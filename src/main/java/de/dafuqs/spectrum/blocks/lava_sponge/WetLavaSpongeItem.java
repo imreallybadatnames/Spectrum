@@ -15,8 +15,8 @@ import java.util.*;
 
 public class WetLavaSpongeItem extends BlockItem {
 	
-	public WetLavaSpongeItem(Block block, FabricItemSettings fabricItemSettings) {
-		super(block, fabricItemSettings);
+	public WetLavaSpongeItem(Block block, Item.Settings itemSettings) {
+		super(block, itemSettings);
 	}
 	
 	@Override

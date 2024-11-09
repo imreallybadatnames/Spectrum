@@ -42,25 +42,24 @@ import java.util.*;
 
 import static de.dafuqs.spectrum.registries.SpectrumFluids.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class SpectrumItems {
 	
 	public static class IS {
 		
-		public static FabricItemSettings of() {
-			return new FabricItemSettings();
+		public static Item.Settings of() {
+			return new Item.Settings();
 		}
 		
-		public static FabricItemSettings of(int maxCount) {
-			return new FabricItemSettings().maxCount(maxCount);
+		public static Item.Settings of(int maxCount) {
+			return new Item.Settings().maxCount(maxCount);
 		}
 		
-		public static FabricItemSettings of(Rarity rarity) {
-			return new FabricItemSettings().rarity(rarity);
+		public static Item.Settings of(Rarity rarity) {
+			return new Item.Settings().rarity(rarity);
 		}
 		
-		public static FabricItemSettings of(int maxCount, Rarity rarity) {
-			return new FabricItemSettings().maxCount(maxCount).rarity(rarity);
+		public static Item.Settings of(int maxCount, Rarity rarity) {
+			return new Item.Settings().maxCount(maxCount).rarity(rarity);
 		}
 		
 	}

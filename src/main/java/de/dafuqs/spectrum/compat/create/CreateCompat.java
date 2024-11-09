@@ -35,7 +35,7 @@ public class CreateCompat extends SpectrumIntegrationPacks.ModIntegrationPack {
         ZINC_CLUSTER = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_ZINC_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
         PURE_ZINC_BLOCK = new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
         PURE_ZINC = new Item(SpectrumItems.IS.of());
-        FabricItemSettings settings = SpectrumItems.IS.of();
+        Item.Settings settings = SpectrumItems.IS.of();
         registerBlockWithItem("small_zinc_bud", SMALL_ZINC_BUD, settings, DyeColor.BROWN);
         registerBlockWithItem("large_zinc_bud", LARGE_ZINC_BUD, settings, DyeColor.BROWN);
         registerBlockWithItem("zinc_cluster", ZINC_CLUSTER, settings, DyeColor.BROWN);
