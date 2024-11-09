@@ -63,7 +63,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.*;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.*;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
@@ -168,8 +168,8 @@ public class SpectrumBlocks {
 	public static final Block MOONSTONE_POWDER_BLOCK = new SandBlock(DyeColor.WHITE.getFireworkColor(), FabricBlockSettings.copyOf(Blocks.SAND).mapColor(MapColor.WHITE));
 	
 	public static final Block VEGETAL_BLOCK = new Block(settings(MapColor.PALE_GREEN, BlockSoundGroup.FUNGUS, 2.0F).nonOpaque());
-	public static final Block NEOLITH_BLOCK = new SpectrumFacingBlock(settings(MapColor.PURPLE, BlockSoundGroup.COPPER, 6.0F).requiresTool().instrument(Instrument.BASEDRUM).luminance(state -> 13).postProcess(SpectrumBlocks::always).emissiveLighting(SpectrumBlocks::always));
-	public static final Block BEDROCK_STORAGE_BLOCK = new BlockWithTooltip(settings(MapColor.STONE_GRAY, BlockSoundGroup.STONE, 100.0F, 3600.0F).pistonBehavior(PistonBehavior.BLOCK).requiresTool().instrument(Instrument.BASEDRUM), Text.translatable("spectrum.tooltip.dragon_and_wither_immune"));
+	public static final Block NEOLITH_BLOCK = new SpectrumFacingBlock(settings(MapColor.PURPLE, BlockSoundGroup.COPPER, 6.0F).requiresTool().instrument(NoteBlockInstrument.BASEDRUM).luminance(state -> 13).postProcess(SpectrumBlocks::always).emissiveLighting(SpectrumBlocks::always));
+	public static final Block BEDROCK_STORAGE_BLOCK = new BlockWithTooltip(settings(MapColor.STONE_GRAY, BlockSoundGroup.STONE, 100.0F, 3600.0F).pistonBehavior(PistonBehavior.BLOCK).requiresTool().instrument(NoteBlockInstrument.BASEDRUM), Text.translatable("spectrum.tooltip.dragon_and_wither_immune"));
 
 	public static final SpectrumClusterBlock BISMUTH_CLUSTER = new SpectrumClusterBlock(gemstone(MapColor.DARK_AQUA, BlockSoundGroup.CHAIN, 8), SpectrumClusterBlock.GrowthStage.CLUSTER);
 	public static final SpectrumClusterBlock LARGE_BISMUTH_BUD = new BismuthBudBlock(gemstone(MapColor.DARK_AQUA, BlockSoundGroup.CHAIN, 6).ticksRandomly(), SpectrumClusterBlock.GrowthStage.LARGE, BISMUTH_CLUSTER);
@@ -181,7 +181,7 @@ public class SpectrumBlocks {
 	private static final float BLACKSLAG_RESISTANCE = 7.0F;
 
 	private static Settings blackslag(BlockSoundGroup blockSoundGroup) {
-		return settings(MapColor.GRAY, blockSoundGroup, BLACKSLAG_HARDNESS, BLACKSLAG_RESISTANCE).instrument(Instrument.BASEDRUM).requiresTool();
+		return settings(MapColor.GRAY, blockSoundGroup, BLACKSLAG_HARDNESS, BLACKSLAG_RESISTANCE).instrument(NoteBlockInstrument.BASEDRUM).requiresTool();
 	}
 
 	public static final Block BLACKSLAG = new BlackslagBlock(blackslag(BlockSoundGroup.DEEPSLATE));
@@ -290,8 +290,8 @@ public class SpectrumBlocks {
 	public static final Block OVERGROWN_SLUSH = new SlushVegetationBlock(blackslag(BlockSoundGroup.MUDDY_MANGROVE_ROOTS));
 	public static final Block TILLED_SLUSH = new TilledSlushBlock(Settings.copy(SLUSH), SLUSH.getDefaultState());
 
-	public static final Block BLACK_MATERIA = new BlackMateriaBlock(settings(MapColor.TERRACOTTA_BLACK, BlockSoundGroup.SAND, 0.0F).instrument(Instrument.SNARE).ticksRandomly());
-	public static final Block BLACK_SLUDGE = new Block(settings(MapColor.TERRACOTTA_BLACK, BlockSoundGroup.SAND, 0.5F).instrument(Instrument.SNARE));
+	public static final Block BLACK_MATERIA = new BlackMateriaBlock(settings(MapColor.TERRACOTTA_BLACK, BlockSoundGroup.SAND, 0.0F).instrument(NoteBlockInstrument.SNARE).ticksRandomly());
+	public static final Block BLACK_SLUDGE = new Block(settings(MapColor.TERRACOTTA_BLACK, BlockSoundGroup.SAND, 0.5F).instrument(NoteBlockInstrument.SNARE));
 	public static final Block SAG_LEAF = new BlackSludgePlantBlock(FabricBlockSettings.copyOf(Blocks.GRASS).mapColor(MapColor.TERRACOTTA_BLACK));
 	public static final Block SAG_BUBBLE = new BlackSludgePlantBlock(FabricBlockSettings.copyOf(Blocks.GRASS).mapColor(MapColor.TERRACOTTA_BLACK));
 	public static final Block SMALL_SAG_BUBBLE = new BlackSludgePlantBlock(FabricBlockSettings.copyOf(Blocks.GRASS).mapColor(MapColor.TERRACOTTA_BLACK));
@@ -304,7 +304,7 @@ public class SpectrumBlocks {
 	public static final Block SMOOTH_BASALT_WALL = new WallBlock(FabricBlockSettings.copyOf(Blocks.BASALT));
 	public static final Block SMOOTH_BASALT_STAIRS = new StairsBlock(Blocks.BASALT.getDefaultState(), FabricBlockSettings.copyOf(Blocks.BASALT));
 
-	public static final Block POLISHED_BASALT = new Block(settings(MapColor.BLACK, BlockSoundGroup.BASALT, 2.0F, 5.0F).instrument(Instrument.BASEDRUM).requiresTool());
+	public static final Block POLISHED_BASALT = new Block(settings(MapColor.BLACK, BlockSoundGroup.BASALT, 2.0F, 5.0F).instrument(NoteBlockInstrument.BASEDRUM).requiresTool());
 	public static final Block PLANED_BASALT = new Block(FabricBlockSettings.copyOf(POLISHED_BASALT));
 	public static final Block PLANED_BASALT_SLAB = new SlabBlock(FabricBlockSettings.copyOf(PLANED_BASALT));
 	public static final Block PLANED_BASALT_STAIRS = new StairsBlock(PLANED_BASALT.getDefaultState(), FabricBlockSettings.copyOf(PLANED_BASALT));
@@ -333,13 +333,13 @@ public class SpectrumBlocks {
 	public static final Block BASALT_TILE_WALL = new WallBlock(FabricBlockSettings.copyOf(BASALT_TILES));
 	public static final Block CRACKED_BASALT_BRICKS = new Block(FabricBlockSettings.copyOf(BASALT_BRICKS));
 	public static final Block POLISHED_BASALT_BUTTON = new ButtonBlock(Settings.create().noCollision().strength(0.5F), SpectrumBlockSetTypes.POLISHED_BASALT, 5, false);
-	public static final Block POLISHED_BASALT_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.create().mapColor(MapColor.BLACK).solid().instrument(Instrument.BASEDRUM).requiresTool().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY), SpectrumBlockSetTypes.POLISHED_BASALT);
+	public static final Block POLISHED_BASALT_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.create().mapColor(MapColor.BLACK).solid().instrument(NoteBlockInstrument.BASEDRUM).requiresTool().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY), SpectrumBlockSetTypes.POLISHED_BASALT);
 
 	public static final Block CALCITE_SLAB = new SlabBlock(FabricBlockSettings.copyOf(Blocks.CALCITE));
 	public static final Block CALCITE_WALL = new WallBlock(FabricBlockSettings.copyOf(Blocks.CALCITE));
 	public static final Block CALCITE_STAIRS = new StairsBlock(Blocks.CALCITE.getDefaultState(), FabricBlockSettings.copyOf(Blocks.CALCITE));
 
-	public static final Block POLISHED_CALCITE = new Block(settings(MapColor.TERRACOTTA_WHITE, BlockSoundGroup.CALCITE, 2.0F, 5.0F).instrument(Instrument.BASEDRUM).requiresTool());
+	public static final Block POLISHED_CALCITE = new Block(settings(MapColor.TERRACOTTA_WHITE, BlockSoundGroup.CALCITE, 2.0F, 5.0F).instrument(NoteBlockInstrument.BASEDRUM).requiresTool());
 	public static final Block PLANED_CALCITE = new Block(FabricBlockSettings.copyOf(POLISHED_CALCITE));
 	public static final Block PLANED_CALCITE_SLAB = new SlabBlock(FabricBlockSettings.copyOf(PLANED_CALCITE));
 	public static final Block PLANED_CALCITE_STAIRS = new StairsBlock(PLANED_CALCITE.getDefaultState(), FabricBlockSettings.copyOf(PLANED_CALCITE));
@@ -368,7 +368,7 @@ public class SpectrumBlocks {
 	public static final Block CRACKED_CALCITE_TILES = new Block(FabricBlockSettings.copyOf(CALCITE_TILES));
 	public static final Block CRACKED_CALCITE_BRICKS = new Block(FabricBlockSettings.copyOf(CALCITE_BRICKS));
 	public static final Block POLISHED_CALCITE_BUTTON = new ButtonBlock(Settings.create().noCollision().strength(0.5F), SpectrumBlockSetTypes.POLISHED_CALCITE, 5, false);
-	public static final Block POLISHED_CALCITE_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.create().mapColor(MapColor.TERRACOTTA_WHITE).solid().instrument(Instrument.BASEDRUM).requiresTool().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY), SpectrumBlockSetTypes.POLISHED_CALCITE);
+	public static final Block POLISHED_CALCITE_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.create().mapColor(MapColor.TERRACOTTA_WHITE).solid().instrument(NoteBlockInstrument.BASEDRUM).requiresTool().noCollision().strength(0.5F).pistonBehavior(PistonBehavior.DESTROY), SpectrumBlockSetTypes.POLISHED_CALCITE);
 
 	private static Settings gemstoneLight(AbstractBlock block) {
 		return FabricBlockSettings.copyOf(block).luminance(15).nonOpaque().solid();
@@ -646,7 +646,7 @@ public class SpectrumBlocks {
 	public static final ToIntFunction<BlockState> LANTERN_LIGHT_PROVIDER = (state -> state.get(RedstoneLampBlock.LIT) ? 15 : 0);
 
 	public static Settings noxcap(MapColor color) {
-		return settings(color, BlockSoundGroup.NETHER_STEM, 4.0F).instrument(Instrument.BASS);
+		return settings(color, BlockSoundGroup.NETHER_STEM, 4.0F).instrument(NoteBlockInstrument.BASS);
 	}
 
 	private static final int NOXCAP_BUTTON_BLOCK_PRESS_TIME_TICKS = 30;
@@ -736,7 +736,7 @@ public class SpectrumBlocks {
 	public static final Block CHESTNUT_NOXWOOD_LAMP = new FlexLanternBlock(FabricBlockSettings.copyOf(Blocks.LANTERN).luminance(13).pistonBehavior(PistonBehavior.DESTROY));
 	
 	public static Settings galaWood(MapColor color) {
-		return settings(color, BlockSoundGroup.CHERRY_WOOD, 30.0F).instrument(Instrument.BASS).burnable();
+		return settings(color, BlockSoundGroup.CHERRY_WOOD, 30.0F).instrument(NoteBlockInstrument.BASS).burnable();
 	}
 	
 	public static final Block WEEPING_GALA_SPRIG = new WeepingGalaSprigBlock(new WeepingGalaSaplingGenerator(), copyWithMapColor(OAK_SAPLING, MapColor.BRIGHT_TEAL));
@@ -771,7 +771,7 @@ public class SpectrumBlocks {
 	public static final Block WEEPING_GALA_LIGHT = new PillarBlock(galaWood(MapColor.BROWN).luminance(state -> 15));
 	
 	public static Settings basalMarble() {
-		return settings(MapColor.GRAY, BlockSoundGroup.DRIPSTONE_BLOCK, 8.0F).instrument(Instrument.BASEDRUM).requiresTool();
+		return settings(MapColor.GRAY, BlockSoundGroup.DRIPSTONE_BLOCK, 8.0F).instrument(NoteBlockInstrument.BASEDRUM).requiresTool();
 	}
 	
 	public static final Block BASAL_MARBLE = new PillarBlock(basalMarble());
@@ -910,7 +910,7 @@ public class SpectrumBlocks {
 	public static final Block PALTAERIA_ORE = new CloakedOreBlock(endstoneOre(), UniformIntProvider.create(2, 4), SpectrumAdvancements.REVEAL_PALTAERIA, Blocks.END_STONE.getDefaultState());
 
 	private static Settings gravityBlock(MapColor mapColor) {
-		return settings(mapColor, BlockSoundGroup.METAL, 4.0F, 6.0F).instrument(Instrument.BASEDRUM).requiresTool();
+		return settings(mapColor, BlockSoundGroup.METAL, 4.0F, 6.0F).instrument(NoteBlockInstrument.BASEDRUM).requiresTool();
 	}
 
 	public static final FloatBlock PALTAERIA_FRAGMENT_BLOCK = new FloatBlock(gravityBlock(MapColor.LIGHT_BLUE), 0.2F);
@@ -947,7 +947,7 @@ public class SpectrumBlocks {
 	public static final Block AMARANTH_BUSHEL = new AmaranthBushelBlock(SpectrumStatusEffects.NOURISHING, 8, settings(MapColor.CLEAR, BlockSoundGroup.CROP, 0.0F).noCollision());
 
 	public static final Block MEMORY = new MemoryBlock(settings(MapColor.CLEAR, BlockSoundGroup.AMETHYST_BLOCK, 0.0F).blockVision(SpectrumBlocks::never).nonOpaque().ticksRandomly());
-	public static final Block CRACKED_END_PORTAL_FRAME = new CrackedEndPortalFrameBlock(settings(MapColor.PALE_PURPLE, BlockSoundGroup.GLASS, -1.0F, 3600000.0F).instrument(Instrument.BASEDRUM).luminance((state) -> 1));
+	public static final Block CRACKED_END_PORTAL_FRAME = new CrackedEndPortalFrameBlock(settings(MapColor.PALE_PURPLE, BlockSoundGroup.GLASS, -1.0F, 3600000.0F).instrument(NoteBlockInstrument.BASEDRUM).luminance((state) -> 1));
 	public static final Block LAVA_SPONGE = new LavaSpongeBlock(FabricBlockSettings.copyOf(Blocks.SPONGE).mapColor(MapColor.ORANGE));
 	public static final Block WET_LAVA_SPONGE = new WetLavaSpongeBlock(FabricBlockSettings.copyOf(Blocks.WET_SPONGE).mapColor(MapColor.ORANGE).luminance(9).emissiveLighting(SpectrumBlocks::always).postProcess(SpectrumBlocks::always));
 
@@ -1328,7 +1328,7 @@ public class SpectrumBlocks {
 	public static final Block PURE_PRISMARINE_BLOCK = new Block(FabricBlockSettings.copyOf(Blocks.PRISMARINE));
 
 	private static Settings preservationBlock() {
-		return settings(MapColor.LIGHT_BLUE_GRAY, BlockSoundGroup.STONE, -1.0F, 3600000.0F).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(SpectrumBlocks::never);
+		return settings(MapColor.LIGHT_BLUE_GRAY, BlockSoundGroup.STONE, -1.0F, 3600000.0F).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(SpectrumBlocks::never);
 	}
 
 	public static final Block PRESERVATION_CONTROLLER = new PreservationControllerBlock(preservationBlock().luminance(state -> 1).emissiveLighting(SpectrumBlocks::always).postProcess(SpectrumBlocks::always));
@@ -2830,7 +2830,7 @@ public class SpectrumBlocks {
 	// All the mob heads vanilla is missing
 	private static void registerMobHeads(FabricItemSettings settings) {
 		for (SpectrumSkullType type : SpectrumSkullType.values()) {
-			Block head = new SpectrumSkullBlock(type, FabricBlockSettings.copyOf(Blocks.SKELETON_SKULL).instrument(Instrument.CUSTOM_HEAD));
+			Block head = new SpectrumSkullBlock(type, FabricBlockSettings.copyOf(Blocks.SKELETON_SKULL).instrument(NoteBlockInstrument.CUSTOM_HEAD));
 			registerBlock(type.name().toLowerCase(Locale.ROOT) + "_head", head);
 			Block wallHead = new SpectrumWallSkullBlock(type, FabricBlockSettings.copyOf(Blocks.SKELETON_SKULL).dropsLike(head));
 			registerBlock(type.name().toLowerCase(Locale.ROOT) + "_wall_head", wallHead);
