@@ -8,7 +8,8 @@ import com.klikli_dev.modonomicon.book.page.BookTextPage;
 import com.klikli_dev.modonomicon.client.gui.book.markdown.BookTextRenderer;
 import com.klikli_dev.modonomicon.util.BookGsonHelper;
 import de.dafuqs.spectrum.compat.modonomicon.ModonomiconCompat;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -28,23 +29,23 @@ public class BookConfirmationButtonPage extends BookTextPage {
         this.confirmationString = confirmationString;
     }
 
-    public static BookConfirmationButtonPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookConfirmationButtonPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", true);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var checkedAdvancement = Identifier.tryParse(JsonHelper.getString(json, "checked_advancement"));
-        var buttonText = BookGsonHelper.getAsBookTextHolder(json, "button_text", BookTextHolder.EMPTY);
-        var confirmedButtonText = BookGsonHelper.getAsBookTextHolder(json, "button_text_confirmed", BookTextHolder.EMPTY);
+        var buttonText = BookGsonHelper.getAsBookTextHolder(json, "button_text", BookTextHolder.EMPTY, provider);
+        var confirmedButtonText = BookGsonHelper.getAsBookTextHolder(json, "button_text_confirmed", BookTextHolder.EMPTY, provider);
         var confirmationString = JsonHelper.getString(json, "confirmation", "");
         return new BookConfirmationButtonPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, checkedAdvancement, buttonText, confirmedButtonText, confirmationString);
     }
 
-    public static BookConfirmationButtonPage fromNetwork(PacketByteBuf buffer) {
+    public static BookConfirmationButtonPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
@@ -93,7 +94,7 @@ public class BookConfirmationButtonPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeIdentifier(checkedAdvancement);
         buttonText.toNetwork(buffer);

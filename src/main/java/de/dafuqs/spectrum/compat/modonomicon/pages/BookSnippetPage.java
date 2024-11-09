@@ -7,7 +7,8 @@ import com.klikli_dev.modonomicon.book.conditions.BookNoneCondition;
 import com.klikli_dev.modonomicon.book.page.BookTextPage;
 import com.klikli_dev.modonomicon.util.BookGsonHelper;
 import de.dafuqs.spectrum.compat.modonomicon.ModonomiconCompat;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -32,14 +33,14 @@ public class BookSnippetPage extends BookTextPage {
         this.textureHeight = textureHeight;
     }
 
-    public static BookSnippetPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookSnippetPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", false);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var resourcePath = Identifier.tryParse(JsonHelper.getString(json, "resource_path"));
         var resourceWidth = JsonHelper.getInt(json, "resource_width");
@@ -51,7 +52,7 @@ public class BookSnippetPage extends BookTextPage {
         return new BookSnippetPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, resourcePath, resourceWidth, resourceHeight, textureX, textureY, textureWidth, textureHeight);
     }
 
-    public static BookSnippetPage fromNetwork(PacketByteBuf buffer) {
+    public static BookSnippetPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
@@ -103,7 +104,7 @@ public class BookSnippetPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeIdentifier(resourcePath);
         buffer.writeVarInt(resourceWidth);

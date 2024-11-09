@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -27,8 +28,9 @@ public class BookEnchanterCraftingPageRenderer extends BookGatedRecipePageRender
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, EnchanterRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<EnchanterRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        EnchanterRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

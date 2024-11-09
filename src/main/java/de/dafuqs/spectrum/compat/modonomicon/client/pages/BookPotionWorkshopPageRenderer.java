@@ -6,7 +6,9 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.potion_workshop.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -26,8 +28,9 @@ public class BookPotionWorkshopPageRenderer<T extends PotionWorkshopRecipe> exte
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, T recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<T> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        T recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();
@@ -47,7 +50,7 @@ public class BookPotionWorkshopPageRenderer<T extends PotionWorkshopRecipe> exte
         parentScreen.renderItemStack(drawContext, recipeX + 82, recipeY + 42, mouseX, mouseY, recipe.createIcon());
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 82, recipeY + 24, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 82, recipeY + 24, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
 }

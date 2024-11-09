@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.fusion_shrine.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
@@ -29,8 +30,9 @@ public class BookFusionShrineCraftingPageRenderer extends BookGatedRecipePageRen
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, FusionShrineRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<FusionShrineRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        FusionShrineRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

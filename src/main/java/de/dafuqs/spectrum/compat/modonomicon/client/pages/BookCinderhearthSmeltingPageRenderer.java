@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.cinderhearth.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -33,17 +33,17 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
         super.onBeginDisplayPage(parentScreen, left, top);
 
         if (chanceTexts1 == null) {
-            chanceTexts1 = createChanceTexts(page.getRecipe1());
+            chanceTexts1 = createChanceTexts(page.getRecipe1().value());
         }
         if (chanceTexts2 == null) {
-            chanceTexts2 = createChanceTexts(page.getRecipe2());
+            chanceTexts2 = createChanceTexts(page.getRecipe2().value());
         }
     }
 
     private List<BookTextHolder> createChanceTexts(CinderhearthRecipe recipe) {
         if (recipe == null) return null;
 
-        World world = parentScreen.getMinecraft().world;
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return null;
         
         Identifier font = BookDataManager.Client.get().safeFont(this.page.getBook().getFont());
@@ -70,8 +70,9 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, CinderhearthRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<CinderhearthRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        CinderhearthRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

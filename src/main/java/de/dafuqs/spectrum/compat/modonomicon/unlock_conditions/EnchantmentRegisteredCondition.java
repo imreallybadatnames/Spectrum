@@ -24,14 +24,14 @@ public class EnchantmentRegisteredCondition extends BookCondition {
         this.enchantmentID = enchantmentID;
     }
     
-    public static EnchantmentRegisteredCondition fromJson(JsonObject json) {
+    public static EnchantmentRegisteredCondition fromJson(Identifier conditionParentId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
         Identifier enchantmentID = Identifier.of(JsonHelper.getString(json, "enchantment_id"));
-        Text tooltip = tooltipFromJson(json);
+        Text tooltip = tooltipFromJson(json, provider);
         return new EnchantmentRegisteredCondition(tooltip, enchantmentID);
     }
     
-    public static EnchantmentRegisteredCondition fromNetwork(PacketByteBuf buffer) {
-        var tooltip = buffer.readBoolean() ? buffer.readText() : null;
+    public static EnchantmentRegisteredCondition fromNetwork(RegistryByteBuf buffer) {
+        var tooltip = buffer.readBoolean() ? TextCodecs.REGISTRY_PACKET_CODEC.decode(buffer) : null;
         var entryId = buffer.readIdentifier();
         return new EnchantmentRegisteredCondition(tooltip, entryId);
     }
@@ -42,10 +42,10 @@ public class EnchantmentRegisteredCondition extends BookCondition {
     }
     
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         buffer.writeBoolean(this.tooltip != null);
         if (this.tooltip != null) {
-            buffer.writeText(this.tooltip);
+            TextCodecs.REGISTRY_PACKET_CODEC.encode(buffer, this.tooltip);
         }
         buffer.writeIdentifier(this.enchantmentID);
     }

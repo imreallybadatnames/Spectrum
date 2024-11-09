@@ -8,7 +8,8 @@ import com.klikli_dev.modonomicon.book.page.BookTextPage;
 import com.klikli_dev.modonomicon.client.gui.book.markdown.BookTextRenderer;
 import com.klikli_dev.modonomicon.util.BookGsonHelper;
 import de.dafuqs.spectrum.compat.modonomicon.ModonomiconCompat;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -21,20 +22,20 @@ public class BookStatusEffectPage extends BookTextPage {
         this.statusEffectId = statusEffectId;
     }
 
-    public static BookStatusEffectPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookStatusEffectPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", true);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var statusEffectId = json.has("status_effect_id") ? Identifier.tryParse(JsonHelper.getString(json, "status_effect_id")) : null;
         return new BookStatusEffectPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, statusEffectId);
     }
 
-    public static BookStatusEffectPage fromNetwork(PacketByteBuf buffer) {
+    public static BookStatusEffectPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
@@ -64,7 +65,7 @@ public class BookStatusEffectPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeIdentifier(this.statusEffectId);
     }

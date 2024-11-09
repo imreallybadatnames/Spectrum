@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import de.dafuqs.revelationary.api.advancements.*;
@@ -34,9 +33,9 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
         }
 
         @Override
-        public void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+        protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
             if (pageRenderer.revealProgress < 0) {
-                super.renderButton(drawContext, mouseX, mouseY, delta);
+                super.renderWidget(drawContext, mouseX, mouseY, delta);
             }
         }
 
@@ -194,7 +193,7 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
             SpectrumC2SPacketSender.sendGuidebookHintBoughtPacket(page.getCompletionAdvancement(), page.getCost());
             revealProgress = 1;
             lastRevealTime = mc.world.getTime();
-            mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
         }
     }
 

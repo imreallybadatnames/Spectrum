@@ -7,8 +7,10 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -32,8 +34,9 @@ public class BookPedestalCraftingPageRenderer extends BookGatedRecipePageRendere
 	}
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, PedestalRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<PedestalRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        PedestalRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

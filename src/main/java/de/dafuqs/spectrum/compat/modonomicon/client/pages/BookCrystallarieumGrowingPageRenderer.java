@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
@@ -11,6 +10,7 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.crystallarieum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
@@ -37,15 +37,15 @@ public class BookCrystallarieumGrowingPageRenderer extends BookGatedRecipePageRe
         }
 
         if (page.getRecipe1() != null) {
-            craftingTimeText1 = new BookTextHolder(Text.translatable(page.getRecipe1().growsWithoutCatalyst()
+            craftingTimeText1 = new BookTextHolder(Text.translatable(page.getRecipe1().value().growsWithoutCatalyst()
                     ? "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds_catalyst_optional"
-					: "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds", page.getRecipe1().getSecondsPerGrowthStage()).styled(s -> s.withFont(font)));
+					: "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds", page.getRecipe1().value().getSecondsPerGrowthStage()).styled(s -> s.withFont(font)));
         }
 
         if (page.getRecipe2() != null) {
-            craftingTimeText2 = new BookTextHolder(Text.translatable(page.getRecipe2().growsWithoutCatalyst()
+            craftingTimeText2 = new BookTextHolder(Text.translatable(page.getRecipe2().value().growsWithoutCatalyst()
                     ? "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds_catalyst_optional"
-					: "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds", page.getRecipe2().getSecondsPerGrowthStage()).styled(s -> s.withFont(font)));
+					: "container.spectrum.rei.crystallarieum.crafting_time_per_stage_seconds", page.getRecipe2().value().getSecondsPerGrowthStage()).styled(s -> s.withFont(font)));
         }
     }
 	
@@ -55,8 +55,9 @@ public class BookCrystallarieumGrowingPageRenderer extends BookGatedRecipePageRe
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, CrystallarieumRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<CrystallarieumRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        CrystallarieumRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

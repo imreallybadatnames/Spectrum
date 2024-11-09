@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.klikli_dev.modonomicon.*;
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.book.conditions.*;
-import com.klikli_dev.modonomicon.book.entries.*;
+import com.klikli_dev.modonomicon.book.entries.BookContentEntry;
 import com.klikli_dev.modonomicon.book.page.*;
 import com.klikli_dev.modonomicon.util.*;
 import com.mojang.brigadier.*;
@@ -15,6 +15,7 @@ import net.minecraft.command.*;
 import net.minecraft.command.argument.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -31,20 +32,20 @@ public class BookCollectionPage extends BookTextPage {
         this.items = new ArrayList<>(itemStrings.size());
     }
 
-    public static BookCollectionPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookCollectionPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", true);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var items = JsonHelper.getArray(json, "items", new JsonArray()).asList().stream().map(JsonElement::getAsString).toList();
         return new BookCollectionPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, items);
     }
 
-    public static BookCollectionPage fromNetwork(PacketByteBuf buffer) {
+    public static BookCollectionPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
@@ -65,7 +66,7 @@ public class BookCollectionPage extends BookTextPage {
     }
 
     @Override
-    public void build(World world, ContentBookEntry parentEntry, int pageNum) {
+    public void build(World world, BookContentEntry parentEntry, int pageNum) {
         super.build(world, parentEntry, pageNum);
 
         for (String itemString : itemStrings) {
@@ -81,7 +82,7 @@ public class BookCollectionPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeCollection(this.itemStrings, PacketByteBuf::writeString);
     }

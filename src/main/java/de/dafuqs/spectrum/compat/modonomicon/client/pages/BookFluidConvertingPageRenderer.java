@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
@@ -21,8 +22,9 @@ public abstract class BookFluidConvertingPageRenderer<R extends GatedRecipe<?>, 
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, R recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<R> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        R recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();
@@ -38,7 +40,7 @@ public abstract class BookFluidConvertingPageRenderer<R extends GatedRecipe<?>, 
         parentScreen.renderIngredient(drawContext, recipeX + 23, recipeY + 7, mouseX, mouseY, ingredients.get(0));
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 75, recipeY + 7, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 75, recipeY + 7, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
     public abstract Identifier getBackgroundTexture();

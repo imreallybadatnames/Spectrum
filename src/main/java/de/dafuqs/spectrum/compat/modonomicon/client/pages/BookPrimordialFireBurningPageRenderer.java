@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
@@ -24,8 +25,9 @@ public class BookPrimordialFireBurningPageRenderer<R extends PrimordialFireBurni
 	}
 	
 	@Override
-	protected void drawRecipe(DrawContext drawContext, R recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-		World world = parentScreen.getMinecraft().world;
+	protected void drawRecipe(DrawContext drawContext, RecipeEntry<R> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+		R recipe = recipeEntry.value();
+		World world = MinecraftClient.getInstance().world;
 		if (world == null) return;
 		
 		renderTitle(drawContext, recipeY, second);

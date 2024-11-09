@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.compat.modonomicon.pages.BookStatusEffectPage;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 
 public class BookStatusEffectPageRenderer extends BookTextPageRenderer {
@@ -15,7 +14,7 @@ public class BookStatusEffectPageRenderer extends BookTextPageRenderer {
 
     public BookStatusEffectPageRenderer(BookStatusEffectPage page) {
         super(page);
-        StatusEffect statusEffect = Registries.STATUS_EFFECT.get(page.getStatusEffectId());
+        var statusEffect = Registries.STATUS_EFFECT.getEntry(page.getStatusEffectId()).orElse(null);
         this.statusEffectSprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(statusEffect);
     }
 

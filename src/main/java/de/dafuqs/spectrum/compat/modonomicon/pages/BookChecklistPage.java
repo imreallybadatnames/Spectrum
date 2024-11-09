@@ -9,6 +9,7 @@ import com.klikli_dev.modonomicon.client.gui.book.markdown.*;
 import com.klikli_dev.modonomicon.util.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import net.minecraft.network.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -23,32 +24,41 @@ public class BookChecklistPage extends BookTextPage {
         this.checklist = checklist;
     }
 
-    public static BookChecklistPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookChecklistPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", true);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var checklistObject = JsonHelper.getObject(json, "checklist", new JsonObject());
         Map<Identifier, BookTextHolder> checklist = new LinkedHashMap<>();
         for (var key : checklistObject.keySet()) {
-            var value = BookGsonHelper.getAsBookTextHolder(checklistObject, key, BookTextHolder.EMPTY);
+            var value = BookGsonHelper.getAsBookTextHolder(checklistObject, key, BookTextHolder.EMPTY, provider);
             checklist.put(Identifier.of(key), value);
         }
         return new BookChecklistPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, checklist);
     }
 
-    public static BookChecklistPage fromNetwork(PacketByteBuf buffer) {
+    public static BookChecklistPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
         var text = BookTextHolder.fromNetwork(buffer);
         var anchor = buffer.readString();
         var condition = BookCondition.fromNetwork(buffer);
-        var checklist = buffer.readMap(Maps::newLinkedHashMapWithExpectedSize, PacketByteBuf::readIdentifier, BookTextHolder::fromNetwork);
+
+        // Because modonomicon decided RegistryByteBuf was worthwhile
+        int checklistSize = buffer.readVarInt();
+        Map<Identifier, BookTextHolder> checklist = Maps.newLinkedHashMapWithExpectedSize(checklistSize);
+        for(int i = 0; i < checklistSize; i++) {
+            var key = buffer.readIdentifier();
+            var value = BookTextHolder.fromNetwork(buffer);
+            checklist.put(key, value);
+        }
+
         return new BookChecklistPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, checklist);
     }
 
@@ -92,7 +102,7 @@ public class BookChecklistPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeMap(checklist, PacketByteBuf::writeIdentifier, (buf, value) -> value.toNetwork(buf));
     }

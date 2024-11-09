@@ -4,7 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.dafuqs.spectrum.SpectrumCommon;
 import de.dafuqs.spectrum.compat.modonomicon.pages.BookGatedRecipePage;
 import de.dafuqs.spectrum.recipe.anvil_crushing.AnvilCrushingRecipe;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -22,8 +24,9 @@ public class BookAnvilCrushingPageRenderer extends BookGatedRecipePageRenderer<A
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, AnvilCrushingRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<AnvilCrushingRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        AnvilCrushingRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

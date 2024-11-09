@@ -1,12 +1,12 @@
 package de.dafuqs.spectrum.compat.modonomicon;
 
+import com.klikli_dev.modonomicon.book.page.BookPage;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import com.klikli_dev.modonomicon.data.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.*;
 import de.dafuqs.spectrum.compat.modonomicon.client.pages.*;
-import de.dafuqs.spectrum.compat.modonomicon.page_types.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.compat.modonomicon.unlock_conditions.*;
 import de.dafuqs.spectrum.recipe.anvil_crushing.*;
@@ -26,9 +26,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 
 public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPack {
-    
-    // Entry Types
-    public static final Identifier ENTRY_LINK_PAGE_TYPE = SpectrumCommon.locate("entry_link");
     
     // Page Types
     public static final Identifier ANVIL_CRUSHING_PAGE = SpectrumCommon.locate("anvil_crushing");
@@ -63,8 +60,6 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
     
     @Override
     public void register() {
-        LoaderRegistry.registerEntryType(ENTRY_LINK_PAGE_TYPE, EntryLinkBookEntry::fromJson, EntryLinkBookEntry::fromNetwork);
-        
         registerPages();
         registerUnlockConditions();
     }
@@ -87,26 +82,26 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
         registerGatedRecipePage(TITRATION_BARREL_FERMENTING_PAGE, SpectrumRecipeTypes.TITRATION_BARREL, true);
         registerGatedRecipePage(PRIMORDIAL_FIRE_BURNING_PAGE, SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, false);
 
-        LoaderRegistry.registerPageLoader(STATUS_EFFECT_PAGE, BookStatusEffectPage::fromJson, BookStatusEffectPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(HINT_PAGE, BookHintPage::fromJson, BookHintPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(CHECKLIST_PAGE, BookChecklistPage::fromJson, BookChecklistPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(CONFIRMATION_BUTTON_PAGE, BookConfirmationButtonPage::fromJson, BookConfirmationButtonPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(SNIPPET_PAGE, BookSnippetPage::fromJson, BookSnippetPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(LINK_PAGE, BookLinkPage::fromJson, BookLinkPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(NBT_SPOTLIGHT_PAGE, BookNbtSpotlightPage::fromJson, BookNbtSpotlightPage::fromNetwork);
-        LoaderRegistry.registerPageLoader(COLLECTION_PAGE, BookCollectionPage::fromJson, BookCollectionPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(STATUS_EFFECT_PAGE, (BookPageJsonLoader<?>) BookStatusEffectPage::fromJson, BookStatusEffectPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(HINT_PAGE, (BookPageJsonLoader<?>) BookHintPage::fromJson, BookHintPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(CHECKLIST_PAGE, (BookPageJsonLoader<?>) BookChecklistPage::fromJson, BookChecklistPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(CONFIRMATION_BUTTON_PAGE, (BookPageJsonLoader<?>) BookConfirmationButtonPage::fromJson, BookConfirmationButtonPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(SNIPPET_PAGE, (BookPageJsonLoader<?>) BookSnippetPage::fromJson, BookSnippetPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(LINK_PAGE, (BookPageJsonLoader<?>) BookLinkPage::fromJson, BookLinkPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(NBT_SPOTLIGHT_PAGE, (BookPageJsonLoader<?>) BookNbtSpotlightPage::fromJson, BookNbtSpotlightPage::fromNetwork);
+        LoaderRegistry.registerPageLoader(COLLECTION_PAGE, (BookPageJsonLoader<?>) BookCollectionPage::fromJson, BookCollectionPage::fromNetwork);
     }
     
     private void registerGatedRecipePage(Identifier id, RecipeType<? extends GatedRecipe<?>> recipeType, boolean supportsTwoRecipesOnOnePage) {
-        LoaderRegistry.registerPageLoader(id,
-                json -> BookGatedRecipePage.fromJson(id, recipeType, json, supportsTwoRecipesOnOnePage),
-                buffer -> BookGatedRecipePage.fromNetwork(id, recipeType, buffer));
+        BookPageJsonLoader<?> fromJson = (entryId, json, provider) -> BookGatedRecipePage.fromJson(entryId, id, recipeType, json, supportsTwoRecipesOnOnePage, provider);
+        NetworkLoader<? extends BookPage> fromNetwork = buffer -> BookGatedRecipePage.fromNetwork(id, recipeType, buffer);
+        LoaderRegistry.registerPageLoader(id, fromJson, fromNetwork);
     }
     
     public void registerUnlockConditions() {
-        LoaderRegistry.registerConditionLoader(ENCHANTMENT_REGISTERED, EnchantmentRegisteredCondition::fromJson, EnchantmentRegisteredCondition::fromNetwork);
-        LoaderRegistry.registerConditionLoader(RECIPE_LOADED_AND_UNLOCKED, RecipesLoadedAndUnlockedCondition::fromJson, RecipesLoadedAndUnlockedCondition::fromNetwork);
-        LoaderRegistry.registerConditionLoader(NOT, NotCondition::fromJson, NotCondition::fromNetwork);
+        LoaderRegistry.registerConditionLoader(ENCHANTMENT_REGISTERED, (BookConditionJsonLoader<?>) EnchantmentRegisteredCondition::fromJson, EnchantmentRegisteredCondition::fromNetwork);
+        LoaderRegistry.registerConditionLoader(RECIPE_LOADED_AND_UNLOCKED, (BookConditionJsonLoader<?>) RecipesLoadedAndUnlockedCondition::fromJson, RecipesLoadedAndUnlockedCondition::fromNetwork);
+        LoaderRegistry.registerConditionLoader(NOT, (BookConditionJsonLoader<?>) NotCondition::fromJson, NotCondition::fromNetwork);
     }
     
     @Override

@@ -9,6 +9,7 @@ import de.dafuqs.spectrum.compat.modonomicon.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -25,19 +26,19 @@ public class RecipesLoadedAndUnlockedCondition extends BookCondition {
         this.recipeIDs = recipeIDs;
     }
     
-    public static RecipesLoadedAndUnlockedCondition fromJson(JsonObject json) {
+    public static RecipesLoadedAndUnlockedCondition fromJson(Identifier conditionParentId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
         List<Identifier> recipeIDs = new ArrayList<>();
         
         JsonArray array = JsonHelper.getArray(json, "recipe_ids");
         for (JsonElement element : array) {
             recipeIDs.add(Identifier.of(element.getAsString()));
         }
-        Text tooltip = tooltipFromJson(json);
+        Text tooltip = tooltipFromJson(json, provider);
         return new RecipesLoadedAndUnlockedCondition(tooltip, recipeIDs);
     }
     
-    public static RecipesLoadedAndUnlockedCondition fromNetwork(PacketByteBuf buffer) {
-        Text tooltip = buffer.readBoolean() ? buffer.readText() : null;
+    public static RecipesLoadedAndUnlockedCondition fromNetwork(RegistryByteBuf buffer) {
+        Text tooltip = buffer.readBoolean() ? TextCodecs.REGISTRY_PACKET_CODEC.decode(buffer) : null;
         int recipeCount = buffer.readInt();
         List<Identifier> recipeIDs = new ArrayList<>();
         for (int i = 0; i < recipeCount; i++) {
@@ -52,10 +53,10 @@ public class RecipesLoadedAndUnlockedCondition extends BookCondition {
     }
     
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         buffer.writeBoolean(this.tooltip != null);
         if (this.tooltip != null) {
-            buffer.writeText(this.tooltip);
+            TextCodecs.REGISTRY_PACKET_CODEC.encode(buffer, this.tooltip);
         }
         buffer.writeInt(this.recipeIDs.size());
         for (Identifier identifier : this.recipeIDs) {
@@ -66,9 +67,9 @@ public class RecipesLoadedAndUnlockedCondition extends BookCondition {
     @Override
     public boolean test(BookConditionContext context, PlayerEntity player) {
         for (Identifier recipeID : this.recipeIDs) {
-            Optional<? extends Recipe<?>> optionalRecipe = player.getWorld().getRecipeManager().get(recipeID);
+            Optional<RecipeEntry<?>> optionalRecipe = player.getWorld().getRecipeManager().get(recipeID);
             if (optionalRecipe.isPresent()) {
-                Recipe<?> recipe = optionalRecipe.get();
+                Recipe<?> recipe = optionalRecipe.get().value();
                 if (recipe instanceof GatedRecipe<?> gatedRecipe) {
                     if (gatedRecipe.canPlayerCraft(player)) {
                         return true;

@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.book.page.*;
-import com.klikli_dev.modonomicon.client.gui.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import de.dafuqs.spectrum.api.recipe.*;

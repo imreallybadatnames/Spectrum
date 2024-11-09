@@ -6,6 +6,7 @@ import com.klikli_dev.modonomicon.book.conditions.context.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -23,20 +24,20 @@ public class NotCondition extends BookCondition {
 			throw new IllegalArgumentException("NotCondition must have exactly one child.");
 		this.child = child;
 	}
-	
-	public static NotCondition fromJson(JsonObject json) {
+
+	public static NotCondition fromJson(Identifier conditionParentId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
 		BookCondition child;
 		var j = JsonHelper.getObject(json, "child");
 		if (!j.isJsonObject()) {
 			throw new JsonSyntaxException("Condition children must be an array of JsonObjects.");
 		}
-		child = BookCondition.fromJson(j.getAsJsonObject());
-		var tooltip = tooltipFromJson(json);
+		child = BookCondition.fromJson(conditionParentId, j.getAsJsonObject(), provider);
+		var tooltip = tooltipFromJson(json, provider);
 		return new NotCondition(tooltip, child);
 	}
 	
-	public static NotCondition fromNetwork(PacketByteBuf buffer) {
-		var tooltip = buffer.readBoolean() ? buffer.readText() : null;
+	public static NotCondition fromNetwork(RegistryByteBuf buffer) {
+		var tooltip = buffer.readBoolean() ? TextCodecs.REGISTRY_PACKET_CODEC.decode(buffer) : null;
 		return new NotCondition(tooltip, BookCondition.fromNetwork(buffer));
 	}
 	
@@ -55,10 +56,10 @@ public class NotCondition extends BookCondition {
 	}
 	
 	@Override
-	public void toNetwork(PacketByteBuf buffer) {
+	public void toNetwork(RegistryByteBuf buffer) {
 		buffer.writeBoolean(this.tooltip != null);
 		if (this.tooltip != null) {
-			buffer.writeText(this.tooltip);
+			TextCodecs.REGISTRY_PACKET_CODEC.encode(buffer, this.tooltip);
 		}
 		
 		BookCondition.toNetwork(this.child, buffer);

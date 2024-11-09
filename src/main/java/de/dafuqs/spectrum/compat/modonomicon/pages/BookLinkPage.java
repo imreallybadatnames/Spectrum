@@ -8,7 +8,8 @@ import com.klikli_dev.modonomicon.book.page.BookTextPage;
 import com.klikli_dev.modonomicon.client.gui.book.markdown.BookTextRenderer;
 import com.klikli_dev.modonomicon.util.BookGsonHelper;
 import de.dafuqs.spectrum.compat.modonomicon.ModonomiconCompat;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -24,21 +25,21 @@ public class BookLinkPage extends BookTextPage {
         this.linkText = linkText;
     }
 
-    public static BookLinkPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookLinkPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var useMarkdownInTitle = JsonHelper.getBoolean(json, "use_markdown_title", false);
         var showTitleSeparator = JsonHelper.getBoolean(json, "show_title_separator", true);
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         var url = JsonHelper.getString(json, "url", "");
-        var linkText = BookGsonHelper.getAsBookTextHolder(json, "link_text", BookTextHolder.EMPTY);;
+        var linkText = BookGsonHelper.getAsBookTextHolder(json, "link_text", BookTextHolder.EMPTY, provider);
         return new BookLinkPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, url, linkText);
     }
 
-    public static BookLinkPage fromNetwork(PacketByteBuf buffer) {
+    public static BookLinkPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
         var useMarkdownInTitle = buffer.readBoolean();
         var showTitleSeparator = buffer.readBoolean();
@@ -73,7 +74,7 @@ public class BookLinkPage extends BookTextPage {
     }
 
     @Override
-    public void toNetwork(PacketByteBuf buffer) {
+    public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
         buffer.writeString(url);
         this.linkText.toNetwork(buffer);

@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.recipe.enchantment_upgrade.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -29,8 +30,9 @@ public class BookEnchanterUpgradingPageRenderer extends BookGatedRecipePageRende
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, EnchantmentUpgradeRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<EnchantmentUpgradeRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        EnchantmentUpgradeRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

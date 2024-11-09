@@ -11,8 +11,10 @@ import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -42,8 +44,9 @@ public class BookTitrationBarrelFermentingPageRenderer extends BookGatedRecipePa
     }
 
     @Override
-    protected void drawRecipe(DrawContext drawContext, TitrationBarrelRecipe recipe, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
-        World world = parentScreen.getMinecraft().world;
+    protected void drawRecipe(DrawContext drawContext, RecipeEntry<TitrationBarrelRecipe> recipeEntry, int recipeX, int recipeY, int mouseX, int mouseY, boolean second) {
+        TitrationBarrelRecipe recipe = recipeEntry.value();
+        World world = MinecraftClient.getInstance().world;
         if (world == null) return;
 
         RenderSystem.enableBlend();

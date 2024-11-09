@@ -6,16 +6,18 @@ import com.klikli_dev.modonomicon.book.conditions.BookCondition;
 import com.klikli_dev.modonomicon.book.conditions.BookNoneCondition;
 import com.klikli_dev.modonomicon.book.page.BookSpotlightPage;
 import com.klikli_dev.modonomicon.util.BookGsonHelper;
+import com.mojang.datafixers.util.Either;
 import de.dafuqs.spectrum.compat.modonomicon.ModonomiconCompat;
 import de.dafuqs.spectrum.helpers.NbtHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -27,23 +29,23 @@ import java.util.List;
 public class BookNbtSpotlightPage extends BookSpotlightPage {
 
     public BookNbtSpotlightPage(BookTextHolder title, BookTextHolder text, Ingredient item, String anchor, BookCondition condition) {
-        super(title, text, item, anchor, condition);
+        super(title, text, Either.right(item), anchor, condition);
     }
 
-    public static BookNbtSpotlightPage fromJson(JsonObject json) {
-        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY);
+    public static BookNbtSpotlightPage fromJson(Identifier entryId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
+        var title = BookGsonHelper.getAsBookTextHolder(json, "title", BookTextHolder.EMPTY, provider);
         var item = getAsIngredientWithNbt(JsonHelper.getObject(json, "item"));
-        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY);
+        var text = BookGsonHelper.getAsBookTextHolder(json, "text", BookTextHolder.EMPTY, provider);
         var anchor = JsonHelper.getString(json, "anchor", "");
         var condition = json.has("condition")
-                ? BookCondition.fromJson(json.getAsJsonObject("condition"))
+                ? BookCondition.fromJson(entryId, json.getAsJsonObject("condition"), provider)
                 : new BookNoneCondition();
         return new BookNbtSpotlightPage(title, text, item, anchor, condition);
     }
 
-    public static BookNbtSpotlightPage fromNetwork(PacketByteBuf buffer) {
+    public static BookNbtSpotlightPage fromNetwork(RegistryByteBuf buffer) {
         var title = BookTextHolder.fromNetwork(buffer);
-        var item = Ingredient.fromPacket(buffer);
+        var item = Ingredient.PACKET_CODEC.decode(buffer);
         var text = BookTextHolder.fromNetwork(buffer);
         var anchor = buffer.readString();
         var condition = BookCondition.fromNetwork(buffer);
