@@ -31,7 +31,7 @@ public class DynamicParticleEffectAlwaysShow extends DynamicParticleEffect {
 		public DynamicParticleEffectAlwaysShow read(ParticleType<DynamicParticleEffectAlwaysShow> particleType, StringReader stringReader) throws CommandSyntaxException {
 			Vector3f color = AbstractDustParticleEffect.readColor(stringReader);
 			stringReader.expect(' ');
-			Identifier textureIdentifier = new Identifier(stringReader.readString());
+			Identifier textureIdentifier = Identifier.of(stringReader.readString());
 			stringReader.expect(' ');
 			float scale = stringReader.readFloat();
 			stringReader.expect(' ');

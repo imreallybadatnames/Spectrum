@@ -165,7 +165,7 @@ public interface InkStorage extends Clearable {
 		Map<InkColor, Long> energy = new HashMap<>();
 		if (compound != null) {
 			for (String key : compound.getKeys()) {
-				InkColor inkColor = SpectrumRegistries.INK_COLORS.get(new Identifier(key));
+				InkColor inkColor = SpectrumRegistries.INK_COLORS.get(Identifier.of(key));
 				long amount = compound.getLong(key);
 				energy.put(inkColor, amount);
 			}

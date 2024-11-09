@@ -46,7 +46,7 @@ public class InkColor {
 	}
 	
 	public static Optional<InkColor> ofIdString(String idString) {
-		return SpectrumRegistries.INK_COLORS.getOrEmpty(new Identifier(idString));
+		return SpectrumRegistries.INK_COLORS.getOrEmpty(Identifier.of(idString));
 	}
 	
 	public DyeColor getDyeColor() {
@@ -113,6 +113,3 @@ public class InkColor {
 	}
 	
 }
-
-
-

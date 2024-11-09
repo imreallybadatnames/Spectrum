@@ -89,7 +89,7 @@ public class RandomChanceWithTreasureHunterLootCondition implements LootConditio
 		public RandomChanceWithTreasureHunterLootCondition fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext) {
 			return new RandomChanceWithTreasureHunterLootCondition(
 					JsonHelper.getFloat(jsonObject, "chance"),
-					Registries.ITEM.get(new Identifier(JsonHelper.getString(jsonObject, "advancement_trigger_itemstack")))
+					Registries.ITEM.get(Identifier.of(JsonHelper.getString(jsonObject, "advancement_trigger_itemstack")))
 			);
 		}
 	}

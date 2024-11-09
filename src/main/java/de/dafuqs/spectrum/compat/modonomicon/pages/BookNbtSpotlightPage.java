@@ -58,7 +58,7 @@ public class BookNbtSpotlightPage extends BookSpotlightPage {
         }
 
         if (item.has("tag")) {
-            Identifier identifier = new Identifier(JsonHelper.getString(item, "tag"));
+            Identifier identifier = Identifier.of(JsonHelper.getString(item, "tag"));
             TagKey<Item> key = TagKey.of(RegistryKeys.ITEM, identifier);
 
             for (RegistryEntry<Item> entry : Registries.ITEM.iterateEntries(key)) {

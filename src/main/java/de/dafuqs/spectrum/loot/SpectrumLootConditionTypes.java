@@ -10,7 +10,7 @@ public class SpectrumLootConditionTypes {
     public static LootConditionType RANDOM_CHANCE_WITH_TREASURE_HUNTER;
 
     private static LootConditionType register(String id, JsonSerializer<? extends LootCondition> serializer) {
-		return Registry.register(Registries.LOOT_CONDITION_TYPE, new Identifier(id), new LootConditionType(serializer));
+		return Registry.register(Registries.LOOT_CONDITION_TYPE, Identifier.of(id), new LootConditionType(serializer));
     }
 
     public static void register() {

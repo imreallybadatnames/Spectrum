@@ -266,7 +266,7 @@ public class SpectrumS2CPacketSender {
 	
 	public static void sendCancelBlockBoundSoundInstance(@NotNull ServerWorld world, BlockPos blockPos) {
 		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeIdentifier(new Identifier("stop"));
+		buf.writeIdentifier(Identifier.of("stop"));
 		buf.writeIdentifier(Registries.BLOCK.getId(world.getBlockState(blockPos).getBlock()));
 		buf.writeBlockPos(blockPos);
 		buf.writeInt(1);

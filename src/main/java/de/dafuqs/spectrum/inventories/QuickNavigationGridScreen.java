@@ -22,7 +22,7 @@ import java.util.*;
 public class QuickNavigationGridScreen<T extends ScreenHandler> extends HandledScreen<T> {
 	
 	public static final int TEXT_COLOR = 0xEEEEEE;
-	public static final Identifier BACKGROUND = new Identifier(SpectrumCommon.MOD_ID, "textures/gui/quick_navigation.png");
+	public static final Identifier BACKGROUND = Identifier.of(SpectrumCommon.MOD_ID, "textures/gui/quick_navigation.png");
 	
 	protected static final Text CONTROLS_TEXT_1 = Text.translatable("gui.spectrum.quick_navigation.controls1");
 	protected static final Text CONTROLS_TEXT_2 = Text.translatable("gui.spectrum.quick_navigation.controls2");

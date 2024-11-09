@@ -58,7 +58,7 @@ public class SpectrumCommon implements ModInitializer {
 	}
 	
 	public static Identifier locate(String name) {
-		return new Identifier(MOD_ID, name);
+		return Identifier.of(MOD_ID, name);
 	}
 	
 	// Will be null when playing on a dedicated server!

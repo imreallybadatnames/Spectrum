@@ -23,7 +23,7 @@ public class CompletedMultiblockCriterion extends AbstractCriterion<CompletedMul
 	
 	@Override
 	public CompletedMultiblockCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		Identifier identifier = new Identifier(JsonHelper.getString(jsonObject, "multiblock_identifier"));
+		Identifier identifier = Identifier.of(JsonHelper.getString(jsonObject, "multiblock_identifier"));
 		return new CompletedMultiblockCriterion.Conditions(extended, identifier);
 	}
 	

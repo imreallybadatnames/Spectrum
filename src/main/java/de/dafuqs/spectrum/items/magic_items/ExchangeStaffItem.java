@@ -77,7 +77,7 @@ public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnch
 		NbtCompound compound = exchangeStaffItemStack.getOrCreateNbt();
 		if (compound.contains("TargetBlock")) {
 			String targetBlockString = compound.getString("TargetBlock");
-			Block targetBlock = Registries.BLOCK.get(new Identifier(targetBlockString));
+			Block targetBlock = Registries.BLOCK.get(Identifier.of(targetBlockString));
 			if (targetBlock != Blocks.AIR) {
 				return Optional.of(targetBlock);
 			}

@@ -70,7 +70,7 @@ public class CrystallarieumRecipeSerializer implements GatedRecipeSerializer<Cry
 		if (jsonObject.has("additional_recipe_manager_outputs")) {
 			JsonArray additionalOutputArray = JsonHelper.getArray(jsonObject, "additional_recipe_manager_outputs");
 			for (JsonElement jsonElement : additionalOutputArray) {
-				Identifier additionalOutputItemIdentifier = new Identifier(jsonElement.getAsString());
+				Identifier additionalOutputItemIdentifier = Identifier.of(jsonElement.getAsString());
 				ItemStack itemStack = new ItemStack(Registries.ITEM.getOrEmpty(additionalOutputItemIdentifier).orElseThrow(() -> new IllegalStateException("Item: " + additionalOutputItemIdentifier + " does not exist")));
 				additionalOutputs.add(itemStack);
 			}

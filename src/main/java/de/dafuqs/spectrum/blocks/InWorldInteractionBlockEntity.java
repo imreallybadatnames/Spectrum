@@ -62,7 +62,7 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 	
 	protected boolean deserializeLootTable(NbtCompound nbt) {
 		if (nbt.contains("LootTable", NbtElement.STRING_TYPE)) {
-			this.lootTableId = new Identifier(nbt.getString("LootTable"));
+			this.lootTableId = Identifier.of(nbt.getString("LootTable"));
 			this.lootTableSeed = nbt.getLong("LootTableSeed");
 			return true;
 		}

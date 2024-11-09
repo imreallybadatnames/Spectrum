@@ -11,7 +11,7 @@ import net.minecraft.util.*;
 @Environment(EnvType.CLIENT)
 public class TropicalFishHeadModel extends SpectrumSkullModel {
 	
-	private static final Identifier PATTERN_TEXTURE = new Identifier("textures/entity/fish/tropical_a_pattern_1.png");
+	private static final Identifier PATTERN_TEXTURE = Identifier.of("textures/entity/fish/tropical_a_pattern_1.png");
 	protected final ModelPart pattern;
 	
 	public TropicalFishHeadModel(ModelPart root, ModelPart pattern) {

@@ -55,7 +55,7 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 			entityArray.forEach(entryElement -> {
 				JsonObject entryObject = entryElement.getAsJsonObject();
 				
-				EntityType<?> entityType = Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(entryObject, "id")));
+				EntityType<?> entityType = Registries.ENTITY_TYPE.get(Identifier.of(JsonHelper.getString(entryObject, "id")));
 				
 				Optional<NbtCompound> nbt = NbtHelper.getNbtCompound(entryObject.get("nbt"));
 

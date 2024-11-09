@@ -35,7 +35,7 @@ public interface GatedGuidebookPage {
 						SpectrumCommon.logWarning("Guidebook page " + entryId + "[" + pageNr + "] references advancement " + pageAdvancement + " for a recipe that does not have an unlock: " + recipeAdvId);
 						continue;
 					}
-					if (SANITY_WHITELIST.containsKey(entryId) && SANITY_WHITELIST.get(entryId).equals(new Identifier(pageAdvancement))) {
+					if (SANITY_WHITELIST.containsKey(entryId) && SANITY_WHITELIST.get(entryId).equals(Identifier.of(pageAdvancement))) {
 						continue;
 					}
 					if (!combinedAdvId.toString().equals(pageAdvancement)) {

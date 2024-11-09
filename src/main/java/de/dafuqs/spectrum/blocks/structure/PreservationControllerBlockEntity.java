@@ -123,20 +123,20 @@ public class PreservationControllerBlockEntity extends BlockEntity {
 			this.checkRange = new Vec3i(nbt.getInt("CheckRangeX"), nbt.getInt("CheckRangeY"), nbt.getInt("CheckRangeZ"));
 		}
 		if (nbt.contains("RequiredStatusEffect", NbtElement.STRING_TYPE)) {
-			StatusEffect statusEffect = Registries.STATUS_EFFECT.get(new Identifier(nbt.getString("RequiredStatusEffect")));
+			StatusEffect statusEffect = Registries.STATUS_EFFECT.get(Identifier.of(nbt.getString("RequiredStatusEffect")));
 			if (this.requiredEffect != null) {
 				this.requiredEffect = statusEffect;
 			}
 		}
 		if (nbt.contains("RequiredAdvancement", NbtElement.STRING_TYPE)) {
-			this.requiredAdvancement = new Identifier(nbt.getString("RequiredAdvancement"));
+			this.requiredAdvancement = Identifier.of(nbt.getString("RequiredAdvancement"));
 		}
 		if (nbt.contains("CheckName", NbtElement.STRING_TYPE)) {
 			this.checkName = nbt.getString("CheckName");
 		}
 		// backwards compatibility with old preservation controller nbt
 		if (nbt.contains("UnlockedAdvancement", NbtElement.STRING_TYPE)) {
-			Identifier unlockedAdvancement = new Identifier(nbt.getString("UnlockedAdvancement"));
+			Identifier unlockedAdvancement = Identifier.of(nbt.getString("UnlockedAdvancement"));
 			this.checkName = unlockedAdvancement.getPath(); // enter_color_mixing_puzzle_structure, enter_dike_gate_puzzle_structure, enter_wireless_redstone_puzzle_structure
 		}
 	}

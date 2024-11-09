@@ -137,7 +137,7 @@ public interface InkPowered {
 		if (!canUse(player)) {
 			return false;
 		}
-		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(new Identifier("malum:silenced"))))
+		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"))))
 		{
 			return false;
 		}
@@ -213,7 +213,7 @@ public interface InkPowered {
 			return false;
 		}
 
-		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(new Identifier("malum:silenced"))))
+		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"))))
 		{
 			return false;
 		}

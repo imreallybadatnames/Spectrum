@@ -11,7 +11,7 @@ import net.minecraft.util.*;
 @Environment(EnvType.CLIENT)
 public class EndermanHeadModel extends SpectrumSkullModel {
 	
-	private static final Identifier EYES_TEXTURE = new Identifier("textures/entity/enderman/enderman_eyes.png");
+	private static final Identifier EYES_TEXTURE = Identifier.of("textures/entity/enderman/enderman_eyes.png");
 	protected final ModelPart eyes;
 	
 	public EndermanHeadModel(ModelPart root, ModelPart eyes) {

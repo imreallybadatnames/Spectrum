@@ -38,9 +38,9 @@ public class EntryLinkBookEntry extends BookEntry {
 		
 		Identifier commandToRunOnFirstReadId = null;
 		if (json.has("command_to_run_on_first_read")) {
-			commandToRunOnFirstReadId = new Identifier(JsonHelper.getString(json, "command_to_run_on_first_read"));
+			commandToRunOnFirstReadId = Identifier.of(JsonHelper.getString(json, "command_to_run_on_first_read"));
 		}
-		Identifier entryToOpen = new Identifier(JsonHelper.getString(json, "entry_to_open"));
+		Identifier entryToOpen = Identifier.of(JsonHelper.getString(json, "entry_to_open"));
 		
 		return new EntryLinkBookEntry(id, data, commandToRunOnFirstReadId, entryToOpen);
 	}

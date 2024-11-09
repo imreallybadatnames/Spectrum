@@ -39,7 +39,7 @@ public class AnvilCrushingRecipeSerializer implements GatedRecipeSerializer<Anvi
 		}
 		
 		String soundEventString = JsonHelper.getString(jsonObject, "soundEventIdentifier");
-		Identifier soundEventIdentifier = new Identifier(soundEventString);
+		Identifier soundEventIdentifier = Identifier.of(soundEventString);
 		
 		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, ingredient, outputItemStack, crushedItemsPerPointOfDamage, experience, particleEffectIdentifier, particleCount, soundEventIdentifier);
 	}

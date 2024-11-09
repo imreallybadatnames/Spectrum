@@ -43,13 +43,13 @@ public class BiomePredicate {
         
         Biome biome = null;
         if (biomeObject.has("biome")) {
-            Identifier biomeId = new Identifier(JsonHelper.getString(biomeObject, "biome"));
+            Identifier biomeId = Identifier.of(JsonHelper.getString(biomeObject, "biome"));
             biome = BuiltinRegistries.createWrapperLookup().getWrapperOrThrow(RegistryKeys.BIOME).getOrThrow(RegistryKey.of(RegistryKeys.BIOME, biomeId)).value();
         }
         
         TagKey<Biome> tagKey = null;
         if (biomeObject.has("tag")) {
-            Identifier tagId = new Identifier(JsonHelper.getString(biomeObject, "tag"));
+            Identifier tagId = Identifier.of(JsonHelper.getString(biomeObject, "tag"));
             tagKey = TagKey.of(RegistryKeys.BIOME, tagId);
         }
         

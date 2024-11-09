@@ -190,7 +190,7 @@ public class SpectrumEmiPlugin implements EmiPlugin {
 	public static Identifier syntheticId(String type, Block block) {
 		Identifier blockId = Registries.BLOCK.getId(block);
 		// Note that all recipe ids here start with "spectrum:/" which is legal, but impossible to represent with real files
-		return new Identifier("spectrum:/" + type + "/" + blockId.getNamespace() + "/" + blockId.getPath());
+		return Identifier.of("spectrum:/" + type + "/" + blockId.getNamespace() + "/" + blockId.getPath());
 	}
 
 	public <C extends Inventory, T extends Recipe<C>> void addAll(EmiRegistry registry, RecipeType<T> type, Function<T, EmiRecipe> constructor) {

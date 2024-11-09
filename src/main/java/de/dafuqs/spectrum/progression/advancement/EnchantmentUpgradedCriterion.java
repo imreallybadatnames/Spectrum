@@ -25,7 +25,7 @@ public class EnchantmentUpgradedCriterion extends AbstractCriterion<EnchantmentU
 	
 	@Override
 	public EnchantmentUpgradedCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		Identifier identifier = new Identifier(JsonHelper.getString(jsonObject, "enchantment_identifier"));
+		Identifier identifier = Identifier.of(JsonHelper.getString(jsonObject, "enchantment_identifier"));
 		Enchantment enchantment = Registries.ENCHANTMENT.get(identifier);
 		NumberRange.IntRange enchantmentLevelRange = NumberRange.IntRange.fromJson(jsonObject.get("enchantment_level"));
 		NumberRange.IntRange experienceRange = NumberRange.IntRange.fromJson(jsonObject.get("spent_experience"));

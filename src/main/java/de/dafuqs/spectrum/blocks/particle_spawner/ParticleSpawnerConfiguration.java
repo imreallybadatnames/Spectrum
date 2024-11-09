@@ -144,7 +144,7 @@ public class ParticleSpawnerConfiguration {
 	}
 	
 	public static ParticleSpawnerConfiguration fromBuf(PacketByteBuf buf) {
-		Identifier particleIdentifier = new Identifier(buf.readString());
+		Identifier particleIdentifier = Identifier.of(buf.readString());
 		ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(particleIdentifier);
 		Vector3i cmyColor = new Vector3i(buf.readInt(), buf.readInt(), buf.readInt());
 		boolean glowing = buf.readBoolean();
@@ -194,7 +194,7 @@ public class ParticleSpawnerConfiguration {
 	}
 	
 	public static ParticleSpawnerConfiguration fromNbt(NbtCompound tag) {
-		ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(new Identifier(tag.getString("particle_type_identifier")));
+		ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(Identifier.of(tag.getString("particle_type_identifier")));
 		float particlesPerSecond = tag.getFloat("particles_per_tick");
 		boolean glowing = tag.getBoolean("glowing");
 		Vector3fc particleSourcePosition = new Vector3f(tag.getFloat("source_pos_x"), tag.getFloat("source_pos_y"), tag.getFloat("source_pos_z"));

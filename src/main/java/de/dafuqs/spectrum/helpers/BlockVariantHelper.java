@@ -50,7 +50,7 @@ public class BlockVariantHelper {
 		
 		Block returnBlock = Blocks.AIR;
 		if (newPath != null) {
-			Identifier newIdentifier = new Identifier(identifier.getNamespace(), newPath);
+			Identifier newIdentifier = Identifier.of(identifier.getNamespace(), newPath);
 			Block newIdentifierBlock = Registries.BLOCK.get(newIdentifier);
 			if (newIdentifierBlock != block) {
 				returnBlock = newIdentifierBlock;
@@ -116,7 +116,7 @@ public class BlockVariantHelper {
 		
 		Block returnBlock = Blocks.AIR;
 		if (!newPath.equals(identifier.getPath())) {
-			Identifier newIdentifier = new Identifier(identifier.getNamespace(), newPath);
+			Identifier newIdentifier = Identifier.of(identifier.getNamespace(), newPath);
 			Block newIdentifierBlock = Registries.BLOCK.get(newIdentifier);
 			if (newIdentifierBlock != block) {
 				returnBlock = newIdentifierBlock;

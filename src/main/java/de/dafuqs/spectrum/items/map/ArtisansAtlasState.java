@@ -49,7 +49,7 @@ public class ArtisansAtlasState extends MapState {
 		this.displayDelta = Vec3i.ZERO;
 	
 		if (nbt.contains("targetId", NbtElement.STRING_TYPE)) {
-			this.targetId = new Identifier(nbt.getString("targetId"));
+			this.targetId = Identifier.of(nbt.getString("targetId"));
 		} else {
 			this.targetId = null;
 		}

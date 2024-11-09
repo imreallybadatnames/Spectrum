@@ -30,7 +30,7 @@ public class RecipesLoadedAndUnlockedCondition extends BookCondition {
         
         JsonArray array = JsonHelper.getArray(json, "recipe_ids");
         for (JsonElement element : array) {
-            recipeIDs.add(new Identifier(element.getAsString()));
+            recipeIDs.add(Identifier.of(element.getAsString()));
         }
         Text tooltip = tooltipFromJson(json);
         return new RecipesLoadedAndUnlockedCondition(tooltip, recipeIDs);

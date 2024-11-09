@@ -20,7 +20,7 @@ public interface GatedRecipeSerializer<T extends Recipe<?>> extends RecipeSerial
 	
 	default Identifier readRequiredAdvancementIdentifier(JsonObject jsonObject) {
 		if (JsonHelper.hasString(jsonObject, "required_advancement")) {
-			return new Identifier(JsonHelper.getString(jsonObject, "required_advancement"));
+			return Identifier.of(JsonHelper.getString(jsonObject, "required_advancement"));
 		}
 		return null;
 	}

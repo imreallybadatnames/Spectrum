@@ -18,7 +18,7 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 	@Nullable
 	private static Block getBlock(JsonObject obj, String propertyName) {
 		if (obj.has(propertyName)) {
-			Identifier identifier = new Identifier(JsonHelper.getString(obj, propertyName));
+			Identifier identifier = Identifier.of(JsonHelper.getString(obj, propertyName));
 			return Registries.BLOCK.getOrEmpty(identifier).orElseThrow(() -> new JsonSyntaxException("Unknown block type '" + identifier + "'"));
 		} else {
 			return null;

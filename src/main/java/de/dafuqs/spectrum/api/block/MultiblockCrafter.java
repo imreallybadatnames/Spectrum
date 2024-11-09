@@ -25,7 +25,7 @@ public interface MultiblockCrafter extends Upgradeable, PlayerOwned {
 			if (!recipeString.isEmpty()) {
 				Optional<RecipeManager> recipeManager = SpectrumCommon.getRecipeManager(world);
 				if (recipeManager.isPresent()) {
-					Recipe<?> r = recipeManager.get().get(new Identifier(recipeString)).get();
+					Recipe<?> r = recipeManager.get().get(Identifier.of(recipeString)).get();
 					if (recipeClass.isInstance(r)) {
 						return (T) r;
 					}

@@ -14,14 +14,15 @@ import net.minecraft.client.util.math.*;
 import net.minecraft.entity.decoration.*;
 import net.minecraft.item.*;
 import net.minecraft.item.map.*;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 
 public class PhantomFrameEntityRenderer<T extends ItemFrameEntity> extends ItemFrameEntityRenderer<PhantomFrameEntity> {
 
-	public static final ModelIdentifier NORMAL_FRAME_MODEL_IDENTIFIER = ModelIdentifier.ofVanilla("item_frame", "map=false");
-	public static final ModelIdentifier MAP_FRAME_MODEL_IDENTIFIER = ModelIdentifier.ofVanilla("item_frame", "map=true");
-	public static final ModelIdentifier GLOW_FRAME_MODEL_IDENTIFIER = ModelIdentifier.ofVanilla("glow_item_frame", "map=false");
-	public static final ModelIdentifier MAP_GLOW_FRAME_MODEL_IDENTIFIER = ModelIdentifier.ofVanilla("glow_item_frame", "map=true");
+	public static final ModelIdentifier NORMAL_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("item_frame"), "map=false");
+	public static final ModelIdentifier MAP_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("item_frame"), "map=true");
+	public static final ModelIdentifier GLOW_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("glow_item_frame"), "map=false");
+	public static final ModelIdentifier MAP_GLOW_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("glow_item_frame"), "map=true");
 
 	private final MinecraftClient client = MinecraftClient.getInstance();
 	private final ItemRenderer itemRenderer;

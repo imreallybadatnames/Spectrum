@@ -36,7 +36,7 @@ public class SpectrumItemTags {
 	}
 	
 	private static TagKey<Item> common(String id) {
-		return TagKey.of(RegistryKeys.ITEM, new Identifier("c", id));
+		return TagKey.of(RegistryKeys.ITEM, Identifier.of("c", id));
 	}
 	
 }

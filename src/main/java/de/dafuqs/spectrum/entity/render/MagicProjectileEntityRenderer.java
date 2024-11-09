@@ -13,7 +13,7 @@ import org.joml.*;
 
 public class MagicProjectileEntityRenderer extends EntityRenderer<MagicProjectileEntity> {
 
-	private static final Identifier TEXTURE = new Identifier("textures/entity/experience_orb.png");
+	private static final Identifier TEXTURE = Identifier.of("textures/entity/experience_orb.png");
 	private static final RenderLayer LAYER = RenderLayer.getItemEntityTranslucentCull(TEXTURE);
 
 	public MagicProjectileEntityRenderer(EntityRendererFactory.Context context) {

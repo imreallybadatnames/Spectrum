@@ -85,7 +85,7 @@ public class SpectrumBlockTags {
 	}
 	
 	private static TagKey<Block> common(String id) {
-		return TagKey.of(RegistryKeys.BLOCK, new Identifier("c", id));
+		return TagKey.of(RegistryKeys.BLOCK, Identifier.of("c", id));
 	}
 
 }

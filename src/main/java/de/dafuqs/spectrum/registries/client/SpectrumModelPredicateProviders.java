@@ -87,35 +87,35 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerNullableDyeColorPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("color"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("color"), (itemStack, clientWorld, livingEntity, i) -> {
 			NullableDyeColor color = NullableDyeColor.get(itemStack.getNbt());
 			return color.getId() / 16F;
 		});
 	}
 	
 	private static void registerMysteriousLocketPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("socketed"), (itemStack, clientWorld, livingEntity, i) -> MysteriousLocketItem.isSocketed(itemStack) ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (itemStack, clientWorld, livingEntity, i) -> MysteriousLocketItem.isSocketed(itemStack) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerStructureCompassPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> StructureCompassItem.getStructurePos(stack)));
+		ModelPredicateProviderRegistry.register(item, Identifier.of("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> StructureCompassItem.getStructurePos(stack)));
 	}
 	
 	private static void registerMalachiteCrossbowPredicates(Item crossbowItem) {
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("pull"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (itemStack, clientWorld, livingEntity, i) -> {
 			if (livingEntity == null) {
 				return 0.0F;
 			} else {
 				return CrossbowItem.isCharged(itemStack) ? 0.0F : (float) (itemStack.getMaxUseTime() - livingEntity.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(itemStack);
 			}
 		});
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("pulling"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pulling"), (itemStack, clientWorld, livingEntity, i) ->
 				livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack && !CrossbowItem.isCharged(itemStack) ? 1.0F : 0.0F
 		);
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("charged"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("charged"), (itemStack, clientWorld, livingEntity, i) ->
 				livingEntity != null && CrossbowItem.isCharged(itemStack) ? 1.0F : 0.0F
 		);
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("projectile"), (itemStack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("projectile"), (itemStack, world, entity, seed) -> {
 			if (itemStack == null) {
 				return 0F;
 			}
@@ -150,7 +150,7 @@ public class SpectrumModelPredicateProviders {
 	 * 1.0: as projectile
 	 */
 	private static void registerBidentThrowingItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("bident_throwing"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("bident_throwing"), (itemStack, clientWorld, livingEntity, i) -> {
 			/* I believe this is unused now... nothing noticeable seems to have happened, but I would prefer to be safe than sorry.
 			if (currentItemRenderMode == ModelTransformationMode.NONE) {
 				if (itemStack.getItem() instanceof FractalBidentItem fractal) {
@@ -163,14 +163,14 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerColorPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("color"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("color"), (itemStack, clientWorld, livingEntity, i) -> {
 			Optional<InkColor> color = PaintbrushItem.getColor(itemStack);
 			return color.map(inkColor -> (1F + inkColor.getDyeColor().getId()) / 100F).orElse(0.0F);
 		});
 	}
 	
 	private static void registerPresentPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("variant"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("variant"), (itemStack, clientWorld, livingEntity, i) -> {
 			NbtCompound compound = itemStack.getNbt();
 			if (compound == null || !compound.contains("Variant", NbtElement.STRING_TYPE))
 				return 0.0F;
@@ -181,13 +181,13 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerBottomlessBundlePredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("locked"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("locked"), (itemStack, clientWorld, livingEntity, i) -> {
 			NbtCompound compound = itemStack.getNbt();
 			if (compound == null)
 				return 0.0F;
 			return compound.contains("Locked") ? 1.0F : 0.0F;
 		});
-		ModelPredicateProviderRegistry.register(SpectrumItems.BOTTOMLESS_BUNDLE, new Identifier("filled"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(SpectrumItems.BOTTOMLESS_BUNDLE, Identifier.of("filled"), (itemStack, clientWorld, livingEntity, i) -> {
 			NbtCompound compound = itemStack.getNbt();
 			if (compound == null)
 				return 0.0F;
@@ -196,7 +196,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerMoonPhasePredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("phase"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("phase"), (itemStack, clientWorld, livingEntity, i) -> {
 			Entity entity = livingEntity != null ? livingEntity : itemStack.getHolder();
 			if (entity == null) {
 				return 0.0F;
@@ -218,7 +218,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerActivatableItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier(ActivatableItem.NBT_STRING), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of(ActivatableItem.NBT_STRING), (itemStack, clientWorld, livingEntity, i) -> {
 			if (ActivatableItem.isActivated(itemStack)) {
 				return 1.0F;
 			} else {
@@ -228,7 +228,7 @@ public class SpectrumModelPredicateProviders {
 	}
 
 	private static void registerStampingItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("stamped"), ((stack, world, entity, seed) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("stamped"), ((stack, world, entity, seed) -> {
 			var nbt = stack.getOrCreateNbt();
 			if (nbt.contains(Stampable.STAMPING_DATA_TAG))
 				return 1F;
@@ -238,7 +238,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerSlotReservingItem(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier(SlotReservingItem.NBT_STRING), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of(SlotReservingItem.NBT_STRING), (itemStack, clientWorld, livingEntity, i) -> {
 			if (itemStack.getItem() instanceof SlotReservingItem reserver && reserver.isReservingSlot(itemStack)) {
 				return 1.0F;
 			} else {
@@ -248,22 +248,22 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerOversizedItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("oversized"), (itemStack, world, livingEntity, seed) -> seed == 817210941 ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, Identifier.of("oversized"), (itemStack, world, livingEntity, seed) -> seed == 817210941 ? 1.0F : 0.0F);
 	}
 	
 	private static void registerBowPredicates(Item bowItem) {
-		ModelPredicateProviderRegistry.register(bowItem, new Identifier("pull"), (itemStack, world, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pull"), (itemStack, world, livingEntity, i) -> {
 			if (livingEntity == null) {
 				return 0.0F;
 			} else {
 				return livingEntity.getActiveItem() != itemStack ? 0.0F : (float) (itemStack.getMaxUseTime() - livingEntity.getItemUseTimeLeft()) / 20.0F;
 			}
 		});
-		ModelPredicateProviderRegistry.register(bowItem, new Identifier("pulling"), (itemStack, clientWorld, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pulling"), (itemStack, clientWorld, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F);
 	}
 	
 	private static void registerCrossbowPredicates(Item crossbowItem) {
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("pull"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (itemStack, clientWorld, livingEntity, i) -> {
 			if (livingEntity == null) {
 				return 0.0F;
 			} else {
@@ -271,25 +271,25 @@ public class SpectrumModelPredicateProviders {
 			}
 		});
 		
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("pulling"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pulling"), (itemStack, clientWorld, livingEntity, i) ->
 				livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack && !CrossbowItem.isCharged(itemStack) ? 1.0F : 0.0F
 		);
 		
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("charged"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("charged"), (itemStack, clientWorld, livingEntity, i) ->
 				livingEntity != null && CrossbowItem.isCharged(itemStack) ? 1.0F : 0.0F
 		);
 		
-		ModelPredicateProviderRegistry.register(crossbowItem, new Identifier("firework"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("firework"), (itemStack, clientWorld, livingEntity, i) ->
 				livingEntity != null && CrossbowItem.isCharged(itemStack) && CrossbowItem.hasProjectile(itemStack, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F
 		);
 	}
 
 	private static void registerPipeBombPredicates(Item pipeBombItem) {
-		ModelPredicateProviderRegistry.register(pipeBombItem, new Identifier("armed"), (stack, world, entity, seed) -> PipeBombItem.isArmed(stack) ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(pipeBombItem, Identifier.of("armed"), (stack, world, entity, seed) -> PipeBombItem.isArmed(stack) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerSpectrumFishingRodItemPredicates(Item fishingRodItem) {
-		ModelPredicateProviderRegistry.register(fishingRodItem, new Identifier("cast"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(fishingRodItem, Identifier.of("cast"), (itemStack, clientWorld, livingEntity, i) -> {
 			if (livingEntity == null) {
 				return 0.0F;
 			} else {
@@ -304,7 +304,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerEnderSplicePredicates(Item enderSpliceItem) {
-		ModelPredicateProviderRegistry.register(enderSpliceItem, new Identifier("bound"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(enderSpliceItem, Identifier.of("bound"), (itemStack, clientWorld, livingEntity, i) -> {
 			NbtCompound compoundTag = itemStack.getNbt();
 			if (compoundTag != null && (compoundTag.contains("PosX") || compoundTag.contains("TargetPlayerUUID"))) {
 				return 1.0F;
@@ -315,7 +315,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerAshenCircletPredicates(Item ashenCircletItem) {
-		ModelPredicateProviderRegistry.register(ashenCircletItem, new Identifier("cooldown"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(ashenCircletItem, Identifier.of("cooldown"), (itemStack, clientWorld, livingEntity, i) -> {
 			if (livingEntity != null && AshenCircletItem.getCooldownTicks(itemStack, livingEntity.getWorld()) == 0) {
 				return 0.0F;
 			} else {
@@ -325,13 +325,13 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerAnimatedWandPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("in_use"), (itemStack, clientWorld, livingEntity, i) ->
+		ModelPredicateProviderRegistry.register(item, Identifier.of("in_use"), (itemStack, clientWorld, livingEntity, i) ->
 				(livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack) ? 1.0F : 0.0F
 		);
 	}
 	
 	private static void registerKnowledgeDropPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("stored_experience_10000"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("stored_experience_10000"), (itemStack, clientWorld, livingEntity, i) -> {
 			if (SpectrumItems.KNOWLEDGE_GEM instanceof ExperienceStorageItem) {
 				return ExperienceStorageItem.getStoredExperience(itemStack) / 10000F;
 			} else {
@@ -341,7 +341,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerInkColorPredicate(InkFlaskItem item) {
-		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, new Identifier("color"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, Identifier.of("color"), (itemStack, clientWorld, livingEntity, i) -> {
 			SingleInkStorage storage = SpectrumItems.INK_FLASK.getEnergyStorage(itemStack);
 			InkColor color = storage.getStoredColor();
 			
@@ -353,7 +353,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerInkFillStateItemPredicate(InkFlaskItem item) {
-		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, new Identifier("fill_state"), (itemStack, world, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, Identifier.of("fill_state"), (itemStack, world, livingEntity, i) -> {
 			SingleInkStorage storage = SpectrumItems.INK_FLASK.getEnergyStorage(itemStack);
 			long current = storage.getCurrentTotal();
 			if (current == 0) {
@@ -366,7 +366,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerEnchantmentCanvasPrediates(Item item) {
-		ModelPredicateProviderRegistry.register(item, new Identifier("bound"), (itemStack, world, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("bound"), (itemStack, world, livingEntity, i) -> {
 			NbtCompound nbt = itemStack.getNbt();
 			if (nbt != null && nbt.contains("BoundItem", NbtElement.STRING_TYPE)) {
 				return 1;

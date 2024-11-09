@@ -134,7 +134,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 		NbtCompound storedItemCompound = nbtCompound.getCompound("StoredStack");
 
 		int storedAmount = storedItemCompound.getInt("Count");
-		ItemStack itemStack = new ItemStack(Registries.ITEM.get(new Identifier(storedItemCompound.getString("ID"))));
+		ItemStack itemStack = new ItemStack(Registries.ITEM.get(Identifier.of(storedItemCompound.getString("ID"))));
 		int stackAmount = Math.min(storedAmount, itemStack.getMaxCount());
 		itemStack.setCount(stackAmount);
 

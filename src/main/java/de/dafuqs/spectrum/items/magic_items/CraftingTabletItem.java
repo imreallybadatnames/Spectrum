@@ -54,7 +54,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 			
 			if (nbtCompound != null && nbtCompound.contains("recipe")) {
 				String recipeString = nbtCompound.getString("recipe");
-				Identifier recipeIdentifier = new Identifier(recipeString);
+				Identifier recipeIdentifier = Identifier.of(recipeString);
 				
 				Optional<? extends Recipe<?>> optional = world.getRecipeManager().get(recipeIdentifier);
 				if (optional.isPresent()) {

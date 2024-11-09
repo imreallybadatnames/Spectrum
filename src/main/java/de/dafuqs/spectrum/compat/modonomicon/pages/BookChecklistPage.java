@@ -36,7 +36,7 @@ public class BookChecklistPage extends BookTextPage {
         Map<Identifier, BookTextHolder> checklist = new LinkedHashMap<>();
         for (var key : checklistObject.keySet()) {
             var value = BookGsonHelper.getAsBookTextHolder(checklistObject, key, BookTextHolder.EMPTY);
-            checklist.put(new Identifier(key), value);
+            checklist.put(Identifier.of(key), value);
         }
         return new BookChecklistPage(title, text, useMarkdownInTitle, showTitleSeparator, anchor, condition, checklist);
     }

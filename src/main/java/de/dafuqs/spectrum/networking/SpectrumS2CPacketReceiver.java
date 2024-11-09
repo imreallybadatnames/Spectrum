@@ -428,7 +428,7 @@ public class SpectrumS2CPacketReceiver {
 
 		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.SYNC_ARTISANS_ATLAS, (client, handler, buf, responseSender) -> {
 			String targetIdStr = buf.readString();
-			Identifier targetId = targetIdStr.length() == 0 ? null : new Identifier(targetIdStr);
+			Identifier targetId = targetIdStr.length() == 0 ? null : Identifier.of(targetIdStr);
 
 			MapUpdateS2CPacket packet = new MapUpdateS2CPacket(buf);
 

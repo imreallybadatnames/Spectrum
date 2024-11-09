@@ -25,7 +25,7 @@ public class EnchantmentRegisteredCondition extends BookCondition {
     }
     
     public static EnchantmentRegisteredCondition fromJson(JsonObject json) {
-        Identifier enchantmentID = new Identifier(JsonHelper.getString(json, "enchantment_id"));
+        Identifier enchantmentID = Identifier.of(JsonHelper.getString(json, "enchantment_id"));
         Text tooltip = tooltipFromJson(json);
         return new EnchantmentRegisteredCondition(tooltip, enchantmentID);
     }

@@ -206,7 +206,7 @@ public class SpectrumEnchantmentHelper {
 		for (int i = 0; i < enchantmentList.size(); i++) {
 			NbtCompound currentCompound = enchantmentList.getCompound(i);
 			if (currentCompound.contains("id", NbtElement.STRING_TYPE)) {
-				Identifier currentID = new Identifier(currentCompound.getString("id"));
+				Identifier currentID = Identifier.of(currentCompound.getString("id"));
 				if(enchantIDs.contains(currentID)) {
 					enchantmentList.remove(i);
 					removals++;

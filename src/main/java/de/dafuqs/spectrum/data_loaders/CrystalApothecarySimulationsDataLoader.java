@@ -45,7 +45,7 @@ public class CrystalApothecarySimulationsDataLoader extends JsonDataLoader imple
 			for (JsonElement entry : object.get("valid_neighbor_blocks").getAsJsonArray()) {
 				Identifier validNeighborBlockId = Identifier.tryParse(entry.getAsString());
 				Block validNeighborBlock = Registries.BLOCK.get(validNeighborBlockId);
-				if (validNeighborBlock == Blocks.AIR && !validNeighborBlockId.equals(new Identifier("air"))) {
+				if (validNeighborBlock == Blocks.AIR && !validNeighborBlockId.equals(Identifier.of("air"))) {
 					SpectrumCommon.logError("Crystal Apothecary Simulation '" + identifier + "' has a non-existant 'valid_neighbor_block' entry: '" + validNeighborBlockId + "'. Ignoring that one.");
 				} else {
 					validNeighbors.add(validNeighborBlock);

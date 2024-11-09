@@ -43,7 +43,7 @@ public class BrokenBlockPredicate {
 				com.google.common.collect.ImmutableSet.Builder<Block> builder = ImmutableSet.builder();
 				
 				for (JsonElement jsonElement : jsonArray) {
-					Identifier identifier = new Identifier(JsonHelper.asString(jsonElement, "block"));
+					Identifier identifier = Identifier.of(JsonHelper.asString(jsonElement, "block"));
 					builder.add(Registries.BLOCK.getOrEmpty(identifier).orElseThrow(() ->
 						new JsonSyntaxException("Unknown block id '" + identifier + "'")
 					));
@@ -54,7 +54,7 @@ public class BrokenBlockPredicate {
 			
 			TagKey<Block> tag = null;
 			if (jsonObject.has("tag")) {
-				Identifier identifier2 = new Identifier(JsonHelper.getString(jsonObject, "tag"));
+				Identifier identifier2 = Identifier.of(JsonHelper.getString(jsonObject, "tag"));
 				tag = TagKey.of(RegistryKeys.BLOCK, identifier2);
 			}
 			
