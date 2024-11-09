@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 import com.klikli_dev.modonomicon.book.BookTextHolder;
 import com.klikli_dev.modonomicon.book.page.BookTextPage;
 import com.klikli_dev.modonomicon.client.gui.BookGuiManager;
-import com.klikli_dev.modonomicon.client.gui.book.BookContentScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.BookTextPageRenderer;
 import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
 import de.dafuqs.spectrum.compat.modonomicon.pages.BookConfirmationButtonPage;
@@ -22,7 +22,7 @@ public class BookConfirmationButtonPageRenderer extends BookTextPageRenderer {
     }
 
     @Override
-    public void onBeginDisplayPage(BookContentScreen parentScreen, int left, int top) {
+    public void onBeginDisplayPage(BookEntryScreen parentScreen, int left, int top) {
         if (!(page instanceof BookConfirmationButtonPage confirmationPage)) return;
         super.onBeginDisplayPage(parentScreen, left, top);
 
@@ -33,8 +33,8 @@ public class BookConfirmationButtonPageRenderer extends BookTextPageRenderer {
                 : confirmationPage.getButtonText();
 
         ButtonWidget button = ButtonWidget.builder(buttonText.getComponent(), this::confirmationButtonClicked)
-                .size(BookContentScreen.PAGE_WIDTH - 12, ButtonWidget.DEFAULT_HEIGHT)
-                .position(2, BookContentScreen.PAGE_HEIGHT - 3)
+                .size(BookEntryScreen.PAGE_WIDTH - 12, ButtonWidget.DEFAULT_HEIGHT)
+                .position(2, BookEntryScreen.PAGE_HEIGHT - 3)
                 .build();
 
         button.active = !completed;

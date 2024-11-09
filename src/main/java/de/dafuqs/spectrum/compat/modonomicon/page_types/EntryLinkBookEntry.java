@@ -5,6 +5,7 @@ import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.book.entries.*;
 import com.klikli_dev.modonomicon.book.error.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import net.minecraft.network.*;
 import net.minecraft.util.*;
@@ -80,7 +81,7 @@ public class EntryLinkBookEntry extends BookEntry {
 		return this.entryToOpen;
 	}
 	
-	public BookContentScreen openEntry(BookCategoryScreen categoryScreen) {
+	public BookEntryScreen openEntry(BookCategoryScreen categoryScreen) {
 		categoryScreen.openEntry(getEntryToOpen());
 		return null;
 	}

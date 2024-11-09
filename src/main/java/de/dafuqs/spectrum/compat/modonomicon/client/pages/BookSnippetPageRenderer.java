@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.gui.book.markdown.*;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import com.mojang.blaze3d.systems.*;
@@ -19,20 +20,20 @@ public class BookSnippetPageRenderer extends BookPageRenderer<BookSnippetPage> i
     @Override
     public void render(DrawContext drawContext, int mouseX, int mouseY, float ticks) {
         if (page.hasTitle()) {
-            renderTitle(drawContext, page.getTitle(), page.showTitleSeparator(), BookContentScreen.PAGE_WIDTH / 2, 0);
+            renderTitle(drawContext, page.getTitle(), page.showTitleSeparator(), BookEntryScreen.PAGE_WIDTH / 2, 0);
         }
 
         if (page.getText() instanceof RenderedBookTextHolder renderedText) {
             int y = getTextY();
             for (MutableText component : renderedText.getRenderedText()) {
-                var wrapped = MarkdownComponentRenderUtils.wrapComponents(component, BookContentScreen.PAGE_WIDTH - 10, BookContentScreen.PAGE_WIDTH - 10, font);
+                var wrapped = MarkdownComponentRenderUtils.wrapComponents(component, BookEntryScreen.PAGE_WIDTH - 10, BookEntryScreen.PAGE_WIDTH - 10, font);
                 for (OrderedText orderedText : wrapped) {
-                    drawCenteredStringNoShadow(drawContext, orderedText, page.getBook().getBookTextOffsetWidth() + BookContentScreen.PAGE_WIDTH / 2, y, 0, 1);
+                    drawCenteredStringNoShadow(drawContext, orderedText, page.getBook().getBookTextOffsetWidth() + BookEntryScreen.PAGE_WIDTH / 2, y, 0, 1);
                     y += font.fontHeight;
                 }
             }
         } else {
-            drawCenteredStringNoShadow(drawContext, page.getText().getComponent().asOrderedText(), BookContentScreen.PAGE_WIDTH / 2, getTextY(), 0, 1);
+            drawCenteredStringNoShadow(drawContext, page.getText().getComponent().asOrderedText(), BookEntryScreen.PAGE_WIDTH / 2, getTextY(), 0, 1);
         }
 
         RenderSystem.enableBlend();
@@ -51,13 +52,13 @@ public class BookSnippetPageRenderer extends BookPageRenderer<BookSnippetPage> i
     public Style getClickedComponentStyleAt(double pMouseX, double pMouseY) {
         if (pMouseX > 0 && pMouseY > 0) {
             if (page.hasTitle()) {
-                var titleStyle = getClickedComponentStyleAtForTitle(page.getTitle(), BookContentScreen.PAGE_WIDTH / 2, 0, pMouseX, pMouseY);
+                var titleStyle = getClickedComponentStyleAtForTitle(page.getTitle(), BookEntryScreen.PAGE_WIDTH / 2, 0, pMouseX, pMouseY);
                 if (titleStyle != null) {
                     return titleStyle;
                 }
             }
 
-            var textStyle = getClickedComponentStyleAtForTextHolder(page.getText(), BookContentScreen.PAGE_WIDTH / 2, getTextY(), BookContentScreen.PAGE_WIDTH, pMouseX, pMouseY);
+            var textStyle = getClickedComponentStyleAtForTextHolder(page.getText(), BookEntryScreen.PAGE_WIDTH / 2, getTextY(), BookEntryScreen.PAGE_WIDTH, pMouseX, pMouseY);
             if (textStyle != null) {
                 return textStyle;
             }

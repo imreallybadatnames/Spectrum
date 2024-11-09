@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.matchbooks.recipe.*;
@@ -90,10 +91,10 @@ public class BookTitrationBarrelFermentingPageRenderer extends BookGatedRecipePa
 
         // the duration
         if (!second && durationText1 != null) {
-            this.renderBookTextHolder(drawContext, durationText1, 0, recipeY + 40, BookContentScreen.PAGE_WIDTH);
+            this.renderBookTextHolder(drawContext, durationText1, 0, recipeY + 40, BookEntryScreen.PAGE_WIDTH);
         }
         if (second && durationText2 != null) {
-            this.renderBookTextHolder(drawContext, durationText2, 0, recipeY + 40, BookContentScreen.PAGE_WIDTH);
+            this.renderBookTextHolder(drawContext, durationText2, 0, recipeY + 40, BookEntryScreen.PAGE_WIDTH);
         }
     }
 

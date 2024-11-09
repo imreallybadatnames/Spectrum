@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
@@ -81,8 +82,8 @@ public class BookCrystallarieumGrowingPageRenderer extends BookGatedRecipePageRe
         parentScreen.renderItemStack(drawContext, recipeX + 23, recipeY + 8, mouseX, mouseY, SpectrumBlocks.CRYSTALLARIEUM.asStackWithColor(NullableDyeColor.get(recipe.getInkColor().getDyeColor())));
 
         // catalyst text
-        renderBookTextHolder(drawContext, catalystText, 0, 38, BookContentScreen.PAGE_WIDTH);
-		renderBookTextHolder(drawContext, second ? craftingTimeText2 : craftingTimeText1, 0, 76, BookContentScreen.PAGE_WIDTH);
+        renderBookTextHolder(drawContext, catalystText, 0, 38, BookEntryScreen.PAGE_WIDTH);
+		renderBookTextHolder(drawContext, second ? craftingTimeText2 : craftingTimeText1, 0, 76, BookEntryScreen.PAGE_WIDTH);
 
         // the catalysts
         x = 0;

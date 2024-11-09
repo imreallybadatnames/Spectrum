@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
@@ -28,7 +29,7 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
     }
 
     @Override
-    public void onBeginDisplayPage(BookContentScreen parentScreen, int left, int top) {
+    public void onBeginDisplayPage(BookEntryScreen parentScreen, int left, int top) {
         super.onBeginDisplayPage(parentScreen, left, top);
 
         if (chanceTexts1 == null) {
@@ -99,7 +100,7 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
 
             if (possibleOutput.getRight() < 1.0F) {
                 BookTextHolder chanceText = second ? chanceTexts2.get(chanceTextIndex) : chanceTexts1.get(chanceTextIndex);
-                renderBookTextHolder(drawContext, chanceText, x, recipeY + 24, BookContentScreen.PAGE_WIDTH);
+                renderBookTextHolder(drawContext, chanceText, x, recipeY + 24, BookEntryScreen.PAGE_WIDTH);
                 chanceTextIndex++;
             }
         }

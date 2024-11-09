@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
@@ -54,7 +55,7 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
     }
 
     @Override
-    public void onBeginDisplayPage(BookContentScreen parentScreen, int left, int top) {
+    public void onBeginDisplayPage(BookEntryScreen parentScreen, int left, int top) {
         super.onBeginDisplayPage(parentScreen, left, top);
         
         OBFUSCATED_STYLE = Style.EMPTY
@@ -76,8 +77,8 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
             revealProgress = -1;
 
             PaymentButtonWidget paymentButtonWidget = new PaymentButtonWidget(
-                    2, BookContentScreen.PAGE_HEIGHT - 3,
-                    BookContentScreen.PAGE_WIDTH - 12, ButtonWidget.DEFAULT_HEIGHT,
+                    2, BookEntryScreen.PAGE_HEIGHT - 3,
+                    BookEntryScreen.PAGE_WIDTH - 12, ButtonWidget.DEFAULT_HEIGHT,
                     Text.empty(), this::paymentButtonClicked, this);
             addButton(paymentButtonWidget);
         } else {
@@ -209,19 +210,19 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
     public void render(DrawContext drawContext, int mouseX, int mouseY, float ticks) {
         if (mc.world == null) return;
         
-        renderTitle(drawContext, this.page.getTitle(), page.showTitleSeparator(), BookContentScreen.PAGE_WIDTH / 2, 0);
+        renderTitle(drawContext, this.page.getTitle(), page.showTitleSeparator(), BookEntryScreen.PAGE_WIDTH / 2, 0);
 
         int textStart = 1;
 
         obfuscatedText = obfuscateText(page.getText(), obfuscatedText, textStart);
-        renderBookTextHolder(drawContext, obfuscatedText, 0, getTextY(), BookContentScreen.PAGE_WIDTH);
+        renderBookTextHolder(drawContext, obfuscatedText, 0, getTextY(), BookEntryScreen.PAGE_WIDTH);
 
         var style = this.getClickedComponentStyleAt(mouseX, mouseY);
         if (style != null)
             this.parentScreen.renderComponentHoverEffect(drawContext, style, mouseX, mouseY);
 
         if (revealProgress == -1) {
-            parentScreen.renderIngredient(drawContext, BookContentScreen.PAGE_WIDTH / 2 + 29, BookContentScreen.PAGE_HEIGHT - 3, mouseX, mouseY, page.getCost());
+            parentScreen.renderIngredient(drawContext, BookEntryScreen.PAGE_WIDTH / 2 + 29, BookEntryScreen.PAGE_HEIGHT - 3, mouseX, mouseY, page.getCost());
         }
 
         if (revealProgress > 0) {
@@ -243,13 +244,13 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
     public Style getClickedComponentStyleAt(double pMouseX, double pMouseY) {
         if (pMouseX > 0 && pMouseY > 0) {
             if (this.page.hasTitle()) {
-                var titleStyle = this.getClickedComponentStyleAtForTitle(this.page.getTitle(), BookContentScreen.PAGE_WIDTH / 2, 0, pMouseX, pMouseY);
+                var titleStyle = this.getClickedComponentStyleAtForTitle(this.page.getTitle(), BookEntryScreen.PAGE_WIDTH / 2, 0, pMouseX, pMouseY);
                 if (titleStyle != null) {
                     return titleStyle;
                 }
             }
 
-            var textStyle = this.getClickedComponentStyleAtForTextHolder(obfuscatedText, 0, this.getTextY(), BookContentScreen.PAGE_WIDTH, pMouseX, pMouseY);
+            var textStyle = this.getClickedComponentStyleAtForTextHolder(obfuscatedText, 0, this.getTextY(), BookEntryScreen.PAGE_WIDTH, pMouseX, pMouseY);
             if (textStyle != null) {
                 return textStyle;
             }

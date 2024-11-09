@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import com.klikli_dev.modonomicon.data.*;
 import de.dafuqs.revelationary.api.advancements.*;
@@ -18,7 +19,7 @@ public class BookChecklistPageRenderer extends BookTextPageRenderer {
     }
 
     @Override
-    public void onBeginDisplayPage(BookContentScreen parentScreen, int left, int top) {
+    public void onBeginDisplayPage(BookEntryScreen parentScreen, int left, int top) {
         if (!(page instanceof BookChecklistPage checklistPage)) return;
         if (!(page.getText() instanceof RenderedBookTextHolder renderedText)) return;
 

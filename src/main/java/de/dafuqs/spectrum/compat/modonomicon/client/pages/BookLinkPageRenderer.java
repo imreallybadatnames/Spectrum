@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
-import com.klikli_dev.modonomicon.client.gui.book.BookContentScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.BookTextPageRenderer;
 import de.dafuqs.spectrum.compat.modonomicon.pages.BookLinkPage;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -10,8 +10,8 @@ import org.jetbrains.annotations.Nullable;
 public class BookLinkPageRenderer extends BookTextPageRenderer {
 
     private static final int BUTTON_X = 2;
-    private static final int BUTTON_Y = BookContentScreen.PAGE_HEIGHT - 3;
-    private static final int BUTTON_WIDTH = BookContentScreen.PAGE_WIDTH - 12;
+    private static final int BUTTON_Y = BookEntryScreen.PAGE_HEIGHT - 3;
+    private static final int BUTTON_WIDTH = BookEntryScreen.PAGE_WIDTH - 12;
     private static final int BUTTON_HEIGHT = ButtonWidget.DEFAULT_HEIGHT;
 
     public BookLinkPageRenderer(BookLinkPage page) {
@@ -19,7 +19,7 @@ public class BookLinkPageRenderer extends BookTextPageRenderer {
     }
 
     @Override
-    public void onBeginDisplayPage(BookContentScreen parentScreen, int left, int top) {
+    public void onBeginDisplayPage(BookEntryScreen parentScreen, int left, int top) {
         if (!(page instanceof BookLinkPage linkPage)) return;
 
         super.onBeginDisplayPage(parentScreen, left, top);
