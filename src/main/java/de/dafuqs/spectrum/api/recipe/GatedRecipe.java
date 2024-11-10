@@ -5,13 +5,13 @@ import de.dafuqs.spectrum.progression.*;
 import net.fabricmc.api.*;
 import net.fabricmc.loader.api.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
-public interface GatedRecipe<C extends Inventory> extends Recipe<C> {
+public interface GatedRecipe<C extends RecipeInput> extends Recipe<C> {
 	
 	boolean isSecret();
 	Identifier getRequiredAdvancementIdentifier();
@@ -45,6 +45,7 @@ public interface GatedRecipe<C extends Inventory> extends Recipe<C> {
 	
 	default @Nullable Text getSecretHintText() {
 		if (isSecret()) {
+			// FIXME - How to handle? Alternatively, where to get this from?
 			String secretHintLangKey = getId().toTranslationKey("recipe", "hint").replace("/", ".");
 			return Language.getInstance().hasTranslation(secretHintLangKey) ? Text.translatable(secretHintLangKey) : null;
 		}

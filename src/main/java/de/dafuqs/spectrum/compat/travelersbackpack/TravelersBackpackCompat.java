@@ -7,12 +7,14 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.world.*;
 
 import java.util.*;
@@ -63,14 +65,14 @@ public class TravelersBackpackCompat extends SpectrumIntegrationPacks.ModIntegra
 					
 					// disenchant random enchanted item
 					List<ItemStack> equipment = new ArrayList<>();
-					player.getItemsEquipped().forEach(equipment::add);
+					player.getEquippedItems().forEach(equipment::add);
 					Collections.shuffle(equipment);
 					
 					for (ItemStack equip : equipment) {
-						Map<Enchantment, Integer> enchants = EnchantmentHelper.get(equip);
+						ItemEnchantmentsComponent enchants = EnchantmentHelper.getEnchantments(equip);
 						if (!enchants.isEmpty()) {
-							Set<Enchantment> enchantments = enchants.keySet();
-							Enchantment enchantment = enchantments.stream().skip(new Random().nextInt(enchantments.size())).findFirst().orElse(null);
+							Set<RegistryEntry<Enchantment>> enchantments = enchants.getEnchantments();
+							Enchantment enchantment = enchantments.stream().skip(new Random().nextInt(enchantments.size())).findFirst().orElse(null).value();
 							SpectrumEnchantmentHelper.removeEnchantments(equip, enchantment);
 						}
 					}

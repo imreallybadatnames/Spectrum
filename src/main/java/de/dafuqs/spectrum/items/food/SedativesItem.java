@@ -1,7 +1,5 @@
 package de.dafuqs.spectrum.items.food;
 
-import de.dafuqs.spectrum.compat.*;
-import de.dafuqs.spectrum.compat.neepmeat.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
@@ -32,9 +30,10 @@ public class SedativesItem extends ItemWithTooltip {
 				}
 			}
 			
-			if (SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.NEEPMEAT_ID)) {
-				NEEPMeatCompat.sedateEnlightenment(user);
-			}
+			// TODO - Reenable compat when up-to-date
+			//if (SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.NEEPMEAT_ID)) {
+			//	NEEPMeatCompat.sedateEnlightenment(user);
+			//}
 		}
 		
 		return super.finishUsing(stack, world, user);

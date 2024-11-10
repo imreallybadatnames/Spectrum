@@ -7,8 +7,6 @@ import de.dafuqs.spectrum.compat.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.*;
-import net.fabricmc.fabric.api.item.v1.*;
-import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.*;
 import net.minecraft.client.render.*;
