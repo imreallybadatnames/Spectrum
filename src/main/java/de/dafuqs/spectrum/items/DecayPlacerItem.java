@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.items;
 
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
@@ -28,11 +27,13 @@ public class DecayPlacerItem extends AliasedBlockItem {
 		ActionResult actionResult = super.useOnBlock(context);
 		if (actionResult.isAccepted()) {
 			ItemPlacementContext itemPlacementContext = this.getPlacementContext(new ItemPlacementContext(context));
-			BlockPos blockPos = itemPlacementContext.getBlockPos();
-			
-			BlockState placedBlockState = context.getWorld().getBlockState(blockPos);
-			if (placedBlockState.isIn(SpectrumBlockTags.DECAY)) {
-				context.getWorld().scheduleBlockTick(blockPos, placedBlockState.getBlock(), 40 + world.random.nextInt(200), TickPriority.EXTREMELY_LOW);
+			if (itemPlacementContext != null) {
+				BlockPos blockPos = itemPlacementContext.getBlockPos();
+
+				BlockState placedBlockState = context.getWorld().getBlockState(blockPos);
+				if (placedBlockState.isIn(SpectrumBlockTags.DECAY)) {
+					context.getWorld().scheduleBlockTick(blockPos, placedBlockState.getBlock(), 40 + world.random.nextInt(200), TickPriority.EXTREMELY_LOW);
+				}
 			}
 		}
 		if (!world.isClient && actionResult.isAccepted() && context.getPlayer() != null && !context.getPlayer().isCreative()) {

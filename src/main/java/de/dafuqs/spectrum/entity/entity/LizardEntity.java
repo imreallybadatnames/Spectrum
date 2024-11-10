@@ -237,7 +237,7 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 		if (stack.isOf(SpectrumItems.LIZARD_MEAT)) {
 			return false;
 		}
-		FoodComponent food = stack.getComponents().get(DataComponentTypes.FOOD);
+		FoodComponent food = stack.get(DataComponentTypes.FOOD);
 		return food != null && food.isMeat();
 	}
 

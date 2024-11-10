@@ -1,16 +1,14 @@
 package de.dafuqs.spectrum.items;
 
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -35,8 +33,8 @@ public class MysteriousLocketItem extends Item {
 	
 	
 	public static boolean isSocketed(ItemStack compassStack) {
-		NbtCompound nbt = compassStack.getNbt();
-		return nbt != null && nbt.getBoolean("socketed");
+		var nbt = compassStack.get(DataComponentTypes.CUSTOM_DATA);
+		return nbt != null && nbt.contains("socketed");
 	}
 
 	@Override

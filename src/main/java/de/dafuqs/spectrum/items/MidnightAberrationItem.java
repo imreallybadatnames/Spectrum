@@ -4,11 +4,11 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.conditional.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -32,8 +32,8 @@ public class MidnightAberrationItem extends CloakedItem {
 		super.inventoryTick(stack, world, entity, slot, selected);
 		
 		if (!world.isClient && world.getTime() % 20 == 0 && entity instanceof ServerPlayerEntity player) {
-			NbtCompound compound = stack.getNbt();
-			if (compound != null && compound.getBoolean("Stable")) {
+			var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
+			if (nbt != null && nbt.contains("Stable") && nbt.copyNbt().getBoolean("Stable")) {
 				return;
 			}
 			
@@ -52,17 +52,16 @@ public class MidnightAberrationItem extends CloakedItem {
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		
-		NbtCompound compound = stack.getNbt();
-		if (compound != null && compound.getBoolean("Stable")) {
+		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
+		if (nbt != null && nbt.copyNbt().getBoolean("Stable")) {
 			tooltip.add(Text.translatable("item.spectrum.midnight_aberration.tooltip.stable"));
 		}
 	}
 	
 	public ItemStack getStableStack() {
 		ItemStack stack = getDefaultStack();
-		NbtCompound compound = stack.getOrCreateNbt();
-		compound.putBoolean("Stable", true);
-		stack.setNbt(compound);
+		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.putBoolean("Stable", true)));
 		return stack;
 	}
 	

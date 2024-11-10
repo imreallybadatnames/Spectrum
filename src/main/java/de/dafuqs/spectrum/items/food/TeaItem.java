@@ -50,7 +50,7 @@ public class TeaItem extends DrinkItem implements ApplyFoodEffectsCallback {
 					}
 					
 					world.playSound(null, player.getX(), player.getY(), player.getZ(), player.getEatSound(sconeStack), SoundCategory.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
-					ApplyFoodEffectsCallback.applyFoodComponent(player.getWorld(), player, sconeStack.getComponents().get(DataComponentTypes.FOOD));
+					ApplyFoodEffectsCallback.applyFoodComponent(player.getWorld(), player, sconeStack.get(DataComponentTypes.FOOD));
 					
 					ApplyFoodEffectsCallback.applyFoodComponent(player.getWorld(), player, this.bonusFoodComponentWithScone);
 					
