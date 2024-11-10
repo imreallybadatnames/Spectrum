@@ -30,6 +30,7 @@ import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.fabric.api.item.v1.*;
 import net.fabricmc.fabric.api.registry.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
+import net.minecraft.component.type.FoodComponents;
 import net.minecraft.enchantment.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;

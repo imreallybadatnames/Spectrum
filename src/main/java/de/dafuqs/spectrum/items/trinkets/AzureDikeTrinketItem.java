@@ -3,13 +3,10 @@ package de.dafuqs.spectrum.items.trinkets;
 import de.dafuqs.spectrum.api.item.*;
 import dev.emi.trinkets.api.*;
 import net.fabricmc.api.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 

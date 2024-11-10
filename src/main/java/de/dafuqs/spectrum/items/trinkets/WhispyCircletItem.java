@@ -4,12 +4,12 @@ import com.google.common.collect.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
@@ -36,7 +36,7 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 
 		List<StatusEffectInstance> negativeEffects = new ArrayList<>();
 		for (StatusEffectInstance statusEffectInstance : currentEffects) {
-			StatusEffect effect = statusEffectInstance.getEffectType();
+			var effect = statusEffectInstance.getEffectType().value();
 			if (effect.getCategory() == category && !SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.SOPORIFIC, effect) && !SpectrumStatusEffectTags.isIncurable(effect)) {
 				negativeEffects.add(statusEffectInstance);
 			}
@@ -52,26 +52,25 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 	}
 	
 	public static void removeNegativeStatusEffects(@NotNull LivingEntity entity) {
-		Set<StatusEffect> effectsToRemove = new HashSet<>();
-		Collection<StatusEffectInstance> currentEffects = entity.getStatusEffects();
-		for (StatusEffectInstance instance : currentEffects) {
-			if (affects(instance.getEffectType())) {
+		Set<RegistryEntry<StatusEffect>> effectsToRemove = new HashSet<>();
+		for (var instance : entity.getStatusEffects()) {
+			if (affects(instance.getEffectType().value())) {
 				effectsToRemove.add(instance.getEffectType());
 			}
 		}
 		
-		for (StatusEffect effect : effectsToRemove) {
+		for (var effect : effectsToRemove) {
 			entity.removeStatusEffect(effect);
 		}
 	}
 	
 	public static void shortenNegativeStatusEffects(@NotNull LivingEntity entity, int duration) {
 		Collection<StatusEffectInstance> newEffects = new ArrayList<>();
-		Collection<StatusEffect> effectTypesToClear = new ArrayList<>();
+		Collection<RegistryEntry<StatusEffect>> effectTypesToClear = new ArrayList<>();
 		
 		// remove them first, so hidden "stacked" effects are preserved
 		for (StatusEffectInstance instance : entity.getStatusEffects()) {
-			if (affects(instance.getEffectType())) {
+			if (affects(instance.getEffectType().value())) {
 				int newDurationTicks = instance.getDuration() - duration;
 				if (newDurationTicks > 0) {
 					newEffects.add(new StatusEffectInstance(instance.getEffectType(), newDurationTicks, instance.getAmplifier(), instance.isAmbient(), instance.shouldShowParticles(), instance.shouldShowIcon()));
@@ -82,7 +81,7 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 			}
 		}
 		
-		for (StatusEffect effectTypeToClear : effectTypesToClear) {
+		for (var effectTypeToClear : effectTypesToClear) {
 			entity.removeStatusEffect(effectTypeToClear);
 		}
 		for (StatusEffectInstance newEffect : newEffects) {

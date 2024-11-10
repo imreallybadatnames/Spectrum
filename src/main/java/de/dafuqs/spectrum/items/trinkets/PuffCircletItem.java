@@ -1,11 +1,8 @@
 package de.dafuqs.spectrum.items.trinkets;
 
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 

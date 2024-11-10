@@ -5,13 +5,13 @@ import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.cca.*;
 import dev.emi.trinkets.api.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -33,19 +33,18 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 	}
 	
 	public static long getCooldownTicks(@NotNull ItemStack ashenCircletStack, @NotNull World world) {
-		NbtCompound nbt = ashenCircletStack.getNbt();
-		if (nbt == null || !nbt.contains("last_cooldown_start", NbtElement.LONG_TYPE)) {
+		var nbt = ashenCircletStack.get(DataComponentTypes.CUSTOM_DATA);
+		if (nbt == null || !nbt.contains("last_cooldown_start")) {
 			return 0;
 		} else {
-			long lastCooldownStart = nbt.getLong("last_cooldown_start");
+			long lastCooldownStart = nbt.copyNbt().getLong("last_cooldown_start");
 			return Math.max(0, lastCooldownStart - world.getTime() + COOLDOWN_TICKS);
 		}
 	}
 	
 	private static void setCooldown(@NotNull ItemStack ashenCircletStack, @NotNull World world) {
-		NbtCompound nbt = ashenCircletStack.getOrCreateNbt();
-		nbt.putLong("last_cooldown_start", world.getTime());
-		ashenCircletStack.setNbt(nbt);
+		ashenCircletStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.putLong("last_cooldown_start", world.getTime())));
 	}
 	
 	public static void grantFireResistance(@NotNull ItemStack ashenCircletStack, @NotNull LivingEntity livingEntity) {

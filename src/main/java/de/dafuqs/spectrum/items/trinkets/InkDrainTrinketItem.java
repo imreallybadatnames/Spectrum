@@ -5,15 +5,14 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.helpers.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -64,11 +63,6 @@ public class InkDrainTrinketItem extends SpectrumTrinketItem implements InkStora
 		return getEnergyStorage(stack).isFull();
 	}
 	
-	@Override
-	public Rarity getRarity(ItemStack stack) {
-		return isMaxedOut(stack) ? Rarity.EPIC : super.getRarity(stack);
-	}
-	
 	// Omitting this would crash outside the dev env o.O
 	@Override
 	public ItemStack getDefaultStack() {
@@ -82,9 +76,9 @@ public class InkDrainTrinketItem extends SpectrumTrinketItem implements InkStora
 	
 	@Override
 	public FixedSingleInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
+		var compound = itemStack.get(DataComponentTypes.CUSTOM_DATA);
 		if (compound != null && compound.contains("EnergyStore")) {
-			return FixedSingleInkStorage.fromNbt(compound.getCompound("EnergyStore"));
+			return FixedSingleInkStorage.fromNbt(compound.copyNbt().getCompound("EnergyStore"));
 		}
 		return new FixedSingleInkStorage(MAX_INK, inkColor);
 	}
@@ -92,8 +86,10 @@ public class InkDrainTrinketItem extends SpectrumTrinketItem implements InkStora
 	@Override
 	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
 		if (storage instanceof FixedSingleInkStorage fixedSingleInkStorage) {
-			NbtCompound compound = itemStack.getOrCreateNbt();
-			compound.put("EnergyStore", fixedSingleInkStorage.toNbt());
+			itemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+					comp -> comp.apply(nbt -> nbt.put("EnergyStore", fixedSingleInkStorage.toNbt())));
+
+			itemStack.set(DataComponentTypes.RARITY, storage.isFull() ? Rarity.EPIC : super.getDefaultStack().get(DataComponentTypes.RARITY));
 		}
 	}
 	

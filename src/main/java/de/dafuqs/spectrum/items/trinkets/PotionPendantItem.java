@@ -3,17 +3,16 @@ package de.dafuqs.spectrum.items.trinkets;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.item.*;
 import dev.emi.trinkets.api.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.potion.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -39,7 +38,7 @@ public class PotionPendantItem extends SpectrumTrinketItem implements InkPowered
 	
 	@Override
 	public boolean hasGlint(ItemStack stack) {
-		return super.hasGlint(stack) || PotionUtil.getCustomPotionEffects(stack).size() > 0;
+		return super.hasGlint(stack) || stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).hasEffects();
 	}
 	
 	@Override
