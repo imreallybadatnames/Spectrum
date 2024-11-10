@@ -6,7 +6,8 @@ import de.dafuqs.spectrum.helpers.BlockReference;
 import de.dafuqs.spectrum.registries.SpectrumSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -52,8 +53,9 @@ public class TuningStampItem extends Item implements ExpandedStatTooltip {
 
         var potentialData = Optional.<Stampable.StampData>empty();
 
-        if (stack.getOrCreateNbt().contains(DATA)) {
-            potentialData = Stampable.loadStampingData(world, stack.getSubNbt(DATA));
+        var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+        if (nbtComp.contains(DATA)) {
+            potentialData = Stampable.loadStampingData(world, nbtComp.copyNbt().getCompound(DATA));
         }
 
         if (potentialData.isPresent()) {
@@ -116,7 +118,8 @@ public class TuningStampItem extends Item implements ExpandedStatTooltip {
     }
 
     public void clearData(Optional<PlayerEntity> player, ItemStack stack) {
-        stack.getOrCreateNbt().remove(DATA);
+        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+                comp -> comp.apply(nbt -> nbt.remove(DATA)));
         tryPlaySound(player, SoundEvents.ITEM_BRUSH_BRUSHING_GENERIC, 1F);
     }
 
@@ -126,8 +129,8 @@ public class TuningStampItem extends Item implements ExpandedStatTooltip {
     }
 
     private void saveToNbt(ItemStack stack, Stampable.StampData data) {
-        var stackNbt = stack.getOrCreateNbt();
-        stackNbt.put(DATA, Stampable.saveStampingData(data));
+        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+                comp -> comp.apply(nbt -> nbt.put(DATA, Stampable.saveStampingData(data))));
     }
 
     private Optional<Stampable.StampData> getData(Optional<PlayerEntity> player, BlockReference reference, World world) {
@@ -152,8 +155,9 @@ public class TuningStampItem extends Item implements ExpandedStatTooltip {
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        if (stack.getOrCreateNbt().contains(DATA)) {
-            var data = Stampable.loadStampingData(world, stack.getSubNbt(DATA));
+        var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+        if (nbtComp.contains(DATA)) {
+            var data = Stampable.loadStampingData(world, nbtComp.copyNbt().getCompound(DATA));
 
             if (data.isEmpty()) {
                 tooltip.add(Text.translatable("item.spectrum.tuning_stamp.tooltip.missing").styled(style -> style.withColor(0xff757a)));

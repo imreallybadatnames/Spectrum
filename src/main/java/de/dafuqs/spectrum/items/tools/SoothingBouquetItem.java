@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
@@ -59,7 +58,7 @@ public class SoothingBouquetItem extends Item implements SleepAlteringItem, Slot
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 40;
     }
 

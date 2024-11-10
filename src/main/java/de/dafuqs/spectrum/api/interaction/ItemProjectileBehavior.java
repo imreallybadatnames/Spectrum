@@ -107,9 +107,7 @@ public interface ItemProjectileBehavior {
 				creeperEntity.ignite();
 				
 				if (stack.isDamageable()) {
-					if (owner instanceof LivingEntity livingEntity) {
-						stack.damage(1, livingEntity, null);
-					}
+					stack.damage(1, world.getRandom(), null);
 				} else {
 					NbtCompound nbtCompound = stack.getNbt();
 					boolean isUnbreakable = nbtCompound != null && nbtCompound.getBoolean("Unbreakable");

@@ -13,7 +13,7 @@ public class PresentTooltipComponent extends SpectrumTooltipComponent {
 	private final List<ItemStack> itemStacks;
 	
 	public PresentTooltipComponent(PresentTooltipData data) {
-		this.itemStacks = data.getItemStacks();
+		this.itemStacks = data.itemStacks();
 	}
 	
 	@Override

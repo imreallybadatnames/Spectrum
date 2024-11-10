@@ -9,17 +9,17 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
-import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -36,31 +36,22 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	}
 	
 	public static void setStoredRecipe(ItemStack craftingTabletItemStack, Recipe<?> recipe) {
-		NbtCompound nbtCompound = craftingTabletItemStack.getOrCreateNbt();
-		nbtCompound.putString("recipe", recipe.getId().toString());
-		craftingTabletItemStack.setNbt(nbtCompound);
+		craftingTabletItemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.putString("recipe", recipe.getId().toString())));
 	}
 	
 	public static void clearStoredRecipe(ItemStack craftingTabletItemStack) {
-		NbtCompound nbtCompound = craftingTabletItemStack.getOrCreateNbt();
-		if (nbtCompound.contains("recipe")) {
-			nbtCompound.remove("recipe");
-			craftingTabletItemStack.setNbt(nbtCompound);
-		}
+		craftingTabletItemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.remove("recipe")));
 	}
 	
-	public static Recipe<?> getStoredRecipe(World world, ItemStack itemStack) {
+	public static RecipeEntry<?> getStoredRecipe(World world, ItemStack itemStack) {
 		if (world != null) {
-			NbtCompound nbtCompound = itemStack.getNbt();
-			
-			if (nbtCompound != null && nbtCompound.contains("recipe")) {
-				String recipeString = nbtCompound.getString("recipe");
+			var nbt = itemStack.get(DataComponentTypes.CUSTOM_DATA);
+			if (nbt != null && nbt.contains("recipe")) {
+				String recipeString = nbt.copyNbt().getString("recipe");
 				Identifier recipeIdentifier = Identifier.of(recipeString);
-				
-				Optional<? extends Recipe<?>> optional = world.getRecipeManager().get(recipeIdentifier);
-				if (optional.isPresent()) {
-					return optional.get();
-				}
+				return world.getRecipeManager().get(recipeIdentifier).orElse(null);
 			}
 		}
 		return null;
@@ -70,7 +61,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack itemStack = user.getStackInHand(hand);
 		
-		Recipe<?> storedRecipe = getStoredRecipe(world, itemStack);
+		var storedRecipe = getStoredRecipe(world, itemStack);
 		if (storedRecipe == null || user.isSneaking()) {
 			if (world.isClient) {
 				return TypedActionResult.success(user.getStackInHand(hand));
@@ -79,17 +70,17 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 				return TypedActionResult.consume(user.getStackInHand(hand));
 			}
 		} else {
-			if (storedRecipe instanceof PedestalRecipe) {
+			if (storedRecipe.value() instanceof PedestalRecipe) {
 				return TypedActionResult.pass(user.getStackInHand(hand));
 			} else {
-				if (tryCraftRecipe(user, storedRecipe, world)) {
+				if (tryCraftRecipe(user, storedRecipe.value(), world)) {
 					if (world.isClient) {
 						return TypedActionResult.success(user.getStackInHand(hand));
 					} else {
 						return TypedActionResult.consume(user.getStackInHand(hand));
 					}
 				}
-				user.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				user.playSound(SpectrumSoundEvents.USE_FAIL, 1.0F, 1.0F);
 				return TypedActionResult.fail(user.getStackInHand(hand));
 			}
 		}
@@ -111,7 +102,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 		if (InventoryHelper.hasInInventory(ingredients, playerInventory)) {
 			List<ItemStack> remainders = InventoryHelper.removeFromInventoryWithRemainders(ingredients, playerInventory);
 			
-			ItemStack craftingResult = recipe.getOutput(serverPlayerEntity.getWorld().getRegistryManager()).copy();
+			ItemStack craftingResult = recipe.getResult(serverPlayerEntity.getWorld().getRegistryManager()).copy();
 			serverPlayerEntity.getInventory().offerOrDrop(craftingResult);
 			
 			for (ItemStack remainder : remainders) {
@@ -125,11 +116,11 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		Recipe<?> recipe = getStoredRecipe(world, stack);
+		var recipe = getStoredRecipe(world, stack);
 		if (recipe == null) {
 			tooltip.add(Text.translatable("item.spectrum.crafting_tablet.tooltip.no_recipe").formatted(Formatting.GRAY));
 		} else {
-			if (recipe instanceof PedestalRecipe) {
+			if (recipe.value() instanceof PedestalRecipe) {
 				tooltip.add(Text.translatable("item.spectrum.crafting_tablet.tooltip.pedestal_recipe").formatted(Formatting.GRAY));
 			} else {
 				tooltip.add(Text.translatable("item.spectrum.crafting_tablet.tooltip.crafting_recipe").formatted(Formatting.GRAY));
@@ -140,13 +131,13 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 		addBannerPatternProviderTooltip(tooltip);
 	}
 	
-	@Environment(EnvType.CLIENT)
 	@Override
+	@Environment(EnvType.CLIENT)
 	public Optional<TooltipData> getTooltipData(ItemStack stack) {
 		MinecraftClient client = MinecraftClient.getInstance();
-		Recipe<?> storedRecipe = CraftingTabletItem.getStoredRecipe(client.world, stack);
+		var storedRecipe = CraftingTabletItem.getStoredRecipe(client.world, stack);
 		if (storedRecipe != null) {
-			return Optional.of(new CraftingTabletTooltipData(storedRecipe));
+			return Optional.of(new CraftingTabletTooltipData(storedRecipe.value(), client.world));
 		} else {
 			return Optional.empty();
 		}

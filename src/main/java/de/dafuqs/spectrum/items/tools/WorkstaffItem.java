@@ -7,19 +7,18 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -82,8 +81,8 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	
 	@Override
 	public boolean canTill(ItemStack stack) {
-		NbtCompound nbt = stack.getNbt();
-		return nbt == null || !nbt.getBoolean(RIGHT_CLICK_DISABLED_NBT_STRING);
+		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
+		return nbt == null || !nbt.contains(RIGHT_CLICK_DISABLED_NBT_STRING) || !nbt.copyNbt().getBoolean(RIGHT_CLICK_DISABLED_NBT_STRING);
 	}
 	
 	public NamedScreenHandlerFactory createScreenHandlerFactory(ItemStack itemStack) {
@@ -95,11 +94,11 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	
 	@Override
 	public int getAoERange(ItemStack stack) {
-		NbtCompound nbt = stack.getNbt();
-		if (nbt == null || !nbt.contains(RANGE_NBT_STRING, NbtElement.NUMBER_TYPE)) {
+		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
+		if (nbt == null || !nbt.contains(RANGE_NBT_STRING)) {
 			return 0;
 		}
-		return nbt.getInt(RANGE_NBT_STRING);
+		return nbt.copyNbt().getInt(RANGE_NBT_STRING);
 	}
 	
 	@Override
@@ -117,15 +116,18 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		
 		switch (toggle) {
 			case SELECT_1x1 -> {
-				stack.getOrCreateNbt().remove(RANGE_NBT_STRING);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.remove(RANGE_NBT_STRING)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case SELECT_3x3 -> {
-				stack.getOrCreateNbt().putInt(RANGE_NBT_STRING, 1);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.putInt(RANGE_NBT_STRING, 1)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case SELECT_5x5 -> {
-				stack.getOrCreateNbt().putInt(RANGE_NBT_STRING, 2);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.putInt(RANGE_NBT_STRING, 2)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			// switching to another enchantment
@@ -141,19 +143,23 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), SpectrumEnchantments.RESONANCE);
 			}
 			case ENABLE_RIGHT_CLICK_ACTIONS -> {
-				stack.getOrCreateNbt().remove(RIGHT_CLICK_DISABLED_NBT_STRING);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.remove(RIGHT_CLICK_DISABLED_NBT_STRING)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case DISABLE_RIGHT_CLICK_ACTIONS -> {
-				stack.getOrCreateNbt().putBoolean(RIGHT_CLICK_DISABLED_NBT_STRING, true);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.putBoolean(RIGHT_CLICK_DISABLED_NBT_STRING, true)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case ENABLE_PROJECTILES -> {
-				stack.getOrCreateNbt().remove(PROJECTILES_DISABLED_NBT_STRING);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.remove(PROJECTILES_DISABLED_NBT_STRING)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case DISABLE_PROJECTILES -> {
-				stack.getOrCreateNbt().putBoolean(PROJECTILES_DISABLED_NBT_STRING, true);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.putBoolean(PROJECTILES_DISABLED_NBT_STRING, true)));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 		}
@@ -168,16 +174,18 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		
 		int level = 1;
 		
-		NbtCompound nbt = stack.getOrCreateNbt();
+		var nbtComp = stack.get(DataComponentTypes.CUSTOM_DATA);
 		if (enchantment == Enchantments.FORTUNE) {
-			if (nbt.contains("FortuneLevel", NbtElement.NUMBER_TYPE)) {
-				level = nbt.getInt("FortuneLevel");
-				nbt.remove("FortuneLevel");
+			if (nbtComp != null && nbtComp.contains("FortuneLevel")) {
+				level = nbtComp.copyNbt().getInt("FortuneLevel");
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.remove("FortuneLevel")));
 			}
 		} else {
 			int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, stack);
 			if (fortuneLevel > 0) {
-				nbt.putInt("FortuneLevel", fortuneLevel);
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt -> nbt.putInt("FortuneLevel", fortuneLevel)));
 			}
 		}
 		
@@ -190,7 +198,9 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		} else {
 			var result2 = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(result.getLeft(), enchantment, level, false, AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.APPLY_CONFLICTING_ENCHANTMENTS));
 			if (result2.getLeft()) {
-				stack.setNbt(result2.getRight().getNbt());
+				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+						comp -> comp.apply(nbt ->
+								result2.getRight().getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT)));
 				player.sendMessage(message, true);
 			} else {
 				player.sendMessage(Text.translatable("item.spectrum.workstaff.message.would_result_in_conflicting_enchantments"), true);

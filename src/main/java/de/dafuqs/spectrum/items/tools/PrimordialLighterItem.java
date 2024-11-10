@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -17,7 +16,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraft.world.event.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -25,10 +23,10 @@ public class PrimordialLighterItem extends FlintAndSteelItem implements Creative
 	
 	public static final DispenserBehavior DISPENSER_BEHAVIOR = new FallibleItemDispenserBehavior() {
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-			World world = pointer.getWorld();
+			World world = pointer.world();
 			this.setSuccess(true);
-			Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
-			BlockPos blockPos = pointer.getPos().offset(direction);
+			Direction direction = pointer.state().get(DispenserBlock.FACING);
+			BlockPos blockPos = pointer.pos().offset(direction);
 			if (PrimordialFireBlock.tryPlacePrimordialFire(world, blockPos, direction)) {
 				stack.damage(1, world.random, null);
 				this.setSuccess(true);
@@ -66,7 +64,7 @@ public class PrimordialLighterItem extends FlintAndSteelItem implements Creative
 			ItemStack stack = context.getStack();
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				Criteria.PLACED_BLOCK.trigger(serverPlayerEntity, blockOnSide, stack);
-				stack.damage(1, serverPlayerEntity, (p) -> {
+				stack.damage(1, world, serverPlayerEntity, (p) -> {
 					p.sendToolBreakStatus(context.getHand());
 				});
 			}

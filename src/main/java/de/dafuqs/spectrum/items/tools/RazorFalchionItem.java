@@ -9,7 +9,7 @@ import java.util.*;
 public class RazorFalchionItem extends SwordItem implements Preenchanted {
 	
 	public RazorFalchionItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-		super(toolMaterial, attackDamage, attackSpeed, settings);
+		super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
 	}
 	
 	@Override

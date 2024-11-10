@@ -9,7 +9,7 @@ import java.util.*;
 public class SpectrumPickaxeItem extends PickaxeItem implements Preenchanted {
 	
 	public SpectrumPickaxeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(material, attackDamage, attackSpeed, settings);
+		super(material, settings.attributeModifiers(PickaxeItem.createAttributeModifiers(material, attackDamage, attackSpeed)));
 	}
 	
 	@Override
