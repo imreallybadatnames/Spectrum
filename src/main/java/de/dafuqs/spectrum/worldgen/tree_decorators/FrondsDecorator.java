@@ -11,7 +11,7 @@ import net.minecraft.world.gen.treedecorator.*;
 
 public class FrondsDecorator extends TreeDecorator {
 	
-	public static final Codec<FrondsDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+	public static final MapCodec<FrondsDecorator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 			Codec.FLOAT.fieldOf("chance").forGetter(FrondsDecorator::getChance),
 			BlockStateProvider.TYPE_CODEC.fieldOf("middle_block").forGetter(FrondsDecorator::getMiddleBlock),
 			BlockStateProvider.TYPE_CODEC.fieldOf("last_block").forGetter(FrondsDecorator::getBottomBlock),

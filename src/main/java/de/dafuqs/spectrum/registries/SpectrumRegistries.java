@@ -63,11 +63,4 @@ public class SpectrumRegistries {
 		}
 	}
 
-	public static void register() {
-		LizardFrillVariant.init();
-		LizardHornVariant.init();
-		KindlingVariant.init();
-		GlassArrowVariant.init();
-	}
-	
 }

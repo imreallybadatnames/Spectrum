@@ -33,8 +33,8 @@ public class SpectrumStatusEffectTags {
 	}
 	
 	public static boolean hasEffectWithTag(LivingEntity livingEntity, TagKey<StatusEffect> tag) {
-		for (StatusEffect statusEffect : livingEntity.getActiveStatusEffects().keySet()) {
-			if (SpectrumStatusEffectTags.isIn(tag, statusEffect)) {
+		for (var statusEffect : livingEntity.getActiveStatusEffects().keySet()) {
+			if (statusEffect.isIn(tag)) {
 				return true;
 			}
 		}
