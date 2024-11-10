@@ -11,7 +11,6 @@ import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.*;
 import net.minecraft.client.render.model.*;

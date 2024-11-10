@@ -9,10 +9,10 @@ import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class BottomlessBundleBlockEntity extends BlockEntity {
 
 	// Do not modify without syncing storage too!
@@ -64,8 +64,8 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.setBundleUnsynced(ItemStack.fromNbt(nbt.getCompound("Bundle")));
 
 		// Handle old data by syncing into bundle
@@ -91,8 +91,8 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 
 		// sync bundle data
 		syncBundleWithStorage();

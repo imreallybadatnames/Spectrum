@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -38,8 +39,8 @@ public class BlockFlooderBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("SourcePositionX") && nbt.contains("SourcePositionY") && nbt.contains("SourcePositionZ")) {
@@ -48,8 +49,8 @@ public class BlockFlooderBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		if (this.sourcePos != null) {

@@ -32,7 +32,7 @@ public class AmphoraBlock extends BlockWithEntity {
 	}
 
 	@Override
-	public MapCodec<AmphoraBlock> getCodec() {
+	public MapCodec<? extends BlockWithEntity> getCodec() {
 		return CODEC;
 	}
 	
