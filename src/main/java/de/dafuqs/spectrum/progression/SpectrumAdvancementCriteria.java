@@ -17,7 +17,7 @@ public class SpectrumAdvancementCriteria {
 	public static EnchantmentUpgradedCriterion ENCHANTER_UPGRADING;
 	public static InertiaUsedCriterion INERTIA_USED;
 	public static AzureDikeChargeCriterion AZURE_DIKE_CHARGE;
-	public static TrinketChangeCriterion TRINKET_CHANGE;
+	public static TrinketChangeCriterion TRINKET_CHANGE;🐠
 	public static PotionWorkshopBrewingCriterion POTION_WORKSHOP_BREWING;
 	public static PotionWorkshopCraftingCriterion POTION_WORKSHOP_CRAFTING;
 	public static TakeOffBeltJumpCriterion TAKE_OFF_BELT_JUMP;
@@ -25,7 +25,7 @@ public class SpectrumAdvancementCriteria {
 	public static JeopardantKillCriterion JEOPARDANT_KILL;
 	public static MemoryManifestingCriterion MEMORY_MANIFESTING;
 	public static SpiritInstillerCraftingCriterion SPIRIT_INSTILLER_CRAFTING;
-	public static SlimeSizingCriterion SLIME_SIZING;
+	public static SlimeSizingCriterion SLIME_SIZING;🐠🐠
 	public static CrystalApothecaryCollectingCriterion CRYSTAL_APOTHECARY_COLLECTING;
 	public static UpgradePlaceCriterion UPGRADE_PLACING;
 	public static CrystallarieumGrownCriterion CRYSTALLARIEUM_GROWING;
@@ -44,8 +44,8 @@ public class SpectrumAdvancementCriteria {
 	public static FluidDippingCriterion FLUID_DIPPING;
 
 	public static void register() {
-		PEDESTAL_RECIPE_CALCULATED = Criteria.register(new PedestalRecipeCalculatedCriterion());
-		PEDESTAL_CRAFTING = Criteria.register(new PedestalCraftingCriterion());
+		PEDESTAL_RECIPE_CALCULATED = Criteria.register(PedestalRecipeCalculatedCriterion.ID.toString(), new PedestalRecipeCalculatedCriterion());
+		PEDESTAL_CRAFTING = Criteria.register(PedestalCraftingCriterion.ID.toString(), new PedestalCraftingCriterion());
 		FUSION_SHRINE_CRAFTING = Criteria.register(new FusionShrineCraftingCriterion());
 		COMPLETED_MULTIBLOCK = Criteria.register(new CompletedMultiblockCriterion());
 		BLOCK_BROKEN = Criteria.register(new BlockBrokenCriterion());
