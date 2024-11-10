@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.world.*;
@@ -130,10 +131,10 @@ public class PipeBombItem extends Item implements DamageAwareItem, TickAwareItem
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.BOW;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.pipe_bomb.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.pipe_bomb.tooltip2").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.pipe_bomb.tooltip3").formatted(Formatting.GRAY));

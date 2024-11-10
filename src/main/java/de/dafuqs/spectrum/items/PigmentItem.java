@@ -6,13 +6,11 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.items.conditional.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -41,8 +39,8 @@ public class PigmentItem extends CloakedItem implements LoomPatternProvider {
 	}
 	
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addBannerPatternProviderTooltip(tooltip);
 	}
 	

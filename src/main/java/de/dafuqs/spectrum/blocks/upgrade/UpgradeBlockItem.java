@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.blocks.upgrade;
 import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -17,10 +18,10 @@ public class UpgradeBlockItem extends BlockItem {
 		super(block, settings);
 		this.tooltipString = tooltipString;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum." + this.tooltipString + ".tooltip").formatted(Formatting.GRAY));
 	}
 	

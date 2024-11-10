@@ -9,6 +9,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -38,16 +39,16 @@ public class AttackRingItem extends SpectrumTrinketItem {
 		super.onUnequip(stack, slot, entity);
 		if (entity.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_ATTACK_DAMAGE, AttackRingItem.ATTACK_RING_DAMAGE_UUID)) {
 			Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
-			EntityAttributeModifier modifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			EntityAttributeModifier modifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 			map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, modifier);
 			entity.getAttributes().removeModifiers(map);
 		}
 	}
 	
-	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		MinecraftClient client = MinecraftClient.getInstance();
 		long mod = Math.round(getAttackModifierForEntity(client.player) * 100);
 		if (mod == 0) {

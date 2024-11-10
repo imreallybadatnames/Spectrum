@@ -5,6 +5,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -29,10 +30,10 @@ public class GlassArrowItem extends ArrowItem {
 		entity.setVariant(variant);
 		return entity;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		
 		tooltip.add(Text.translatable("item.spectrum.glass_arrow.tooltip").formatted(Formatting.GRAY));

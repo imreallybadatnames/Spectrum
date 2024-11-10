@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.potion.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -29,10 +30,10 @@ public class PotionPendantItem extends SpectrumTrinketItem implements InkPowered
 		this.maxEffectCount = maxEffectCount;
 		this.maxAmplifier = maxAmplifier;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.potion_pendant.when_worn"), false, context.getUpdateTickRate());
 	}
 	

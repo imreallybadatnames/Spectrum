@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.compat.botania;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -44,10 +45,10 @@ public class LeastBlackLotusItem extends Item implements ManaDissolvable {
 	public boolean hasGlint(ItemStack stack) {
 		return true;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		tooltip.add(Text.translatable("item.spectrum.least_black_lotus.tooltip").formatted(Formatting.GRAY));
 	}

@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.explosion.*;
 import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -23,10 +24,10 @@ public class ModularExplosionBlockItem extends BlockItem implements ModularExplo
 		this.baseBlastRadius = baseBlastRadius;
 		this.baseDamage = baseDamage;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		ModularExplosionDefinition.getFromStack(stack).appendTooltip(tooltip, this);
 	}
 	

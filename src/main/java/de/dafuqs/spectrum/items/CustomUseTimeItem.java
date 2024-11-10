@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.items;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 
 public class CustomUseTimeItem extends Item {
@@ -12,7 +13,7 @@ public class CustomUseTimeItem extends Item {
 	}
 	
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return useTime;
 	}
 }

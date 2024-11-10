@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -66,13 +67,13 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 			setCooldown(stack, entity.getWorld());
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip2").formatted(Formatting.GRAY));
-		
+
 		if (world != null) {
 			long cooldownTicks = getCooldownTicks(stack, world);
 			if (cooldownTicks == 0) {
@@ -87,8 +88,8 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 		Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);
 		
-		modifiers.put(AdditionalEntityAttributes.LAVA_SPEED, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_MOVEMENT_SPEED_MOD, EntityAttributeModifier.Operation.ADDITION));
-		modifiers.put(AdditionalEntityAttributes.LAVA_VISIBILITY, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_VIEW_DISTANCE_MOD, EntityAttributeModifier.Operation.ADDITION));
+		modifiers.put(AdditionalEntityAttributes.LAVA_SPEED, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_MOVEMENT_SPEED_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
+		modifiers.put(AdditionalEntityAttributes.LAVA_VISIBILITY, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_VIEW_DISTANCE_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
 		
 		return modifiers;
 	}

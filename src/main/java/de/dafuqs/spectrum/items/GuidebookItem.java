@@ -9,18 +9,16 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.advancement.*;
-import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -36,7 +34,7 @@ public class GuidebookItem extends Item implements LoomPatternProvider {
 	private static final Set<UUID> alreadyReprocessedPlayers = new HashSet<>();
 	
 	public static void reprocessAdvancementUnlocks(ServerPlayerEntity serverPlayerEntity) {
-		if (serverPlayerEntity.getServer() == null) {
+		if (serverPlayerEntity.getServer() == null || SpectrumCommon.minecraftServer == null) {
 			return;
 		}
 		
@@ -48,15 +46,15 @@ public class GuidebookItem extends Item implements LoomPatternProvider {
 		
 		PlayerAdvancementTracker tracker = serverPlayerEntity.getAdvancementTracker();
 		
-		for (Advancement advancement : serverPlayerEntity.getServer().getAdvancementLoader().getAdvancements()) {
-			AdvancementProgress hasAdvancement = tracker.getProgress(advancement);
+		for (var advancement : serverPlayerEntity.getServer().getAdvancementLoader().getAdvancements()) {
+			var hasAdvancement = tracker.getProgress(advancement);
 			if (!hasAdvancement.isDone()) {
-				for (Map.Entry<String, AdvancementCriterion> criterionEntry : advancement.getCriteria().entrySet()) {
-					CriterionConditions conditions = criterionEntry.getValue().getConditions();
-					if (conditions != null && conditions.getId().equals(AdvancementGottenCriterion.ID) && conditions instanceof AdvancementGottenCriterion.Conditions hasAdvancementConditions) {
-						Advancement advancementCriterionAdvancement = SpectrumCommon.minecraftServer.getAdvancementLoader().get(hasAdvancementConditions.getAdvancementIdentifier());
+				for (var criterionEntry : advancement.value().criteria().entrySet()) {
+					var conditions = criterionEntry.getValue().conditions();
+					if (conditions instanceof AdvancementGottenCriterion.Conditions hasAdvancementConditions) {
+						var advancementCriterionAdvancement = SpectrumCommon.minecraftServer.getAdvancementLoader().get(hasAdvancementConditions.getAdvancementIdentifier());
 						if (advancementCriterionAdvancement != null) {
-							AdvancementProgress hasAdvancementCriterionAdvancement = tracker.getProgress(advancementCriterionAdvancement);
+							var hasAdvancementCriterionAdvancement = tracker.getProgress(advancementCriterionAdvancement);
 							if (hasAdvancementCriterionAdvancement.isDone()) {
 								tracker.grantCriterion(advancement, criterionEntry.getKey());
 							}
@@ -118,10 +116,10 @@ public class GuidebookItem extends Item implements LoomPatternProvider {
 	public RegistryEntry<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.GUIDEBOOK;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addBannerPatternProviderTooltip(tooltip);
 	}
 	

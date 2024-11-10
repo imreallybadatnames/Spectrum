@@ -10,6 +10,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -24,9 +25,9 @@ public class ExtraMiningSpeedRingItem extends InkDrainTrinketItem {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.spectrum.ring_of_pursuit.tooltip").formatted(Formatting.GRAY));
-		super.appendTooltip(stack, world, tooltip, context);
+		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class ExtraMiningSpeedRingItem extends InkDrainTrinketItem {
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		double miningSpeedMod = getExtraMiningSpeed(storedInk);
 		if (miningSpeedMod != 0) {
-			modifiers.put(AdditionalEntityAttributes.DIG_SPEED, new EntityAttributeModifier(uuid, "spectrum:ring_of_pursuit", miningSpeedMod, EntityAttributeModifier.Operation.ADDITION));
+			modifiers.put(AdditionalEntityAttributes.DIG_SPEED, new EntityAttributeModifier(uuid, "spectrum:ring_of_pursuit", miningSpeedMod, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

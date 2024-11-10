@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -157,10 +158,10 @@ public class SugarStickBlock extends Block implements RockCandy {
 	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
 		return false;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		NbtCompound nbt = stack.getNbt();
 		if (nbt != null && nbt.contains("BlockStateTag")) {
 			NbtCompound blockStateTag = nbt.getCompound("BlockStateTag");

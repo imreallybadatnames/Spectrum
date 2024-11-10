@@ -8,6 +8,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -31,10 +32,10 @@ public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEnti
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.color_picker.tooltip").formatted(Formatting.GRAY));
 	}
 	

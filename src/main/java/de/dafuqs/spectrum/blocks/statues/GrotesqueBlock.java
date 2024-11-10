@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.blocks.statues;
 import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -34,8 +35,8 @@ public class GrotesqueBlock extends HorizontalFacingBlock {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(tooltipText);
 	}
 

@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -32,10 +33,10 @@ public class CrystalApothecaryBlock extends BlockWithEntity {
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new CrystalApothecaryBlockEntity(pos, state);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.crystal_apothecary.tooltip").formatted(Formatting.GRAY));
 	}
 	

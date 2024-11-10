@@ -8,6 +8,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
@@ -109,20 +110,20 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 			}
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
-		int maxExperience = getMaxStoredExperience(itemStack);
-		int storedExperience = ExperienceStorageItem.getStoredExperience(itemStack);
+		int maxExperience = getMaxStoredExperience(stack);
+		int storedExperience = ExperienceStorageItem.getStoredExperience(stack);
 		if (storedExperience == 0) {
 			tooltip.add(Text.literal("0 ").formatted(Formatting.DARK_GRAY).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
 		} else {
 			tooltip.add(Text.literal(storedExperience + " ").formatted(Formatting.GREEN).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
 		}
-		if (shouldDisplayUsageTooltip(itemStack)) {
-			tooltip.add(Text.translatable("item.spectrum.knowledge_gem.tooltip.use", getTransferableExperiencePerTick(itemStack)).formatted(Formatting.GRAY));
+		if (shouldDisplayUsageTooltip(stack)) {
+			tooltip.add(Text.translatable("item.spectrum.knowledge_gem.tooltip.use", getTransferableExperiencePerTick(stack)).formatted(Formatting.GRAY));
 			addBannerPatternProviderTooltip(tooltip);
 		}
 	}

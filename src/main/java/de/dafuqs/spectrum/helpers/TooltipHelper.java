@@ -62,7 +62,7 @@ public class TooltipHelper {
 				EntityAttributeModifier entityAttributeModifier3 = entityAttributeEntityAttributeModifierPair.getSecond();
 				double d = entityAttributeModifier3.getValue();
 				double e;
-				if (entityAttributeModifier3.getOperation() != EntityAttributeModifier.Operation.MULTIPLY_BASE && entityAttributeModifier3.getOperation() != EntityAttributeModifier.Operation.MULTIPLY_TOTAL) {
+				if (entityAttributeModifier3.getOperation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE && entityAttributeModifier3.getOperation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
 					e = entityAttributeModifier3.getValue();
 				} else {
 					e = entityAttributeModifier3.getValue() * 100.0D;

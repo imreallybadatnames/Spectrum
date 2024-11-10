@@ -8,6 +8,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -26,8 +27,8 @@ public class BloodstoneGlassAmpouleItem extends BaseGlassAmpouleItem implements 
 		super(settings);
 		
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADDITION));
-		builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADDITION));
+		builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE));
+		builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE));
 		this.attributeModifiers = builder.build();
 	}
 
@@ -49,8 +50,8 @@ public class BloodstoneGlassAmpouleItem extends BaseGlassAmpouleItem implements 
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.bloodstone_glass_ampoule.tooltip").formatted(Formatting.GRAY));
 	}
 

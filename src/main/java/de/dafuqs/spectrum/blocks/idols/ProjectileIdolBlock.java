@@ -5,6 +5,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -30,10 +31,10 @@ public abstract class ProjectileIdolBlock extends IdolBlock {
 		this.speed = speed;
 		this.divergence = divergence;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.projectile_idol.tooltip", this.entityType.getName()));
 	}
 	

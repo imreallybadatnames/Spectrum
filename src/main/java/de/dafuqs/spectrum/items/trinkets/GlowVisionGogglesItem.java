@@ -11,6 +11,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -75,8 +76,8 @@ public class GlowVisionGogglesItem extends SpectrumTrinketItem implements InkPow
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		if (InkPowered.canUseClient()) {
 			tooltip.add(Text.translatable("item.spectrum.glow_vision_goggles.tooltip_with_ink", INK_COST.getColor().getColoredInkName()));
 		} else {

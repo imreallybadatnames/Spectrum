@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.sound.*;
@@ -294,9 +295,9 @@ public class PresentItem extends BlockItem {
 		}
 		return Optional.of(new PresentTooltipData(list));
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		boolean wrapped = isWrapped(stack);
 		if (wrapped) {
 			Optional<Pair<UUID, String>> giver = getWrapper(stack);

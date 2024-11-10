@@ -11,6 +11,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
@@ -68,10 +69,10 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		}
 		return super.use(world, user, hand);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		int range = getAoERange(stack);
 		if(range > 0) {
 			int displayedRange = 1 + range + range;

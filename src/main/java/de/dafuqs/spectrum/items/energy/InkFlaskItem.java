@@ -12,6 +12,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
@@ -59,8 +60,8 @@ public class InkFlaskItem extends Item implements InkStorageItem<SingleInkStorag
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		getEnergyStorage(stack).addTooltip(tooltip);
 		addBannerPatternProviderTooltip(tooltip);
 	}

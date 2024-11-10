@@ -1,15 +1,14 @@
 package de.dafuqs.spectrum.items;
 
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -34,13 +33,13 @@ public class MysteriousLocketItem extends Item {
 	
 	
 	public static boolean isSocketed(ItemStack compassStack) {
-		NbtCompound nbt = compassStack.getNbt();
-		return nbt != null && nbt.getBoolean("socketed");
+		var nbt = compassStack.get(DataComponentTypes.CUSTOM_DATA);
+		return nbt != null && nbt.contains("socketed");
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.mysterious_locket.tooltip").formatted(Formatting.GRAY));
 		if (isSocketed(stack)) {
 			tooltip.add(Text.translatable("item.spectrum.mysterious_locket.tooltip_socketed").formatted(Formatting.GRAY));

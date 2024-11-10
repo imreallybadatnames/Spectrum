@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
@@ -88,8 +89,8 @@ public class ShootingStarItem extends BlockItem implements ShootingStar {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		if (isHardened(stack)) {
 			tooltip.add(Text.translatable("item.spectrum.shooting_star.tooltip.hardened").formatted(Formatting.GRAY));
 		}

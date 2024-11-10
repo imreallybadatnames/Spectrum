@@ -14,6 +14,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -37,10 +38,10 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 	public GlassCrestGreatswordItem(ToolMaterial material, int attackDamage, float attackSpeed, float extraReach, Settings settings) {
 		super(material, attackDamage, attackSpeed, extraReach, settings);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.glass_crest_ultra_greatsword.tooltip", (int) (MAGIC_DAMAGE_SHARE * 100)));
 		tooltip.add(Text.translatable("item.spectrum.glass_crest_ultra_greatsword.tooltip2"));
 		addInkPoweredTooltip(tooltip);

@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -32,10 +33,10 @@ public class InkDrainTrinketItem extends SpectrumTrinketItem implements InkStora
 		super(settings, unlockIdentifier);
 		this.inkColor = inkColor;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		FixedSingleInkStorage inkStorage = getEnergyStorage(stack);
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());

@@ -6,6 +6,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
@@ -34,10 +35,10 @@ public class PreenchantedMultiToolItem extends MultiToolItem implements Preencha
 	public RegistryEntry<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.MULTITOOL;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addBannerPatternProviderTooltip(tooltip);
 	}
 	

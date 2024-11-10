@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.items.food.*;
 import de.dafuqs.spectrum.items.food.beverages.properties.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 
@@ -18,10 +19,10 @@ public abstract class BeverageItem extends StatusEffectDrinkItem implements Ferm
 	
 	@Override
 	public abstract BeverageProperties getBeverageProperties(ItemStack stack);
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(stack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		getBeverageProperties(stack).addTooltip(stack, tooltip);
 	}
 	

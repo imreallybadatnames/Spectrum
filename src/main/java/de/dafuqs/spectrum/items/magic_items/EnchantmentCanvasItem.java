@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
@@ -96,9 +97,9 @@ public class EnchantmentCanvasItem extends Item {
 	private void playExchangeSound(Entity entity) {
 		entity.playSound(SoundEvents.BLOCK_GRINDSTONE_USE, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		Optional<Item> boundItem = getItemBoundTo(stack);
 		if (boundItem.isPresent()) {
 			tooltip.add(Text.translatable("item.spectrum.enchantment_canvas.tooltip.bound_to").append(boundItem.get().getName()));

@@ -39,8 +39,8 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 
 	protected static final UUID COVERED_ARMOR_BONUS_ID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
 	protected static final UUID COVERED_TOUGHNESS_BONUS_ID = UUID.fromString("8ED24DFF-221F-4ADB-9DD2-7EA92574628C");
-	protected static final EntityAttributeModifier COVERED_ARMOR_BONUS = new EntityAttributeModifier(COVERED_ARMOR_BONUS_ID, "Covered armor bonus", 20.0, EntityAttributeModifier.Operation.ADDITION);
-	protected static final EntityAttributeModifier COVERED_TOUGHNESS_BONUS = new EntityAttributeModifier(COVERED_TOUGHNESS_BONUS_ID, "Covered toughness bonus", 6.0, EntityAttributeModifier.Operation.ADDITION);
+	protected static final EntityAttributeModifier COVERED_ARMOR_BONUS = new EntityAttributeModifier(COVERED_ARMOR_BONUS_ID, "Covered armor bonus", 20.0, EntityAttributeModifier.Operation.ADD_VALUE);
+	protected static final EntityAttributeModifier COVERED_TOUGHNESS_BONUS = new EntityAttributeModifier(COVERED_TOUGHNESS_BONUS_ID, "Covered toughness bonus", 6.0, EntityAttributeModifier.Operation.ADD_VALUE);
 	
 	protected static final TrackedData<Direction> ATTACHED_FACE = DataTracker.registerData(PreservationTurretEntity.class, TrackedDataHandlerRegistry.FACING);
 	protected static final TrackedData<Byte> PEEK_AMOUNT = DataTracker.registerData(PreservationTurretEntity.class, TrackedDataHandlerRegistry.BYTE);

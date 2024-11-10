@@ -88,15 +88,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		
 		EntityAttributeModifier jeopardantModifier;
 		if (SpectrumTrinketItem.hasEquipped(player, SpectrumItems.JEOPARDANT)) {
-			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(player), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(player), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 		} else {
-			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, 0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, 0, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 		}
 		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, jeopardantModifier);
 		
 		if (SpectrumEnchantments.IMPROVED_CRITICAL.canEntityUse(player)) {
 			int improvedCriticalLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.IMPROVED_CRITICAL, player.getMainHandStack(), player);
-			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_UUID, ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_NAME, ImprovedCriticalEnchantment.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADDITION);
+			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_UUID, ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_NAME, ImprovedCriticalEnchantment.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
 			map.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, improvedCriticalModifier);
 		}
 		
