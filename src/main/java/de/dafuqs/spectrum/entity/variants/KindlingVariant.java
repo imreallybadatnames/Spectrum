@@ -1,20 +1,77 @@
 package de.dafuqs.spectrum.entity.variants;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
+import de.dafuqs.spectrum.worldgen.features.BlockStateFeatureConfig;
 import net.minecraft.registry.*;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.*;
 
-public record KindlingVariant(Identifier defaultTexture, Identifier blinkingTexture, Identifier angryTexture,
-							  Identifier clippedTexture, Identifier blinkingClippedTexture,
-							  Identifier angryClippedTexture, Identifier clippingLootTable) {
-	
-	public static final KindlingVariant DEFAULT = register("default", "textures/entity/kindling/kindling.png", "textures/entity/kindling/kindling_blink.png", "textures/entity/kindling/kindling_angry.png", "textures/entity/kindling/kindling_clipped.png", "textures/entity/kindling/kindling_blink_clipped.png", "textures/entity/kindling/kindling_angry_clipped.png", SpectrumLootTables.KINDLING_CLIPPING);
-	
-	private static KindlingVariant register(String name, String defaultTexture, String blinkingTexture, String angryTexture, String clippedTexture, String blinkingClippedTexture, String angryClippedTexture, Identifier clippingLootTable) {
-		return Registry.register(SpectrumRegistries.KINDLING_VARIANT, SpectrumCommon.locate(name), new KindlingVariant(SpectrumCommon.locate(defaultTexture), SpectrumCommon.locate(blinkingTexture), SpectrumCommon.locate(angryTexture), SpectrumCommon.locate(clippedTexture), SpectrumCommon.locate(blinkingClippedTexture), SpectrumCommon.locate(angryClippedTexture), clippingLootTable));
+public enum KindlingVariant implements StringIdentifiable {
+
+	DEFAULT("default", "textures/entity/kindling/kindling.png", "textures/entity/kindling/kindling_blink.png", "textures/entity/kindling/kindling_angry.png", "textures/entity/kindling/kindling_clipped.png", "textures/entity/kindling/kindling_blink_clipped.png", "textures/entity/kindling/kindling_angry_clipped.png", SpectrumLootTables.KINDLING_CLIPPING);
+
+	public static Codec<KindlingVariant> CODEC = StringIdentifiable.createCodec(KindlingVariant::values);
+
+	private final String name;
+	private final Identifier id;
+	private final Identifier defaultTexture;
+	private final Identifier blinkingTexture;
+	private final Identifier angryTexture;
+	private final Identifier clippedTexture;
+	private final Identifier blinkingClippedTexture;
+	private final Identifier angryClippedTexture;
+	private final Identifier clippingLootTable;
+
+	KindlingVariant(String name, String defaultTexture, String blinkingTexture, String angryTexture, String clippedTexture, String blinkingClippedTexture, String angryClippedTexture, Identifier clippingLootTable) {
+		this.name = name;
+		this.id = SpectrumCommon.locate(name);
+		this.defaultTexture = SpectrumCommon.locate(defaultTexture);
+		this.blinkingTexture = SpectrumCommon.locate(blinkingTexture);
+		this.angryTexture = SpectrumCommon.locate(angryTexture);
+		this.clippedTexture = SpectrumCommon.locate(clippedTexture);
+		this.blinkingClippedTexture = SpectrumCommon.locate(blinkingClippedTexture);
+		this.angryClippedTexture = SpectrumCommon.locate(angryClippedTexture);
+		this.clippingLootTable = clippingLootTable;
+		Registry.register(SpectrumRegistries.KINDLING_VARIANT, id, this);
 	}
-	
-	public static void init() {
+
+	public TagKey<KindlingVariant> getReference() {
+		return TagKey.of(SpectrumRegistries.KINDLING_VARIANT_KEY, id);
+	}
+
+	public Identifier getDefaultTexture() {
+		return defaultTexture;
+	}
+
+	public Identifier getBlinkingTexture() {
+		return blinkingTexture;
+	}
+
+	public Identifier getAngryTexture() {
+		return angryTexture;
+	}
+
+	public Identifier getClippedTexture() {
+		return clippedTexture;
+	}
+
+	public Identifier getBlinkingClippedTexture() {
+		return blinkingClippedTexture;
+	}
+
+	public Identifier getAngryClippedTexture() {
+		return angryClippedTexture;
+	}
+
+	public Identifier getClippingLootTable() {
+		return clippingLootTable;
+	}
+
+	@Override
+	public String asString() {
+		return name;
 	}
 }

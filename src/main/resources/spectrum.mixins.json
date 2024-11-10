@@ -100,7 +100,6 @@
     "accessors.SlimeEntityAccessor",
     "accessors.StatusEffectInstanceAccessor",
     "accessors.TridentEntityAccessor",
-    "accessors.TypeSpecificPredicateDeserializerMixin",
     "compat.connectormod.absent.EntityApplyFluidsMixinNoSinytra",
     "compat.connectormod.absent.ExplosionMixin",
     "compat.connectormod.absent.PlayerEntityMixin",

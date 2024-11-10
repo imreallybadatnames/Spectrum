@@ -1,5 +1,7 @@
 package de.dafuqs.spectrum.api.energy.color;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.registry.tag.*;
@@ -10,7 +12,11 @@ import org.joml.*;
 import java.util.*;
 
 public class InkColor {
-	
+
+	public static Codec<InkColor> CODEC = Identifier.CODEC.comapFlatMap(
+			id -> ofId(id).map(DataResult::success).orElse(DataResult.error(() -> "Not a valid ink color: " + id)),
+			InkColor::getID);
+
 	protected static final Map<DyeColor, InkColor> DYE_TO_COLOR = new HashMap<>();
 	
 	protected final DyeColor dyeColor;

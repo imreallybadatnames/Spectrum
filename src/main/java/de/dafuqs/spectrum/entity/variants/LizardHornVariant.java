@@ -1,30 +1,45 @@
 package de.dafuqs.spectrum.entity.variants;
 
+import com.mojang.serialization.Codec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 
-public record LizardHornVariant(Identifier texture) {
+public enum LizardHornVariant implements StringIdentifiable {
 	
-	public static final LizardHornVariant HORNY = register("horny", "textures/entity/lizard/horns_horny.png");
-	public static final LizardHornVariant STRAIGHT = register("straight", "textures/entity/lizard/horns_straight.png");
-	public static final LizardHornVariant FLEXIBLE = register("flexible", "textures/entity/lizard/horns_flexible.png");
-	public static final LizardHornVariant QUEER = register("queer", "textures/entity/lizard/horns_queer.png");
-	public static final LizardHornVariant POLY = register("poly", "textures/entity/lizard/horns_poly.png");
-	public static final LizardHornVariant ONLY_LIKES_YOU_AS_A_FRIEND = register("friendzoned", "textures/entity/lizard/horns_friendzoned.png");
-	
-	private static LizardHornVariant register(String name, String textureId) {
-		return Registry.register(SpectrumRegistries.LIZARD_HORN_VARIANT, SpectrumCommon.locate(name), new LizardHornVariant(SpectrumCommon.locate(textureId)));
+	HORNY("horny", "textures/entity/lizard/horns_horny.png"),
+	STRAIGHT("straight", "textures/entity/lizard/horns_straight.png"),
+	FLEXIBLE("flexible", "textures/entity/lizard/horns_flexible.png"),
+	QUEER("queer", "textures/entity/lizard/horns_queer.png"),
+	POLY("poly", "textures/entity/lizard/horns_poly.png"),
+	ONLY_LIKES_YOU_AS_A_FRIEND("friendzoned", "textures/entity/lizard/horns_friendzoned.png");
+
+	public static Codec<LizardHornVariant> CODEC = StringIdentifiable.createCodec(LizardHornVariant::values);
+
+	private final String name;
+	private final Identifier id;
+	private final Identifier texture;
+
+	LizardHornVariant(String name, String texture) {
+		this.name = name;
+		this.id = SpectrumCommon.locate(name);
+		this.texture = SpectrumCommon.locate(texture);
+		Registry.register(SpectrumRegistries.LIZARD_HORN_VARIANT, id, this);
 	}
 
-	public static final TagKey<LizardHornVariant> NATURAL_VARIANT = getReference("natural");
+	public TagKey<LizardHornVariant> getReference() {
+		return TagKey.of(SpectrumRegistries.LIZARD_HORN_VARIANT_KEY, id);
+	}
 
-	private static TagKey<LizardHornVariant> getReference(String name) {
-		return TagKey.of(SpectrumRegistries.LIZARD_HORN_VARIANT_KEY, SpectrumCommon.locate(name));
+	public Identifier getTexture() {
+		return texture;
+	}
+
+	@Override
+	public String asString() {
+		return name;
 	}
 	
-	public static void init() {
-	}
 }

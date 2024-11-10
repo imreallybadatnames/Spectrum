@@ -4,7 +4,7 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.mob_head.*;
 import de.dafuqs.spectrum.compat.gofish.*;
-import de.dafuqs.spectrum.entity.type_specific_predicates.*;
+import de.dafuqs.spectrum.entity.predicates.*;
 import de.dafuqs.spectrum.loot.conditions.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.loot.v2.*;

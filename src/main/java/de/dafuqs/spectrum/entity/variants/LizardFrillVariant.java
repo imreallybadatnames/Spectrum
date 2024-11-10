@@ -1,29 +1,44 @@
 package de.dafuqs.spectrum.entity.variants;
 
+import com.mojang.serialization.Codec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 
-public record LizardFrillVariant(Identifier texture) {
-	
-	public static final LizardFrillVariant SIMPLE = register("simple", "textures/entity/lizard/frills_simple.png");
-	public static final LizardFrillVariant FANCY = register("fancy", "textures/entity/lizard/frills_fancy.png");
-	public static final LizardFrillVariant RUFFLED = register("ruffled", "textures/entity/lizard/frills_ruffled.png");
-	public static final LizardFrillVariant MODEST = register("modest", "textures/entity/lizard/frills_modest.png");
-	public static final LizardFrillVariant NONE = register("none", "textures/entity/lizard/frills_none.png");
-	
-	public static final TagKey<LizardFrillVariant> NATURAL_VARIANT = getReference("natural");
+public enum LizardFrillVariant implements StringIdentifiable {
 
-	private static LizardFrillVariant register(String name, String textureId) {
-		return Registry.register(SpectrumRegistries.LIZARD_FRILL_VARIANT, SpectrumCommon.locate(name), new LizardFrillVariant(SpectrumCommon.locate(textureId)));
+	SIMPLE("simple", "textures/entity/lizard/frills_simple.png"),
+	FANCY("fancy", "textures/entity/lizard/frills_fancy.png"),
+	RUFFLED("ruffled", "textures/entity/lizard/frills_ruffled.png"),
+	MODEST("modest", "textures/entity/lizard/frills_modest.png"),
+	NONE("none", "textures/entity/lizard/frills_none.png");
+
+	public static Codec<LizardFrillVariant> CODEC = StringIdentifiable.createCodec(LizardFrillVariant::values);
+
+	private final String name;
+	private final Identifier id;
+	private final Identifier texture;
+
+	LizardFrillVariant(String name, String texture) {
+		this.name = name;
+		this.id = SpectrumCommon.locate(name);
+		this.texture = SpectrumCommon.locate(texture);
+		Registry.register(SpectrumRegistries.LIZARD_FRILL_VARIANT, id, this);
 	}
 
-	private static TagKey<LizardFrillVariant> getReference(String name) {
-		return TagKey.of(SpectrumRegistries.LIZARD_FRILL_VARIANT_KEY, SpectrumCommon.locate(name));
+	public TagKey<LizardFrillVariant> getReference() {
+		return TagKey.of(SpectrumRegistries.LIZARD_FRILL_VARIANT_KEY, id);
 	}
-	
-	public static void init() {
+
+	public Identifier getTexture() {
+		return texture;
 	}
+
+	@Override
+	public String asString() {
+		return name;
+	}
+
 }
