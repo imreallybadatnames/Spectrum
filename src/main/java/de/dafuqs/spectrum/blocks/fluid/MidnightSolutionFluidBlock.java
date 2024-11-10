@@ -24,12 +24,12 @@ public class MidnightSolutionFluidBlock extends SpectrumFluidBlock {
 	}
 
 	@Override
-	public DefaultParticleType getSplashParticle() {
+	public SimpleParticleType getSplashParticle() {
 		return SpectrumParticleTypes.MIDNIGHT_SOLUTION_SPLASH;
 	}
 
 	@Override
-	public Pair<DefaultParticleType, DefaultParticleType> getFishingParticles() {
+	public Pair<SimpleParticleType, SimpleParticleType> getFishingParticles() {
 		return new Pair<>(SpectrumParticleTypes.GRAY_SPARKLE_RISING, SpectrumParticleTypes.MIDNIGHT_SOLUTION_FISHING);
 	}
 

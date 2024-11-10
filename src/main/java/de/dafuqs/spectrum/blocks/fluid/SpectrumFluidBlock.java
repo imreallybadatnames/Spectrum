@@ -20,12 +20,11 @@ public abstract class SpectrumFluidBlock extends FluidBlock {
 		this.ultrawarmReplacementBlockState = ultrawarmReplacementBlockState;
 	}
 	
-	public abstract DefaultParticleType getSplashParticle();
+	public abstract SimpleParticleType getSplashParticle();
 	
-	public abstract Pair<DefaultParticleType, DefaultParticleType> getFishingParticles();
+	public abstract Pair<SimpleParticleType, SimpleParticleType> getFishingParticles();
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
 		((SpectrumFluid) fluid).onEntityCollision(state, world, pos, entity);

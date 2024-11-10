@@ -229,11 +229,11 @@ public class SpectrumCommon implements ModInitializer {
 		logInfo("Registering Tree Decorator Types...");
 		SpectrumTreeDecoratorTypes.register();
 		
-		//noinspection UnstableApiUsage
+		//noinspection
 		ItemStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.storage, SpectrumBlockEntities.BOTTOMLESS_BUNDLE);
-		//noinspection UnstableApiUsage
+		//noinspection
 		FluidStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.fluidStorage, SpectrumBlockEntities.FUSION_SHRINE);
-		//noinspection UnstableApiUsage
+		//noinspection
 		FluidStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.getFluidStorage(), SpectrumBlockEntities.TITRATION_BARREL);
 		
 		// Builtin Resource Packs

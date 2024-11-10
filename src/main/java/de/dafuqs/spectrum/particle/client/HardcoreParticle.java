@@ -26,7 +26,7 @@ public class HardcoreParticle extends AnimatedParticle {
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public static class Factory implements ParticleFactory<DefaultParticleType> {
+	public static class Factory implements ParticleFactory<SimpleParticleType> {
 		private final SpriteProvider spriteProvider;
 		
 		public Factory(SpriteProvider spriteProvider) {
@@ -34,7 +34,7 @@ public class HardcoreParticle extends AnimatedParticle {
 		}
 		
 		@Override
-		public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+		public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
 			return new HardcoreParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
 		}
 	}

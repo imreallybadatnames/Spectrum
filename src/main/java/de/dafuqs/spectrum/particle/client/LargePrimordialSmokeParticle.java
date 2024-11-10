@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 @Environment(EnvType.CLIENT)
 public class LargePrimordialSmokeParticle extends SpriteBillboardParticle {
@@ -48,14 +48,14 @@ public class LargePrimordialSmokeParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class SignalSmokeFactory implements ParticleFactory<DefaultParticleType> {
+    public static class SignalSmokeFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public SignalSmokeFactory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             var campfireSmokeParticle = new LargePrimordialSmokeParticle(clientWorld, d, e, f, g, h, i, true);
             campfireSmokeParticle.setAlpha(0.95F);
             campfireSmokeParticle.setSprite(this.spriteProvider);
@@ -64,14 +64,14 @@ public class LargePrimordialSmokeParticle extends SpriteBillboardParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class CosySmokeFactory implements ParticleFactory<DefaultParticleType> {
+    public static class CosySmokeFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public CosySmokeFactory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             var campfireSmokeParticle = new LargePrimordialSmokeParticle(clientWorld, d, e, f, g, h, i, false);
             campfireSmokeParticle.setAlpha(0.9F);
             campfireSmokeParticle.setSprite(this.spriteProvider);

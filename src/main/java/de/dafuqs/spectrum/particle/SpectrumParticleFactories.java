@@ -233,7 +233,7 @@ public class SpectrumParticleFactories {
 		ParticleFactoryRegistry.getInstance().register(SpectrumParticleTypes.DYNAMIC_ALWAYS_SHOW, DynamicParticle.Factory::new);
 	}
 
-	public static void registerColoredExplosionParticle(DefaultParticleType particleType, float red, float green, float blue) {
+	public static void registerColoredExplosionParticle(SimpleParticleType particleType, float red, float green, float blue) {
 		ParticleFactoryRegistry.getInstance().register(particleType, provider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> {
 			ExplosionLargeParticle.Factory factory = new ExplosionLargeParticle.Factory(provider);
 			Particle particle = factory.createParticle(particleType, world, x, y, z, velocityX, velocityY, velocityZ);
@@ -242,7 +242,7 @@ public class SpectrumParticleFactories {
 		});
 	}
 	
-	public static void registerColoredCraftingParticle(DefaultParticleType particleType, float red, float green, float blue) {
+	public static void registerColoredCraftingParticle(SimpleParticleType particleType, float red, float green, float blue) {
 		ParticleFactoryRegistry.getInstance().register(particleType, provider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> {
 			CraftingParticle.Factory factory = new CraftingParticle.Factory(provider);
 			Particle particle = factory.createParticle(particleType, world, x, y, z, velocityX, velocityY, velocityZ);
@@ -251,7 +251,7 @@ public class SpectrumParticleFactories {
 		});
 	}
 	
-	public static void registerColoredRisingParticle(DefaultParticleType particleType, float red, float green, float blue) {
+	public static void registerColoredRisingParticle(SimpleParticleType particleType, float red, float green, float blue) {
 		ParticleFactoryRegistry.getInstance().register(particleType, provider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> {
 			FixedVelocityParticle.Factory factory = new FixedVelocityParticle.Factory(provider);
 			Particle particle = factory.createParticle(particleType, world, x, y, z, velocityX, velocityY, velocityZ);
@@ -260,7 +260,7 @@ public class SpectrumParticleFactories {
 		});
 	}
 	
-	public static void registerColoredSporeBlossomParticles(DefaultParticleType fallingParticleType, DefaultParticleType airParticleType, float red, float green, float blue) {
+	public static void registerColoredSporeBlossomParticles(SimpleParticleType fallingParticleType, SimpleParticleType airParticleType, float red, float green, float blue) {
 		ParticleFactoryRegistry.getInstance().register(fallingParticleType, provider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> {
 			SpriteBillboardParticle particle = BlockLeakParticle.createFallingSporeBlossom(fallingParticleType, world, x, y, z, velocityX, velocityY, velocityZ);
             particle.setSprite(provider);

@@ -47,7 +47,7 @@ public class LitParticle extends AbstractSlowingParticle {
 		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
 	}
 	
-	public static class Factory implements ParticleFactory<DefaultParticleType> {
+	public static class Factory implements ParticleFactory<SimpleParticleType> {
 		
 		private final SpriteProvider spriteProvider;
 		
@@ -56,7 +56,7 @@ public class LitParticle extends AbstractSlowingParticle {
 		}
 		
 		@Override
-		public Particle createParticle(DefaultParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			LitParticle particle = new LitParticle(clientWorld, x, y, z, velocityX, velocityY, velocityZ);
 			particle.setSprite(this.spriteProvider);
 			return particle;

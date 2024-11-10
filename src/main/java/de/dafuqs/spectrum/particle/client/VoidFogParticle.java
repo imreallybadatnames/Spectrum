@@ -32,7 +32,7 @@ public class VoidFogParticle extends SpriteBillboardParticle {
 		return 0;
 	}
 	
-	public static class Factory implements ParticleFactory<DefaultParticleType> {
+	public static class Factory implements ParticleFactory<SimpleParticleType> {
 		private final SpriteProvider spriteProvider;
 		
 		public Factory(SpriteProvider spriteProvider) {
@@ -40,7 +40,7 @@ public class VoidFogParticle extends SpriteBillboardParticle {
 		}
 		
 		@Override
-		public Particle createParticle(DefaultParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			Random random = clientWorld.getRandom();
 			
 			VoidFogParticle particle = new VoidFogParticle(clientWorld, x, y, z, 0, (random.nextDouble() - 0.5) * 0.05, 0);

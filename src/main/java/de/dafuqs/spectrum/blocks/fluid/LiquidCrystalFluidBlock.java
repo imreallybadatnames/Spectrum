@@ -23,12 +23,12 @@ public class LiquidCrystalFluidBlock extends SpectrumFluidBlock {
 	}
 	
 	@Override
-	public DefaultParticleType getSplashParticle() {
+	public SimpleParticleType getSplashParticle() {
 		return SpectrumParticleTypes.LIQUID_CRYSTAL_FISHING;
 	}
 	
 	@Override
-	public Pair<DefaultParticleType, DefaultParticleType> getFishingParticles() {
+	public Pair<SimpleParticleType, SimpleParticleType> getFishingParticles() {
 		return new Pair<>(SpectrumParticleTypes.LIQUID_CRYSTAL_SPARKLE, SpectrumParticleTypes.LIQUID_CRYSTAL_FISHING);
 	}
 	

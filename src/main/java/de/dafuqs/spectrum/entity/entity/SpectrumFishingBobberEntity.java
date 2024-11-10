@@ -363,7 +363,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 				j = this.getZ() + (double) (h * (float) this.fishTravelCountdown * 0.1F);
 				blockState = serverWorld.getBlockState(BlockPos.ofFloored(d, e - 1.0D, j));
 				
-				Pair<DefaultParticleType, DefaultParticleType> particles = getFluidParticles(blockState);
+				Pair<SimpleParticleType, SimpleParticleType> particles = getFluidParticles(blockState);
 				if (this.fishTravelCountdown > 0) {
 					float k = g * 0.04F;
 					float l = h * 0.04F;
@@ -403,7 +403,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 					j = this.getZ() + (double) (MathHelper.cos(g) * h) * 0.1D;
 					blockState = serverWorld.getBlockState(BlockPos.ofFloored(d, e - 1.0D, j));
 					
-					Pair<DefaultParticleType, DefaultParticleType> particles = getFluidParticles(blockState);
+					Pair<SimpleParticleType, SimpleParticleType> particles = getFluidParticles(blockState);
 					if (particles != null) {
 						serverWorld.spawnParticles(particles.getLeft(), d, e, j, 2 + this.random.nextInt(2), 0.10000000149011612D, 0.0D, 0.10000000149011612D, 0.0D);
 					}
@@ -422,8 +422,8 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	}
 	
 	@Nullable
-	private Pair<DefaultParticleType, DefaultParticleType> getFluidParticles(BlockState blockState) {
-		Pair<DefaultParticleType, DefaultParticleType> particles = null;
+	private Pair<SimpleParticleType, SimpleParticleType> getFluidParticles(BlockState blockState) {
+		Pair<SimpleParticleType, SimpleParticleType> particles = null;
 		if (this.getWorld().getBlockState(getBlockPos()).getBlock() instanceof SpectrumFluidBlock spectrumFluidBlock) {
 			particles = spectrumFluidBlock.getFishingParticles();
 		} else if (blockState.isOf(Blocks.LAVA)) {

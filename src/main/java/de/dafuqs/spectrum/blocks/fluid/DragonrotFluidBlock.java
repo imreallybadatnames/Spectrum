@@ -20,12 +20,12 @@ public class DragonrotFluidBlock extends SpectrumFluidBlock {
 	}
 
 	@Override
-	public DefaultParticleType getSplashParticle() {
+	public SimpleParticleType getSplashParticle() {
 		return SpectrumParticleTypes.DRAGONROT;
 	}
 
 	@Override
-	public Pair<DefaultParticleType, DefaultParticleType> getFishingParticles() {
+	public Pair<SimpleParticleType, SimpleParticleType> getFishingParticles() {
 		return new Pair<>(SpectrumParticleTypes.DRAGONROT, SpectrumParticleTypes.DRAGONROT_FISHING);
 	}
 	

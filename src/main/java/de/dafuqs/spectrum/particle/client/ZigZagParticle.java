@@ -66,7 +66,7 @@ public class ZigZagParticle extends SpriteBillboardParticle {
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public static class Factory implements ParticleFactory<DefaultParticleType> {
+	public static class Factory implements ParticleFactory<SimpleParticleType> {
 		
 		private final SpriteProvider spriteProvider;
 		
@@ -75,7 +75,7 @@ public class ZigZagParticle extends SpriteBillboardParticle {
 		}
 		
 		@Override
-		public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			ZigZagParticle craftingParticle = new ZigZagParticle(clientWorld, x, y, z, velocityX, velocityY, velocityZ);
 			craftingParticle.setMaxAge((int) (8.0D / (clientWorld.random.nextDouble() * 0.8D + 0.2D)));
 			craftingParticle.setSprite(this.spriteProvider);

@@ -43,7 +43,7 @@ public class WindParticle extends SpriteBillboardParticle {
 		return 15728880;
 	}
 	
-	public static class Factory implements ParticleFactory<DefaultParticleType> {
+	public static class Factory implements ParticleFactory<SimpleParticleType> {
 		private final SpriteProvider spriteProvider;
 		
 		public Factory(SpriteProvider spriteProvider) {
@@ -51,7 +51,7 @@ public class WindParticle extends SpriteBillboardParticle {
 		}
 		
 		@Override
-		public Particle createParticle(DefaultParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld clientWorld, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			Random random = clientWorld.getRandom();
 			
 			WindParticle particle = new WindParticle(clientWorld, x, y, z, velocityX * random.nextDouble(), (random.nextDouble() - 0.5) * 0.05, velocityZ * random.nextDouble());
