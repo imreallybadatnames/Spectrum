@@ -76,7 +76,7 @@ public class FluidIngredient {
         if (this == EMPTY) return Ingredient.empty();
         if (this.fluid != null)
             return Ingredient.ofStacks(this.fluid.getBucketItem().getDefaultStack());
-        if (this.tag != null) {
+        if (this.tag != null && tag().isPresent()) {
             // Handle custom fluid registries
             // in the case of FluidIngredient objects created by other mods.
             Registry<Fluid> registry = Registries.FLUID;
@@ -96,20 +96,21 @@ public class FluidIngredient {
         Objects.requireNonNull(fluid);
         if (this == EMPTY) return fluid == Fluids.EMPTY;
         if (this.fluid != null) return this.fluid == fluid;
-        if (this.tag != null) return fluid.getDefaultState().isIn(tag().get());
+        if (this.tag != null && tag().isPresent()) return fluid.getDefaultState().isIn(tag().get());
 
         // UNREACHABLE under normal circumstances!
         throw new AssertionError("Invalid FluidIngredient object");
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     public boolean test(@NotNull FluidVariant variant) {
         Objects.requireNonNull(variant);
         return test(variant.getFluid());
     }
 
     public static @NotNull FluidIngredient fromIdentifier(@Nullable Identifier id, boolean isTag) {
-        if (isTag) {
+        if (id == null) {
+            return EMPTY;
+        } else if (isTag) {
             return FluidIngredient.of(id);
         } else {
             Fluid fluid = Registries.FLUID.get(id);

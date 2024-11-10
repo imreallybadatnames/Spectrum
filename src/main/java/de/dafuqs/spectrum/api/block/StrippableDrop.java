@@ -6,6 +6,8 @@ import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -36,7 +38,7 @@ public interface StrippableDrop {
 		return false;
 	}
 	
-	static List<ItemStack> getStrippedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, Identifier lootTableIdentifier) {
+	static List<ItemStack> getStrippedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, Identifier lootTableKey) {
 		var builder = (new LootContextParameterSet.Builder(world))
 				.add(LootContextParameters.BLOCK_STATE, state)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
@@ -44,7 +46,7 @@ public interface StrippableDrop {
 				.addOptional(LootContextParameters.THIS_ENTITY, entity)
 				.addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity);
 		
-		LootTable lootTable = world.getServer().getLootManager().getLootTable(lootTableIdentifier);
+		LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, lootTableKey));
 		return lootTable.generateLoot(builder.build(LootContextTypes.BLOCK));
 	}
 	

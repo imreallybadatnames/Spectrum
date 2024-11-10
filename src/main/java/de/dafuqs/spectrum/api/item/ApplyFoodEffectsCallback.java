@@ -1,13 +1,11 @@
 package de.dafuqs.spectrum.api.item;
 
-import com.mojang.datafixers.util.*;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
-
-import java.util.*;
 
 public interface ApplyFoodEffectsCallback {
 	
@@ -21,13 +19,12 @@ public interface ApplyFoodEffectsCallback {
 	
 	static void applyFoodComponent(World world, LivingEntity entity, FoodComponent foodComponent) {
 		if (entity instanceof PlayerEntity player) {
-			player.getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
+			player.getHungerManager().add(foodComponent.nutrition(), foodComponent.saturation());
 		}
 		
-		List<Pair<StatusEffectInstance, Float>> list = foodComponent.getStatusEffects();
-		for (Pair<StatusEffectInstance, Float> statusEffectInstanceFloatPair : list) {
-			if (!world.isClient && statusEffectInstanceFloatPair.getFirst() != null && world.random.nextFloat() < statusEffectInstanceFloatPair.getSecond()) {
-				entity.addStatusEffect(new StatusEffectInstance(statusEffectInstanceFloatPair.getFirst()));
+		for (var entry : foodComponent.effects()) {
+			if (!world.isClient && world.random.nextFloat() < entry.probability()) {
+				entity.addStatusEffect(new StatusEffectInstance(entry.effect()));
 			}
 		}
 	}

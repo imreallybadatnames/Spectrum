@@ -9,7 +9,6 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
-import net.minecraft.registry.*;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.*;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public interface FilterConfigurable {
 
     List<ItemVariant> getItemFilters();

@@ -5,6 +5,7 @@ import com.klikli_dev.modonomicon.book.*;
 import com.klikli_dev.modonomicon.book.conditions.*;
 import com.klikli_dev.modonomicon.book.page.*;
 import com.klikli_dev.modonomicon.util.*;
+import de.dafuqs.spectrum.api.block.GatedGuidebookPage;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.unlock_conditions.*;
 import net.minecraft.item.*;
@@ -16,7 +17,7 @@ import net.minecraft.world.*;
 
 import java.util.*;
 
-public class BookGatedRecipePage<T extends GatedRecipe<?>> extends BookRecipePage<T> implements de.dafuqs.spectrum.interfaces.GatedGuidebookPage {
+public class BookGatedRecipePage<T extends GatedRecipe<?>> extends BookRecipePage<T> implements GatedGuidebookPage {
 	
 	private final Identifier pageType;
 	

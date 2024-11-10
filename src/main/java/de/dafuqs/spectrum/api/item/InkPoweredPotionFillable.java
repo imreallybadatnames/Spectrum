@@ -70,9 +70,9 @@ public interface InkPoweredPotionFillable {
 		itemStack.removeSubNbt(InkPoweredStatusEffectInstance.NBT_KEY);
 	}
 	
-	default void appendPotionFillableTooltip(ItemStack stack, List<Text> tooltip, MutableText attributeModifierText, boolean showDuration) {
+	default void appendPotionFillableTooltip(ItemStack stack, List<Text> tooltip, MutableText attributeModifierText, boolean showDuration, float tickRate) {
 		List<InkPoweredStatusEffectInstance> effects = InkPoweredStatusEffectInstance.getEffects(stack);
-		InkPoweredStatusEffectInstance.buildTooltip(tooltip, effects, attributeModifierText, showDuration);
+		InkPoweredStatusEffectInstance.buildTooltip(tooltip, effects, attributeModifierText, showDuration, tickRate);
 		
 		int maxEffectCount = maxEffectCount();
 		if (effects.size() < maxEffectCount) {

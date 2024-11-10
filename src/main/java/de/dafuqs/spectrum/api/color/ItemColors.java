@@ -85,7 +85,7 @@ public class ItemColors extends ColorRegistry<Item> {
 		put(Items.GUNPOWDER, DyeColor.GRAY);
 		put(Items.MAGMA_CREAM, DyeColor.ORANGE);
 		put(Items.ROTTEN_FLESH, DyeColor.GRAY);
-		put(Items.SCUTE, DyeColor.BLUE);
+		put(Items.TURTLE_SCUTE, DyeColor.BLUE);
 		put(Items.SUGAR, DyeColor.YELLOW);
 		put(Items.WATER_BUCKET, DyeColor.LIGHT_BLUE);
 		put(Items.SPONGE, DyeColor.LIGHT_BLUE);

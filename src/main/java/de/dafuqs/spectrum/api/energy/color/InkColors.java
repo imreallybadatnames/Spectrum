@@ -22,8 +22,7 @@ public class InkColors {
 	 * So, instead, we use something closer to midnight solution in shade.
 	 */
 	public static final int BLACK_TEXT_COLOR = 0xff302951;
-	public static final Vector3f BLACK_TEXT_VEC = ColorHelper.colorIntToVec(BLACK_TEXT_COLOR);
-	
+
 	public static final int CYAN_COLOR = 0xff5bffed;
 	public static final int MAGENTA_COLOR = 0xffff4ff6;
 	public static final int YELLOW_COLOR = 0xffeded00;

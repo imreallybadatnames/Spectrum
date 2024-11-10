@@ -34,7 +34,7 @@ public class ConcealingOilsItem extends DrinkItem implements InkPoweredPotionFil
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (!getEffects(stack).isEmpty())
             tooltip.add(Text.translatable("item.spectrum.concealing_oils.tooltip").styled(s -> s.withFormatting(Formatting.GRAY).withItalic(true)));
-        appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.concealing_oils.when_poisoned"), true);
+        appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.concealing_oils.when_poisoned"), true, context.getUpdateTickRate());
     }
 
     @Override

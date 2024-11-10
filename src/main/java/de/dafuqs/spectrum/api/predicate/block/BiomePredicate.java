@@ -28,10 +28,7 @@ public class BiomePredicate {
         if (this.tag != null && world.getBiome(pos).isIn(this.tag)) {
             return true;
         }
-        if (this.biome != null && world.getBiome(pos).value() == this.biome) {
-            return true;
-        }
-        return false;
+        return this.biome != null && world.getBiome(pos).value() == this.biome;
     }
 
     public static BiomePredicate fromJson(@Nullable JsonElement json) {

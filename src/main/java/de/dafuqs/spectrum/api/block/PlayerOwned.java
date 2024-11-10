@@ -31,7 +31,7 @@ public interface PlayerOwned {
 	@Nullable
 	default PlayerEntity getOwnerIfOnline() {
 		UUID ownerUUID = this.getOwnerUUID();
-		if (ownerUUID != null) {
+		if (ownerUUID != null && SpectrumCommon.minecraftServer != null) {
 			return SpectrumCommon.minecraftServer.getPlayerManager().getPlayer(ownerUUID);
 		}
 		return null;

@@ -137,9 +137,11 @@ public interface InkPowered {
 		if (!canUse(player)) {
 			return false;
 		}
-		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"))))
-		{
-			return false;
+		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID)) {
+			var effect = Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"));
+			if (player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(effect))) {
+				return false;
+			}
 		}
 		
 		// hands (main hand, too, if someone uses the staff from the offhand)
@@ -213,9 +215,11 @@ public interface InkPowered {
 			return false;
 		}
 
-		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && player.hasStatusEffect(Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"))))
-		{
-			return false;
+		if(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID)) {
+			var effect = Registries.STATUS_EFFECT.get(Identifier.of("malum:silenced"));
+			if (player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(effect))) {
+				return false;
+			}
 		}
 		
 		if (player.isCreative()) {

@@ -15,6 +15,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.predicate.item.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
@@ -93,7 +94,7 @@ public interface ItemProjectileBehavior {
 		@Override
 		public ItemStack onEntityHit(ItemProjectileEntity projectile, ItemStack stack, Entity owner, EntityHitResult hitResult) {
 			Entity target = hitResult.getEntity();
-			
+
 			if (target instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
 				return stack;
 			}
@@ -106,7 +107,9 @@ public interface ItemProjectileBehavior {
 				creeperEntity.ignite();
 				
 				if (stack.isDamageable()) {
-					stack.damage(1, world.getRandom(), null);
+					if (owner instanceof LivingEntity livingEntity) {
+						stack.damage(1, livingEntity, null);
+					}
 				} else {
 					NbtCompound nbtCompound = stack.getNbt();
 					boolean isUnbreakable = nbtCompound != null && nbtCompound.getBoolean("Unbreakable");
@@ -179,9 +182,9 @@ public interface ItemProjectileBehavior {
 				}
 				
 				if (target instanceof LivingEntity livingTarget) {
-					if (!target.getWorld().isClient() && owner instanceof LivingEntity livingOwner) {
+					if (owner.getWorld() instanceof ServerWorld serverWorld && owner instanceof LivingEntity livingOwner) {
 						EnchantmentHelper.onUserDamaged(livingTarget, livingOwner);
-						EnchantmentHelper.onTargetDamaged(livingOwner, target);
+						EnchantmentHelper.onTargetDamaged(serverWorld, target, livingTarget.getRecentDamageSource(), stack);
 					}
 					if (target != owner && target instanceof PlayerEntity && owner instanceof ServerPlayerEntity serverPlayerOwner && !projectile.isSilent()) {
 						serverPlayerOwner.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER, 0.0F));
@@ -231,22 +234,19 @@ public interface ItemProjectileBehavior {
 		@Override
 		public Direction[] getPlacementDirections() {
 			Direction[] directions = Direction.getEntityFacingOrder(itemProjectileEntity);
-			if (this.canReplaceExisting) {
-				return directions;
-			} else {
+			if (!this.canReplaceExisting) {
 				Direction direction = this.getSide();
 				
 				int i;
-				for (i = 0; i < directions.length && directions[i] != direction.getOpposite(); ++i) {
-				}
+				for (i = 0; i < directions.length && directions[i] != direction.getOpposite();)
+					i++;
 				
 				if (i > 0) {
 					System.arraycopy(directions, 0, directions, 1, i);
 					directions[0] = direction.getOpposite();
 				}
-				
-				return directions;
 			}
+			return directions;
 		}
 		
 	}

@@ -124,8 +124,8 @@ public interface Stampable {
             return source.verifyStampData(data);
         }
 
-        public void notifySourceOfChange(StampData data, boolean succeess) {
-            source.onImpressedOther(data, succeess);
+        public void notifySourceOfChange(StampData data, boolean success) {
+            source.onImpressedOther(data, success);
         }
 
         public boolean canUserStamp(Optional<PlayerEntity> player) {

@@ -37,7 +37,6 @@ public class InkColor {
 		this.colorVec = ColorHelper.colorIntToVec(color);
 		this.textColor = textColor;
 		this.textColorVec = ColorHelper.colorIntToVec(textColor);
-		;
 		this.requiredAdvancement = requiredAdvancement;
 		
 		DYE_TO_COLOR.put(dyeColor, this);

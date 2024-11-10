@@ -7,6 +7,7 @@ import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
@@ -110,9 +111,9 @@ public class InkPoweredStatusEffectInstance {
 		}
 	}
 	
-	public static void buildTooltip(List<Text> tooltip, List<InkPoweredStatusEffectInstance> effects, MutableText attributeModifierText, boolean showDuration) {
+	public static void buildTooltip(List<Text> tooltip, List<InkPoweredStatusEffectInstance> effects, MutableText attributeModifierText, boolean showDuration, float tickRate) {
 		if (effects.size() > 0) {
-			List<Pair<EntityAttribute, EntityAttributeModifier>> attributeModifiers = Lists.newArrayList();
+			List<Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> attributeModifiers = Lists.newArrayList();
 			for (InkPoweredStatusEffectInstance entry : effects) {
 				if (entry.isUnidentifiable()) {
 					tooltip.add(Text.translatable("item.spectrum.potion.tooltip.unidentifiable"));
@@ -127,42 +128,41 @@ public class InkPoweredStatusEffectInstance {
 					mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + effect.getAmplifier()));
 				}
 				if (showDuration && effect.getDuration() > 20) {
-					mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(effect, 1.0F));
+					mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(effect, 1.0F, tickRate));
 				}
-				mutableText.formatted(effect.getEffectType().getCategory().getFormatting());
+				mutableText.formatted(effect.getEffectType().value().getCategory().getFormatting());
 				mutableText.append(Text.translatable("spectrum.tooltip.ink_cost", Support.getShortenedNumberString(cost.getCost()), cost.getColor().getColoredInkName()).formatted(Formatting.GRAY));
 				if (entry.isIncurable()) {
 					mutableText.append(Text.translatable("item.spectrum.potion.tooltip.incurable"));
 				}
 				tooltip.add(mutableText);
 				
-				Map<EntityAttribute, EntityAttributeModifier> map = effect.getEffectType().getAttributeModifiers();
-				for (Map.Entry<EntityAttribute, EntityAttributeModifier> entityAttributeEntityAttributeModifierEntry : map.entrySet()) {
-					EntityAttributeModifier entityAttributeModifier = entityAttributeEntityAttributeModifierEntry.getValue();
-					EntityAttributeModifier entityAttributeModifier2 = new EntityAttributeModifier(entityAttributeModifier.getName(), effect.getEffectType().adjustModifierAmount(effect.getAmplifier(), entityAttributeModifier), entityAttributeModifier.getOperation());
-					attributeModifiers.add(new Pair<>(entityAttributeEntityAttributeModifierEntry.getKey(), entityAttributeModifier2));
-				}
+				effect.getEffectType().value().forEachAttributeModifier(effect.getAmplifier(), (attribute, modifier) ->
+					attributeModifiers.add(new Pair<>(attribute, modifier))
+				);
 			}
 			
 			if (!attributeModifiers.isEmpty()) {
 				tooltip.add(Text.empty());
 				tooltip.add(attributeModifierText.formatted(Formatting.DARK_PURPLE));
 				
-				for (Pair<EntityAttribute, EntityAttributeModifier> entityAttributeEntityAttributeModifierPair : attributeModifiers) {
-					EntityAttributeModifier mutableText = entityAttributeEntityAttributeModifierPair.getRight();
-					double statusEffect = mutableText.getValue();
+				for (var pair : attributeModifiers) {
+					var translatedAttribute = Text.translatable(pair.getLeft().value().getTranslationKey());
+					var mutableText = pair.getRight();
+
+					double statusEffect = mutableText.value();
 					double d;
-					if (mutableText.getOperation() != EntityAttributeModifier.Operation.MULTIPLY_BASE && mutableText.getOperation() != EntityAttributeModifier.Operation.MULTIPLY_TOTAL) {
-						d = mutableText.getValue();
+					if (mutableText.operation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE && mutableText.operation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
+						d = mutableText.value();
 					} else {
-						d = mutableText.getValue() * 100.0D;
+						d = mutableText.value() * 100.0D;
 					}
 					
 					if (statusEffect > 0.0D) {
-						tooltip.add((Text.translatable("attribute.modifier.plus." + mutableText.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(d), Text.translatable((entityAttributeEntityAttributeModifierPair.getLeft()).getTranslationKey()))).formatted(Formatting.BLUE));
+						tooltip.add((Text.translatable("attribute.modifier.plus." + mutableText.operation().getId(), ItemStack.MODIFIER_FORMAT.format(d), translatedAttribute)).formatted(Formatting.BLUE));
 					} else if (statusEffect < 0.0D) {
 						d *= -1.0D;
-						tooltip.add((Text.translatable("attribute.modifier.take." + mutableText.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(d), Text.translatable((entityAttributeEntityAttributeModifierPair.getLeft()).getTranslationKey()))).formatted(Formatting.RED));
+						tooltip.add((Text.translatable("attribute.modifier.take." + mutableText.operation().getId(), ItemStack.MODIFIER_FORMAT.format(d), translatedAttribute)).formatted(Formatting.RED));
 					}
 				}
 			}
@@ -171,7 +171,7 @@ public class InkPoweredStatusEffectInstance {
 	
 	public int getColor() {
 		if (this.customColor == -1) {
-			return statusEffectInstance.getEffectType().getColor();
+			return statusEffectInstance.getEffectType().value().getColor();
 		}
 		return this.customColor;
 	}

@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.interfaces;
+package de.dafuqs.spectrum.api.block;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
@@ -21,10 +21,10 @@ public interface GatedGuidebookPage {
 			SpectrumCommon.locate("creating_life/egg_laying_wooly_pig"), SpectrumCommon.locate("midgame/remember_egg_laying_wooly_pig") // recipe should only be revealed after remembering it
 	);
 	
-	static void runSanityCheck(Identifier entryId, int pageNr, String pageAdvancement, GatedRecipe... recipes) {
+	static void runSanityCheck(Identifier entryId, int pageNr, String pageAdvancement, GatedRecipe<?>... recipes) {
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			if (pageAdvancement != null && !pageAdvancement.isEmpty()) {
-				for (GatedRecipe recipe : recipes) {
+				for (GatedRecipe<?> recipe : recipes) {
 					if (recipe == null) {
 						SpectrumCommon.logWarning("Guidebook page " + entryId + " page " + pageNr + " is missing its recipe");
 						continue;
