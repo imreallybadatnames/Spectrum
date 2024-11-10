@@ -4,6 +4,8 @@ import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.fabric.api.particle.v1.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.particle.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
@@ -13,6 +15,7 @@ import java.util.function.*;
 
 public class SpectrumParticleTypes {
 	
+	// FIXME - Particle refactor required
 	public static ParticleType<ItemTransmissionParticleEffect> ITEM_TRANSMISSION = register("item_transfer", ItemTransmissionParticleEffect.FACTORY, (particleType) -> ItemTransmissionParticleEffect.CODEC, false);
 	public static ParticleType<ExperienceTransmissionParticleEffect> EXPERIENCE_TRANSMISSION = register("experience_transfer", ExperienceTransmissionParticleEffect.FACTORY, (particleType) -> ExperienceTransmissionParticleEffect.CODEC, false);
 	public static ParticleType<WirelessRedstoneTransmissionParticleEffect> WIRELESS_REDSTONE_TRANSMISSION = register("wireless_redstone_transmission", WirelessRedstoneTransmissionParticleEffect.FACTORY, (particleType) -> WirelessRedstoneTransmissionParticleEffect.CODEC, false);
@@ -209,11 +212,21 @@ public class SpectrumParticleTypes {
 	}
 	
 	// complex particles
-	private static <T extends ParticleEffect> ParticleType<T> register(String name, ParticleEffect.Factory<T> factory, final Function<ParticleType<T>, Codec<T>> function, boolean alwaysShow) {
-		return Registry.register(Registries.PARTICLE_TYPE, SpectrumCommon.locate(name), new ParticleType<T>(alwaysShow, factory) {
+	private static <T extends ParticleEffect> ParticleType<T> register(
+		String name,
+		boolean alwaysShow,
+		Function<ParticleType<T>, MapCodec<T>> codecGetter,
+		Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter
+	) {
+		return Registry.register(Registries.PARTICLE_TYPE, name, new ParticleType<T>(alwaysShow) {
 			@Override
-			public Codec<T> getCodec() {
-				return function.apply(this);
+			public MapCodec<T> getCodec() {
+				return codecGetter.apply(this);
+			}
+			
+			@Override
+			public PacketCodec<? super RegistryByteBuf, T> getPacketCodec() {
+				return packetCodecGetter.apply(this);
 			}
 		});
 	}
