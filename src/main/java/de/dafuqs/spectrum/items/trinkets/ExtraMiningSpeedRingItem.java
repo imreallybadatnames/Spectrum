@@ -38,7 +38,7 @@ public class ExtraMiningSpeedRingItem extends InkDrainTrinketItem {
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		double miningSpeedMod = getExtraMiningSpeed(storedInk);
 		if (miningSpeedMod != 0) {
-			modifiers.put(AdditionalEntityAttributes.DIG_SPEED, new EntityAttributeModifier(uuid, "spectrum:ring_of_pursuit", miningSpeedMod, EntityAttributeModifier.Operation.ADDITION));
+			modifiers.put(AdditionalEntityAttributes.DIG_SPEED, new EntityAttributeModifier(uuid, "spectrum:ring_of_pursuit", miningSpeedMod, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

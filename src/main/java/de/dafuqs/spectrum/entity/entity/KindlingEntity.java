@@ -235,7 +235,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 			if (this.isHorseArmor(stack)) {
 				int armorBonus = ((HorseArmorItem) stack.getItem()).getBonus();
 				if (armorBonus != 0) {
-					this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).addTemporaryModifier(new EntityAttributeModifier(HORSE_ARMOR_BONUS_ID, "Horse armor bonus", armorBonus, EntityAttributeModifier.Operation.ADDITION));
+					this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).addTemporaryModifier(new EntityAttributeModifier(HORSE_ARMOR_BONUS_ID, "Horse armor bonus", armorBonus, EntityAttributeModifier.Operation.ADD_VALUE));
 				}
 			}
 		}

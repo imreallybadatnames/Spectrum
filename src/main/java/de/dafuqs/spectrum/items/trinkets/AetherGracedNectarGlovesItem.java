@@ -41,7 +41,7 @@ public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implement
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 		Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);
-		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:nectar_gloves_sleep", -1, EntityAttributeModifier.Operation.ADDITION));
+		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:nectar_gloves_sleep", -1, EntityAttributeModifier.Operation.ADD_VALUE));
 		return modifiers;
 	}
 

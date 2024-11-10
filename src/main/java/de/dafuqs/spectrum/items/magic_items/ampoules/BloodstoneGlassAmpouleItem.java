@@ -27,8 +27,8 @@ public class BloodstoneGlassAmpouleItem extends BaseGlassAmpouleItem implements 
 		super(settings);
 		
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADDITION));
-		builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADDITION));
+		builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE));
+		builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE));
 		this.attributeModifiers = builder.build();
 	}
 

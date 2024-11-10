@@ -26,7 +26,7 @@ public abstract class GravityRingItem extends InkDrainTrinketItem implements Gra
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		double knockbackResistance = getBonus(storedInk) / 10D;
 		if (knockbackResistance != 0) {
-			modifiers.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid, getAttributeName(), negativeGravity() ? -knockbackResistance : knockbackResistance, EntityAttributeModifier.Operation.ADDITION));
+			modifiers.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid, getAttributeName(), negativeGravity() ? -knockbackResistance : knockbackResistance, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

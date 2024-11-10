@@ -42,11 +42,11 @@ public class LaurelsOfSerenityItem extends InkDrainTrinketItem {
             // For some weird reason, Pug, who PRd the attribute to Additional Entity Attributes
             // made negative values be the 'good' variant (aka reducing the distance mobs need to be in to detect an entity)
             // so it shows up red in tooltips. Hmmmm
-            modifiers.put(AdditionalEntityAttributes.MOB_DETECTION_RANGE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_detection_range", -detectionRangeMod, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+            modifiers.put(AdditionalEntityAttributes.MOB_DETECTION_RANGE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_detection_range", -detectionRangeMod, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         }
         double sleepResistanceMod = getInducedSleepResistanceMod(storedInk);
         if (sleepResistanceMod != 0) {
-            modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_sleep", sleepResistanceMod, EntityAttributeModifier.Operation.ADDITION));
+            modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_sleep", sleepResistanceMod, EntityAttributeModifier.Operation.ADD_VALUE));
         }
         
         return modifiers;

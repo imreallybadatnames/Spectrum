@@ -39,7 +39,7 @@ public class AttackRingItem extends SpectrumTrinketItem {
 		super.onUnequip(stack, slot, entity);
 		if (entity.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_ATTACK_DAMAGE, AttackRingItem.ATTACK_RING_DAMAGE_UUID)) {
 			Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
-			EntityAttributeModifier modifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			EntityAttributeModifier modifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 			map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, modifier);
 			entity.getAttributes().removeModifiers(map);
 		}

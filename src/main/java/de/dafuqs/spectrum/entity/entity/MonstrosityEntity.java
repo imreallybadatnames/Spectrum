@@ -210,7 +210,7 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 		this.timesGottenStronger += amount;
 
 		Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
-		EntityAttributeModifier jeopardantModifier = new EntityAttributeModifier(BONUS_DAMAGE_UUID, "spectrum:monstrosity_bonus", 1.0 + timesGottenStronger * 0.1, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+		EntityAttributeModifier jeopardantModifier = new EntityAttributeModifier(BONUS_DAMAGE_UUID, "spectrum:monstrosity_bonus", 1.0 + timesGottenStronger * 0.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, jeopardantModifier);
 		this.getAttributes().addTemporaryModifiers(map);
 

@@ -24,7 +24,7 @@ public class LifeDrainStatusEffect extends SpectrumStatusEffect {
 			EntityAttributeModifier currentMod = instance.getModifier(ATTRIBUTE_UUID);
 			if (currentMod != null) {
 				instance.removeModifier(currentMod);
-				EntityAttributeModifier newModifier = new EntityAttributeModifier(UUID.fromString(ATTRIBUTE_UUID_STRING), this::getTranslationKey, currentMod.getValue() - (dragon ? 2 : 1), EntityAttributeModifier.Operation.ADDITION);
+				EntityAttributeModifier newModifier = new EntityAttributeModifier(UUID.fromString(ATTRIBUTE_UUID_STRING), this::getTranslationKey, currentMod.getValue() - (dragon ? 2 : 1), EntityAttributeModifier.Operation.ADD_VALUE);
 				instance.addPersistentModifier(newModifier);
 				instance.getValue(); // recalculate final value
 				if (entity.getHealth() > entity.getMaxHealth()) {

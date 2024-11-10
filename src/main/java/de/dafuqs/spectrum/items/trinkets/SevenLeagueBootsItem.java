@@ -15,7 +15,7 @@ import java.util.*;
 public class SevenLeagueBootsItem extends SpectrumTrinketItem implements ExtendedEnchantable {
 	
 	public static final UUID STEP_BOOST_UUID = UUID.fromString("47b19f03-3211-4b4d-abf1-0c544a19dc70");
-	private static final EntityAttributeModifier STEP_BOOST_MODIFIER = new EntityAttributeModifier(STEP_BOOST_UUID, "spectrum:speed_boots", 0.75, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier STEP_BOOST_MODIFIER = new EntityAttributeModifier(STEP_BOOST_UUID, "spectrum:speed_boots", 0.75, EntityAttributeModifier.Operation.ADD_VALUE);
 	
 	public SevenLeagueBootsItem(Settings settings) {
 		super(settings, SpectrumCommon.locate("unlocks/trinkets/seven_league_boots"));
@@ -27,7 +27,7 @@ public class SevenLeagueBootsItem extends SpectrumTrinketItem implements Extende
 		
 		int powerLevel = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
 		double speedBoost = 0.05 * (powerLevel + 1);
-		modifiers.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(uuid, "spectrum:movement_speed", speedBoost, EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+		modifiers.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(uuid, "spectrum:movement_speed", speedBoost, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 		modifiers.put(StepHeightEntityAttributeMain.STEP_HEIGHT, STEP_BOOST_MODIFIER);
 		
 		return modifiers;
