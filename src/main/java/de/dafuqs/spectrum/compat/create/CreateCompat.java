@@ -30,10 +30,10 @@ public class CreateCompat extends SpectrumIntegrationPacks.ModIntegrationPack {
 
     @Override
     public void register() {
-        SMALL_ZINC_BUD = new SpectrumClusterBlock(FabricBlockSettings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(Blocks.LIGHT_GRAY_CONCRETE.getDefaultMapColor()).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
-        LARGE_ZINC_BUD = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_ZINC_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
-        ZINC_CLUSTER = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_ZINC_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
-        PURE_ZINC_BLOCK = new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK));
+        SMALL_ZINC_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(Blocks.LIGHT_GRAY_CONCRETE.getDefaultMapColor()).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
+        LARGE_ZINC_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_ZINC_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
+        ZINC_CLUSTER = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_ZINC_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
+        PURE_ZINC_BLOCK = new Block(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK));
         PURE_ZINC = new Item(SpectrumItems.IS.of());
         Item.Settings settings = SpectrumItems.IS.of();
         registerBlockWithItem("small_zinc_bud", SMALL_ZINC_BUD, settings, DyeColor.BROWN);

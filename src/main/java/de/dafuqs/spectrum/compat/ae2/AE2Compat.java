@@ -34,15 +34,15 @@ public class AE2Compat extends SpectrumIntegrationPacks.ModIntegrationPack {
 	@Override
 	public void register() {
 		// BLOCKS
-		SMALL_CERTUS_QUARTZ_BUD = new SpectrumClusterBlock(FabricBlockSettings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(MapColor.TERRACOTTA_WHITE).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
-		LARGE_CERTUS_QUARTZ_BUD = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_CERTUS_QUARTZ_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
-		CERTUS_QUARTZ_CLUSTER = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_CERTUS_QUARTZ_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
-		SMALL_FLUIX_BUD = new SpectrumClusterBlock(FabricBlockSettings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(Blocks.PURPLE_CONCRETE.getDefaultMapColor()).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
-		LARGE_FLUIX_BUD = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_FLUIX_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
-		FLUIX_CLUSTER = new SpectrumClusterBlock(FabricBlockSettings.copyOf(SMALL_FLUIX_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
+		SMALL_CERTUS_QUARTZ_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(MapColor.TERRACOTTA_WHITE).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
+		LARGE_CERTUS_QUARTZ_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_CERTUS_QUARTZ_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
+		CERTUS_QUARTZ_CLUSTER = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_CERTUS_QUARTZ_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
+		SMALL_FLUIX_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.create().pistonBehavior(PistonBehavior.DESTROY).hardness(1.0f).mapColor(Blocks.PURPLE_CONCRETE.getDefaultMapColor()).requiresTool().nonOpaque(), SpectrumClusterBlock.GrowthStage.SMALL);
+		LARGE_FLUIX_BUD = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_FLUIX_BUD), SpectrumClusterBlock.GrowthStage.LARGE);
+		FLUIX_CLUSTER = new SpectrumClusterBlock(AbstractBlock.Settings.copy(SMALL_FLUIX_BUD), SpectrumClusterBlock.GrowthStage.CLUSTER);
 		
-		PURE_CERTUS_QUARTZ_BLOCK = new Block(FabricBlockSettings.create().mapColor(MapColor.PALE_YELLOW).strength(0.3F).sounds(BlockSoundGroup.GLASS));
-		PURE_FLUIX_BLOCK = new Block(FabricBlockSettings.create().mapColor(MapColor.PALE_YELLOW).strength(0.3F).sounds(BlockSoundGroup.GLASS));
+		PURE_CERTUS_QUARTZ_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(0.3F).sounds(BlockSoundGroup.GLASS));
+		PURE_FLUIX_BLOCK = new Block(AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(0.3F).sounds(BlockSoundGroup.GLASS));
 
 		Item.Settings settings = SpectrumItems.IS.of();
 		registerBlockWithItem("small_certus_quartz_bud", SMALL_CERTUS_QUARTZ_BUD, settings, DyeColor.YELLOW);
