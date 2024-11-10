@@ -8,12 +8,12 @@ import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -57,8 +57,8 @@ public class GlassCrestCrossbowItem extends MalachiteCrossbowItem implements Ext
     }
     
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return isCharged(stack) ? OVERCHARGE_DURATION_MAX_TICKS : super.getMaxUseTime(stack);
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+        return isCharged(stack) ? OVERCHARGE_DURATION_MAX_TICKS : super.getMaxUseTime(stack, user);
     }
     
     @Override
@@ -94,23 +94,20 @@ public class GlassCrestCrossbowItem extends MalachiteCrossbowItem implements Ext
     }
     
     public static float getOvercharge(ItemStack stack) {
-        NbtCompound compound = stack.getNbt();
-        if (compound == null) {
+        var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+        if (!nbtComp.contains("Overcharged"))
             return 0;
-        }
-        return compound.getFloat("Overcharged");
+        return nbtComp.copyNbt().getFloat("Overcharged");
     }
     
     public static void overcharge(ItemStack stack, float percent) {
-        NbtCompound compound = stack.getOrCreateNbt();
-        compound.putFloat("Overcharged", percent);
+        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+                comp -> comp.apply(nbt -> nbt.putFloat("Overcharged", percent)));
     }
     
     public static void unOvercharge(ItemStack stack) {
-        NbtCompound compound = stack.getNbt();
-        if (compound != null) {
-            compound.remove("Overcharged");
-        }
+        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+                comp -> comp.apply(nbt -> nbt.remove("Overcharged")));
     }
     
     @Override

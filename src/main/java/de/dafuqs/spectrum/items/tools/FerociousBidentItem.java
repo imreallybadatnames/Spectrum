@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -22,7 +21,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 	public static final InkCost RIPTIDE_COST = new InkCost(InkColors.WHITE, 10);
 	public static final int BUILTIN_RIPTIDE_LEVEL = 1;
 	
-	public FerociousBidentItem(Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
+	public FerociousBidentItem(Item.Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
 		super(settings, attackSpeed, damage, armorPierce, protPierce);
 	}
 	
@@ -46,7 +45,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 		super.usageTick(world, user, stack, remainingUseTicks);
 		if (user.isUsingRiptide() && user instanceof PlayerEntity player) {
 			
-			int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
+			int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
 			if (useTime % 10 == 0) {
 				if (InkPowered.tryDrainEnergy(player, RIPTIDE_COST)) {
 					stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));

@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -12,7 +11,6 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -22,7 +20,7 @@ public class FractalBidentItem extends MalachiteBidentItem implements SlotBackgr
 	
 	public static final InkCost MIRROR_IMAGE_COST = new InkCost(InkColors.WHITE, 25);
 	
-	public FractalBidentItem(Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
+	public FractalBidentItem(Item.Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
 		super(settings, attackSpeed, damage, armorPierce, protPierce);
 	}
 	

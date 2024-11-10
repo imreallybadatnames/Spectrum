@@ -12,6 +12,7 @@ import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.world.*;
@@ -119,7 +120,7 @@ public class SpectrumModelPredicateProviders {
 			if (itemStack == null) {
 				return 0F;
 			}
-			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(itemStack);
+			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(MinecraftClient.getInstance().world.getRegistryManager(), itemStack);
 			if(projectile.isEmpty()) {
 				return 0F;
 			}

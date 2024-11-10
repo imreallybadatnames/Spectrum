@@ -7,7 +7,8 @@ import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.gui.screen.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -33,7 +34,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	private final float armorPierce, protPierce;
 	public static final String THROW_EFFECTS_DISABLED = "disabled";
 	
-	public MalachiteBidentItem(Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
+	public MalachiteBidentItem(Item.Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
 		super(settings);
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", damage, EntityAttributeModifier.Operation.ADD_VALUE));
@@ -71,7 +72,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
 		if (user instanceof PlayerEntity player) {
-			int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
+			int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
 			if (useTime >= 10) {
 				player.incrementStat(Stats.USED.getOrCreateStat(this));
 
@@ -103,11 +104,11 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 		
 		SoundEvent soundEvent;
 		if (riptideLevel >= 3) {
-			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3.value();
 		} else if (riptideLevel == 2) {
-			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2.value();
 		} else {
-			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+			soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1.value();
 		}
 		
 		world.playSoundFromEntity(null, playerEntity, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
@@ -140,7 +141,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 		}
 		
 		world.spawnEntity(bidentBaseEntity);
-		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THROW;
+		var soundEvent = SoundEvents.ITEM_TRIDENT_THROW.value();
 		if (mirrorImage) {
 			SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, bidentBaseEntity.getPos(), SpectrumParticleTypes.MIRROR_IMAGE, 8, Vec3d.ZERO, new Vec3d(0.2, 0.2, 0.2));
 			bidentBaseEntity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
@@ -156,11 +157,12 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	}
 	
 	public void markDisabled(ItemStack stack, boolean disabled) {
-		stack.getOrCreateNbt().putBoolean(THROW_EFFECTS_DISABLED, disabled);
+		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.putBoolean(THROW_EFFECTS_DISABLED, disabled)));
 	}
 	
 	public boolean isDisabled(ItemStack stack) {
-		return stack.getOrCreateNbt().getBoolean(THROW_EFFECTS_DISABLED);
+		return stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getBoolean(THROW_EFFECTS_DISABLED);
 	}
 	
 	public boolean canBeDisabled() {

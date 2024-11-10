@@ -8,7 +8,6 @@ import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
@@ -42,7 +41,7 @@ public class DreamflayerItem extends SwordItem implements InkPowered, Activatabl
 	public final float attackSpeed;
 	
 	public DreamflayerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-		super(toolMaterial, attackDamage, attackSpeed, settings);
+		super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
 		this.attackDamage = attackDamage;
 		this.attackSpeed = attackSpeed;
 	}

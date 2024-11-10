@@ -82,7 +82,7 @@ public class NectarLanceItem extends LightGreatswordItem implements SlotBackgrou
 		else {
 			var stolenEffect = target.getStatusEffects()
 					.stream()
-					.filter(instance -> instance.getEffectType().isBeneficial())
+					.filter(instance -> instance.getEffectType().value().isBeneficial())
 					.filter(instance -> !((Incurable) instance).spectrum$isIncurable())
 					.findFirst();
 

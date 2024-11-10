@@ -3,13 +3,18 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.arrowhead.api.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.*;
 
 import java.util.*;
 import java.util.function.*;
+
+import static net.minecraft.nbt.NbtElement.COMPOUND_TYPE;
 
 public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted, ArrowheadCrossbow {
 	
@@ -29,13 +34,12 @@ public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted,
 		return getDefaultEnchantedStack(this);
 	}
 	
-	public static ItemStack getFirstProjectile(ItemStack crossbow) {
-		NbtCompound nbtCompound = crossbow.getNbt();
-		if (nbtCompound != null && nbtCompound.contains("ChargedProjectiles", 9)) {
-			NbtList nbtList = nbtCompound.getList("ChargedProjectiles", 10);
+	public static ItemStack getFirstProjectile(RegistryWrapper.WrapperLookup wrapperLookup, ItemStack crossbow) {
+		var nbtComp = crossbow.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+		if (nbtComp.contains("ChargedProjectiles")) {
+			NbtList nbtList = nbtComp.copyNbt().getList("ChargedProjectiles", COMPOUND_TYPE);
 			if (nbtList != null && nbtList.size() > 0) {
-				NbtCompound nbtCompound2 = nbtList.getCompound(0);
-				return ItemStack.fromNbt(nbtCompound2);
+				return ItemStack.fromNbt(wrapperLookup, nbtList.getCompound(0)).orElse(ItemStack.EMPTY);
 			}
 		}
 		return ItemStack.EMPTY;

@@ -3,14 +3,11 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 

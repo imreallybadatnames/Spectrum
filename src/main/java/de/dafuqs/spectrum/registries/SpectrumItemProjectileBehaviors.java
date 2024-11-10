@@ -139,7 +139,7 @@ public class SpectrumItemProjectileBehaviors {
 			
 			@Override
 			public ItemStack onBlockHit(ItemProjectileEntity projectile, ItemStack accelerator, @Nullable Entity owner, BlockHitResult hitResult) {
-				Optional<ItemStack> optionalAcceleratorContentStack = OmniAcceleratorItem.getFirstStack(accelerator);
+				Optional<ItemStack> optionalAcceleratorContentStack = OmniAcceleratorItem.getFirstStack(projectile.getWorld().getRegistryManager(), accelerator);
 				if (optionalAcceleratorContentStack.isPresent() && owner instanceof LivingEntity livingOwner) {
 					ItemStack acceleratorContentStack = optionalAcceleratorContentStack.get();
 					
