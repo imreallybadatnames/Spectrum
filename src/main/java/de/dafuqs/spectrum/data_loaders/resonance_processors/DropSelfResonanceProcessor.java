@@ -2,10 +2,12 @@ package de.dafuqs.spectrum.data_loaders.resonance_processors;
 
 import com.google.gson.*;
 import de.dafuqs.spectrum.api.interaction.*;
-import de.dafuqs.spectrum.data_loaders.*;
 import de.dafuqs.spectrum.api.predicate.block.*;
+import de.dafuqs.spectrum.data_loaders.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.state.property.*;
@@ -70,8 +72,8 @@ public class DropSelfResonanceProcessor extends ResonanceDropProcessor {
 					continue;
 				}
 				
-				NbtCompound nbt = convertedStack.getOrCreateSubNbt("BlockStateTag");
-				nbt.putString(blockProperty.getName(), getPropertyName(minedState, blockProperty));
+				NbtComponent nbt = convertedStack.get(DataComponentTypes.CUSTOM_DATA);
+				convertedStack.apply(DataComponentTypes.CUSTOM_DATA, nbt, nbtComponent -> nbtComponent.apply(nbtCompound -> nbtCompound.putString(blockProperty.getName(), getPropertyName(minedState, blockProperty))));
 			}
 		}
 	}
@@ -83,15 +85,17 @@ public class DropSelfResonanceProcessor extends ResonanceDropProcessor {
 	public void copyNbt(BlockEntity blockEntity, ItemStack convertedStack) {
 		NbtCompound newNbt = new NbtCompound();
 		
-		NbtCompound beNbt = blockEntity.createNbt();
+		ComponentMap defaultBlockComponents = blockEntity.createComponentMap();
+		
 		for (String s : nbtToCopy) {
-			if (beNbt.contains(s)) {
-				newNbt.put(s, beNbt.get(s));
+			if (defaultBlockComponents.contains(DataComponentTypes.BLOCK_ENTITY_DATA)) {
+				newNbt.put(s, defaultBlockComponents.get(DataComponentTypes.BLOCK_ENTITY_DATA).copyNbt());
 			}
 		}
 		
 		if (!newNbt.isEmpty()) {
-			convertedStack.getOrCreateSubNbt("BlockEntityTag").copyFrom(newNbt);
+			NbtComponent nbt = convertedStack.get(DataComponentTypes.CUSTOM_DATA);
+			convertedStack.apply(DataComponentTypes.CUSTOM_DATA, nbt, comp -> comp.apply(consumer -> consumer.put("BlockEntityTag", newNbt)));
 		}
 	}
 	

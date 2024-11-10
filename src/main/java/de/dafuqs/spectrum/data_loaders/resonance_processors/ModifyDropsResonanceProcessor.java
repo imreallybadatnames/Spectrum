@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.data_loaders.resonance_processors;
 
 import com.google.gson.*;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.api.predicate.block.*;
 import net.minecraft.block.*;
@@ -26,7 +27,9 @@ public class ModifyDropsResonanceProcessor extends ResonanceDropProcessor {
 				if (!(entry instanceof JsonObject entryObject)) {
 					throw new JsonSyntaxException("modify_drops is not an json object");
 				}
-				Ingredient ingredient = Ingredient.fromJson(entryObject.get("input"));
+				// TODO - Review
+				JsonObject input = JsonHelper.getObject(entryObject, "input");
+				Ingredient ingredient = Ingredient.DISALLOW_EMPTY_CODEC.parse(JsonOps.INSTANCE, input).getOrThrow();
 				Item output = Registries.ITEM.get(Identifier.tryParse(JsonHelper.getString(entryObject, "output")));
 				modifiedDrops.put(ingredient, output);
 			}

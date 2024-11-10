@@ -85,7 +85,7 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 				if (world.random.nextFloat() < entry.entityChance * (1 + bigCatchLevel)) {
 					var x = entry.weightedEntities.getOrEmpty(world.random);
 					if (x.isPresent()) {
-						return Optional.of(x.get().getData());
+						return Optional.of(x.get().data());
 					}
 				}
 				return Optional.empty();
