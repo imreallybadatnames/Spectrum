@@ -149,7 +149,7 @@ public class DarknessEffects {
 		if (client.cameraEntity == null)
 			return interp;
 		
-		var y = MathHelper.lerp(client.getTickDelta(), client.cameraEntity.lastRenderY, client.cameraEntity.getY());
+		double y = MathHelper.lerp(client.getRenderTickCounter().getTickDelta(false), client.cameraEntity.lastRenderY, client.cameraEntity.getY());
 		float adjustedInterp;
 		
 		//entrance darkening
@@ -170,7 +170,7 @@ public class DarknessEffects {
 		if (client.cameraEntity == null)
 			return near;
 		
-		var y = MathHelper.lerp(client.getTickDelta(), client.cameraEntity.lastRenderY, client.cameraEntity.getY());
+		var y = MathHelper.lerp(client.getRenderTickCounter().getTickDelta(false), client.cameraEntity.lastRenderY, client.cameraEntity.getY());
 		float distance;
 		
 		if (y < -272) {
@@ -190,7 +190,7 @@ public class DarknessEffects {
 	}
 	
 	public static float getDarknessInterpolation() {
-		return MathHelper.lerp(MinecraftClient.getInstance().getTickDelta(), (float) DarknessEffects.darkenTicks, DarknessEffects.lastDarkenTicks) / INTERP_TICKS * getInterp();
+		return MathHelper.lerp(MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false), (float) DarknessEffects.darkenTicks, DarknessEffects.lastDarkenTicks) / INTERP_TICKS * getInterp();
 	}
 	
 	static {

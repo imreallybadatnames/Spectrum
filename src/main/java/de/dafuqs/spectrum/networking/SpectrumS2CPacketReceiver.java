@@ -154,7 +154,7 @@ public class SpectrumS2CPacketReceiver {
 			
 			client.execute(() -> {
 				// Everything in this lambda is running on the render thread
-				SpectrumClient.skyLerper.trigger(dimensionType, sourceTime, client.getTickDelta(), targetTime);
+				SpectrumClient.skyLerper.trigger(dimensionType, sourceTime, client.getRenderTickCounter().getTickDelta(false), targetTime);
 				if (client.world.isSkyVisible(client.player.getBlockPos())) {
 					client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.CELESTIAL_POCKET_WATCH_FLY_BY, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 				}
