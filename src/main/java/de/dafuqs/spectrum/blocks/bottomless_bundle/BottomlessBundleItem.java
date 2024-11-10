@@ -22,6 +22,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipData;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
@@ -342,9 +344,9 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 		
 		return Optional.of(new BottomlessBundleTooltipData(itemStack, storedAmount));
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		boolean locked = isLocked(stack);
 		int storedAmount = getStoredAmount(stack);
 		if (storedAmount == 0) {

@@ -13,6 +13,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.entry.*;
@@ -120,11 +121,11 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 		}
 		return false;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
-		Recipe<?> recipe = getStoredRecipe(world, itemStack);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
+		Recipe<?> recipe = getStoredRecipe(world, stack);
 		if (recipe == null) {
 			tooltip.add(Text.translatable("item.spectrum.crafting_tablet.tooltip.no_recipe").formatted(Formatting.GRAY));
 		} else {

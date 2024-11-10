@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -45,10 +46,10 @@ public class MalachiteGlassAmpouleItem extends BaseGlassAmpouleItem implements I
     public int maxEffectAmplifier() {
         return 0;
     }
-    
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add(Text.translatable("item.spectrum.malachite_glass_ampoule.tooltip").formatted(Formatting.GRAY));
         appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.malachite_glass_ampoule.tooltip.when_hit"), false, context.getUpdateTickRate());
     }

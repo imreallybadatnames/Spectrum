@@ -9,6 +9,7 @@ import net.minecraft.block.dispenser.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -41,10 +42,10 @@ public class PrimordialLighterItem extends FlintAndSteelItem implements Creative
 	public PrimordialLighterItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.primordial_lighter.tooltip").formatted(Formatting.GRAY));
 		CreativeOnlyItem.appendTooltip(tooltip);
 	}

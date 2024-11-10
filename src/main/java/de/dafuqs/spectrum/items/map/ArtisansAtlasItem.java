@@ -10,6 +10,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.item.map.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -302,8 +303,8 @@ public class ArtisansAtlasItem extends FilledMapItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         
         MapState state = getMapState(stack, world);
         if (state instanceof ArtisansAtlasState atlasState) {

@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
@@ -67,10 +68,10 @@ public class FreezingIdolBlock extends IdolBlock {
 		}
 		return true;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.freezing_idol.tooltip"));
 	}
 	

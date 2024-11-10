@@ -6,6 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.particle.*;
@@ -71,10 +72,10 @@ public class PiglinTradeIdolBlock extends IdolBlock {
 			world.spawnEntity(itemEntity);
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.piglin_trade_idol.tooltip"));
 	}
 	

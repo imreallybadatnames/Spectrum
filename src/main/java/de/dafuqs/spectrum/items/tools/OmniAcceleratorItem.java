@@ -16,6 +16,7 @@ import net.minecraft.client.util.math.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -117,10 +118,10 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 	public List<InkColor> getUsedColors() {
 		return List.of(COST.getColor());
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addInkPoweredTooltip(tooltip);
 	}
 	

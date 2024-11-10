@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.items.trinkets;
 
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -18,8 +19,8 @@ public class PuffCircletItem extends AzureDikeTrinketItem {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.puff_circlet.tooltip"));
 		tooltip.add(Text.translatable("item.spectrum.puff_circlet.tooltip2"));
 	}

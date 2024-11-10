@@ -15,6 +15,7 @@ import net.minecraft.client.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
@@ -63,8 +64,8 @@ public class PigmentPaletteItem extends SpectrumTrinketItem implements InkStorag
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.pigment_palette.tooltip.target").formatted(Formatting.GRAY));
 		getEnergyStorage(stack).addTooltip(tooltip);
 		addBannerPatternProviderTooltip(tooltip);

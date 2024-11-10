@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -25,7 +26,7 @@ public class NightSaltsItem extends Item implements SleepAlteringItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(TOOLTIP.formatted(Formatting.GRAY));
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.stat.*;
@@ -118,10 +119,10 @@ public class GuidebookItem extends Item implements LoomPatternProvider {
 	public RegistryEntry<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.GUIDEBOOK;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addBannerPatternProviderTooltip(tooltip);
 	}
 	

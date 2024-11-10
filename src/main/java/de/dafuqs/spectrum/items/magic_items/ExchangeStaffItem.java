@@ -17,6 +17,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
@@ -162,8 +163,8 @@ public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnch
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.exchanging_staff.tooltip.range", getRange(MinecraftClient.getInstance().player)).formatted(Formatting.GRAY));
 		getStoredBlock(stack).ifPresent(block -> tooltip.add(Text.translatable("item.spectrum.exchanging_staff.tooltip.target", block.getName()).formatted(Formatting.GRAY)));
 		addInkPoweredTooltip(tooltip);

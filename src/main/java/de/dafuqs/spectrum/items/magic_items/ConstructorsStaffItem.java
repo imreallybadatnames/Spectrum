@@ -11,6 +11,7 @@ import net.minecraft.client.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -60,8 +61,8 @@ public class ConstructorsStaffItem extends BuildingStaffItem {
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.constructors_staff.tooltip.range", getRange(MinecraftClient.getInstance().player)).formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.constructors_staff.tooltip.crouch").formatted(Formatting.GRAY));
 		addInkPoweredTooltip(tooltip);

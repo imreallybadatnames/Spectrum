@@ -9,6 +9,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -40,10 +41,10 @@ public class IncandescentAmalgamItem extends BlockItem implements DamageAwareIte
 		
 		return stack;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.incandescent_amalgam.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("block.spectrum.incandescent_amalgam.tooltip_power", getExplosionPower(stack, false)).formatted(Formatting.GRAY));
 		if (FermentedItem.isPreviewStack(stack)) {

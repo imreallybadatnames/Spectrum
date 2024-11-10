@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -41,10 +42,10 @@ public class MultiToolItem extends MiningToolItem {
 			return super.useOnBlock(context);
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		if (canTill(stack)) {
 			tooltip.add(Text.translatable("item.spectrum.workstaff.tooltip.right_click_actions").formatted(Formatting.GRAY));

@@ -8,6 +8,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -39,10 +40,10 @@ public class FractalBidentItem extends MalachiteBidentItem implements SlotBackgr
 	public List<InkColor> getUsedColors() {
 		return List.of(MIRROR_IMAGE_COST.getColor());
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.fractal_glass_crest_bident.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.fractal_glass_crest_bident.tooltip2").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.fractal_glass_crest_bident.tooltip3").formatted(Formatting.GRAY));

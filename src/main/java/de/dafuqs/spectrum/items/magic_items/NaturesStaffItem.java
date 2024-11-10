@@ -18,6 +18,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -43,10 +44,10 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
-		int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, itemStack);
+		int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
 		if (efficiencyLevel == 0) {
 			if (InkPowered.canUseClient()) {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink", INK_COST.getColor().getColoredInkName()));
@@ -54,7 +55,7 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip"));
 			}
 		} else {
-			int chancePercent = (int) (getInkCostMod(itemStack) * 100);
+			int chancePercent = (int) (getInkCostMod(stack) * 100);
 			if (InkPowered.canUseClient()) {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink_and_chance", INK_COST.getColor().getColoredInkName(), chancePercent));
 			} else {

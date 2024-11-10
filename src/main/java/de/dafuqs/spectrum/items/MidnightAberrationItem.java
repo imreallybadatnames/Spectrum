@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -46,10 +47,10 @@ public class MidnightAberrationItem extends CloakedItem {
 			}
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		NbtCompound compound = stack.getNbt();
 		if (compound != null && compound.getBoolean("Stable")) {

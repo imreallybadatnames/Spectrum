@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -19,10 +20,10 @@ public class RingOfAerialGraceItem extends GravityRingItem implements Gravitable
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.ring_of_aerial_grace.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.ring_of_aerial_grace.tooltip2").formatted(Formatting.GRAY));
-		super.appendTooltip(stack, world, tooltip, context);
 	}
 	
 	

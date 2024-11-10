@@ -15,6 +15,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.potion.*;
 import net.minecraft.text.*;
@@ -95,10 +96,10 @@ public class NightfallsBladeItem extends ToolItem implements Vanishable, InkPowe
 	public boolean hasGlint(ItemStack stack) {
 		return super.hasGlint(stack) || !PotionUtil.getCustomPotionEffects(stack).isEmpty();
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.nightfalls_blade.when_struck"), true, context.getUpdateTickRate());
 	}
 	

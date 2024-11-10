@@ -10,6 +10,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -53,10 +54,10 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
         }
         return result;
     }
-    
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
     
         if (canShoot(stack)) {
             tooltip.add(Text.translatable("item.spectrum.workstaff.tooltip.projectile").formatted(Formatting.GRAY));

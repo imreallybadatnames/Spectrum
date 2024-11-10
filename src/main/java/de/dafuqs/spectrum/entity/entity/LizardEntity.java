@@ -5,6 +5,8 @@ import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.entity.variants.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.ai.goal.*;
@@ -109,8 +111,8 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
 		Random random = world.getRandom();
-		this.setFrills(SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_FRILL_VARIANT, LizardFrillVariant.NATURAL_VARIANT, random, LizardFrillVariant.SIMPLE));
-		this.setHorns(SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_HORN_VARIANT, LizardHornVariant.NATURAL_VARIANT, random, LizardHornVariant.HORNY));
+		this.setFrills(SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_FRILL_VARIANT, LizardFrillVariant.SIMPLE.getReference(), random, LizardFrillVariant.SIMPLE));
+		this.setHorns(SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_HORN_VARIANT, LizardHornVariant.HORNY.getReference(), random, LizardHornVariant.HORNY));
 		this.setColor(SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.INK_COLORS, InkColorTags.ELEMENTAL_COLORS, random, InkColors.MAGENTA));
 
 		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -133,10 +135,10 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 		this.setColor(color == null ? SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.INK_COLORS, InkColorTags.ELEMENTAL_COLORS, this.random, InkColors.CYAN) : color);
 
 		LizardFrillVariant frills = SpectrumRegistries.LIZARD_FRILL_VARIANT.get(Identifier.tryParse(nbt.getString("frills")));
-		this.setFrills(frills == null ? SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_FRILL_VARIANT, LizardFrillVariant.NATURAL_VARIANT, this.random, LizardFrillVariant.SIMPLE) : frills);
+		this.setFrills(frills == null ? SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_FRILL_VARIANT, LizardFrillVariant.SIMPLE.getReference(), this.random, LizardFrillVariant.SIMPLE) : frills);
 		
 		LizardHornVariant horns = SpectrumRegistries.LIZARD_HORN_VARIANT.get(Identifier.tryParse(nbt.getString("horns")));
-		this.setHorns(horns == null ? SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_HORN_VARIANT, LizardHornVariant.NATURAL_VARIANT, this.random, LizardHornVariant.HORNY) : horns);
+		this.setHorns(horns == null ? SpectrumRegistries.getRandomTagEntry(SpectrumRegistries.LIZARD_HORN_VARIANT, LizardHornVariant.HORNY.getReference(), this.random, LizardHornVariant.HORNY) : horns);
 		
 		readPOIPosFromNbt(nbt);
 	}
@@ -235,7 +237,7 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 		if (stack.isOf(SpectrumItems.LIZARD_MEAT)) {
 			return false;
 		}
-		FoodComponent food = stack.getItem().getFoodComponent();
+		FoodComponent food = stack.getComponents().get(DataComponentTypes.FOOD);
 		return food != null && food.isMeat();
 	}
 

@@ -13,6 +13,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -77,7 +78,7 @@ public class RadianceStaffItem extends Item implements InkPowered {
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		if (InkPowered.canUseClient()) {
 			tooltip.add(Text.translatable("item.spectrum.radiance_staff.tooltip.ink", INK_COST.getColor().getColoredInkName()));
 		} else {

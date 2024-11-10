@@ -10,6 +10,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.*;
 import net.minecraft.state.property.*;
 import net.minecraft.text.*;
@@ -115,10 +116,10 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 		NullableDyeColor.set(stack, color);
 		return stack;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		NullableDyeColor.addTooltip(stack, tooltip);
 	}
 	

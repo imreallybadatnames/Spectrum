@@ -7,6 +7,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -31,10 +32,10 @@ public class MoltenRodItem extends SpectrumFishingRodItem {
 	public void spawnBobber(PlayerEntity user, World world, int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion, boolean foundry) {
 		world.spawnEntity(new MoltenFishingBobberEntity(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion));
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.molten_rod.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.molten_rod.tooltip2").formatted(Formatting.GRAY));
 	}

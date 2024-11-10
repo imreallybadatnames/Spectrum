@@ -8,6 +8,7 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
@@ -31,7 +32,7 @@ public class ConcealingOilsItem extends DrinkItem implements InkPoweredPotionFil
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         if (!getEffects(stack).isEmpty())
             tooltip.add(Text.translatable("item.spectrum.concealing_oils.tooltip").styled(s -> s.withFormatting(Formatting.GRAY).withItalic(true)));
         appendPotionFillableTooltip(stack, tooltip, Text.translatable("item.spectrum.concealing_oils.when_poisoned"), true, context.getUpdateTickRate());

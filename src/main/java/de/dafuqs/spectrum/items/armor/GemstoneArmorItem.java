@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -31,10 +32,10 @@ public class GemstoneArmorItem extends ArmorItem implements ArmorWithHitEffect {
 		
 		itemStack.damage(2, targetEntity, (e) -> e.sendEquipmentBreakStatus(type.getEquipmentSlot()));
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		addTooltip(tooltip, type);
 	}
 	

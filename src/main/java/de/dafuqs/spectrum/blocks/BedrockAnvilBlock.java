@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -33,10 +34,10 @@ public class BedrockAnvilBlock extends AnvilBlock {
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 		return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new BedrockAnvilScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), TITLE);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("container.spectrum.bedrock_anvil.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("container.spectrum.bedrock_anvil.tooltip2").formatted(Formatting.GRAY));
 	}

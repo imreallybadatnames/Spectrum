@@ -14,6 +14,7 @@ import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -165,9 +166,9 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	public boolean canBeDisabled() {
 		return false;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		if (isDisabled(stack))
 			tooltip.add(Text.translatable("item.spectrum.bident.toolTip.disabled").formatted(Formatting.RED, Formatting.ITALIC));
 	}

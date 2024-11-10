@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.block.*;
 import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 
@@ -23,10 +24,10 @@ public class PedestalBlockItem extends BlockItem {
 	public PedestalVariant getVariant() {
 		return this.pedestalVariant;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(tooltipText);
 	}
 	

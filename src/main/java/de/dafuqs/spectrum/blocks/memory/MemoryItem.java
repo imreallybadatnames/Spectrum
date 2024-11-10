@@ -8,6 +8,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.ItemGroup.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
@@ -177,10 +178,10 @@ public class MemoryItem extends BlockItem {
 		nbtCompound.putBoolean("Unrecognizable", true);
 		itemStack.setNbt(nbtCompound);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		NbtCompound nbt = stack.getNbt();
 		Optional<EntityType<?>> entityType = getEntityType(nbt);

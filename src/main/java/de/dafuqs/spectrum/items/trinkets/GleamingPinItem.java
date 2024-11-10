@@ -11,6 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -46,10 +47,10 @@ public class GleamingPinItem extends SpectrumTrinketItem implements ExtendedEnch
 	public static int getEffectRange(ItemStack stack) {
 		return BASE_RANGE + RANGE_BONUS_PER_LEVEL_OF_SNIPING * EnchantmentHelper.getLevel(SpectrumEnchantments.SNIPER, stack);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.gleaming_pin.tooltip"));
 	}
 	

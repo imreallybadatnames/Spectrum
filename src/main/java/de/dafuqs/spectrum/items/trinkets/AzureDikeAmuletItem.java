@@ -8,6 +8,7 @@ import net.fabricmc.api.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -20,11 +21,11 @@ public class AzureDikeAmuletItem extends InkDrainTrinketItem implements AzureDik
 		super(settings, UNLOCK_IDENTIFIER, InkColors.BLUE);
 	}
 	
-	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.spectrum.azure_dike_provider.tooltip", maxAzureDike(stack)));
-		super.appendTooltip(stack, world, tooltip, context);
+		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
 	@Override

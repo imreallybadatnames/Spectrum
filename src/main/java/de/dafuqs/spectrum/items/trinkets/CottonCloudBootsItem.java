@@ -5,6 +5,7 @@ import dev.emi.trinkets.api.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -37,10 +38,10 @@ public class CottonCloudBootsItem extends SpectrumTrinketItem {
 			}
 		}
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.cotton_cloud_boots.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.cotton_cloud_boots.tooltip2").formatted(Formatting.GRAY));
 	}

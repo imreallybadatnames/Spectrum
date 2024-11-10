@@ -15,6 +15,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
@@ -240,9 +241,9 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack itemStack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		// If Dimension & Pos stored => Teleport to that position
-		Optional<Pair<String, Vec3d>> teleportTargetPos = getTeleportTargetPos(itemStack);
+		Optional<Pair<String, Vec3d>> teleportTargetPos = getTeleportTargetPos(stack);
 		if (teleportTargetPos.isPresent()) {
 			String dimensionDisplayString = Support.getReadableDimensionString(teleportTargetPos.get().getLeft());
 			Vec3d pos = teleportTargetPos.get().getRight();
@@ -250,9 +251,9 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 			return;
 		} else {
 			// If UUID stored => Teleport to player, if online
-			Optional<UUID> teleportTargetPlayerUUID = getTeleportTargetPlayerUUID(itemStack);
+			Optional<UUID> teleportTargetPlayerUUID = getTeleportTargetPlayerUUID(stack);
 			if (teleportTargetPlayerUUID.isPresent()) {
-				Optional<String> teleportTargetPlayerName = getTeleportTargetPlayerName(itemStack);
+				Optional<String> teleportTargetPlayerName = getTeleportTargetPlayerName(stack);
 				if (teleportTargetPlayerName.isPresent()) {
 					tooltip.add(Text.translatable("item.spectrum.ender_splice.tooltip.bound_player", teleportTargetPlayerName.get()));
 				} else {

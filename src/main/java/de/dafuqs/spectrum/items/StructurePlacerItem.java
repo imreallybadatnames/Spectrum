@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -34,10 +35,10 @@ public class StructurePlacerItem extends Item implements CreativeOnlyItem {
 		}
 		return ActionResult.PASS;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		CreativeOnlyItem.appendTooltip(tooltip);
 	}
 	

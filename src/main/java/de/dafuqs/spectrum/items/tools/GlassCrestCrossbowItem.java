@@ -12,6 +12,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -114,9 +115,9 @@ public class GlassCrestCrossbowItem extends MalachiteCrossbowItem implements Ext
     
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack itemStack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(itemStack, world, tooltip, context);
-        float overcharge = getOvercharge(itemStack);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
+        float overcharge = getOvercharge(stack);
         if (overcharge == 0) {
             tooltip.add(Text.translatable("item.spectrum.glass_crest_crossbow.tooltip.how_to_overcharge").formatted(Formatting.GRAY));
 			addInkPoweredTooltip(tooltip);

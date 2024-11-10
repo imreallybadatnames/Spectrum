@@ -9,6 +9,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
@@ -96,10 +97,10 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 	public static void preventPhantomSpawns(@NotNull ServerPlayerEntity serverPlayerEntity) {
 		serverPlayerEntity.getStatHandler().setStat(serverPlayerEntity, Stats.CUSTOM.getOrCreateStat(Stats.TIME_SINCE_REST), 0);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.whispy_circlet.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.whispy_circlet.tooltip2").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.whispy_circlet.tooltip3").formatted(Formatting.GRAY));

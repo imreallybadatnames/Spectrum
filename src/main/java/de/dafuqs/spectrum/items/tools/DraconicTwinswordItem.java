@@ -14,6 +14,7 @@ import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -108,9 +109,9 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.BLOCK;
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.spectrum.draconic_twinsword.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.draconic_twinsword.tooltip2").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.draconic_twinsword.tooltip3").formatted(Formatting.GRAY));

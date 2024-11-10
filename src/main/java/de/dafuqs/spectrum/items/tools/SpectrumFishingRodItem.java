@@ -9,6 +9,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
@@ -68,10 +69,10 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 	public boolean shouldAutosmelt(ItemStack itemStack, PlayerEntity user) {
 		return SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.FOUNDRY, itemStack, user) > 0 || GoFishCompat.hasDeepfry(itemStack);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.spectrum_fishing_rods.tooltip").formatted(Formatting.GRAY));
 	}
 	

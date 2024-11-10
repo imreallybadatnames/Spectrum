@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.items.trinkets;
 
 import net.minecraft.client.item.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -35,7 +36,7 @@ public class AzureDikeCoreItem extends AzureDikeTrinketItem {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.spectrum.azuresque_dike_core.tooltip"));
 		tooltip.add(Text.translatable("item.spectrum.azuresque_dike_core.tooltip2"));
 		tooltip.add(Text.translatable("item.spectrum.azuresque_dike_core.tooltip3"));

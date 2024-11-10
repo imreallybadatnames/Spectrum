@@ -18,6 +18,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
@@ -42,10 +43,10 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 		super(settings);
 	}
 	
-	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		boolean unlockedColoring = AdvancementHelper.hasAdvancementClient(SpectrumAdvancements.PAINTBRUSH_COLORING);
 		boolean unlockedSlinging = AdvancementHelper.hasAdvancementClient(SpectrumAdvancements.PAINTBRUSH_INK_SLINGING);

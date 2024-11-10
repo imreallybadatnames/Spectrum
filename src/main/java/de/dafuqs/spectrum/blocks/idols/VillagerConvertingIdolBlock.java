@@ -6,6 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
@@ -21,10 +22,10 @@ public class VillagerConvertingIdolBlock extends IdolBlock {
 	public VillagerConvertingIdolBlock(Settings settings, ParticleEffect particleEffect) {
 		super(settings, particleEffect);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.villager_converting_idol.tooltip"));
 	}
 	

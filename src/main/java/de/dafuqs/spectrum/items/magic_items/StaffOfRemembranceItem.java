@@ -15,6 +15,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -34,10 +35,10 @@ public class StaffOfRemembranceItem extends Item implements InkPowered, Prioriti
 		super(settings);
 	}
 	
-	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-		super.appendTooltip(itemStack, world, tooltip, tooltipContext);
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		
 		tooltip.add(Text.translatable("item.spectrum.staff_of_remembrance.tooltip").formatted(Formatting.GRAY));
 		addInkPoweredTooltip(tooltip);

@@ -7,6 +7,7 @@ import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -104,10 +105,10 @@ public class MilkingIdolBlock extends IdolBlock {
 		itemEntity.addVelocity(0, -0.2F, 0);
 		world.spawnEntity(itemEntity);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.milking_idol.tooltip", this.milkingRange));
 		tooltip.add(Text.translatable("block.spectrum.milking_idol.tooltip2"));
 	}
