@@ -7,6 +7,8 @@ import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class CommandPredicate implements WorldConditionPredicate, CommandOutput {
 	public static final CommandPredicate ANY = new CommandPredicate(null);
 	
@@ -24,9 +26,14 @@ public class CommandPredicate implements WorldConditionPredicate, CommandOutput 
 	@Override
 	public boolean test(ServerWorld world, BlockPos pos) {
 		if (this == ANY) return true;
+		AtomicBoolean passed = new AtomicBoolean(false);
 		MinecraftServer minecraftServer = world.getServer();
-		ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(pos), Vec2f.ZERO, world, 2, "FusionShrine", world.getBlockState(pos).getBlock().getName(), minecraftServer, null);
-		return minecraftServer.getCommandManager().executeWithPrefix(serverCommandSource, command) > 0;
+		ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(pos), Vec2f.ZERO, world, 2, "FusionShrine", world.getBlockState(pos).getBlock().getName(), minecraftServer, null)
+				.withReturnValueConsumer((successful, returnValue) -> {
+					passed.set(returnValue > 0);
+				});
+		minecraftServer.getCommandManager().executeWithPrefix(serverCommandSource, command);
+		return passed.get();
 	}
 	
 	@Override

@@ -15,6 +15,7 @@ import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PreservationBlockDetectorBlockEntity extends BlockEntity implements CommandOutput {
 	
@@ -77,11 +78,13 @@ public class PreservationBlockDetectorBlockEntity extends BlockEntity implements
 	
 	public void execute(ServerWorld serverWorld) {
 		MinecraftServer minecraftServer = serverWorld.getServer();
+		AtomicBoolean failed = new AtomicBoolean(false);
 		if (!this.commands.isEmpty()) {
-			ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(PreservationBlockDetectorBlockEntity.this.pos), Vec2f.ZERO, serverWorld, 2, "PreservationBlockDetector", this.getWorld().getBlockState(this.pos).getBlock().getName(), minecraftServer, null);
+			ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(PreservationBlockDetectorBlockEntity.this.pos), Vec2f.ZERO, serverWorld, 2, "PreservationBlockDetector", this.getWorld().getBlockState(this.pos).getBlock().getName(), minecraftServer, null)
+					.withReturnValueConsumer((success, returnValue) -> { if (returnValue < 1) failed.set(true); });
 			for (String command : this.commands) {
-				int success = minecraftServer.getCommandManager().executeWithPrefix(serverCommandSource, command);
-				if (success < 1) {
+				minecraftServer.getCommandManager().executeWithPrefix(serverCommandSource, command);
+				if (failed.get()) {
 					break;
 				}
 			}

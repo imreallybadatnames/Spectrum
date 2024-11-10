@@ -119,6 +119,10 @@ public class SpectrumEventListeners {
 		});
 		
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
+			if (!server.getTickManager().shouldTick()) {
+				return;
+			}
+
 			try {
 				Pastel.getServerInstance().tick();
 			} catch (Exception e) {
@@ -139,6 +143,10 @@ public class SpectrumEventListeners {
 		});
 		
 		ServerTickEvents.START_WORLD_TICK.register(world -> {
+			if (!world.getTickManager().shouldTick()) {
+				return;
+			}
+
 			// these would actually be nicer to have as Spawners in ServerWorld
 			// to have them run in tickSpawners()
 			// but getting them in there would require some ugly mixins
