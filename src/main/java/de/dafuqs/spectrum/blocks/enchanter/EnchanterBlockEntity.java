@@ -306,16 +306,6 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 			centerStackCopy = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(centerStackCopy, enchantment, highestEnchantments.get(enchantment), false, enchanterBlockEntity.canOwnerApplyConflictingEnchantments).getRight();
 		}
 		
-		// START BIOME MAKEOVER COMPAT
-		// If any input item has the "BMCursed" tag, the output item will also get it
-		// This resolves exploits where players are able to indefinitely increase the
-		// enchantment level by transferring the enchantment to new items
-		for (int i = 0; i < 8; i++) {
-			ItemStack bowlStack = enchanterBlockEntity.virtualInventoryIncludingBowlStacks.getStack(2 + i);
-			BiomeMakeoverCompat.transferBMCursedTag(bowlStack, centerStackCopy);
-		}
-		// END BIOME MAKEOVER COMPAT
-		
 		int spentExperience = enchanterBlockEntity.currentItemProcessingTime / EnchanterBlockEntity.REQUIRED_TICKS_FOR_EACH_EXPERIENCE_POINT;
 		if (centerStack.getCount() > 1) {
 			centerStackCopy.setCount(1);
