@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.registries;
 
 import com.mojang.serialization.*;
-import de.dafuqs.spectrum.compat.biome_makeover.*;
 import net.fabricmc.fabric.api.client.item.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -27,10 +26,6 @@ public class SpectrumTooltips {
 					addSignTooltips(lines, nbt);
 				} else if (stack.isOf(Items.SPAWNER)) {
 					addSpawnerTooltips(lines, nbt);
-				}
-				
-				if (nbt.getBoolean(BiomeMakeoverCompat.CURSED_TAG)) {
-					lines.add(Text.translatable("spectrum.tooltip.biomemakeover_cursed").formatted(Formatting.GRAY));
 				}
 			}
 		});

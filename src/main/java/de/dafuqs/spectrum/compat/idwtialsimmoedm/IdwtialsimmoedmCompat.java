@@ -17,6 +17,7 @@ public class IdwtialsimmoedmCompat {
             Entity player = MinecraftClient.getInstance().player;
             Text original = DefaultDescriptions.forEnchantmentRaw(ench);
             if (original == null) return null;
+            // FIXME - Fix once enchantments are refactored
             if (ench instanceof SpectrumEnchantment spectrumEnchantment && !spectrumEnchantment.canEntityUse(player)) {
                 return GatherDescriptionCallback.wrapDescription(original.copy().formatted(Formatting.OBFUSCATED));
             }

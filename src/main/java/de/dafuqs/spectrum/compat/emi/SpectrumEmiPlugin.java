@@ -14,8 +14,8 @@ import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import net.minecraft.block.*;
 import net.minecraft.client.gui.screen.ingame.*;
-import net.minecraft.inventory.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 
@@ -193,8 +193,9 @@ public class SpectrumEmiPlugin implements EmiPlugin {
 		return Identifier.of("spectrum:/" + type + "/" + blockId.getNamespace() + "/" + blockId.getPath());
 	}
 
-	public <C extends Inventory, T extends Recipe<C>> void addAll(EmiRegistry registry, RecipeType<T> type, Function<T, EmiRecipe> constructor) {
-		for (T recipe : registry.getRecipeManager().listAllOfType(type)) {
+	public <C extends RecipeInput, T extends Recipe<C>> void addAll(EmiRegistry registry, RecipeType<T> type, Function<T, EmiRecipe> constructor) {
+		for (RecipeEntry<T> entry : registry.getRecipeManager().listAllOfType(type)) {
+			T recipe = entry.value();
 			registry.addRecipe(constructor.apply(recipe));
 		}
 	}

@@ -21,7 +21,7 @@ public abstract class GatedSpectrumEmiRecipe<T extends GatedRecipe<?>> extends S
 	public GatedSpectrumEmiRecipe(EmiRecipeCategory category, T recipe, int width, int height) {
 		super(category, recipe.getRecipeTypeUnlockIdentifier(), recipe.getId(), width, height);
 		this.recipe = recipe;
-		this.outputs = List.of(EmiStack.of(recipe.getOutput(getRegistryManager())));
+		this.outputs = List.of(EmiStack.of(recipe.getResult(getRegistryManager())));
 		this.secretHintText = recipe.getSecretHintText();
 	}
 	
