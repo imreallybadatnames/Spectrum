@@ -24,7 +24,7 @@ repositories {
 	maven { url = "https://repo.unascribed.com" } // Ears API
 	maven { url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/" } // Modonomicon
 	maven { url = "https://maven.is-immensely.gay/releases" } // Matchbooks
-	maven { url = "https://jitpack.io" } // Arrowhead, Dimensional Reverb, Step Height Entity Attribute
+	maven { url = "https://jitpack.io" } // Arrowhead, Dimensional Reverb
 	mavenCentral()
 }
 
@@ -79,11 +79,8 @@ dependencies {
 	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-item:${project.cca_version}")
 	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-level:${project.cca_version}")
 
-	modImplementation include("com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_attribute_version}")
-	modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_entity_attributes_version}")
-
 	// shipped with FAPI
-	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}"))
+	//implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}"))
 
 	// Connect to local dev servers
 	modLocalRuntime("maven.modrinth:auth-me:${project.auth_me_version}")
