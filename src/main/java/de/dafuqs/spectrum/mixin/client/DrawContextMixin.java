@@ -30,7 +30,7 @@ public abstract class DrawContextMixin {
 			return;
 		
 		var player = MinecraftClient.getInstance().player;
-		var tickDelta = MinecraftClient.getInstance().getTickDelta();
+		var tickDelta = MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false);
 		
 		var type = backgroundEffectProvider.backgroundType(player, stack);
 		var opacity = backgroundEffectProvider.getEffectOpacity(player, stack, tickDelta);

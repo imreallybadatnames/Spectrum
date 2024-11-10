@@ -23,7 +23,7 @@ public class LightTrailparticle extends AnimatedParticle {
     @Override
     public void tick() {
         super.tick();
-        var fadeProgress = MathHelper.clamp((age + MinecraftClient.getInstance().getTickDelta()) / maxAge, 0, 1);
+        var fadeProgress = MathHelper.clamp((age + MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false)) / maxAge, 0, 1);
         setAlpha(MathHelper.lerp(fadeProgress, 0.8F, 0F));
         scale = MathHelper.lerp(fadeProgress, 0.2F, 0.1F);
     }

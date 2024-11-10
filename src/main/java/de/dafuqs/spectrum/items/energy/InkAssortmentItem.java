@@ -89,7 +89,7 @@ public class InkAssortmentItem extends Item implements InkStorageItem<Individual
 			return new ExtendedItemBarProvider.BarSignature(1, 13, 14, progress, 1, ColorHelper.colorVecToRGB(color.getColorVec()) | 0xFF000000, 2, DEFAULT_BACKGROUND_COLOR);
 		}
 		
-		var delta = MinecraftClient.getInstance().getTickDelta();
+		var delta = MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false);
 		var curColor = colors.get((int) (time % (30L * colors.size()) / 30));
 		var nextColor = colors.get((int) ((time % (30L * colors.size()) / 30 + 1) % colors.size()));
 		

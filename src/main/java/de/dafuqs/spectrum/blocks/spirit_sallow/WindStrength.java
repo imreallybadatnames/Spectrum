@@ -17,7 +17,7 @@ public class WindStrength {
 	public Vec3d getWindStrength(World world) {
 		long tick = world.getTime();
 		if (tick != cachedTick) {
-			float tickDelta = MinecraftClient.getInstance().getTickDelta();
+			float tickDelta = MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false);
 			cachedValue = new Vec3d(
 					SAMPLER.sample((tick + tickDelta) / 512D, 0, 0),
 					SAMPLER.sample(0, (tick + tickDelta) / 512D, 0),
