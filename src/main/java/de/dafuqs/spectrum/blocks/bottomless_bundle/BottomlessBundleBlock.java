@@ -79,12 +79,11 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 					ItemVariant storedVariant = storage.variant;
 					
 					try (Transaction transaction = Transaction.openOuter()) {
-						ItemStack handStack = player.getStackInHand(hand);
-						if (storedVariant.matches(handStack) || storedVariant.isBlank()) {
+						if (storedVariant.matches(stack) || storedVariant.isBlank()) {
 							// insert
-							if (!handStack.isEmpty() && handStack.getItem().canBeNested()) {
-								long inserted = storage.insert(ItemVariant.of(handStack), handStack.getCount(), transaction);
-								handStack.decrement((int) inserted);
+							if (!stack.isEmpty() && stack.getItem().canBeNested()) {
+								long inserted = storage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
+								stack.decrement((int) inserted);
 								world.playSound(null, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS, 0.8F, 0.8F + world.getRandom().nextFloat() * 0.4F);
 							}
 						} else {

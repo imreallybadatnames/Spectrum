@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.*;
@@ -13,7 +14,9 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class BlackMateriaBlock extends FallingBlock {
-	
+
+	public static final MapCodec<BlackMateriaBlock> CODEC = createCodec(BlackMateriaBlock::new);
+
 	public static final int PROPAGATION_TRIES = 3;
 	
 	public static final int MAX_AGE = Properties.AGE_3_MAX;
@@ -22,6 +25,11 @@ public class BlackMateriaBlock extends FallingBlock {
 	public BlackMateriaBlock(Settings settings) {
 		super(settings);
 		setDefaultState(this.stateManager.getDefaultState().with(Properties.AGE_3, Properties.AGE_3_MAX));
+	}
+
+	@Override
+	protected MapCodec<? extends BlackMateriaBlock> getCodec() {
+		return CODEC;
 	}
 
     @Override

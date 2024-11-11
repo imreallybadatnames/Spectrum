@@ -26,5 +26,11 @@ public class SpectrumClusterBlock extends AmethystClusterBlock {
 		super(growthStage.height, growthStage.xzOffset, settings);
 		this.growthStage = growthStage;
 	}
+
+//	@Override
+//	public MapCodec<? extends CloakedOreBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 }

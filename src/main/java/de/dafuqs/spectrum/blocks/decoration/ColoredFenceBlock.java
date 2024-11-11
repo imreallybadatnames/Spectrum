@@ -16,6 +16,12 @@ public class ColoredFenceBlock extends FenceBlock {
 		this.color = color;
 		BLOCKS.put(color, this);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredFenceBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;

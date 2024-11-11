@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -14,12 +15,19 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class ForfeitureBlock extends DecayBlock {
+
+	public static final MapCodec<ForfeitureBlock> CODEC = createCodec(ForfeitureBlock::new);
 	
 	// A special version of ruin that spreads indefinitely, even through air.
 	// There are no brakes on the Forfeiture train
 	public ForfeitureBlock(Settings settings) {
 		super(settings, SpectrumCommon.CONFIG.ForfeitureDecayTickRate, SpectrumCommon.CONFIG.ForfeitureCanDestroyBlockEntities, 4, 7.5F);
 		setDefaultState(getStateManager().getDefaultState().with(CONVERSION, Conversion.NONE));
+	}
+
+	@Override
+	protected MapCodec<? extends ForfeitureBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

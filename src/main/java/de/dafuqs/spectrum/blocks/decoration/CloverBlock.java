@@ -11,7 +11,9 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class CloverBlock extends PlantBlock implements Fertilizable {
-	
+
+	public static final MapCodec<CloverBlock> CODEC = createCodec(CloverBlock::new);
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D);
 
 	public CloverBlock(Settings settings) {
@@ -20,8 +22,7 @@ public class CloverBlock extends PlantBlock implements Fertilizable {
 
 	@Override
 	public MapCodec<? extends CloverBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 
 	@Override

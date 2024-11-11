@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.util.*;
 import net.minecraft.entity.ai.pathing.*;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.screen.*;
@@ -18,6 +19,9 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
+import java.util.Iterator;
+import java.util.List;
+
 public abstract class SpectrumChestBlock extends BlockWithEntity {
 	
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -27,12 +31,21 @@ public abstract class SpectrumChestBlock extends BlockWithEntity {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
 	}
-	
+
 	public static boolean isChestBlocked(WorldAccess world, BlockPos pos) {
-		BlockPos upperPos = pos.up();
-		return world.getBlockState(upperPos).isSolidBlock(world, upperPos);
+		var up = pos.up();
+		if (world.getBlockState(up).isSolidBlock(world, up))
+			return true;
+
+		for (var catEntity : world.getNonSpectatingEntities(CatEntity.class, new Box(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1))) {
+			if (catEntity.isInSittingPose()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
