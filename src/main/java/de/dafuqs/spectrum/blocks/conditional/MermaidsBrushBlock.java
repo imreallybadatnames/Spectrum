@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
@@ -137,7 +138,7 @@ public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, Reve
 	}
 	
 	@Override
-	public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+	public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
 		return false;
 	}
 	

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.deeper_down.flora.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
@@ -8,6 +9,8 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -29,6 +32,14 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
         setDefaultState(getDefaultState().with(FORM, Form.TIP));
     }
 
+    public static final MapCodec<WeepingGalaFrondsTipBlock> CODEC = createCodec(WeepingGalaFrondsTipBlock::new);
+
+    @Override
+    public MapCodec<? extends WeepingGalaFrondsTipBlock> getCodec() {
+        //TODO: Make the codec
+        return CODEC;
+    }
+
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return state.get(FORM) != Form.TIP;
@@ -45,7 +56,7 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
                 reference.update(world);
             }
             else {
-                for (ItemStack rareStack : getResinStacks(state, world, pos, ItemStack.EMPTY, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN)) {
+                for (ItemStack rareStack : getResinStacks(state, world, pos, ItemStack.EMPTY, RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN))) {
                     dropStack(world, pos, rareStack);
                 }
                 world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_DRIP, SoundCategory.BLOCKS, 1, 0.9F + random.nextFloat() * 0.2F);
@@ -56,11 +67,11 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         var reference = BlockReference.of(state, pos);
         if (reference.getProperty(FORM) == Form.RESIN) {
             if (!world.isClient()) {
-                for (ItemStack rareStack : getResinStacks(state, (ServerWorld) world, pos, player.getMainHandStack(), SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN)) {
+                for (ItemStack rareStack : getResinStacks(state, (ServerWorld) world, pos, player.getMainHandStack(), RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN))) {
                     dropStack(world, pos, rareStack);
                 }
             }
@@ -74,13 +85,13 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
         return ActionResult.PASS;
     }
 
-    public static List<ItemStack> getResinStacks(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, Identifier lootTableIdentifier) {
+    public static List<ItemStack> getResinStacks(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, RegistryKey<LootTable> lootTableKey) {
         var builder = (new LootContextParameterSet.Builder(world))
                 .add(LootContextParameters.BLOCK_STATE, state)
                 .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
                 .add(LootContextParameters.TOOL, stack);
 
-        LootTable lootTable = world.getServer().getLootManager().getLootTable(lootTableIdentifier);
+        LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(lootTableKey);
         return lootTable.generateLoot(builder.build(LootContextTypes.BLOCK));
     }
 

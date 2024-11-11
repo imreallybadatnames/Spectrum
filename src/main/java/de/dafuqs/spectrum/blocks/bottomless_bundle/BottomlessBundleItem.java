@@ -78,7 +78,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 					stackInBundle.setCount(amountAbleToStore);
 					bundleStack(voidBundleStack, stackInBundle);
 					return amountAbleToStore;
-				} else if (ItemStack.canCombine(stackInBundle, stackToBundle)) {
+				} else if (ItemStack.areItemsAndComponentsEqual(stackInBundle, stackToBundle)) {
 					stackInBundle.increment(amountAbleToStore);
 					bundleStack(voidBundleStack, stackInBundle, storedAmount + amountAbleToStore);
 					return amountAbleToStore;
@@ -408,7 +408,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 						.ifPresent((removedStack) -> addToBundle(stack, slot.insertStack(removedStack)));
 			} else if (itemStack.getItem().canBeNested()) {
 				ItemStack firstStack = getFirstBundledStack(stack);
-				if (firstStack.isEmpty() || ItemStack.canCombine(firstStack, itemStack)) {
+				if (firstStack.isEmpty() || ItemStack.areItemsAndComponentsEqual(firstStack, itemStack)) {
 					boolean hasVoiding = EnchantmentHelper.getLevel(SpectrumEnchantments.VOIDING, stack) > 0;
 					int amountAbleToStore = hasVoiding ? itemStack.getCount() : Math.min(itemStack.getCount(), (getMaxStoredAmount(stack) - getStoredAmount(stack)));
 					if (amountAbleToStore > 0) {
@@ -469,7 +469,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 		if (storedStack.isEmpty()) {
 			return false;
 		} else {
-			return ItemStack.canCombine(storedStack, itemStackToAccept);
+			return ItemStack.areItemsAndComponentsEqual(storedStack, itemStackToAccept);
 		}
 	}
 	
@@ -526,12 +526,12 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 			this.setSuccess(false);
 			Item item = stack.getItem();
 			if (item instanceof BottomlessBundleItem bottomlessBundleItem) {
-				Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
-				BlockPos blockPos = pointer.getPos().offset(direction);
-				Direction direction2 = pointer.getWorld().isAir(blockPos.down()) ? direction : Direction.UP;
+				Direction direction = pointer.state().get(DispenserBlock.FACING);
+				BlockPos blockPos = pointer.pos().offset(direction);
+				Direction direction2 = pointer.world().isAir(blockPos.down()) ? direction : Direction.UP;
 				
 				try {
-					this.setSuccess(bottomlessBundleItem.place(new AutomaticItemPlacementContext(pointer.getWorld(), blockPos, direction, stack, direction2)).isAccepted());
+					this.setSuccess(bottomlessBundleItem.place(new AutomaticItemPlacementContext(pointer.world(), blockPos, direction, stack, direction2)).isAccepted());
 				} catch (Exception e) {
 					SpectrumCommon.logError("Error trying to place bottomless bundle at " + blockPos + " : " + e);
 				}

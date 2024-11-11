@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.blocks.ender;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.inventories.*;
+import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -25,15 +27,22 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class EnderDropperBlock extends DispenserBlock {
-	
+
+	public static final MapCodec<EnderDropperBlock> CODEC = createCodec(EnderDropperBlock::new);
+
 	private static final DispenserBehavior BEHAVIOR = new ItemDispenserBehavior();
-	
+
 	public EnderDropperBlock(Settings settings) {
 		super(settings);
 	}
+
+	@Override
+	public MapCodec<? extends EnderDropperBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	protected DispenserBehavior getBehaviorForItem(ItemStack stack) {
+	protected DispenserBehavior getBehaviorForItem(World world, ItemStack stack) {
 		return BEHAVIOR;
 	}
 	
@@ -44,17 +53,17 @@ public class EnderDropperBlock extends DispenserBlock {
 	
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-		if (placer instanceof ServerPlayerEntity) {
+		if (placer instanceof ServerPlayerEntity serverPlayer) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof EnderDropperBlockEntity) {
-				((EnderDropperBlockEntity) blockEntity).setOwner((ServerPlayerEntity) placer);
+			if (blockEntity instanceof EnderDropperBlockEntity dropperEntity) {
+				dropperEntity.setOwner(serverPlayer);
 				blockEntity.markDirty();
 			}
 		}
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -79,12 +88,14 @@ public class EnderDropperBlock extends DispenserBlock {
 		}
 	}
 	
-	@SuppressWarnings("UnstableApiUsage")
 	@Override
-	protected void dispense(ServerWorld world, BlockPos pos) {
-		BlockPointerImpl blockPointerImpl = new BlockPointerImpl(world, pos);
-		EnderDropperBlockEntity enderDropperBlockEntity = blockPointerImpl.getBlockEntity();
-		
+	protected void dispense(ServerWorld world, BlockState state, BlockPos pos) {
+		EnderDropperBlockEntity enderDropperBlockEntity = world.getBlockEntity(pos, SpectrumBlockEntities.ENDER_DROPPER).orElse(null);
+		if (enderDropperBlockEntity == null) {
+			return;
+		}
+
+		BlockPointer blockPointer = new BlockPointer(world, pos, state, enderDropperBlockEntity);
 		int i = enderDropperBlockEntity.chooseNonEmptySlot();
 		if (i < 0) {
 			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0); // no items in inv
@@ -93,7 +104,7 @@ public class EnderDropperBlock extends DispenserBlock {
 			if (!itemStack.isEmpty()) {
 				Direction direction = world.getBlockState(pos).get(FACING);
 				if (world.getBlockState(pos.offset(direction)).isAir()) {
-					ItemStack itemStack3 = BEHAVIOR.dispense(blockPointerImpl, itemStack);
+					ItemStack itemStack3 = BEHAVIOR.dispense(blockPointer, itemStack);
 					enderDropperBlockEntity.setStack(i, itemStack3);
 				} else {
 					Storage<ItemVariant> target = ItemStorage.SIDED.find(world, pos.offset(direction), direction.getOpposite());
@@ -114,10 +125,6 @@ public class EnderDropperBlock extends DispenserBlock {
 				}
 			}
 		}
-	}
-
-	public DispenserBehavior getDefaultBehaviorForItem(ItemStack stack) {
-		return super.getBehaviorForItem(stack);
 	}
 
 }

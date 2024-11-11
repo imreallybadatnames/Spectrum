@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.ender;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -26,16 +27,24 @@ import org.jetbrains.annotations.*;
 import static net.minecraft.block.HopperBlock.*;
 
 public class EnderHopperBlock extends BlockWithEntity {
-	
-	private final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-	private final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 10.0D, 12.0D);
+
+	public static final MapCodec<EnderHopperBlock> CODEC = createCodec(EnderHopperBlock::new);
+
+	private final VoxelShape TOP_SHAPE = createCuboidShape(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+	private final VoxelShape MIDDLE_SHAPE = createCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 10.0D, 12.0D);
 	private final VoxelShape OUTSIDE_SHAPE = VoxelShapes.union(MIDDLE_SHAPE, TOP_SHAPE);
-	private final VoxelShape DEFAULT_SHAPE = VoxelShapes.combineAndSimplify(OUTSIDE_SHAPE, Hopper.INSIDE_SHAPE, BooleanBiFunction.ONLY_FIRST);
+	private final VoxelShape INSIDE_SHAPE = createCuboidShape(2.0, 11.0, 2.0, 14.0, 16.0, 14.0);
+	private final VoxelShape DEFAULT_SHAPE = VoxelShapes.combineAndSimplify(OUTSIDE_SHAPE, INSIDE_SHAPE, BooleanBiFunction.ONLY_FIRST);
 	private final VoxelShape DOWN_SHAPE = VoxelShapes.union(DEFAULT_SHAPE, Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D));
-	private final VoxelShape DOWN_RAYCAST_SHAPE = Hopper.INSIDE_SHAPE;
-	
+	private final VoxelShape DOWN_RAYCAST_SHAPE = INSIDE_SHAPE;
+
 	public EnderHopperBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends EnderHopperBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -67,11 +76,7 @@ public class EnderHopperBlock extends BlockWithEntity {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return null;
-		} else {
-			return checkType(type, SpectrumBlockEntities.ENDER_HOPPER, EnderHopperBlockEntity::serverTick);
-		}
+		return world.isClient ? null : validateTicker(type, SpectrumBlockEntities.ENDER_HOPPER, EnderHopperBlockEntity::serverTick);
 	}
 	
 	@Override
@@ -87,7 +92,6 @@ public class EnderHopperBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -114,7 +118,7 @@ public class EnderHopperBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
@@ -124,7 +128,7 @@ public class EnderHopperBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -144,8 +148,7 @@ public class EnderHopperBlock extends BlockWithEntity {
 				} else {
 					player.sendMessage(Text.translatable("block.spectrum.ender_hopper_with_owner", enderHopperBlockEntity.getOwnerName()), true);
 				}
-				
-				
+
 			}
 			return ActionResult.CONSUME;
 		}

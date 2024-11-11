@@ -8,6 +8,7 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -48,7 +49,7 @@ public class NightdewBlock extends TriStateVineBlock {
         var dropChance = MathHelper.clampedLerp(BASE_BURGEON_CHANCE, MAX_BURGEON_CHANCE, sleepingEntities);
 
         if (random.nextFloat() < 1 / dropChance)
-			for (ItemStack rareStack : getRareStacks(state, world, pos, tool, SpectrumLootTables.NIGHTDEW_VINE_RARE_DROP)) {
+			for (ItemStack rareStack : getRareStacks(state, world, pos, tool, RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.NIGHTDEW_VINE_RARE_DROP))) {
                 dropStack(world, pos, rareStack);
             }
     }

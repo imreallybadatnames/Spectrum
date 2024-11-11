@@ -1,10 +1,10 @@
 package de.dafuqs.spectrum.blocks.energy;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.Support;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -21,11 +21,18 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<ColorPickerBlock> CODEC = createCodec(ColorPickerBlock::new);
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 13.0D, 15.0D);
-	
+
 	public ColorPickerBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends ColorPickerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -50,7 +57,7 @@ public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEnti
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
@@ -71,7 +78,7 @@ public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEnti
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -111,7 +118,6 @@ public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEnti
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);

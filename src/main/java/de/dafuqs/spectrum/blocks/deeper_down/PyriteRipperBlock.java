@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -15,9 +16,11 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class PyriteRipperBlock extends SpectrumFacingBlock {
-	
+
+	public static final MapCodec<PyriteRipperBlock> CODEC = createCodec(PyriteRipperBlock::new);
+
 	public static final BooleanProperty MIRRORED = BooleanProperty.of("mirrored");
-	
+
 	public static final Map<Direction, VoxelShape> SHAPES = new HashMap<>() {{
 		put(Direction.UP, Block.createCuboidShape(0.0D, 0.0D, 5.0D, 16.0D, 6.0D, 11.0D));
 		put(Direction.DOWN, Block.createCuboidShape(0.0D, 10.0D, 5.0D, 16.0D, 16.0D, 11.0D));
@@ -34,14 +37,19 @@ public class PyriteRipperBlock extends SpectrumFacingBlock {
 		put(Direction.EAST, Block.createCuboidShape(0.0D, 0.0D, 5.0D, 6.0D, 16.0D, 11.0D));
 		put(Direction.WEST, Block.createCuboidShape(10.0D, 0.0D, 5.0D, 16.0D, 16.0D, 11.0D));
 	}};
-	
+
 	public PyriteRipperBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState().with(FACING, Direction.EAST).with(MIRRORED, false));
 	}
+
+	@Override
+	public MapCodec<? extends PyriteRipperBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	

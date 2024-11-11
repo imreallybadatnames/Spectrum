@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.events;
 
 import de.dafuqs.spectrum.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import net.minecraft.world.event.*;
 
@@ -9,11 +10,11 @@ import java.util.*;
 
 public class SpectrumGameEvents {
 	
-	public static GameEvent ENTITY_SPAWNED;
-	public static GameEvent BLOCK_CHANGED;
+	public static RegistryEntry<GameEvent> ENTITY_SPAWNED;
+	public static RegistryEntry<GameEvent> BLOCK_CHANGED;
 
-	public static GameEvent HUMMINGSTONE_HUMMING;
-	public static GameEvent HUMMINGSTONE_HYMN;
+	public static RegistryEntry<GameEvent> HUMMINGSTONE_HUMMING;
+	public static RegistryEntry<GameEvent> HUMMINGSTONE_HYMN;
 
 	public static final HashMap<DyeColor, List<RedstoneTransferGameEvent>> WIRELESS_REDSTONE_SIGNALS = new HashMap<>(); // a list of 16 * 16 events, meaning redstone strength 0-15 with each dye color
 
@@ -33,12 +34,12 @@ public class SpectrumGameEvents {
 		}
 	}
 	
-	private static GameEvent register(String id) {
+	private static RegistryEntry<GameEvent> register(String id) {
 		return register(id, 16);
 	}
 	
-	private static GameEvent register(String id, int range) {
-		return Registry.register(Registries.GAME_EVENT, SpectrumCommon.locate(id), new GameEvent(id, range));
+	private static RegistryEntry<GameEvent> register(String id, int range) {
+		return Registry.registerReference(Registries.GAME_EVENT, SpectrumCommon.locate(id), new GameEvent(range));
 	}
 	
 }

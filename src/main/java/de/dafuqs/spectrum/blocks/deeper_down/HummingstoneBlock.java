@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
@@ -24,13 +25,20 @@ import net.minecraft.world.event.listener.*;
 import org.jetbrains.annotations.*;
 
 public class HummingstoneBlock extends BlockWithEntity {
-	
+
+	public static final MapCodec<HummingstoneBlock> CODEC = createCodec(HummingstoneBlock::new);
+
 	public static final float CHANCE_TO_ECHO_HUM_EVENT = 0.08F;
 	public static final BooleanProperty HUMMING = BooleanProperty.of("humming");
-	
+
 	public HummingstoneBlock(Settings settings) {
 		super(settings);
 		setDefaultState(this.stateManager.getDefaultState().with(HUMMING, false));
+	}
+
+	@Override
+	public MapCodec<? extends HummingstoneBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -74,15 +82,14 @@ public class HummingstoneBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!state.get(HUMMING)) {
 			if (!world.isClient) {
 				startHumming(world, pos, state, player, false);
 			}
 			return ActionResult.success(world.isClient);
 		}
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUse(state, world, pos, player, hit);
 	}
 	
 	@Override
@@ -91,7 +98,6 @@ public class HummingstoneBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.randomTick(state, world, pos, random);
 		if (!world.isClient && state.get(HUMMING)) {
@@ -100,7 +106,6 @@ public class HummingstoneBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
 		if (!world.isClient && !state.get(HUMMING)) {
@@ -126,10 +131,7 @@ public class HummingstoneBlock extends BlockWithEntity {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (!world.isClient) {
-			return checkType(type, SpectrumBlockEntities.HUMMINGSTONE, HummingstoneBlockEntity::serverTick);
-		}
-		return null;
+		return world.isClient ? null : validateTicker(type, SpectrumBlockEntities.HUMMINGSTONE, HummingstoneBlockEntity::serverTick);
 	}
 	
 	@Override

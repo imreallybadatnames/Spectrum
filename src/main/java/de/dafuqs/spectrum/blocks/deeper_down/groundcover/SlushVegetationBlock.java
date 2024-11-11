@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.groundcover;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.SpectrumBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,6 +17,13 @@ public class SlushVegetationBlock extends SnowyBlock {
 
     public SlushVegetationBlock(Settings settings) {
         super(settings);
+    }
+
+    public static final MapCodec<SlushVegetationBlock> CODEC = createCodec(SlushVegetationBlock::new);
+
+    @Override
+    public MapCodec<? extends SlushVegetationBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

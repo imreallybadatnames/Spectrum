@@ -9,7 +9,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 
-class HummingstoneEventQueue extends EventQueue<HummingstoneEventQueue.EventEntry> {
+public class HummingstoneEventQueue extends EventQueue<HummingstoneEventQueue.EventEntry> {
     
     public HummingstoneEventQueue(PositionSource positionSource, int range, Callback<EventEntry> listener) {
         super(positionSource, range, listener);
@@ -29,15 +29,7 @@ class HummingstoneEventQueue extends EventQueue<HummingstoneEventQueue.EventEntr
 			}
 		}
 	}
-	
-	protected static class EventEntry {
-		public final GameEvent.Message message;
-		public final int distance;
-		
-		public EventEntry(GameEvent.Message message, int distance) {
-			this.message = message;
-			this.distance = distance;
-		}
-	}
+
+	public record EventEntry(GameEvent.Message message, int distance) { }
 
 }

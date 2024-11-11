@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.math.*;
 import org.joml.Math;
 
-public class EnchanterBlockEntityRenderer implements BlockEntityRenderer<de.dafuqs.spectrum.blocks.enchanter.EnchanterBlockEntity> {
+public class EnchanterBlockEntityRenderer implements BlockEntityRenderer<EnchanterBlockEntity> {
 
 	protected static final double ITEM_STACK_RENDER_HEIGHT = 0.95F;
 	protected static EntityRenderDispatcher dispatcher;

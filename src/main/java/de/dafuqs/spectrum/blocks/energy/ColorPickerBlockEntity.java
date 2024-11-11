@@ -22,6 +22,7 @@ import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -82,11 +83,11 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-		if (!this.deserializeLootTable(nbt)) {
-			Inventories.readNbt(nbt, this.inventory);
+		if (!this.readLootTable(nbt)) {
+			Inventories.readNbt(nbt, this.inventory, registryLookup);
 		}
 		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
 			this.inkStorage = TotalCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
@@ -98,10 +99,10 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	}
 	
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
-		if (!this.serializeLootTable(nbt)) {
-			Inventories.writeNbt(nbt, this.inventory);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
+		if (!this.writeLootTable(nbt)) {
+			Inventories.writeNbt(nbt, this.inventory, registryLookup);
 		}
 		nbt.put("InkStorage", this.inkStorage.toNbt());
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
@@ -147,12 +148,12 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	}
 	
 	@Override
-	protected DefaultedList<ItemStack> getInvStackList() {
+	protected DefaultedList<ItemStack> getHeldStacks() {
 		return this.inventory;
 	}
 	
 	@Override
-	protected void setInvStackList(DefaultedList<ItemStack> list) {
+	protected void setHeldStacks(DefaultedList<ItemStack> list) {
 		this.inventory = list;
 		this.paused = false;
 		updateInClientWorld();
@@ -297,9 +298,9 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	

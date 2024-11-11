@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.groundcover;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.util.math.*;
@@ -7,13 +8,20 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class AshBlock extends Block {
-	
+
+	public static final MapCodec<AshBlock> CODEC = createCodec(AshBlock::new);
+
 	public static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 14, 16);
-	
+
 	public AshBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends AshBlock> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
