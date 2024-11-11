@@ -10,6 +10,12 @@ public class TilledShaleClayBlock extends ImmutableFarmlandBlock {
 		super(settings, bareState);
 	}
 
+//	@Override
+//	public MapCodec<? extends TilledShaleClayBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
+
 	@Override
 	public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
 		entity.handleFallDamage(fallDistance, 2.0F, world.getDamageSources().fall());

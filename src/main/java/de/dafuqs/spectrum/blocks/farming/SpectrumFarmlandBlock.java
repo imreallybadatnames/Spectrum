@@ -19,6 +19,12 @@ public class SpectrumFarmlandBlock extends FarmlandBlock {
 		super(settings);
 		this.bareState = bareState;
 	}
+
+//	@Override
+//	public MapCodec<? extends SpectrumFarmlandBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {

@@ -19,6 +19,12 @@ public class DragonrotFluidBlock extends SpectrumFluidBlock {
 		super(fluid, ultrawarmReplacementBlockState, settings);
 	}
 
+//	@Override
+//	public MapCodec<? extends DragonrotFluidBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
+
 	@Override
 	public SimpleParticleType getSplashParticle() {
 		return SpectrumParticleTypes.DRAGONROT;
@@ -38,7 +44,7 @@ public class DragonrotFluidBlock extends SpectrumFluidBlock {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 

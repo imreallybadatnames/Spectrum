@@ -33,9 +33,10 @@ public abstract class InWorldInteractionBlock extends BlockWithEntity {
 	// drop all currently stored stuff
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) { // happens when filling with fluid, ...
-			scatterContents(world, pos);
-			world.updateComparators(pos, this);
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		// happens when filling with fluid, ...
+		if (!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof InWorldInteractionBlockEntity inWorldInteractionBlockEntity) {
+			inWorldInteractionBlockEntity.inventoryChanged();
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}

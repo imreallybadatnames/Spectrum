@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.fusion_shrine;
 
 import com.klikli_dev.modonomicon.api.multiblock.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
@@ -35,14 +36,21 @@ import org.jetbrains.annotations.*;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FusionShrineBlock extends InWorldInteractionBlock {
-	
+
+	public static final MapCodec<FusionShrineBlock> CODEC = createCodec(FusionShrineBlock::new);
+
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("collect_all_basic_pigments_besides_brown");
 	public static final IntProperty LIGHT_LEVEL = IntProperty.of("light_level", 0, 15);
 	protected static final VoxelShape SHAPE;
-	
+
 	public FusionShrineBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getStateManager().getDefaultState().with(LIGHT_LEVEL, 0));
+	}
+
+	@Override
+	public MapCodec<? extends FusionShrineBlock> getCodec() {
+		return CODEC;
 	}
 	
 	public static void clearCurrentlyRenderedMultiBlock(World world) {
@@ -156,8 +164,7 @@ public class FusionShrineBlock extends InWorldInteractionBlock {
 				
 				// We're not considering stacked fluid storages for the time being
 				if (itemStack.getCount() == 1) {
-					Item item = itemStack.getItem();
-					SingleSlotStorage<ItemVariant> slot = new DroppedItemStorage(item, itemStack.getNbt());
+					SingleSlotStorage<ItemVariant> slot = new DroppedItemStorage(itemStack);
 					SingleSlotContainerItemContext ctx = new SingleSlotContainerItemContext(slot);
 					Storage<FluidVariant> fluidStorage = FluidStorage.ITEM.find(itemStack, ctx);
 					
@@ -200,11 +207,10 @@ public class FusionShrineBlock extends InWorldInteractionBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
 			verifyStructure(world, pos, null);
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			verifySkyAccess((ServerWorld) world, pos);
 			
@@ -213,27 +219,25 @@ public class FusionShrineBlock extends InWorldInteractionBlock {
 			if (blockEntity instanceof FusionShrineBlockEntity fusionShrineBlockEntity && verifyStructure(world, pos, (ServerPlayerEntity) player)) {
 				fusionShrineBlockEntity.setOwner(player);
 				
-				ItemStack handStack = player.getStackInHand(hand);
 				if (FluidStorageUtil.interactWithFluidStorage(fusionShrineBlockEntity.fluidStorage, player, hand)) {
 					fusionShrineBlockEntity.inventoryChanged();
-					return ActionResult.CONSUME;
+					return ItemActionResult.CONSUME;
 				}
 				if ((player.isSneaking() || handStack.isEmpty()) && retrieveLastStack(world, pos, player, hand, handStack, fusionShrineBlockEntity)) {
 					fusionShrineBlockEntity.inventoryChanged();
-					return ActionResult.CONSUME;
+					return ItemActionResult.CONSUME;
 				}
 				if (!handStack.isEmpty() && inputHandStack(world, player, hand, handStack, fusionShrineBlockEntity)) {
 					fusionShrineBlockEntity.inventoryChanged();
-					return ActionResult.CONSUME;
+					return ItemActionResult.CONSUME;
 				}
 			}
 			
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
 	}
@@ -241,11 +245,7 @@ public class FusionShrineBlock extends InWorldInteractionBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return checkType(type, SpectrumBlockEntities.FUSION_SHRINE, FusionShrineBlockEntity::clientTick);
-		} else {
-			return checkType(type, SpectrumBlockEntities.FUSION_SHRINE, FusionShrineBlockEntity::serverTick);
-		}
+		return validateTicker(type, SpectrumBlockEntities.FUSION_SHRINE, world.isClient ? FusionShrineBlockEntity::clientTick : FusionShrineBlockEntity::serverTick);
 	}
 	
 	static {

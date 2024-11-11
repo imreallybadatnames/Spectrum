@@ -17,6 +17,12 @@ public class MudFluidBlock extends SpectrumFluidBlock {
 	public MudFluidBlock(SpectrumFluid fluid, BlockState ultrawarmReplacementBlockState, Settings settings) {
 		super(fluid, ultrawarmReplacementBlockState, settings);
 	}
+
+//	@Override
+//	public MapCodec<? extends MudFluidBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
 	public SimpleParticleType getSplashParticle() {
@@ -37,7 +43,7 @@ public class MudFluidBlock extends SpectrumFluidBlock {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return true;
 	}
 

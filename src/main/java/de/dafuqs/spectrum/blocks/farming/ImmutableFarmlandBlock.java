@@ -11,6 +11,12 @@ public class ImmutableFarmlandBlock extends SpectrumFarmlandBlock {
 		super(settings, bareState);
 	}
 
+//	@Override
+//	public MapCodec<? extends ImmutableFarmlandBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
+
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 	}

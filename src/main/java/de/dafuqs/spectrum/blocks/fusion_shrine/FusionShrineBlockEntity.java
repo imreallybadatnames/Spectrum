@@ -18,6 +18,7 @@ import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -29,7 +30,6 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity implements PlayerOwned, Upgradeable {
 
     protected static final int INVENTORY_SIZE = 7;
@@ -215,8 +215,8 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
         this.fluidStorage.variant = FluidVariant.fromNbt(nbt.getCompound("FluidVariant"));
         this.fluidStorage.amount = nbt.getLong("FluidAmount");
 
@@ -235,8 +235,8 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
         nbt.put("FluidVariant", this.fluidStorage.variant.toNbt());
         nbt.putLong("FluidAmount", this.fluidStorage.amount);
         nbt.putShort("CraftingTime", (short) this.craftingTime);

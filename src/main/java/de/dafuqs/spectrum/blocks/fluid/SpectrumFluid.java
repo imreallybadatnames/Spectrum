@@ -57,7 +57,7 @@ public abstract class SpectrumFluid extends FlowableFluid {
 	 * Water returns 4. Lava returns 2 in the Overworld and 4 in the Nether.
 	 */
 	@Override
-	protected int getFlowSpeed(WorldView worldView) {
+	protected int getMaxFlowDistance(WorldView worldView) {
 		return 3;
 	}
 	

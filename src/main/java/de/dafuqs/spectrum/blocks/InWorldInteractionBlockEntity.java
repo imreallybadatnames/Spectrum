@@ -13,6 +13,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
@@ -41,23 +42,23 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.items = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
-		Inventories.readNbt(nbt, items);
+		Inventories.readNbt(nbt, items, registryLookup);
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
-		Inventories.writeNbt(nbt, items);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
+		Inventories.writeNbt(nbt, items, registryLookup);
 	}
 	
 	protected boolean deserializeLootTable(NbtCompound nbt) {
@@ -86,7 +87,7 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 	public void checkLootInteraction(@Nullable PlayerEntity player) {
 		var world = this.getWorld();
 		if (world != null && this.lootTableId != null && world.getServer() != null) {
-			LootTable lootTable = world.getServer().getLootManager().getLootTable(this.lootTableId);
+			LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(this.lootTableId);
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger(serverPlayerEntity, this.lootTableId);
 			}

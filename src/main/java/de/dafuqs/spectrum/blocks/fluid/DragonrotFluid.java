@@ -81,11 +81,6 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 	}
 	
 	@Override
-	protected int getFlowSpeed(WorldView worldView) {
-		return 3;
-	}
-	
-	@Override
 	protected int getLevelDecreasePerBlock(WorldView worldView) {
 		return 3;
 	}

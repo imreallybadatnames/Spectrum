@@ -10,6 +10,12 @@ public class TilledSlushBlock extends ExtraTickFarmlandBlock {
 		super(settings, bareState);
 		this.setDefaultState(getDefaultState().with(MOISTURE, 7));
 	}
+
+//	@Override
+//	public MapCodec<? extends > getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
 	
 	@Override
 	protected boolean isWaterNearby(WorldView world, BlockPos pos) {

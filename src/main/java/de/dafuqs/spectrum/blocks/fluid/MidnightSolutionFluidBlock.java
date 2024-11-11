@@ -23,6 +23,12 @@ public class MidnightSolutionFluidBlock extends SpectrumFluidBlock {
 		super(fluid, ultrawarmReplacementBlockState, settings);
 	}
 
+//	@Override
+//	public MapCodec<? extends MidnightSolutionFluidBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
+
 	@Override
 	public SimpleParticleType getSplashParticle() {
 		return SpectrumParticleTypes.MIDNIGHT_SOLUTION_SPLASH;
@@ -56,7 +62,7 @@ public class MidnightSolutionFluidBlock extends SpectrumFluidBlock {
 	}
 
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.gemstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.*;
 import net.minecraft.server.world.*;
@@ -22,6 +23,12 @@ public class SpectrumBuddingBlock extends SpectrumGemstoneBlock {
 		this.mediumBlock = mediumBlock;
 		this.largeBlock = largeBlock;
 		this.clusterBlock = clusterBlock;
+	}
+
+	@Override
+	public MapCodec<? extends SpectrumBuddingBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

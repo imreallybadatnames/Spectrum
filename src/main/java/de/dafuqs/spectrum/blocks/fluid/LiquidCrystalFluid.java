@@ -110,11 +110,6 @@ public abstract class LiquidCrystalFluid extends SpectrumFluid {
 		}
 		
 		@Override
-		protected boolean isInfinite(World world) {
-			return false;
-		}
-		
-		@Override
 		public int getLevel(FluidState fluidState) {
 			return fluidState.get(LEVEL);
 		}
@@ -126,11 +121,6 @@ public abstract class LiquidCrystalFluid extends SpectrumFluid {
 	}
 	
 	public static class Still extends LiquidCrystalFluid {
-		
-		@Override
-		protected boolean isInfinite(World world) {
-			return false;
-		}
 		
 		@Override
 		public int getLevel(FluidState fluidState) {
