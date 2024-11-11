@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -18,6 +19,12 @@ public class ColoredWoodBlock extends PillarBlock implements RevelationAware, Co
 		this.color = color;
 		WOOD.put(color, this);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends ColoredWoodBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

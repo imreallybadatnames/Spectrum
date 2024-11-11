@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.registry.*;
@@ -16,14 +17,20 @@ public class CloverBlock extends PlantBlock implements Fertilizable {
 	public CloverBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends CloverBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 

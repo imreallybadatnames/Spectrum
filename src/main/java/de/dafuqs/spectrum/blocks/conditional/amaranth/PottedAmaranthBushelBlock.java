@@ -15,6 +15,12 @@ public class PottedAmaranthBushelBlock extends FlowerPotBlock implements Revelat
 		super(content, settings);
 		RevelationAware.register(this);
 	}
+
+//	@Override
+//	public MapCodec<? extends PottedAmaranthBushelBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {

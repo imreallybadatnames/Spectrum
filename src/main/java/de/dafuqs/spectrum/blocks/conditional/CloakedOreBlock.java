@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -18,11 +19,17 @@ public class CloakedOreBlock extends ExperienceDroppingBlock implements Revelati
 	protected final Identifier cloakAdvancementIdentifier;
 	protected final BlockState cloakBlockState;
 	
-	public CloakedOreBlock(Settings settings, UniformIntProvider uniformIntProvider, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
-		super(settings, uniformIntProvider);
+	public CloakedOreBlock(UniformIntProvider uniformIntProvider, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
+		super(uniformIntProvider, settings);
 		this.cloakAdvancementIdentifier = cloakAdvancementIdentifier;
 		this.cloakBlockState = cloakBlockState;
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends CloakedOreBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -41,7 +48,6 @@ public class CloakedOreBlock extends ExperienceDroppingBlock implements Revelati
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		// workaround: since onStacksDropped() has no way of checking if it was
 		// triggered by a player we have to cache that information here
@@ -51,8 +57,6 @@ public class CloakedOreBlock extends ExperienceDroppingBlock implements Revelati
 		return super.getDroppedStacks(state, builder);
 	}
 
-
-	
 	@Override
 	public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, boolean dropExperience) {
 		super.onStacksDropped(state, world, pos, stack, dropExperience && dropXP);

@@ -14,6 +14,12 @@ public class PottedResonantLilyBlock extends FlowerPotBlock implements Revelatio
 		super(content, settings);
 		RevelationAware.register(this);
 	}
+
+//	@Override
+//	public MapCodec<? extends PottedResonantLilyBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {

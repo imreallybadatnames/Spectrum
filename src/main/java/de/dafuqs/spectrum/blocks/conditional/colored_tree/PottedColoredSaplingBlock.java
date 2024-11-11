@@ -17,6 +17,12 @@ public class PottedColoredSaplingBlock extends FlowerPotBlock implements Revelat
 		this.color = color;
 		RevelationAware.register(this);
 	}
+
+//	@Override
+//	public MapCodec<? extends PottedColoredSaplingBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {

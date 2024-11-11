@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional.blood_orchid;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.progression.*;
@@ -8,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -27,10 +29,16 @@ public class BloodOrchidBlock extends FlowerBlock implements Fertilizable, Revel
 	public static final Identifier ADVANCEMENT_IDENTIFIER = SpectrumCommon.locate("midgame/collect_blood_orchid_petal");
 	public static final IntProperty AGE = Properties.AGE_5;
 	
-	public BloodOrchidBlock(StatusEffect suspiciousStewEffect, int effectDuration, Settings settings) {
-		super(suspiciousStewEffect, effectDuration, settings);
+	public BloodOrchidBlock(RegistryEntry<StatusEffect> suspiciousStewEffect, float effectLengthInSeconds, Settings settings) {
+		super(suspiciousStewEffect, effectLengthInSeconds, settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends BloodOrchidBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -52,7 +60,7 @@ public class BloodOrchidBlock extends FlowerBlock implements Fertilizable, Revel
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		int age = state.get(AGE);
 		if (age > 0) {
 			if (world.isClient) {
@@ -90,7 +98,7 @@ public class BloodOrchidBlock extends FlowerBlock implements Fertilizable, Revel
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return state.get(AGE) < Properties.AGE_5_MAX;
 	}
 	

@@ -1,21 +1,29 @@
 package de.dafuqs.spectrum.blocks.conditional.amaranth;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.registries.client.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class AmaranthBushelBlock extends FlowerBlock implements RevelationAware {
-	
-	public AmaranthBushelBlock(StatusEffect suspiciousStewEffect, int effectDuration, Settings settings) {
-		super(suspiciousStewEffect, effectDuration, settings);
+
+	public AmaranthBushelBlock(RegistryEntry<StatusEffect> suspiciousStewEffect, float effectLengthInSeconds, Settings settings) {
+		super(suspiciousStewEffect, effectLengthInSeconds, settings);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends AmaranthBushelBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

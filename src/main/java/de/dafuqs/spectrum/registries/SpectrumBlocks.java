@@ -58,8 +58,6 @@ import de.dafuqs.spectrum.items.conditional.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.*;
-import net.fabricmc.fabric.api.item.v1.*;
-import net.fabricmc.fabric.api.object.builder.v1.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.*;

@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -19,6 +20,12 @@ public class ColoredStrippedLogBlock extends PillarBlock implements RevelationAw
 		this.color = color;
 		LOGS.put(color, this);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends ColoredStrippedLogBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

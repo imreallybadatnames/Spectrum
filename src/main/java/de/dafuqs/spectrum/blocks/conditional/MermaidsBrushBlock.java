@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
@@ -33,6 +34,12 @@ public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, Reve
 		this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0).with(LOGGED, FluidLogging.State.WATER));
 		RevelationAware.register(this);
 	}
+
+	@Override
+	public MapCodec<? extends MermaidsBrushBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
 	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -40,12 +47,11 @@ public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, Reve
 	}
 
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return new ItemStack(SpectrumItems.MERMAIDS_GEM);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
 		state.get(LOGGED).onEntityCollision(state, world, pos, entity);
@@ -141,7 +147,7 @@ public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, Reve
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 	
