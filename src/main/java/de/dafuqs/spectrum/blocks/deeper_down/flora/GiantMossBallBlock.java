@@ -1,16 +1,25 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class GiantMossBallBlock extends MossBallBlock{
+public class GiantMossBallBlock extends MossBallBlock {
+
+    public static final MapCodec<GiantMossBallBlock> CODEC = createCodec(GiantMossBallBlock::new);
 
     public GiantMossBallBlock(Settings settings) {
         super(settings);
     }
+
+//    @Override
+//    public MapCodec<? extends GiantMossBallBlock> getCodec() {
+//        //TODO: Make the codec
+//        return CODEC;
+//    }
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {

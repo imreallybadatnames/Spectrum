@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
@@ -35,14 +36,19 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public MapCodec<? extends TriStateVineBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
+    }
+
+    @Override
+    public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         var reference = BlockReference.of(state, pos);
-        var handStack = player.getStackInHand(hand);
         var creative = player.getAbilities().creativeMode;
 
         if (handStack.isIn(ConventionalItemTags.SHEARS)) {
             if (reference.getProperty(LIFE_STAGE) != LifeStage.GROWING)
-                return ActionResult.FAIL;
+                return ItemActionResult.FAIL;
 
             if (!creative)
                 handStack.damage(1, player, p -> p.sendToolBreakStatus(hand));
@@ -52,11 +58,11 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
             
             world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.BLOCKS, 1.0F, MathHelper.nextBetween(world.random, 0.6F, 1.0F)); // TODO: custom sound event because subtitles
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, reference.getState()));
-            return ActionResult.success(world.isClient());
+            return ItemActionResult.success(world.isClient());
         }
         else if (handStack.isOf(SpectrumItems.MOONSTRUCK_NECTAR)) {
             if (reference.getProperty(LIFE_STAGE) != LifeStage.MATURE)
-                return ActionResult.FAIL;
+                return ItemActionResult.FAIL;
 
             if (!creative)
                 handStack.decrement(1);
@@ -66,10 +72,10 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
             
             world.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 1.0F, MathHelper.nextBetween(world.random, 0.6F, 1.0F)); // TODO: custom sound event because subtitles
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, reference.getState()));
-            return ActionResult.success(world.isClient());
+            return ItemActionResult.success(world.isClient());
         }
 
-        return ActionResult.PASS;
+        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Nullable
@@ -170,7 +176,7 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
         return true;
     }
 

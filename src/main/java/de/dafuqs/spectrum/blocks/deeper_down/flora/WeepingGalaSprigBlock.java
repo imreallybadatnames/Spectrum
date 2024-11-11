@@ -1,15 +1,21 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.block.sapling.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class WeepingGalaSprigBlock extends SaplingBlock {
-	
+
 	public WeepingGalaSprigBlock(SaplingGenerator generator, AbstractBlock.Settings settings) {
 		super(generator, settings);
+	}
+
+	@Override
+	public MapCodec<? extends WeepingGalaSprigBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override

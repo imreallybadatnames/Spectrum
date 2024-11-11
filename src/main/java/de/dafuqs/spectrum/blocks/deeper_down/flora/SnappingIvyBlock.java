@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -18,16 +19,23 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 
 public class SnappingIvyBlock extends PlantBlock implements Fertilizable {
-    
+
+    public static final MapCodec<SnappingIvyBlock> CODEC = createCodec(SnappingIvyBlock::new);
+
     public static final EnumProperty<Direction.Axis> AXIS = Properties.HORIZONTAL_AXIS;
     public static final BooleanProperty SNAPPED = BooleanProperty.of("snapped");
-    
+
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
     protected static final Vec3d MOVEMENT_SLOWDOWN_VECTOR = new Vec3d(0.5, 0.75, 0.5);
-    
+
     public SnappingIvyBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AXIS, Direction.Axis.X).with(SNAPPED, false));
+    }
+
+    @Override
+    public MapCodec<? extends SnappingIvyBlock> getCodec() {
+        return CODEC;
     }
     
     @Override
@@ -46,7 +54,7 @@ public class SnappingIvyBlock extends PlantBlock implements Fertilizable {
     }
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
     

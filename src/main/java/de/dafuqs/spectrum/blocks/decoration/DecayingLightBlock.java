@@ -16,13 +16,14 @@ public class DecayingLightBlock extends WandLightBlock {
 		super(settings);
 	}
 
-	@Override
-	public MapCodec<? extends DecayingLightBlock> getCodec() {
-		return CODEC;
-	}
+//	@Override
+//	public MapCodec<? extends DecayingLightBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
 
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return ItemStack.EMPTY;
 	}
 	

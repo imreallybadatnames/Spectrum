@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.jade_vines.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
@@ -20,19 +21,26 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 
 public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
-    
+
+    public static final MapCodec<SawbladeHollyBushBlock> CODEC = createCodec(SawbladeHollyBushBlock::new);
+
     public static final float DAMAGE = 2.0F;
-	
+
     public static final int MAX_TINY_AGE = 0;
     public static final int MAX_SMALL_AGE = 2;
     public static final int MAX_AGE = Properties.AGE_7_MAX;
     public static final IntProperty AGE = Properties.AGE_7;
     private static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(3.0, 0.0, 3.0, 13.0, 8.0, 13.0);
     private static final VoxelShape LARGE_SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
-    
+
     public SawbladeHollyBushBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
+    }
+
+    @Override
+    public MapCodec<? extends SawbladeHollyBushBlock> getCodec() {
+        return CODEC;
     }
     
     @Override
@@ -74,7 +82,7 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
 	}
     
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         return new ItemStack(SpectrumItems.SAWBLADE_HOLLY_BERRY);
     }
     
@@ -84,7 +92,6 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
     }
     
     @Override
-	@SuppressWarnings("deprecation")
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (state.get(AGE) <= MAX_TINY_AGE) {
             return SMALL_SHAPE;
@@ -94,11 +101,9 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int age = state.get(AGE);
         
-        ItemStack handStack = player.getStackInHand(hand);
         if (canBeSheared(age) && handStack.isIn(ConventionalItemTags.SHEARS)) {
             if (!world.isClient) {
 				for (ItemStack stack : JadeVinePlantBlock.getHarvestedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), player, player.getMainHandStack(), SpectrumLootTables.SAWBLADE_HOLLY_SHEARING)) {
@@ -112,7 +117,7 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
             world.emitGameEvent(GameEvent.SHEAR, pos, GameEvent.Emitter.of(player, newState));
             world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
             
-            return ActionResult.success(world.isClient);
+            return ItemActionResult.success(world.isClient);
         } else if (age == MAX_AGE) {
             if (!world.isClient) {
 				for (ItemStack stack : JadeVinePlantBlock.getHarvestedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), player, player.getMainHandStack(), SpectrumLootTables.SAWBLADE_HOLLY_HARVESTING)) {
@@ -125,9 +130,9 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
             world.setBlockState(pos, newState, Block.NOTIFY_LISTENERS);
             world.emitGameEvent(GameEvent.SHEAR, pos, GameEvent.Emitter.of(player, newState));
             
-            return ActionResult.success(world.isClient);
+            return ItemActionResult.success(world.isClient);
         } else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return super.onUseWithItem(handStack, state, world, pos, player, hand, hit);
         }
     }
     
@@ -136,7 +141,7 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
     }
     
     @Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return state.get(AGE) < MAX_AGE;
 	}
     

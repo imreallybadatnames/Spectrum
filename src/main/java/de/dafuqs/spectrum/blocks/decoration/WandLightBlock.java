@@ -39,10 +39,12 @@ public class WandLightBlock extends LightBlock {
 	}
 	
 	private boolean holdsRadianceStaff(@NotNull Entity entity) {
-		// context.isHolding() only checks the main hand, so we use our own implementation
-		for(ItemStack stack : entity.getHandItems()) {
-			if(stack.getItem() instanceof RadianceStaffItem) {
-				return true;
+		if(entity instanceof LivingEntity livingEntity) {
+			// context.isHolding() only checks the main hand, so we use our own implementation
+			for(ItemStack stack : livingEntity.getHandItems()) {
+				if(stack.getItem() instanceof RadianceStaffItem) {
+					return true;
+				}
 			}
 		}
 		return false;

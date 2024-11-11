@@ -1,17 +1,24 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.SpectrumBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
 public class WeepingGalaFrondsBlock extends PlantBlock {
 
+    public static final MapCodec<WeepingGalaFrondsBlock> CODEC = createCodec(WeepingGalaFrondsBlock::new);
+
     public WeepingGalaFrondsBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public MapCodec<? extends WeepingGalaFrondsBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

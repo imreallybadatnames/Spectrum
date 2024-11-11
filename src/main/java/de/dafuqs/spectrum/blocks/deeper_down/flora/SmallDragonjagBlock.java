@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -19,6 +20,12 @@ public class SmallDragonjagBlock extends PlantBlock implements Dragonjag, Fertil
 		super(settings);
 		this.variant = variant;
 		VARIANTS.put(variant, this);
+	}
+
+	@Override
+	public MapCodec<? extends SmallDragonjagBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -41,7 +48,7 @@ public class SmallDragonjagBlock extends PlantBlock implements Dragonjag, Fertil
     }
 
     @Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 
