@@ -19,7 +19,7 @@ public class ModifyDropsResonanceProcessor extends ResonanceDropProcessor {
 		
 		@Override
 		public ResonanceDropProcessor fromJson(JsonObject json) throws Exception {
-			BrokenBlockPredicate blockTarget = BrokenBlockPredicate.fromJson(json.get("block"));
+			BrokenBlockPredicate blockTarget = BrokenBlockPredicate.CODEC.parse(JsonOps.INSTANCE, json.get("block")).getOrThrow();
 			
 			Map<Ingredient, Item> modifiedDrops = new HashMap<>();
 			JsonArray modifyDropsArray = JsonHelper.getArray(json, "modify_drops");

@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.data_loaders.resonance_processors;
 
 import com.google.gson.*;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.api.predicate.block.*;
 import de.dafuqs.spectrum.data_loaders.*;
@@ -21,7 +22,7 @@ public class DropSelfResonanceProcessor extends ResonanceDropProcessor {
 		
 		@Override
 		public ResonanceDropProcessor fromJson(JsonObject json) throws Exception {
-			BrokenBlockPredicate blockTarget = BrokenBlockPredicate.fromJson(json.get("block"));
+			BrokenBlockPredicate blockTarget = BrokenBlockPredicate.CODEC.parse(JsonOps.INSTANCE, json.get("block")).getOrThrow();
 			
 			List<String> statePropertiesToCopy = new ArrayList<>();
 			if (json.has("state_properties_to_copy")) {
