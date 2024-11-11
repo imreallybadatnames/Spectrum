@@ -8,8 +8,8 @@ import net.minecraft.world.*;
 
 public class WeepingGalaSprigBlock extends SaplingBlock {
 
-	public WeepingGalaSprigBlock(SaplingGenerator generator, AbstractBlock.Settings settings) {
-		super(generator, settings);
+	public WeepingGalaSprigBlock(AbstractBlock.Settings settings) {
+		super(SpectrumSaplingGenerators.WEEPING_GALA_SAPLING_GENERATOR, settings);
 	}
 
 	@Override
