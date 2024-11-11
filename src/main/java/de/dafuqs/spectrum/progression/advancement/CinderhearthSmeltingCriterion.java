@@ -14,14 +14,14 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class CinderhearthSmeltingCriterion extends AbstractCriterion<CinderhearthSmeltingCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("cinderhearth_smelting");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("cinderhearth_smelting");
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public CinderhearthSmeltingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		ItemPredicate input = ItemPredicate.fromJson(jsonObject.get("input"));
@@ -31,7 +31,7 @@ public class CinderhearthSmeltingCriterion extends AbstractCriterion<Cinderheart
 		NumberRange.IntRange yieldMultiplierRange = NumberRange.IntRange.fromJson(jsonObject.get("yield_multiplier"));
 		NumberRange.IntRange efficiencyMultiplierRange = NumberRange.IntRange.fromJson(jsonObject.get("efficiency_multiplier"));
 		NumberRange.IntRange experienceMultiplierRange = NumberRange.IntRange.fromJson(jsonObject.get("experience_multiplier"));
-		
+
 		return new CinderhearthSmeltingCriterion.Conditions(extended, input, output, experienceRange, speedMultiplierRange, yieldMultiplierRange, efficiencyMultiplierRange, experienceMultiplierRange);
 	}
 
@@ -59,7 +59,7 @@ public class CinderhearthSmeltingCriterion extends AbstractCriterion<Cinderheart
 			this.efficiencyMultiplierRange = efficiencyMultiplierRange;
 			this.experienceMultiplierRange = experienceMultiplierRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -104,5 +104,5 @@ public class CinderhearthSmeltingCriterion extends AbstractCriterion<Cinderheart
 		}
 
 	}
-	
+
 }

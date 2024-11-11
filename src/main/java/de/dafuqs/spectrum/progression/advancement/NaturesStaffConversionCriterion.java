@@ -12,9 +12,9 @@ import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesStaffConversionCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("natures_staff_conversion");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("natures_staff_conversion");
+
 	@Nullable
 	private static Block getBlock(JsonObject obj, String propertyName) {
 		if (obj.has(propertyName)) {
@@ -24,23 +24,23 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 			return null;
 		}
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public NaturesStaffConversionCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		Block sourceBlock = getBlock(jsonObject, "source_block");
 		StatePredicate sourceStatePredicate = StatePredicate.fromJson(jsonObject.get("source_state"));
-		
+
 		if (sourceBlock != null) {
 			sourceStatePredicate.check(sourceBlock.getStateManager(), (name) -> {
 				throw new JsonSyntaxException("Block " + sourceBlock + " has no property " + name);
 			});
 		}
-		
+
 		Block targetBlock = getBlock(jsonObject, "target_block");
 		StatePredicate targetStatePredicate = StatePredicate.fromJson(jsonObject.get("target_state"));
 		if (targetBlock != null) {
@@ -48,23 +48,23 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 				throw new JsonSyntaxException("Block " + targetBlock + " has no property " + name);
 			});
 		}
-		
+
 		return new NaturesStaffConversionCriterion.Conditions(extended, sourceBlock, sourceStatePredicate, targetBlock, targetStatePredicate);
 	}
-	
+
 	public void trigger(ServerPlayerEntity player, BlockState sourceBlockState, BlockState targetBlockState) {
 		this.trigger(player, (conditions) -> conditions.matches(sourceBlockState, targetBlockState));
 	}
-	
+
 	public static class Conditions extends AbstractCriterionConditions {
-		
+
 		@Nullable
 		private final Block sourceBlock;
 		private final StatePredicate sourceBlockState;
 		@Nullable
 		private final Block targetBlock;
 		private final StatePredicate targetBlockState;
-		
+
 		public Conditions(LootContextPredicate player, @Nullable Block sourceBlock, StatePredicate sourceBlockState, @Nullable Block targetBlock, StatePredicate targetBlockState) {
 			super(ID, player);
 			this.sourceBlock = sourceBlock;
@@ -72,7 +72,7 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 			this.targetBlock = targetBlock;
 			this.targetBlockState = targetBlockState;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -86,7 +86,7 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 			jsonObject.add("target_state", this.targetBlockState.toJson());
 			return jsonObject;
 		}
-		
+
 		public boolean matches(BlockState sourceBlockState, BlockState targetBlockState) {
 			if (this.sourceBlock != null && !sourceBlockState.isOf(this.sourceBlock)) {
 				return false;
@@ -100,7 +100,7 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 				return this.targetBlockState.test(targetBlockState);
 			}
 		}
-		
+
 	}
-	
+
 }

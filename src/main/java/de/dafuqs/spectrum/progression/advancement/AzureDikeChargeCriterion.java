@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.predicate.*;
@@ -8,53 +9,37 @@ import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class AzureDikeChargeCriterion extends AbstractCriterion<AzureDikeChargeCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("azure_dike_charge_change");
-	
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
 
-	@Override
-	protected Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate lootContextPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		NumberRange.IntRange chargesRange = NumberRange.IntRange.fromJson(jsonObject.get("charges"));
-		NumberRange.IntRange rechargeRateRange = NumberRange.IntRange.fromJson(jsonObject.get("recharge_rate"));
-		NumberRange.IntRange changeRange = NumberRange.IntRange.fromJson(jsonObject.get("change"));
-
-		return new AzureDikeChargeCriterion.Conditions(lootContextPredicate, chargesRange, rechargeRateRange, changeRange);
-	}
+	public static final Identifier ID = SpectrumCommon.locate("azure_dike_charge_change");
 
 	public void trigger(ServerPlayerEntity player, float charges, int rechargeRate, float change) {
 		this.trigger(player, (conditions) -> conditions.matches(charges, rechargeRate, change));
 	}
-	
-	public static class Conditions extends AbstractCriterionConditions {
-		
-		private final NumberRange.IntRange chargesRange;
-		private final NumberRange.IntRange rechargeRateRange;
-		private final NumberRange.IntRange changeRange;
-		
-		public Conditions(LootContextPredicate predicate, NumberRange.IntRange chargesRange, NumberRange.IntRange rechargeRateRange, NumberRange.IntRange changeRange) {
-			super(AzureDikeChargeCriterion.ID, predicate);
-			this.chargesRange = chargesRange;
-			this.rechargeRateRange = rechargeRateRange;
-			this.changeRange = changeRange;
-		}
-		
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("charges", this.chargesRange.toJson());
-			jsonObject.add("recharge_rate", this.rechargeRateRange.toJson());
-			jsonObject.add("change", this.changeRange.toJson());
-			return jsonObject;
-		}
-		
+
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		NumberRange.IntRange charges,
+		NumberRange.IntRange rechargeRate,
+		NumberRange.IntRange change
+	) implements AbstractCriterion.Conditions {
+		public static final Codec<AzureDikeChargeCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(AzureDikeChargeCriterion.Conditions::player),
+			NumberRange.IntRange.CODEC.fieldOf("charges").forGetter(AzureDikeChargeCriterion.Conditions::charges),
+			NumberRange.IntRange.CODEC.fieldOf("recharge_rate").forGetter(AzureDikeChargeCriterion.Conditions::rechargeRate),
+			NumberRange.IntRange.CODEC.fieldOf("change").forGetter(AzureDikeChargeCriterion.Conditions::change)
+		).apply(instance, AzureDikeChargeCriterion.Conditions::new));
+
 		public boolean matches(float charges, int rechargeRate, float change) {
-			return this.chargesRange.test(Math.round(charges)) && this.rechargeRateRange.test(rechargeRate) && this.changeRange.test(Math.round(change));
+			return this.charges.test(Math.round(charges)) && this.rechargeRate.test(rechargeRate) && this.change.test(Math.round(change));
 		}
 	}
-	
 }
+	

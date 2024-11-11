@@ -1,44 +1,31 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
-public class BloodOrchidPluckingCriterion extends AbstractCriterion<BloodOrchidPluckingCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("blood_orchid_plucking");
-	
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
+import java.util.*;
 
-	@Override
-	protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		return new BloodOrchidPluckingCriterion.Conditions(playerPredicate);
-	}
+public class BloodOrchidPluckingCriterion extends AbstractCriterion<BloodOrchidPluckingCriterion.Conditions> {
+
+	public static final Identifier ID = SpectrumCommon.locate("blood_orchid_plucking");
 
 	public void trigger(ServerPlayerEntity player) {
-		this.trigger(player, Conditions::matches);
+		this.trigger(player, conditions -> true);
 	}
-	
-	public static class Conditions extends AbstractCriterionConditions {
-		
-		public Conditions(LootContextPredicate predicate) {
-			super(BloodOrchidPluckingCriterion.ID, predicate);
-		}
-		
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			return super.toJson(predicateSerializer);
-		}
-		
-		public boolean matches() {
-			return true;
-		}
+
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
 	}
-	
+
+	public record Conditions(Optional<LootContextPredicate> player) implements AbstractCriterion.Conditions {
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(Conditions::player)
+		).apply(instance, BloodOrchidPluckingCriterion.Conditions::new));
+	}
 }

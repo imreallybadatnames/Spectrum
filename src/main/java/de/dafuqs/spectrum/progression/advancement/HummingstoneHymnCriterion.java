@@ -11,17 +11,17 @@ import net.minecraft.util.math.*;
 
 public class HummingstoneHymnCriterion extends AbstractCriterion<HummingstoneHymnCriterion.Conditions> {
 
-	static final Identifier ID = SpectrumCommon.locate("hummingstone_hymn");
+	public static final Identifier ID = SpectrumCommon.locate("hummingstone_hymn");
 
 	public static HummingstoneHymnCriterion.Conditions create(LocationPredicate location) {
 		return new HummingstoneHymnCriterion.Conditions(LootContextPredicate.EMPTY, location);
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public HummingstoneHymnCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		LocationPredicate locationPredicate = LocationPredicate.fromJson(jsonObject.get("location"));
@@ -39,7 +39,7 @@ public class HummingstoneHymnCriterion extends AbstractCriterion<HummingstoneHym
 			super(ID, player);
 			this.location = location;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);

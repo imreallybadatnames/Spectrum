@@ -16,25 +16,25 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("take_off_belt_jump");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("take_off_belt_jump");
+
 	public static TakeOffBeltJumpCriterion.Conditions create(ItemPredicate itemPredicate, NumberRange.IntRange chargesRange) {
 		return new TakeOffBeltJumpCriterion.Conditions(LootContextPredicate.EMPTY, itemPredicate, chargesRange);
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public TakeOffBeltJumpCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
 		NumberRange.IntRange chargesRange = NumberRange.IntRange.fromJson(jsonObject.get("charges"));
 		return new TakeOffBeltJumpCriterion.Conditions(extended, itemPredicate, chargesRange);
 	}
-	
+
 	public void trigger(ServerPlayerEntity player) {
 		this.trigger(player, (conditions) -> {
 			Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(player);
@@ -53,17 +53,17 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 			return false;
 		});
 	}
-	
+
 	public static class Conditions extends AbstractCriterionConditions {
 		private final ItemPredicate itemPredicate;
 		private final NumberRange.IntRange chargesRange;
-		
+
 		public Conditions(LootContextPredicate player, ItemPredicate itemPredicate, NumberRange.IntRange chargesRange) {
 			super(ID, player);
 			this.itemPredicate = itemPredicate;
 			this.chargesRange = chargesRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -71,10 +71,10 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 			jsonObject.addProperty("charges", this.chargesRange.toString());
 			return jsonObject;
 		}
-		
+
 		public boolean matches(ItemStack beltStack, int charge) {
 			return itemPredicate.test(beltStack) && this.chargesRange.test(charge);
 		}
 	}
-	
+
 }
