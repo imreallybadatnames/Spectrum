@@ -129,7 +129,7 @@ public class BlackHoleChestBlockEntityRenderer implements BlockEntityRenderer<Bl
         }
 
         orb.forEachCuboid(matrixStack, ((matrix, path, index, cuboid) -> {
-			cuboid.renderCuboid(matrixStack.peek(), vertexConsumer, index == 0 ? orbLight : light, overlay, 1, 1, 1, 1);
+			cuboid.renderCuboid(matrixStack.peek(), vertexConsumer, index == 0 ? orbLight : light, overlay, -1);
 		}));
 
 

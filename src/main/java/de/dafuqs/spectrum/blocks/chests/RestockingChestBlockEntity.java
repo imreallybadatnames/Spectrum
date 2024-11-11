@@ -11,6 +11,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.text.*;
 import net.minecraft.util.collection.*;
@@ -129,7 +130,7 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	public List<ItemStack> getRecipeOutputs() {
-		if (world.isClient()) {
+		if (world == null || world.isClient()) {
 			return cachedOutputs;
 		}
 
@@ -141,13 +142,13 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 			if (!tablet.isOf(SpectrumItems.CRAFTING_TABLET))
 				continue;
 
-			var recipe = CraftingTabletItem.getStoredRecipe(world, tablet);
+			var recipe = CraftingTabletItem.getStoredRecipe(world, tablet).value();
 
 
 			if (!isRecipeValid(recipe))
 				continue;
 
-			var output = recipe.getOutput(world.getRegistryManager());
+			var output = recipe.getResult(world.getRegistryManager());
 
 			if (!output.isEmpty())
 				list.add(output);
@@ -161,7 +162,7 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 
 	public boolean hasValidRecipes() {
-		if (world.isClient()) {
+		if (world == null || world.isClient()) {
 			return hasValidRecipes;
 		}
 
@@ -170,7 +171,7 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 			if (!tablet.isOf(SpectrumItems.CRAFTING_TABLET))
 				continue;
 
-			Recipe<?> recipe = CraftingTabletItem.getStoredRecipe(world, tablet);
+			var recipe = CraftingTabletItem.getStoredRecipe(world, tablet).value();
 			if (isRecipeValid(recipe) && isRecipeCraftable(recipe, i) && canSlotFitCraftingOutput(inventory.get(RESULT_SLOTS[i]), recipe))
 				return true;
 		}
@@ -194,10 +195,10 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	private boolean tryCraft(RestockingChestBlockEntity chest, int index) {
 		ItemStack craftingTabletItemStack = chest.inventory.get(RECIPE_SLOTS[index]);
 		if (craftingTabletItemStack.isOf(SpectrumItems.CRAFTING_TABLET)) {
-			Recipe<?> recipe = CraftingTabletItem.getStoredRecipe(world, craftingTabletItemStack);
-			if (isRecipeValid(recipe)) {
-				DefaultedList<Ingredient> ingredients = recipe.getIngredients();
-				ItemStack outputItemStack = recipe.getOutput(world.getRegistryManager());
+			var recipe = CraftingTabletItem.getStoredRecipe(world, craftingTabletItemStack);
+			if (recipe != null && isRecipeValid(recipe.value())) {
+				DefaultedList<Ingredient> ingredients = recipe.value().getIngredients();
+				ItemStack outputItemStack = recipe.value().getResult(world.getRegistryManager());
 				ItemStack currentItemStack = chest.inventory.get(RESULT_SLOTS[index]);
 				if (InventoryHelper.canCombineItemStacks(currentItemStack, outputItemStack) && InventoryHelper.hasInInventory(ingredients, chest)) {
 					List<ItemStack> remainders = InventoryHelper.removeFromInventoryWithRemainders(ingredients, chest);
@@ -240,19 +241,19 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		tag.putInt("cooldown", coolDownTicks);
 		tag.putLong("age", age);
-		if (world.isClient()) {
+		if (world != null && world.isClient()) {
 			tag.putFloat("yaw", yaw);
 			tag.putFloat("lastYaw", lastYaw);
 		}
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		if (tag.contains("cooldown")) {
 			coolDownTicks = tag.getInt("cooldown");
 		}
@@ -291,7 +292,7 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 
 	public void updateFullState() {
-		if (!world.isClient()) {
+		if (world != null && !world.isClient()) {
 			isFull = isFull();
 			hasValidRecipes = hasValidRecipes();
 			SpectrumS2CPacketSender.sendRestockingChestStatusUpdate(this);
@@ -311,16 +312,16 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 			if (!tablet.isOf(SpectrumItems.CRAFTING_TABLET))
 				continue;
 
-			Recipe<?> recipe = CraftingTabletItem.getStoredRecipe(world, tablet);
+			var recipe = CraftingTabletItem.getStoredRecipe(world, tablet);
 
-			if (!isRecipeValid(recipe)) {
+			if (recipe == null || !isRecipeValid(recipe.value())) {
 				invalids++;
 				continue;
 			}
 
 			ItemStack outputSlot = inventory.get(RESULT_SLOTS[i]);
 
-			if (canSlotFitCraftingOutput(outputSlot, recipe)) {
+			if (canSlotFitCraftingOutput(outputSlot, recipe.value())) {
 				return false;
 			}
 		}
@@ -328,7 +329,9 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
     }
 
 	public boolean canSlotFitCraftingOutput(ItemStack slot, Recipe<?> recipe) {
-        return slot.isEmpty() || slot.getCount() + recipe.getOutput(world.getRegistryManager()).getCount() < slot.getMaxCount();
+		if (world == null)
+			return false;
+        return slot.isEmpty() || slot.getCount() + recipe.getResult(world.getRegistryManager()).getCount() < slot.getMaxCount();
     }
 
 	public void updateState(boolean full, boolean hasValidRecipes, List<ItemStack> cachedOutputs) {

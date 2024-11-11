@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.util.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -35,7 +34,7 @@ public abstract class SpectrumChestBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -57,17 +56,9 @@ public abstract class SpectrumChestBlock extends BlockWithEntity {
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof SpectrumChestBlockEntity spectrumChestBlockEntity) {
-				ItemScatterer.spawn(world, pos, spectrumChestBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override
@@ -86,12 +77,11 @@ public abstract class SpectrumChestBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -99,24 +89,13 @@ public abstract class SpectrumChestBlock extends BlockWithEntity {
 			((SpectrumChestBlockEntity) blockEntity).onScheduledTick();
 		}
 	}
-	
-	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (itemStack.hasCustomName()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof SpectrumChestBlockEntity spectrumChestBlockEntity) {
-				spectrumChestBlockEntity.setCustomName(itemStack.getName());
-			}
-		}
-	}
-	
+
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}

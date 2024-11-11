@@ -18,13 +18,12 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
-import net.minecraft.registry.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -35,7 +34,6 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory, SidedInventory, EventQueue.Callback<Object> {
 	
 	public static final int INVENTORY_SIZE = 28;
@@ -115,7 +113,7 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	public void updateFullState() {
-		if (!world.isClient()) {
+		if (world != null && !world.isClient) {
 			isFull = isFull();
 			SpectrumS2CPacketSender.sendBlackHoleChestUpdate(this);
 		}
@@ -131,14 +129,14 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	public boolean canFunction() {
-		return !SpectrumChestBlock.isChestBlocked(world, this.pos) && !isFull;
+		return world != null && !SpectrumChestBlock.isChestBlocked(world, this.pos) && !isFull;
 	}
 
 	public boolean isFull() {
 		for (int i = 0; i < inventory.size() - 1; i++) {
 			var stack = inventory.get(i);
 			if (stack.getCount() < stack.getMaxCount()) {
-				return  false;
+				return false;
 			}
 		}
 
@@ -172,14 +170,18 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	private static void searchForNearbyEntities(@NotNull BlackHoleChestBlockEntity blockEntity) {
-		List<ItemEntity> itemEntities = blockEntity.getWorld().getEntitiesByType(EntityType.ITEM, getBoxWithRadius(blockEntity.pos, RANGE), Entity::isAlive);
+		var world = blockEntity.getWorld();
+		if (world == null)
+			return;
+
+		List<ItemEntity> itemEntities = world.getEntitiesByType(EntityType.ITEM, getBoxWithRadius(blockEntity.pos, RANGE), Entity::isAlive);
 		for (ItemEntity itemEntity : itemEntities) {
 			if (itemEntity.isAlive() && !itemEntity.getStack().isEmpty()) {
 				itemEntity.emitGameEvent(SpectrumGameEvents.ENTITY_SPAWNED);
 			}
 		}
 
-		List<ExperienceOrbEntity> experienceOrbEntities = blockEntity.getWorld().getEntitiesByType(EntityType.EXPERIENCE_ORB, getBoxWithRadius(blockEntity.pos, RANGE), Entity::isAlive);
+		List<ExperienceOrbEntity> experienceOrbEntities = world.getEntitiesByType(EntityType.EXPERIENCE_ORB, getBoxWithRadius(blockEntity.pos, RANGE), Entity::isAlive);
 		for (ExperienceOrbEntity experienceOrbEntity : experienceOrbEntities) {
 			if (experienceOrbEntity.isAlive()) {
 				experienceOrbEntity.emitGameEvent(SpectrumGameEvents.ENTITY_SPAWNED);
@@ -211,15 +213,15 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		FilterConfigurable.writeFilterNbt(tag, filterItems);
 		tag.putLong("age", age);
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		FilterConfigurable.readFilterNbt(tag, filterItems);
 		age = tag.getLong("age");
 	}

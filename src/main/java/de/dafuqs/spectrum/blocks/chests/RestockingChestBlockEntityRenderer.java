@@ -141,7 +141,7 @@ public class RestockingChestBlockEntityRenderer implements BlockEntityRenderer<R
 		}
 
 		if (chest.alphaValue > 0.01F) {
-			rings.render(matrices, vertexConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay, 1, 1, 1, chest.alphaValue);
+			rings.render(matrices, vertexConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay, ColorHelper.Argb.fromFloats(chest.alphaValue, 1, 1, 1));
 		}
 
 		var outputs = chest.getRecipeOutputs();

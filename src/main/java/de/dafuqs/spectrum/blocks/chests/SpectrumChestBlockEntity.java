@@ -8,6 +8,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.collection.*;
@@ -125,12 +126,12 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 	}
 	
 	@Override
-	protected DefaultedList<ItemStack> getInvStackList() {
+	protected DefaultedList<ItemStack> getHeldStacks() {
 		return this.inventory;
 	}
 	
 	@Override
-	protected void setInvStackList(DefaultedList<ItemStack> list) {
+	protected void setHeldStacks(DefaultedList<ItemStack> list) {
 		this.inventory = list;
 	}
 	
@@ -139,19 +140,19 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
-		this.deserializeLootTable(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
+		this.readLootTable(tag);
 		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-		Inventories.readNbt(tag, this.inventory);
+		Inventories.readNbt(tag, this.inventory, registryLookup);
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
-		this.serializeLootTable(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
+		this.writeLootTable(tag);
 		if (!this.inventory.isEmpty()) {
-			Inventories.writeNbt(tag, this.inventory);
+			Inventories.writeNbt(tag, this.inventory, registryLookup);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.chests;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -9,11 +10,18 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class CompactingChestBlock extends SpectrumChestBlock {
-	
+
+	public static final MapCodec<CompactingChestBlock> CODEC = createCodec(CompactingChestBlock::new);
+
 	public CompactingChestBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	@Nullable
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -23,7 +31,7 @@ public class CompactingChestBlock extends SpectrumChestBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return checkType(type, SpectrumBlockEntities.COMPACTING_CHEST, CompactingChestBlockEntity::tick);
+		return validateTicker(type, SpectrumBlockEntities.COMPACTING_CHEST, CompactingChestBlockEntity::tick);
 	}
 	
 	@Override
