@@ -13,10 +13,16 @@ public class ColoredWoodenButtonBlock extends ButtonBlock {
 	protected final DyeColor color;
 	
 	public ColoredWoodenButtonBlock(Settings settings, DyeColor color) {
-		super(settings, SpectrumBlockSetTypes.COLORED_WOOD, 30, true);
+		super(SpectrumBlockSetTypes.COLORED_WOOD, 30, settings);
 		this.color = color;
 		BLOCKS.put(color, this);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredWoodenButtonBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;

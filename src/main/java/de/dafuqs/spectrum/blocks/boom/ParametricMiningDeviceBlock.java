@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.boom;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.explosion.*;
 import net.minecraft.block.*;
@@ -19,6 +20,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class ParametricMiningDeviceBlock extends PlacedItemBlock {
+
+	public static final MapCodec<ParametricMiningDeviceBlock> CODEC = createCodec(ParametricMiningDeviceBlock::new);
 	
 	public static final DirectionProperty FACING = Properties.FACING;
 	
@@ -35,7 +38,12 @@ public class ParametricMiningDeviceBlock extends PlacedItemBlock {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(FacingBlock.FACING, Direction.UP));
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	// Wall mounting stuffs
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -45,7 +53,6 @@ public class ParametricMiningDeviceBlock extends PlacedItemBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		return direction == state.get(FACING).getOpposite() && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}
@@ -85,7 +92,7 @@ public class ParametricMiningDeviceBlock extends PlacedItemBlock {
 	// actual logic
 	// press to boom
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		}

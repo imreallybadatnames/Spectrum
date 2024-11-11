@@ -1,5 +1,7 @@
 package de.dafuqs.spectrum.blocks;
 
+import com.mojang.serialization.MapCodec;
+import de.dafuqs.spectrum.blocks.conditional.amaranth.AmaranthBushelBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.block.enums.*;
@@ -29,6 +31,12 @@ public class TallCropBlock extends CropBlock {
     public TallCropBlock(Settings settings, int lastSingleBlockAge) {
         super(settings);
         this.lastSingleBlockAge = lastSingleBlockAge;
+    }
+
+    @Override
+    public MapCodec<? extends TallCropBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
     }
 
     @Override
@@ -194,12 +202,12 @@ public class TallCropBlock extends CropBlock {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient) {
 			breakTheOtherHalf(world, pos, state, player);
         }
 
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override

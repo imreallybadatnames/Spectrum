@@ -19,6 +19,12 @@ public class ColoredLightBlock extends RedstoneLampBlock {
 		this.color = color;
 		LIGHTS.put(color, this);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredLightBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;

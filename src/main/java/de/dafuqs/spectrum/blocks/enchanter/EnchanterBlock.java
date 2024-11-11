@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.enchanter;
 
 import com.klikli_dev.modonomicon.api.multiblock.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.*;
@@ -19,11 +20,18 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class EnchanterBlock extends InWorldInteractionBlock {
-	
+
+	public static final MapCodec<EnchanterBlock> CODEC = createCodec(EnchanterBlock::new);
+
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/build_enchanting_structure");
-	
+
 	public EnchanterBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends EnchanterBlock> getCodec() {
+		return CODEC;
 	}
 	
 	public static void clearCurrentlyRenderedMultiBlock(World world) {
@@ -58,11 +66,7 @@ public class EnchanterBlock extends InWorldInteractionBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return checkType(type, SpectrumBlockEntities.ENCHANTER, EnchanterBlockEntity::clientTick);
-		} else {
-			return checkType(type, SpectrumBlockEntities.ENCHANTER, EnchanterBlockEntity::serverTick);
-		}
+		return validateTicker(type, SpectrumBlockEntities.ENCHANTER, world.isClient ? EnchanterBlockEntity::clientTick : EnchanterBlockEntity::serverTick);
 	}
 	
 	@Override
@@ -73,18 +77,17 @@ public class EnchanterBlock extends InWorldInteractionBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
 			verifyStructure(world, pos, null);
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			if (verifyStructure(world, pos, (ServerPlayerEntity) player)) {
 				
 				// if the structure is valid the player can put / retrieve blocks into the shrine
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 				if (blockEntity instanceof EnchanterBlockEntity enchanterBlockEntity) {
-					
-					ItemStack handStack = player.getStackInHand(hand);
+
 					if (player.isSneaking() || handStack.isEmpty()) {
 						// sneaking or empty hand: remove items
 						for (int i = 0; i < EnchanterBlockEntity.INVENTORY_SIZE; i++) {
@@ -95,7 +98,7 @@ public class EnchanterBlock extends InWorldInteractionBlock {
 								break;
 							}
 						}
-						return ActionResult.CONSUME;
+						return ItemActionResult.CONSUME;
 					} else {
 						// hand is full and inventory is empty: add
 						// hand is full and inventory already contains item: exchange them
@@ -108,7 +111,7 @@ public class EnchanterBlock extends InWorldInteractionBlock {
 					}
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	

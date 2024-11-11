@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
@@ -24,7 +25,9 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidLogging.SpectrumFluidLoggable {
-	
+
+	public static final MapCodec<QuitoxicReedsBlock> CODEC = createCodec(QuitoxicReedsBlock::new);
+
 	public static final EnumProperty<FluidLogging.State> LOGGED = FluidLogging.ANY_INCLUDING_NONE;
 	public static final IntProperty AGE = Properties.AGE_7;
 	
@@ -41,6 +44,11 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(LOGGED, FluidLogging.State.NOT_LOGGED).with(ALWAYS_DROP, false).with(AGE, 0));
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends QuitoxicReedsBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -85,7 +93,7 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 	}
 	
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		// since the quitoxic reeds are stacked and break from bottom to top
 		// bot the player that broke the other blocks is not propagated we
 		// have to apply a workaround here by counting the reeds above this
@@ -99,11 +107,10 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 			}
 		}
 		
-		super.onBreak(world, pos, state, player);
+		return super.onBreak(world, pos, state, player);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		FluidLogging.State fluidLog = state.get(LOGGED);
 		if (fluidLog == FluidLogging.State.WATER) {
@@ -129,7 +136,6 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
 		state.get(LOGGED).onEntityCollision(state, world, pos, entity);
@@ -142,7 +148,8 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 		}
 		
 		int height;
-		for (height = 1; world.getBlockState(pos.down(height)).isOf(this); ++height) ;
+		for (height = 1; world.getBlockState(pos.down(height)).isOf(this);)
+			height++;
 		
 		boolean bottomLiquidCrystalLogged = world.getBlockState(pos.down(height - 1)).get(LOGGED) == FluidLogging.State.LIQUID_CRYSTAL;
 		

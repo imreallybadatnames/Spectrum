@@ -79,7 +79,7 @@ public abstract class DecayBlock extends Block {
 		super.onPlaced(world, pos, state, placer, itemStack);
 		
 		if (!world.isClient && SpectrumCommon.CONFIG.LogPlacingOfDecay && placer != null) {
-			SpectrumCommon.logInfo(state.getBlock().getName().getString() + " was placed in " + world.getRegistryKey().getValue() + " at " + pos.getX() + " " + pos.getY() + " " + pos.getZ() + " by " + placer.getEntityName());
+			SpectrumCommon.logInfo(state.getBlock().getName().getString() + " was placed in " + world.getRegistryKey().getValue() + " at " + pos.getX() + " " + pos.getY() + " " + pos.getZ() + " by " + placer.getName());
 		}
 	}
 	
@@ -106,7 +106,6 @@ public abstract class DecayBlock extends Block {
 	 * schedule a tick to convert it faster. => User gets quick reaction
 	 */
 	@Override
-	@SuppressWarnings("deprecation")
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block previousBlock, BlockPos fromPos, boolean notify) {
 		super.neighborUpdate(state, world, pos, previousBlock, fromPos, notify);
 		

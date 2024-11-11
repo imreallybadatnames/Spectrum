@@ -19,11 +19,17 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class WandLightBlock extends LightBlock {
-	
+
 	public WandLightBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+//	@Override
+//	public MapCodec<? extends WandLightBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if(context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() != null && holdsRadianceStaff(entityShapeContext.getEntity())) {
@@ -33,10 +39,12 @@ public class WandLightBlock extends LightBlock {
 	}
 	
 	private boolean holdsRadianceStaff(@NotNull Entity entity) {
-		// context.isHolding() only checks the main hand, so we use our own implementation
-		for(ItemStack stack : entity.getHandItems()) {
-			if(stack.getItem() instanceof RadianceStaffItem) {
-				return true;
+		if(entity instanceof LivingEntity livingEntity) {
+			// context.isHolding() only checks the main hand, so we use our own implementation
+			for(ItemStack stack : livingEntity.getHandItems()) {
+				if(stack.getItem() instanceof RadianceStaffItem) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -56,12 +64,12 @@ public class WandLightBlock extends LightBlock {
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return new ItemStack(SpectrumItems.RADIANCE_STAFF);
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!world.isClient) {
 			BlockState newState = state.cycle(LEVEL_15);
 			if (newState.get(LEVEL_15) == 0) { // lights with a level of 0 are absolutely

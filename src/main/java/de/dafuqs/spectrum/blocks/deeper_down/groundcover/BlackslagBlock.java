@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.groundcover;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
@@ -10,13 +11,20 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class BlackslagBlock extends PillarBlock implements Fertilizable {
-	
+
+	public static final MapCodec<BlackslagBlock> CODEC = createCodec(BlackslagBlock::new);
+
 	public BlackslagBlock(Settings settings) {
 		super(settings);
 	}
+
+	@Override
+	public MapCodec<? extends BlackslagBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		if (!world.getBlockState(pos.up()).isTransparent(world, pos)) {
 			return false;
 		}
@@ -53,6 +61,6 @@ public class BlackslagBlock extends PillarBlock implements Fertilizable {
 		}
 		
 		Collections.shuffle(nextStates);
-		world.setBlockState(pos, nextStates.get(0), Block.NOTIFY_ALL);
+		world.setBlockState(pos, nextStates.getFirst(), Block.NOTIFY_ALL);
 	}
 }

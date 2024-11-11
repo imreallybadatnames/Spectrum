@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.boom;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.explosion.*;
 import de.dafuqs.spectrum.registries.*;
@@ -21,7 +22,9 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class ThreatConfluxBlock extends PlacedItemBlock implements FluidLogging.SpectrumFluidLoggable {
-	
+
+	public static final MapCodec<ThreatConfluxBlock> CODEC = createCodec(ThreatConfluxBlock::new);
+
 	public enum ArmedState implements StringIdentifiable {
 		NOT_ARMED("not_armed", false),
 		ARMED("armed", true),
@@ -58,20 +61,23 @@ public class ThreatConfluxBlock extends PlacedItemBlock implements FluidLogging.
 		super(settings);
 		setDefaultState(getDefaultState().with(ARMED, ArmedState.NOT_ARMED).with(LOGGED, FluidLogging.State.NOT_LOGGED));
 	}
-	
+
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
+	@Override
+	public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		if (!world.isClient && state.get(ARMED).explodesWhenBroken()) {
 			explode((ServerWorld) world, pos);
 		}
-		super.onBreak(world, pos, state, player);
+		return super.onBreak(world, pos, state, player);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		var handStack = player.getStackInHand(hand);
-		if (state.get(ARMED).explodesWhenBroken() && handStack.isOf(SpectrumItems.MIDNIGHT_CHIP)) {
+	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (state.get(ARMED).explodesWhenBroken() && stack.isOf(SpectrumItems.MIDNIGHT_CHIP)) {
 			world.setBlockState(pos, state.with(ARMED, ArmedState.NOT_ARMED));
 			world.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SpectrumSoundEvents.BLOCK_THREAT_CONFLUX_DISARM, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			
@@ -85,13 +91,13 @@ public class ThreatConfluxBlock extends PlacedItemBlock implements FluidLogging.
 			}
 			
 			if (!player.isCreative()) {
-				handStack.decrement(1);
+				stack.decrement(1);
 			}
 			
-			return ActionResult.success(world.isClient());
+			return ItemActionResult.success(world.isClient());
 		}
 		
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
 	}
 	
 	@Override
@@ -104,7 +110,6 @@ public class ThreatConfluxBlock extends PlacedItemBlock implements FluidLogging.
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (state.get(ARMED) == ArmedState.ARMED) {
 			world.playSound(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SpectrumSoundEvents.BLOCK_THREAT_CONFLUX_PRIME, SoundCategory.BLOCKS, 1, 2F);
@@ -123,7 +128,6 @@ public class ThreatConfluxBlock extends PlacedItemBlock implements FluidLogging.
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		

@@ -252,7 +252,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 					this.currentCatalyst = catalyst;
 					changed = true;
 				}
-			} else if (ItemStack.canCombine(currentCatalystStack, itemStack)) {
+			} else if (ItemStack.areItemsAndComponentsEqual(currentCatalystStack, itemStack)) {
 				InventoryHelper.combineStacks(currentCatalystStack, itemStack);
 				changed = true;
 			}

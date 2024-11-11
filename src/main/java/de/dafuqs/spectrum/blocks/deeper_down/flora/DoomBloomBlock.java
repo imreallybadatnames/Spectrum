@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -32,8 +34,14 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
 	protected static final double GROW_CHANCE = 0.2;
 	
-	public DoomBloomBlock(StatusEffect suspiciousStewEffect, int effectDuration, Settings settings) {
+	public DoomBloomBlock(RegistryEntry<StatusEffect> suspiciousStewEffect, int effectDuration, Settings settings) {
 		super(suspiciousStewEffect, effectDuration, settings);
+	}
+
+	@Override
+	public MapCodec<? extends DoomBloomBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -53,7 +61,7 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return state.get(AGE) < Properties.AGE_4_MAX;
 	}
 	
@@ -125,14 +133,12 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
 		super.onProjectileHit(world, state, hit, projectile);
 		explode(world, hit.getBlockPos(), state);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);
 		if (world.random.nextInt(10) == 0) {
@@ -161,7 +167,7 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		int age = state.get(AGE);
 		if (age == AGE_MAX) {
 			if (world.isClient) {

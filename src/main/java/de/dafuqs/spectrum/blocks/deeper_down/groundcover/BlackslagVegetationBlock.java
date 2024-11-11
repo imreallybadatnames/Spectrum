@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.groundcover;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
@@ -9,9 +10,16 @@ import net.minecraft.world.*;
 import net.minecraft.world.chunk.light.*;
 
 public class BlackslagVegetationBlock extends SnowyBlock {
-	
+
+	public static final MapCodec<BlackslagVegetationBlock> CODEC = createCodec(BlackslagVegetationBlock::new);
+
 	public BlackslagVegetationBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends BlackslagVegetationBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

@@ -9,7 +9,6 @@ import de.dafuqs.spectrum.sound.*;
 import de.dafuqs.spectrum.spells.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;

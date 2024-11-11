@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.boom;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
@@ -23,6 +24,8 @@ import net.minecraft.world.explosion.*;
 import org.jetbrains.annotations.*;
 
 public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterloggable, ExplosionAware {
+
+	public static final MapCodec<IncandescentAmalgamBlock> CODEC = createCodec(IncandescentAmalgamBlock::new);
 	
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
@@ -32,20 +35,23 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	protected void appendProperties(StateManager.@NotNull Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(@NotNull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(@NotNull BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (state.get(WATERLOGGED)) {
 			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
@@ -106,7 +112,6 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
 		super.onProjectileHit(world, state, hit, projectile);
 		if (!state.get(WATERLOGGED)) {
@@ -115,7 +120,6 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);
 		if (!state.get(WATERLOGGED) && world.random.nextInt(10) == 0) {
@@ -124,7 +128,7 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 	}
 
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		if (!state.get(WATERLOGGED)
 				&& !player.isCreative()
 				&& EnchantmentHelper.getLevel(SpectrumEnchantments.RESONANCE, player.getStackInHand(player.getActiveHand())) == 0) {
@@ -132,7 +136,7 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 			explode(world, pos);
 		}
 		
-		super.onBreak(world, pos, state, player);
+		return super.onBreak(world, pos, state, player);
 	}
 	
 	protected static void explode(World world, BlockPos pos) {

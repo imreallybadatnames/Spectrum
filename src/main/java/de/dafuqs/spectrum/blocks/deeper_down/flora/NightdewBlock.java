@@ -1,13 +1,15 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
@@ -15,12 +17,18 @@ import java.util.*;
 
 public class NightdewBlock extends TriStateVineBlock {
 
+    public static final MapCodec<NightdewBlock> CODEC = createCodec(NightdewBlock::new);
+
     public static final float BASE_BURGEON_CHANCE = 2000;
     public static final float MAX_BURGEON_CHANCE = 250;
 
-
     public NightdewBlock(Settings settings) {
         super(settings, 6, 1F, 0.3F, 0.85F);
+    }
+
+    @Override
+    public MapCodec<? extends NightdewBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -29,7 +37,7 @@ public class NightdewBlock extends TriStateVineBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         return SpectrumItems.NIGHTDEW_SPROUT.getDefaultStack();
     }
 
@@ -41,7 +49,7 @@ public class NightdewBlock extends TriStateVineBlock {
         var dropChance = MathHelper.clampedLerp(BASE_BURGEON_CHANCE, MAX_BURGEON_CHANCE, sleepingEntities);
 
         if (random.nextFloat() < 1 / dropChance)
-			for (ItemStack rareStack : getRareStacks(state, world, pos, tool, SpectrumLootTables.NIGHTDEW_VINE_RARE_DROP)) {
+			for (ItemStack rareStack : getRareStacks(state, world, pos, tool, RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.NIGHTDEW_VINE_RARE_DROP))) {
                 dropStack(world, pos, rareStack);
             }
     }
@@ -51,13 +59,13 @@ public class NightdewBlock extends TriStateVineBlock {
         return false;
     }
 
-    public static List<ItemStack> getRareStacks(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, Identifier lootTableIdentifier) {
+    public static List<ItemStack> getRareStacks(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack, RegistryKey<LootTable> lootTableKey) {
         var builder = (new LootContextParameterSet.Builder(world))
                 .add(LootContextParameters.BLOCK_STATE, state)
                 .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
                 .add(LootContextParameters.TOOL, stack);
 
-        LootTable lootTable = world.getServer().getLootManager().getLootTable(lootTableIdentifier);
+        LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(lootTableKey);
         return lootTable.generateLoot(builder.build(LootContextTypes.BLOCK));
     }
 }

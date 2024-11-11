@@ -1,12 +1,12 @@
 package de.dafuqs.spectrum.blocks.crystallarieum;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -23,12 +23,19 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class CrystallarieumBlock extends InWorldInteractionBlock {
-	
+
+	public static final MapCodec<CrystallarieumBlock> CODEC = createCodec(CrystallarieumBlock::new);
+
 	public static final EnumProperty<NullableDyeColor> COLOR = EnumProperty.of("color", NullableDyeColor.class);
-	
+
 	public CrystallarieumBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(COLOR, NullableDyeColor.NONE));
+	}
+
+	@Override
+	public MapCodec<? extends CrystallarieumBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -46,11 +53,10 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return checkType(type, SpectrumBlockEntities.CRYSTALLARIEUM, world.isClient ? CrystallarieumBlockEntity::clientTick : CrystallarieumBlockEntity::serverTick);
+		return validateTicker(type, SpectrumBlockEntities.CRYSTALLARIEUM, world.isClient ? CrystallarieumBlockEntity::clientTick : CrystallarieumBlockEntity::serverTick);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!world.isClient() && direction == Direction.UP) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -75,40 +81,38 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (world.isClient) {
-			return ActionResult.SUCCESS;
-		} else {
+	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (!world.isClient) {
 			// if the structure is valid the player can put / retrieve blocks into the shrine
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof CrystallarieumBlockEntity crystallarieumBlockEntity) {
 				
-				ItemStack handStack = player.getStackInHand(hand);
-				if (player.isSneaking() || handStack.isEmpty()) {
+				if (player.isSneaking() || stack.isEmpty()) {
 					// sneaking or empty hand: remove items
-					if (retrieveStack(world, pos, player, hand, handStack, crystallarieumBlockEntity, 1) || retrieveStack(world, pos, player, hand, handStack, crystallarieumBlockEntity, 0)) {
+					if (retrieveStack(world, pos, player, hand, stack, crystallarieumBlockEntity, 1) || retrieveStack(world, pos, player, hand, stack, crystallarieumBlockEntity, 0)) {
 						crystallarieumBlockEntity.inventoryChanged();
 						crystallarieumBlockEntity.setOwner(player);
 					}
-					return ActionResult.CONSUME;
+					return ItemActionResult.CONSUME;
 				} else {
 					// hand is full and inventory is empty: add
 					// hand is full and inventory already contains item: exchange them
-					if (handStack.getItem() instanceof InkStorageItem<?> inkStorageItem) {
-						if (inkStorageItem.getDrainability().canDrain(false) && exchangeStack(world, pos, player, hand, handStack, crystallarieumBlockEntity, CrystallarieumBlockEntity.INK_STORAGE_STACK_SLOT_ID)) {
+					if (stack.getItem() instanceof InkStorageItem<?> inkStorageItem) {
+						if (inkStorageItem.getDrainability().canDrain(false) && exchangeStack(world, pos, player, hand, stack, crystallarieumBlockEntity, CrystallarieumBlockEntity.INK_STORAGE_STACK_SLOT_ID)) {
 							crystallarieumBlockEntity.inventoryChanged();
 							crystallarieumBlockEntity.setOwner(player);
 						}
 					} else {
-						if (exchangeStack(world, pos, player, hand, handStack, crystallarieumBlockEntity, CrystallarieumBlockEntity.CATALYST_SLOT_ID)) {
+						if (exchangeStack(world, pos, player, hand, stack, crystallarieumBlockEntity, CrystallarieumBlockEntity.CATALYST_SLOT_ID)) {
 							crystallarieumBlockEntity.inventoryChanged();
 							crystallarieumBlockEntity.setOwner(player);
 						}
 					}
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
+		return ItemActionResult.SUCCESS;
 	}
 	
 	public ItemStack asStackWithColor(NullableDyeColor color) {

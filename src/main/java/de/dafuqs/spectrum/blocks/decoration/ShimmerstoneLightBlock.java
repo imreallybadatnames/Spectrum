@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -14,7 +15,9 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class ShimmerstoneLightBlock extends FacingBlock {
-	
+
+	public static final MapCodec<ShimmerstoneLightBlock> CODEC = createCodec(ShimmerstoneLightBlock::new);
+
 	protected static final VoxelShape SHAPE_UP = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 2.0D, 12.0D);
 	protected static final VoxelShape SHAPE_DOWN = Block.createCuboidShape(4.0D, 14.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	protected static final VoxelShape SHAPE_NORTH = Block.createCuboidShape(4.0D, 4.0D, 14.0D, 12.0D, 12.0D, 16.0D);
@@ -25,6 +28,11 @@ public class ShimmerstoneLightBlock extends FacingBlock {
 	public ShimmerstoneLightBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(Properties.FACING, Direction.UP).with(Properties.INVERTED, false));
+	}
+
+	@Override
+	public MapCodec<? extends ShimmerstoneLightBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

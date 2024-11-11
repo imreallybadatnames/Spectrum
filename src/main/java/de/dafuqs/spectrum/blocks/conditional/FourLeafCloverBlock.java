@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.registries.*;
@@ -14,6 +15,12 @@ public class FourLeafCloverBlock extends CloverBlock implements RevelationAware 
 	public FourLeafCloverBlock(Settings settings) {
 		super(settings);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends FourLeafCloverBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

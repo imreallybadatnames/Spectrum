@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -11,15 +12,22 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class BristleSproutsBlock extends PlantBlock implements Fertilizable {
-	
+
+	public static final MapCodec<BristleSproutsBlock> CODEC = createCodec(BristleSproutsBlock::new);
+
 	public static final float DAMAGE = 2.0F;
-	
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 3.0, 14.0);
-	
+
 	public BristleSproutsBlock(AbstractBlock.Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends BristleSproutsBlock> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		Vec3d vec3d = state.getModelOffset(world, pos);
@@ -40,7 +48,7 @@ public class BristleSproutsBlock extends PlantBlock implements Fertilizable {
     }
 
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 

@@ -1,20 +1,17 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class MultiToolItem extends MiningToolItem {
 	
 	public MultiToolItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(attackDamage, attackSpeed, material, SpectrumBlockTags.MULTITOOL_MINEABLE, settings);
+		super(material, SpectrumBlockTags.MULTITOOL_MINEABLE, settings.attributeModifiers(MiningToolItem.createAttributeModifiers(material, attackDamage, attackSpeed)));
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -14,9 +15,16 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class FadingBlock extends DecayBlock {
-	
+
+	public static final MapCodec<FadingBlock> CODEC = createCodec(FadingBlock::new);
+
 	public FadingBlock(Settings settings) {
 		super(settings, SpectrumCommon.CONFIG.FadingDecayTickRate, SpectrumCommon.CONFIG.FadingCanDestroyBlockEntities, 1, 1F);
+	}
+
+	@Override
+	protected MapCodec<? extends FadingBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

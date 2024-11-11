@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.events.listeners;
 
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -49,7 +50,7 @@ public abstract class EventQueue<D> implements GameEventListener {
 	}
 
 	@Override
-	public boolean listen(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos) {
+	public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
 		Optional<Vec3d> positionSourcePosOptional = this.positionSource.getPos(world);
 		if (positionSourcePosOptional.isEmpty()) {
 			return false;

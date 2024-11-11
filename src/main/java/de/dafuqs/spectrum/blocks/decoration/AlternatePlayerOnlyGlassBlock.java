@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -9,21 +10,27 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class AlternatePlayerOnlyGlassBlock extends GlassBlock {
-	
+public class AlternatePlayerOnlyGlassBlock extends TransparentBlock {
+
 	private final Block alternateBlock;
 	
 	// used for tinted glass to make light not shine through
 	private final boolean tinted;
 	
-	public AlternatePlayerOnlyGlassBlock(Settings settings, Block block, boolean tinted) {
+	public AlternatePlayerOnlyGlassBlock(AbstractBlock.Settings settings, Block block, boolean tinted) {
 		super(settings);
 		this.alternateBlock = block;
 		this.tinted = tinted;
 	}
+
+	@Override
+	public MapCodec<? extends AlternatePlayerOnlyGlassBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
@@ -45,7 +52,6 @@ public class AlternatePlayerOnlyGlassBlock extends GlassBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
 		if (tinted) {
 			return world.getMaxLightLevel();

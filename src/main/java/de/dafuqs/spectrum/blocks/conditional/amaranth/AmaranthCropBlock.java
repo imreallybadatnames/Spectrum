@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional.amaranth;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
@@ -34,6 +35,12 @@ public class AmaranthCropBlock extends TallCropBlock implements RevelationAware 
 	public AmaranthCropBlock(Settings settings) {
 		super(settings, LAST_SINGLE_BLOCK_AGE);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends AmaranthCropBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

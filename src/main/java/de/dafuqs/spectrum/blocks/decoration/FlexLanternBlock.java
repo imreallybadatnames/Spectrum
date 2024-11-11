@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -11,6 +12,8 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class FlexLanternBlock extends DiagonalBlock implements Waterloggable {
+
+	public static final MapCodec<FlexLanternBlock> CODEC = createCodec(FlexLanternBlock::new);
 	
 	public static final BooleanProperty HANGING = Properties.HANGING;
 	public static final BooleanProperty TALL = BooleanProperty.of("tall");
@@ -20,6 +23,11 @@ public class FlexLanternBlock extends DiagonalBlock implements Waterloggable {
 	public FlexLanternBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState().with(HANGING, false).with(TALL, true).with(WATERLOGGED, false));
+	}
+
+	@Override
+	public MapCodec<? extends FlexLanternBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -59,7 +67,6 @@ public class FlexLanternBlock extends DiagonalBlock implements Waterloggable {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.block.enums.*;
@@ -14,14 +15,21 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class DecoStoneBlock extends Block {
-	
+
+	public static final MapCodec<DecoStoneBlock> CODEC = createCodec(DecoStoneBlock::new);
+
 	public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
 	protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 14.0D, 12.0D);
 	protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
-	
+
 	public DecoStoneBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(HALF, DoubleBlockHalf.LOWER));
+	}
+
+	@Override
+	public MapCodec<? extends DecoStoneBlock> getCodec() {
+		return CODEC;
 	}
 	
 	protected static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
@@ -41,7 +49,6 @@ public class DecoStoneBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		DoubleBlockHalf doubleBlockHalf = state.get(HALF);
 		if (direction.getAxis() == Direction.Axis.Y && doubleBlockHalf == DoubleBlockHalf.LOWER == (direction == Direction.UP) && (!neighborState.isOf(this) || neighborState.get(HALF) == doubleBlockHalf)) {
@@ -65,7 +72,6 @@ public class DecoStoneBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		if (state.get(HALF) != DoubleBlockHalf.UPPER) {
 			return super.canPlaceAt(state, world, pos);
@@ -76,7 +82,7 @@ public class DecoStoneBlock extends Block {
 	}
 	
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		if (!world.isClient) {
 			if (player.isCreative()) {
 				onBreakInCreative(world, pos, state, player);
@@ -85,7 +91,7 @@ public class DecoStoneBlock extends Block {
 			}
 		}
 		
-		super.onBreak(world, pos, state, player);
+		return super.onBreak(world, pos, state, player);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 
@@ -15,6 +16,12 @@ public class PigmentBlock extends Block {
 		super(settings);
 		this.color = color;
 		BLOCKS.put(color, this);
+	}
+
+	@Override
+	public MapCodec<? extends PigmentBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public DyeColor getColor() {

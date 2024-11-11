@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
 import de.dafuqs.revelationary.api.revelations.*;
+import de.dafuqs.spectrum.registries.SpectrumSaplingGenerators;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -14,7 +15,7 @@ public class ColoredSaplingBlock extends SaplingBlock implements RevelationAware
 	protected final DyeColor color;
 	
 	public ColoredSaplingBlock(Settings settings, DyeColor color) {
-		super(new ColoredSaplingGenerator(color), settings);
+		super(SpectrumSaplingGenerators.get("colored_trees/" + color.toString()), settings);
 		this.color = color;
 		SAPLINGS.put(color, this);
 		RevelationAware.register(this);

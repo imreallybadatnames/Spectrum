@@ -26,6 +26,7 @@ import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -36,6 +37,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+import java.sql.Wrapper;
 import java.util.*;
 
 public class CinderhearthBlockEntity extends LockableContainerBlockEntity implements MultiblockCrafter, SidedInventory, ExtendedScreenHandlerFactory, InkStorageBlockEntity<IndividualCappedInkStorage> {
@@ -164,9 +166,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	
@@ -197,10 +199,10 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
-		Inventories.readNbt(nbt, this.inventory);
+		Inventories.readNbt(nbt, this.inventory, registryLookup);
 		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
 			this.inkStorage = IndividualCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
 		}
@@ -224,9 +226,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	}
 
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
-		Inventories.writeNbt(nbt, this.inventory);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
+		Inventories.writeNbt(nbt, this.inventory, registryLookup);
 		nbt.put("InkStorage", this.inkStorage.toNbt());
 		nbt.putShort("CraftingTime", (short) this.craftingTime);
 		nbt.putShort("CraftingTimeTotal", (short) this.craftingTimeTotal);
@@ -288,7 +290,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 				
 				cinderhearthBlockEntity.usesEfficiency = cinderhearthBlockEntity.drainInkForUpgradesRequired(cinderhearthBlockEntity, UpgradeType.EFFICIENCY, InkColors.BLACK, false);
 				
-				int baseTime = recipe instanceof AbstractCookingRecipe abstractCookingRecipe ? abstractCookingRecipe.getCookTime() : ((CinderhearthRecipe) recipe).getCraftingTime();
+				int baseTime = recipe instanceof AbstractCookingRecipe abstractCookingRecipe ? abstractCookingRecipe.getCookingTime() : ((CinderhearthRecipe) recipe).getCraftingTime();
 				float speedModifier = cinderhearthBlockEntity.drainInkForUpgrades(cinderhearthBlockEntity, UpgradeType.SPEED, InkColors.MAGENTA, cinderhearthBlockEntity.usesEfficiency);
 				cinderhearthBlockEntity.craftingTimeTotal = (int) Math.ceil(baseTime / speedModifier);
 			}
@@ -325,7 +327,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	protected static boolean canAcceptRecipeOutput(World world, Recipe<?> recipe, Inventory inventory) {
 		if (recipe != null) {
-			ItemStack outputStack = recipe.getOutput(world.getRegistryManager());
+			ItemStack outputStack = recipe.getResult(world.getRegistryManager());
 			if (outputStack.isEmpty()) {
 				return true;
 			} else {
@@ -334,7 +336,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 					ItemStack slotStack = inventory.getStack(slot);
 					if (slotStack.isEmpty()) {
 						return true;
-					} else if (ItemStack.canCombine(slotStack, outputStack)) {
+					} else if (ItemStack.areItemsAndComponentsEqual(slotStack, outputStack)) {
 						outputSpaceFound += outputStack.getMaxCount() - slotStack.getCount();
 						if (outputSpaceFound >= outputStack.getCount()) {
 							return true;
@@ -389,7 +391,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			return false;
 		}
 		
-		if (cinderhearthBlockEntity.currentRecipe instanceof GatedRecipe gatedRecipe) {
+		if (cinderhearthBlockEntity.currentRecipe instanceof GatedRecipe<?> gatedRecipe) {
 			return gatedRecipe.canPlayerCraft(lastInteractedPlayer);
 		}
 		return true;
@@ -399,7 +401,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		// calculate outputs
 		ItemStack inputStack = cinderhearth.getStack(INPUT_SLOT_ID);
 		float yieldMod = inputStack.isIn(SpectrumItemTags.NO_CINDERHEARTH_DOUBLING) ? 1.0F : cinderhearth.drainInkForUpgrades(cinderhearth, UpgradeType.YIELD, InkColors.LIGHT_BLUE, cinderhearth.usesEfficiency);
-		ItemStack output = blastingRecipe.getOutput(world.getRegistryManager()).copy();
+		ItemStack output = blastingRecipe.getResult(world.getRegistryManager()).copy();
 		List<ItemStack> outputs = new ArrayList<>();
 		if (yieldMod > 1) {
 			int outputCount = Support.getIntFromDecimalWithChance(output.getCount() * yieldMod, world.random);

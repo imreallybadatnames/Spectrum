@@ -10,14 +10,14 @@ import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.registries.SpectrumStatusEffects;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
-import net.minecraft.potion.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -78,7 +78,7 @@ public class NightfallsBladeItem extends ToolItem implements Vanishable, InkPowe
 					if(InkPowered.tryDrainEnergy(player, instance.getInkCost().getColor(), instance.getInkCost().getCost())) {
 						World world = attacker.getWorld();
 						if (world.isClient) {
-							world.addParticle(new DynamicParticleEffect(ParticleTypes.EFFECT, 0.1F, ColorHelper.colorIntToVec(instance.getStatusEffectInstance().getEffectType().getColor()), 0.5F, 120, true, true),
+							world.addParticle(new DynamicParticleEffect(ParticleTypes.EFFECT, 0.1F, ColorHelper.colorIntToVec(instance.getStatusEffectInstance().getEffectType().value().getColor()), 0.5F, 120, true, true),
 									target.getParticleX(0.5D), target.getBodyY(0.5D), target.getParticleZ(0.5D),
 									world.random.nextFloat() - 0.5, world.random.nextFloat() - 0.5, world.random.nextFloat() - 0.5
 							);
@@ -94,7 +94,7 @@ public class NightfallsBladeItem extends ToolItem implements Vanishable, InkPowe
 	
 	@Override
 	public boolean hasGlint(ItemStack stack) {
-		return super.hasGlint(stack) || !PotionUtil.getCustomPotionEffects(stack).isEmpty();
+		return super.hasGlint(stack) || !stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).hasEffects();
 	}
 
 	@Override

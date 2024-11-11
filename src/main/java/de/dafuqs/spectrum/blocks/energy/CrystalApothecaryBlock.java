@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.blocks.energy;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
@@ -23,9 +23,16 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class CrystalApothecaryBlock extends BlockWithEntity {
-	
+
+	public static final MapCodec<CrystalApothecaryBlock> CODEC = createCodec(CrystalApothecaryBlock::new);
+
 	public CrystalApothecaryBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends CrystalApothecaryBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Nullable
@@ -47,15 +54,12 @@ public class CrystalApothecaryBlock extends BlockWithEntity {
 			if (placer instanceof ServerPlayerEntity serverPlayerEntity) {
 				crystalApothecaryBlockEntity.setOwner(serverPlayerEntity);
 			}
-			if (itemStack.hasCustomName()) {
-				crystalApothecaryBlockEntity.setCustomName(itemStack.getName());
-			}
 			crystalApothecaryBlockEntity.harvestExistingClusters();
 		}
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -78,7 +82,6 @@ public class CrystalApothecaryBlock extends BlockWithEntity {
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -97,14 +100,14 @@ public class CrystalApothecaryBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return checkType(type, SpectrumBlockEntities.CRYSTAL_APOTHECARY, CrystalApothecaryBlockEntity::tick);
+		return validateTicker(type, SpectrumBlockEntities.CRYSTAL_APOTHECARY, CrystalApothecaryBlockEntity::tick);
 	}
 	
 	@Override

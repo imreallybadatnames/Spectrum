@@ -11,6 +11,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.predicate.entity.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.function.*;
 import net.minecraft.util.math.*;
@@ -124,7 +125,7 @@ public class EnderHopperBlockEntity extends BlockEntity implements PlayerOwnedWi
 				}
 				additionStack.setCount(additionStack.getCount() - maxAcceptCount);
 				doneStuff = true;
-			} else if (ItemStack.canCombine(currentStack, additionStack)) {
+			} else if (ItemStack.areItemsAndComponentsEqual(currentStack, additionStack)) {
 				// add to stack;
 				int maxStackCount = currentStack.getMaxCount();
 				int canAcceptCount = maxStackCount - currentStack.getCount();
@@ -213,8 +214,8 @@ public class EnderHopperBlockEntity extends BlockEntity implements PlayerOwnedWi
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		
 		if (tag.contains("OwnerUUID")) {
 			this.ownerUUID = tag.getUuid("OwnerUUID");
@@ -229,8 +230,8 @@ public class EnderHopperBlockEntity extends BlockEntity implements PlayerOwnedWi
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		
 		if (this.ownerUUID != null) {
 			tag.putUuid("OwnerUUID", this.ownerUUID);

@@ -5,13 +5,13 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -30,8 +30,9 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
     }
     
     public static boolean canShoot(ItemStack stack) {
-        NbtCompound nbt = stack.getNbt();
-        return nbt == null || !nbt.getBoolean(WorkstaffItem.PROJECTILES_DISABLED_NBT_STRING);
+        var comp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+        return !comp.contains(WorkstaffItem.PROJECTILES_DISABLED_NBT_STRING)
+                || comp.copyNbt().getBoolean(WorkstaffItem.PROJECTILES_DISABLED_NBT_STRING);
     }
     
     @Override
@@ -42,7 +43,7 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
             if (canShoot(stack) && InkPowered.tryDrainEnergy(user, PROJECTILE_COST)) {
                 user.getItemCooldownManager().set(this, COOLDOWN_DURATION_TICKS);
                 if (!world.isClient) {
-                    user.playSound(SpectrumSoundEvents.LIGHT_CRYSTAL_RING, SoundCategory.PLAYERS, 0.5F, 0.75F + user.getRandom().nextFloat());
+                    user.playSoundToPlayer(SpectrumSoundEvents.LIGHT_CRYSTAL_RING, SoundCategory.PLAYERS, 0.5F, 0.75F + user.getRandom().nextFloat());
                     MiningProjectileEntity.shoot(world, user, user.getStackInHand(hand));
                 }
                 stack.damage(2, user, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));

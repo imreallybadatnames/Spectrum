@@ -21,7 +21,7 @@ public abstract class InWorldInteractionBlock extends BlockWithEntity {
 	}
 
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 
@@ -32,7 +32,6 @@ public abstract class InWorldInteractionBlock extends BlockWithEntity {
 
 	// drop all currently stored stuff
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) { // happens when filling with fluid, ...
 			scatterContents(world, pos);
@@ -97,7 +96,7 @@ public abstract class InWorldInteractionBlock extends BlockWithEntity {
 		} else {
 			ItemStack currentStack = blockEntity.getStack(slot);
 			if (!handStack.isEmpty() && !currentStack.isEmpty()) {
-				if (ItemStack.canCombine(handStack, currentStack)) {
+				if (ItemStack.areItemsAndComponentsEqual(handStack, currentStack)) {
 					InventoryHelper.setOrCombineStack(blockEntity, slot, handStack);
 				} else {
 					blockEntity.setStack(slot, handStack);

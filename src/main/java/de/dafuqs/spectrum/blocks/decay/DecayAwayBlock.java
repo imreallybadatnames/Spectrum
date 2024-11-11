@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -15,12 +16,19 @@ import net.minecraft.world.dimension.*;
 import org.jetbrains.annotations.*;
 
 public class DecayAwayBlock extends Block {
-	
+
+	public static final MapCodec<DecayAwayBlock> CODEC = createCodec(DecayAwayBlock::new);
+
 	private static final EnumProperty<TargetConversion> TARGET_CONVERSION = EnumProperty.of("target_conversion", TargetConversion.class);
 	
 	public DecayAwayBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getStateManager().getDefaultState().with(TARGET_CONVERSION, TargetConversion.DEFAULT));
+	}
+
+	@Override
+	protected MapCodec<? extends DecayAwayBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -36,7 +44,6 @@ public class DecayAwayBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		

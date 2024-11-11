@@ -7,17 +7,19 @@ import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.*;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -48,7 +50,7 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 	}
 	
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return CHARGE_TIME;
 	}
 	
@@ -56,7 +58,7 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!(user instanceof ServerPlayerEntity player)) return stack;
 		
-		Optional<ItemStack> shootStackOptional = getFirstStack(stack);
+		Optional<ItemStack> shootStackOptional = getFirstStack(world.getRegistryManager(), stack);
 		if (shootStackOptional.isEmpty()) {
 			world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			return stack;
@@ -80,36 +82,38 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 	}
 	
 	public static void decrementFirstItem(ItemStack acceleratorStack) {
-		NbtCompound nbtCompound = acceleratorStack.getOrCreateNbt();
-		if (nbtCompound.contains("Items")) {
-			NbtList itemsList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
-			if (!itemsList.isEmpty()) {
-				NbtCompound stackNbt = itemsList.getCompound(0);
-				int count = stackNbt.getByte("Count");
-				if (count > 1) {
-					stackNbt.putByte("Count", (byte) (count - 1));
-				} else {
-					itemsList.remove(0);
-					if (itemsList.isEmpty()) {
-						acceleratorStack.removeSubNbt("Items");
+		acceleratorStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT, comp -> {
+			if (comp.contains("Items")) {
+				comp.apply(nbt -> {
+					NbtList itemsList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
+					if (!itemsList.isEmpty()) {
+						NbtCompound stackNbt = itemsList.getCompound(0);
+						int count = stackNbt.getByte("Count");
+						if (count > 1) {
+							stackNbt.putByte("Count", (byte) (count - 1));
+						} else {
+							itemsList.remove(0);
+							if (itemsList.isEmpty()) {
+								nbt.remove("Items");
+							}
+						}
 					}
-				}
+				});
 			}
-		}
+		});
 	}
 	
-	public static Optional<ItemStack> getFirstStack(ItemStack stack) {
-		NbtCompound nbtCompound = stack.getOrCreateNbt();
-		if (!nbtCompound.contains("Items")) {
+	public static Optional<ItemStack> getFirstStack(RegistryWrapper.WrapperLookup wrapperLookup, ItemStack stack) {
+		var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+		if (!nbtComp.contains("Items")) {
 			return Optional.empty();
 		} else {
-			NbtList itemsList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
+			NbtList itemsList = nbtComp.copyNbt().getList("Items", NbtElement.COMPOUND_TYPE);
 			if (itemsList.isEmpty()) {
 				return Optional.empty();
 			} else {
 				NbtCompound stackNbt = itemsList.getCompound(0);
-				ItemStack itemStack = ItemStack.fromNbt(stackNbt);
-				return Optional.of(itemStack);
+				return ItemStack.fromNbt(wrapperLookup, stackNbt);
 			}
 		}
 	}
@@ -133,15 +137,15 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 		@Override
 		public void render(ItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
 			renderer.renderItem(stack, mode, leftHanded, matrices, vertexConsumers, light, overlay, model);
-			if (mode != ModelTransformationMode.GUI) return;
-			
-			Optional<ItemStack> optionalStack = getFirstStack(stack);
+			MinecraftClient client = MinecraftClient.getInstance();
+			if (mode != ModelTransformationMode.GUI || client.world == null) return;
+
+			Optional<ItemStack> optionalStack = getFirstStack(client.world.getRegistryManager(), stack);
 			if (optionalStack.isEmpty()) {
 				return;
 			}
 			ItemStack bundledStack = optionalStack.get();
-			
-			MinecraftClient client = MinecraftClient.getInstance();
+
 			BakedModel bundledModel = renderer.getModel(bundledStack, client.world, client.player, 0);
 			
 			matrices.push();

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
@@ -49,6 +50,9 @@ public class HeartboundChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	public void updateRedstone(BlockPos pos, BlockState state) {
+		if (world == null)
+			return;
+
 		world.updateNeighborsAlways(pos, state.getBlock());
 		world.updateNeighborsAlways(pos.down(), state.getBlock());
 		
@@ -79,12 +83,13 @@ public class HeartboundChestBlockEntity extends SpectrumChestBlockEntity impleme
 	@Override
 	public void onScheduledTick() {
 		super.onScheduledTick();
-		this.updateRedstone(this.getPos(), this.getWorld().getBlockState(pos));
+		if (world != null)
+			this.updateRedstone(this.getPos(), world.getBlockState(pos));
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		
 		if (tag.contains("OwnerUUID")) {
 			this.ownerUUID = tag.getUuid("OwnerUUID");
@@ -105,8 +110,8 @@ public class HeartboundChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		
 		if (this.ownerUUID != null) {
 			tag.putUuid("OwnerUUID", this.ownerUUID);

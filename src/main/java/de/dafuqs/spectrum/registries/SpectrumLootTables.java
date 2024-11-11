@@ -1,6 +1,9 @@
 package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.spectrum.*;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.*;
 
 public class SpectrumLootTables {
@@ -41,5 +44,5 @@ public class SpectrumLootTables {
 	public static final Identifier EBONY_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/ebony_noxcap_stripping");
 	public static final Identifier IVORY_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/ivory_noxcap_stripping");
 	public static final Identifier CHESTNUT_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/chestnut_noxcap_stripping");
-	
+
 }

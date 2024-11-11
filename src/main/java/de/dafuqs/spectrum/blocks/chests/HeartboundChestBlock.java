@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.chests;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -12,11 +13,18 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class HeartboundChestBlock extends SpectrumChestBlock {
-	
+
+	public static final MapCodec<HeartboundChestBlock> CODEC = createCodec(HeartboundChestBlock::new);
+
 	public HeartboundChestBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	@Nullable
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -26,7 +34,7 @@ public class HeartboundChestBlock extends SpectrumChestBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return world.isClient ? checkType(type, SpectrumBlockEntities.HEARTBOUND_CHEST, HeartboundChestBlockEntity::clientTick) : null;
+		return world.isClient ? validateTicker(type, SpectrumBlockEntities.HEARTBOUND_CHEST, HeartboundChestBlockEntity::clientTick) : null;
 	}
 	
 	@Override
@@ -52,9 +60,6 @@ public class HeartboundChestBlock extends SpectrumChestBlock {
 		if (blockEntity instanceof HeartboundChestBlockEntity heartboundChestBlockEntity) {
 			if (placer instanceof ServerPlayerEntity serverPlayerEntity) {
 				heartboundChestBlockEntity.setOwner(serverPlayerEntity);
-			}
-			if (itemStack.hasCustomName()) {
-				heartboundChestBlockEntity.setCustomName(itemStack.getName());
 			}
 		}
 	}

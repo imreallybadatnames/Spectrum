@@ -13,10 +13,16 @@ public class ColoredFenceGateBlock extends FenceGateBlock {
 	protected final DyeColor color;
 	
 	public ColoredFenceGateBlock(Settings settings, DyeColor color) {
-		super(settings, SpectrumWoodTypes.COLORED_WOOD);
+		super(SpectrumWoodTypes.COLORED_WOOD, settings);
 		this.color = color;
 		BLOCKS.put(color, this);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredFenceGateBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;

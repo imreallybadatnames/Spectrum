@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.block_flooder;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -18,6 +19,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class BlockFlooderBlock extends BlockWithEntity {
+
+	public static final MapCodec<BlockFlooderBlock> CODEC = createCodec(BlockFlooderBlock::new);
 	
 	// when replacing blocks there may be cases when there is a good reason to use replacement blocks
 	// like using dirt instead of grass, because grass will be growing anyway and silk touching grass
@@ -35,7 +38,12 @@ public class BlockFlooderBlock extends BlockWithEntity {
 	public BlockFlooderBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	public static boolean isReplaceableBlock(World world, BlockPos blockPos) {
 		BlockState state = world.getBlockState(blockPos);
 		Block block = state.getBlock();
@@ -49,7 +57,6 @@ public class BlockFlooderBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		super.onBlockAdded(state, world, pos, oldState, notify);
 		if (!world.isClient) {
@@ -68,7 +75,6 @@ public class BlockFlooderBlock extends BlockWithEntity {
 		return new BlockFlooderBlockEntity(pos, state);
 	}
 	
-	@SuppressWarnings("deprecation")
 	private boolean calculateTargetBlockAndPropagate(BlockState state, World world, BlockPos pos, Random random) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof BlockFlooderBlockEntity blockFlooderBlockEntity) {
@@ -123,7 +129,7 @@ public class BlockFlooderBlock extends BlockWithEntity {
 					if (blockItem != Items.AIR) {
 						if (currentOccurrences > max || (currentOccurrences == max && random.nextBoolean())) {
 							ItemStack currentItemStack = new ItemStack(blockItem);
-							if (owner.isCreative() || owner.getInventory().contains(currentItemStack) && currentBlock.canPlaceAt(currentBlock.getDefaultState(), world, pos)) {
+							if (owner.isCreative() || owner.getInventory().contains(currentItemStack) && currentBlock.getDefaultState().canPlaceAt(world, pos)) {
 								maxBlock = currentBlock;
 							} else {
 								Optional<TagKey<Block>> tag = Support.getFirstMatchingBlockTag(currentBlock.getDefaultState(), exchangeBlockTags);
@@ -132,7 +138,7 @@ public class BlockFlooderBlock extends BlockWithEntity {
 									blockItem = currentBlock.asItem();
 									if (blockItem != Items.AIR) {
 										currentItemStack = new ItemStack(blockItem);
-										if (owner.isCreative() || owner.getInventory().contains(currentItemStack) && currentBlock.canPlaceAt(currentBlock.getDefaultState(), world, pos)) {
+										if (owner.isCreative() || owner.getInventory().contains(currentItemStack) && currentBlock.getDefaultState().canPlaceAt(world, pos)) {
 											maxBlock = currentBlock;
 										}
 									}
@@ -154,7 +160,6 @@ public class BlockFlooderBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		

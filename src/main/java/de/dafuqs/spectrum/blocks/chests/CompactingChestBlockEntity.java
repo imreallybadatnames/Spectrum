@@ -17,6 +17,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -102,12 +103,13 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 
 	public void produceRunningEffects() {
-		var server = (ServerWorld) world;
-		var random = world.getRandom();
-		if (random.nextFloat() < 0.125F) {
-			server.playSound(null, pos, SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.BLOCKS, 0.05F + random.nextFloat() * 0.1F, 0.334F + random.nextFloat() / 2F);
-			for (int i = 0; i < 4 + random.nextInt(5); i++) {
-				server.spawnParticles(ParticleTypes.CLOUD, pos.getX() + random.nextFloat(), pos.getY() + 0.975 + random.nextFloat() * 0.667F, pos.getZ() + random.nextFloat(), 0, 0, random.nextFloat() / 20F + 0.02F, 0, 1);
+		if (world instanceof ServerWorld server) {
+			var random = world.getRandom();
+			if (random.nextFloat() < 0.125F) {
+				server.playSound(null, pos, SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.BLOCKS, 0.05F + random.nextFloat() * 0.1F, 0.334F + random.nextFloat() / 2F);
+				for (int i = 0; i < 4 + random.nextInt(5); i++) {
+					server.spawnParticles(ParticleTypes.CLOUD, pos.getX() + random.nextFloat(), pos.getY() + 0.975 + random.nextFloat() * 0.667F, pos.getZ() + random.nextFloat(), 0, 0, random.nextFloat() / 20F + 0.02F, 0, 1);
+				}
 			}
 		}
 	}
@@ -149,7 +151,7 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 						}
 						additionStack.setCount(additionStack.getCount() - maxAcceptCount);
 						doneStuff = true;
-					} else if (ItemStack.canCombine(currentStack, additionStack)) {
+					} else if (ItemStack.areItemsAndComponentsEqual(currentStack, additionStack)) {
 						// add to stack;
 						int maxStackCount = currentStack.getMaxCount();
 						int canAcceptCount = maxStackCount - currentStack.getCount();
@@ -201,8 +203,8 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		if (tag.contains("AutoCraftingMode", NbtElement.NUMBER_TYPE)) {
 			int autoCraftingModeInt = tag.getInt("AutoCraftingMode");
 			this.autoCraftingMode = AutoCompactingInventory.AutoCraftingMode.values()[autoCraftingModeInt];
@@ -210,8 +212,8 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		tag.putInt("AutoCraftingMode", this.autoCraftingMode.ordinal());
 	}
 	
@@ -232,7 +234,7 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	
 	private boolean tryCraftOnce() {
 		Optional<CraftingRecipe> optionalCraftingRecipe = Optional.empty();
-		DefaultedList<ItemStack> inventory = this.getInvStackList();
+		DefaultedList<ItemStack> inventory = this.getHeldStacks();
 		
 		// try last recipe
 		if (lastCraftingRecipe != null) {
@@ -279,6 +281,9 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 
 	public Optional<CraftingRecipe> searchRecipeToCraft() {
+		if (world == null)
+			return Optional.empty();
+
 		for (ItemStack itemStack : inventory) {
 			if (itemStack.isEmpty()) {
 				continue;
@@ -317,20 +322,23 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	}
 	
 	public boolean tryCraftInInventory(DefaultedList<ItemStack> inventory, CraftingRecipe craftingRecipe, ItemVariant itemVariant) {
+		if (world == null)
+			return false;
+
 		ItemStack inputStack = itemVariant.toStack(this.autoCraftingMode.getItemCount());
 		List<ItemStack> remainders = InventoryHelper.removeFromInventoryWithRemainders(inputStack, this);
 		
 		boolean spaceInInventory;
 		
 		List<ItemStack> additionItemStacks = new ArrayList<>();
-		additionItemStacks.add(craftingRecipe.getOutput(world.getRegistryManager()));
+		additionItemStacks.add(craftingRecipe.getResult(world.getRegistryManager()));
 		additionItemStacks.addAll(remainders);
 		
 		spaceInInventory = smartAddToInventory(additionItemStacks, inventory, true);
 		if (spaceInInventory) {
 			// craft
 			smartAddToInventory(additionItemStacks, inventory, false);
-			this.setInvStackList(inventory);
+			this.setHeldStacks(inventory);
 			
 			// cache
 			return true;

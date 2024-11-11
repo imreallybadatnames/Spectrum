@@ -1,17 +1,18 @@
 package de.dafuqs.spectrum.blocks;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FernBlock;
+import net.minecraft.block.ShortPlantBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 
-public abstract class SpreadableFloraBlock extends FernBlock {
+public abstract class SpreadableFloraBlock extends ShortPlantBlock {
 
     private final int tries;
 
-    public SpreadableFloraBlock(int tries, Settings settings) {
+    public SpreadableFloraBlock(int tries, AbstractBlock.Settings settings) {
         super(settings);
         this.tries = tries;
     }

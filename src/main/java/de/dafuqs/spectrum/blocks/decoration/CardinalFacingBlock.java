@@ -1,20 +1,27 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.state.*;
 import net.minecraft.state.property.*;
-import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.*;
 
 public class CardinalFacingBlock extends Block {
+
+	public static final MapCodec<CardinalFacingBlock> CODEC = createCodec(CardinalFacingBlock::new);
 	
 	public static final BooleanProperty CARDINAL_FACING = BooleanProperty.of("cardinal_facing");
 	
 	public CardinalFacingBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(CARDINAL_FACING, false));
+	}
+
+	@Override
+	public MapCodec<? extends CardinalFacingBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

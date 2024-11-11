@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -16,6 +17,8 @@ import net.minecraft.world.*;
 
 public class AloeBlock extends PlantBlock implements Fertilizable {
 
+    public static final MapCodec<AloeBlock> CODEC = createCodec(AloeBlock::new);
+
     protected static final IntProperty AGE = Properties.AGE_4;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
     protected static final double GROW_CHANCE = 0.4;
@@ -23,6 +26,11 @@ public class AloeBlock extends PlantBlock implements Fertilizable {
 
     public AloeBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public MapCodec<? extends AloeBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class AloeBlock extends PlantBlock implements Fertilizable {
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return state.get(AGE) < Properties.AGE_4_MAX;
 	}
 
@@ -79,7 +87,7 @@ public class AloeBlock extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         int age = state.get(AGE);
         if (age > 1) {
             if (world.isClient) {

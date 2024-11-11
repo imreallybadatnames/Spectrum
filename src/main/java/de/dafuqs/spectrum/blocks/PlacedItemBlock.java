@@ -13,7 +13,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class PlacedItemBlock extends BlockWithEntity {
+public abstract class PlacedItemBlock extends BlockWithEntity {
 	
 	public PlacedItemBlock(Settings settings) {
 		super(settings);
@@ -44,14 +44,13 @@ public class PlacedItemBlock extends BlockWithEntity {
 	}
 
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		ItemStack itemStack = super.getPickStack(world, pos, state);
 		world.getBlockEntity(pos, SpectrumBlockEntities.PLACED_ITEM).ifPresent((blockEntity) -> blockEntity.setStackNbt(itemStack));
 		return itemStack;
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
 		if (blockEntity instanceof PlacedItemBlockEntity placedItemBlockEntity) {

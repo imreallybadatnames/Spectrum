@@ -12,11 +12,17 @@ public class ColoredPressurePlateBlock extends PressurePlateBlock {
 	private static final Map<DyeColor, ColoredPressurePlateBlock> BLOCKS = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
-	public ColoredPressurePlateBlock(PressurePlateBlock.ActivationRule type, Settings settings, DyeColor color) {
-		super(type, settings, SpectrumBlockSetTypes.COLORED_WOOD);
+	public ColoredPressurePlateBlock(Settings settings, DyeColor color) {
+		super(SpectrumBlockSetTypes.COLORED_WOOD, settings);
 		this.color = color;
 		BLOCKS.put(color, this);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredPressurePlateBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;

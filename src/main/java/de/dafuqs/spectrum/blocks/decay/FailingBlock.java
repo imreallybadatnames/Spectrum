@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -16,12 +17,19 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class FailingBlock extends DecayBlock {
+
+	public static final MapCodec<FailingBlock> CODEC = createCodec(FailingBlock::new);
 	
 	public static final IntProperty AGE = Properties.AGE_15; // failing may spread 15 blocks max. It consuming obsidian resets that value
 	
 	public FailingBlock(Settings settings) {
 		super(settings, SpectrumCommon.CONFIG.FailingDecayTickRate, SpectrumCommon.CONFIG.FailingCanDestroyBlockEntities, 2, 2.5F);
 		setDefaultState(getStateManager().getDefaultState().with(CONVERSION, Conversion.NONE).with(AGE, 0));
+	}
+
+	@Override
+	protected MapCodec<? extends FailingBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

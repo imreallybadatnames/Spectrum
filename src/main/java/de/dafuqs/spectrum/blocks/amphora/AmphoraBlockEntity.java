@@ -8,6 +8,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -54,19 +55,19 @@ public class AmphoraBlockEntity extends LootableContainerBlockEntity {
 	}
 	
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
-		if (!this.serializeLootTable(nbt)) {
-			Inventories.writeNbt(nbt, this.inventory);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
+		if (!this.writeLootTable(nbt)) {
+			Inventories.writeNbt(nbt, this.inventory, registryLookup);
 		}
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-		if (!this.deserializeLootTable(nbt)) {
-			Inventories.readNbt(nbt, this.inventory);
+		if (!this.readLootTable(nbt)) {
+			Inventories.readNbt(nbt, this.inventory, registryLookup);
 		}
 	}
 	
@@ -76,12 +77,12 @@ public class AmphoraBlockEntity extends LootableContainerBlockEntity {
 	}
 	
 	@Override
-	protected DefaultedList<ItemStack> getInvStackList() {
+	protected DefaultedList<ItemStack> getHeldStacks() {
 		return this.inventory;
 	}
 	
 	@Override
-	protected void setInvStackList(DefaultedList<ItemStack> list) {
+	protected void setHeldStacks(DefaultedList<ItemStack> list) {
 		this.inventory = list;
 	}
 	
@@ -116,16 +117,19 @@ public class AmphoraBlockEntity extends LootableContainerBlockEntity {
 	}
 	
 	void setOpen(BlockState state, boolean open) {
-		this.getWorld().setBlockState(this.getPos(), state.with(BarrelBlock.OPEN, open), 3);
+		if (this.world == null)
+			return;
+		this.world.setBlockState(this.getPos(), state.with(BarrelBlock.OPEN, open), 3);
 	}
 	
 	void playSound(BlockState state, SoundEvent soundEvent) {
-		World world = this.getWorld();
+		if (this.world == null)
+			return;
 		Vec3i vec3i = (state.get(BarrelBlock.FACING)).getVector();
 		double d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
 		double e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
 		double f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
-		this.getWorld().playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
+		this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
@@ -16,6 +17,12 @@ public class StrippingLootPillarBlock extends PillarBlock implements StrippableD
         this.sourceBlock = sourceBlock;
         this.strippingLootTableIdentifier = strippingLootTableIdentifier;
     }
+
+    @Override
+    public MapCodec<? extends StrippingLootPillarBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
+    }
     
     @Override
     public Block getStrippedBlock() {
@@ -28,7 +35,6 @@ public class StrippingLootPillarBlock extends PillarBlock implements StrippableD
     }
     
     @Override
-	@SuppressWarnings("deprecation")
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         checkAndDropStrippedLoot(state, world, pos, newState, moved);
         super.onStateReplaced(state, world, pos, newState, moved);

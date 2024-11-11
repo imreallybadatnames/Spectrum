@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -23,13 +24,20 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class BottomlessBundleBlock extends BlockWithEntity {
+
+	public static final MapCodec<BottomlessBundleBlock> CODEC = createCodec(BottomlessBundleBlock::new);
 	
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	
 	public BottomlessBundleBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
@@ -47,12 +55,12 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (!world.isClient) {
 			if (player.isSneaking()) {
 				world.getBlockEntity(pos, SpectrumBlockEntities.BOTTOMLESS_BUNDLE).ifPresent((bottomlessBundleBlockEntity) -> {
@@ -71,12 +79,11 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 					ItemVariant storedVariant = storage.variant;
 					
 					try (Transaction transaction = Transaction.openOuter()) {
-						ItemStack handStack = player.getStackInHand(hand);
-						if (storedVariant.matches(handStack) || storedVariant.isBlank()) {
+						if (storedVariant.matches(stack) || storedVariant.isBlank()) {
 							// insert
-							if (!handStack.isEmpty() && handStack.getItem().canBeNested()) {
-								long inserted = storage.insert(ItemVariant.of(handStack), handStack.getCount(), transaction);
-								handStack.decrement((int) inserted);
+							if (!stack.isEmpty() && stack.getItem().canBeNested()) {
+								long inserted = storage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
+								stack.decrement((int) inserted);
 								world.playSound(null, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS, 0.8F, 0.8F + world.getRandom().nextFloat() * 0.4F);
 							}
 						} else {
@@ -91,18 +98,17 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 					bottomlessBundleBlockEntity.markDirty();
 				});
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
-		return ActionResult.SUCCESS;
+		return ItemActionResult.SUCCESS;
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack();
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
 		if (blockEntity instanceof BottomlessBundleBlockEntity bottomlessBundleBlockEntity) {
@@ -130,14 +136,12 @@ public class BottomlessBundleBlock extends BlockWithEntity {
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof BottomlessBundleBlockEntity bottomlessBundleBlockEntity) {
+			if (blockEntity instanceof BottomlessBundleBlockEntity) {
 				world.updateComparators(pos, this);
 			}
-			
 			super.onStateReplaced(state, world, pos, newState, moved);
 		}
 	}

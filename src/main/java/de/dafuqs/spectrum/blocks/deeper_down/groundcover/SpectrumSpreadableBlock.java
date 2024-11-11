@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.groundcover;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.world.*;
@@ -19,7 +20,13 @@ public class SpectrumSpreadableBlock extends SnowyBlock {
 		this.blockAbleToSpreadTo = blockAbleToSpreadTo;
 		this.deadState = deadState;
 	}
-	
+
+	@Override
+	public MapCodec<? extends SpectrumSpreadableBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
 	private static boolean canSpread(BlockState state, WorldView world, BlockPos pos) {
 		BlockPos blockPos = pos.up();
 		return canSurvive(state, world, pos) && !world.getFluidState(blockPos).isIn(FluidTags.WATER);

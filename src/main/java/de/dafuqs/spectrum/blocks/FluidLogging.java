@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
@@ -12,6 +13,7 @@ import net.minecraft.state.property.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -94,7 +96,7 @@ public class FluidLogging {
 	public interface SpectrumFluidFillable extends FluidFillable {
 		
 		@Override
-		default boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+		default boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
 			return state.get(ANY_INCLUDING_NONE) == State.NOT_LOGGED && (fluid == Fluids.WATER || fluid == SpectrumFluids.LIQUID_CRYSTAL);
 		}
 		
@@ -122,7 +124,7 @@ public class FluidLogging {
 	public interface SpectrumFluidDrainable extends FluidDrainable {
 		
 		@Override
-		default ItemStack tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
+		default ItemStack tryDrainFluid(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state) {
 			State fluidLog = state.get(ANY_INCLUDING_NONE);
 			
 			if (fluidLog == State.WATER) {

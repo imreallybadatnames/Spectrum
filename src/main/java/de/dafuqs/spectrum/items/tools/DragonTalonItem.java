@@ -7,7 +7,8 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -32,7 +33,7 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers, phantomModifiers;
 	
 	
-	public DragonTalonItem(ToolMaterial toolMaterial, double damage, double extraReach, Settings settings) {
+	public DragonTalonItem(ToolMaterial toolMaterial, double damage, double extraReach, Item.Settings settings) {
 		super(settings, 0, 0, 0, 0);
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", damage + toolMaterial.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE));
@@ -82,12 +83,12 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 		needleEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
 		
 		world.spawnEntity(needleEntity);
-		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THROW;
+		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THROW.value();
 		
 		world.playSoundFromEntity(null, needleEntity, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-		var nbt = stack.getOrCreateNbt();
 		markReserved(stack, true);
-		nbt.putUuid("lastNeedle", needleEntity.getUuid());
+		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
+				comp -> comp.apply(nbt -> nbt.putUuid("lastNeedle", needleEntity.getUuid())));
 	}
 	
 	@Override

@@ -1,14 +1,13 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.BlockReference;
-import de.dafuqs.spectrum.helpers.InventoryHelper;
 import de.dafuqs.spectrum.registries.SpectrumBlockTags;
 import de.dafuqs.spectrum.registries.SpectrumBlocks;
 import de.dafuqs.spectrum.registries.SpectrumItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -17,17 +16,17 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
 public class AbyssalVineBlock extends TriStateVineBlock {
+
+    public static final MapCodec<AbyssalVineBlock> CODEC = createCodec(AbyssalVineBlock::new);
 
     public static final BooleanProperty BERRIES = Properties.BERRIES;
 
@@ -37,14 +36,19 @@ public class AbyssalVineBlock extends TriStateVineBlock {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+    public MapCodec<? extends AbyssalVineBlock> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
         return !state.get(BERRIES);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         var reference = BlockReference.of(state, pos);
-        var superSucc = super.onUse(state, world, pos, player, hand, hit);
+        var superSucc = super.onUse(state, world, pos, player, hit);
 
         if (superSucc.shouldIncrementStat()) {
             return superSucc;
@@ -95,7 +99,7 @@ public class AbyssalVineBlock extends TriStateVineBlock {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         return SpectrumItems.FISSURE_PLUM.getDefaultStack();
     }
 

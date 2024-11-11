@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.registries.*;
@@ -16,10 +17,17 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class DragonboneBlock extends PillarBlock implements RevelationAware, ExplosionAware, MoonstoneStrikeableBlock {
-	
+
+	public static final MapCodec<DragonboneBlock> CODEC = createCodec(DragonboneBlock::new);
+
 	public DragonboneBlock(Settings settings) {
 		super(settings);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends DragonboneBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.cinderhearth;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.*;
@@ -26,6 +27,8 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class CinderhearthBlock extends BlockWithEntity {
+
+	public static final MapCodec<CinderhearthBlock> CODEC = createCodec(CinderhearthBlock::new);
 	
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	
@@ -33,7 +36,12 @@ public class CinderhearthBlock extends BlockWithEntity {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(FACING, Direction.EAST));
 	}
-	
+
+	@Override
+	protected MapCodec<? extends BlockWithEntity> getCodec() {
+		return CODEC;
+	}
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -43,15 +51,11 @@ public class CinderhearthBlock extends BlockWithEntity {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return null;
-		} else {
-			return checkType(type, SpectrumBlockEntities.CINDERHEARTH, CinderhearthBlockEntity::serverTick);
-		}
+		return world.isClient ? null : validateTicker(type, SpectrumBlockEntities.CINDERHEARTH, CinderhearthBlockEntity::serverTick);
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			verifyStructure(world, pos, null);
 			return ActionResult.SUCCESS;
@@ -79,14 +83,10 @@ public class CinderhearthBlock extends BlockWithEntity {
 			if (placer instanceof PlayerEntity player) {
 				cinderhearthBlockEntity.setOwner(player);
 			}
-			if (itemStack.hasCustomName()) {
-				cinderhearthBlockEntity.setCustomName(itemStack.getName());
-			}
 		}
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);

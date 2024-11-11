@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.registries.client.*;
 import net.minecraft.block.*;
@@ -19,6 +20,12 @@ public class ColoredLeavesBlock extends LeavesBlock implements RevelationAware, 
 		this.color = color;
 		LEAVES.put(color, this);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends ColoredLeavesBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -19,12 +20,19 @@ import net.minecraft.world.explosion.*;
 import java.util.*;
 
 public class StuckStormStoneBlock extends HorizontalFacingBlock implements RevelationAware {
-	
+
+	public static final MapCodec<StuckStormStoneBlock> CODEC = createCodec(StuckStormStoneBlock::new);
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 11.0D, 2.0D, 11.0D);
 	
 	public StuckStormStoneBlock(Settings settings) {
 		super(settings);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends StuckStormStoneBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -34,19 +42,16 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		return world.getBlockState(pos.down()).isSolidBlock(world, pos);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return VoxelShapes.empty();
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
 		return 1.0F;
 	}
@@ -57,7 +62,6 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}
@@ -89,7 +93,6 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (this.isVisibleTo(context)) {
 			return SHAPE;
@@ -98,7 +101,6 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (context instanceof EntityShapeContext entityShapeContext) {
 			Entity var4 = entityShapeContext.getEntity();
@@ -127,7 +129,6 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	 * If it gets ticked, there is a chance to vanish
 	 */
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (random.nextFloat() < 0.1) {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
@@ -135,7 +136,7 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return new ItemStack(SpectrumItems.STORM_STONE);
 	}
 	

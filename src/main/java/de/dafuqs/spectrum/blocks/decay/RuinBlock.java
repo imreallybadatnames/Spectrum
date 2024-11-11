@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decay;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.particle.*;
@@ -15,10 +16,17 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class RuinBlock extends DecayBlock {
+
+	public static final MapCodec<RuinBlock> CODEC = createCodec(RuinBlock::new);
 	
 	public RuinBlock(Settings settings) {
 		super(settings, SpectrumCommon.CONFIG.RuinDecayTickRate, SpectrumCommon.CONFIG.RuinCanDestroyBlockEntities, 3, 5F);
 		setDefaultState(getStateManager().getDefaultState().with(CONVERSION, Conversion.NONE));
+	}
+
+	@Override
+	protected MapCodec<? extends RuinBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -58,7 +66,6 @@ public class RuinBlock extends DecayBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		super.onStateReplaced(state, world, pos, newState, moved);
 		

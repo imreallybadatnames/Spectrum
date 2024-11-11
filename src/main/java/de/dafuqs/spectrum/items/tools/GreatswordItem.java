@@ -22,7 +22,7 @@ public class GreatswordItem extends SwordItem implements Preenchanted {
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
 	public GreatswordItem(ToolMaterial material, int attackDamage, float attackSpeed, float extraReach, Settings settings) {
-		super(material, attackDamage, attackSpeed, settings);
+		super(material, settings.attributeModifiers(SwordItem.createAttributeModifiers(material, attackDamage, attackSpeed)));
 
 		this.attackDamage = (float) attackDamage + material.getAttackDamage();
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();

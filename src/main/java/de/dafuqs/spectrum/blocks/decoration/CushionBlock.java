@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -12,12 +13,19 @@ import net.minecraft.world.*;
 
 public class CushionBlock extends Block {
 
+    public static final MapCodec<CushionBlock> CODEC = createCodec(CushionBlock::new);
+
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 7, 16);
     public static final double SITTING_OFFSET = 5 / 16.0;
 
     public CushionBlock(Settings settings) {
         super(settings);
     }
+
+	@Override
+	public MapCodec<? extends CushionBlock> getCodec() {
+		return CODEC;
+	}
 
     public void onEntityLand(BlockView world, Entity entity) {
         if (entity.bypassesLandingEffects()) {
@@ -40,8 +48,7 @@ public class CushionBlock extends Block {
     }
 
     @Override
-	@SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         var seat = getOrCreateSeatEntity(world, pos, state);
 
         if (seat.getFirstPassenger() == null) {
@@ -49,19 +56,19 @@ public class CushionBlock extends Block {
             return ActionResult.success(world.isClient());
         }
 
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
 
         var seat = getOrCreateSeatEntity(world, pos, state);
         seat.remove(Entity.RemovalReason.DISCARDED);
+        return state;
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         super.onStateReplaced(state, world, pos, newState, moved);
 

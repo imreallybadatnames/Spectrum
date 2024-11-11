@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional.blood_orchid;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.revelations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -14,6 +15,12 @@ public class PottedBloodOrchidBlock extends FlowerPotBlock implements Revelation
 		super(content, settings);
 		RevelationAware.register(this);
 	}
+
+//	@Override
+//	public MapCodec<? extends PottedBloodOrchidBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {

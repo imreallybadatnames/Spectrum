@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -33,6 +34,12 @@ public class TallDragonjagBlock extends TallPlantBlock implements Dragonjag, Fer
         VARIANTS.put(variant, this);
         this.setDefaultState(this.stateManager.getDefaultState().with(HALF, DoubleBlockHalf.LOWER).with(DEAD, false));
 	}
+
+    @Override
+    public MapCodec<? extends TallDragonjagBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
+    }
 	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -48,7 +55,7 @@ public class TallDragonjagBlock extends TallPlantBlock implements Dragonjag, Fer
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SmallDragonjagBlock.getBlockForVariant(this.variant).getPickStack(world, pos, state);
 	}
 	
@@ -67,7 +74,7 @@ public class TallDragonjagBlock extends TallPlantBlock implements Dragonjag, Fer
     }
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return !state.get(DEAD);
 	}
 
