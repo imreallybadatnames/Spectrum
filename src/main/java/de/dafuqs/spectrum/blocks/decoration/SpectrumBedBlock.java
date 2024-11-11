@@ -18,6 +18,12 @@ public class SpectrumBedBlock extends BedBlock {
 		super(color, settings);
 	}
 
+//	@Override
+//	public MapCodec<? extends SpectrumBedBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
+
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;

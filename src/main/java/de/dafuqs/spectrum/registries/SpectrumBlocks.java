@@ -210,8 +210,8 @@ public class SpectrumBlocks {
 
 	public static final Block CRACKED_BLACKSLAG_BRICKS = new Block(Settings.copy(BLACKSLAG_BRICKS));
 	public static final Block CRACKED_BLACKSLAG_TILES = new Block(Settings.copy(BLACKSLAG_TILES));
-	public static final Block POLISHED_BLACKSLAG_BUTTON = new ButtonBlock(Settings.create().noCollision().strength(0.5F), SpectrumBlockSetTypes.POLISHED_BLACKSLAG, 5, false);
-	public static final Block POLISHED_BLACKSLAG_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, Settings.create().mapColor(MapColor.BLACK).requiresTool().noCollision().strength(0.5F), SpectrumBlockSetTypes.POLISHED_BLACKSLAG);
+	public static final Block POLISHED_BLACKSLAG_BUTTON = new ButtonBlock(SpectrumBlockSetTypes.POLISHED_BLACKSLAG, 5, Settings.create().noCollision().strength(0.5F));
+	public static final Block POLISHED_BLACKSLAG_PRESSURE_PLATE = new PressurePlateBlock(SpectrumBlockSetTypes.POLISHED_BLACKSLAG, Settings.create().mapColor(MapColor.BLACK).requiresTool().noCollision().strength(0.5F));
 
 	public static final Block SHALE_CLAY = new WeatheringBlock(Weathering.WeatheringLevel.UNAFFECTED, blackslag(BlockSoundGroup.MUD_BRICKS));
 	public static final Block TILLED_SHALE_CLAY = new TilledShaleClayBlock(Settings.copy(SHALE_CLAY), SHALE_CLAY.getDefaultState());

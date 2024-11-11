@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.state.*;
@@ -7,12 +8,19 @@ import net.minecraft.state.property.*;
 import org.jetbrains.annotations.*;
 
 public class DiagonalBlock extends Block {
+
+	public static final MapCodec<DiagonalBlock> CODEC = createCodec(DiagonalBlock::new);
 	
 	public static final BooleanProperty DIAGONAL = BooleanProperty.of("diagonal");
 	
 	public DiagonalBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState().with(DIAGONAL, false));
+	}
+
+	@Override
+	public MapCodec<? extends DiagonalBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Nullable

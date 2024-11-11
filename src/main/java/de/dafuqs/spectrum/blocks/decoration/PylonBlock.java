@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
 import com.google.common.collect.*;
-import de.dafuqs.spectrum.blocks.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -17,6 +17,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class PylonBlock extends Block implements Waterloggable {
+
+    public static final MapCodec<PylonBlock> CODEC = createCodec(PylonBlock::new);
 
     public static final EnumProperty<Section> SECTION = EnumProperty.of("section", Section.class);
     public static final EnumProperty<Direction> FACING = Properties.FACING;
@@ -34,6 +36,11 @@ public class PylonBlock extends Block implements Waterloggable {
                 .with(SECTION, Section.FOOT)
                 .with(FACING, Direction.UP)
                 .with(PEDESTAL, false));
+    }
+
+    @Override
+    public MapCodec<? extends PylonBlock> getCodec() {
+        return CODEC;
     }
 
     @Nullable

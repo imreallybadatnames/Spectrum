@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -14,12 +15,18 @@ public class GemstonePlayerOnlyGlassBlock extends GemstoneGlassBlock {
 	public GemstonePlayerOnlyGlassBlock(Settings settings, GemstoneColor gemstoneColor) {
 		super(settings, gemstoneColor);
 	}
-	
+
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public MapCodec<? extends GemstonePlayerOnlyGlassBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
+	@Override
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
-	
+
 	@Override
 	@Deprecated
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

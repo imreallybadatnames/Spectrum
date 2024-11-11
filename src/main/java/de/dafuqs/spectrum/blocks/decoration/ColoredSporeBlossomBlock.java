@@ -27,6 +27,12 @@ public class ColoredSporeBlossomBlock extends SporeBlossomBlock {
 		this.fallingParticleType = getFallingParticleType(color);
 		this.airParticleType = getAirParticleType(color);
 	}
+
+//	@Override
+//	public MapCodec<? extends ColoredSporeBlossomBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	public DyeColor getColor() {
 		return this.color;
@@ -161,6 +167,5 @@ public class ColoredSporeBlossomBlock extends SporeBlossomBlock {
 			}
 		}
 	}
-	
-	
+
 }

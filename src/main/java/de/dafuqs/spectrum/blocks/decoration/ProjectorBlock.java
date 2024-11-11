@@ -27,6 +27,12 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
 	}
 
 	@Override
+	public MapCodec<? extends ProjectorBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
+	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return shape;
 	}

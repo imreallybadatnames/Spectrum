@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
@@ -7,11 +8,18 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class ShimmerstoneBlock extends Block {
-	
+
+	public static final MapCodec<ShimmerstoneBlock> CODEC = createCodec(ShimmerstoneBlock::new);
+
 	public ShimmerstoneBlock(AbstractBlock.Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends ShimmerstoneBlock> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		if (random.nextBoolean()) {

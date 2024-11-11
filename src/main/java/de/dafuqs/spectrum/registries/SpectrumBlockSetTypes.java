@@ -44,8 +44,10 @@ public class SpectrumBlockSetTypes {
             .trapdoorOpenSound(SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN)
             .pressurePlateClickOffSound(SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF)
             .pressurePlateClickOnSound(SoundEvents.BLOCK_STONE_PRESSURE_PLATE_CLICK_ON)
+            .pressurePlateActivationRule(BlockSetType.ActivationRule.MOBS)
             .buttonClickOffSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF)
             .buttonClickOnSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON)
+            .buttonActivatedByArrows(false)
             .build(locate("polished_blackslag"));
 
     // TODO - Custom wood sounds? Maybe?

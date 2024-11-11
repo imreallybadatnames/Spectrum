@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -14,7 +15,9 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class EtherealPlatformBlock extends AbstractGlassBlock {
+public class EtherealPlatformBlock extends TransparentBlock {
+
+	public static final MapCodec<EtherealPlatformBlock> CODEC = createCodec(EtherealPlatformBlock::new);
 	
 	public static final int MAX_AGE = 5;
 	public static final BooleanProperty EXTEND = BooleanProperty.of("extend");
@@ -24,7 +27,12 @@ public class EtherealPlatformBlock extends AbstractGlassBlock {
 	public EtherealPlatformBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends EtherealPlatformBlock> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {

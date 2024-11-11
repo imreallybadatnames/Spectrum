@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -8,18 +9,24 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class DecayingLightBlock extends WandLightBlock {
-	
+
+	public static final MapCodec<DecayingLightBlock> CODEC = createCodec(DecayingLightBlock::new);
+
 	public DecayingLightBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+	@Override
+	public MapCodec<? extends DecayingLightBlock> getCodec() {
+		return CODEC;
+	}
+
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.randomTick(state, world, pos, random);
 		int light = state.get(LightBlock.LEVEL_15);

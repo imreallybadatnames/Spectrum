@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -17,6 +18,12 @@ public class GlowBlock extends Block {
 		super(settings);
 		this.color = color;
 		GLOWBLOCKS.put(color, this);
+	}
+
+	@Override
+	public MapCodec<? extends GlowBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public DyeColor getColor() {

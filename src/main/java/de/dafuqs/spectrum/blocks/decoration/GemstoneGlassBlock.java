@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.item.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
@@ -7,7 +8,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public class GemstoneGlassBlock extends GlassBlock {
+public class GemstoneGlassBlock extends TransparentBlock {
 	
 	@Nullable
 	final
@@ -16,6 +17,12 @@ public class GemstoneGlassBlock extends GlassBlock {
 	public GemstoneGlassBlock(Settings settings, @Nullable GemstoneColor gemstoneColor) {
 		super(settings);
 		this.gemstoneColor = gemstoneColor;
+	}
+
+	@Override
+	public MapCodec<? extends GemstoneGlassBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

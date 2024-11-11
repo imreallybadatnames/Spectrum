@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.state.*;
@@ -7,10 +8,17 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
 public class SpectrumFacingBlock extends FacingBlock {
-	
+
+	public static final MapCodec<SpectrumFacingBlock> CODEC = createCodec(SpectrumFacingBlock::new);
+
 	public SpectrumFacingBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(FacingBlock.FACING, Direction.UP));
+	}
+
+	@Override
+	public MapCodec<? extends SpectrumFacingBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
