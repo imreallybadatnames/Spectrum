@@ -4,45 +4,48 @@ import de.dafuqs.spectrum.*;
 import net.minecraft.loot.LootTable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.*;
 
 public class SpectrumLootTables {
 	
 	// Shooting Stars
-	public static final Identifier SHOOTING_STAR_BOUNCE = SpectrumCommon.locate("entity/shooting_star/shooting_star_bounce");
-	public static final Identifier COLORFUL_SHOOTING_STAR = SpectrumCommon.locate("entity/shooting_star/colorful_shooting_star");
-	public static final Identifier FIERY_SHOOTING_STAR = SpectrumCommon.locate("entity/shooting_star/fiery_shooting_star");
-	public static final Identifier GEMSTONE_SHOOTING_STAR = SpectrumCommon.locate("entity/shooting_star/gemstone_shooting_star");
-	public static final Identifier GLISTERING_SHOOTING_STAR = SpectrumCommon.locate("entity/shooting_star/glistering_shooting_star");
-	public static final Identifier PRISTINE_SHOOTING_STAR = SpectrumCommon.locate("entity/shooting_star/pristine_shooting_star");
+	public static final RegistryKey<LootTable> SHOOTING_STAR_BOUNCE = keyOf("entity/shooting_star/shooting_star_bounce");
+	public static final RegistryKey<LootTable> COLORFUL_SHOOTING_STAR = keyOf("entity/shooting_star/colorful_shooting_star");
+	public static final RegistryKey<LootTable> FIERY_SHOOTING_STAR = keyOf("entity/shooting_star/fiery_shooting_star");
+	public static final RegistryKey<LootTable> GEMSTONE_SHOOTING_STAR = keyOf("entity/shooting_star/gemstone_shooting_star");
+	public static final RegistryKey<LootTable> GLISTERING_SHOOTING_STAR = keyOf("entity/shooting_star/glistering_shooting_star");
+	public static final RegistryKey<LootTable> PRISTINE_SHOOTING_STAR = keyOf("entity/shooting_star/pristine_shooting_star");
 	
 	// Fishing
-	public static final Identifier UNIVERSAL_FISHING = SpectrumCommon.locate("gameplay/universal_fishing");
+	public static final RegistryKey<LootTable> UNIVERSAL_FISHING = keyOf("gameplay/universal_fishing");
 	
-	public static final Identifier LAVA_FISHING = SpectrumCommon.locate("gameplay/fishing/lava/fishing");
-	public static final Identifier END_FISHING = SpectrumCommon.locate("gameplay/fishing/end/fishing");
-	public static final Identifier DEEPER_DOWN_FISHING = SpectrumCommon.locate("gameplay/fishing/deeper_down/fishing");
-	public static final Identifier MUD_FISHING = SpectrumCommon.locate("gameplay/fishing/mud/fishing");
-	public static final Identifier LIQUID_CRYSTAL_FISHING = SpectrumCommon.locate("gameplay/fishing/liquid_crystal/fishing");
-	public static final Identifier MIDNIGHT_SOLUTION_FISHING = SpectrumCommon.locate("gameplay/fishing/midnight_solution/fishing");
+	public static final RegistryKey<LootTable> LAVA_FISHING = keyOf("gameplay/fishing/lava/fishing");
+	public static final RegistryKey<LootTable> END_FISHING = keyOf("gameplay/fishing/end/fishing");
+	public static final RegistryKey<LootTable> DEEPER_DOWN_FISHING = keyOf("gameplay/fishing/deeper_down/fishing");
+	public static final RegistryKey<LootTable> MUD_FISHING = keyOf("gameplay/fishing/mud/fishing");
+	public static final RegistryKey<LootTable> LIQUID_CRYSTAL_FISHING = keyOf("gameplay/fishing/liquid_crystal/fishing");
+	public static final RegistryKey<LootTable> MIDNIGHT_SOLUTION_FISHING = keyOf("gameplay/fishing/midnight_solution/fishing");
 	
 	// Entities
-	public static final Identifier KINDLING_CLIPPING = SpectrumCommon.locate("gameplay/kindling_clipping");
-	public static final Identifier EGG_LAYING_WOOLY_PIG_SHEARING = SpectrumCommon.locate("entities/egg_laying_wooly_pig_shearing");
+	public static final RegistryKey<LootTable> KINDLING_CLIPPING = keyOf("gameplay/kindling_clipping");
+	public static final RegistryKey<LootTable> EGG_LAYING_WOOLY_PIG_SHEARING = keyOf("entities/egg_laying_wooly_pig_shearing");
 	
 	// Blocks
-	public static final Identifier WEEPING_GALA_SPRIG_RESIN = SpectrumCommon.locate("gameplay/weeping_gala_sprig_resin");
-	public static final Identifier NIGHTDEW_VINE_RARE_DROP = SpectrumCommon.locate("gameplay/nightdew_vine_rare_drop");
+	public static final RegistryKey<LootTable> WEEPING_GALA_SPRIG_RESIN = keyOf("gameplay/weeping_gala_sprig_resin");
+	public static final RegistryKey<LootTable> NIGHTDEW_VINE_RARE_DROP = keyOf("gameplay/nightdew_vine_rare_drop");
 	
-	public static final Identifier SAWBLADE_HOLLY_HARVESTING = SpectrumCommon.locate("gameplay/sawblade_holly_harvesting");
-	public static final Identifier SAWBLADE_HOLLY_SHEARING = SpectrumCommon.locate("gameplay/sawblade_holly_shearing");
+	public static final RegistryKey<LootTable> SAWBLADE_HOLLY_HARVESTING = keyOf("gameplay/sawblade_holly_harvesting");
+	public static final RegistryKey<LootTable> SAWBLADE_HOLLY_SHEARING = keyOf("gameplay/sawblade_holly_shearing");
 	
-	public static final Identifier JADE_VINE_HARVESTING_PETALS = SpectrumCommon.locate("gameplay/jade_vine_petal_harvesting");
-	public static final Identifier JADE_VINE_HARVESTING_NECTAR = SpectrumCommon.locate("gameplay/jade_vine_nectar_harvesting");
+	public static final RegistryKey<LootTable> JADE_VINE_HARVESTING_PETALS = keyOf("gameplay/jade_vine_petal_harvesting");
+	public static final RegistryKey<LootTable> JADE_VINE_HARVESTING_NECTAR = keyOf("gameplay/jade_vine_nectar_harvesting");
 	
-	public static final Identifier SLATE_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/slate_noxcap_stripping");
-	public static final Identifier EBONY_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/ebony_noxcap_stripping");
-	public static final Identifier IVORY_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/ivory_noxcap_stripping");
-	public static final Identifier CHESTNUT_NOXCAP_STRIPPING = SpectrumCommon.locate("gameplay/stripping/chestnut_noxcap_stripping");
+	public static final RegistryKey<LootTable> SLATE_NOXCAP_STRIPPING = keyOf("gameplay/stripping/slate_noxcap_stripping");
+	public static final RegistryKey<LootTable> EBONY_NOXCAP_STRIPPING = keyOf("gameplay/stripping/ebony_noxcap_stripping");
+	public static final RegistryKey<LootTable> IVORY_NOXCAP_STRIPPING = keyOf("gameplay/stripping/ivory_noxcap_stripping");
+	public static final RegistryKey<LootTable> CHESTNUT_NOXCAP_STRIPPING = keyOf("gameplay/stripping/chestnut_noxcap_stripping");
+
+	public static RegistryKey<LootTable> keyOf(String id) {
+		return RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate(id));
+	}
 
 }
