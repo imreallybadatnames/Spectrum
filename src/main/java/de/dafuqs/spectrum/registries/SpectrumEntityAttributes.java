@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.registries;
 import de.dafuqs.spectrum.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class SpectrumEntityAttributes {
 	
@@ -11,11 +12,11 @@ public class SpectrumEntityAttributes {
 	 * <1 means it is more resistant than the default, getting weaker effects
 	 * >1 means it is more vulnerable
 	 */
-	public static final EntityAttribute MENTAL_PRESENCE = register("mental_presence", new ClampedEntityAttribute("attribute.name.spectrum.mental_presence", 1.0, 0, 1024));
+	public static final RegistryEntry<EntityAttribute> MENTAL_PRESENCE = register("mental_presence", new ClampedEntityAttribute("attribute.name.spectrum.mental_presence", 1.0, 0, 1024));
 	
 	
-	private static EntityAttribute register(String name, EntityAttribute attribute) {
-		return Registry.register(Registries.ATTRIBUTE, SpectrumCommon.locate(name), attribute);
+	private static RegistryEntry<EntityAttribute> register(String name, EntityAttribute attribute) {
+		return Registry.registerReference(Registries.ATTRIBUTE, SpectrumCommon.locate(name), attribute);
 	}
 	
 	public static void register() {
