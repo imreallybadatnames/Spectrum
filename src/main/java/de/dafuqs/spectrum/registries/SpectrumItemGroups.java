@@ -256,7 +256,7 @@ public class SpectrumItemGroups {
 				
 				entries.add(SpectrumBlocks.PARTICLE_SPAWNER);
 				
-				entries.add(SpectrumBlocks.GLISTERING_MELON);
+				entries.add(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON));
 				entries.add(SpectrumBlocks.LAVA_SPONGE);
 				entries.add(SpectrumBlocks.WET_LAVA_SPONGE);
 				entries.add(SpectrumBlocks.ETHEREAL_PLATFORM);
@@ -576,7 +576,7 @@ public class SpectrumItemGroups {
 		
 		entries.add(SpectrumItems.AMARANTH_GRAINS);
 		entries.add(SpectrumBlocks.AMARANTH_BUSHEL);
-		entries.add(SpectrumItems.GLISTERING_MELON_SEEDS);
+		entries.add(Registries.ITEM.get(SpectrumItems.GLISTERING_MELON_SEEDS));
 		
 		entries.add(SpectrumBlocks.GLISTERING_SHOOTING_STAR);
 		entries.add(SpectrumBlocks.FIERY_SHOOTING_STAR);
