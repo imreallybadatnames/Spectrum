@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.upgrade;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.particle.effect.*;
@@ -73,6 +74,12 @@ public class UpgradeBlock extends BlockWithEntity {
 		upgradeBlocks.add(this);
 	}
 
+	@Override
+	public MapCodec<? extends UpgradeBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
 	public static List<Block> getUpgradeBlocks() {
 		return upgradeBlocks;
 	}
@@ -83,12 +90,11 @@ public class UpgradeBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		super.onBlockAdded(state, world, pos, oldState, notify);
 		if (!world.isClient) {
@@ -97,7 +103,6 @@ public class UpgradeBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient) {

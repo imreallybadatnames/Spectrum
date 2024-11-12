@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.titration_barrel;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
 import de.dafuqs.spectrum.registries.*;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class TitrationBarrelBlock extends HorizontalFacingBlock implements BlockEntityProvider {
+
+	public static final MapCodec<TitrationBarrelBlock> CODEC = createCodec(TitrationBarrelBlock::new);
 	
 	enum BarrelState implements StringIdentifiable {
 		EMPTY,
@@ -44,6 +47,11 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(BARREL_STATE, BarrelState.EMPTY));
 	}
+
+    @Override
+    public MapCodec<? extends TitrationBarrelBlock> getCodec() {
+        return CODEC;
+    }
 	
 	@Nullable
 	@Override
@@ -57,15 +65,14 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof TitrationBarrelBlockEntity barrelEntity) {
 				
 				BarrelState barrelState = state.get(BARREL_STATE);
-				ItemStack handStack = player.getStackInHand(hand);
 				switch (barrelState) {
 					case EMPTY, FILLED -> {
 						if (player.isSneaking() && handStack.isEmpty()) {
@@ -102,7 +109,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 									} else {
 										player.sendMessage(Text.translatable("block.spectrum.titration_barrel.invalid_recipe"), true);
 									}
-									return ActionResult.CONSUME;
+									return ItemActionResult.CONSUME;
 								}
 								
 								if (ContainerItemContext.forPlayerInteraction(player, hand).find(FluidStorage.ITEM) != null ) {
@@ -116,7 +123,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 												world.setBlockState(pos, state.with(BARREL_STATE, TitrationBarrelBlock.BarrelState.FILLED));
 											}
 										}
-										return ActionResult.CONSUME;
+										return ItemActionResult.CONSUME;
 									}
 								}
 								
@@ -181,7 +188,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 				}
 			}
 			
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	
@@ -289,7 +296,6 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 	
 	// drop all currently stored items
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!newState.isOf(this) && state.get(BARREL_STATE) == BarrelState.FILLED) {
 			scatterContents(world, pos);

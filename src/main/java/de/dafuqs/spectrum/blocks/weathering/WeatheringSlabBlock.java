@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.weathering;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -12,6 +13,12 @@ public class WeatheringSlabBlock extends SlabBlock implements Weathering {
 	public WeatheringSlabBlock(Weathering.WeatheringLevel weatheringLevel, AbstractBlock.Settings settings) {
 		super(settings);
 		this.weatheringLevel = weatheringLevel;
+	}
+
+	@Override
+	public MapCodec<? extends WeatheringSlabBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

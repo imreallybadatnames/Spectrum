@@ -1,12 +1,10 @@
 package de.dafuqs.spectrum.blocks.upgrade;
 
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 
 import java.util.*;
 
