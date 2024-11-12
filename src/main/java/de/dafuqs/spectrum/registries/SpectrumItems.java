@@ -30,6 +30,7 @@ import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.fabric.api.item.v1.*;
 import net.fabricmc.fabric.api.registry.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
+import net.minecraft.block.Block;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.FoodComponents;
@@ -42,7 +43,9 @@ import net.minecraft.text.*;
 import net.minecraft.util.*;
 
 import java.util.*;
+import java.util.function.Supplier;
 
+import static de.dafuqs.spectrum.SpectrumCommon.locate;
 import static de.dafuqs.spectrum.registries.SpectrumFluids.*;
 
 public class SpectrumItems {
@@ -66,7 +69,12 @@ public class SpectrumItems {
 		}
 		
 	}
-	
+
+	private interface Deferred {
+		void apply();
+	}
+	private static final Map<RegistryKey<Item>, Deferred> DEFERRED_COMMON = new HashMap<>();
+
 	// Main items
 	public static final Item GUIDEBOOK = new GuidebookItem(IS.of(1));
 	public static final Item PAINTBRUSH = new PaintbrushItem(IS.of(1));
@@ -84,16 +92,16 @@ public class SpectrumItems {
 	// Gem shards
 	public static final Item TOPAZ_SHARD = new Item(IS.of());
 	public static final Item CITRINE_SHARD = new Item(IS.of());
-	public static final Item ONYX_SHARD = new CloakedItem(IS.of(), SpectrumCommon.locate("collect_all_basic_pigments_besides_brown"), Items.BLACK_DYE);
-	public static final Identifier BREA_DECAYED_BEDROCK = SpectrumCommon.locate("midgame/break_decayed_bedrock");
+	public static final Item ONYX_SHARD = new CloakedItem(IS.of(), locate("collect_all_basic_pigments_besides_brown"), Items.BLACK_DYE);
+	public static final Identifier BREA_DECAYED_BEDROCK = locate("midgame/break_decayed_bedrock");
 	public static final Item MOONSTONE_SHARD = new CloakedItem(IS.of(), BREA_DECAYED_BEDROCK, Items.WHITE_DYE);
 	public static final Item SPECTRAL_SHARD = new Item(IS.of(Rarity.RARE));
 	
-	public static final Item TOPAZ_POWDER = new GemstonePowderItem(IS.of(), SpectrumCommon.locate("hidden/collect_shards/topaz"), BuiltinGemstoneColor.CYAN);
-	public static final Item AMETHYST_POWDER = new GemstonePowderItem(IS.of(), SpectrumCommon.locate("hidden/collect_shards/amethyst"), BuiltinGemstoneColor.MAGENTA);
-	public static final Item CITRINE_POWDER = new GemstonePowderItem(IS.of(), SpectrumCommon.locate("hidden/collect_shards/citrine"), BuiltinGemstoneColor.YELLOW);
-	public static final Item ONYX_POWDER = new GemstonePowderItem(IS.of(), SpectrumCommon.locate("create_onyx_shard"), BuiltinGemstoneColor.BLACK);
-	public static final Item MOONSTONE_POWDER = new GemstonePowderItem(IS.of(), SpectrumCommon.locate("lategame/collect_moonstone"), BuiltinGemstoneColor.WHITE);
+	public static final Item TOPAZ_POWDER = new GemstonePowderItem(IS.of(), locate("hidden/collect_shards/topaz"), BuiltinGemstoneColor.CYAN);
+	public static final Item AMETHYST_POWDER = new GemstonePowderItem(IS.of(), locate("hidden/collect_shards/amethyst"), BuiltinGemstoneColor.MAGENTA);
+	public static final Item CITRINE_POWDER = new GemstonePowderItem(IS.of(), locate("hidden/collect_shards/citrine"), BuiltinGemstoneColor.YELLOW);
+	public static final Item ONYX_POWDER = new GemstonePowderItem(IS.of(), locate("create_onyx_shard"), BuiltinGemstoneColor.BLACK);
+	public static final Item MOONSTONE_POWDER = new GemstonePowderItem(IS.of(), locate("lategame/collect_moonstone"), BuiltinGemstoneColor.WHITE);
 	
 	// Pigment
 	public static final Item BLACK_PIGMENT = new PigmentItem(IS.of(), DyeColor.BLACK);
@@ -277,7 +285,7 @@ public class SpectrumItems {
 	
 	public static final Item HIBERNATING_JADE_VINE_BULB = new ItemWithTooltip(IS.of(16), "item.spectrum.hibernating_jade_vine_bulb.tooltip");
 	public static final Item GERMINATED_JADE_VINE_BULB = new GerminatedJadeVineBulbItem(IS.of(16), SpectrumAdvancements.COLLECT_HIBERNATING_JADE_VINE_BULB, Items.LIME_DYE);
-	public static final Item JADE_VINE_PETALS = new CloakedItemWithLoomPattern(IS.of(), SpectrumCommon.locate("midgame/build_spirit_instiller_structure"), Items.LIME_DYE, SpectrumBannerPatterns.JADE_VINE); // TODO: Funky unlock?
+	public static final Item JADE_VINE_PETALS = new CloakedItemWithLoomPattern(IS.of(), locate("midgame/build_spirit_instiller_structure"), Items.LIME_DYE, SpectrumBannerPatterns.JADE_VINE); // TODO: Funky unlock?
 	
 	public static final Item JADEITE_PETALS = new Item(IS.of(Rarity.UNCOMMON));
 	
@@ -351,7 +359,7 @@ public class SpectrumItems {
 	public static final Item MONSTER_TRIFLE = new Item(IS.of().food(SpectrumFoodComponents.MONSTER_TRIFLE));
 	public static final Item DEMON_TRIFLE = new Item(IS.of().food(SpectrumFoodComponents.DEMON_TRIFLE));
 
-	public static final Item MYCEYLON = new CloakedItem(IS.of(), SpectrumCommon.locate("lategame/collect_myceylon"), Items.ORANGE_DYE);
+	public static final Item MYCEYLON = new CloakedItem(IS.of(), locate("lategame/collect_myceylon"), Items.ORANGE_DYE);
 	public static final Item MYCEYLON_APPLE_PIE = new Item(IS.of().food(SpectrumFoodComponents.MYCEYLON_APPLE_PIE));
 	public static final Item MYCEYLON_PUMPKIN_PIE = new Item(IS.of().food(SpectrumFoodComponents.MYCEYLON_PUMPKIN_PIE));
 	public static final Item MYCEYLON_COOKIE = new Item(IS.of().food(SpectrumFoodComponents.MYCEYLON_COOKIE));
@@ -362,7 +370,9 @@ public class SpectrumItems {
 	public static final Item DRAGONBONE_BROTH = new StackableStewItem(IS.of(8).food(SpectrumFoodComponents.DRAGONBONE_BROTH));
 	public static final Item DOOMBLOOM_SEED = new AliasedBlockItem(SpectrumBlocks.DOOMBLOOM, IS.of().fireproof());
 	
-	public static final Item GLISTERING_MELON_SEEDS = new AliasedBlockItem(SpectrumBlocks.GLISTERING_MELON_STEM, IS.of());
+	public static final RegistryKey<Item> GLISTERING_MELON_SEEDS = registerDeferred("glistering_melon_seeds",
+			() -> new AliasedBlockItem(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON_STEM), IS.of()),
+			DyeColor.LIME);
 	public static final Item AMARANTH_GRAINS = new AliasedBlockItem(SpectrumBlocks.AMARANTH, IS.of());
 	
 	public static final Item MELOCHITES_COOKBOOK_VOL_1 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/melochites_cookbook_vol_1");
@@ -441,9 +451,9 @@ public class SpectrumItems {
 	public static final Item CONCEALING_OILS = new ConcealingOilsItem(IS.of(1));
 	public static final Item BITTER_OILS = new DrinkItem(IS.of(16).food(SpectrumFoodComponents.BITTER_OILS));
 	
-	public static final Item INCANDESCENT_ESSENCE = new CloakedItem(IS.of().fireproof(), SpectrumCommon.locate("midgame/spectrum_midgame"), Items.ORANGE_DYE);
-	public static final Item FROSTBITE_ESSENCE = new CloakedItem(IS.of(), SpectrumCommon.locate("midgame/spectrum_midgame"), Items.LIGHT_BLUE_DYE);
-	public static final Item MOONSTONE_CORE = new CloakedItem(IS.of(16, Rarity.RARE), SpectrumCommon.locate("lategame/find_forgotten_city"), Items.WHITE_DYE);
+	public static final Item INCANDESCENT_ESSENCE = new CloakedItem(IS.of().fireproof(), locate("midgame/spectrum_midgame"), Items.ORANGE_DYE);
+	public static final Item FROSTBITE_ESSENCE = new CloakedItem(IS.of(), locate("midgame/spectrum_midgame"), Items.LIGHT_BLUE_DYE);
+	public static final Item MOONSTONE_CORE = new CloakedItem(IS.of(16, Rarity.RARE), locate("lategame/find_forgotten_city"), Items.WHITE_DYE);
 	
 	// Misc
 	public static final Item MUSIC_DISC_DISCOVERY = new MusicDiscItem(1, SpectrumSoundEvents.MUSIC_DISCOVERY, IS.of(1, Rarity.RARE), 120);
@@ -532,10 +542,28 @@ public class SpectrumItems {
 	public static final Item BUFFER_NODE_CRYSTAL = new Item(IS.of());
 	public static final Item GATHER_NODE_CRYSTAL = new Item(IS.of());
 
+	public static RegistryKey<Item> keyOf(String name) {
+		return RegistryKey.of(RegistryKeys.ITEM, locate(name));
+	}
+
+	private static Item getOrDefault(RegistryKey<Item> key, Supplier<Item> defaultSupplier) {
+		var item = Registries.ITEM.get(key);
+		return item == null ? defaultSupplier.get() : item;
+	}
 
 	public static void register(String name, Item item, DyeColor dyeColor) {
-		Registry.register(Registries.ITEM, SpectrumCommon.locate(name), item);
+		Registry.register(Registries.ITEM, locate(name), item);
 		ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
+	}
+
+	public static RegistryKey<Item> registerDeferred(String name, Supplier<Item> itemSupplier, DyeColor dyeColor) {
+		var key = keyOf(name);
+		DEFERRED_COMMON.put(key, () -> {
+			var item = getOrDefault(key, itemSupplier);
+			Registry.register(Registries.ITEM, locate(name), item);
+			ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
+		});
+		return key;
 	}
 	
 	public static void register() {
@@ -559,6 +587,10 @@ public class SpectrumItems {
 		registerSpawningStuff();
 		registerMusicDisks();
 		registerTechnicalItems();
+
+		for (var deferred : DEFERRED_COMMON.values()) {
+			deferred.apply();
+		}
 	}
 	
 	public static void registerMusicDisks() {
@@ -677,8 +709,7 @@ public class SpectrumItems {
 		register("germinated_jade_vine_bulb", GERMINATED_JADE_VINE_BULB, DyeColor.LIME);
 		register("jade_vine_petals", JADE_VINE_PETALS, DyeColor.LIME);
 		register("jadeite_petals", JADEITE_PETALS, DyeColor.BROWN);
-		
-		register("glistering_melon_seeds", GLISTERING_MELON_SEEDS, DyeColor.LIME);
+
 		register("amaranth_grains", AMARANTH_GRAINS, DyeColor.LIME);
 		
 		register("vegetal", VEGETAL, DyeColor.LIME);

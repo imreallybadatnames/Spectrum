@@ -34,7 +34,6 @@ import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.item_roundel.*;
 import de.dafuqs.spectrum.blocks.jade_vines.*;
 import de.dafuqs.spectrum.blocks.lava_sponge.*;
-import de.dafuqs.spectrum.blocks.melon.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.mob_head.*;
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
@@ -102,6 +101,12 @@ public class SpectrumBlocks {
 	private static Settings craftingBlock(MapColor mapColor, BlockSoundGroup blockSoundGroup) {
 		return settings(mapColor, blockSoundGroup, 5.0F, 8.0F).solidBlock(SpectrumBlocks::never).blockVision(SpectrumBlocks::never).nonOpaque().requiresTool();
 	}
+
+	private interface Deferred {
+		void apply();
+	}
+	private static final Map<RegistryKey<Block>, Deferred> DEFERRED_COMMON = new HashMap<>();
+	private static final Map<RegistryKey<Block>, Deferred> DEFERRED_CLIENT = new HashMap<>();
 
 	public static final Block PEDESTAL_BASIC_TOPAZ = new PedestalBlock(craftingBlock(MapColor.DIAMOND_BLUE, SpectrumBlockSoundGroups.TOPAZ_BLOCK), BuiltinPedestalVariant.BASIC_TOPAZ);
 	public static final Block PEDESTAL_BASIC_AMETHYST = new PedestalBlock(craftingBlock(MapColor.PURPLE, BlockSoundGroup.AMETHYST_BLOCK), BuiltinPedestalVariant.BASIC_AMETHYST);
@@ -435,9 +440,15 @@ public class SpectrumBlocks {
 	public static final Block MOONSTONE_SEMI_PERMEABLE_GLASS = new GemstonePlayerOnlyGlassBlock(AbstractBlock.Settings.copy(SpectrumBlocks.MOONSTONE_GLASS), BuiltinGemstoneColor.WHITE);
 
 	// MELON
-	public static final Block GLISTERING_MELON = new GlisteringMelonBlock(AbstractBlock.Settings.copy(Blocks.MELON));
-	public static final Block GLISTERING_MELON_STEM = new GlisteringStemBlock((GourdBlock) GLISTERING_MELON, () -> SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.MELON_STEM));
-	public static final Block ATTACHED_GLISTERING_MELON_STEM = new AttachedGlisteringStemBlock((GourdBlock) GLISTERING_MELON, () -> SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.ATTACHED_MELON_STEM));
+	public static final RegistryKey<Block> GLISTERING_MELON = registerDeferredWithItem("glistering_melon",
+			() -> new Block(AbstractBlock.Settings.copy(Blocks.MELON)),
+			IS.of(), DyeColor.LIME);
+	public static final RegistryKey<Block> ATTACHED_GLISTERING_MELON_STEM = registerDeferred("attached_glistering_melon_stem",
+			() -> new AttachedStemBlock(keyOf("glistering_melon_stem"), GLISTERING_MELON, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.ATTACHED_MELON_STEM)),
+			true);
+	public static RegistryKey<Block> GLISTERING_MELON_STEM = registerDeferred("glistering_melon_stem",
+			() -> new StemBlock(GLISTERING_MELON, ATTACHED_GLISTERING_MELON_STEM, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.MELON_STEM)),
+			true);
 
 	public static final Block OMINOUS_SAPLING = new OminousSaplingBlock(AbstractBlock.Settings.copy(Blocks.OAK_SAPLING));
 	public static final Block PRESENT = new PresentBlock(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL));
@@ -1528,6 +1539,41 @@ public class SpectrumBlocks {
 		ItemColors.ITEM_COLORS.registerColorMapping(blockItem, dyeColor);
 	}
 
+	public static RegistryKey<Block> keyOf(String name) {
+		return RegistryKey.of(RegistryKeys.BLOCK, locate(name));
+	}
+
+	private static Block getOrDefault(RegistryKey<Block> key, Supplier<Block> defaultSupplier) {
+		var block = Registries.BLOCK.get(key);
+		return block == null ? defaultSupplier.get() : block;
+	}
+
+	public static RegistryKey<Block> registerDeferred(String name, Supplier<Block> blockSupplier, boolean registerRenderLayerMap) {
+		var key = keyOf(name);
+		DEFERRED_COMMON.put(key, () -> {
+			Registry.register(Registries.BLOCK, key, getOrDefault(key, blockSupplier));
+		});
+		if (registerRenderLayerMap) {
+			DEFERRED_CLIENT.put(key, () -> {
+				BlockRenderLayerMap.INSTANCE.putBlock(getOrDefault(key, blockSupplier), RenderLayer.getCutout());
+			});
+		}
+		return key;
+	}
+
+	public static RegistryKey<Block> registerDeferredWithItem(String name, Supplier<Block> blockSupplier, Item.Settings itemSettings, DyeColor dyeColor) {
+		var key = keyOf(name);
+		DEFERRED_COMMON.put(key, () -> {
+			var block = getOrDefault(key, blockSupplier);
+			Registry.register(Registries.BLOCK, key, block);
+
+			var blockItem = new BlockItem(block, itemSettings);
+			Registry.register(Registries.ITEM, SpectrumItems.keyOf(name), blockItem);
+			ItemColors.ITEM_COLORS.registerColorMapping(blockItem, dyeColor);
+		});
+		return key;
+	}
+
 	public static void register() {
 		registerBlockWithItem("pedestal_basic_topaz", PEDESTAL_BASIC_TOPAZ, new PedestalBlockItem(PEDESTAL_BASIC_TOPAZ, IS.of(1), BuiltinPedestalVariant.BASIC_TOPAZ, "item.spectrum.pedestal.tooltip.basic_topaz"), DyeColor.WHITE);
 		registerBlockWithItem("pedestal_basic_amethyst", PEDESTAL_BASIC_AMETHYST, new PedestalBlockItem(PEDESTAL_BASIC_AMETHYST, IS.of(1), BuiltinPedestalVariant.BASIC_AMETHYST, "item.spectrum.pedestal.tooltip.basic_amethyst"), DyeColor.WHITE);
@@ -1638,8 +1684,6 @@ public class SpectrumBlocks {
 		registerBlockWithItem("primordial_torch", PRIMORDIAL_TORCH, new VerticallyAttachableBlockItem(PRIMORDIAL_TORCH, PRIMORDIAL_WALL_TORCH, IS.of(), Direction.DOWN), DyeColor.ORANGE);
 		registerBlock("primordial_wall_torch", PRIMORDIAL_WALL_TORCH);
 		registerBlock("deeper_down_portal", DEEPER_DOWN_PORTAL);
-		registerBlock("glistering_melon_stem", GLISTERING_MELON_STEM);
-		registerBlock("attached_glistering_melon_stem", ATTACHED_GLISTERING_MELON_STEM);
 		registerBlock("stuck_storm_stone", STUCK_STORM_STONE);
 		registerBlock("wand_light", WAND_LIGHT_BLOCK);
 		registerBlock("decaying_light", DECAYING_LIGHT_BLOCK);
@@ -1647,6 +1691,10 @@ public class SpectrumBlocks {
 		registerBlock("bottomless_bundle", BOTTOMLESS_BUNDLE);
 
 		registerMobHeads(IS.of());
+
+		for (var deferred : DEFERRED_COMMON.values()) {
+			deferred.apply();
+		}
 	}
 
 	private static void registerDDFlora(Item.Settings settings) {
@@ -1895,8 +1943,6 @@ public class SpectrumBlocks {
 		registerBlockWithItem("particle_spawner", PARTICLE_SPAWNER, settings, DyeColor.PINK);
 		registerBlockWithItem("creative_particle_spawner", CREATIVE_PARTICLE_SPAWNER, new BlockItem(CREATIVE_PARTICLE_SPAWNER, IS.of(Rarity.EPIC)), DyeColor.PINK);
 
-		registerBlockWithItem("glistering_melon", GLISTERING_MELON, settings, DyeColor.LIME);
-		
 		registerBlockWithItem("lava_sponge", LAVA_SPONGE, IS.of().fireproof(), DyeColor.ORANGE);
 		registerBlockWithItem("wet_lava_sponge", WET_LAVA_SPONGE, new WetLavaSpongeItem(WET_LAVA_SPONGE, IS.of(1).fireproof().recipeRemainder(LAVA_SPONGE.asItem())), DyeColor.ORANGE);
 
@@ -3021,8 +3067,6 @@ public class SpectrumBlocks {
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), SpectrumBlocks.PRIMORDIAL_FIRE, SpectrumBlocks.PRIMORDIAL_TORCH, SpectrumBlocks.PRIMORDIAL_WALL_TORCH);
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.PRESENT, RenderLayer.getCutout());
 
-		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.GLISTERING_MELON_STEM, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.ATTACHED_GLISTERING_MELON_STEM, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.OMINOUS_SAPLING, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.ITEM_BOWL_BASALT, RenderLayer.getCutout());
@@ -3234,6 +3278,10 @@ public class SpectrumBlocks {
 				SpectrumBlocks.WAXED_HUMMINGSTONE,
 				SpectrumBlocks.HUMMINGSTONE_GLASS,
 				SpectrumBlocks.HUMMINGSTONE_GLASS_PANE);
+
+		for (var deferred : DEFERRED_CLIENT.values()) {
+			deferred.apply();
+		}
 	}
 
 }
