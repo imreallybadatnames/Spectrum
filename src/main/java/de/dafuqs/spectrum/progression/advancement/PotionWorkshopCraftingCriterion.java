@@ -35,7 +35,7 @@ public class PotionWorkshopCraftingCriterion extends AbstractCriterion<PotionWor
 		this.trigger(player, (conditions) -> conditions.matches(itemStack));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate[] itemPredicates;
 
 		public Conditions(LootContextPredicate player, ItemPredicate[] itemPredicates) {

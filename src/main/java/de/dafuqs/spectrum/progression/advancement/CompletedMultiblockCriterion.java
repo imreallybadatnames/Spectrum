@@ -1,50 +1,35 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
 import com.klikli_dev.modonomicon.api.multiblock.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class CompletedMultiblockCriterion extends AbstractCriterion<CompletedMultiblockCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("completed_multiblock");
 
-	public static CompletedMultiblockCriterion.Conditions create(Identifier id) {
-		return new CompletedMultiblockCriterion.Conditions(LootContextPredicate.EMPTY, id);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public CompletedMultiblockCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		Identifier identifier = Identifier.of(JsonHelper.getString(jsonObject, "multiblock_identifier"));
-		return new CompletedMultiblockCriterion.Conditions(extended, identifier);
-	}
-
 	public void trigger(ServerPlayerEntity player, Multiblock iMultiblock) {
 		this.trigger(player, (conditions) -> conditions.matches(iMultiblock));
 	}
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(Optional<LootContextPredicate> player, Identifier identifier) implements AbstractCriterion.Conditions {
 
-	public static class Conditions extends AbstractCriterionConditions {
-		private final Identifier identifier;
-
-		public Conditions(LootContextPredicate player, Identifier identifier) {
-			super(ID, player);
-			this.identifier = identifier;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("multiblock_identifier", this.identifier.toString());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			Identifier.CODEC.fieldOf("multiblock_identifier").forGetter(Conditions::identifier)
+		).apply(instance, Conditions::new));
 
 		public boolean matches(Multiblock multiblock) {
 			return multiblock.getId().equals(identifier);

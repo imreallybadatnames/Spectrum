@@ -41,7 +41,7 @@ public class UpgradePlaceCriterion extends AbstractCriterion<UpgradePlaceCriteri
 		this.trigger(player, (conditions) -> conditions.matches(world, pos, upgradeCount, upgradeModifiers));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final BlockPredicate blockPredicate;
 		private final NumberRange.IntRange countRange;
 		private final NumberRange.IntRange speedRange;

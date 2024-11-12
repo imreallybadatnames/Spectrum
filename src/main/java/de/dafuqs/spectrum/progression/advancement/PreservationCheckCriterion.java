@@ -31,7 +31,7 @@ public class PreservationCheckCriterion extends AbstractCriterion<PreservationCh
 		this.trigger(player, (conditions) -> conditions.matches(checkName, checkPassed));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final String checkName;
 		private final boolean checkPassed;

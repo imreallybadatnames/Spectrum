@@ -32,7 +32,7 @@ public class HummingstoneHymnCriterion extends AbstractCriterion<HummingstoneHym
 		this.trigger(player, (conditions) -> conditions.matches(world, pos));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final LocationPredicate location;
 
 		public Conditions(LootContextPredicate player, LocationPredicate location) {

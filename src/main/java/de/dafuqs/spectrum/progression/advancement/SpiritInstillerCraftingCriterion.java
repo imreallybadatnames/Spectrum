@@ -37,7 +37,7 @@ public class SpiritInstillerCraftingCriterion extends AbstractCriterion<SpiritIn
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, experience));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate[] itemPredicates;
 		private final NumberRange.IntRange experienceRange;
 

@@ -385,7 +385,7 @@ public class PotionWorkshopBlockEntity extends BlockEntity implements NamedScree
 	
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		super.readNbt(, registryLookup);
+		super.readNbt(nbt, registryLookup);
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		Inventories.readNbt(nbt, this.inventory, registryLookup);
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);

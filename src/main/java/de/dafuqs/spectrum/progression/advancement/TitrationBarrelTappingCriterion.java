@@ -38,7 +38,7 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, ingameDaysAge, ingredientCount));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate[] tappedItemPredicates;
 		private final NumberRange.IntRange ingameDaysAgeRange;
 		private final NumberRange.IntRange ingredientCountRange;

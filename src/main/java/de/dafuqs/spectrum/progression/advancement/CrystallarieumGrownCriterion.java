@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
@@ -12,51 +13,36 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
+import java.util.*;
+
 public class CrystallarieumGrownCriterion extends AbstractCriterion<CrystallarieumGrownCriterion.Conditions> {
-
+	
 	public static final Identifier ID = SpectrumCommon.locate("crystallarieum_growing");
-
-	public static CrystallarieumGrownCriterion.Conditions create(ItemPredicate item, BlockPredicate blockPredicate) {
-		return new CrystallarieumGrownCriterion.Conditions(LootContextPredicate.EMPTY, item, blockPredicate);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public CrystallarieumGrownCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		BlockPredicate grownBlockPredicate = BlockPredicate.fromJson(jsonObject.get("grown_block"));
-		ItemPredicate catalystPredicate = ItemPredicate.fromJson(jsonObject.get("used_catalyst"));
-		return new CrystallarieumGrownCriterion.Conditions(extended, catalystPredicate, grownBlockPredicate);
-	}
-
+	
 	public void trigger(ServerPlayerEntity player, ServerWorld world, BlockPos pos, ItemStack catalystStack) {
 		this.trigger(player, (conditions) -> conditions.matches(world, pos, catalystStack));
 	}
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		BlockPredicate blockPredicate,
+		ItemPredicate catalystPredicate
+	) implements AbstractCriterion.Conditions {
 
-	public static class Conditions extends AbstractCriterionConditions {
-		private final ItemPredicate catalystPredicate;
-		private final BlockPredicate blockPredicate;
-
-		public Conditions(LootContextPredicate player, ItemPredicate catalystPredicate, BlockPredicate blockPredicate) {
-			super(ID, player);
-			this.catalystPredicate = catalystPredicate;
-			this.blockPredicate = blockPredicate;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("grown_block", this.blockPredicate.toJson());
-			jsonObject.add("used_catalyst", this.catalystPredicate.toJson());
-			return jsonObject;
-		}
-
+		public static final Codec<CrystallarieumGrownCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(CrystallarieumGrownCriterion.Conditions::player),
+			BlockPredicate.CODEC.fieldOf("grown_block").forGetter(CrystallarieumGrownCriterion.Conditions::blockPredicate),
+			ItemPredicate.CODEC.fieldOf("used_catalyst").forGetter(CrystallarieumGrownCriterion.Conditions::catalystPredicate)
+		).apply(instance, CrystallarieumGrownCriterion.Conditions::new));
+		
 		public boolean matches(ServerWorld world, BlockPos blockPos, ItemStack catalystStack) {
 			return this.blockPredicate.test(world, blockPos) && this.catalystPredicate.test(catalystStack);
 		}
 	}
-
+	
 }

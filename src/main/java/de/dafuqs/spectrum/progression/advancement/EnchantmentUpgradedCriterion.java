@@ -36,7 +36,7 @@ public class EnchantmentUpgradedCriterion extends AbstractCriterion<EnchantmentU
 		this.trigger(player, (conditions) -> conditions.matches(enchantment, enchantmentLevel, spentExperience));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final Enchantment enchantment;
 		private final NumberRange.IntRange enchantmentLevelRange;
 		private final NumberRange.IntRange experienceRange;
