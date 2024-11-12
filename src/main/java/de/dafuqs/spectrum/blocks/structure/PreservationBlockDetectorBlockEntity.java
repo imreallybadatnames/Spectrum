@@ -28,8 +28,8 @@ public class PreservationBlockDetectorBlockEntity extends BlockEntity implements
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		if (this.changeIntoState != null) {
 			nbt.putString("change_into_state", BlockArgumentParser.stringifyBlockState(this.changeIntoState));
 		}
@@ -46,8 +46,8 @@ public class PreservationBlockDetectorBlockEntity extends BlockEntity implements
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.commands = new ArrayList<>();
 		this.changeIntoState = null;
 		this.detectedState = null;

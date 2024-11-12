@@ -33,8 +33,8 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		this.requiredItems = new ArrayList<>();
 		if (nbt.contains("RequiredItems", NbtElement.LIST_TYPE)) {
 			for (NbtElement e : nbt.getList("RequiredItems", NbtElement.STRING_TYPE)) {
@@ -59,8 +59,8 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		if (!this.requiredItems.isEmpty()) {
 			NbtList itemList = new NbtList();
 			for (Item requiredItem : this.requiredItems) {

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.item_roundel.*;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.block.*;
@@ -15,12 +16,19 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class PreservationRoundelBlock extends ItemRoundelBlock {
-	
+
+	public static final MapCodec<PreservationRoundelBlock> CODEC = createCodec(PreservationRoundelBlock::new);
+
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-	
+
 	public PreservationRoundelBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+	}
+
+	@Override
+	public MapCodec<? extends PreservationRoundelBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -29,13 +37,12 @@ public class PreservationRoundelBlock extends ItemRoundelBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof ItemRoundelBlockEntity itemRoundelBlockEntity) {
-				ItemStack handStack = player.getStackInHand(hand);
 				if (player.isSneaking() || handStack.isEmpty()) {
 					retrieveLastStack(world, pos, player, hand, handStack, itemRoundelBlockEntity);
 				} else {
@@ -48,7 +55,7 @@ public class PreservationRoundelBlock extends ItemRoundelBlock {
 					}
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	

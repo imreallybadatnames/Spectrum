@@ -1358,7 +1358,7 @@ public class SpectrumBlocks {
 	public static final Block TREASURE_ITEM_BOWL = new TreasureItemBowlBlock(preservationBlock().nonOpaque().solidBlock(SpectrumBlocks::never).suffocates(SpectrumBlocks::never).blockVision(SpectrumBlocks::never));
 	public static final Block DIKE_GATE_FOUNTAIN = new SpectrumFacingBlock(preservationBlock());
 	public static final Block PRESERVATION_BRICKS = new Block(preservationBlock());
-	public static final Block SHIMMERING_PRESERVATION_BRICKS = new Block(AbstractBlock.Settings.copy(preservationBlock()).luminance(s -> 5));
+	public static final Block SHIMMERING_PRESERVATION_BRICKS = new Block(preservationBlock().luminance(s -> 5));
 	public static final Block COURIER_STATUE = new StatueBlock(preservationBlock());
 	public static final Block MANXI = new ManxiBlock(preservationBlock().nonOpaque().noCollision().dropsNothing());
 
@@ -1416,11 +1416,9 @@ public class SpectrumBlocks {
 			markerEntity.setPos(position.getX(), position.getY(), position.getZ());
 
 			Vec3d targetPosition = Vec3d.ofCenter(mobBlockPos.offset(side, 50));
-			double f = targetPosition.getX() - markerEntity.getX();
-			double g = targetPosition.getY() - markerEntity.getY();
-			double h = targetPosition.getZ() - markerEntity.getZ();
+			var velocity = targetPosition.subtract(markerEntity.getPos());
 
-			DragonFireballEntity entity = new DragonFireballEntity(world, markerEntity, f, g, h);
+			DragonFireballEntity entity = new DragonFireballEntity(world, markerEntity, velocity);
 
 			markerEntity.discard();
 			return entity;
@@ -1443,11 +1441,9 @@ public class SpectrumBlocks {
 			markerEntity.setPos(position.getX(), position.getY(), position.getZ());
 
 			Vec3d targetPosition = Vec3d.ofCenter(mobBlockPos.offset(side, 50));
-			double f = targetPosition.getX() - markerEntity.getX();
-			double g = targetPosition.getY() - markerEntity.getY();
-			double h = targetPosition.getZ() - markerEntity.getZ();
+			var velocity = targetPosition.subtract(markerEntity.getPos());
 
-			FireballEntity entity = new FireballEntity(world, markerEntity, f, g, h, 1);
+			FireballEntity entity = new FireballEntity(world, markerEntity, velocity, 1);
 
 			markerEntity.discard();
 			return entity;
@@ -1472,7 +1468,7 @@ public class SpectrumBlocks {
 	public static final Block SKELETON_IDOL = new ProjectileIdolBlock(idol(SpectrumBlockSoundGroups.SKELETON_IDOL), ParticleTypes.INSTANT_EFFECT, EntityType.ARROW, SoundEvents.ENTITY_ARROW_SHOOT, 6.0F, 1.1F) {
 		@Override
 		public ProjectileEntity createProjectile(ServerWorld world, BlockPos mobBlockPos, Position position, Direction side) {
-			ArrowEntity arrowEntity = new ArrowEntity(world, position.getX(), position.getY(), position.getZ());
+			ArrowEntity arrowEntity = new ArrowEntity(world, position.getX(), position.getY(), position.getZ(), ItemStack.EMPTY, null);
 			arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 			return arrowEntity;
 		}

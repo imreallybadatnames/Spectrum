@@ -56,9 +56,9 @@ public class PreservationControllerBlockEntityRenderer implements BlockEntityRen
 		float u1 = 0, v1 = 0;
 		float u2 = u1 + u / 16F, v2 = v1 + v / 16F;
 
-		vertices.vertex(model, x1, z2, 0).color(1F, 1F, 1F, alpha).texture(u1, v1).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0).next();
-		vertices.vertex(model, x2, z2, 0).color(1F, 1F, 1F, alpha).texture(u2, v1).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0).next();
-		vertices.vertex(model, x2, z1, 0).color(1F, 1F, 1F, alpha).texture(u2, v2).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0).next();
-		vertices.vertex(model, x1, z1, 0).color(1F, 1F, 1F, alpha).texture(u1, v2).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0).next();
+		vertices.vertex(model, x1, z2, 0).color(1F, 1F, 1F, alpha).texture(u1, v1).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0);
+		vertices.vertex(model, x2, z2, 0).color(1F, 1F, 1F, alpha).texture(u2, v1).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0);
+		vertices.vertex(model, x2, z1, 0).color(1F, 1F, 1F, alpha).texture(u2, v2).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0);
+		vertices.vertex(model, x1, z1, 0).color(1F, 1F, 1F, alpha).texture(u1, v2).overlay(overlay).light(LightmapTextureManager.MAX_LIGHT_COORDINATE).normal(0, 1, 0);
 	}
 }

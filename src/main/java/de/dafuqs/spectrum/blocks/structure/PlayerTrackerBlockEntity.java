@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -27,7 +28,7 @@ public class PlayerTrackerBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	protected void writeNbt(NbtCompound tag) {
+	protected void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		if (!playersThatOpenedAlready.isEmpty()) {
 			NbtList uuidList = new NbtList();
 			for (UUID uuid : playersThatOpenedAlready) {
@@ -40,7 +41,7 @@ public class PlayerTrackerBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void readNbt(NbtCompound tag) {
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		this.playersThatOpenedAlready.clear();
 		if (tag.contains("OpenedPlayers", NbtElement.LIST_TYPE)) {
 			NbtList list = tag.getList("OpenedPlayers", NbtElement.COMPOUND_TYPE);

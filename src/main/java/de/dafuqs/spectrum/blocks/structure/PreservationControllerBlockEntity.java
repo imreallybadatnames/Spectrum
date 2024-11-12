@@ -77,8 +77,8 @@ public class PreservationControllerBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		
 		if (this.entranceOffset != null) {
 			nbt.putInt("EntranceOffsetX", this.entranceOffset.getX());
@@ -110,8 +110,8 @@ public class PreservationControllerBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		if (nbt.contains("EntranceOffsetX") && nbt.contains("EntranceOffsetY") && nbt.contains("EntranceOffsetZ")) {
 			this.entranceOffset = new Vec3i(nbt.getInt("EntranceOffsetX"), nbt.getInt("EntranceOffsetY"), nbt.getInt("EntranceOffsetZ"));
@@ -151,7 +151,7 @@ public class PreservationControllerBlockEntity extends BlockEntity {
                 SpectrumS2CPacketSender.playParticles((ServerWorld) world, centerPos, ParticleTypes.FLAME, 1);
 
 				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(centerPos), ParticleTypes.SMOKE, 250,
-						new Vec3d(checkBox.getXLength() / 2, checkBox.getYLength() / 2, checkBox.getZLength() / 2),
+						new Vec3d(checkBox.getLengthX() / 2, checkBox.getLengthY() / 2, checkBox.getLengthZ() / 2),
 						Vec3d.ZERO);
 			}
 			

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -14,16 +15,22 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class PreservationControllerBlock extends BlockWithEntity {
-	
+
+	public static final MapCodec<PreservationControllerBlock> CODEC = createCodec(PreservationControllerBlock::new);
+
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-	
+
 	public PreservationControllerBlock(Settings settings) {
 		super(settings);
 	}
+
+	@Override
+	public MapCodec<? extends PreservationControllerBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!world.isClient && player.isCreative()) { // for testing and building structures
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof PreservationControllerBlockEntity preservationControllerBlockEntity) {
@@ -34,7 +41,7 @@ public class PreservationControllerBlock extends BlockWithEntity {
 				}
 			}
 		}
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUse(state, world, pos, player, hit);
 	}
 	
 	@Override
@@ -55,10 +62,7 @@ public class PreservationControllerBlock extends BlockWithEntity {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (!world.isClient) {
-			return checkType(type, SpectrumBlockEntities.PRESERVATION_CONTROLLER, PreservationControllerBlockEntity::serverTick);
-		}
-		return null;
+		return world.isClient ? null : validateTicker(type, SpectrumBlockEntities.PRESERVATION_CONTROLLER, PreservationControllerBlockEntity::serverTick);
 	}
 	
 	@Override

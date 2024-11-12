@@ -1,7 +1,5 @@
 package de.dafuqs.spectrum.blocks.structure;
 
-import de.dafuqs.spectrum.helpers.ColorHelper;
-import net.minecraft.block.*;
 import net.minecraft.client.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.render.*;

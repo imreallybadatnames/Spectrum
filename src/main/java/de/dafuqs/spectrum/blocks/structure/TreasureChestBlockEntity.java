@@ -12,6 +12,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -33,8 +34,8 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		
 		if (this.requiredAdvancementIdentifierToOpen != null) {
 			tag.putString("RequiredAdvancement", this.requiredAdvancementIdentifierToOpen.toString());
@@ -68,8 +69,8 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		
 		if (tag.contains("RequiredAdvancement", NbtElement.STRING_TYPE)) {
 			this.requiredAdvancementIdentifierToOpen = Identifier.tryParse(tag.getString("RequiredAdvancement"));

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -16,8 +17,15 @@ import org.jetbrains.annotations.*;
 
 public class ManxiBlock extends HorizontalFacingBlock implements BlockEntityProvider {
 
+	public static final MapCodec<ManxiBlock> CODEC = createCodec(ManxiBlock::new);
+
 	public ManxiBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends ManxiBlock> getCodec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -32,7 +40,7 @@ public class ManxiBlock extends HorizontalFacingBlock implements BlockEntityProv
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		var entity = world.getBlockEntity(pos);
 
 		if (!(entity instanceof PlayerTrackerBlockEntity manxi))

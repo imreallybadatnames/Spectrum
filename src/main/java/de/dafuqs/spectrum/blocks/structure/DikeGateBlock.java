@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.cca.azure_dike.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -20,9 +21,16 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class DikeGateBlock extends TransparentBlock {
-	
+
+	public static final MapCodec<DikeGateBlock> CODEC = createCodec(DikeGateBlock::new);
+
 	public DikeGateBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends DikeGateBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -55,9 +63,9 @@ public class DikeGateBlock extends TransparentBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		punishEntityWithoutAzureDike(world, pos, player, false);
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUse(state, world, pos, player, hit);
 	}
 	
 	@Override
@@ -95,7 +103,7 @@ public class DikeGateBlock extends TransparentBlock {
 				entity.damage(SpectrumDamageTypes.dike(serverWorld), 1);
 				SpectrumS2CPacketSender.playParticles(serverWorld, pos, SpectrumParticleTypes.AZURE_DIKE_RUNES, 10);
 				if (entity instanceof ServerPlayerEntity serverPlayerEntity && (!decreasedSounds || ((ServerWorld) world).getTime() % 10 == 0)) {
-					serverPlayerEntity.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
+					serverPlayerEntity.playSoundToPlayer(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
 				}
 			}
 		}

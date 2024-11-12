@@ -1,14 +1,22 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class InvisibleWallBlock extends AbstractGlassBlock {
-	
+public class InvisibleWallBlock extends TransparentBlock {
+
+	public static final MapCodec<InvisibleWallBlock> CODEC = createCodec(InvisibleWallBlock::new);
+
 	public InvisibleWallBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends InvisibleWallBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

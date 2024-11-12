@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.*;
@@ -9,9 +10,16 @@ import org.jetbrains.annotations.*;
 
 public class DeepLightBlock extends HorizontalFacingBlock implements BlockEntityProvider {
 
+    public static final MapCodec<DeepLightBlock> CODEC = createCodec(DeepLightBlock::new);
+
 	public DeepLightBlock(Settings settings) {
 		super(settings);
 	}
+
+    @Override
+    public MapCodec<? extends DeepLightBlock> getCodec() {
+        return CODEC;
+    }
 
 	@Nullable
 	@Override

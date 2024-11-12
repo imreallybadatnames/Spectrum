@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.structure;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.registries.*;
@@ -14,9 +15,16 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class TreasureChestBlock extends SpectrumChestBlock {
-	
+
+	public static final MapCodec<TreasureChestBlock> CODEC = createCodec(TreasureChestBlock::new);
+
 	public TreasureChestBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends TreasureChestBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -41,7 +49,7 @@ public class TreasureChestBlock extends SpectrumChestBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return world.isClient ? checkType(type, SpectrumBlockEntities.PRESERVATION_CHEST, TreasureChestBlockEntity::clientTick) : null;
+		return world.isClient ? validateTicker(type, SpectrumBlockEntities.PRESERVATION_CHEST, TreasureChestBlockEntity::clientTick) : null;
 	}
 	
 	@Override
