@@ -19,6 +19,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -383,10 +384,10 @@ public class PotionWorkshopBlockEntity extends BlockEntity implements NamedScree
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(, registryLookup);
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
-		Inventories.readNbt(nbt, this.inventory);
+		Inventories.readNbt(nbt, this.inventory, registryLookup);
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("LastBrewedRecipe") && this.getWorld() != null) {
 			String recipeString = nbt.getString("LastBrewedRecipe");
@@ -402,9 +403,9 @@ public class PotionWorkshopBlockEntity extends BlockEntity implements NamedScree
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
-		Inventories.writeNbt(nbt, this.inventory);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
+		Inventories.writeNbt(nbt, this.inventory, registryLookup);
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		if (this.lastBrewedRecipe != null) {
 			nbt.putString("LastBrewedRecipe", this.lastBrewedRecipe.getId().toString());
@@ -515,7 +516,7 @@ public class PotionWorkshopBlockEntity extends BlockEntity implements NamedScree
 	@Override
 	public void setStack(int slot, @NotNull ItemStack stack) {
 		ItemStack itemStack = this.inventory.get(slot);
-		boolean isSameItem = ItemStack.canCombine(stack, itemStack);
+		boolean isSameItem = ItemStack.areItemsAndComponentsEqual(stack, itemStack);
 		this.inventory.set(slot, stack);
 		if (stack.getCount() > this.getMaxCountPerStack()) {
 			stack.setCount(this.getMaxCountPerStack());

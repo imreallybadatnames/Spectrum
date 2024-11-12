@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.present;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.networking.*;
@@ -31,6 +32,8 @@ import org.joml.*;
 import java.util.*;
 
 public class PresentBlock extends BlockWithEntity {
+
+	public static final MapCodec<PresentBlock> CODEC = createCodec(PresentBlock::new);
 	
 	protected static Map<Item, PresentUnpackBehavior> BEHAVIORS = new Object2ObjectOpenHashMap<>();
 	
@@ -71,6 +74,11 @@ public class PresentBlock extends BlockWithEntity {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(OPENING, false).with(VARIANT, WrappingPaper.RED));
 	}
+
+	@Override
+	public MapCodec<? extends PresentBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
 	protected void appendProperties(StateManager.@NotNull Builder<Block, BlockState> builder) {
@@ -98,7 +106,7 @@ public class PresentBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!player.getAbilities().allowModifyWorld) {
 			return ActionResult.PASS;
 		} else {
@@ -127,7 +135,6 @@ public class PresentBlock extends BlockWithEntity {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
 		if (blockEntity instanceof PresentBlockEntity presentBlockEntity) {
@@ -216,17 +223,15 @@ public class PresentBlock extends BlockWithEntity {
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new PresentBlockEntity(pos, state);
 	}
-	
-	
+
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
-	
-	
+
 }

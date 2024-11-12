@@ -27,6 +27,7 @@ import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -351,7 +352,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 				return true;
 			}
 			
-			if (!ItemStack.canCombine(existingOutput, output)) {
+			if (!ItemStack.areItemsAndComponentsEqual(existingOutput, output)) {
 				return false;
 			}
 			
@@ -536,18 +537,18 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 	
 	// Called when the chunk is first loaded to initialize this be or manually synced via updateInClientWorld()
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
-		Inventories.readNbt(nbt, this.inventory);
+		Inventories.readNbt(nbt, this.inventory, registryLookup);
 		
 		if (nbt.contains("StoredXP")) {
 			this.storedXP = nbt.getFloat("StoredXP");
@@ -573,8 +574,8 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		nbt.putFloat("StoredXP", this.storedXP);
 		nbt.putShort("CraftingTime", (short) this.craftingTime);
 		nbt.putShort("CraftingTimeTotal", (short) this.craftingTimeTotal);
@@ -588,7 +589,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		}
 		
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
-		Inventories.writeNbt(nbt, this.inventory);
+		Inventories.writeNbt(nbt, this.inventory, registryLookup);
 	}
 	
 	@Override
@@ -705,7 +706,8 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 				return false;
 			}
 			
-			Recipe<?> storedRecipe = CraftingTabletItem.getStoredRecipe(this.getWorld(), craftingTabletItem);
+			var storedRecipeKey = CraftingTabletItem.getStoredRecipe(this.getWorld(), craftingTabletItem);
+			var storedRecipe = storedRecipeKey == null ? null : storedRecipeKey.value();
 			
 			int width = 3;
 			if (storedRecipe instanceof ShapedRecipe shapedRecipe) {

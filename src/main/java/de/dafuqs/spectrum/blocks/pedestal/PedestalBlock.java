@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.pedestal;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.recipe.*;
@@ -41,6 +42,12 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 		super(settings);
 		this.variant = variant;
 		setDefaultState(getStateManager().getDefaultState().with(POWERED, false));
+	}
+
+	@Override
+	public MapCodec<? extends PedestalBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	/**
@@ -157,17 +164,17 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult actionResult = checkAndDoPaintbrushTrigger(state, world, pos, player, hand, hit);
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ItemActionResult actionResult = checkAndDoPaintbrushTrigger(state, world, pos, player, hand, hit);
 		if (actionResult.isAccepted()) {
 			return actionResult;
 		}
 		
 		if (world.isClient) {
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			this.openScreen(world, pos, player);
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	
@@ -180,7 +187,6 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (newState.getBlock() instanceof PedestalBlock newStateBlock) {
 			if (!state.isOf(newStateBlock)) {
@@ -228,11 +234,7 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return checkType(type, SpectrumBlockEntities.PEDESTAL, PedestalBlockEntity::clientTick);
-		} else {
-			return checkType(type, SpectrumBlockEntities.PEDESTAL, PedestalBlockEntity::serverTick);
-		}
+		return validateTicker(type, SpectrumBlockEntities.PEDESTAL, world.isClient ? PedestalBlockEntity::clientTick : PedestalBlockEntity::serverTick);
 	}
 	
 	@Override
@@ -288,17 +290,17 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 	}
 	
 	@Override
-	public ActionResult onPaintBrushTrigger(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onPaintBrushTrigger(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof PedestalBlockEntity pedestalBlockEntity) {
 			if (pedestalBlockEntity.craftingTime > 0) {
-				return ActionResult.FAIL;
+				return ItemActionResult.FAIL;
 			}
 			if (pedestalBlockEntity.currentRecipe == null) {
-				return ActionResult.FAIL;
+				return ItemActionResult.FAIL;
 			}
-			if (pedestalBlockEntity.currentRecipe instanceof GatedRecipe gatedRecipe && !gatedRecipe.canPlayerCraft(player)) {
-				return ActionResult.FAIL;
+			if (pedestalBlockEntity.currentRecipe instanceof GatedRecipe<?> gatedRecipe && !gatedRecipe.canPlayerCraft(player)) {
+				return ItemActionResult.FAIL;
 			}
 			
 			if (!world.isClient) {
@@ -306,9 +308,9 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 				SpectrumS2CPacketSender.spawnPedestalStartCraftingParticles(pedestalBlockEntity);
 			}
 			
-			return ActionResult.success(world.isClient);
+			return ItemActionResult.success(world.isClient);
 		}
-		return ActionResult.FAIL;
+		return ItemActionResult.FAIL;
 	}
 	
 }

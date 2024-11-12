@@ -113,13 +113,11 @@ public class PastelRenderHelper {
         vertexConsumerProvider.getBuffer(RenderLayer.getLines())
                 .vertex(positionMatrix, 0.5F, 0.5F, 0.5F)
                 .color(color)
-                .normal((float) normalized.x, (float) normalized.y, (float) normalized.z)
-                .next();
+                .normal((float) normalized.x, (float) normalized.y, (float) normalized.z);
         vertexConsumerProvider.getBuffer(RenderLayer.getLines())
                 .vertex(positionMatrix, (float) offset.x, (float) offset.y, (float) offset.z)
                 .color(color)
-                .normal((float) normalized.x, (float) normalized.y, (float) normalized.z)
-                .next();
+                .normal((float) normalized.x, (float) normalized.y, (float) normalized.z);
     }
 
     public static float[] unpackNormalizedColor(int color) {

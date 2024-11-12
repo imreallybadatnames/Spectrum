@@ -9,6 +9,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -65,9 +66,9 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
-		Inventories.readNbt(nbt, this.stacks);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
+		Inventories.readNbt(nbt, this.stacks, registryLookup);
 		this.colors = PresentItem.getColors(nbt);
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		this.ownerName = PlayerOwned.readOwnerName(nbt);
@@ -82,10 +83,10 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	}
 	
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		if (!this.stacks.isEmpty()) {
-			Inventories.writeNbt(nbt, this.stacks);
+			Inventories.writeNbt(nbt, this.stacks, registryLookup);
 		}
 		if (!this.colors.isEmpty()) {
 			PresentItem.setColors(nbt, this.colors);

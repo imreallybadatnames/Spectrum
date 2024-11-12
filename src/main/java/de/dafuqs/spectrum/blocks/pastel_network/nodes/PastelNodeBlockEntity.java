@@ -45,7 +45,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory, Stampable, PastelUpgradeable {
 
 	public static final int MAX_FILTER_SLOTS = 25;
@@ -357,8 +356,8 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		if (nbt.contains("Network")) {
 			UUID networkUUID = nbt.getUuid("Network");
 			if (this.getWorld() == null) {
@@ -401,8 +400,8 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		if (this.parentNetwork != null) {
 			nbt.putUuid("Network", this.parentNetwork.getUUID());
 		}
@@ -429,9 +428,9 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 

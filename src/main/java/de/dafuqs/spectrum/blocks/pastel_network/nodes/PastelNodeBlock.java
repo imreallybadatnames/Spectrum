@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.pastel_network.nodes;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.decoration.*;
@@ -8,7 +9,6 @@ import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -53,6 +53,12 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	}
 
 	@Override
+	public MapCodec<? extends PastelNodeBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
+	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return SpectrumCommon.CONFIG.MinimalNodes ? BlockRenderType.ENTITYBLOCK_ANIMATED : BlockRenderType.MODEL;
 	}
@@ -65,7 +71,6 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!newState.isOf(state.getBlock())) {
 			PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
@@ -77,13 +82,6 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
-	}
-
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		Direction direction = ctx.getSide();
-		BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(direction.getOpposite()));
-		return blockState.isOf(this) && blockState.get(FACING) == direction ? this.getDefaultState().with(FACING, direction.getOpposite()) : this.getDefaultState().with(FACING, direction);
 	}
 
 	@Nullable
@@ -116,11 +114,9 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		// TODO: We do not handle the null possibility here!
 		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
-		var stack = player.getStackInHand(hand);
 
 		if (player.isSneaking() && stack.isEmpty()) {
 			if (AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.PASTEL_NODE_UPGRADING)) {
@@ -130,12 +126,12 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 						player.getInventory().offerOrDrop(removed);
 					
 					blockEntity.updateUpgrades();
-					return ActionResult.success(world.isClient());
+					return ItemActionResult.success(world.isClient());
 				}
 			}
-			return ActionResult.FAIL;
+			return ItemActionResult.FAIL;
 		} else if (stack.isOf(SpectrumItems.TUNING_STAMP)) {
-			return ActionResult.PASS;
+			return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		} else if (stack.isOf(SpectrumItems.PAINTBRUSH)) {
 			return sendDebugMessage(world, player, blockEntity);
 		} else if (AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.PASTEL_NODE_UPGRADING) && stack.isIn(SpectrumItemTags.PASTEL_NODE_UPGRADES) && blockEntity.tryInteractRings(stack, pastelNodeType)) {
@@ -147,16 +143,16 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 
 			world.playSoundAtBlockCenter(pos, SpectrumSoundEvents.MEDIUM_CRYSTAL_RING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.getRandom().nextFloat() * 0.2F, true);
 			blockEntity.updateUpgrades();
-			return ActionResult.success(world.isClient());
+			return ItemActionResult.success(world.isClient());
 		} else if (this.pastelNodeType.usesFilters()) {
 			if (world.isClient) {
-				return ActionResult.SUCCESS;
+				return ItemActionResult.SUCCESS;
 			} else {
 				player.openHandledScreen(blockEntity);
-				return ActionResult.CONSUME;
+				return ItemActionResult.CONSUME;
 			}
 		}
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
 	}
 
 	@Override
@@ -175,7 +171,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	}
 
 	@NotNull
-	private static ActionResult sendDebugMessage(World world, PlayerEntity player, PastelNodeBlockEntity blockEntity) {
+	private static ItemActionResult sendDebugMessage(World world, PlayerEntity player, PastelNodeBlockEntity blockEntity) {
 		if (world.isClient) {
 			if (blockEntity != null) {
 				PastelNetwork network = blockEntity.parentNetwork;
@@ -187,7 +183,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 					player.sendMessage(Text.literal("C: " + network.getNodeDebugText()));
 				}
 			}
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			if (blockEntity != null) {
 				PastelNetwork network = blockEntity.parentNetwork;
@@ -198,7 +194,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 					player.sendMessage(Text.literal("S: " + network.getNodeDebugText()));
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 

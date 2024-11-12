@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.potion_workshop;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.Support;
 import de.dafuqs.spectrum.registries.*;
@@ -18,13 +19,20 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class PotionWorkshopBlock extends HorizontalFacingBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<PotionWorkshopBlock> CODEC = createCodec(PotionWorkshopBlock::new);
+
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/potion_workshop");
-	
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D);
-	
+
 	public PotionWorkshopBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends PotionWorkshopBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -38,17 +46,14 @@ public class PotionWorkshopBlock extends HorizontalFacingBlock implements BlockE
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 	
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (!world.isClient) {
-			return world.isClient ? null : Support.checkType(type, SpectrumBlockEntities.POTION_WORKSHOP, PotionWorkshopBlockEntity::tick);
-		}
-		return null;
+		return world.isClient ? null : Support.checkType(type, SpectrumBlockEntities.POTION_WORKSHOP, PotionWorkshopBlockEntity::tick);
 	}
 	
 	@Override
@@ -73,7 +78,6 @@ public class PotionWorkshopBlock extends HorizontalFacingBlock implements BlockE
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!(newState.getBlock() instanceof PotionWorkshopBlock)) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -86,7 +90,7 @@ public class PotionWorkshopBlock extends HorizontalFacingBlock implements BlockE
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
