@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.*;
@@ -12,7 +12,6 @@ import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -21,6 +20,12 @@ public class VillagerConvertingIdolBlock extends IdolBlock {
 	
 	public VillagerConvertingIdolBlock(Settings settings, ParticleEffect particleEffect) {
 		super(settings, particleEffect);
+	}
+
+	@Override
+	public MapCodec<? extends VillagerConvertingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override
@@ -33,10 +38,10 @@ public class VillagerConvertingIdolBlock extends IdolBlock {
 	public boolean trigger(ServerWorld world, BlockPos blockPos, BlockState state, @Nullable Entity entity, Direction side) {
 		if (entity instanceof VillagerEntity villagerEntity) {
 			ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, false);
-			zombieVillagerEntity.initialize(world, world.getLocalDifficulty(zombieVillagerEntity.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true), null);
+			zombieVillagerEntity.initialize(world, world.getLocalDifficulty(zombieVillagerEntity.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true));
 			zombieVillagerEntity.setVillagerData(villagerEntity.getVillagerData());
 			zombieVillagerEntity.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
-			zombieVillagerEntity.setOfferData(villagerEntity.getOffers().toNbt());
+			zombieVillagerEntity.setOfferData(villagerEntity.getOffers());
 			zombieVillagerEntity.setXp(villagerEntity.getExperience());
 			
 			zombieVillagerEntity.playAmbientSound();

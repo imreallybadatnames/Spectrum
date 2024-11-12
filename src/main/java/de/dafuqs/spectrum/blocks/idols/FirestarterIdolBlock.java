@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -18,7 +18,6 @@ import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
 
@@ -45,12 +44,18 @@ public class FirestarterIdolBlock extends IdolBlock {
 		super(settings, particleEffect);
 	}
 
+	@Override
+	public MapCodec<? extends FirestarterIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
 	public static void addBlockSmeltingRecipes(@NotNull MinecraftServer server) {
 		DynamicRegistryManager manager = server.getRegistryManager();
-		for (SmeltingRecipe recipe : server.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
-			ItemStack outputStack = recipe.getOutput(manager);
+		for (var recipe : server.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
+			ItemStack outputStack = recipe.value().getResult(manager);
 			if (outputStack.getItem() instanceof BlockItem outputBlockItem && outputBlockItem.getBlock() != Blocks.AIR) {
-				DefaultedList<Ingredient> ingredients = recipe.getIngredients();
+				DefaultedList<Ingredient> ingredients = recipe.value().getIngredients();
 				if (!ingredients.isEmpty()) {
 					ItemStack[] inputStacks = ingredients.get(0).getMatchingStacks();
 					for (ItemStack inputStack : inputStacks) {

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -21,6 +21,12 @@ public class LineTeleportingIdolBlock extends IdolBlock {
 	public LineTeleportingIdolBlock(Settings settings, ParticleEffect particleEffect, int range) {
 		super(settings, particleEffect);
 		this.range = range;
+	}
+
+	@Override
+	public MapCodec<? extends LineTeleportingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public static Direction getLookDirection(@NotNull Entity entity, boolean mirrorVertical, boolean mirrorHorizontal) {

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.gravity;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
@@ -14,6 +15,12 @@ public class FloatBlock extends FallingBlock {
 	public FloatBlock(Settings settings, float gravityMod) {
 		super(settings);
 		this.gravityMod = gravityMod;
+	}
+
+	@Override
+	public MapCodec<? extends FloatBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public float getGravityMod() {
@@ -59,11 +66,6 @@ public class FloatBlock extends FallingBlock {
 	private static void launch(World world, BlockPos pos) {
 		FloatBlockEntity blockEntity = new FloatBlockEntity(world, pos, world.getBlockState(pos));
 		world.spawnEntity(blockEntity);
-	}
-
-	@Override
-	protected int getFallDelay() {
-		return 2;
 	}
 
 }

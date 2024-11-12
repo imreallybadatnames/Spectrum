@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
@@ -26,6 +27,12 @@ public class ExplosionIdolBlock extends IdolBlock {
 		this.power = power;
 		this.createFire = createFire;
 		this.destructionType = destructionType;
+	}
+
+	@Override
+	public MapCodec<? extends ExplosionIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override

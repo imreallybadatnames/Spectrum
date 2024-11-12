@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -10,7 +10,6 @@ import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -22,6 +21,12 @@ public class ShearingIdolBlock extends IdolBlock {
 	public ShearingIdolBlock(Settings settings, ParticleEffect particleEffect, int range) {
 		super(settings, particleEffect);
 		this.range = range;
+	}
+
+	@Override
+	public MapCodec<? extends ShearingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override

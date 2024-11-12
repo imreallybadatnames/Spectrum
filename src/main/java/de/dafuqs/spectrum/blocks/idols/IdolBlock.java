@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.blocks.idols;
 
 import de.dafuqs.spectrum.networking.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
@@ -46,7 +45,7 @@ public abstract class IdolBlock extends Block {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!world.isClient) {
 			if (!hasCooldown(state) && trigger((ServerWorld) world, pos, state, player, hit.getSide())) {
 				playTriggerParticles((ServerWorld) world, pos);
@@ -60,7 +59,6 @@ public abstract class IdolBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		world.setBlockState(pos, world.getBlockState(pos).with(COOLDOWN, false));
@@ -114,10 +112,10 @@ public abstract class IdolBlock extends Block {
 	}
 	
 	public Position getOutputLocation(BlockPointer pointer, Direction direction) {
-		double d = pointer.getX() + 0.7D * (double) direction.getOffsetX();
-		double e = pointer.getY() + 0.7D * (double) direction.getOffsetY();
-		double f = pointer.getZ() + 0.7D * (double) direction.getOffsetZ();
-		return new PositionImpl(d, e, f);
+		double d = pointer.centerPos().getX() + 0.7D * (double) direction.getOffsetX();
+		double e = pointer.centerPos().getY() + 0.7D * (double) direction.getOffsetY();
+		double f = pointer.centerPos().getZ() + 0.7D * (double) direction.getOffsetZ();
+		return new Vec3d(d, e, f);
 	}
 	
 }

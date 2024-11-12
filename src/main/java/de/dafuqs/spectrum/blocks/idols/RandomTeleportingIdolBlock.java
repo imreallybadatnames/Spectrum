@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -12,7 +12,6 @@ import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -26,6 +25,12 @@ public class RandomTeleportingIdolBlock extends IdolBlock {
 		super(settings, particleEffect);
 		this.horizontalRange = horizontalRange;
 		this.verticalRange = verticalRange;
+	}
+
+	@Override
+	public MapCodec<? extends RandomTeleportingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public static void teleportTo(ServerWorld world, Entity entity, int x, int y, int z) {
@@ -45,7 +50,7 @@ public class RandomTeleportingIdolBlock extends IdolBlock {
 		
 		BlockState blockState = world.getBlockState(mutable);
 		if (blockState.blocksMovement()) {
-			double boundingBoxY = entity.getBoundingBox().getYLength(); // bouncy
+			double boundingBoxY = entity.getBoundingBox().getLengthY(); // bouncy
 			if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
 				serverPlayerEntity.teleport((ServerWorld) serverPlayerEntity.getWorld(), mutable.getX() + 0.5, mutable.getY() + boundingBoxY, mutable.getZ() + 0.5, serverPlayerEntity.getYaw(), serverPlayerEntity.getPitch());
 				world.sendEntityStatus(serverPlayerEntity, (byte) 46); // particles
@@ -58,7 +63,7 @@ public class RandomTeleportingIdolBlock extends IdolBlock {
 				}
 				return success;
 			} else {
-				entity.teleport(mutable.getX() + 0.5, mutable.getY() + boundingBoxY, mutable.getZ() + 0.5);
+				entity.requestTeleport(mutable.getX() + 0.5, mutable.getY() + boundingBoxY, mutable.getZ() + 0.5);
 				world.playSound(null, entity.prevX, entity.prevY, entity.prevZ, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				entity.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
 				return true;

@@ -1,9 +1,10 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
@@ -13,7 +14,6 @@ import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -28,6 +28,12 @@ public class MilkingIdolBlock extends IdolBlock {
 	public MilkingIdolBlock(Settings settings, ParticleEffect particleEffect, int milkingRange) {
 		super(settings, particleEffect);
 		this.milkingRange = milkingRange;
+	}
+
+	@Override
+	public MapCodec<? extends MilkingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -81,11 +87,10 @@ public class MilkingIdolBlock extends IdolBlock {
 					
 					SoundEvent soundEvent;
 					ItemStack resultStack;
-					if (accessor.getStewEffect() != null) {
+					if (accessor.getStewEffects() != null) {
 						resultStack = new ItemStack(Items.SUSPICIOUS_STEW);
-						SuspiciousStewItem.addEffectToStew(resultStack, accessor.getStewEffect(), accessor.getStewEffectDuration());
-						accessor.setStewEffect(null);
-						accessor.setStewEffectDuration(0);
+						resultStack.set(DataComponentTypes.SUSPICIOUS_STEW_EFFECTS, accessor.getStewEffects());
+						accessor.setStewEffects(null);
 						soundEvent = SoundEvents.ENTITY_MOOSHROOM_SUSPICIOUS_MILK;
 					} else {
 						resultStack = new ItemStack(Items.MUSHROOM_STEW);

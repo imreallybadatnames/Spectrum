@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
@@ -11,7 +11,6 @@ import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
 
@@ -25,6 +24,12 @@ public class FeedingIdolBlock extends IdolBlock {
 	public FeedingIdolBlock(Settings settings, ParticleEffect particleEffect, int range) {
 		super(settings, particleEffect);
 		this.range = range;
+	}
+
+	@Override
+	public MapCodec<? extends FeedingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override

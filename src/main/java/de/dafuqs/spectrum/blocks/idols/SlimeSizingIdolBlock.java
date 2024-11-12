@@ -1,10 +1,10 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.progression.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.item.*;
@@ -14,7 +14,6 @@ import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -28,6 +27,12 @@ public class SlimeSizingIdolBlock extends IdolBlock {
 		super(settings, particleEffect);
 		this.range = range;
 		this.maxSize = maxSize;
+	}
+
+	@Override
+	public MapCodec<? extends SlimeSizingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override
@@ -50,7 +55,7 @@ public class SlimeSizingIdolBlock extends IdolBlock {
 				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), 16, new Vec3d(0.75, 0.75, 0.75), new Vec3d(0.1, 0.1, 0.1));
 				
 				Box boundingBox = slimeEntity.getBoundingBox();
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, slimeEntity.getPos().add(0, boundingBox.getYLength() / 2, 0), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), newSize * 8, new Vec3d(boundingBox.getXLength(), boundingBox.getYLength(), boundingBox.getZLength()), new Vec3d(0.1, 0.1, 0.1));
+				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, slimeEntity.getPos().add(0, boundingBox.getLengthY() / 2, 0), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), newSize * 8, new Vec3d(boundingBox.getLengthX(), boundingBox.getLengthY(), boundingBox.getLengthZ()), new Vec3d(0.1, 0.1, 0.1));
 				slimeEntity.playSound(((SlimeEntityAccessor) slimeEntity).invokeGetSquishSound(), ((SlimeEntityAccessor) slimeEntity).invokeGetSoundVolume(), ((world.random.nextFloat() - world.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
 				
 				// grant advancements

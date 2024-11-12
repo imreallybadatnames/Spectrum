@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.item.*;
@@ -10,7 +10,6 @@ import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -22,6 +21,12 @@ public abstract class EntitySummoningIdolBlock extends IdolBlock {
 	public EntitySummoningIdolBlock(Settings settings, ParticleEffect particleEffect, EntityType<?> entityType) {
 		super(settings, particleEffect);
 		this.entityType = entityType;
+	}
+
+	@Override
+	public MapCodec<? extends EntitySummoningIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override
@@ -37,7 +42,7 @@ public abstract class EntitySummoningIdolBlock extends IdolBlock {
 		if (summonedEntity != null) {
 			summonedEntity.refreshPositionAndAngles(blockPos.up(), 0.0F, 0.0F);
 			if (summonedEntity instanceof MobEntity mobEntity) {
-				mobEntity.initialize(world, world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null, null);
+				mobEntity.initialize(world, world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null);
 			}
 			afterSummon(world, summonedEntity);
 			world.spawnEntityAndPassengers(summonedEntity);

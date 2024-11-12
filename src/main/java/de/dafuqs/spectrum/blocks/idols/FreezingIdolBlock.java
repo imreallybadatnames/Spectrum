@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -37,6 +37,12 @@ public class FreezingIdolBlock extends IdolBlock {
 	
 	public FreezingIdolBlock(Settings settings, ParticleEffect particleEffect) {
 		super(settings, particleEffect);
+	}
+
+	@Override
+	public MapCodec<? extends FreezingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public static void freeze(@NotNull ServerWorld world, BlockPos blockPos) {

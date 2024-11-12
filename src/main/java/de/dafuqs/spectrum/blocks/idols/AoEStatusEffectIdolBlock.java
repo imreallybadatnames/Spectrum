@@ -1,16 +1,16 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -18,11 +18,11 @@ import java.util.*;
 public class AoEStatusEffectIdolBlock extends IdolBlock {
 	
 	protected final int range;
-	protected final StatusEffect statusEffect;
+	protected final RegistryEntry<StatusEffect> statusEffect;
 	protected final int amplifier;
 	protected final int duration;
 	
-	public AoEStatusEffectIdolBlock(Settings settings, ParticleEffect particleEffect, StatusEffect statusEffect, int amplifier, int duration, int range) {
+	public AoEStatusEffectIdolBlock(Settings settings, ParticleEffect particleEffect, RegistryEntry<StatusEffect> statusEffect, int amplifier, int duration, int range) {
 		super(settings, particleEffect);
 		this.statusEffect = statusEffect;
 		this.amplifier = amplifier;
@@ -30,6 +30,11 @@ public class AoEStatusEffectIdolBlock extends IdolBlock {
 		this.range = range;
 	}
 
+	@Override
+	public MapCodec<? extends AoEStatusEffectIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);

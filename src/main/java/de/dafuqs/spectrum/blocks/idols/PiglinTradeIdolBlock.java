@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
@@ -13,7 +13,6 @@ import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -23,12 +22,18 @@ public class PiglinTradeIdolBlock extends IdolBlock {
 	public PiglinTradeIdolBlock(Settings settings, ParticleEffect particleEffect) {
 		super(settings, particleEffect);
 	}
+
+	@Override
+	public MapCodec<? extends PiglinTradeIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
 	
 	private static List<ItemStack> getBarteredStacks(@NotNull ServerWorld world, BlockPos blockPos) {
 		PiglinEntity piglin = new PiglinEntity(EntityType.PIGLIN, world);
 		piglin.setPos(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 		
-		LootTable lootTable = world.getServer().getLootManager().getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY);
+		LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY);
 		List<ItemStack> loot = lootTable.generateLoot(new LootContextParameterSet.Builder(world).add(LootContextParameters.THIS_ENTITY, piglin).build(LootContextTypes.BARTER));
 		
 		piglin.discard();
@@ -65,7 +70,7 @@ public class PiglinTradeIdolBlock extends IdolBlock {
 	}
 	
 	private void outputLoot(ServerWorld world, BlockPos blockPos, Direction side) {
-		Position outputLocation = getOutputLocation(new BlockPointerImpl(world, blockPos), side);
+		Position outputLocation = getOutputLocation(new BlockPointer(world, blockPos), side);
 		for (ItemStack barteredStack : getBarteredStacks(world, blockPos)) {
 			ItemEntity itemEntity = new ItemEntity(world, outputLocation.getX(), outputLocation.getY(), outputLocation.getZ(), barteredStack);
 			itemEntity.addVelocity(side.getOffsetX() * 0.25, side.getOffsetY() * 0.25 + 0.03, side.getOffsetZ() * 0.25);

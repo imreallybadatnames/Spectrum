@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -18,6 +18,12 @@ public class FallDamageNegatingIdolBlock extends IdolBlock {
 	
 	public FallDamageNegatingIdolBlock(Settings settings, ParticleEffect particleEffect) {
 		super(settings, particleEffect);
+	}
+
+	@Override
+	public MapCodec<? extends FallDamageNegatingIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override

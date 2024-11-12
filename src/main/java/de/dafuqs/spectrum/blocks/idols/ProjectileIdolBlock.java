@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
@@ -33,6 +33,12 @@ public abstract class ProjectileIdolBlock extends IdolBlock {
 	}
 
 	@Override
+	public MapCodec<? extends ProjectileIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
+	}
+
+	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.projectile_idol.tooltip", this.entityType.getName()));
@@ -44,7 +50,7 @@ public abstract class ProjectileIdolBlock extends IdolBlock {
 		
 		BlockPos outputBlockPos = blockPos.offset(side);
 		if (world.getBlockState(outputBlockPos).getCollisionShape(world, outputBlockPos).isEmpty()) {
-			BlockPointer pointer = new BlockPointerImpl(world, blockPos);
+			BlockPointer pointer = new BlockPointer(world, blockPos);
 			Position outputLocation = getOutputLocation(pointer, side);
 			
 			ProjectileEntity projectileEntity = createProjectile(world, blockPos, outputLocation, side);

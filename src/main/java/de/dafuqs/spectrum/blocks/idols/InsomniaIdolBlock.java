@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.idols;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.item.*;
@@ -15,7 +15,6 @@ import net.minecraft.stat.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -27,6 +26,12 @@ public class InsomniaIdolBlock extends IdolBlock {
 	public InsomniaIdolBlock(Settings settings, ParticleEffect particleEffect, int additionalTicksSinceLastRest) {
 		super(settings, particleEffect);
 		this.additionalTicksSinceLastRest = additionalTicksSinceLastRest;
+	}
+
+	@Override
+	public MapCodec<? extends InsomniaIdolBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -49,7 +54,7 @@ public class InsomniaIdolBlock extends IdolBlock {
 				PhantomEntity phantomEntity = EntityType.PHANTOM.create(world);
 				if (phantomEntity != null) {
 					phantomEntity.refreshPositionAndAngles(blockPos.up(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21)), 0.0F, 0.0F);
-					phantomEntity.initialize(world, world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null, null);
+					phantomEntity.initialize(world, world.getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null);
 					
 					int phantomSize = Math.min(64, newValue / 24000);
 					phantomEntity.setPhantomSize(phantomSize);
