@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.lava_sponge;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.fluid.*;
@@ -12,11 +13,19 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class LavaSpongeBlock extends SpongeBlock {
-	
+
+	public static final MapCodec<LavaSpongeBlock> CODEC = createCodec(LavaSpongeBlock::new);
+
 	public LavaSpongeBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+//	@Override
+//	public MapCodec<? extends LavaSpongeBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
+
 	@Override
 	protected void update(World world, BlockPos pos) {
 		if (this.absorbLava(world, pos)) {
@@ -40,7 +49,7 @@ public class LavaSpongeBlock extends SpongeBlock {
 				BlockState blockState = world.getBlockState(blockPos2);
 				FluidState fluidState = world.getFluidState(blockPos2);
 				if (fluidState.isIn(FluidTags.LAVA)) {
-					if (blockState.getBlock() instanceof FluidDrainable && !((FluidDrainable) blockState.getBlock()).tryDrainFluid(world, blockPos2, blockState).isEmpty()) {
+					if (blockState.getBlock() instanceof FluidDrainable && !((FluidDrainable) blockState.getBlock()).tryDrainFluid(null, world, blockPos2, blockState).isEmpty()) {
 						++i;
 						if (j < 6) {
 							queue.add(new Pair<>(blockPos2, j + 1));

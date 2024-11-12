@@ -1,8 +1,6 @@
 package de.dafuqs.spectrum.blocks.lava_sponge;
 
-import net.fabricmc.fabric.api.item.v1.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;

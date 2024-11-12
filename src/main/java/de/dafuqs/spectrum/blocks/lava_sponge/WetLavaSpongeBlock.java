@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.lava_sponge;
 
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.particle.*;
@@ -9,11 +10,19 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class WetLavaSpongeBlock extends WetSpongeBlock {
-	
+
+	public static final MapCodec<WetLavaSpongeBlock> CODEC = createCodec(WetLavaSpongeBlock::new);
+
 	public WetLavaSpongeBlock(Settings settings) {
 		super(settings);
 	}
-	
+
+//	@Override
+//	public MapCodec<? extends WetLavaSpongeBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
+
 	// faster than fire (30+ 0-10)
 	// even more in the nether
 	private static int getRandomTickTime(World world) {
