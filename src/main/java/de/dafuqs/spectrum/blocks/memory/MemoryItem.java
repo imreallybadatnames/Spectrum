@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.ItemGroup.*;
@@ -13,7 +12,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -230,8 +228,8 @@ public class MemoryItem extends BlockItem {
 		Set<NbtCompound> encountered = new HashSet<>();
 		if (SpectrumCommon.minecraftServer != null) {
 			Item memoryItem = SpectrumBlocks.MEMORY.asItem();
-			for (SpiritInstillerRecipe recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.SPIRIT_INSTILLING)) {
-				ItemStack output = recipe.getOutput(SpectrumCommon.minecraftServer.getRegistryManager());
+			for (var recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.SPIRIT_INSTILLING)) {
+				ItemStack output = recipe.value().getResult(SpectrumCommon.minecraftServer.getRegistryManager());
 				if (output.isOf(memoryItem) && !encountered.contains(output.getNbt())) {
 					entries.add(output);
 					encountered.add(output.getNbt());

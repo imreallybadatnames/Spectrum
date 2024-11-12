@@ -134,7 +134,7 @@ public class SpectrumSkullBlockEntityRenderer implements BlockEntityRenderer<Spe
         // Spectrum
         builder.put(SpectrumSkullType.EGG_LAYING_WOOLY_PIG, new Pair<>(new EggLayingWoolyPigHeadModel(modelLoader.getModelPart(SpectrumModelLayers.EGG_LAYING_WOOLY_PIG_HEAD)), EggLayingWoolyPigEntityRenderer.TEXTURE));
         builder.put(SpectrumSkullType.ERASER, new Pair<>(new SpiderHeadModel(modelLoader.getModelPart(SpectrumModelLayers.ERASER_HEAD)), SpectrumCommon.locate("textures/entity/eraser/eraser_combined.png")));
-        builder.put(SpectrumSkullType.KINDLING, new Pair<>(new KindlingHeadModel(modelLoader.getModelPart(SpectrumModelLayers.KINDLING_HEAD)), KindlingVariant.DEFAULT.defaultTexture()));
+        builder.put(SpectrumSkullType.KINDLING, new Pair<>(new KindlingHeadModel(modelLoader.getModelPart(SpectrumModelLayers.KINDLING_HEAD)), KindlingVariant.DEFAULT.getDefaultTexture()));
         builder.put(SpectrumSkullType.LIZARD_BLACK, new Pair<>(new LizardHeadModel(modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD), modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD_FRILLS), InkColors.BLACK.getColorVec()), LizardHeadModel.HEAD_TEXTURE));
         builder.put(SpectrumSkullType.LIZARD_BLUE, new Pair<>(new LizardHeadModel(modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD), modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD_FRILLS), InkColors.BLUE.getColorVec()), LizardHeadModel.HEAD_TEXTURE));
         builder.put(SpectrumSkullType.LIZARD_BROWN, new Pair<>(new LizardHeadModel(modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD), modelLoader.getModelPart(SpectrumModelLayers.LIZARD_HEAD_FRILLS), InkColors.BROWN.getColorVec()), LizardHeadModel.HEAD_TEXTURE));

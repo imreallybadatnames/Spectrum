@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.memory;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
@@ -19,15 +20,23 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class MemoryBlock extends BlockWithEntity implements Waterloggable {
-	
+
+	public static final MapCodec<MemoryBlock> CODEC = createCodec(MemoryBlock::new);
+
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0D, 2.0D, 4.0D, 12.0D, 14.0D, 12.0D);
-	
+
 	public MemoryBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
 	}
-	
+
+	@Override
+	public MapCodec<? extends MemoryBlock> getCodec() {
+		return CODEC;
+	}
+
+
 	@Override
 	protected void appendProperties(StateManager.@NotNull Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
@@ -58,7 +67,6 @@ public class MemoryBlock extends BlockWithEntity implements Waterloggable {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.randomTick(state, world, pos, random);
 		
@@ -76,7 +84,6 @@ public class MemoryBlock extends BlockWithEntity implements Waterloggable {
 	
 	// drop the memory when broken
 	@Override
-	@SuppressWarnings("deprecation")
 	public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
 		BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
 		if (blockEntity instanceof MemoryBlockEntity memoryBlockEntity) {
@@ -87,13 +94,11 @@ public class MemoryBlock extends BlockWithEntity implements Waterloggable {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(@NotNull BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(@NotNull BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (state.get(WATERLOGGED)) {
 			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));

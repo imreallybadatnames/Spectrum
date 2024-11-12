@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.mob_head;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.util.math.*;
@@ -16,6 +17,12 @@ public class SpectrumWallSkullBlock extends WallSkullBlock {
 	public SpectrumWallSkullBlock(SpectrumSkullType skullType, Settings settings) {
 		super(skullType, settings);
 		MOB_WALL_HEADS.put(skullType, this);
+	}
+
+	@Override
+	public MapCodec<? extends SpectrumWallSkullBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	public static Block getMobWallHead(SpectrumSkullType skullType) {

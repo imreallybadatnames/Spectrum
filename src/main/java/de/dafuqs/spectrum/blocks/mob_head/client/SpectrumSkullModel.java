@@ -17,15 +17,15 @@ public abstract class SpectrumSkullModel extends SkullBlockEntityModel {
 		super();
 		this.head = root.getChild("head");
 	}
-	
-	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, float red, float green, float blue, float alpha) {
+
+	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, int color) {
 		float scale = getScale();
 		matrices.scale(scale, scale, scale);
-		this.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+		this.render(matrices, vertices, light, overlay, color);
 	}
-	
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		this.head.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		this.head.render(matrices, vertices, light, overlay, color);
 	}
 	
 	@Override

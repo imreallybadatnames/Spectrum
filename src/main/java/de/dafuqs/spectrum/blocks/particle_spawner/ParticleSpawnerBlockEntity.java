@@ -12,6 +12,7 @@ import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.text.*;
@@ -58,9 +59,9 @@ public class ParticleSpawnerBlockEntity extends BlockEntity implements ExtendedS
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	
@@ -77,14 +78,14 @@ public class ParticleSpawnerBlockEntity extends BlockEntity implements ExtendedS
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		tag.put("particle_config", this.configuration.toNbt());
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		this.initialized = false;
 		if (tag.contains("particle_config", NbtElement.COMPOUND_TYPE)) {
 			this.configuration = ParticleSpawnerConfiguration.fromNbt(tag.getCompound("particle_config"));

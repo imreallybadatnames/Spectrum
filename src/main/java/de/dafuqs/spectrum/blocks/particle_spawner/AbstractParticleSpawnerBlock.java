@@ -12,13 +12,13 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public abstract class AbstractParticleSpawnerBlock extends BlockWithEntity {
-	
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 13.0D, 15.0D);
-	
+
 	public AbstractParticleSpawnerBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
@@ -38,11 +38,11 @@ public abstract class AbstractParticleSpawnerBlock extends BlockWithEntity {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return world.isClient ? checkType(type, SpectrumBlockEntities.PARTICLE_SPAWNER, ParticleSpawnerBlockEntity::clientTick) : null;
+		return world.isClient ? validateTicker(type, SpectrumBlockEntities.PARTICLE_SPAWNER, ParticleSpawnerBlockEntity::clientTick) : null;
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {

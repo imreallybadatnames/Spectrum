@@ -12,6 +12,7 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -73,8 +74,8 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("MemoryItem", NbtElement.COMPOUND_TYPE)) {
@@ -83,8 +84,8 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	}
 	
 	@Override
-	protected void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		if (this.memoryItemStack != null) {
 			NbtCompound creatureSpawnCompound = new NbtCompound();
@@ -177,9 +178,9 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
-		this.writeNbt(nbtCompound);
+		this.writeNbt(nbtCompound, registryLookup);
 		return nbtCompound;
 	}
 	

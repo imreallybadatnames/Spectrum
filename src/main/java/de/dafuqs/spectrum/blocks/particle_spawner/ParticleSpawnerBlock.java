@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.particle_spawner;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.*;
@@ -12,18 +12,24 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class ParticleSpawnerBlock extends AbstractParticleSpawnerBlock implements RedstonePoweredBlock {
-	
+
+	public static final MapCodec<ParticleSpawnerBlock> CODEC = createCodec(ParticleSpawnerBlock::new);
+
 	public static final BooleanProperty POWERED = BooleanProperty.of("powered");
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 13.0D, 15.0D);
-	
+
 	public ParticleSpawnerBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getStateManager().getDefaultState().with(POWERED, false));
+	}
+
+	@Override
+	public MapCodec<? extends ParticleSpawnerBlock> getCodec() {
+		return CODEC;
 	}
 
 	@Override

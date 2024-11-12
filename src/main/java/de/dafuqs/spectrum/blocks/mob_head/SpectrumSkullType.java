@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.mob_head;
 
+import com.mojang.serialization.Codec;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -8,7 +9,8 @@ import net.minecraft.sound.*;
 import net.minecraft.util.*;
 
 public enum SpectrumSkullType implements SkullBlock.SkullType {
-    // Vanilla
+
+	// Vanilla
 	ALLAY(EntityType.ALLAY, SoundEvents.ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM.getId()),
 	AXOLOTL_BLUE(EntityType.AXOLOTL, SoundEvents.ENTITY_AXOLOTL_IDLE_WATER.getId()),
 	AXOLOTL_WILD(EntityType.AXOLOTL, SoundEvents.ENTITY_AXOLOTL_IDLE_WATER.getId()),
@@ -130,7 +132,9 @@ public enum SpectrumSkullType implements SkullBlock.SkullType {
 	MONSTROSITY(SpectrumEntityTypes.MONSTROSITY, SpectrumSoundEvents.ENTITY_MONSTROSITY_AMBIENT.getId()),
 	PRESERVATION_TURRET(SpectrumEntityTypes.PRESERVATION_TURRET, SpectrumSoundEvents.ENTITY_PRESERVATION_TURRET_AMBIENT.getId());
 
-    private final EntityType<?> entityType;
+	public static final Codec<SpectrumSkullType> CODEC = StringIdentifiable.createCodec(SpectrumSkullType::values);
+
+	private final EntityType<?> entityType;
 	private final Identifier noteBlockSound;
 	
 	SpectrumSkullType(EntityType<?> entityType, Identifier noteBlockSound) {
@@ -145,5 +149,9 @@ public enum SpectrumSkullType implements SkullBlock.SkullType {
 	public Identifier getNoteBlockSound() {
 		return this.noteBlockSound;
 	}
-    
+
+	@Override
+	public String asString() {
+		return name();
+	}
 }
