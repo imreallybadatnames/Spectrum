@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.geology;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.conditional.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.*;
@@ -19,8 +20,14 @@ import net.minecraft.world.*;
 
 public class AzuriteOreBlock extends CloakedOreBlock {
 
-    public AzuriteOreBlock(Settings settings, UniformIntProvider uniformIntProvider, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
-        super(settings, uniformIntProvider, cloakAdvancementIdentifier, cloakBlockState);
+    public AzuriteOreBlock(UniformIntProvider uniformIntProvider, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
+        super(uniformIntProvider, settings, cloakAdvancementIdentifier, cloakBlockState);
+    }
+
+    @Override
+    public MapCodec<? extends AzuriteOreBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
     }
 
     @Override
@@ -32,13 +39,15 @@ public class AzuriteOreBlock extends CloakedOreBlock {
     }
     
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         
         if (world.isClient() && this.isVisibleTo(player)) {
             ParticleHelper.playTriangulatedParticle(world, SpectrumParticleTypes.AZURE_AURA, 1, false, Vec3d.ZERO, 0, true, Vec3d.ofCenter(pos), new Vec3d(0, 0.08D + world.getRandom().nextDouble() * 0.04, 0));
             ParticleHelper.playParticleAroundBlockSides(world, SpectrumParticleTypes.AZURE_MOTE_SMALL, Vec3d.of(pos), Direction.values(), 3, Vec3d.ZERO);
         }
+
+        return state;
     }
 
     @Override

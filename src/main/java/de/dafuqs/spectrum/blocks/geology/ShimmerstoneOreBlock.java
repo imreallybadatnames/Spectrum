@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.geology;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.conditional.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -15,8 +16,14 @@ import net.minecraft.world.*;
 
 public class ShimmerstoneOreBlock extends CloakedOreBlock {
 
-    public ShimmerstoneOreBlock(Settings settings, UniformIntProvider uniformIntProvider, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
-        super(settings, uniformIntProvider, cloakAdvancementIdentifier, cloakBlockState);
+    public ShimmerstoneOreBlock(UniformIntProvider uniformIntProvider, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
+        super(uniformIntProvider, settings, cloakAdvancementIdentifier, cloakBlockState);
+    }
+
+    @Override
+    public MapCodec<? extends ShimmerstoneOreBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
     }
 
     @Override
@@ -56,12 +63,12 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient()) {
             SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, 3, Vec3d.of(pos), new Vec3d(0, 0.05, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
 
         }
-        super.onBreak(world, pos, state, player);
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
