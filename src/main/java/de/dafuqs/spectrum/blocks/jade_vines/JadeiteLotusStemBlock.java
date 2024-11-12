@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -50,7 +51,7 @@ public class JadeiteLotusStemBlock extends PlantBlock {
 			BlockState newState = state.with(STEM_PART, StemComponent.STEM);
 			world.setBlockState(pos, newState);
 			player.playSoundToPlayer(SoundEvents.ENTITY_MOOSHROOM_SHEAR, SoundCategory.BLOCKS, 1, 0.9F + player.getRandom().nextFloat() * 0.2F);
-			handStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
+			handStack.damage(1, player, LivingEntity.getSlotForHand(hand));
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(newState));
     
             return ItemActionResult.success(world.isClient());

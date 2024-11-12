@@ -79,7 +79,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 				if (canStartRiptide(player, stack)) {
 					riptide(world, player, getRiptideLevel(stack));
 				} else if (!world.isClient) {
-					stack.damage(1, player, (p) -> p.sendToolBreakStatus(user.getActiveHand()));
+					stack.damage(1, player, LivingEntity.getSlotForHand(user.getActiveHand()));
 					throwBident(stack, (ServerWorld) world, player);
 				}
 			}

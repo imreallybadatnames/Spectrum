@@ -48,7 +48,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 			int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
 			if (useTime % 10 == 0) {
 				if (InkPowered.tryDrainEnergy(player, RIPTIDE_COST)) {
-					stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));
+					stack.damage(1, user, LivingEntity.getSlotForHand(user.getActiveHand()));
 				} else {
 					user.stopUsingItem();
 					return;

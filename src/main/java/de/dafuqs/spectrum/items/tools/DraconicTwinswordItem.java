@@ -67,7 +67,7 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 		nbt.putUuid("lastTwinsword", twinsword.getUuid());
 		
 		if (!world.isClient())
-			stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));
+			stack.damage(1, user, LivingEntity.getSlotForHand(user.getActiveHand()));
 		
 		
 		super.onStoppedUsing(stack, world, user, remainingUseTicks);

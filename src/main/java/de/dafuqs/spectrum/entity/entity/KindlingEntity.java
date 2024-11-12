@@ -509,7 +509,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 				this.sheared(SoundCategory.PLAYERS);
 				this.emitGameEvent(GameEvent.SHEAR, player);
 				if (!this.getWorld().isClient) {
-					handStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
+					handStack.damage(1, player, LivingEntity.getSlotForHand(hand));
 				}
 			}
 			

@@ -30,7 +30,7 @@ public class GemstoneArmorItem extends ArmorItem implements ArmorWithHitEffect {
 		targetEntity.getWorld().playSound(null, targetEntity.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_HIT, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		targetEntity.getWorld().playSound(null, targetEntity.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		
-		itemStack.damage(2, targetEntity, (e) -> e.sendEquipmentBreakStatus(type.getEquipmentSlot()));
+		itemStack.damage(2, targetEntity, type.getEquipmentSlot());
 	}
 
 	@Override

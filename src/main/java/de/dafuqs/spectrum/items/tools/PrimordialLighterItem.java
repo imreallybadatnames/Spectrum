@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -64,9 +65,7 @@ public class PrimordialLighterItem extends FlintAndSteelItem implements Creative
 			ItemStack stack = context.getStack();
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				Criteria.PLACED_BLOCK.trigger(serverPlayerEntity, blockOnSide, stack);
-				stack.damage(1, world, serverPlayerEntity, (p) -> {
-					p.sendToolBreakStatus(context.getHand());
-				});
+				stack.damage(1, serverPlayerEntity, LivingEntity.getSlotForHand(context.getHand()));
 			}
 			
 			return ActionResult.success(world.isClient());

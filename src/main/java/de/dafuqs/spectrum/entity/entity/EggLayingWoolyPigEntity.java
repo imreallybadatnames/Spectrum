@@ -71,7 +71,7 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 			if (!world.isClient() && this.isShearable()) {
 				this.sheared(SoundCategory.PLAYERS);
 				this.emitGameEvent(GameEvent.SHEAR, player);
-				handStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
+				handStack.damage(1, player, LivingEntity.getSlotForHand(hand)));
 				return ActionResult.SUCCESS;
 			} else {
 				return ActionResult.CONSUME;

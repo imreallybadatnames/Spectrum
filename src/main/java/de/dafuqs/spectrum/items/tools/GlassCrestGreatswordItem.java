@@ -86,7 +86,7 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 			int groundSlamStrength = getGroundSlamStrength(stack);
 			if (groundSlamStrength > 0) {
 				performGroundSlam(world, user.getPos(), user, groundSlamStrength);
-				stack.damage(1, user, (p) -> p.sendToolBreakStatus(user.getActiveHand()));
+				stack.damage(1, user, LivingEntity.getSlotForHand(user.getActiveHand()));
 			}
 		}
 		

@@ -70,7 +70,7 @@ public abstract class ParryingSwordItem extends SwordItem implements ExtendedIte
 		if (usedTime > 1) {
 			player.getItemCooldownManager().set(this, Math.max(usedTime, 10));
 		}
-		stack.damage(1, player, p -> p.sendToolBreakStatus(player.getActiveHand()));
+		stack.damage(1, player, LivingEntity.getSlotForHand(player.getActiveHand()));
 	}
 
 	@Override

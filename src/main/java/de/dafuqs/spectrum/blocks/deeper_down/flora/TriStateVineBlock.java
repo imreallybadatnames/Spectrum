@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -51,7 +52,7 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
                 return ItemActionResult.FAIL;
 
             if (!creative)
-                handStack.damage(1, player, p -> p.sendToolBreakStatus(hand));
+                handStack.damage(1, player, LivingEntity.getSlotForHand(hand));
 
             reference.setProperty(LIFE_STAGE, LifeStage.MATURE);
             reference.update(world);

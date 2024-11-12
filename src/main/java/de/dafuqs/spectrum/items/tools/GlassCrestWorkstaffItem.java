@@ -46,7 +46,7 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
                     user.playSoundToPlayer(SpectrumSoundEvents.LIGHT_CRYSTAL_RING, SoundCategory.PLAYERS, 0.5F, 0.75F + user.getRandom().nextFloat());
                     MiningProjectileEntity.shoot(world, user, user.getStackInHand(hand));
                 }
-                stack.damage(2, user, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+                stack.damage(2, user, EquipmentSlot.MAINHAND);
                 
                 return TypedActionResult.consume(stack);
             } else {

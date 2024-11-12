@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.compat.gofish.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -33,7 +34,7 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 		if (playerEntityAccessor.getSpectrumBobber() != null) {
 			if (!world.isClient) {
 				int damage = playerEntityAccessor.getSpectrumBobber().use(itemStack);
-				itemStack.damage(damage, world, user, p -> p.sendToolBreakStatus(hand));
+				itemStack.damage(damage, user, LivingEntity.getSlotForHand(hand));
 			}
 			
 			world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));

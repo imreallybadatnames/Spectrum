@@ -23,7 +23,7 @@ public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 		// Break the tool if it is used without the voiding enchantment
 		// Otherwise this would be a VERY cheap early game diamond tier tool
 		if (!world.isClient && !EnchantmentHelper.get(stack).containsKey(SpectrumEnchantments.VOIDING)) {
-			stack.damage(5000, miner, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+			stack.damage(5000, miner, EquipmentSlot.MAINHAND);
 		}
 		
 		return true;

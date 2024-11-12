@@ -109,7 +109,7 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
 				for (ItemStack stack : JadeVinePlantBlock.getHarvestedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), player, player.getMainHandStack(), SpectrumLootTables.SAWBLADE_HOLLY_SHEARING)) {
                     dropStack(world, pos, stack);
                 }
-                handStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
+                handStack.damage(1, player, LivingEntity.getSlotForHand(hand));
             }
             
             BlockState newState = state.with(AGE, state.get(AGE) - 1);
