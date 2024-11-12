@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.spirit_instiller;
 
 import com.klikli_dev.modonomicon.api.multiblock.*;
 import com.klikli_dev.modonomicon.client.render.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -20,10 +21,18 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class SpiritInstillerBlock extends InWorldInteractionBlock {
+
+	public static final MapCodec<SpiritInstillerBlock> CODEC = createCodec(SpiritInstillerBlock::new);
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
-	
+
 	public SpiritInstillerBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends SpiritInstillerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	public static void clearCurrentlyRenderedMultiBlock(World world) {
@@ -82,11 +91,7 @@ public class SpiritInstillerBlock extends InWorldInteractionBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return checkType(type, SpectrumBlockEntities.SPIRIT_INSTILLER, SpiritInstillerBlockEntity::clientTick);
-		} else {
-			return checkType(type, SpectrumBlockEntities.SPIRIT_INSTILLER, SpiritInstillerBlockEntity::serverTick);
-		}
+		return validateTicker(type, SpectrumBlockEntities.SPIRIT_INSTILLER, world.isClient ? SpiritInstillerBlockEntity::clientTick : SpiritInstillerBlockEntity::serverTick);
 	}
 	
 	@Override
@@ -102,24 +107,23 @@ public class SpiritInstillerBlock extends InWorldInteractionBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (world.isClient) {
 			if (blockEntity instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 				verifyStructure(world, pos, null, spiritInstillerBlockEntity);
 			}
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			if (blockEntity instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 				if (verifyStructure(world, pos, (ServerPlayerEntity) player, spiritInstillerBlockEntity)) {
-					ItemStack handStack = player.getStackInHand(hand);
 					if (exchangeStack(world, pos, player, hand, handStack, spiritInstillerBlockEntity)) {
 						spiritInstillerBlockEntity.setOwner(player);
 						spiritInstillerBlockEntity.inventoryChanged();
 					}
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	

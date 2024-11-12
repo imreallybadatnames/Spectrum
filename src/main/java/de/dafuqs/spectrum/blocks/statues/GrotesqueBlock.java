@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.statues;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.*;
@@ -26,6 +26,12 @@ public class GrotesqueBlock extends HorizontalFacingBlock {
 		var min = (16 - width) / 2;
 		var max = width + min;
 		shape = Block.createCuboidShape(min, 0, min, max, height, max);
+	}
+
+	@Override
+	public MapCodec<? extends GrotesqueBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Nullable

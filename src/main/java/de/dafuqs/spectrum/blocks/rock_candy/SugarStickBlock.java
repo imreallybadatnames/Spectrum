@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.blocks.rock_candy;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.fluid.*;
@@ -46,6 +46,12 @@ public class SugarStickBlock extends Block implements RockCandy {
 		SUGAR_STICK_BLOCKS.put(this.rockCandyVariant, this);
 		this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0).with(LOGGED, FluidLogging.State.NOT_LOGGED));
 	}
+
+    @Override
+    public MapCodec<? extends SugarStickBlock> getCodec() {
+        //TODO: Make the codec
+        return null;
+    }
 	
 	@Override
 	public RockCandyVariant getVariant() {
@@ -64,7 +70,6 @@ public class SugarStickBlock extends Block implements RockCandy {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(BlockState state) {
 		return state.get(LOGGED).isOf(SpectrumFluids.LIQUID_CRYSTAL) ? SpectrumFluids.LIQUID_CRYSTAL.getStill(false) : super.getFluidState(state);
 	}
@@ -99,7 +104,6 @@ public class SugarStickBlock extends Block implements RockCandy {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.randomTick(state, world, pos, random);
 		
@@ -149,13 +153,12 @@ public class SugarStickBlock extends Block implements RockCandy {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		return direction == Direction.UP && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.spirit_sallow;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
@@ -7,9 +8,16 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class SpiritSallowLeavesBlock extends LeavesBlock {
-	
+
+	public static final MapCodec<SpiritSallowLeavesBlock> CODEC = createCodec(SpiritSallowLeavesBlock::new);
+
 	public SpiritSallowLeavesBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends SpiritSallowLeavesBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

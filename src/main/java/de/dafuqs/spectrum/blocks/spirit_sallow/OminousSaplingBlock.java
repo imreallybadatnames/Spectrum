@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.spirit_sallow;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
@@ -23,9 +24,16 @@ public class OminousSaplingBlock extends PlantBlock implements BlockEntityProvid
 	public OminousSaplingBlock(Settings settings) {
 		super(settings);
 	}
+
+	public static final MapCodec<OminousSaplingBlock> CODEC = createCodec(OminousSaplingBlock::new);
+
+	@Override
+	public MapCodec<? extends OminousSaplingBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!world.isClient()) {
 			OminousSaplingBlockEntity ominousSaplingBlockEntity = getBlockEntity(world, pos);
 			if (ominousSaplingBlockEntity != null) {

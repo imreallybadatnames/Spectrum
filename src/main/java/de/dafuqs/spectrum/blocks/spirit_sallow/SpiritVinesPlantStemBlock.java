@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.spirit_sallow;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -22,6 +23,12 @@ public class SpiritVinesPlantStemBlock extends AbstractPlantStemBlock implements
 		super(settings, Direction.DOWN, SHAPE, false, 0.0D);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(CRYSTALS, false));
 		this.gemstoneColor = gemstoneColor;
+	}
+
+	@Override
+	public MapCodec<? extends SpiritVinesPlantStemBlock> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 	
 	@Override
@@ -70,12 +77,12 @@ public class SpiritVinesPlantStemBlock extends AbstractPlantStemBlock implements
 	
 	@Override
 	@Environment(EnvType.CLIENT)
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return new ItemStack(SpiritVine.getYieldItem(state));
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		return SpiritVine.pick(state, world, pos);
 	}
 	
@@ -86,13 +93,8 @@ public class SpiritVinesPlantStemBlock extends AbstractPlantStemBlock implements
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return false;
-	}
-	
-	@Override
-	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-		return true;
 	}
 	
 	@Override

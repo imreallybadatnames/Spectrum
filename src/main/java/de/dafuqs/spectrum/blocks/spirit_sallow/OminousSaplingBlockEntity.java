@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -35,8 +36,8 @@ public class OminousSaplingBlockEntity extends BlockEntity implements PlayerOwne
 	
 	// Serialize the BlockEntity
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		
 		if (this.ownerUUID != null) {
 			tag.putUuid("OwnerUUID", this.ownerUUID);
@@ -45,8 +46,8 @@ public class OminousSaplingBlockEntity extends BlockEntity implements PlayerOwne
 	
 	// Deserialize the BlockEntity
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		
 		if (tag.contains("OwnerUUID")) {
 			this.ownerUUID = tag.getUuid("OwnerUUID");
