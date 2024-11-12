@@ -314,13 +314,13 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent TRIPLE_MEAT_POT_STEW = new FoodComponent.Builder()
-			.nutrition(20).saturationModifier(1.2F).meat()
+			.nutrition(20).saturationModifier(1.2F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100), 1.0F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 12000, 1), 1.0F)
 			.build();
 	
 	public static final FoodComponent DRAGONBONE_BROTH = new FoodComponent.Builder()
-			.nutrition(6).saturationModifier(0.6F).meat()
+			.nutrition(6).saturationModifier(0.6F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.MAGIC_ANNULATION, 2400, 1), 1.0F)
 			.build();
 	
@@ -372,11 +372,11 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent LIZARD_MEAT = new FoodComponent.Builder()
-			.nutrition(2).saturationModifier(0.6F).meat()
+			.nutrition(2).saturationModifier(0.6F)
 			.build();
 	
 	public static final FoodComponent COOKED_LIZARD_MEAT = new FoodComponent.Builder()
-			.nutrition(4).saturationModifier(1.6F).meat()
+			.nutrition(4).saturationModifier(1.6F)
 			.build();
 
 	public static final FoodComponent GOLDEN_BRISTLE_TEA = new FoodComponent.Builder()

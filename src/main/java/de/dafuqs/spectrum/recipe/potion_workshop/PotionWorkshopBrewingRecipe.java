@@ -12,6 +12,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.random.Random;
@@ -34,7 +35,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		add(new Pair<>(0.25F, 0.667F));
 	}};
 	
-	public static final Map<StatusEffect, StatusEffect> negativeToPositiveEffect = new HashMap<>() {{
+	public static final Map<RegistryEntry<StatusEffect>, RegistryEntry<StatusEffect>> negativeToPositiveEffect = new HashMap<>() {{
 		put(StatusEffects.BAD_OMEN, StatusEffects.HERO_OF_THE_VILLAGE);
 		put(StatusEffects.HUNGER, StatusEffects.SATURATION);
 		put(StatusEffects.INSTANT_DAMAGE, StatusEffects.INSTANT_HEALTH);

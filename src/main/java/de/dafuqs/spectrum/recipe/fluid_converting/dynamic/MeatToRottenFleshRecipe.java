@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.recipe.fluid_converting.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.*;
 
 public class MeatToRottenFleshRecipe extends DragonrotConvertingRecipe {
@@ -16,12 +17,12 @@ public class MeatToRottenFleshRecipe extends DragonrotConvertingRecipe {
 	}
 	
 	private static Ingredient getMeatsIngredient() {
-		return Ingredient.ofStacks(Registries.ITEM.stream().filter(item -> {
-			FoodComponent foodComponent = item.getFoodComponent();
-			return item != Items.ROTTEN_FLESH && foodComponent != null && foodComponent.isMeat();
-		}).map(ItemStack::new));
+		return Ingredient.ofStacks(Registries.ITEM.getOrCreateEntryList(ItemTags.MEAT)
+				.stream()
+				.filter(item -> item.value() == Items.ROTTEN_FLESH)
+				.map(ItemStack::new));
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SERIALIZER;

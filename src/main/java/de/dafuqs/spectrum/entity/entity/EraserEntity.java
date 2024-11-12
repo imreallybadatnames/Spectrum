@@ -15,6 +15,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -93,7 +94,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 		}
 		
 		if (entityData instanceof SwarmingSpiderData swarmingSpiderData) {
-			StatusEffect statusEffect = swarmingSpiderData.effect;
+			var statusEffect = swarmingSpiderData.effect;
 			if (statusEffect != null) {
 				this.addStatusEffect(swarmingSpiderData.getEffectInstance());
 			}
@@ -212,7 +213,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 		World world = this.getWorld();
 		Difficulty difficulty = this.getWorld().getDifficulty();
 		
-		StatusEffect statusEffect;
+		RegistryEntry<StatusEffect> statusEffect;
 		int amplifier = 0;
 		switch (world.random.nextInt(30)) {
 			case 1 -> {
@@ -329,7 +330,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 	}
 	
 	public static class SwarmingSpiderData extends SpiderData {
-		public StatusEffect effect;
+		public RegistryEntry<StatusEffect> effect;
 		public int amplifier = 0;
 		
 		public SwarmingSpiderData() {

@@ -10,17 +10,6 @@ public class SpectrumStatusEffect extends StatusEffect {
 		super(category, color);
 	}
 	
-	// no unused super() calls (performance)
-	@Override
-	public boolean canApplyUpdateEffect(int duration, int amplifier) {
-		return false;
-	}
-	
-	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-	
-	}
-	
 	@Override
 	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
 	

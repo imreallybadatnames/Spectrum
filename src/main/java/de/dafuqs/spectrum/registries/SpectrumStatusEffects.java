@@ -94,20 +94,20 @@ public class SpectrumStatusEffects {
 	 * Reduced health over time
 	 */
 	public static final RegistryEntry<StatusEffect> LIFE_DRAIN = registerStatusEffect("life_drain", new LifeDrainStatusEffect(StatusEffectCategory.HARMFUL, 0x222222)
-			.addAttributeModifier(EntityAttributes.GENERIC_MAX_HEALTH, LifeDrainStatusEffect.ATTRIBUTE_UUID_STRING, -1.0, EntityAttributeModifier.Operation.ADD_VALUE));
+			.addAttributeModifier(EntityAttributes.GENERIC_MAX_HEALTH, LifeDrainStatusEffect.ATTRIBUTE_ID, -1.0, EntityAttributeModifier.Operation.ADD_VALUE));
 	
 	/**
 	 * Gives loads of buffs, but the player will be handled as if they were playing hardcore
 	 */
 	public static final RegistryEntry<StatusEffect> ASCENSION = registerStatusEffect("ascension", new AscensionStatusEffect(StatusEffectCategory.BENEFICIAL, 0xdff9fc));
 	public static final RegistryEntry<StatusEffect> DIVINITY = registerStatusEffect("divinity", new DivinityStatusEffect(StatusEffectCategory.BENEFICIAL, 0xdff9fc)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, locate("effect.divinity.generic_attack_speed"), 0.1D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, locate("effect.divinity.generic_movement_speed"), 0.2D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, locate("effect.divinity.generic_attack_damage"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, locate("effect.divinity.generic_attack_knockback"), 1.0D, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, locate("effect.divinity.generic_armor"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, locate("effect.divinity.generic_armor_toughness"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, locate("effect.divinity.generic_knockback_resistance"), 1.0D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, locate("effect.divinity.attack_speed"), 0.1D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, locate("effect.divinity.movement_speed"), 0.2D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, locate("effect.divinity.attack_damage"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, locate("effect.divinity.attack_knockback"), 1.0D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, locate("effect.divinity.armor"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, locate("effect.divinity.armor_toughness"), 2.0D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, locate("effect.divinity.knockback_resistance"), 1.0D, EntityAttributeModifier.Operation.ADD_VALUE)
 			.addAttributeModifier(SpectrumEntityAttributes.MENTAL_PRESENCE, locate("effect.divinity.mental_presence"), 0.25, EntityAttributeModifier.Operation.ADD_VALUE));
 	
 	/**
@@ -116,10 +116,10 @@ public class SpectrumStatusEffects {
 	 * Stacking $(thing)Frenzy$() (applying the effect while they already have it) increases these effects amplitude
 	 */
 	public static final RegistryEntry<StatusEffect> FRENZY = registerStatusEffect("frenzy", new FrenzyStatusEffect(StatusEffectCategory.NEUTRAL, 0x990000)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, FrenzyStatusEffect.ATTACK_SPEED_UUID_STRING, FrenzyStatusEffect.ATTACK_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, FrenzyStatusEffect.ATTACK_DAMAGE_UUID_STRING, FrenzyStatusEffect.ATTACK_DAMAGE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, FrenzyStatusEffect.MOVEMENT_SPEED_UUID_STRING, FrenzyStatusEffect.MOVEMENT_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, FrenzyStatusEffect.KNOCKBACK_RESISTANCE_UUID_STRING, FrenzyStatusEffect.KNOCKBACK_RESISTANCE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, locate("effect.frenzy.attack_speed"), FrenzyStatusEffect.ATTACK_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, locate("effect.frenzy.attack_damage"), FrenzyStatusEffect.ATTACK_DAMAGE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, locate("effect.frenzy.movement_speed"), FrenzyStatusEffect.MOVEMENT_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, locate("effect.frenzy.knockback_resistance"), FrenzyStatusEffect.KNOCKBACK_RESISTANCE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
 			.addAttributeModifier(SpectrumEntityAttributes.MENTAL_PRESENCE, locate("effect.frenzy.mental_presence"), 5, EntityAttributeModifier.Operation.ADD_VALUE));
 	
 	/**

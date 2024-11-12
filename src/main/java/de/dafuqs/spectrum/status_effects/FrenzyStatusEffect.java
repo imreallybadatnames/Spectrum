@@ -1,27 +1,29 @@
 package de.dafuqs.spectrum.status_effects;
 
+import de.dafuqs.spectrum.SpectrumCommon;
 import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class FrenzyStatusEffect extends SpectrumStatusEffect implements StackableStatusEffect {
 	
-	public static final String ATTACK_SPEED_UUID_STRING = "7ee7c082-1134-4dc5-b0f9-dab92723f560";
+	public static final Identifier ATTACK_SPEED_ID = SpectrumCommon.locate("effect.frenzy.attack_speed");
 	public static final double ATTACK_SPEED_PER_STAGE = 0.1D;
 	
-	public static final String MOVEMENT_SPEED_UUID_STRING = "a215d081-48a9-4d6c-bdff-a153d4838324";
+	public static final Identifier MOVEMENT_SPEED_ID = "a215d081-48a9-4d6c-bdff-a153d4838324";
 	public static final double MOVEMENT_SPEED_PER_STAGE = 0.1D;
 	
-	public static final String ATTACK_DAMAGE_UUID_STRING = "061a2c27-eae8-4643-a0c0-0f0d195bc9b1";
+	public static final Identifier ATTACK_DAMAGE_UUID_STRING = "061a2c27-eae8-4643-a0c0-0f0d195bc9b1";
 	public static final double ATTACK_DAMAGE_PER_STAGE = 0.5D;
 	
-	public static final String KNOCKBACK_RESISTANCE_UUID_STRING = "b9d38c3a-75b5-462f-a624-eec9b987a5e2";
+	public static final Identifier KNOCKBACK_RESISTANCE_UUID_STRING = "b9d38c3a-75b5-462f-a624-eec9b987a5e2";
 	public static final double KNOCKBACK_RESISTANCE_PER_STAGE = 0.25D;
 	
 	public static final long REQUIRE_KILL_EVERY_X_TICKS = 200;
@@ -50,7 +52,7 @@ public class FrenzyStatusEffect extends SpectrumStatusEffect implements Stackabl
 	}
 	
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		long lastKillTick = LastKillComponent.getLastKillTick(entity);
 		long worldTime = entity.getWorld().getTime();
 		long lastKillTickDifference = worldTime - lastKillTick;
@@ -64,6 +66,8 @@ public class FrenzyStatusEffect extends SpectrumStatusEffect implements Stackabl
 		if (potency > 0 && entity.getHealth() > potency) {
 			entity.damage(SpectrumDamageTypes.sleep(entity.getWorld(), null), potency);
 		}
+
+		return true;
 	}
 	
 	public void onKill(LivingEntity livingEntity, int amplifier) {

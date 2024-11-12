@@ -6,6 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.*;
 
 public class SleepStatusEffect extends SpectrumStatusEffect {
@@ -81,7 +82,7 @@ public class SleepStatusEffect extends SpectrumStatusEffect {
         return 2 * (float) Math.pow(1 - potency, 2);
     }
     
-    public static @Nullable StatusEffect getStrongestSleepEffect(LivingEntity entity) {
+    public static @Nullable RegistryEntry<StatusEffect> getStrongestSleepEffect(LivingEntity entity) {
         if (entity.hasStatusEffect(SpectrumStatusEffects.FATAL_SLUMBER)) {
             return SpectrumStatusEffects.FATAL_SLUMBER;
         }
