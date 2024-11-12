@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -10,10 +11,17 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class NephriteBlossomBulbBlock extends PlantBlock implements Fertilizable {
-	
+
+	public static final MapCodec<NephriteBlossomBulbBlock> CODEC = createCodec(NephriteBlossomBulbBlock::new);
+
 	public NephriteBlossomBulbBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState());
+	}
+
+	@Override
+	public MapCodec<? extends NephriteBlossomBulbBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -22,7 +30,7 @@ public class NephriteBlossomBulbBlock extends PlantBlock implements Fertilizable
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumBlocks.NEPHRITE_BLOSSOM_BULB.asItem().getDefaultStack();
 	}
 	
@@ -34,7 +42,7 @@ public class NephriteBlossomBulbBlock extends PlantBlock implements Fertilizable
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 

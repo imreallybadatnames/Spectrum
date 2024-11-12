@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -13,17 +14,24 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class JadeiteFlowerBlock extends SpectrumFacingBlock {
-	
+
+	public static final MapCodec<JadeiteFlowerBlock> CODEC = createCodec(JadeiteFlowerBlock::new);
+
 	protected static final VoxelShape SHAPE_UP = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
 	protected static final VoxelShape SHAPE_DOWN = Block.createCuboidShape(0, 8, 0, 16, 16, 16);
 	protected static final VoxelShape SHAPE_NORTH = Block.createCuboidShape(0.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D);
 	protected static final VoxelShape SHAPE_SOUTH = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D);
 	protected static final VoxelShape SHAPE_EAST = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 	protected static final VoxelShape SHAPE_WEST = Block.createCuboidShape(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-	
+
 	public JadeiteFlowerBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState());
+	}
+
+	@Override
+	public MapCodec<? extends JadeiteFlowerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -59,12 +67,11 @@ public class JadeiteFlowerBlock extends SpectrumFacingBlock {
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumBlocks.JADEITE_LOTUS_BULB.asItem().getDefaultStack();
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!state.canPlaceAt(world, pos)) {
 			world.scheduleBlockTick(pos, this, 1);
@@ -85,7 +92,6 @@ public class JadeiteFlowerBlock extends SpectrumFacingBlock {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		if (!state.canPlaceAt(world, pos)) {

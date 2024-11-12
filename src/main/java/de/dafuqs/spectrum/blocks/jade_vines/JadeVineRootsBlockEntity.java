@@ -26,8 +26,8 @@ public class JadeVineRootsBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		if (nbt.contains("LastGrowthTick", NbtElement.LONG_TYPE)) {
 			this.lastGrowthTick = nbt.getLong("LastGrowthTick");
 		}
@@ -44,8 +44,8 @@ public class JadeVineRootsBlockEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		nbt.putLong("LastGrowthTick", this.lastGrowthTick);
 		nbt.putBoolean("WasExposedToSunlight", this.wasExposedToSunlight);
 		if (this.fenceBlockState != null) {
@@ -92,7 +92,7 @@ public class JadeVineRootsBlockEntity extends BlockEntity {
 	
 	// Called when the chunk is first loaded to initialize this be
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		NbtCompound nbtCompound = new NbtCompound();
 		if (this.fenceBlockState != null) {
 			nbtCompound.putString("FenceBlockIdentifier", Registries.BLOCK.getId(this.fenceBlockState.getBlock()).toString());

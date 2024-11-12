@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -15,12 +16,19 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class JadeVineBulbBlock extends Block implements JadeVine, NaturesStaffTriggered {
-	
+
+	public static final MapCodec<JadeVineBulbBlock> CODEC = createCodec(JadeVineBulbBlock::new);
+
 	public static final BooleanProperty DEAD = JadeVine.DEAD;
-	
+
 	public JadeVineBulbBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState((this.stateManager.getDefaultState()).with(DEAD, false));
+	}
+
+	@Override
+	public MapCodec<? extends JadeVineBulbBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -32,7 +40,6 @@ public class JadeVineBulbBlock extends Block implements JadeVine, NaturesStaffTr
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (!state.canPlaceAt(world, pos)) {
 			world.scheduleBlockTick(pos, this, 1);
@@ -53,7 +60,7 @@ public class JadeVineBulbBlock extends Block implements JadeVine, NaturesStaffTr
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumItems.GERMINATED_JADE_VINE_BULB.getDefaultStack();
 	}
 	

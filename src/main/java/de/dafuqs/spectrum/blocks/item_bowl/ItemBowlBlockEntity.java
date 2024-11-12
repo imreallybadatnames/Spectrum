@@ -16,6 +16,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -34,25 +35,25 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		if (!this.deserializeLootTable(nbt)) {
-			Inventories.readNbt(nbt, this.items);
+			Inventories.readNbt(nbt, this.items, registryLookup);
 		}
 	}
 
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		if (!this.serializeLootTable(nbt)) {
-			Inventories.writeNbt(nbt, this.items);
+			Inventories.writeNbt(nbt, this.items, registryLookup);
 		}
 	}
 
 	@Override
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
 		this.checkLootInteraction(null);
-		return super.toInitialChunkDataNbt();
+		return super.toInitialChunkDataNbt(registryLookup);
 	}
 	
 	public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, ItemBowlBlockEntity itemBowlBlockEntity) {

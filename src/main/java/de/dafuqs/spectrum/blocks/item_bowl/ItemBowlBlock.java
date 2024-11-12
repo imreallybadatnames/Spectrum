@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.item_bowl;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.enchanter.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
@@ -18,9 +19,11 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class ItemBowlBlock extends InWorldInteractionBlock {
-	
+
+	public static final MapCodec<ItemBowlBlock> CODEC = createCodec(ItemBowlBlock::new);
+
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D);
-	
+
 	// Positions to check on place / destroy to upgrade those blocks upgrade counts
 	private final List<Vec3i> possibleEnchanterOffsets = new ArrayList<>() {{
 		add(new Vec3i(5, 0, 3));
@@ -32,7 +35,7 @@ public class ItemBowlBlock extends InWorldInteractionBlock {
 		add(new Vec3i(5, 0, 3));
 		add(new Vec3i(5, 0, -3));
 	}};
-	
+
 	// Positions to check on place / destroy to upgrade those blocks upgrade counts
 	private final List<Vec3i> possibleSpiritInstillerOffsets = new ArrayList<>() {{
 		add(new Vec3i(0, -1, 2));
@@ -40,9 +43,14 @@ public class ItemBowlBlock extends InWorldInteractionBlock {
 		add(new Vec3i(2, -1, 0));
 		add(new Vec3i(-2, -1, 0));
 	}};
-	
+
 	public ItemBowlBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends ItemBowlBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -53,11 +61,7 @@ public class ItemBowlBlock extends InWorldInteractionBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		if (world.isClient) {
-			return checkType(type, SpectrumBlockEntities.ITEM_BOWL, ItemBowlBlockEntity::clientTick);
-		} else {
-			return null;
-		}
+		return world.isClient ? validateTicker(type, SpectrumBlockEntities.ITEM_BOWL, ItemBowlBlockEntity::clientTick) : null;
 	}
 	
 	@Override
@@ -95,18 +99,17 @@ public class ItemBowlBlock extends InWorldInteractionBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof ItemBowlBlockEntity itemBowlBlockEntity) {
-				ItemStack handStack = player.getStackInHand(hand);
 				if (exchangeStack(world, pos, player, hand, handStack, itemBowlBlockEntity)) {
 					updateConnectedMultiBlocks(world, pos);
 				}
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	

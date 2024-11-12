@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
 import net.minecraft.block.*;
@@ -19,11 +20,18 @@ import org.jetbrains.annotations.*;
 
 public class NephriteBlossomStemBlock extends PlantBlock {
 
+	public static final MapCodec<NephriteBlossomStemBlock> CODEC = createCodec(NephriteBlossomStemBlock::new);
+
 	public static final EnumProperty<StemComponent> STEM_PART = StemComponent.PROPERTY;
 
 	public NephriteBlossomStemBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState().with(STEM_PART, StemComponent.BASE));
+	}
+
+	@Override
+	public MapCodec<? extends NephriteBlossomStemBlock> getCodec() {
+		return CODEC;
 	}
 	
 	public static BlockState getStemVariant(boolean top) {
@@ -31,26 +39,23 @@ public class NephriteBlossomStemBlock extends PlantBlock {
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumBlocks.NEPHRITE_BLOSSOM_BULB.asItem().getDefaultStack();
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		var handStack = player.getStackInHand(hand);
-		
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (handStack.isIn(ConventionalItemTags.SHEARS) && state.get(STEM_PART) == StemComponent.BASE) {
 			BlockState newState = state.with(STEM_PART, StemComponent.STEM);
 			world.setBlockState(pos, newState);
-			player.playSound(SoundEvents.ENTITY_MOOSHROOM_SHEAR, SoundCategory.BLOCKS, 1, 0.9F + player.getRandom().nextFloat() * 0.2F);
+			player.playSoundToPlayer(SoundEvents.ENTITY_MOOSHROOM_SHEAR, SoundCategory.BLOCKS, 1, 0.9F + player.getRandom().nextFloat() * 0.2F);
 			handStack.damage(1, player, (p) -> p.sendToolBreakStatus(hand));
 			world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(newState));
     
-            return ActionResult.success(world.isClient());
+            return ItemActionResult.success(world.isClient());
         }
 
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUseWithItem(handStack, state, world, pos, player, hand, hit);
     }
 
     @Nullable
@@ -92,7 +97,6 @@ public class NephriteBlossomStemBlock extends PlantBlock {
 	}
 
     @Override
-	@SuppressWarnings("deprecation")
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.scheduledTick(state, world, pos, random);
 		if (!state.canPlaceAt(world, pos)) {

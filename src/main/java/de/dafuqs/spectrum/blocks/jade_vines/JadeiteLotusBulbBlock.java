@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -11,9 +12,16 @@ import net.minecraft.world.*;
 
 public class JadeiteLotusBulbBlock extends PlantBlock implements Fertilizable {
 
+	public static final MapCodec<JadeiteLotusBulbBlock> CODEC = createCodec(JadeiteLotusBulbBlock::new);
+
     public JadeiteLotusBulbBlock(Settings settings) {
         super(settings);
     }
+
+	@Override
+	public MapCodec<? extends JadeiteLotusBulbBlock> getCodec() {
+		return CODEC;
+	}
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -33,12 +41,12 @@ public class JadeiteLotusBulbBlock extends PlantBlock implements Fertilizable {
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumBlocks.JADEITE_LOTUS_BULB.asItem().getDefaultStack();
 	}
 	
 	@Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return true;
 	}
 	

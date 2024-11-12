@@ -1,14 +1,22 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class JadeVinePetalBlock extends Block {
-	
+
+	public static final MapCodec<JadeVinePetalBlock> CODEC = createCodec(JadeVinePetalBlock::new);
+
 	public JadeVinePetalBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends JadeVinePetalBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

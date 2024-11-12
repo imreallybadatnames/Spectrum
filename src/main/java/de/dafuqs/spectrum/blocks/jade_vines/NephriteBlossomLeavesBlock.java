@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.*;
@@ -18,34 +19,39 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 
 public class NephriteBlossomLeavesBlock extends LeavesBlock implements Fertilizable {
-    
+
+    public static final MapCodec<NephriteBlossomLeavesBlock> CODEC = createCodec(NephriteBlossomLeavesBlock::new);
+
     public static final IntProperty AGE = Properties.AGE_2;
     public static final int MAX_AGE = Properties.AGE_2_MAX;
-    
+
     public NephriteBlossomLeavesBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState().with(AGE, 0));
     }
+
+    @Override
+    public MapCodec<? extends NephriteBlossomLeavesBlock> getCodec() {
+        return CODEC;
+    }
     
     @Override
-	@SuppressWarnings("deprecation")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (state.get(AGE) == MAX_AGE) {
-			ItemStack handStack = player.getStackInHand(hand);
 			int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, handStack) / 2;
 			int count = 1 + world.getRandom().nextInt(fortuneLevel + 1);
 			player.getInventory().offerOrDrop(new ItemStack(SpectrumItems.GLASS_PEACH, count));
 	
 			world.setBlockState(pos, state.with(AGE, 0));
-			player.playSound(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1, 1 + player.getRandom().nextFloat() * 0.25F);
-			return ActionResult.success(world.isClient());
+			player.playSoundToPlayer(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1, 1 + player.getRandom().nextFloat() * 0.25F);
+			return ItemActionResult.success(world.isClient());
 		}
 	
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUseWithItem(handStack, state, world, pos, player, hand, hit);
 	}
 	
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return SpectrumBlocks.NEPHRITE_BLOSSOM_BULB.asItem().getDefaultStack();
 	}
 	
@@ -103,7 +109,7 @@ public class NephriteBlossomLeavesBlock extends LeavesBlock implements Fertiliza
     }
 
     @Override
-	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
 		return state.get(AGE) != 2;
 	}
 
