@@ -34,7 +34,7 @@ public class EnchanterCraftingCriterion extends AbstractCriterion<EnchanterCraft
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, experience));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate itemPredicate;
 		private final NumberRange.IntRange experienceRange;
 

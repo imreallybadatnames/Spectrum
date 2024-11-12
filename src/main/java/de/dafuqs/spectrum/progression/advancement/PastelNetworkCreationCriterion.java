@@ -37,7 +37,7 @@ public class PastelNetworkCreationCriterion extends AbstractCriterion<PastelNetw
 			network.getNodes(PastelNodeType.STORAGE).size(), network.getNodes(PastelNodeType.SENDER).size(), network.getNodes(PastelNodeType.GATHER).size(), network.getNodes(PastelNodeType.BUFFER).size()));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final NumberRange.IntRange totalNodes;
 		private final NumberRange.IntRange connectionNodes;

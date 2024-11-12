@@ -1,48 +1,35 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class ConfirmationButtonPressedCriterion extends AbstractCriterion<ConfirmationButtonPressedCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("confirmation_button_pressed");
 
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public ConfirmationButtonPressedCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate predicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		String confirmation = JsonHelper.getString(jsonObject, "confirmation");
-
-		return new ConfirmationButtonPressedCriterion.Conditions(predicate, confirmation);
-	}
-
 	public void trigger(ServerPlayerEntity player, String confirmation) {
 		this.trigger(player, (conditions) -> conditions.matches(confirmation));
 	}
-
-	public static class Conditions extends AbstractCriterionConditions {
-
-		private final String confirmation;
-
-		public Conditions(LootContextPredicate player, String confirmation) {
-			super(ConfirmationButtonPressedCriterion.ID, player);
-			this.confirmation = confirmation;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("confirmation", new JsonPrimitive(this.confirmation));
-			return jsonObject;
-		}
-
+	
+	@Override
+	public Codec<ConfirmationButtonPressedCriterion.Conditions> getConditionsCodec() {
+		return ConfirmationButtonPressedCriterion.Conditions.CODEC;
+	}
+	
+	public record Conditions(Optional<LootContextPredicate> player, String confirmation) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<ConfirmationButtonPressedCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(ConfirmationButtonPressedCriterion.Conditions::player),
+			Codec.STRING.fieldOf("confirmation").forGetter(ConfirmationButtonPressedCriterion.Conditions::confirmation)
+		).apply(instance, ConfirmationButtonPressedCriterion.Conditions::new));
+		
 		public boolean matches(String confirmation) {
 			return this.confirmation.equals(confirmation);
 		}

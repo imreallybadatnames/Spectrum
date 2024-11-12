@@ -28,7 +28,7 @@ public class PastelNodeUpgradeCriterion extends AbstractCriterion<PastelNodeUpgr
 		this.trigger(player, (c) -> c.matches(upgrade));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final ItemPredicate upgrade;
 

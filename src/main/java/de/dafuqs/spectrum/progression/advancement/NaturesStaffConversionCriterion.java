@@ -56,7 +56,7 @@ public class NaturesStaffConversionCriterion extends AbstractCriterion<NaturesSt
 		this.trigger(player, (conditions) -> conditions.matches(sourceBlockState, targetBlockState));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		@Nullable
 		private final Block sourceBlock;

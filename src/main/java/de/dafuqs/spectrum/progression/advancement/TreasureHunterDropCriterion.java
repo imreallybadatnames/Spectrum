@@ -29,7 +29,7 @@ public class TreasureHunterDropCriterion extends AbstractCriterion<TreasureHunte
 		this.trigger(player, (conditions) -> conditions.matches(droppedStack));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final ItemPredicate droppedItemPredicate;
 

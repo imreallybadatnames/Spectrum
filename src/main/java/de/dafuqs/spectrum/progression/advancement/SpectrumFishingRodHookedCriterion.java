@@ -55,7 +55,7 @@ public class SpectrumFishingRodHookedCriterion extends AbstractCriterion<Spectru
 		Criteria.FISHING_ROD_HOOKED.trigger(player, (conditions) -> conditions.matches(rod, hookedEntityOrBobberContext, fishingLoots));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate rod;
 		private final LootContextPredicate bobber;
 		private final LootContextPredicate hookedEntity;

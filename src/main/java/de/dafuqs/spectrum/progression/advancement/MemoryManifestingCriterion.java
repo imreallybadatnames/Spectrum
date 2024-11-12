@@ -28,7 +28,7 @@ public class MemoryManifestingCriterion extends AbstractCriterion<MemoryManifest
 		this.trigger(player, (conditions) -> conditions.matches(lootContext));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final LootContextPredicate manifestedEntity;
 
 		public Conditions(Identifier id, LootContextPredicate player, LootContextPredicate manifestedEntity) {

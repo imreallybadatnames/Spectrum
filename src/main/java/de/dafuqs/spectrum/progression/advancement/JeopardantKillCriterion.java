@@ -32,7 +32,7 @@ public class JeopardantKillCriterion extends AbstractCriterion<JeopardantKillCri
 		this.trigger(player, (conditions) -> conditions.test(player, lootContext));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final LootContextPredicate entity;
 		private final NumberRange.IntRange health;
 

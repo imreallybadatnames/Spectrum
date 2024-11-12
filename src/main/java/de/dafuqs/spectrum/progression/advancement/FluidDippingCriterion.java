@@ -33,7 +33,7 @@ public class FluidDippingCriterion extends AbstractCriterion<FluidDippingCriteri
 		return new FluidDippingCriterion.Conditions(playerPredicate, fluidPredicate, previousStackPredicate, targetStackPredicate);
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final FluidPredicate fluidPredicate;
 		private final ItemPredicate previousStackPredicate;

@@ -44,7 +44,7 @@ public class InkProjectileKillingCriterion extends AbstractCriterion<InkProjecti
 		this.trigger(player, (conditions) -> conditions.matches(list, set.size()));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final LootContextPredicate[] victims;
 		private final IntRange uniqueEntityTypes;
 

@@ -51,7 +51,7 @@ public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCrite
 		});
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final ItemPredicate[] itemPredicates;
 		private final NumberRange.IntRange totalCountRange;

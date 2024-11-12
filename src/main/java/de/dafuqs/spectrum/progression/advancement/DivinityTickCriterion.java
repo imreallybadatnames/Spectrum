@@ -34,7 +34,7 @@ public class DivinityTickCriterion extends AbstractCriterion<DivinityTickCriteri
 		this.trigger(player, (conditions) -> conditions.matches(player.isAlive(), player.getHealth()));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final Boolean isAlive;
 		private final NumberRange.FloatRange healthRange;

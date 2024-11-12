@@ -48,7 +48,7 @@ public class InertiaUsedCriterion extends AbstractCriterion<InertiaUsedCriterion
 		this.trigger(player, (conditions) -> conditions.matches(state, amount));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		@Nullable
 		private final Block block;
 		private final StatePredicate state;

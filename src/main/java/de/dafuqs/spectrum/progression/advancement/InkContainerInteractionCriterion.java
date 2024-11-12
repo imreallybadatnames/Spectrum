@@ -73,7 +73,7 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 		));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate itemPredicate;
 
 		private final LongRange blackRange;

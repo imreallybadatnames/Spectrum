@@ -28,7 +28,7 @@ public class SlimeSizingCriterion extends AbstractCriterion<SlimeSizingCriterion
 		this.trigger(player, (conditions) -> conditions.matches(size));
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 
 		private final NumberRange.IntRange sizeRange;
 

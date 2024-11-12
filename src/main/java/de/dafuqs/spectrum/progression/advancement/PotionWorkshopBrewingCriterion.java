@@ -71,7 +71,7 @@ public class PotionWorkshopBrewingCriterion extends AbstractCriterion<PotionWork
 		});
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate itemPredicate;
 		private final EntityEffectPredicate statusEffectsPredicate;
 		private final NumberRange.IntRange brewedCountRange;

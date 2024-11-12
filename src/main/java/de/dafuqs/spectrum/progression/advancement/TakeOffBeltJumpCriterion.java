@@ -54,7 +54,7 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 		});
 	}
 
-	public static class Conditions extends AbstractCriterionConditions {
+	public record Conditions implements AbstractCriterion.Conditions {
 		private final ItemPredicate itemPredicate;
 		private final NumberRange.IntRange chargesRange;
 
