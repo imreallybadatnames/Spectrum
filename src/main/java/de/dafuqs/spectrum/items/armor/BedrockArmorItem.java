@@ -11,6 +11,7 @@ import net.minecraft.client.render.entity.model.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -20,7 +21,7 @@ public class BedrockArmorItem extends ArmorItem implements Preenchanted {
     @Environment(EnvType.CLIENT)
     private BipedEntityModel<LivingEntity> model;
 
-    public BedrockArmorItem(ArmorMaterial material, ArmorItem.Type type, Settings settings) {
+    public BedrockArmorItem(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, Settings settings) {
         super(material, type, settings);
     }
 
@@ -32,11 +33,6 @@ public class BedrockArmorItem extends ArmorItem implements Preenchanted {
     @Override
     public ItemStack getDefaultStack() {
         return getDefaultEnchantedStack(this);
-    }
-
-    @Override
-    public boolean isDamageable() {
-        return false;
     }
 
     @Override
@@ -65,11 +61,13 @@ public class BedrockArmorItem extends ArmorItem implements Preenchanted {
     }
 
     // this takes the "unused" stack, so addons can mixin into it
+    @SuppressWarnings("unused")
     public RenderLayer getRenderLayer(ItemStack stack) {
         return RenderLayer.getEntitySolid(SpectrumModelLayers.BEDROCK_ARMOR_MAIN_ID);
     }
 
     @NotNull
+    @SuppressWarnings("unused")
     public Identifier getArmorTexture(ItemStack stack, EquipmentSlot slot) {
         return SpectrumCommon.locate("textures/armor/bedrock_armor_main.png");
     }

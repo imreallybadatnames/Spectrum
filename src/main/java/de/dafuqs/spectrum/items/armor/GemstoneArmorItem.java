@@ -2,23 +2,22 @@ package de.dafuqs.spectrum.items.armor;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class GemstoneArmorItem extends ArmorItem implements ArmorWithHitEffect {
 	
-	public GemstoneArmorItem(ArmorMaterial material, ArmorItem.Type type, Settings settings) {
+	public GemstoneArmorItem(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, Settings settings) {
 		super(material, type, settings);
 	}
 	
@@ -34,8 +33,8 @@ public class GemstoneArmorItem extends ArmorItem implements ArmorWithHitEffect {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		super.appendTooltip(stack, context, tooltip, type);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType tooltipType) {
+		super.appendTooltip(stack, context, tooltip, tooltipType);
 		addTooltip(tooltip, type);
 	}
 	
