@@ -12,18 +12,18 @@ import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
 public class InkContainerInteractionCriterion extends AbstractCriterion<InkContainerInteractionCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("ink_container_interaction");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("ink_container_interaction");
+
 	public static InkContainerInteractionCriterion.Conditions create(ItemPredicate itemPredicate, LongRange blackRange, LongRange blueRange, LongRange brownRange, LongRange cyanRange, LongRange grayRange, LongRange greenRange, LongRange lightBlueRange, LongRange lightGrayRange, LongRange limeRange, LongRange magentaRange, LongRange orangeRange, LongRange pinkRange, LongRange purpleRange, LongRange redRange, LongRange whiteRange, LongRange yellowRange, ColorPredicate changeColor, LongRange changeRange) {
 		return new InkContainerInteractionCriterion.Conditions(LootContextPredicate.EMPTY, itemPredicate, blackRange, blueRange, brownRange, cyanRange, grayRange, greenRange, lightBlueRange, lightGrayRange, limeRange, magentaRange, orangeRange, pinkRange, purpleRange, redRange, whiteRange, yellowRange, changeColor, changeRange);
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public InkContainerInteractionCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		LongRange blackRange = LongRange.fromJson(jsonObject.get("black"));
@@ -42,40 +42,40 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 		LongRange redRange = LongRange.fromJson(jsonObject.get("red"));
 		LongRange whiteRange = LongRange.fromJson(jsonObject.get("white"));
 		LongRange yellowRange = LongRange.fromJson(jsonObject.get("yellow"));
-		
+
 		ColorPredicate changeColor = ColorPredicate.fromJson(jsonObject.get("change_color"));
 		LongRange changeRange = LongRange.fromJson(jsonObject.get("change_range"));
 		ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
 		return new InkContainerInteractionCriterion.Conditions(extended, itemPredicate, blackRange, blueRange, brownRange, cyanRange, grayRange, greenRange, lightBlueRange, lightGrayRange, limeRange, magentaRange, orangeRange, pinkRange, purpleRange, redRange, whiteRange, yellowRange, changeColor, changeRange);
 	}
-	
+
 	public void trigger(ServerPlayerEntity player, ItemStack stack, InkStorage storage, InkColor changeColor, long changeAmount) {
 		this.trigger(player, (conditions) -> conditions.matches(
-				stack,
-				storage.getEnergy(InkColors.BLACK),
-				storage.getEnergy(InkColors.BLUE),
-				storage.getEnergy(InkColors.BROWN),
-				storage.getEnergy(InkColors.CYAN),
-				storage.getEnergy(InkColors.GRAY),
-				storage.getEnergy(InkColors.GREEN),
-				storage.getEnergy(InkColors.LIGHT_BLUE),
-				storage.getEnergy(InkColors.LIGHT_GRAY),
-				storage.getEnergy(InkColors.LIME),
-				storage.getEnergy(InkColors.MAGENTA),
-				storage.getEnergy(InkColors.ORANGE),
-				storage.getEnergy(InkColors.PINK),
-				storage.getEnergy(InkColors.PURPLE),
-				storage.getEnergy(InkColors.RED),
-				storage.getEnergy(InkColors.WHITE),
-				storage.getEnergy(InkColors.YELLOW),
-				changeColor,
-				changeAmount
+			stack,
+			storage.getEnergy(InkColors.BLACK),
+			storage.getEnergy(InkColors.BLUE),
+			storage.getEnergy(InkColors.BROWN),
+			storage.getEnergy(InkColors.CYAN),
+			storage.getEnergy(InkColors.GRAY),
+			storage.getEnergy(InkColors.GREEN),
+			storage.getEnergy(InkColors.LIGHT_BLUE),
+			storage.getEnergy(InkColors.LIGHT_GRAY),
+			storage.getEnergy(InkColors.LIME),
+			storage.getEnergy(InkColors.MAGENTA),
+			storage.getEnergy(InkColors.ORANGE),
+			storage.getEnergy(InkColors.PINK),
+			storage.getEnergy(InkColors.PURPLE),
+			storage.getEnergy(InkColors.RED),
+			storage.getEnergy(InkColors.WHITE),
+			storage.getEnergy(InkColors.YELLOW),
+			changeColor,
+			changeAmount
 		));
 	}
-	
+
 	public static class Conditions extends AbstractCriterionConditions {
 		private final ItemPredicate itemPredicate;
-		
+
 		private final LongRange blackRange;
 		private final LongRange blueRange;
 		private final LongRange brownRange;
@@ -92,14 +92,14 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 		private final LongRange redRange;
 		private final LongRange whiteRange;
 		private final LongRange yellowRange;
-		
+
 		private final ColorPredicate changeColor;
 		private final LongRange changeRange;
-		
+
 		public Conditions(LootContextPredicate player, ItemPredicate itemPredicate, LongRange blackRange, LongRange blueRange, LongRange brownRange, LongRange cyanRange, LongRange grayRange, LongRange greenRange, LongRange lightBlueRange, LongRange lightGrayRange, LongRange limeRange, LongRange magentaRange, LongRange orangeRange, LongRange pinkRange, LongRange purpleRange, LongRange redRange, LongRange whiteRange, LongRange yellowRange, ColorPredicate changeColor, LongRange changeRange) {
 			super(ID, player);
 			this.itemPredicate = itemPredicate;
-			
+
 			this.blackRange = blackRange;
 			this.blueRange = blueRange;
 			this.brownRange = brownRange;
@@ -116,11 +116,11 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 			this.redRange = redRange;
 			this.whiteRange = whiteRange;
 			this.yellowRange = yellowRange;
-			
+
 			this.changeColor = changeColor;
 			this.changeRange = changeRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -145,16 +145,16 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 			jsonObject.addProperty("change_range", this.changeRange.toString());
 			return jsonObject;
 		}
-		
+
 		public boolean matches(ItemStack stack, long black, long blue, long brown, long cyan, long gray, long green, long lightBlue, long lightGray, long lime, long magenta, long o, long pink, long purple, long red, long white, long yellow, InkColor color, long change) {
 			return itemPredicate.test(stack) && changeRange.test(change) && changeColor.test(color)
-					&& blackRange.test(black) && blueRange.test(blue) && brownRange.test(brown)
-					&& cyanRange.test(cyan) && grayRange.test(gray) && greenRange.test(green)
-					&& lightBlueRange.test(lightBlue) && lightGrayRange.test(lightGray) && limeRange.test(lime)
-					&& magentaRange.test(magenta) && orangeRange.test(o) && pinkRange.test(pink)
-					&& purpleRange.test(purple) && redRange.test(red) && whiteRange.test(white) && yellowRange.test(yellow);
-			
+				&& blackRange.test(black) && blueRange.test(blue) && brownRange.test(brown)
+				&& cyanRange.test(cyan) && grayRange.test(gray) && greenRange.test(green)
+				&& lightBlueRange.test(lightBlue) && lightGrayRange.test(lightGray) && limeRange.test(lime)
+				&& magentaRange.test(magenta) && orangeRange.test(o) && pinkRange.test(pink)
+				&& purpleRange.test(purple) && redRange.test(red) && whiteRange.test(white) && yellowRange.test(yellow);
+
 		}
 	}
-	
+
 }

@@ -16,9 +16,9 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("trinket_change");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("trinket_change");
+
 	@Override
 	public Identifier getId() {
 		return ID;
@@ -50,37 +50,37 @@ public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCrite
 			return false;
 		});
 	}
-	
+
 	public static class Conditions extends AbstractCriterionConditions {
-		
+
 		private final ItemPredicate[] itemPredicates;
 		private final NumberRange.IntRange totalCountRange;
 		private final NumberRange.IntRange spectrumCountRange;
-		
+
 		public Conditions(LootContextPredicate playerPredicate, ItemPredicate[] itemPredicates, NumberRange.IntRange totalCountRange, NumberRange.IntRange spectrumCountRange) {
 			super(TrinketChangeCriterion.ID, playerPredicate);
 			this.itemPredicates = itemPredicates;
 			this.totalCountRange = totalCountRange;
 			this.spectrumCountRange = spectrumCountRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
-			
+
 			if (this.itemPredicates.length > 0) {
 				JsonArray jsonObject2 = new JsonArray();
 				for (ItemPredicate itemPredicate : this.itemPredicates) {
 					jsonObject2.add(itemPredicate.toJson());
 				}
-				
+
 				jsonObject.add("items", jsonObject2);
 			}
 			jsonObject.add("total_count", this.totalCountRange.toJson());
 			jsonObject.add("spectrum_count", this.spectrumCountRange.toJson());
 			return jsonObject;
 		}
-		
+
 		public boolean matches(List<ItemStack> trinketStacks, int totalCount, int spectrumCount) {
 			if (this.totalCountRange.test(totalCount) && this.spectrumCountRange.test(spectrumCount)) {
 				int i = this.itemPredicates.length;
@@ -96,12 +96,12 @@ public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCrite
 							requiredTrinkets.removeIf((item) -> item.test(trinketStack));
 						}
 					}
-					
+
 					return requiredTrinkets.isEmpty();
 				}
 			}
 			return false;
 		}
 	}
-	
+
 }

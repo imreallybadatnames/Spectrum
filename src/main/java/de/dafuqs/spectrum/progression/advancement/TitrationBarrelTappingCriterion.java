@@ -14,18 +14,18 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class TitrationBarrelTappingCriterion extends AbstractCriterion<TitrationBarrelTappingCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("titration_barrel_tapping");
-	
+
+	public static final Identifier ID = SpectrumCommon.locate("titration_barrel_tapping");
+
 	public static TitrationBarrelTappingCriterion.Conditions create(ItemPredicate[] item, NumberRange.IntRange ingameDaysAgeRange, NumberRange.IntRange ingredientCountRange) {
 		return new TitrationBarrelTappingCriterion.Conditions(LootContextPredicate.EMPTY, item, ingameDaysAgeRange, ingredientCountRange);
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public TitrationBarrelTappingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		ItemPredicate[] tappedItemPredicates = ItemPredicate.deserializeAll(jsonObject.get("items"));
@@ -33,23 +33,23 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 		NumberRange.IntRange ingredientCountRange = NumberRange.IntRange.fromJson(jsonObject.get("ingredient_count"));
 		return new TitrationBarrelTappingCriterion.Conditions(extended, tappedItemPredicates, ingameDaysAgeRange, ingredientCountRange);
 	}
-	
+
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack, int ingameDaysAge, int ingredientCount) {
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, ingameDaysAge, ingredientCount));
 	}
-	
+
 	public static class Conditions extends AbstractCriterionConditions {
 		private final ItemPredicate[] tappedItemPredicates;
 		private final NumberRange.IntRange ingameDaysAgeRange;
 		private final NumberRange.IntRange ingredientCountRange;
-		
+
 		public Conditions(LootContextPredicate player, ItemPredicate[] tappedItemPredicates, NumberRange.IntRange ingameDaysAgeRange, NumberRange.IntRange ingredientCountRange) {
 			super(ID, player);
 			this.tappedItemPredicates = tappedItemPredicates;
 			this.ingameDaysAgeRange = ingameDaysAgeRange;
 			this.ingredientCountRange = ingredientCountRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -58,7 +58,7 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 			jsonObject.add("ingredient_count", this.ingredientCountRange.toJson());
 			return jsonObject;
 		}
-		
+
 		public boolean matches(ItemStack itemStack, int experience, int ingredientCount) {
 			if (this.ingameDaysAgeRange.test(experience) && this.ingredientCountRange.test(ingredientCount)) {
 				List<ItemPredicate> list = new ObjectArrayList<>(this.tappedItemPredicates);
@@ -75,5 +75,5 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 			}
 		}
 	}
-	
+
 }

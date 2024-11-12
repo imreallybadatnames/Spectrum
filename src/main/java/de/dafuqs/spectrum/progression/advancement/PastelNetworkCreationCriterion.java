@@ -12,13 +12,13 @@ import net.minecraft.util.*;
 
 public class PastelNetworkCreationCriterion extends AbstractCriterion<PastelNetworkCreationCriterion.Conditions> {
 
-	static final Identifier ID = SpectrumCommon.locate("pastel_network_creation");
-	
+	public static final Identifier ID = SpectrumCommon.locate("pastel_network_creation");
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public PastelNetworkCreationCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate predicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		NumberRange.IntRange totalNodes = NumberRange.IntRange.fromJson(jsonObject.get("total_nodes"));
@@ -34,7 +34,7 @@ public class PastelNetworkCreationCriterion extends AbstractCriterion<PastelNetw
 
 	public void trigger(ServerPlayerEntity player, ServerPastelNetwork network) {
 		this.trigger(player, (conditions) -> conditions.matches(network.getNodes(PastelNodeType.CONNECTION).size(), network.getNodes(PastelNodeType.PROVIDER).size(),
-				network.getNodes(PastelNodeType.STORAGE).size(), network.getNodes(PastelNodeType.SENDER).size(), network.getNodes(PastelNodeType.GATHER).size(), network.getNodes(PastelNodeType.BUFFER).size()));
+			network.getNodes(PastelNodeType.STORAGE).size(), network.getNodes(PastelNodeType.SENDER).size(), network.getNodes(PastelNodeType.GATHER).size(), network.getNodes(PastelNodeType.BUFFER).size()));
 	}
 
 	public static class Conditions extends AbstractCriterionConditions {
@@ -57,7 +57,7 @@ public class PastelNetworkCreationCriterion extends AbstractCriterion<PastelNetw
 			this.gatherNodes = gatherNodes;
 			this.bufferNodes = bufferNodes;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);

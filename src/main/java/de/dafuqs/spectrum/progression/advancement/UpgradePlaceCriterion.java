@@ -14,18 +14,18 @@ import net.minecraft.util.math.*;
 import java.util.*;
 
 public class UpgradePlaceCriterion extends AbstractCriterion<UpgradePlaceCriterion.Conditions> {
-	
-	static final Identifier ID = SpectrumCommon.locate("upgrade_place");
+
+	public static final Identifier ID = SpectrumCommon.locate("upgrade_place");
 
 	public static UpgradePlaceCriterion.Conditions create(BlockPredicate blockPredicate, NumberRange.IntRange countRange, NumberRange.IntRange speedRange, NumberRange.IntRange experienceRange, NumberRange.IntRange efficiencyRange, NumberRange.IntRange yieldRange) {
 		return new UpgradePlaceCriterion.Conditions(LootContextPredicate.EMPTY, blockPredicate, countRange, speedRange, experienceRange, efficiencyRange, yieldRange);
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return ID;
 	}
-	
+
 	@Override
 	public UpgradePlaceCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
 		BlockPredicate blockPredicate = BlockPredicate.fromJson(jsonObject.get("block"));
@@ -58,7 +58,7 @@ public class UpgradePlaceCriterion extends AbstractCriterion<UpgradePlaceCriteri
 			this.efficiencyRange = efficiencyRange;
 			this.yieldRange = yieldRange;
 		}
-		
+
 		@Override
 		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
 			JsonObject jsonObject = super.toJson(predicateSerializer);
@@ -73,12 +73,12 @@ public class UpgradePlaceCriterion extends AbstractCriterion<UpgradePlaceCriteri
 
 		public boolean matches(ServerWorld world, BlockPos pos, int upgradeCount, Map<Upgradeable.UpgradeType, Integer> upgradeModifiers) {
 			return this.blockPredicate.test(world, pos)
-					&& this.countRange.test(upgradeCount)
-					&& this.speedRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.SPEED))
-					&& this.experienceRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EXPERIENCE))
-					&& this.efficiencyRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EFFICIENCY))
-					&& this.yieldRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.YIELD));
+				&& this.countRange.test(upgradeCount)
+				&& this.speedRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.SPEED))
+				&& this.experienceRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EXPERIENCE))
+				&& this.efficiencyRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EFFICIENCY))
+				&& this.yieldRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.YIELD));
 		}
 	}
-	
+
 }
