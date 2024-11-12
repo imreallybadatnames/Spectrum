@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -21,8 +22,8 @@ public class PlayerDetectorBlockEntity extends BlockEntity implements PlayerOwne
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound tag) {
-		super.writeNbt(tag);
+	public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(tag, registryLookup);
 		
 		if (this.ownerUUID != null) {
 			tag.putUuid("UUID", this.ownerUUID);
@@ -33,8 +34,8 @@ public class PlayerDetectorBlockEntity extends BlockEntity implements PlayerOwne
 	}
 	
 	@Override
-	public void readNbt(NbtCompound tag) {
-		super.readNbt(tag);
+	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(tag, registryLookup);
 		
 		if (tag.contains("UUID")) {
 			this.ownerUUID = tag.getUuid("UUID");

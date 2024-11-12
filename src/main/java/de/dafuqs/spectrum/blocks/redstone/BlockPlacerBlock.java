@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import net.minecraft.block.*;
@@ -19,9 +20,16 @@ import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
 
 public class BlockPlacerBlock extends RedstoneInteractionBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<BlockPlacerBlock> CODEC = createCodec(BlockPlacerBlock::new);
+
 	public BlockPlacerBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends BlockPlacerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -30,7 +38,7 @@ public class BlockPlacerBlock extends RedstoneInteractionBlock implements BlockE
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {

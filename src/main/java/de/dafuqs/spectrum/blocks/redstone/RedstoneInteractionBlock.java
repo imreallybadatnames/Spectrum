@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.*;
 import net.minecraft.item.*;
@@ -9,13 +10,20 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
 public class RedstoneInteractionBlock extends Block {
-	
+
+	public static final MapCodec<RedstoneInteractionBlock> CODEC = createCodec(RedstoneInteractionBlock::new);
+
 	public static final BooleanProperty TRIGGERED = Properties.TRIGGERED;
-	public static final EnumProperty<JigsawOrientation> ORIENTATION = Properties.ORIENTATION;
-	
+	public static final EnumProperty<Orientation> ORIENTATION = Properties.ORIENTATION;
+
 	public RedstoneInteractionBlock(Settings settings) {
 		super(settings);
-		this.setDefaultState(this.stateManager.getDefaultState().with(ORIENTATION, JigsawOrientation.EAST_UP).with(TRIGGERED, false));
+		this.setDefaultState(this.stateManager.getDefaultState().with(ORIENTATION, Orientation.EAST_UP).with(TRIGGERED, false));
+	}
+
+	@Override
+	public MapCodec<? extends RedstoneInteractionBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -48,7 +56,7 @@ public class RedstoneInteractionBlock extends Block {
 		};
 		
 		return this.getDefaultState()
-				.with(ORIENTATION, JigsawOrientation.byDirections(direction, direction2))
+				.with(ORIENTATION, Orientation.byDirections(direction, direction2))
 				.with(TRIGGERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
 	}
 	

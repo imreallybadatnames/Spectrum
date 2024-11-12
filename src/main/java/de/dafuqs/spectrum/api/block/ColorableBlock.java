@@ -29,8 +29,7 @@ public interface ColorableBlock {
         return getColor(state) == color;
     }
 
-    default boolean tryColorUsingStackInHand(World world, BlockPos pos, PlayerEntity player, Hand hand) {
-        ItemStack handStack = player.getStackInHand(hand);
+    default boolean tryColorUsingStackInHand(ItemStack handStack, World world, BlockPos pos, PlayerEntity player, Hand hand) {
         Optional<DyeColor> itemInHandColor = ColorHelper.getDyeColorOfItemStack(handStack);
         if (itemInHandColor.isPresent()) {
             if (color(world, pos, itemInHandColor.get())) {

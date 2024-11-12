@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
@@ -23,12 +24,19 @@ import org.jetbrains.annotations.*;
 
 public class RedstoneTransceiverBlock extends AbstractRedstoneGateBlock implements BlockEntityProvider, ColorableBlock {
 
+	public static final MapCodec<RedstoneTransceiverBlock> CODEC = createCodec(RedstoneTransceiverBlock::new);
+
 	public static final BooleanProperty SENDER = BooleanProperty.of("sender");
 	public static final EnumProperty<DyeColor> CHANNEL = EnumProperty.of("channel", DyeColor.class);
 
 	public RedstoneTransceiverBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(SENDER, true).with(CHANNEL, DyeColor.RED));
+	}
+
+	@Override
+	public MapCodec<? extends RedstoneTransceiverBlock> getCodec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -43,14 +51,14 @@ public class RedstoneTransceiverBlock extends AbstractRedstoneGateBlock implemen
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (world.isClient) {
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		} else {
-			if (!tryColorUsingStackInHand(world, pos, player, hand)) {
+			if (!tryColorUsingStackInHand(handStack, world, pos, player, hand)) {
 				toggleSendingMode(world, pos, state);
 			}
-			return ActionResult.CONSUME;
+			return ItemActionResult.CONSUME;
 		}
 	}
 	

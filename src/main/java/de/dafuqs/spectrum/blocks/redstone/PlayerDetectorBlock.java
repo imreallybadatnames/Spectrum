@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
@@ -15,9 +16,16 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class PlayerDetectorBlock extends DetectorBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<PlayerDetectorBlock> CODEC = createCodec(PlayerDetectorBlock::new);
+
 	public PlayerDetectorBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends PlayerDetectorBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -31,7 +39,7 @@ public class PlayerDetectorBlock extends DetectorBlock implements BlockEntityPro
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
@@ -43,7 +51,7 @@ public class PlayerDetectorBlock extends DetectorBlock implements BlockEntityPro
 				}
 				return ActionResult.CONSUME;
 			} else {
-				return super.onUse(state, world, pos, player, hand, hit);
+				return super.onUse(state, world, pos, player, hit);
 			}
 		}
 	}

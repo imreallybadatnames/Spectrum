@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -10,12 +11,19 @@ import net.minecraft.util.math.random.*;
 import org.jetbrains.annotations.*;
 
 public class RedstoneGravityBlock extends FallingBlock {
-	
+
+	public static final MapCodec<RedstoneGravityBlock> CODEC = createCodec(RedstoneGravityBlock::new);
+
 	public static final BooleanProperty UNSTABLE = BooleanProperty.of("unstable");
-	
+
 	public RedstoneGravityBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getStateManager().getDefaultState().with(UNSTABLE, false));
+	}
+
+	@Override
+	public MapCodec<? extends RedstoneGravityBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

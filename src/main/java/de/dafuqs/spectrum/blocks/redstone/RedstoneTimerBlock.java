@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.particle.*;
@@ -18,13 +19,20 @@ import net.minecraft.world.tick.*;
 import org.jetbrains.annotations.*;
 
 public class RedstoneTimerBlock extends AbstractRedstoneGateBlock {
-	
+
+	public static final MapCodec<RedstoneTimerBlock> CODEC = createCodec(RedstoneTimerBlock::new);
+
 	public static final EnumProperty<TimingStep> ACTIVE_TIME = EnumProperty.of("active_time", TimingStep.class);
 	public static final EnumProperty<TimingStep> INACTIVE_TIME = EnumProperty.of("inactive_time", TimingStep.class);
-	
+
 	public RedstoneTimerBlock(AbstractBlock.Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(POWERED, false).with(ACTIVE_TIME, TimingStep.OneSecond).with(INACTIVE_TIME, TimingStep.OneSecond));
+	}
+
+	@Override
+	public MapCodec<? extends RedstoneTimerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -37,7 +45,7 @@ public class RedstoneTimerBlock extends AbstractRedstoneGateBlock {
 	}
 	
 	@Override
-	public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, @NotNull PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, @NotNull PlayerEntity player, BlockHitResult hit) {
 		if (!player.getAbilities().allowModifyWorld) {
 			return ActionResult.PASS;
 		} else {

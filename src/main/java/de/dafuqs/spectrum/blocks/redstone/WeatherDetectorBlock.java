@@ -1,14 +1,22 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.*;
 
 public class WeatherDetectorBlock extends DetectorBlock {
-	
+
+	public static final MapCodec<WeatherDetectorBlock> CODEC = createCodec(WeatherDetectorBlock::new);
+
 	public WeatherDetectorBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends WeatherDetectorBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

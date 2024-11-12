@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
@@ -9,9 +10,16 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class ItemDetectorBlock extends DetectorBlock {
-	
+
+	public static final MapCodec<ItemDetectorBlock> CODEC = createCodec(ItemDetectorBlock::new);
+
 	public ItemDetectorBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends ItemDetectorBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override

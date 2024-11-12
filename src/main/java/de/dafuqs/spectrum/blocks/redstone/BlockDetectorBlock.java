@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -7,13 +8,19 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class BlockDetectorBlock extends RedstoneInteractionBlock {
-	
+
+	public static final MapCodec<BlockDetectorBlock> CODEC = createCodec(BlockDetectorBlock::new);
+
 	public BlockDetectorBlock(AbstractBlock.Settings settings) {
 		super(settings);
 	}
+
+	@Override
+	public MapCodec<? extends BlockDetectorBlock> getCodec() {
+		return CODEC;
+	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
 		if (direction != Direction.DOWN
 				&& state.get(ORIENTATION).getFacing() == direction

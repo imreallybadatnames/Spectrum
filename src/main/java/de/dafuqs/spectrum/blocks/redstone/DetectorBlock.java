@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.server.world.*;
@@ -13,19 +14,18 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public abstract class DetectorBlock extends Block {
-	
+
 	public static final IntProperty POWER = Properties.POWER;
 	public static final BooleanProperty INVERTED = Properties.INVERTED;
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
-	
+
 	public DetectorBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(((this.stateManager.getDefaultState()).with(POWER, 0)).with(INVERTED, false));
 	}
-	
+
 	@Override
-	@SuppressWarnings("deprecation")
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (player.canModifyBlocks()) {
 			if (world.isClient) {
 				return ActionResult.SUCCESS;
@@ -36,7 +36,7 @@ public abstract class DetectorBlock extends Block {
 				return ActionResult.CONSUME;
 			}
 		} else {
-			return super.onUse(state, world, pos, player, hand, hit);
+			return super.onUse(state, world, pos, player, hit);
 		}
 	}
 	

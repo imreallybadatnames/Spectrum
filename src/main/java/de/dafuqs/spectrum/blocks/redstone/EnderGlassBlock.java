@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.item.*;
@@ -11,12 +12,19 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class EnderGlassBlock extends Block {
-	
+
+	public static final MapCodec<EnderGlassBlock> CODEC = createCodec(EnderGlassBlock::new);
+
 	public static final EnumProperty<TransparencyState> TRANSPARENCY_STATE = EnumProperty.of("transparency_state", TransparencyState.class);
-	
+
 	public EnderGlassBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getStateManager().getDefaultState().with(TRANSPARENCY_STATE, TransparencyState.SOLID));
+	}
+
+	@Override
+	public MapCodec<? extends EnderGlassBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
@@ -25,7 +33,6 @@ public class EnderGlassBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
 		return (state.get(EnderGlassBlock.TRANSPARENCY_STATE) != TransparencyState.SOLID) && stateFrom.isOf(this) || super.isSideInvisible(state, stateFrom, direction);
 	}
@@ -46,7 +53,7 @@ public class EnderGlassBlock extends Block {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return (state.get(TRANSPARENCY_STATE) == TransparencyState.NO_COLLISION);
 	}
 	
@@ -66,7 +73,6 @@ public class EnderGlassBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
 		if ((state.get(TRANSPARENCY_STATE) == TransparencyState.SOLID)) {
 			return world.getMaxLightLevel();
@@ -91,7 +97,6 @@ public class EnderGlassBlock extends Block {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		if (!world.isClient) {
 			BlockState fromPosBlockState = world.getBlockState(fromPos);

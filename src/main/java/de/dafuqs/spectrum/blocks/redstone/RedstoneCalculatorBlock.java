@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
@@ -18,12 +19,19 @@ import net.minecraft.world.tick.*;
 import org.jetbrains.annotations.*;
 
 public class RedstoneCalculatorBlock extends AbstractRedstoneGateBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<RedstoneCalculatorBlock> CODEC = createCodec(RedstoneCalculatorBlock::new);
+
 	public static final EnumProperty<CalculationMode> CALCULATION_MODE = EnumProperty.of("calculation_mode", CalculationMode.class);
-	
+
 	public RedstoneCalculatorBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(POWERED, false).with(CALCULATION_MODE, CalculationMode.ADDITION));
+	}
+
+	@Override
+	public MapCodec<? extends RedstoneCalculatorBlock> getCodec() {
+		return CODEC;
 	}
 
 	@Override
@@ -42,7 +50,7 @@ public class RedstoneCalculatorBlock extends AbstractRedstoneGateBlock implement
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 		if (!player.getAbilities().allowModifyWorld) {
 			return ActionResult.PASS;
 		} else {

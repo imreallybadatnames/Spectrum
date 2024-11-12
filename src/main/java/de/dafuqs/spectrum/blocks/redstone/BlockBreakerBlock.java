@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -18,11 +19,18 @@ import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
 
 public class BlockBreakerBlock extends RedstoneInteractionBlock implements BlockEntityProvider {
-	
+
+	public static final MapCodec<BlockBreakerBlock> CODEC = createCodec(BlockBreakerBlock::new);
+
 	private static ItemStack BREAK_STACK;
-	
+
 	public BlockBreakerBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public MapCodec<? extends BlockBreakerBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Nullable
