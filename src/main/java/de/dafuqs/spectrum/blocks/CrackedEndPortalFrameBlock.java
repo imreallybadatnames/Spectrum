@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks;
 
 import com.google.common.base.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.pattern.*;
@@ -18,7 +19,9 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class CrackedEndPortalFrameBlock extends Block {
-	
+
+	public static final MapCodec<CrackedEndPortalFrameBlock> CODEC = createCodec(CrackedEndPortalFrameBlock::new);
+
 	public static final BooleanProperty FACING_VERTICAL;
 	public static final EnumProperty<EndPortalFrameEye> EYE_TYPE;
 	protected static final VoxelShape FRAME_SHAPE;
@@ -26,13 +29,18 @@ public class CrackedEndPortalFrameBlock extends Block {
 	protected static final VoxelShape FRAME_WITH_EYE_SHAPE;
 	private static BlockPattern COMPLETED_FRAME;
 	private static BlockPattern END_PORTAL;
-	
+
 	static {
 		FACING_VERTICAL = BooleanProperty.of("facing_vertical");
 		EYE_TYPE = EnumProperty.of("eye_type", CrackedEndPortalFrameBlock.EndPortalFrameEye.class);
 		FRAME_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D);
 		EYE_SHAPE = Block.createCuboidShape(4.0D, 13.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 		FRAME_WITH_EYE_SHAPE = VoxelShapes.union(FRAME_SHAPE, EYE_SHAPE);
+	}
+
+	@Override
+	public MapCodec<? extends CrackedEndPortalFrameBlock> getCodec() {
+		return CODEC;
 	}
 	
 	public CrackedEndPortalFrameBlock(Settings settings) {
@@ -183,7 +191,7 @@ public class CrackedEndPortalFrameBlock extends Block {
 	}
 	
 	@Override
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+	public boolean canPathfindThrough(BlockState state, NavigationType type) {
 		return false;
 	}
 

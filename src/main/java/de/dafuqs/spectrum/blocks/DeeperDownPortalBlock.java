@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.blocks;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.dimension.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -29,6 +29,8 @@ import net.minecraft.world.*;
 
 public class DeeperDownPortalBlock extends Block {
 
+	public static final MapCodec<DeeperDownPortalBlock> CODEC = createCodec(DeeperDownPortalBlock::new);
+
 	private final static Identifier CREATE_PORTAL_ADVANCEMENT_IDENTIFIER = SpectrumCommon.locate("midgame/open_deeper_down_portal");
 	private final static String CREATE_PORTAL_ADVANCEMENT_CRITERION = "opened_deeper_down_portal";
 
@@ -43,12 +45,16 @@ public class DeeperDownPortalBlock extends Block {
 	}
 
 	@Override
+	public MapCodec<? extends DeeperDownPortalBlock> getCodec() {
+		return CODEC;
+	}
+
+	@Override
 	public boolean hasSidedTransparency(BlockState state) {
 		return true;
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		super.onBlockAdded(state, world, pos, oldState, notify);
 
@@ -65,20 +71,19 @@ public class DeeperDownPortalBlock extends Block {
 	}
 
 	@Override
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemStack handStack = player.getStackInHand(hand);
+	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (handStack.isOf(SpectrumItems.BEDROCK_DUST)) {
 			if (world.isClient) {
-				return ActionResult.SUCCESS;
+				return ItemActionResult.SUCCESS;
 			} else {
 				BlockState placedState = Blocks.BEDROCK.getDefaultState();
 				world.setBlockState(pos, placedState);
 				world.playSound(null, pos, placedState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1.0F, 1.0F);
-				return ActionResult.CONSUME;
+				return ItemActionResult.CONSUME;
 			}
 		}
 
-		return ActionResult.PASS;
+		return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
 	private boolean hasNeighboringPortals(World world, BlockPos pos) {
@@ -96,7 +101,7 @@ public class DeeperDownPortalBlock extends Block {
 	}
 
 	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
 		return ItemStack.EMPTY;
 	}
 
@@ -112,7 +117,7 @@ public class DeeperDownPortalBlock extends Block {
 
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (world instanceof ServerWorld serverWorld && entity.canUsePortals() && !entity.hasPortalCooldown()) {
+		if (world instanceof ServerWorld serverWorld && entity.canUsePortals(false) && !entity.hasPortalCooldown()) {
 			
 			entity.resetPortalCooldown();
 			RegistryKey<World> currentWorldKey = world.getRegistryKey();
@@ -132,7 +137,7 @@ public class DeeperDownPortalBlock extends Block {
 					}
 					
 					BlockPos targetPos = portalPos.up(2);
-					FabricDimensions.teleport(entity, serverWorld, new TeleportTarget(Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch()));
+					entity.teleportTo(new TeleportTarget(serverWorld, Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch(), TeleportTarget.NO_OP));
 					teleportToSafePosition(serverWorld, entity, targetPos, 3);
 				} else {
 					BlockPos portalPos = new BlockPos(pos.getX(), world.getBottomY() + world.getDimension().logicalHeight() - 1, pos.getZ());
@@ -145,7 +150,7 @@ public class DeeperDownPortalBlock extends Block {
 					}
 					
 					BlockPos targetPos = portalPos.down(3);
-					FabricDimensions.teleport(entity, serverWorld, new TeleportTarget(Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch()));
+					entity.teleportTo(new TeleportTarget(serverWorld, Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch(), TeleportTarget.NO_OP));
 					teleportToSafePosition(serverWorld, entity, targetPos.down(), 5);
 				}
 				
@@ -166,7 +171,8 @@ public class DeeperDownPortalBlock extends Block {
 					}
 					
 					BlockPos targetPos = portalPos.down(3);
-					FabricDimensions.teleport(entity, targetWorld, new TeleportTarget(Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch()));
+					entity.teleportTo(new TeleportTarget(targetWorld, Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch(),
+							TeleportTarget.SEND_TRAVEL_THROUGH_PORTAL_PACKET.then(TeleportTarget.ADD_PORTAL_CHUNK_TICKET)));
 					teleportToSafePosition(targetWorld, entity, targetPos.down(), 5);
 					
 					return;
@@ -183,7 +189,8 @@ public class DeeperDownPortalBlock extends Block {
 				makeRoomAround(targetWorld, portalPos, 4, 2, true, BlockTags.BASE_STONE_OVERWORLD);
 				
 				BlockPos targetPos = portalPos.up(2);
-				FabricDimensions.teleport(entity, targetWorld, new TeleportTarget(Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch()));
+				entity.teleportTo(new TeleportTarget(targetWorld, Vec3d.ofCenter(targetPos), Vec3d.ZERO, entity.getYaw(), entity.getPitch(),
+						TeleportTarget.SEND_TRAVEL_THROUGH_PORTAL_PACKET.then(TeleportTarget.ADD_PORTAL_CHUNK_TICKET)));
 				teleportToSafePosition(targetWorld, entity, targetPos, 3);
 			}
 		}
@@ -252,7 +259,7 @@ public class DeeperDownPortalBlock extends Block {
 					&& entity.getY() < (double) world.getTopY()
 					&& entity.getY() > (double) world.getBottomY()) {
 
-				entity.teleport(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5);
+				entity.requestTeleport(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5);
 				return;
 			}
 		}
@@ -260,7 +267,7 @@ public class DeeperDownPortalBlock extends Block {
 		world.removeBlock(targetPos.up(1), false);
 		world.removeBlock(targetPos, false);
 		world.setBlockState(targetPos.down(1), Blocks.COBBLED_DEEPSLATE.getDefaultState());
-		entity.teleport(targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5);
+		entity.requestTeleport(targetPos.getX() + 0.5, targetPos.getY() + 0.5, targetPos.getZ() + 0.5);
 	}
 
 	@Override

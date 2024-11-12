@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.inventories.*;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -16,12 +16,20 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class BedrockAnvilBlock extends AnvilBlock {
-	
+
+	public static final MapCodec<BedrockAnvilBlock> CODEC = createCodec(BedrockAnvilBlock::new);
+
 	private static final Text TITLE = Text.translatable("container.spectrum.bedrock_anvil");
-	
+
 	public BedrockAnvilBlock(Settings settings) {
 		super(settings);
 	}
+
+//	@Override
+//	public MapCodec<? extends BedrockAnvilBlock> getCodec() {
+//		//TODO: Make the codec
+//		return CODEC;
+//	}
 	
 	// Heavier => More damage
 	@Override

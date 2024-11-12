@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.blocks.crystallarieum.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -25,9 +26,14 @@ public class BismuthBudBlock extends SpectrumClusterBlock {
 		super(settings, growthStage);
 		this.grownBlock = grownBlock;
 	}
+
+//	@Override
+//	public MapCodec<? extends BismuthBudBlock> getCodec() {
+//		//TODO: Make the codec
+//		return null;
+//	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		super.randomTick(state, world, pos, random);
 		if (!world.isClient && grownBlock != null && searchAndConsumeBlock(world, pos, GROWTH_CHECK_RADIUS, CONSUMED_TAG_TO_GROW, CONSUMED_TARGET_STATE, GROWTH_CHECK_TRIES, random)) {

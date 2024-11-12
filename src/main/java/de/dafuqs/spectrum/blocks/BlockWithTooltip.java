@@ -1,12 +1,10 @@
 package de.dafuqs.spectrum.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.client.item.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -17,6 +15,12 @@ public class BlockWithTooltip extends Block {
 	public BlockWithTooltip(Settings settings, Text tooltipText) {
 		super(settings);
 		this.tooltipText = tooltipText;
+	}
+
+	@Override
+	public MapCodec<? extends BlockWithTooltip> getCodec() {
+		//TODO: Make the codec
+		return null;
 	}
 
 	@Override

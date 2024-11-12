@@ -3,19 +3,20 @@ package de.dafuqs.spectrum.blocks.deeper_down;
 import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.block.*;
 import net.minecraft.block.*;
-import net.minecraft.util.*;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class StrippingLootPillarBlock extends PillarBlock implements StrippableDrop {
     
     private final Block sourceBlock;
-    private final Identifier strippingLootTableIdentifier;
+    private final RegistryKey<LootTable> strippingLootTableKey;
     
-    public StrippingLootPillarBlock(Settings settings, Block sourceBlock, Identifier strippingLootTableIdentifier) {
+    public StrippingLootPillarBlock(Settings settings, Block sourceBlock, RegistryKey<LootTable> strippingLootTableKey) {
         super(settings);
         this.sourceBlock = sourceBlock;
-        this.strippingLootTableIdentifier = strippingLootTableIdentifier;
+        this.strippingLootTableKey = strippingLootTableKey;
     }
 
     @Override
@@ -30,8 +31,8 @@ public class StrippingLootPillarBlock extends PillarBlock implements StrippableD
     }
     
     @Override
-    public Identifier getStrippingLootTableIdentifier() {
-        return strippingLootTableIdentifier;
+    public RegistryKey<LootTable> getStrippingLootTableKey() {
+        return strippingLootTableKey;
     }
     
     @Override

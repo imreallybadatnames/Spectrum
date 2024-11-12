@@ -7,7 +7,6 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -24,12 +23,12 @@ public interface StrippableDrop {
 	
 	Block getStrippedBlock();
 	
-	Identifier getStrippingLootTableIdentifier();
+	RegistryKey<LootTable> getStrippingLootTableKey();
 	
 	default boolean checkAndDropStrippedLoot(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!moved && newState.isOf(getStrippedBlock())) {
 			// we sadly don't have the entity or hand stack here, but oh well
-			List<ItemStack> harvestedStacks = getStrippedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), null, ItemStack.EMPTY, getStrippingLootTableIdentifier());
+			List<ItemStack> harvestedStacks = getStrippedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), null, ItemStack.EMPTY, getStrippingLootTableKey());
 			for (ItemStack harvestedStack : harvestedStacks) {
 				ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, harvestedStack);
 			}
@@ -38,7 +37,7 @@ public interface StrippableDrop {
 		return false;
 	}
 	
-	static List<ItemStack> getStrippedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, Identifier lootTableKey) {
+	static List<ItemStack> getStrippedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, RegistryKey<LootTable> lootTableKey) {
 		var builder = (new LootContextParameterSet.Builder(world))
 				.add(LootContextParameters.BLOCK_STATE, state)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
@@ -46,7 +45,7 @@ public interface StrippableDrop {
 				.addOptional(LootContextParameters.THIS_ENTITY, entity)
 				.addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity);
 		
-		LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, lootTableKey));
+		LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(lootTableKey);
 		return lootTable.generateLoot(builder.build(LootContextTypes.BLOCK));
 	}
 	
