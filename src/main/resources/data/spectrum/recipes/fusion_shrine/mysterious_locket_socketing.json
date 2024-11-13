@@ -19,8 +19,8 @@
   ],
   "result": {
     "item": "spectrum:mysterious_locket",
-    "nbt": {
-      "socketed": true
+    "components": {
+      "spectrum:socketed": true
     }
   },
   "required_advancement": "spectrum:unlocks/mysterious_locket_socketing",

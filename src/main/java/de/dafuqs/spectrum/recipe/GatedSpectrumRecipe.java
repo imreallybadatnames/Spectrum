@@ -3,29 +3,22 @@ package de.dafuqs.spectrum.recipe;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.helpers.NbtHelper;
 import de.dafuqs.spectrum.helpers.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
-public abstract class GatedSpectrumRecipe<C extends Inventory> implements GatedRecipe<C> {
+public abstract class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C> {
 	
-	public final Identifier id;
 	public final String group;
 	public final boolean secret;
 	public final Identifier requiredAdvancementIdentifier;
 	
-	protected GatedSpectrumRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier) {
-		this.id = id;
+	protected GatedSpectrumRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier) {
 		this.group = group;
 		this.secret = secret;
 		this.requiredAdvancementIdentifier = requiredAdvancementIdentifier;
-	}
-	
-	@Override
-	public Identifier getId() {
-		return this.id;
 	}
 	
 	@Override
@@ -51,7 +44,8 @@ public abstract class GatedSpectrumRecipe<C extends Inventory> implements GatedR
 	
 	@Override
 	public abstract Identifier getRecipeTypeUnlockIdentifier();
-	
+
+	//TODO: Should this be false when the recipe is unlocked?
 	@Override
 	public boolean isIgnoredInRecipeBook() {
 		return true;
@@ -59,7 +53,7 @@ public abstract class GatedSpectrumRecipe<C extends Inventory> implements GatedR
 	
 	@Override
 	public boolean equals(Object object) {
-		if (object instanceof GatedSpectrumRecipe gatedSpectrumRecipe) {
+		if (object instanceof GatedSpectrumRecipe<?> gatedSpectrumRecipe) {
 			return gatedSpectrumRecipe.getId().equals(this.getId());
 		}
 		return false;

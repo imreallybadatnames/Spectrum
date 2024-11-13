@@ -12,7 +12,6 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -20,7 +19,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;

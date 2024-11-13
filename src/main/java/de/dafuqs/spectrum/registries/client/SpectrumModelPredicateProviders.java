@@ -95,7 +95,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerMysteriousLocketPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (itemStack, clientWorld, livingEntity, i) -> MysteriousLocketItem.isSocketed(itemStack) ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (itemStack, clientWorld, livingEntity, i) -> itemStack.contains(SpectrumDataComponentTypes.SOCKETED) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerStructureCompassPredicates(Item item) {

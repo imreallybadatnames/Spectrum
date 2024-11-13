@@ -90,7 +90,7 @@ public class SpectrumCommon implements ModInitializer {
 		
 		logInfo("Registering Block / Item Color Registries...");
 		ColorRegistry.registerColorRegistries();
-		
+
 		// Register ALL the stuff
 		logInfo("Registering Status Effects...");
 		SpectrumStatusEffectTags.register();
@@ -106,6 +106,8 @@ public class SpectrumCommon implements ModInitializer {
 		SpectrumFluids.register();
 		logInfo("Registering Enchantments...");
 		SpectrumEnchantments.register();
+		logInfo("Registering Armor Materials...");
+		SpectrumArmorMaterials.register();
 		logInfo("Registering Blocks...");
 		SpectrumBlocks.register();
 		logInfo("Registering Items...");

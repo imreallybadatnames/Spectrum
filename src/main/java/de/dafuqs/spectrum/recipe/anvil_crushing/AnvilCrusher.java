@@ -5,29 +5,25 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
-import java.util.*;
-
 public class AnvilCrusher {
-	
-	private static final Inventory INVENTORY = new SimpleInventory(1);
-	
+
 	public static void crush(ItemEntity itemEntity, float damageAmount) {
 		ItemStack thisItemStack = itemEntity.getStack();
 		World world = itemEntity.getWorld();
 		
-		INVENTORY.setStack(0, thisItemStack);
+		var inventory = new SingleStackRecipeInput(thisItemStack);
 		
-		Optional<AnvilCrushingRecipe> optionalAnvilCrushingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.ANVIL_CRUSHING, INVENTORY, world);
+		var optionalAnvilCrushingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.ANVIL_CRUSHING, inventory, world);
 		if (optionalAnvilCrushingRecipe.isPresent()) {
 			// Item can be crafted via anvil. Do anvil crafting
-			AnvilCrushingRecipe recipe = optionalAnvilCrushingRecipe.get();
+			AnvilCrushingRecipe recipe = optionalAnvilCrushingRecipe.get().value();
 			
 			int itemStackAmount = itemEntity.getStack().getCount();
 			int crushingInputAmount = Math.min(itemStackAmount, (int) (recipe.getCrushedItemsPerPointOfDamage() * damageAmount));
@@ -35,7 +31,7 @@ public class AnvilCrusher {
 			if (crushingInputAmount > 0) {
 				Vec3d position = itemEntity.getPos();
 				
-				ItemStack crushingOutput = recipe.getOutput(world.getRegistryManager()).copy();
+				ItemStack crushingOutput = recipe.getResult(world.getRegistryManager()).copy();
 				Vec3d pos = itemEntity.getPos();
 
 				// Remove the input amount from the source stack
