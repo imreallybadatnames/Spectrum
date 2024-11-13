@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
@@ -10,53 +11,38 @@ import net.minecraft.predicate.item.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class EnchanterCraftingCriterion extends AbstractCriterion<EnchanterCraftingCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("enchanter_crafting");
-
-	public static EnchanterCraftingCriterion.Conditions create(ItemPredicate item, NumberRange.IntRange experienceRange) {
-		return new EnchanterCraftingCriterion.Conditions(LootContextPredicate.EMPTY, item, experienceRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public EnchanterCraftingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
-		NumberRange.IntRange experienceRange = NumberRange.IntRange.fromJson(jsonObject.get("spent_experience"));
-		return new EnchanterCraftingCriterion.Conditions(extended, itemPredicate, experienceRange);
-	}
 
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack, int experience) {
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, experience));
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate itemPredicate;
-		private final NumberRange.IntRange experienceRange;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, ItemPredicate itemPredicate, NumberRange.IntRange experienceRange) {
-			super(ID, player);
-			this.itemPredicate = itemPredicate;
-			this.experienceRange = experienceRange;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		ItemPredicate itemPredicate,
+		NumberRange.IntRange spentExperience
+	) implements AbstractCriterion.Conditions {
 
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("item", this.itemPredicate.toJson());
-			jsonObject.add("spent_experience", this.experienceRange.toJson());
-			return jsonObject;
-		}
+		public static final Codec<EnchanterCraftingCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.fieldOf("item").forGetter(Conditions::itemPredicate),
+			NumberRange.IntRange.CODEC.fieldOf("spent_experience").forGetter(Conditions::spentExperience)
+		).apply(instance, EnchanterCraftingCriterion.Conditions::new));
 
 		public boolean matches(ItemStack stack, int spentExperience) {
 			if (!this.itemPredicate.test(stack)) {
 				return false;
 			} else {
-				return this.experienceRange.test(spentExperience);
+				return this.spentExperience.test(spentExperience);
 			}
 		}
 	}

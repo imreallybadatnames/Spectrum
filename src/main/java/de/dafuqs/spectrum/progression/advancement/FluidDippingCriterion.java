@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
@@ -12,48 +13,34 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
+import java.util.*;
+
 public class FluidDippingCriterion extends AbstractCriterion<FluidDippingCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("fluid_dipping");
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
 
 	public void trigger(ServerPlayerEntity player, ServerWorld world, BlockPos pos, ItemStack previousStack, ItemStack targetStack) {
 		this.trigger(player, (conditions) -> conditions.matches(world, pos, previousStack, targetStack));
 	}
 
 	@Override
-	protected Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		FluidPredicate fluidPredicate = FluidPredicate.fromJson(jsonObject.get("fluid"));
-		ItemPredicate previousStackPredicate = ItemPredicate.fromJson(jsonObject.get("source_stack"));
-		ItemPredicate targetStackPredicate = ItemPredicate.fromJson(jsonObject.get("target_stack"));
-		return new FluidDippingCriterion.Conditions(playerPredicate, fluidPredicate, previousStackPredicate, targetStackPredicate);
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		FluidPredicate fluidPredicate,
+		ItemPredicate previousStackPredicate,
+		ItemPredicate targetStackPredicate
+	) implements AbstractCriterion.Conditions {
 
-		private final FluidPredicate fluidPredicate;
-		private final ItemPredicate previousStackPredicate;
-		private final ItemPredicate targetStackPredicate;
-
-		public Conditions(LootContextPredicate player, FluidPredicate fluidPredicate, ItemPredicate previousStackPredicate, ItemPredicate targetStackPredicate) {
-			super(ID, player);
-			this.fluidPredicate = fluidPredicate;
-			this.previousStackPredicate = previousStackPredicate;
-			this.targetStackPredicate = targetStackPredicate;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("fluid", this.fluidPredicate.toJson());
-			jsonObject.add("previous_stack", this.previousStackPredicate.toJson());
-			jsonObject.add("target_stack", this.targetStackPredicate.toJson());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			FluidPredicate.CODEC.fieldOf("fluid").forGetter(Conditions::fluidPredicate),
+			ItemPredicate.CODEC.fieldOf("source_stack").forGetter(Conditions::previousStackPredicate),
+			ItemPredicate.CODEC.fieldOf("target_stack").forGetter(Conditions::targetStackPredicate)
+		).apply(instance, Conditions::new));
 
 		public boolean matches(ServerWorld world, BlockPos pos, ItemStack previousStack, ItemStack targetStack) {
 			return this.fluidPredicate.test(world, pos) && this.previousStackPredicate.test(previousStack) && this.targetStackPredicate.test(targetStack);

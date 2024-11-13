@@ -522,6 +522,8 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 		// enchantment upgrading criterion
 		ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) enchanterBlockEntity.getOwnerIfOnline();
 		if (serverPlayerEntity != null) {
+			// FIXME - Takes in a component of what it was upgrading
+			// Can be built using the builder
 			SpectrumAdvancementCriteria.ENCHANTER_UPGRADING.trigger(serverPlayerEntity, enchantmentUpgradeRecipe.getEnchantment(), enchantmentUpgradeRecipe.getEnchantmentDestinationLevel(), enchantmentUpgradeRecipe.getRequiredExperience());
 		}
 	}

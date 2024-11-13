@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.advancement.criterion.*;
@@ -17,43 +18,26 @@ public class FusionShrineCraftingCriterion extends AbstractCriterion<FusionShrin
 
 	public static final Identifier ID = SpectrumCommon.locate("crafted_with_fusion_shrine");
 
-	public static FusionShrineCraftingCriterion.Conditions create(ItemPredicate[] item, NumberRange.IntRange experienceRange) {
-		return new FusionShrineCraftingCriterion.Conditions(LootContextPredicate.EMPTY, item, experienceRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public FusionShrineCraftingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate[] itemPredicates = ItemPredicate.deserializeAll(jsonObject.get("items"));
-		NumberRange.IntRange experienceRange = NumberRange.IntRange.fromJson(jsonObject.get("gained_experience"));
-		return new FusionShrineCraftingCriterion.Conditions(extended, itemPredicates, experienceRange);
-	}
-
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack, int experience) {
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, experience));
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate[] itemPredicates;
-		private final NumberRange.IntRange experienceRange;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, ItemPredicate[] itemPredicates, NumberRange.IntRange experienceRange) {
-			super(ID, player);
-			this.itemPredicates = itemPredicates;
-			this.experienceRange = experienceRange;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		List<ItemPredicate> itemPredicates,
+		NumberRange.IntRange experienceRange
+		) implements AbstractCriterion.Conditions {
 
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("items", Arrays.toString(this.itemPredicates));
-			jsonObject.add("gained_experience", this.experienceRange.toJson());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.listOf().fieldOf("items").forGetter(Conditions::itemPredicates),
+			NumberRange.IntRange.CODEC.fieldOf("gained_experience").forGetter(Conditions::experienceRange)
+			).apply(instance, Conditions::new));
 
 		public boolean matches(ItemStack itemStack, int experience) {
 			if (this.experienceRange.test(experience)) {

@@ -1,65 +1,46 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
-import net.minecraft.enchantment.*;
+import net.minecraft.component.type.*;
 import net.minecraft.predicate.*;
 import net.minecraft.predicate.entity.*;
-import net.minecraft.registry.*;
+import net.minecraft.predicate.item.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
+
+import java.util.*;
 
 public class EnchantmentUpgradedCriterion extends AbstractCriterion<EnchantmentUpgradedCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("enchantment_upgraded");
 
-	public static EnchantmentUpgradedCriterion.Conditions create(Enchantment enchantment, NumberRange.IntRange enchantmentLevelRange, NumberRange.IntRange experienceRange) {
-		return new EnchantmentUpgradedCriterion.Conditions(LootContextPredicate.EMPTY, enchantment, enchantmentLevelRange, experienceRange);
+	public void trigger(ServerPlayerEntity player, ItemEnchantmentsComponent enchantmentsComponent, int spentExperience) {
+		this.trigger(player, (conditions) -> conditions.matches(enchantmentsComponent, spentExperience));
 	}
 
 	@Override
-	public Identifier getId() {
-		return ID;
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
 	}
 
-	@Override
-	public EnchantmentUpgradedCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		Identifier identifier = Identifier.of(JsonHelper.getString(jsonObject, "enchantment_identifier"));
-		Enchantment enchantment = Registries.ENCHANTMENT.get(identifier);
-		NumberRange.IntRange enchantmentLevelRange = NumberRange.IntRange.fromJson(jsonObject.get("enchantment_level"));
-		NumberRange.IntRange experienceRange = NumberRange.IntRange.fromJson(jsonObject.get("spent_experience"));
-		return new EnchantmentUpgradedCriterion.Conditions(extended, enchantment, enchantmentLevelRange, experienceRange);
-	}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		EnchantmentPredicate enchantmentPredicate,
+		NumberRange.IntRange spentExperience
+		) implements AbstractCriterion.Conditions {
 
-	public void trigger(ServerPlayerEntity player, Enchantment enchantment, int enchantmentLevel, int spentExperience) {
-		this.trigger(player, (conditions) -> conditions.matches(enchantment, enchantmentLevel, spentExperience));
-	}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			EnchantmentPredicate.CODEC.fieldOf("enchantments").forGetter(Conditions::enchantmentPredicate),
+			NumberRange.IntRange.CODEC.fieldOf("spentExperience").forGetter(Conditions::spentExperience)
+			).apply(instance, Conditions::new));
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final Enchantment enchantment;
-		private final NumberRange.IntRange enchantmentLevelRange;
-		private final NumberRange.IntRange experienceRange;
-
-		public Conditions(LootContextPredicate player, Enchantment enchantment, NumberRange.IntRange enchantmentLevelRange, NumberRange.IntRange experienceRange) {
-			super(ID, player);
-			this.enchantment = enchantment;
-			this.enchantmentLevelRange = enchantmentLevelRange;
-			this.experienceRange = experienceRange;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("enchantment_identifier", Registries.ENCHANTMENT.getId(enchantment).toString());
-			jsonObject.add("enchantment_level", this.enchantmentLevelRange.toJson());
-			jsonObject.add("spent_experience", this.experienceRange.toJson());
-			return jsonObject;
-		}
-
-		public boolean matches(Enchantment enchantment, int enchantmentLevel, int spentExperience) {
-			if (this.enchantment == null || this.enchantment.equals(enchantment)) {
-				return this.enchantmentLevelRange.test(enchantmentLevel) && this.experienceRange.test(spentExperience);
+		public boolean matches(ItemEnchantmentsComponent itemEnchantmentsComponent, int spentExperience) {
+			if (this.enchantmentPredicate.test(itemEnchantmentsComponent)) {
+				return this.spentExperience.test(spentExperience);
 			}
 			return false;
 		}
