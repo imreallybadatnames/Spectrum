@@ -111,7 +111,7 @@ public class SpectrumRecipeTypes {
 		SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPELESS_PEDESTAL_RECIPE_ID, new ShapelessPedestalRecipeSerializer(ShapelessPedestalRecipe::new));
 		PEDESTAL = registerRecipeType(SHAPED_PEDESTAL_RECIPE_ID);
 		
-		ANVIL_CRUSHING_RECIPE_SERIALIZER = registerSerializer(ANVIL_CRUSHING_ID, new AnvilCrushingRecipeSerializer(AnvilCrushingRecipe::new));
+		ANVIL_CRUSHING_RECIPE_SERIALIZER = registerSerializer(ANVIL_CRUSHING_ID, new AnvilCrushingRecipeSerializer());
 		ANVIL_CRUSHING = registerRecipeType(ANVIL_CRUSHING_ID);
 		
 		FUSION_SHRINE_RECIPE_SERIALIZER = registerSerializer(FUSION_SHRINE_ID, new FusionShrineRecipeSerializer(FusionShrineRecipe::new));

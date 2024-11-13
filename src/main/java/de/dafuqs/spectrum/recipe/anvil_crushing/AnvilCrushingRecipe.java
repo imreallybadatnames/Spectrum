@@ -3,34 +3,34 @@ package de.dafuqs.spectrum.recipe.anvil_crushing;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.world.*;
 
-public class AnvilCrushingRecipe extends GatedSpectrumRecipe<Inventory> {
+public class AnvilCrushingRecipe extends GatedSpectrumRecipe<SingleStackRecipeInput> {
 	
-	protected final Ingredient input;
-	protected final ItemStack output;
+	protected final Ingredient ingredient;
+	protected final ItemStack result;
 	protected final float crushedItemsPerPointOfDamage;
 	protected final float experience;
 	protected final Identifier particleEffectIdentifier;
 	protected final int particleCount;
 	protected final Identifier soundEvent;
 	
-	public AnvilCrushingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
-							   Ingredient input, ItemStack output, float crushedItemsPerPointOfDamage,
+	public AnvilCrushingRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
+							   Ingredient ingredient, ItemStack result, float crushedItemsPerPointOfDamage,
 							   float experience, Identifier particleEffectIdentifier, int particleCount, Identifier soundEventIdentifier) {
 		
-		super(id, group, secret, requiredAdvancementIdentifier);
+		super(group, secret, requiredAdvancementIdentifier);
 		
-		this.input = input;
-		this.output = output;
+		this.ingredient = ingredient;
+		this.result = result;
 		this.crushedItemsPerPointOfDamage = crushedItemsPerPointOfDamage;
 		this.experience = experience;
 		this.particleEffectIdentifier = particleEffectIdentifier;
@@ -43,13 +43,13 @@ public class AnvilCrushingRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return this.input.test(inv.getStack(0));
+	public boolean matches(SingleStackRecipeInput input, World world) {
+		return ingredient.test(input.item());
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
-		return output.copy();
+	public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup registryLookup) {
+		return result.copy();
 	}
 	
 	@Override
@@ -58,8 +58,8 @@ public class AnvilCrushingRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
-		return output;
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
+		return result;
 	}
 	
 	@Override
@@ -85,7 +85,7 @@ public class AnvilCrushingRecipe extends GatedSpectrumRecipe<Inventory> {
 	@Override
 	public DefaultedList<Ingredient> getIngredients() {
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-		defaultedList.add(this.input);
+		defaultedList.add(this.ingredient);
 		return defaultedList;
 	}
 
