@@ -3,33 +3,33 @@ package de.dafuqs.spectrum.recipe.crafting.dynamic;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.items.magic_items.*;
-import net.minecraft.inventory.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class ColorEverpromiseRibbonRecipe extends SpecialCraftingRecipe {
 	
 	public static final RecipeSerializer<ColorEverpromiseRibbonRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ColorEverpromiseRibbonRecipe::new);
 	
-	public ColorEverpromiseRibbonRecipe(Identifier identifier, CraftingRecipeCategory category) {
-		super(identifier, category);
+	public ColorEverpromiseRibbonRecipe(CraftingRecipeCategory category) {
+		super(category);
 	}
 	
 	@Override
-	public boolean matches(RecipeInputInventory craftingInventory, World world) {
+	public boolean matches(CraftingRecipeInput input, World world) {
 		boolean ribbonFound = false;
 		boolean pigmentFound = false;
 		
-		for (int i = 0; i < craftingInventory.size(); ++i) {
-			ItemStack itemStack = craftingInventory.getStack(i);
+		for (int i = 0; i < input.getSize(); ++i) {
+			ItemStack itemStack = input.getStackInSlot(i);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.getItem() instanceof EverpromiseRibbonItem) {
-					if (!itemStack.hasCustomName()) {
+					if (!itemStack.contains(DataComponentTypes.CUSTOM_NAME)) {
 						return false;
 					}
 					if (ribbonFound) {
@@ -53,13 +53,13 @@ public class ColorEverpromiseRibbonRecipe extends SpecialCraftingRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(RecipeInputInventory craftingInventory, DynamicRegistryManager drm) {
+	public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registryLookup) {
 		ItemStack ribbon = null;
 		PigmentItem pigment = null;
 		
 		
-		for (int i = 0; i < craftingInventory.size(); ++i) {
-			ItemStack stack = craftingInventory.getStack(i);
+		for (int i = 0; i < input.getSize(); ++i) {
+			ItemStack stack = input.getStackInSlot(i);
 			if (stack.getItem() instanceof EverpromiseRibbonItem) {
 				ribbon = stack;
 			}
@@ -79,7 +79,7 @@ public class ColorEverpromiseRibbonRecipe extends SpecialCraftingRecipe {
 		if (text instanceof MutableText mutableText) {
 			TextColor newColor = TextColor.fromRgb(ColorHelper.getInt(pigment.getColor()));
 			Text newName = mutableText.setStyle(mutableText.getStyle().withColor(newColor));
-			ribbon.setCustomName(newName);
+			ribbon.set(DataComponentTypes.CUSTOM_NAME, newName);
 		}
 		
 		return ribbon;

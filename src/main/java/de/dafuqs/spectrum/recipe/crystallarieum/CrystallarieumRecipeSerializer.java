@@ -1,7 +1,12 @@
 package de.dafuqs.spectrum.recipe.crystallarieum;
 
-import com.google.gson.*;
+import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.exceptions.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Lifecycle;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.recipe.*;
@@ -9,112 +14,65 @@ import de.dafuqs.spectrum.recipe.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.*;
 
 import java.util.*;
 
 public class CrystallarieumRecipeSerializer implements GatedRecipeSerializer<CrystallarieumRecipe> {
+
+	private static final MapCodec<CrystallarieumRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+			Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+			Identifier.CODEC.fieldOf("required_advancement").forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+			Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+			BlockState.CODEC.listOf().fieldOf("growth_stage_states").forGetter(recipe -> recipe.growthStages),
+			Codec.INT.fieldOf("seconds_per_growth_stage").forGetter(recipe -> recipe.secondsPerGrowthStage),
+			InkColor.CODEC.fieldOf("ink_color").forGetter(recipe -> recipe.inkColor),
+			Codec.INT.xmap(d -> d == 0 ? 0 : (int) Math.pow(2, d - 1), e -> e).fieldOf("ink_cost_tier").forGetter(recipe -> recipe.inkPerSecond),
+			Codec.BOOL.optionalFieldOf("grows_without_catalyst", false).forGetter(recipe -> recipe.growsWithoutCatalyst),
+			CrystallarieumCatalyst.CODEC.listOf().fieldOf("catalysts").forGetter(recipe -> recipe.catalysts),
+			Identifier.CODEC.xmap(d -> new ItemStack(Registries.ITEM.get(d)), e -> null).listOf()
+					.optionalFieldOf("additional_recipe_manager_results", ImmutableList.of()).forGetter(recipe -> recipe.additionalResults)
+	).apply(instance, CrystallarieumRecipe::new));
+	private static final PacketCodec<RegistryByteBuf, CrystallarieumRecipe> PACKET_CODEC = PacketCodec.ofStatic(CrystallarieumRecipeSerializer::write, CrystallarieumRecipeSerializer::read);
 	
-	public final CrystallarieumRecipeSerializer.RecipeFactory recipeFactory;
-	
-	public CrystallarieumRecipeSerializer(CrystallarieumRecipeSerializer.RecipeFactory recipeFactory) {
-		this.recipeFactory = recipeFactory;
-	}
-	
-	public interface RecipeFactory {
-		CrystallarieumRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient inputIngredient, List<BlockState> growthStages, int secondsPerGrowthStage, InkColor inkColor, int inkPerSecond, boolean growsWithoutCatalyst, List<CrystallarieumCatalyst> catalysts, List<ItemStack> additionalOutputs);
-	}
-	
-	@Override
-	public CrystallarieumRecipe read(Identifier identifier, JsonObject jsonObject) {
-		String group = readGroup(jsonObject);
-		boolean secret = readSecret(jsonObject);
-		Identifier requiredAdvancementIdentifier = readRequiredAdvancementIdentifier(jsonObject);
+	public void write(RegistryByteBuf buf, CrystallarieumRecipe recipe) {
+		buf.writeString(recipe.group);
+		buf.writeBoolean(recipe.secret);
+		GatedRecipeSerializer.writeNullableIdentifier(buf, recipe.requiredAdvancementIdentifier);
 		
-		Ingredient inputIngredient = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "ingredient"));
-		
-		List<BlockState> growthStages = new ArrayList<>();
-		JsonArray growthStageArray = JsonHelper.getArray(jsonObject, "growth_stage_states");
-		for (int i = 0; i < growthStageArray.size(); i++) {
-			String blockStateString = growthStageArray.get(i).getAsString();
-			try {
-				growthStages.add(RecipeUtils.blockStateFromString(blockStateString));
-			} catch (CommandSyntaxException e) {
-				SpectrumCommon.logError("Recipe " + identifier + " specifies block state " + blockStateString + " that does not seem valid or the block does not exist. Recipe will be ignored.");
-				return null;
-			}
-		}
-		
-		int secondsPerGrowthStage = JsonHelper.getInt(jsonObject, "seconds_per_growth_stage");
-		
-		String inkColorString = JsonHelper.getString(jsonObject, "ink_color");
-		Optional<InkColor> inkColor = InkColor.ofIdString(inkColorString);
-		if (inkColor.isEmpty()) {
-			throw new JsonParseException("InkColor " + inkColorString + " in Crystallarieum recipe " + identifier + " does not exist.");
-		}
-		
-		int inkCostTier = JsonHelper.getInt(jsonObject, "ink_cost_tier");
-		int inkPerSecond = inkCostTier == 0 ? 0 : (int) Math.pow(2, inkCostTier - 1);
-		boolean growsWithoutCatalyst = JsonHelper.getBoolean(jsonObject,   "grows_without_catalyst", false);
-		
-		List<CrystallarieumCatalyst> catalysts = new ArrayList<>();
-		if (jsonObject.has("catalysts")) {
-			JsonArray catalystArray = JsonHelper.getArray(jsonObject, "catalysts");
-			for (JsonElement jsonElement : catalystArray) {
-				catalysts.add(CrystallarieumCatalyst.fromJson(jsonElement.getAsJsonObject()));
-			}
-		}
-		List<ItemStack> additionalOutputs = new ArrayList<>();
-		if (jsonObject.has("additional_recipe_manager_outputs")) {
-			JsonArray additionalOutputArray = JsonHelper.getArray(jsonObject, "additional_recipe_manager_outputs");
-			for (JsonElement jsonElement : additionalOutputArray) {
-				Identifier additionalOutputItemIdentifier = Identifier.of(jsonElement.getAsString());
-				ItemStack itemStack = new ItemStack(Registries.ITEM.getOrEmpty(additionalOutputItemIdentifier).orElseThrow(() -> new IllegalStateException("Item: " + additionalOutputItemIdentifier + " does not exist")));
-				additionalOutputs.add(itemStack);
-			}
-		}
-		
-		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, inputIngredient, growthStages, secondsPerGrowthStage, inkColor.get(), inkPerSecond, growsWithoutCatalyst, catalysts, additionalOutputs);
-	}
-	
-	@Override
-	public void write(PacketByteBuf packetByteBuf, CrystallarieumRecipe recipe) {
-		packetByteBuf.writeString(recipe.group);
-		packetByteBuf.writeBoolean(recipe.secret);
-		writeNullableIdentifier(packetByteBuf, recipe.requiredAdvancementIdentifier);
-		
-		recipe.inputIngredient.write(packetByteBuf);
-		packetByteBuf.writeInt(recipe.growthStages.size());
+		Ingredient.PACKET_CODEC.encode(buf, recipe.ingredient);
+		buf.writeInt(recipe.growthStages.size());
 		for (BlockState state : recipe.growthStages) {
-			packetByteBuf.writeString(RecipeUtils.blockStateToString(state));
+			buf.writeString(RecipeUtils.blockStateToString(state));
 		}
-		packetByteBuf.writeInt(recipe.secondsPerGrowthStage);
-		packetByteBuf.writeIdentifier(recipe.inkColor.getID());
-		packetByteBuf.writeInt(recipe.inkPerSecond);
-		packetByteBuf.writeBoolean(recipe.growsWithoutCatalyst);
-		packetByteBuf.writeInt(recipe.catalysts.size());
+		buf.writeInt(recipe.secondsPerGrowthStage);
+		buf.writeIdentifier(recipe.inkColor.getID());
+		buf.writeInt(recipe.inkPerSecond);
+		buf.writeBoolean(recipe.growsWithoutCatalyst);
+		buf.writeInt(recipe.catalysts.size());
 		for (CrystallarieumCatalyst catalyst : recipe.catalysts) {
-			catalyst.write(packetByteBuf);
+			catalyst.write(buf);
 		}
-		packetByteBuf.writeInt(recipe.additionalOutputs.size());
+		buf.writeInt(recipe.additionalOutputs.size());
 		for (ItemStack additionalOutput : recipe.additionalOutputs) {
-			packetByteBuf.writeItemStack(additionalOutput);
+			ItemStack.PACKET_CODEC.encode(buf, additionalOutput);
 		}
 	}
 	
-	@Override
-	public CrystallarieumRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-		String group = packetByteBuf.readString();
-		boolean secret = packetByteBuf.readBoolean();
-		Identifier requiredAdvancementIdentifier = readNullableIdentifier(packetByteBuf);
+	public CrystallarieumRecipe read(RegistryByteBuf buf) {
+		String group = buf.readString();
+		boolean secret = buf.readBoolean();
+		Identifier requiredAdvancementIdentifier = GatedRecipeSerializer.readNullableIdentifier(buf);
 		
-		Ingredient inputIngredient = Ingredient.fromPacket(packetByteBuf);
+		Ingredient ingredient = Ingredient.PACKET_CODEC.decode(buf);
 		List<BlockState> growthStages = new ArrayList<>();
-		int count = packetByteBuf.readInt();
+		int count = buf.readInt();
 		for (int i = 0; i < count; i++) {
-			String blockStateString = packetByteBuf.readString();
+			String blockStateString = buf.readString();
 			try {
 				growthStages.add(RecipeUtils.blockStateFromString(blockStateString));
 			} catch (CommandSyntaxException e) {
@@ -123,22 +81,31 @@ public class CrystallarieumRecipeSerializer implements GatedRecipeSerializer<Cry
 			}
 		}
 
-		int secondsPerGrowthStage = packetByteBuf.readInt();
-		InkColor inkColor = InkColor.ofId(packetByteBuf.readIdentifier()).get();
-		int inkPerSecond = packetByteBuf.readInt();
-		boolean growthWithoutCatalyst = packetByteBuf.readBoolean();
+		int secondsPerGrowthStage = buf.readInt();
+		InkColor inkColor = InkColor.ofId(buf.readIdentifier()).get();
+		int inkPerSecond = buf.readInt();
+		boolean growthWithoutCatalyst = buf.readBoolean();
 		List<CrystallarieumCatalyst> catalysts = new ArrayList<>();
-		count = packetByteBuf.readInt();
+		count = buf.readInt();
 		for (int i = 0; i < count; i++) {
-			catalysts.add(CrystallarieumCatalyst.fromPacket(packetByteBuf));
+			catalysts.add(CrystallarieumCatalyst.PACKET_CODEC.decode(buf));
 		}
-		List<ItemStack> additionalOutputs = new ArrayList<>();
-		count = packetByteBuf.readInt();
+		List<ItemStack> additionalResults = new ArrayList<>();
+		count = buf.readInt();
 		for (int i = 0; i < count; i++) {
-			additionalOutputs.add(packetByteBuf.readItemStack());
+			additionalResults.add(ItemStack.PACKET_CODEC.decode(buf));
 		}
 
-		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, inputIngredient, growthStages, secondsPerGrowthStage, inkColor, inkPerSecond, growthWithoutCatalyst, catalysts, additionalOutputs);
+		return new CrystallarieumRecipe(group, secret, requiredAdvancementIdentifier, ingredient, growthStages, secondsPerGrowthStage, inkColor, inkPerSecond, growthWithoutCatalyst, catalysts, additionalResults);
 	}
-	
+
+	@Override
+	public MapCodec<CrystallarieumRecipe> codec() {
+		return CODEC;
+	}
+
+	@Override
+	public PacketCodec<RegistryByteBuf, CrystallarieumRecipe> packetCodec() {
+		return PACKET_CODEC;
+	}
 }

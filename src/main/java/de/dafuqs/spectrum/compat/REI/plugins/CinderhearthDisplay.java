@@ -4,7 +4,6 @@ import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.compat.REI.*;
 import de.dafuqs.spectrum.recipe.cinderhearth.*;
 import me.shedaniel.rei.api.common.category.*;
-import me.shedaniel.rei.api.common.display.basic.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.item.*;
@@ -21,7 +20,7 @@ public class CinderhearthDisplay extends GatedSpectrumDisplay {
 	
 	public CinderhearthDisplay(@NotNull CinderhearthRecipe recipe) {
 		super(recipe, REIHelper.toEntryIngredients(recipe.getIngredientStacks()), List.of(EntryIngredients.ofItemStacks(recipe.getPossibleOutputs())));
-		this.outputsWithChance = recipe.getOutputsWithChance(BasicDisplay.registryAccess());
+		this.outputsWithChance = recipe.getResultsWithChance();
 		this.experience = recipe.getExperience();
 		this.craftingTime = recipe.getCraftingTime();
 	}

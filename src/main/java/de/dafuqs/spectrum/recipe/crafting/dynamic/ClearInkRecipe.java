@@ -4,15 +4,14 @@ import de.dafuqs.spectrum.api.energy.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class ClearInkRecipe extends SingleItemCraftingRecipe {
 	
 	public static final RecipeSerializer<ClearInkRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ClearInkRecipe::new);
 	
-	public ClearInkRecipe(Identifier identifier, CraftingRecipeCategory category) {
-		super(identifier, category);
+	public ClearInkRecipe(CraftingRecipeCategory category) {
+		super(category);
 	}
 	
 	@Override

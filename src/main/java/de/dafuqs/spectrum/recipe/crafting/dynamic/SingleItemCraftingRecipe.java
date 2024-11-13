@@ -1,29 +1,28 @@
 package de.dafuqs.spectrum.recipe.crafting.dynamic;
 
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public abstract class SingleItemCraftingRecipe extends SpecialCraftingRecipe {
 	
-	public SingleItemCraftingRecipe(Identifier identifier) {
-		super(identifier, CraftingRecipeCategory.MISC);
+	public SingleItemCraftingRecipe() {
+		super(CraftingRecipeCategory.MISC);
 	}
 
-	public SingleItemCraftingRecipe(Identifier identifier, CraftingRecipeCategory category) {
-		super(identifier, category);
+	public SingleItemCraftingRecipe(CraftingRecipeCategory category) {
+		super(category);
 	}
 	
 	@Override
-	public boolean matches(RecipeInputInventory craftingInventory, World world) {
+	public boolean matches(CraftingRecipeInput input, World world) {
 		boolean matchingItemFound = false;
 		
-		for (int slot = 0; slot < craftingInventory.size(); ++slot) {
-			ItemStack itemStack = craftingInventory.getStack(slot);
+		for (int slot = 0; slot < input.getSize(); ++slot) {
+			ItemStack itemStack = input.getStackInSlot(slot);
 			if (itemStack.isEmpty()) {
 				continue;
 			}
@@ -39,10 +38,10 @@ public abstract class SingleItemCraftingRecipe extends SpecialCraftingRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(RecipeInputInventory craftingInventory, DynamicRegistryManager drm) {
+	public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registryLookup) {
 		ItemStack stack;
-		for (int slot = 0; slot < craftingInventory.size(); ++slot) {
-			stack = craftingInventory.getStack(slot);
+		for (int slot = 0; slot < input.getSize(); ++slot) {
+			stack = input.getStackInSlot(slot);
 			if (!stack.isEmpty()) {
 				return craft(stack.copy());
 			}

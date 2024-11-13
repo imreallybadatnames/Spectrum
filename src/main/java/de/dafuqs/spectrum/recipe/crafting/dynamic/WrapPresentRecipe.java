@@ -3,10 +3,10 @@ package de.dafuqs.spectrum.recipe.crafting.dynamic;
 import de.dafuqs.spectrum.blocks.present.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
@@ -19,8 +19,8 @@ import java.util.*;
 public class WrapPresentRecipe extends SpecialCraftingRecipe {
 	public static final RecipeSerializer<WrapPresentRecipe> SERIALIZER = new SpecialRecipeSerializer<>(WrapPresentRecipe::new);
 	
-	public WrapPresentRecipe(Identifier identifier, CraftingRecipeCategory category) {
-		super(identifier, CraftingRecipeCategory.MISC);
+	public WrapPresentRecipe(CraftingRecipeCategory category) {
+		super(CraftingRecipeCategory.MISC);
 	}
 	
 	@Override
@@ -31,19 +31,19 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryLookup) {
 		ItemStack stack = SpectrumBlocks.PRESENT.asItem().getDefaultStack();
 		PresentItem.wrap(stack, PresentBlock.WrappingPaper.RED, Map.of());
 		return stack;
 	}
 	
 	@Override
-	public boolean matches(@NotNull RecipeInputInventory craftingInventory, World world) {
+	public boolean matches(@NotNull CraftingRecipeInput input, World world) {
 		boolean presentItemFound = false;
 		boolean wrappingItemFound = false;
 		
-		for (int j = 0; j < craftingInventory.size(); ++j) {
-			ItemStack itemStack = craftingInventory.getStack(j);
+		for (int j = 0; j < input.getSize(); ++j) {
+			ItemStack itemStack = input.getStackInSlot(j);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.getItem() instanceof PresentItem) {
 					if (presentItemFound || PresentItem.isWrapped(itemStack)) {
@@ -62,13 +62,13 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(@NotNull RecipeInputInventory craftingInventory, DynamicRegistryManager drm) {
+	public ItemStack craft(@NotNull CraftingRecipeInput input, RegistryWrapper.WrapperLookup registryLookup) {
 		ItemStack presentStack = ItemStack.EMPTY;
 		PresentBlock.WrappingPaper wrappingPaper = PresentBlock.WrappingPaper.RED;
 		Map<DyeColor, Integer> colors = new HashMap<>();
 		
-		for (int j = 0; j < craftingInventory.size(); ++j) {
-			ItemStack stack = craftingInventory.getStack(j);
+		for (int j = 0; j < input.getSize(); ++j) {
+			ItemStack stack = input.getStackInSlot(j);
 			if (stack.getItem() instanceof PresentItem) {
 				presentStack = stack.copy();
 			} else if (stack.getItem() instanceof PigmentItem pigmentItem) {

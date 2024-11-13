@@ -4,15 +4,14 @@ import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class ClearPotionFillableRecipe extends SingleItemCraftingRecipe {
 	
 	public static final RecipeSerializer<ClearPotionFillableRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ClearPotionFillableRecipe::new);
 	
-	public ClearPotionFillableRecipe(Identifier identifier, CraftingRecipeCategory category) {
-		super(identifier, category);
+	public ClearPotionFillableRecipe(CraftingRecipeCategory category) {
+		super(category);
 	}
 	
 	@Override
