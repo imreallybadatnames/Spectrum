@@ -153,7 +153,7 @@ public class SpectrumRecipeTypes {
 		CRYSTALLARIEUM_RECIPE_SERIALIZER = registerSerializer(CRYSTALLARIEUM_ID, new CrystallarieumRecipeSerializer(CrystallarieumRecipe::new));
 		CRYSTALLARIEUM = registerRecipeType(CRYSTALLARIEUM_ID);
 		
-		CINDERHEARTH_RECIPE_SERIALIZER = registerSerializer(CINDERHEARTH_ID, new CinderhearthRecipeSerializer(CinderhearthRecipe::new));
+		CINDERHEARTH_RECIPE_SERIALIZER = registerSerializer(CINDERHEARTH_ID, new CinderhearthRecipeSerializer());
 		CINDERHEARTH = registerRecipeType(CINDERHEARTH_ID);
 		
 		TITRATION_BARREL_RECIPE_SERIALIZER = registerSerializer(TITRATION_BARREL_ID, new TitrationBarrelRecipeSerializer(TitrationBarrelRecipe::new));

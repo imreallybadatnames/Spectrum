@@ -33,7 +33,7 @@ public abstract class SpectrumEmiRecipe implements EmiRecipe {
 	public DynamicRegistryManager getRegistryManager() {
 		return MinecraftClient.getInstance().world.getRegistryManager();
 	}
-	
+
 	public boolean isUnlocked() {
 		return recipeTypeUnlockIdentifier == null || hasAdvancement(recipeTypeUnlockIdentifier);
 	}

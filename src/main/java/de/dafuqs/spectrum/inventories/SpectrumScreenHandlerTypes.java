@@ -1,11 +1,14 @@
 package de.dafuqs.spectrum.inventories;
 
+import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.client.gui.screen.ingame.*;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.*;
 import net.minecraft.resource.featuretoggle.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 
 public class SpectrumScreenHandlerTypes {
 	
@@ -42,9 +45,8 @@ public class SpectrumScreenHandlerTypes {
 		return Registry.register(Registries.SCREEN_HANDLER, id, type);
 	}
 	
-	public static <T extends ScreenHandler> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T> factory) {
-		ScreenHandlerType<T> type = new ExtendedScreenHandlerType<>(factory);
-		return Registry.register(Registries.SCREEN_HANDLER, id, type);
+	public static <T extends ScreenHandler, D> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<ByteBuf, D> packetCodec) {
+		return Registry.register(Registries.SCREEN_HANDLER, id, new ExtendedScreenHandlerType<>(factory, packetCodec));
 	}
 	
 	public static void register() {
@@ -56,7 +58,7 @@ public class SpectrumScreenHandlerTypes {
         COMPACTING_CHEST = registerExtended(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
         BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new);
         COLOR_PICKER = registerExtended(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
-        CINDERHEARTH = registerExtended(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new);
+        CINDERHEARTH = registerExtended(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new, BlockPos.PACKET_CODEC);
 		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new);
 		BAG_OF_HOLDING = registerSimple(SpectrumScreenHandlerIDs.BAG_OF_HOLDING, BagOfHoldingScreenHandler::new);
 

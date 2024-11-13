@@ -36,7 +36,7 @@ public abstract class GatedSpectrumDisplay extends BasicDisplay implements Gated
 		super(inputs, outputs);
 		this.secret = recipe.isSecret();
 		this.requiredAdvancementIdentifier = recipe.getRequiredAdvancementIdentifier();
-		this.secretHintText = recipe.getSecretHintText();
+		this.secretHintText = recipe.getSecretHintText(id);
 	}
 
 	@Override

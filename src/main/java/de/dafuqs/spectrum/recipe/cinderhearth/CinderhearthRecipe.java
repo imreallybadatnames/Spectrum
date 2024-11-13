@@ -5,45 +5,44 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
-import net.minecraft.util.collection.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 
 import java.util.*;
 
-public class CinderhearthRecipe extends GatedStackSpectrumRecipe<Inventory> {
+public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackRecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/cinderhearth");
 
-	protected final IngredientStack inputIngredient;
+	protected final IngredientStack ingredient;
 	protected final int time;
 	protected final float experience;
-	protected final List<Pair<ItemStack, Float>> outputsWithChance;
+	protected final List<Pair<ItemStack, Float>> resultsWithChance;
 
-	public CinderhearthRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, IngredientStack inputIngredient, int time, float experience, List<Pair<ItemStack, Float>> outputsWithChance) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public CinderhearthRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, IngredientStack ingredient, int time, float experience, List<Pair<ItemStack, Float>> resultsWithChance) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
-		this.inputIngredient = inputIngredient;
+		this.ingredient = ingredient;
 		this.time = time;
 		this.experience = experience;
-		this.outputsWithChance = outputsWithChance;
+		this.resultsWithChance = resultsWithChance;
 		
 		registerInToastManager(getType(), this);
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return this.inputIngredient.test(inv.getStack(0));
+	public boolean matches(SingleStackRecipeInput input, World world) {
+		return ingredient.test(input.getStackInSlot(0));
 	}
 	
 	@Override
 	@Deprecated
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup registryLookup) {
 		return ItemStack.EMPTY;
 	}
 	
@@ -53,8 +52,8 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
-		return outputsWithChance.get(0).getLeft();
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryLookup) {
+		return resultsWithChance.get(0).getLeft();
 	}
 	
 	@Override
@@ -84,27 +83,20 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<Inventory> {
 
 	@Override
 	public List<IngredientStack> getIngredientStacks() {
-		return List.of(this.inputIngredient);
+		return List.of(ingredient);
 	}
 
-	@Override
-	public DefaultedList<Ingredient> getIngredients() {
-		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-		defaultedList.add(this.inputIngredient.getIngredient());
-		return defaultedList;
-	}
-	
 	public float getExperience() {
-		return this.experience;
+		return experience;
 	}
 	
 	public int getCraftingTime() {
-		return this.time;
+		return time;
 	}
 	
 	public List<ItemStack> getRolledOutputs(Random random, float yieldMod) {
 		List<ItemStack> output = new ArrayList<>();
-		for (Pair<ItemStack, Float> possibleOutput : this.outputsWithChance) {
+		for (Pair<ItemStack, Float> possibleOutput : resultsWithChance) {
 			float chance = possibleOutput.getRight();
 			if (chance >= 1.0 || random.nextFloat() < chance * yieldMod) {
 				ItemStack currentOutputStack = possibleOutput.getLeft();
@@ -127,14 +119,14 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<Inventory> {
 	
 	public List<ItemStack> getPossibleOutputs() {
 		List<ItemStack> outputs = new ArrayList<>();
-		for (Pair<ItemStack, Float> pair : this.outputsWithChance) {
+		for (Pair<ItemStack, Float> pair : resultsWithChance) {
 			outputs.add(pair.getLeft());
 		}
 		return outputs;
 	}
 	
-	public List<Pair<ItemStack, Float>> getOutputsWithChance(DynamicRegistryManager registryManager) {
-		return outputsWithChance;
+	public List<Pair<ItemStack, Float>> getResultsWithChance() {
+		return resultsWithChance;
 	}
-	
+
 }

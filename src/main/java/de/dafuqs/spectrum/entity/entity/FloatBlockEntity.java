@@ -19,6 +19,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
+import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.state.property.*;
 import net.minecraft.util.*;
 import net.minecraft.util.crash.*;
@@ -219,7 +220,7 @@ public class FloatBlockEntity extends Entity {
 		if (this.blockEntityData != null) {
 			compound.put("BlockEntityData", this.blockEntityData);
 		}
-		compound.putFloat("GravityModifier", getGravity());
+		compound.putFloat("GravityModifier", (float) getGravity());
 	}
 	
 	@Override
@@ -249,6 +250,8 @@ public class FloatBlockEntity extends Entity {
 	}
 	
 	public void trySetBlock() {
+		var registryLookup = getWorld().getRegistryManager();
+
 		if (!this.dropItem) {
 			boolean canBeReplaced = this.blockState.canReplace(new AutomaticItemPlacementContext(this.getWorld(), this.getBlockPos(), Direction.UP, ItemStack.EMPTY, Direction.DOWN));
 			
@@ -266,7 +269,7 @@ public class FloatBlockEntity extends Entity {
 					if (this.blockEntityData != null && this.blockState.hasBlockEntity()) {
 						BlockEntity blockEntity = this.getWorld().getBlockEntity(this.getBlockPos());
 						if (blockEntity != null) {
-							NbtCompound compoundTag = blockEntity.createNbt();
+							NbtCompound compoundTag = blockEntity.createNbt(registryLookup);
 							for (String keyName : this.blockEntityData.getKeys()) {
 								NbtElement tag = this.blockEntityData.get(keyName);
 								if (tag != null && !"x".equals(keyName) && !"y".equals(keyName) && !"z".equals(keyName)) {
@@ -274,7 +277,7 @@ public class FloatBlockEntity extends Entity {
 								}
 							}
 							
-							blockEntity.readNbt(compoundTag);
+							blockEntity.read(blockEntityData, registryLookup);
 							blockEntity.markDirty();
 						}
 					}
@@ -290,7 +293,7 @@ public class FloatBlockEntity extends Entity {
 			
 			this.moveEntities();
 		}
-		
+
 		BlockPos blockPos = this.getBlockPos();
 		BlockState blockState = this.getWorld().getBlockState(blockPos);
 		boolean canReplace = blockState.canReplace(new AutomaticItemPlacementContext(this.getWorld(), blockPos, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
@@ -308,7 +311,7 @@ public class FloatBlockEntity extends Entity {
 			if (this.blockEntityData != null && this.blockState.hasBlockEntity()) {
 				BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
 				if (blockEntity != null) {
-					NbtCompound compoundTag = blockEntity.createNbt();
+					NbtCompound compoundTag = blockEntity.createNbt(registryLookup);
 					for (String keyName : this.blockEntityData.getKeys()) {
 						NbtElement tag = this.blockEntityData.get(keyName);
 						if (tag != null && !"x".equals(keyName) && !"y".equals(keyName) && !"z".equals(keyName)) {
@@ -316,7 +319,7 @@ public class FloatBlockEntity extends Entity {
 						}
 					}
 					
-					blockEntity.readNbt(compoundTag);
+					blockState.readNbt(compoundTag, registryLookup);
 					blockEntity.markDirty();
 				}
 			}
@@ -385,8 +388,8 @@ public class FloatBlockEntity extends Entity {
 	}
 	
 	@Override
-	public Packet<ClientPlayPacketListener> createSpawnPacket() {
-		return new EntitySpawnS2CPacket(this, Block.getRawIdFromState(this.getBlockState()));
+	public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
+		return new EntitySpawnS2CPacket(this, entityTrackerEntry, Block.getRawIdFromState(this.getBlockState()));
 	}
 	
 	@Override
@@ -424,10 +427,10 @@ public class FloatBlockEntity extends Entity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
-		this.dataTracker.startTracking(ORIGIN, BlockPos.ORIGIN);
-		this.dataTracker.startTracking(GRAVITY_MODIFIER, 0.0F);
-		this.dataTracker.startTracking(LAUNCH_TIME, 0L);
+	protected void initDataTracker(DataTracker.Builder builder) {
+		builder.add(ORIGIN, BlockPos.ORIGIN);
+		builder.add(GRAVITY_MODIFIER, 0.0F);
+		builder.add(LAUNCH_TIME, 0L);
 	}
 	
 	@Override
@@ -436,11 +439,7 @@ public class FloatBlockEntity extends Entity {
 	}
 	
 	@Override
-	public boolean collidesWith(Entity other) {
-		return other.isCollidable() && !this.isConnectedThroughVehicle(other);
-	}
-	
-	public float getGravity() {
+	public double getGravity() {
 		return this.dataTracker.get(GRAVITY_MODIFIER);
 	}
 	

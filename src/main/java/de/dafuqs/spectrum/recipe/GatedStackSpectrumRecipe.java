@@ -5,15 +5,16 @@ import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 
 import java.util.*;
 
-public abstract class GatedStackSpectrumRecipe<C extends Inventory> extends GatedSpectrumRecipe<C> {
+public abstract class GatedStackSpectrumRecipe<C extends RecipeInput> extends GatedSpectrumRecipe<C> {
 	
-	protected GatedStackSpectrumRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	protected GatedStackSpectrumRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier) {
+		super(group, secret, requiredAdvancementIdentifier);
 	}
 	
 	public abstract List<IngredientStack> getIngredientStacks();

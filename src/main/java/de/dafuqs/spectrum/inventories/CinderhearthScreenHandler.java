@@ -14,7 +14,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class CinderhearthScreenHandler extends ScreenHandler {
-	
+
 	public static final int PLAYER_INVENTORY_START_X = 8;
 	public static final int PLAYER_INVENTORY_START_Y = 84;
 	
@@ -33,16 +33,16 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		}
 	}
 	
-	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-		this(syncId, playerInventory, buf.readBlockPos(), new ArrayPropertyDelegate(2));
+	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos) {
+		this(syncId, playerInventory, blockPos, new ArrayPropertyDelegate(2));
 	}
-	
-	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos readBlockPos, PropertyDelegate propertyDelegate) {
+
+	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.CINDERHEARTH, syncId);
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
-		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(readBlockPos);
+		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(blockPos);
 		if (blockEntity instanceof CinderhearthBlockEntity cinderhearthBlockEntity) {
 			this.blockEntity = cinderhearthBlockEntity;
 		} else {

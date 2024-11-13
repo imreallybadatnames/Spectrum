@@ -43,10 +43,9 @@ public interface GatedRecipe<C extends RecipeInput> extends Recipe<C> {
 		UnlockToastManager.registerGatedRecipe(recipeType, gatedRecipe);
 	}
 	
-	default @Nullable Text getSecretHintText() {
+	default @Nullable Text getSecretHintText(Identifier id) {
 		if (isSecret()) {
-			// FIXME - How to handle? Alternatively, where to get this from?
-			String secretHintLangKey = getId().toTranslationKey("recipe", "hint").replace("/", ".");
+			String secretHintLangKey = id.toTranslationKey("recipe", "hint").replace("/", ".");
 			return Language.getInstance().hasTranslation(secretHintLangKey) ? Text.translatable(secretHintLangKey) : null;
 		}
 		return null;
