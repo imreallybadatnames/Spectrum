@@ -46,6 +46,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import static de.dafuqs.spectrum.SpectrumCommon.locate;
+import static de.dafuqs.spectrum.registries.DeferredRegistrar.defer;
 import static de.dafuqs.spectrum.registries.SpectrumFluids.*;
 
 public class SpectrumItems {
@@ -70,10 +71,7 @@ public class SpectrumItems {
 		
 	}
 
-	private interface Deferred {
-		void apply();
-	}
-	private static final Map<RegistryKey<Item>, Deferred> DEFERRED_COMMON = new HashMap<>();
+	static { DeferredRegistrar.setClass(SpectrumItems.class); }
 
 	// Main items
 	public static final Item GUIDEBOOK = new GuidebookItem(IS.of(1));
@@ -370,9 +368,9 @@ public class SpectrumItems {
 	public static final Item DRAGONBONE_BROTH = new StackableStewItem(IS.of(8).food(SpectrumFoodComponents.DRAGONBONE_BROTH));
 	public static final Item DOOMBLOOM_SEED = new AliasedBlockItem(SpectrumBlocks.DOOMBLOOM, IS.of().fireproof());
 	
-	public static final RegistryKey<Item> GLISTERING_MELON_SEEDS = registerDeferred("glistering_melon_seeds",
-			() -> new AliasedBlockItem(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON_STEM), IS.of()),
-			DyeColor.LIME);
+	public static final RegistryKey<Item> GLISTERING_MELON_SEEDS = defer(keyOf("glistering_melon_seeds"))
+			.withCommon(key -> register(key, new AliasedBlockItem(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON_STEM), IS.of()), DyeColor.LIME))
+			.value();
 	public static final Item AMARANTH_GRAINS = new AliasedBlockItem(SpectrumBlocks.AMARANTH, IS.of());
 	
 	public static final Item MELOCHITES_COOKBOOK_VOL_1 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/melochites_cookbook_vol_1");
@@ -556,16 +554,11 @@ public class SpectrumItems {
 		ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
 	}
 
-	public static RegistryKey<Item> registerDeferred(String name, Supplier<Item> itemSupplier, DyeColor dyeColor) {
-		var key = keyOf(name);
-		DEFERRED_COMMON.put(key, () -> {
-			var item = getOrDefault(key, itemSupplier);
-			Registry.register(Registries.ITEM, locate(name), item);
-			ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
-		});
-		return key;
+	public static void register(RegistryKey<Item> key, Item item, DyeColor dyeColor) {
+		Registry.register(Registries.ITEM, key, item);
+		ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
 	}
-	
+
 	public static void register() {
 		register("guidebook", GUIDEBOOK, DyeColor.WHITE);
 		register("paintbrush", PAINTBRUSH, DyeColor.WHITE);
@@ -588,9 +581,7 @@ public class SpectrumItems {
 		registerMusicDisks();
 		registerTechnicalItems();
 
-		for (var deferred : DEFERRED_COMMON.values()) {
-			deferred.apply();
-		}
+		DeferredRegistrar.registerCommon(SpectrumItems.class);
 	}
 	
 	public static void registerMusicDisks() {

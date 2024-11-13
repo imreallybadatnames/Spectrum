@@ -85,6 +85,7 @@ import java.util.*;
 import java.util.function.*;
 
 import static de.dafuqs.spectrum.SpectrumCommon.*;
+import static de.dafuqs.spectrum.registries.DeferredRegistrar.defer;
 import static de.dafuqs.spectrum.registries.SpectrumItems.*;
 import static net.minecraft.block.Blocks.*;
 
@@ -102,11 +103,7 @@ public class SpectrumBlocks {
 		return settings(mapColor, blockSoundGroup, 5.0F, 8.0F).solidBlock(SpectrumBlocks::never).blockVision(SpectrumBlocks::never).nonOpaque().requiresTool();
 	}
 
-	private interface Deferred {
-		void apply();
-	}
-	private static final Map<RegistryKey<Block>, Deferred> DEFERRED_COMMON = new HashMap<>();
-	private static final Map<RegistryKey<Block>, Deferred> DEFERRED_CLIENT = new HashMap<>();
+	static { DeferredRegistrar.setClass(SpectrumBlocks.class); }
 
 	public static final Block PEDESTAL_BASIC_TOPAZ = new PedestalBlock(craftingBlock(MapColor.DIAMOND_BLUE, SpectrumBlockSoundGroups.TOPAZ_BLOCK), BuiltinPedestalVariant.BASIC_TOPAZ);
 	public static final Block PEDESTAL_BASIC_AMETHYST = new PedestalBlock(craftingBlock(MapColor.PURPLE, BlockSoundGroup.AMETHYST_BLOCK), BuiltinPedestalVariant.BASIC_AMETHYST);
@@ -440,15 +437,17 @@ public class SpectrumBlocks {
 	public static final Block MOONSTONE_SEMI_PERMEABLE_GLASS = new GemstonePlayerOnlyGlassBlock(AbstractBlock.Settings.copy(SpectrumBlocks.MOONSTONE_GLASS), BuiltinGemstoneColor.WHITE);
 
 	// MELON
-	public static final RegistryKey<Block> GLISTERING_MELON = registerDeferredWithItem("glistering_melon",
-			() -> new Block(AbstractBlock.Settings.copy(Blocks.MELON)),
-			IS.of(), DyeColor.LIME);
-	public static final RegistryKey<Block> ATTACHED_GLISTERING_MELON_STEM = registerDeferred("attached_glistering_melon_stem",
-			() -> new AttachedStemBlock(keyOf("glistering_melon_stem"), GLISTERING_MELON, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.ATTACHED_MELON_STEM)),
-			true);
-	public static RegistryKey<Block> GLISTERING_MELON_STEM = registerDeferred("glistering_melon_stem",
-			() -> new StemBlock(GLISTERING_MELON, ATTACHED_GLISTERING_MELON_STEM, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.MELON_STEM)),
-			true);
+	public static final RegistryKey<Block> GLISTERING_MELON = defer(keyOf("glistering_melon"))
+			.withCommon(key -> registerBlockWithItem(key, new Block(AbstractBlock.Settings.copy(Blocks.MELON)), IS.of(), DyeColor.LIME))
+			.value();
+	public static final RegistryKey<Block> ATTACHED_GLISTERING_MELON_STEM = defer(keyOf("attached_glistering_melon_stem"))
+			.withCommon(key -> registerBlock(key, new AttachedStemBlock(keyOf("glistering_melon_stem"), GLISTERING_MELON, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.ATTACHED_MELON_STEM))))
+			.withClient(SpectrumBlocks::registerRenderLayerEntry)
+			.value();
+	public static final RegistryKey<Block> GLISTERING_MELON_STEM = defer(keyOf("glistering_melon_stem"))
+			.withCommon(key -> registerBlock(key, new StemBlock(GLISTERING_MELON, ATTACHED_GLISTERING_MELON_STEM, SpectrumItems.GLISTERING_MELON_SEEDS, AbstractBlock.Settings.copy(Blocks.MELON_STEM))))
+			.withClient(SpectrumBlocks::registerRenderLayerEntry)
+			.value();
 
 	public static final Block OMINOUS_SAPLING = new OminousSaplingBlock(AbstractBlock.Settings.copy(Blocks.OAK_SAPLING));
 	public static final Block PRESENT = new PresentBlock(AbstractBlock.Settings.copy(Blocks.WHITE_WOOL));
@@ -1514,7 +1513,11 @@ public class SpectrumBlocks {
 	}
 
 	static void registerBlock(String name, Block block) {
-		Registry.register(Registries.BLOCK, locate(name), block);
+		registerBlock(RegistryKey.of(RegistryKeys.BLOCK, locate(name)), block);
+	}
+
+	static void registerBlock(RegistryKey<Block> key, Block block) {
+		Registry.register(Registries.BLOCK, key, block);
 	}
 
 	static void registerBlockItem(String name, BlockItem blockItem, DyeColor dyeColor) {
@@ -1529,6 +1532,13 @@ public class SpectrumBlocks {
 		ItemColors.ITEM_COLORS.registerColorMapping(blockItem, dyeColor);
 	}
 
+	public static void registerBlockWithItem(RegistryKey<Block> key, Block block, Item.Settings itemSettings, DyeColor dyeColor) {
+		Registry.register(Registries.BLOCK, key, block);
+		var blockItem = new BlockItem(block, itemSettings);
+		Registry.register(Registries.ITEM, RegistryKey.of(RegistryKeys.ITEM, key.getValue()), blockItem);
+		ItemColors.ITEM_COLORS.registerColorMapping(blockItem, dyeColor);
+	}
+
 	static void registerBlockWithItem(String name, Block block, BlockItem blockItem, DyeColor dyeColor) {
 		Registry.register(Registries.BLOCK, locate(name), block);
 		Registry.register(Registries.ITEM, locate(name), blockItem);
@@ -1539,37 +1549,9 @@ public class SpectrumBlocks {
 		return RegistryKey.of(RegistryKeys.BLOCK, locate(name));
 	}
 
-	private static Block getOrDefault(RegistryKey<Block> key, Supplier<Block> defaultSupplier) {
-		var block = Registries.BLOCK.get(key);
-		return block == null ? defaultSupplier.get() : block;
+	public static void registerRenderLayerEntry(RegistryKey<Block> key) {
+		BlockRenderLayerMap.INSTANCE.putBlock(Registries.BLOCK.get(key), RenderLayer.getCutout());
 	}
-
-	public static RegistryKey<Block> registerDeferred(String name, Supplier<Block> blockSupplier, boolean registerRenderLayerMap) {
-		var key = keyOf(name);
-		DEFERRED_COMMON.put(key, () -> {
-			Registry.register(Registries.BLOCK, key, getOrDefault(key, blockSupplier));
-		});
-		if (registerRenderLayerMap) {
-			DEFERRED_CLIENT.put(key, () -> {
-				BlockRenderLayerMap.INSTANCE.putBlock(getOrDefault(key, blockSupplier), RenderLayer.getCutout());
-			});
-		}
-		return key;
-	}
-
-	public static RegistryKey<Block> registerDeferredWithItem(String name, Supplier<Block> blockSupplier, Item.Settings itemSettings, DyeColor dyeColor) {
-		var key = keyOf(name);
-		DEFERRED_COMMON.put(key, () -> {
-			var block = getOrDefault(key, blockSupplier);
-			Registry.register(Registries.BLOCK, key, block);
-
-			var blockItem = new BlockItem(block, itemSettings);
-			Registry.register(Registries.ITEM, SpectrumItems.keyOf(name), blockItem);
-			ItemColors.ITEM_COLORS.registerColorMapping(blockItem, dyeColor);
-		});
-		return key;
-	}
-
 	public static void register() {
 		registerBlockWithItem("pedestal_basic_topaz", PEDESTAL_BASIC_TOPAZ, new PedestalBlockItem(PEDESTAL_BASIC_TOPAZ, IS.of(1), BuiltinPedestalVariant.BASIC_TOPAZ, "item.spectrum.pedestal.tooltip.basic_topaz"), DyeColor.WHITE);
 		registerBlockWithItem("pedestal_basic_amethyst", PEDESTAL_BASIC_AMETHYST, new PedestalBlockItem(PEDESTAL_BASIC_AMETHYST, IS.of(1), BuiltinPedestalVariant.BASIC_AMETHYST, "item.spectrum.pedestal.tooltip.basic_amethyst"), DyeColor.WHITE);
@@ -1688,9 +1670,7 @@ public class SpectrumBlocks {
 
 		registerMobHeads(IS.of());
 
-		for (var deferred : DEFERRED_COMMON.values()) {
-			deferred.apply();
-		}
+		DeferredRegistrar.registerCommon(SpectrumBlocks.class);
 	}
 
 	private static void registerDDFlora(Item.Settings settings) {
@@ -3275,9 +3255,7 @@ public class SpectrumBlocks {
 				SpectrumBlocks.HUMMINGSTONE_GLASS,
 				SpectrumBlocks.HUMMINGSTONE_GLASS_PANE);
 
-		for (var deferred : DEFERRED_CLIENT.values()) {
-			deferred.apply();
-		}
+		DeferredRegistrar.registerClient(SpectrumBlocks.class);
 	}
 
 }
