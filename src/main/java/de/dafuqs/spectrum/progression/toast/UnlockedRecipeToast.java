@@ -3,16 +3,19 @@ package de.dafuqs.spectrum.progression.toast;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
+import it.unimi.dsi.fastutil.objects.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.sound.*;
 import net.minecraft.client.toast.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
-import net.minecraft.potion.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -61,17 +64,18 @@ public class UnlockedRecipeToast implements Toast {
 			// special handling for enchanted books
 			// Instead of the text "enchanted book" the toast will
 			// read the first stored enchantment in the book
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(itemStack);
-			if (enchantments.size() > 0) {
-				Map.Entry<Enchantment, Integer> firstEnchantment = enchantments.entrySet().iterator().next();
-				return Text.translatable(firstEnchantment.getKey().getTranslationKey());
+			var enchantments = itemStack.getEnchantments().getEnchantmentEntries();
+			// TODO - Review
+			if (!enchantments.isEmpty()) {
+				Object2IntMap.Entry<RegistryEntry<Enchantment>> enchantEntry = enchantments.iterator().next();
+				return Text.translatable(enchantEntry.getKey().getIdAsString());
 			}
 		} else if (itemStack.isOf(Items.POTION)) {
 			// special handling for potions
 			// use the name of the first custom potion effect
-			List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(itemStack);
-			if (effects.size() > 0) {
-				return Text.translatable(effects.get(0).getTranslationKey()).append(" ").append(Text.translatable("item.minecraft.potion"));
+			List<StatusEffectInstance> effects = itemStack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).customEffects();
+			if (!effects.isEmpty()) {
+				return Text.translatable(effects.getFirst().getTranslationKey()).append(" ").append(Text.translatable("item.minecraft.potion"));
 			}
 		}
 		return itemStack.getName();

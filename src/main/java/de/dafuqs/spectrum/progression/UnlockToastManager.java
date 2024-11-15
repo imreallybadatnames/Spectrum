@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.progression;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.progression.toast.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
@@ -66,6 +65,7 @@ public class UnlockToastManager {
 	
 	public static void processAdvancements(Set<Identifier> doneAdvancements) {
 		MinecraftClient client = MinecraftClient.getInstance();
+		if (client.world == null) return;
 		DynamicRegistryManager registryManager = client.world.getRegistryManager();
 		
 		int unlockedRecipeCount = 0;
@@ -130,7 +130,7 @@ public class UnlockToastManager {
 			List<ItemStack> allStacks = new ArrayList<>();
 			for (List<GatedRecipe<?>> recipes : unlockedRecipesByType.values()) {
 				for (GatedRecipe<?> recipe : recipes) {
-					allStacks.add(recipe.getOutput(client.world.getRegistryManager()));
+					allStacks.add(recipe.getResult(client.world.getRegistryManager()));
 				}
 			}
             UnlockedRecipeToast.showLotsOfRecipesToast(MinecraftClient.getInstance(), allStacks);
@@ -151,26 +151,27 @@ public class UnlockToastManager {
 		}
 		
 		
-		Text singleText = unlockedRecipes.get(0).getSingleUnlockToastString();
-		Text multipleText = unlockedRecipes.get(0).getMultipleUnlockToastString();
+		Text singleText = unlockedRecipes.getFirst().getSingleUnlockToastString();
+		Text multipleText = unlockedRecipes.getFirst().getMultipleUnlockToastString();
 		
 		List<ItemStack> singleRecipes = new ArrayList<>();
 		HashMap<String, List<ItemStack>> groupedRecipes = new HashMap<>();
 		
 		for (GatedRecipe<?> recipe : unlockedRecipes) {
-			if (!recipe.getOutput(registryManager).isEmpty()) { // weather recipes
+			if (!recipe.getResult(registryManager).isEmpty()) { // weather recipes
 				if (recipe.getGroup() == null) {
-					SpectrumCommon.logWarning("Found a recipe with null group: " + recipe.getId().toString() + " Please report this. If you are Dafuqs and you are reading this: you messed up big time.");
+					// FIXME - Better place to log this?
+					//SpectrumCommon.logWarning("Found a recipe with null group: " + recipe.getId().toString() + " Please report this. If you are DaFuqs and you are reading this: you messed up big time.");
 				}
 				
 				if (recipe.getGroup().isEmpty()) {
-					singleRecipes.add(recipe.getOutput(registryManager));
+					singleRecipes.add(recipe.getResult(registryManager));
 				} else {
 					if (groupedRecipes.containsKey(recipe.getGroup())) {
-						groupedRecipes.get(recipe.getGroup()).add(recipe.getOutput(registryManager));
+						groupedRecipes.get(recipe.getGroup()).add(recipe.getResult(registryManager));
 					} else {
 						List<ItemStack> newList = new ArrayList<>();
-						newList.add(recipe.getOutput(registryManager));
+						newList.add(recipe.getResult(registryManager));
 						groupedRecipes.put(recipe.getGroup(), newList);
 					}
 				}
@@ -182,7 +183,7 @@ public class UnlockToastManager {
 			for (Map.Entry<String, List<ItemStack>> group : groupedRecipes.entrySet()) {
 				List<ItemStack> groupedList = group.getValue();
 				if (groupedList.size() == 1) {
-					UnlockedRecipeToast.showRecipeToast(MinecraftClient.getInstance(), groupedList.get(0), singleText);
+					UnlockedRecipeToast.showRecipeToast(MinecraftClient.getInstance(), groupedList.getFirst(), singleText);
 				} else {
 					UnlockedRecipeToast.showRecipeGroupToast(MinecraftClient.getInstance(), group.getKey(), groupedList, multipleText);
 				}
