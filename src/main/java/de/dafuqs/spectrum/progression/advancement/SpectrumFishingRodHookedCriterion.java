@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.advancement.criterion.*;
@@ -26,22 +27,6 @@ public class SpectrumFishingRodHookedCriterion extends AbstractCriterion<Spectru
 
 	public static final Identifier ID = SpectrumCommon.locate("fishing_rod_hooked");
 
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	protected Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		ItemPredicate rod = ItemPredicate.fromJson(jsonObject.get("rod"));
-		LootContextPredicate bobber = EntityPredicate.contextPredicateFromJson(jsonObject, "bobber", predicateDeserializer);
-		LootContextPredicate fishing = EntityPredicate.contextPredicateFromJson(jsonObject, "fishing", predicateDeserializer);
-		LootContextPredicate fishedEntity = EntityPredicate.contextPredicateFromJson(jsonObject, "fished_entity", predicateDeserializer);
-		ItemPredicate fishedItem = ItemPredicate.fromJson(jsonObject.get("item"));
-		FluidPredicate fluidPredicate = FluidPredicate.fromJson(jsonObject.get("fluid"));
-		return new SpectrumFishingRodHookedCriterion.Conditions(playerPredicate, rod, bobber, fishing, fishedEntity, fishedItem, fluidPredicate);
-	}
-
 	public void trigger(ServerPlayerEntity player, ItemStack rod, SpectrumFishingBobberEntity bobber, Entity fishedEntity, Collection<ItemStack> fishingLoots) {
 		LootContext bobberContext = EntityPredicate.createAdvancementEntityLootContext(player, bobber);
 		LootContext hookedEntityContext = bobber.getHookedEntity() == null ? null : EntityPredicate.createAdvancementEntityLootContext(player, bobber.getHookedEntity());
@@ -55,63 +40,61 @@ public class SpectrumFishingRodHookedCriterion extends AbstractCriterion<Spectru
 		Criteria.FISHING_ROD_HOOKED.trigger(player, (conditions) -> conditions.matches(rod, hookedEntityOrBobberContext, fishingLoots));
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate rod;
-		private final LootContextPredicate bobber;
-		private final LootContextPredicate hookedEntity;
-		private final LootContextPredicate fishedEntity;
-		private final ItemPredicate caughtItem;
-		private final FluidPredicate fluidPredicate;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, ItemPredicate rod, LootContextPredicate bobber, LootContextPredicate hookedEntity, LootContextPredicate fishedEntity, ItemPredicate caughtItem, FluidPredicate fluidPredicate) {
-			super(SpectrumFishingRodHookedCriterion.ID, player);
-			this.rod = rod;
-			this.bobber = bobber;
-			this.hookedEntity = hookedEntity;
-			this.fishedEntity = fishedEntity;
-			this.caughtItem = caughtItem;
-			this.fluidPredicate = fluidPredicate;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		Optional<ItemPredicate> rod,
+		Optional<LootContextPredicate> bobber,
+		Optional<LootContextPredicate> hookedEntity,
+		Optional<LootContextPredicate> fishedEntity,
+		Optional<ItemPredicate> caughtItem,
+		Optional<FluidPredicate> fluidPredicate
+	) implements AbstractCriterion.Conditions {
 
-		public static SpectrumFishingRodHookedCriterion.Conditions create(ItemPredicate rod, LootContextPredicate bobber, LootContextPredicate hookedEntity, LootContextPredicate fishedEntity, ItemPredicate item, FluidPredicate fluidPredicate) {
-			return new SpectrumFishingRodHookedCriterion.Conditions(LootContextPredicate.EMPTY, rod, bobber, hookedEntity, fishedEntity, item, fluidPredicate);
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.optionalFieldOf("rod").forGetter(Conditions::rod),
+			LootContextPredicate.CODEC.optionalFieldOf("bobber").forGetter(Conditions::bobber),
+			LootContextPredicate.CODEC.optionalFieldOf("fishing").forGetter(Conditions::hookedEntity),
+			LootContextPredicate.CODEC.optionalFieldOf("fished_entity").forGetter(Conditions::fishedEntity),
+			ItemPredicate.CODEC.optionalFieldOf("item").forGetter(Conditions::caughtItem),
+			FluidPredicate.CODEC.optionalFieldOf("fluid").forGetter(Conditions::fluidPredicate)
+		).apply(instance, Conditions::new));
 
 		public boolean matches(ItemStack rod, LootContext bobberContext, LootContext hookedEntityContext, LootContext fishedEntityContext, Collection<ItemStack> fishingLoots, ServerWorld world, BlockPos blockPos) {
-			if (!this.rod.test(rod)) return false;
-			if (!this.bobber.test(bobberContext)) return false;
-			if (!this.fluidPredicate.test(world, blockPos)) return false;
+			if (this.rod.isPresent() && !this.rod.get().test(rod)) return false;
+			if (this.bobber.isPresent() && !this.bobber.get().test(bobberContext)) return false;
+			if (this.fluidPredicate.isPresent() && !this.fluidPredicate.get().test(world, blockPos)) return false;
+			// FIXME - This doesn't seem right...
+			/*
 			if (fishedEntityContext == null && !fishedEntity.equals(LootContextPredicate.EMPTY) ||
 				!this.fishedEntity.test(fishedEntityContext)) return false;
 			if (hookedEntityContext == null && !hookedEntity.equals(LootContextPredicate.EMPTY) ||
 				!this.hookedEntity.test(hookedEntityContext)) return false;
+			 */
+			if (this.fishedEntity.isPresent() && !this.fishedEntity.get().test(fishedEntityContext) && fishedEntityContext == null)
+				return false;
+			if (this.hookedEntity.isPresent() && this.hookedEntity.get().test(hookedEntityContext) && hookedEntityContext == null)
+				return false;
 
-			if (this.caughtItem != ItemPredicate.ANY) {
+			if (this.caughtItem.isPresent()) {
 				if (hookedEntityContext != null) {
 					Entity entity = hookedEntityContext.get(LootContextParameters.THIS_ENTITY);
 					if (entity instanceof ItemEntity itemEntity &&
-						this.caughtItem.test(itemEntity.getStack())) return true;
+						this.caughtItem.get().test(itemEntity.getStack())) return true;
 				}
 				for (ItemStack itemStack : fishingLoots) {
-					if (this.caughtItem.test(itemStack)) return true;
+					if (this.caughtItem.get().test(itemStack)) return true;
 				}
 
 				return false;
 			}
 
 			return true;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("rod", this.rod.toJson());
-			jsonObject.add("bobber", this.bobber.toJson(predicateSerializer));
-			jsonObject.add("hooked_entity", this.hookedEntity.toJson(predicateSerializer));
-			jsonObject.add("fished_entity", this.fishedEntity.toJson(predicateSerializer));
-			jsonObject.add("item", this.caughtItem.toJson());
-			jsonObject.add("fluid", this.fluidPredicate.toJson());
-			return jsonObject;
 		}
 	}
 

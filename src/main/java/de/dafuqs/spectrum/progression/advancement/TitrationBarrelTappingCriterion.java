@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.advancement.criterion.*;
@@ -17,51 +18,35 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 
 	public static final Identifier ID = SpectrumCommon.locate("titration_barrel_tapping");
 
-	public static TitrationBarrelTappingCriterion.Conditions create(ItemPredicate[] item, NumberRange.IntRange ingameDaysAgeRange, NumberRange.IntRange ingredientCountRange) {
-		return new TitrationBarrelTappingCriterion.Conditions(LootContextPredicate.EMPTY, item, ingameDaysAgeRange, ingredientCountRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public TitrationBarrelTappingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate[] tappedItemPredicates = ItemPredicate.deserializeAll(jsonObject.get("items"));
-		NumberRange.IntRange ingameDaysAgeRange = NumberRange.IntRange.fromJson(jsonObject.get("age_ingame_days"));
-		NumberRange.IntRange ingredientCountRange = NumberRange.IntRange.fromJson(jsonObject.get("ingredient_count"));
-		return new TitrationBarrelTappingCriterion.Conditions(extended, tappedItemPredicates, ingameDaysAgeRange, ingredientCountRange);
-	}
-
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack, int ingameDaysAge, int ingredientCount) {
 		this.trigger(player, (conditions) -> conditions.matches(itemStack, ingameDaysAge, ingredientCount));
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate[] tappedItemPredicates;
-		private final NumberRange.IntRange ingameDaysAgeRange;
-		private final NumberRange.IntRange ingredientCountRange;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, ItemPredicate[] tappedItemPredicates, NumberRange.IntRange ingameDaysAgeRange, NumberRange.IntRange ingredientCountRange) {
-			super(ID, player);
-			this.tappedItemPredicates = tappedItemPredicates;
-			this.ingameDaysAgeRange = ingameDaysAgeRange;
-			this.ingredientCountRange = ingredientCountRange;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		Optional<List<ItemPredicate>> tappedItemsPredicate,
+		Optional<NumberRange.IntRange> ingameDaysAgeRange,
+		Optional<NumberRange.IntRange> ingredientCountRange
+	) implements AbstractCriterion.Conditions {
 
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("items", Arrays.toString(this.tappedItemPredicates));
-			jsonObject.add("age_ingame_days", this.ingameDaysAgeRange.toJson());
-			jsonObject.add("ingredient_count", this.ingredientCountRange.toJson());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.listOf().optionalFieldOf("items").forGetter(Conditions::tappedItemsPredicate),
+			NumberRange.IntRange.CODEC.optionalFieldOf("age_ingame_days").forGetter(Conditions::ingameDaysAgeRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("ingredient_count").forGetter(Conditions::ingredientCountRange)
+		).apply(instance, Conditions::new));
 
-		public boolean matches(ItemStack itemStack, int experience, int ingredientCount) {
-			if (this.ingameDaysAgeRange.test(experience) && this.ingredientCountRange.test(ingredientCount)) {
-				List<ItemPredicate> list = new ObjectArrayList<>(this.tappedItemPredicates);
+		public boolean matches(ItemStack itemStack, int ingameDaysAge, int ingredientCount) {
+			if (this.ingameDaysAgeRange.isEmpty()) return false;
+			if (this.ingredientCountRange.isEmpty()) return false;
+
+			if (this.ingameDaysAgeRange.get().test(ingameDaysAge) && this.ingredientCountRange.get().test(ingredientCount)) {
+				List<ItemPredicate> list = new ObjectArrayList<>(this.tappedItemsPredicate.get());
 				if (list.isEmpty()) {
 					return true;
 				} else {
@@ -70,9 +55,9 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 					}
 					return list.isEmpty();
 				}
-			} else {
-				return false;
 			}
+
+			return false;
 		}
 	}
 

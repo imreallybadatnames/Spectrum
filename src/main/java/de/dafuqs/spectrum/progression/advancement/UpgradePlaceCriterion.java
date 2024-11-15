@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import net.minecraft.advancement.criterion.*;
@@ -17,67 +18,43 @@ public class UpgradePlaceCriterion extends AbstractCriterion<UpgradePlaceCriteri
 
 	public static final Identifier ID = SpectrumCommon.locate("upgrade_place");
 
-	public static UpgradePlaceCriterion.Conditions create(BlockPredicate blockPredicate, NumberRange.IntRange countRange, NumberRange.IntRange speedRange, NumberRange.IntRange experienceRange, NumberRange.IntRange efficiencyRange, NumberRange.IntRange yieldRange) {
-		return new UpgradePlaceCriterion.Conditions(LootContextPredicate.EMPTY, blockPredicate, countRange, speedRange, experienceRange, efficiencyRange, yieldRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public UpgradePlaceCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		BlockPredicate blockPredicate = BlockPredicate.fromJson(jsonObject.get("block"));
-		NumberRange.IntRange countRange = NumberRange.IntRange.fromJson(jsonObject.get("count"));
-		NumberRange.IntRange speedRange = NumberRange.IntRange.fromJson(jsonObject.get("speed_mod"));
-		NumberRange.IntRange experienceRange = NumberRange.IntRange.fromJson(jsonObject.get("experience_mod"));
-		NumberRange.IntRange efficiencyRange = NumberRange.IntRange.fromJson(jsonObject.get("efficiency_mod"));
-		NumberRange.IntRange yieldRange = NumberRange.IntRange.fromJson(jsonObject.get("yield_mod"));
-		return new UpgradePlaceCriterion.Conditions(extended, blockPredicate, countRange, speedRange, experienceRange, efficiencyRange, yieldRange);
-	}
-
 	public void trigger(ServerPlayerEntity player, ServerWorld world, BlockPos pos, int upgradeCount, Map<Upgradeable.UpgradeType, Integer> upgradeModifiers) {
 		this.trigger(player, (conditions) -> conditions.matches(world, pos, upgradeCount, upgradeModifiers));
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final BlockPredicate blockPredicate;
-		private final NumberRange.IntRange countRange;
-		private final NumberRange.IntRange speedRange;
-		private final NumberRange.IntRange experienceRange;
-		private final NumberRange.IntRange efficiencyRange;
-		private final NumberRange.IntRange yieldRange;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, BlockPredicate blockPredicate, NumberRange.IntRange countRange, NumberRange.IntRange speedRange, NumberRange.IntRange experienceRange, NumberRange.IntRange efficiencyRange, NumberRange.IntRange yieldRange) {
-			super(ID, player);
-			this.blockPredicate = blockPredicate;
-			this.countRange = countRange;
-			this.speedRange = speedRange;
-			this.experienceRange = experienceRange;
-			this.efficiencyRange = efficiencyRange;
-			this.yieldRange = yieldRange;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		Optional<BlockPredicate> blockPredicate,
+		Optional<NumberRange.IntRange> countRange,
+		Optional<NumberRange.IntRange> speedRange,
+		Optional<NumberRange.IntRange> experienceRange,
+		Optional<NumberRange.IntRange> efficiencyRange,
+		Optional<NumberRange.IntRange> yieldRange
+	) implements AbstractCriterion.Conditions {
 
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("block", this.blockPredicate.toJson());
-			jsonObject.add("count", this.countRange.toJson());
-			jsonObject.add("speed_mod", this.speedRange.toJson());
-			jsonObject.add("experience_mod", this.experienceRange.toJson());
-			jsonObject.add("efficiency_mod", this.efficiencyRange.toJson());
-			jsonObject.add("yield_mod", this.yieldRange.toJson());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			BlockPredicate.CODEC.optionalFieldOf("block").forGetter(Conditions::blockPredicate),
+			NumberRange.IntRange.CODEC.optionalFieldOf("count").forGetter(Conditions::countRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("speed_mod").forGetter(Conditions::speedRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("experience_mod").forGetter(Conditions::experienceRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("efficiency_mod").forGetter(Conditions::efficiencyRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("yield_mod").forGetter(Conditions::yieldRange)
+		).apply(instance, Conditions::new));
 
 		public boolean matches(ServerWorld world, BlockPos pos, int upgradeCount, Map<Upgradeable.UpgradeType, Integer> upgradeModifiers) {
-			return this.blockPredicate.test(world, pos)
-				&& this.countRange.test(upgradeCount)
-				&& this.speedRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.SPEED))
-				&& this.experienceRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EXPERIENCE))
-				&& this.efficiencyRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.EFFICIENCY))
-				&& this.yieldRange.test(upgradeModifiers.get(Upgradeable.UpgradeType.YIELD));
+			// FIXME - Determine the best logic for this
+			return this.blockPredicate.get().test(world, pos)
+				&& this.countRange.get().test(upgradeCount)
+				&& this.speedRange.get().test(upgradeModifiers.get(Upgradeable.UpgradeType.SPEED))
+				&& this.experienceRange.get().test(upgradeModifiers.get(Upgradeable.UpgradeType.EXPERIENCE))
+				&& this.efficiencyRange.get().test(upgradeModifiers.get(Upgradeable.UpgradeType.EFFICIENCY))
+				&& this.yieldRange.get().test(upgradeModifiers.get(Upgradeable.UpgradeType.YIELD));
 		}
 	}
 

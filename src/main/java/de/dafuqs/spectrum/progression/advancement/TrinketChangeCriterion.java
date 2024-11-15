@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import dev.emi.trinkets.api.*;
@@ -18,20 +19,6 @@ import java.util.*;
 public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("trinket_change");
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	protected Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		ItemPredicate[] itemPredicates = ItemPredicate.deserializeAll(jsonObject.get("items"));
-		NumberRange.IntRange totalCountRange = NumberRange.IntRange.fromJson(jsonObject.get("total_count"));
-		NumberRange.IntRange spectrumCountRange = NumberRange.IntRange.fromJson(jsonObject.get("spectrum_count"));
-
-		return new TrinketChangeCriterion.Conditions(playerPredicate, itemPredicates, totalCountRange, spectrumCountRange);
-	}
 
 	public void trigger(ServerPlayerEntity player) {
 		this.trigger(player, (conditions) -> {
@@ -51,43 +38,33 @@ public class TrinketChangeCriterion extends AbstractCriterion<TrinketChangeCrite
 		});
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		private final ItemPredicate[] itemPredicates;
-		private final NumberRange.IntRange totalCountRange;
-		private final NumberRange.IntRange spectrumCountRange;
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		Optional<List<ItemPredicate>> itemPredicates,
+		Optional<NumberRange.IntRange> totalCountRange,
+		Optional<NumberRange.IntRange> spectrumCountRange
+	) implements AbstractCriterion.Conditions {
 
-		public Conditions(LootContextPredicate playerPredicate, ItemPredicate[] itemPredicates, NumberRange.IntRange totalCountRange, NumberRange.IntRange spectrumCountRange) {
-			super(TrinketChangeCriterion.ID, playerPredicate);
-			this.itemPredicates = itemPredicates;
-			this.totalCountRange = totalCountRange;
-			this.spectrumCountRange = spectrumCountRange;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-
-			if (this.itemPredicates.length > 0) {
-				JsonArray jsonObject2 = new JsonArray();
-				for (ItemPredicate itemPredicate : this.itemPredicates) {
-					jsonObject2.add(itemPredicate.toJson());
-				}
-
-				jsonObject.add("items", jsonObject2);
-			}
-			jsonObject.add("total_count", this.totalCountRange.toJson());
-			jsonObject.add("spectrum_count", this.spectrumCountRange.toJson());
-			return jsonObject;
-		}
+		public static final Codec<TrinketChangeCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(TrinketChangeCriterion.Conditions::player),
+			ItemPredicate.CODEC.listOf().optionalFieldOf("items").forGetter(TrinketChangeCriterion.Conditions::itemPredicates),
+			NumberRange.IntRange.CODEC.optionalFieldOf("total_count").forGetter(TrinketChangeCriterion.Conditions::totalCountRange),
+			NumberRange.IntRange.CODEC.optionalFieldOf("spectrum_count").forGetter(TrinketChangeCriterion.Conditions::spectrumCountRange)
+		).apply(instance, TrinketChangeCriterion.Conditions::new));
 
 		public boolean matches(List<ItemStack> trinketStacks, int totalCount, int spectrumCount) {
-			if (this.totalCountRange.test(totalCount) && this.spectrumCountRange.test(spectrumCount)) {
-				int i = this.itemPredicates.length;
+			if (this.totalCountRange.isPresent() && this.totalCountRange.get().test(totalCount)
+				&& this.spectrumCountRange.isPresent() && this.spectrumCountRange.get().test(spectrumCount)) {
+				int i = this.itemPredicates.orElse(List.of()).size();
 				if (i == 0) {
 					return true;
 				} else {
-					List<ItemPredicate> requiredTrinkets = new ObjectArrayList<>(this.itemPredicates);
+					List<ItemPredicate> requiredTrinkets = new ObjectArrayList<>(this.itemPredicates.get());
 					for (ItemStack trinketStack : trinketStacks) {
 						if (requiredTrinkets.isEmpty()) {
 							return true;

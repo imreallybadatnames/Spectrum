@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
@@ -20,19 +21,7 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 	public static final Identifier ID = SpectrumCommon.locate("take_off_belt_jump");
 
 	public static TakeOffBeltJumpCriterion.Conditions create(ItemPredicate itemPredicate, NumberRange.IntRange chargesRange) {
-		return new TakeOffBeltJumpCriterion.Conditions(LootContextPredicate.EMPTY, itemPredicate, chargesRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public TakeOffBeltJumpCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
-		NumberRange.IntRange chargesRange = NumberRange.IntRange.fromJson(jsonObject.get("charges"));
-		return new TakeOffBeltJumpCriterion.Conditions(extended, itemPredicate, chargesRange);
+		return new TakeOffBeltJumpCriterion.Conditions(Optional.empty(), itemPredicate, chargesRange);
 	}
 
 	public void trigger(ServerPlayerEntity player) {
@@ -41,7 +30,7 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 			if (component.isPresent()) {
 				List<Pair<SlotReference, ItemStack>> equipped = component.get().getEquipped(SpectrumItems.TAKE_OFF_BELT);
 				if (!equipped.isEmpty()) {
-					ItemStack firstBelt = equipped.get(0).getRight();
+					ItemStack firstBelt = equipped.getFirst().getRight();
 					if (firstBelt != null) {
 						int charge = TakeOffBeltItem.getCurrentCharge(player);
 						if (charge > 0) {
@@ -54,23 +43,22 @@ public class TakeOffBeltJumpCriterion extends AbstractCriterion<TakeOffBeltJumpC
 		});
 	}
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate itemPredicate;
-		private final NumberRange.IntRange chargesRange;
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
 
-		public Conditions(LootContextPredicate player, ItemPredicate itemPredicate, NumberRange.IntRange chargesRange) {
-			super(ID, player);
-			this.itemPredicate = itemPredicate;
-			this.chargesRange = chargesRange;
-		}
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		ItemPredicate itemPredicate,
+		NumberRange.IntRange chargesRange
+	) implements AbstractCriterion.Conditions {
 
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("item", this.itemPredicate.toString());
-			jsonObject.addProperty("charges", this.chargesRange.toString());
-			return jsonObject;
-		}
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.fieldOf("item").forGetter(Conditions::itemPredicate),
+			NumberRange.IntRange.CODEC.fieldOf("charges").forGetter(Conditions::chargesRange)
+		).apply(instance, Conditions::new));
 
 		public boolean matches(ItemStack beltStack, int charge) {
 			return itemPredicate.test(beltStack) && this.chargesRange.test(charge);
