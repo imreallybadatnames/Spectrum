@@ -1,25 +1,26 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.item.*;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-
-import java.util.*;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 
 public class BedrockShovelItem extends ShovelItem implements Preenchanted {
 	
-	public BedrockShovelItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(material, attackDamage, attackSpeed, settings);
+	public BedrockShovelItem(ToolMaterial material, Settings settings) {
+		super(material, settings);
 	}
 	
 	@Override
-	public boolean isDamageable() {
-		return false;
-	}
-	
-	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of(Enchantments.EFFICIENCY, 6);
+	public ItemEnchantmentsComponent getDefaultEnchantments(RegistryWrapper.WrapperLookup registryLookup) {
+		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		registryLookup
+				.getOptionalWrapper(RegistryKeys.ENCHANTMENT)
+				.flatMap(registryEntryLookup -> registryEntryLookup.getOptional(Enchantments.EFFICIENCY))
+				.ifPresent(e -> builder.add(e, 6));
+		return builder.build();
 	}
 	
 	@Override

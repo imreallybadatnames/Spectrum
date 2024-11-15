@@ -1,21 +1,31 @@
 package de.dafuqs.spectrum.api.item;
 
-import net.minecraft.enchantment.*;
+import de.dafuqs.spectrum.SpectrumCommon;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.*;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
-
 public interface Preenchanted {
-	
-	Map<Enchantment, Integer> getDefaultEnchantments();
-	
+
+	void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder);
+
+	default ItemEnchantmentsComponent getDefaultEnchantments() {
+		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		SpectrumCommon.getRegistryLookup()
+				.flatMap(r -> r.getOptionalWrapper(RegistryKeys.ENCHANTMENT))
+				.ifPresent(impl -> addDefaultEnchantments(impl, builder));
+		return builder.build();
+	}
+
 	default @NotNull ItemStack getDefaultEnchantedStack(Item item) {
-		ItemStack itemStack = new ItemStack(item);
-		for (Map.Entry<Enchantment, Integer> defaultEnchantment : getDefaultEnchantments().entrySet()) {
-			itemStack.addEnchantment(defaultEnchantment.getKey(), defaultEnchantment.getValue());
-		}
-		return itemStack;
+		var stack = new ItemStack(item);
+		SpectrumCommon.getRegistryLookup().ifPresent(
+				r -> stack.set(DataComponentTypes.ENCHANTMENTS, getDefaultEnchantments()));
+		return stack;
 	}
 	
 	/**
@@ -23,17 +33,9 @@ public interface Preenchanted {
 	 * meaning enchantments had been added on top of the original ones.
 	 */
 	default boolean onlyHasPreEnchantments(ItemStack stack) {
-		Map<Enchantment, Integer> innateEnchantments = getDefaultEnchantments();
-		Map<Enchantment, Integer> stackEnchantments = EnchantmentHelper.get(stack);
-		
-		for (Map.Entry<Enchantment, Integer> stackEnchantment : stackEnchantments.entrySet()) {
-			int innateLevel = innateEnchantments.getOrDefault(stackEnchantment.getKey(), 0);
-			if (stackEnchantment.getValue() > innateLevel) {
-				return false;
-			}
-		}
-		
-		return true;
+		var currentEnchants = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
+		var defaultEnchants = getDefaultEnchantments();
+		return currentEnchants.equals(defaultEnchants);
 	}
 	
 }

@@ -1,20 +1,19 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.item.*;
-import net.minecraft.enchantment.*;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.item.*;
-
-import java.util.*;
+import net.minecraft.registry.RegistryWrapper;
 
 public class SpectrumPickaxeItem extends PickaxeItem implements Preenchanted {
 	
-	public SpectrumPickaxeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(material, settings.attributeModifiers(PickaxeItem.createAttributeModifiers(material, attackDamage, attackSpeed)));
+	public SpectrumPickaxeItem(ToolMaterial material, Settings settings) {
+		super(material, settings);
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of();
+	public ItemEnchantmentsComponent getDefaultEnchantments(RegistryWrapper.WrapperLookup registryLookup) {
+		return ItemEnchantmentsComponent.DEFAULT;
 	}
 	
 	@Override

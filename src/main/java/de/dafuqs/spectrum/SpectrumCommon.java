@@ -24,8 +24,10 @@ import net.fabricmc.fabric.api.resource.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.loader.api.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.*;
 import net.minecraft.resource.*;
 import net.minecraft.server.*;
@@ -259,6 +261,15 @@ public class SpectrumCommon implements ModInitializer {
 	 */
 	public static Optional<RecipeManager> getRecipeManager(@Nullable World world) {
 		return world == null ? minecraftServer == null ? Optional.empty() : Optional.of(minecraftServer.getRecipeManager()) : Optional.of(world.getRecipeManager());
+	}
+
+	public static Optional<RegistryWrapper.WrapperLookup> getRegistryLookup() {
+		if (minecraftServer != null)
+			return Optional.of(minecraftServer.getRegistryManager());
+		var client = MinecraftClient.getInstance();
+		if (client.world != null)
+			return Optional.of(client.world.getRegistryManager());
+		return Optional.empty();
 	}
 	
 }
