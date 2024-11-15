@@ -1,0 +1,41 @@
+{
+  "type": "spectrum:pedestal",
+  "time": 1200,
+  "tier": "advanced",
+  "cyan": 2,
+  "magenta": 4,
+  "yellow": 2,
+  "black": 1,
+  "white": 0,
+  "experience": 4.0,
+  "pattern": [
+    "PAP",
+    "XTX",
+    "YCY"
+  ],
+  "key": {
+    "X": {
+      "item": "spectrum:polished_calcite"
+    },
+    "Y": {
+      "item": "spectrum:polished_basalt"
+    },
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+    "T": {
+      "item": "spectrum:topaz_block"
+    },
+    "C": {
+      "item": "spectrum:citrine_block"
+    },
+    "P": {
+      "item": "spectrum:magenta_pigment"
+    }
+  },
+  "result": {
+    "item": "spectrum:upgrade_speed",
+    "count": 1
+  },
+  "required_advancement": "spectrum:unlocks/upgrades/upgrade_speed"
+}
