@@ -1,44 +1,27 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.advancement.criterion.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.predicate.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.predicate.item.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
 import java.util.*;
 
 public class PotionWorkshopBrewingCriterion extends AbstractCriterion<PotionWorkshopBrewingCriterion.Conditions> {
-
+	
 	public static final Identifier ID = SpectrumCommon.locate("potion_workshop_brewing");
-
-	public static PotionWorkshopBrewingCriterion.Conditions create(ItemPredicate itemPredicate, EntityEffectPredicate effectsPredicate, NumberRange.IntRange brewedCountRange, NumberRange.IntRange maxAmplifierRange, NumberRange.IntRange maxDurationRange, NumberRange.IntRange effectCountRange, NumberRange.IntRange uniqueEffectCountRange) {
-		return new PotionWorkshopBrewingCriterion.Conditions(LootContextPredicate.EMPTY, itemPredicate, effectsPredicate, brewedCountRange, maxAmplifierRange, maxDurationRange, effectCountRange, uniqueEffectCountRange);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public PotionWorkshopBrewingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject.get("item"));
-		EntityEffectPredicate statusEffectsPredicate = EntityEffectPredicate.fromJson(jsonObject.get("effects"));
-		NumberRange.IntRange brewedCountRange = NumberRange.IntRange.fromJson(jsonObject.get("brewed_count"));
-		NumberRange.IntRange maxAmplifierRange = NumberRange.IntRange.fromJson(jsonObject.get("highest_amplifier"));
-		NumberRange.IntRange maxDurationRange = NumberRange.IntRange.fromJson(jsonObject.get("longest_duration"));
-		NumberRange.IntRange effectCountRange = NumberRange.IntRange.fromJson(jsonObject.get("effect_count"));
-		NumberRange.IntRange uniqueEffectCountRange = NumberRange.IntRange.fromJson(jsonObject.get("unique_effect_count"));
-		return new PotionWorkshopBrewingCriterion.Conditions(extended, itemPredicate, statusEffectsPredicate, brewedCountRange, maxAmplifierRange, maxDurationRange, effectCountRange, uniqueEffectCountRange);
-	}
-
+	
 	@SuppressWarnings("deprecation")
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack, int brewedCount) {
 		this.trigger(player, conditions -> {
@@ -46,9 +29,10 @@ public class PotionWorkshopBrewingCriterion extends AbstractCriterion<PotionWork
 			if (itemStack.getItem() instanceof InkPoweredPotionFillable inkPoweredPotionFillable) {
 				effects = inkPoweredPotionFillable.getVanillaEffects(itemStack);
 			} else {
-				effects = PotionUtil.getPotionEffects(itemStack);
+				PotionContentsComponent potionComponent = itemStack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
+				effects = potionComponent.customEffects();
 			}
-
+			
 			int highestAmplifier = 0;
 			int longestDuration = 0;
 			for (StatusEffectInstance instance : effects) {
@@ -59,70 +43,65 @@ public class PotionWorkshopBrewingCriterion extends AbstractCriterion<PotionWork
 					longestDuration = instance.getDuration();
 				}
 			}
-
+			
 			List<StatusEffect> uniqueEffects = new ArrayList<>();
 			for (StatusEffectInstance instance : effects) {
-				if (!uniqueEffects.contains(instance.getEffectType())) {
-					uniqueEffects.add(instance.getEffectType());
+				if (!uniqueEffects.contains(instance.getEffectType().value())) {
+					uniqueEffects.add(instance.getEffectType().value());
 				}
 			}
-
+			
 			return conditions.matches(itemStack, effects, brewedCount, highestAmplifier, longestDuration, effects.size(), uniqueEffects.size());
 		});
 	}
-
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate itemPredicate;
-		private final EntityEffectPredicate statusEffectsPredicate;
-		private final NumberRange.IntRange brewedCountRange;
-		private final NumberRange.IntRange highestEffectAmplifierRange;
-		private final NumberRange.IntRange longestEffectDurationRange;
-		private final NumberRange.IntRange effectCountRange;
-		private final NumberRange.IntRange uniqueEffectCountRange;
-
-		public Conditions(LootContextPredicate player, ItemPredicate itemPredicate, EntityEffectPredicate statusEffectsPredicate, NumberRange.IntRange brewedCountRange, NumberRange.IntRange highestEffectAmplifierRange, NumberRange.IntRange longestEffectDurationRange, NumberRange.IntRange effectCountRange, NumberRange.IntRange uniqueEffectCountRange) {
-			super(ID, player);
-			this.itemPredicate = itemPredicate;
-			this.statusEffectsPredicate = statusEffectsPredicate;
-			this.brewedCountRange = brewedCountRange;
-			this.highestEffectAmplifierRange = highestEffectAmplifierRange;
-			this.longestEffectDurationRange = longestEffectDurationRange;
-			this.effectCountRange = effectCountRange;
-			this.uniqueEffectCountRange = uniqueEffectCountRange;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("items", this.itemPredicate.toJson());
-			jsonObject.add("effects", this.statusEffectsPredicate.toJson());
-			jsonObject.add("brewed_count", this.brewedCountRange.toJson());
-			jsonObject.add("highest_amplifier", this.highestEffectAmplifierRange.toJson());
-			jsonObject.add("longest_duration", this.longestEffectDurationRange.toJson());
-			jsonObject.add("effect_count", this.effectCountRange.toJson());
-			jsonObject.add("unique_effect_count", this.uniqueEffectCountRange.toJson());
-			return jsonObject;
-		}
-
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		ItemPredicate itemPredicate,
+		EntityEffectPredicate statusEffectsPredicate,
+		NumberRange.IntRange brewedCountRange,
+		NumberRange.IntRange maxAmplifierRange,
+		NumberRange.IntRange maxDurationRange,
+		NumberRange.IntRange effectCountRange,
+		NumberRange.IntRange uniqueEffectCountRange
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.fieldOf("item").forGetter(Conditions::itemPredicate),
+			EntityEffectPredicate.CODEC.fieldOf("effects").forGetter(Conditions::statusEffectsPredicate),
+			NumberRange.IntRange.CODEC.fieldOf("brewed_count").forGetter(Conditions::brewedCountRange),
+			NumberRange.IntRange.CODEC.fieldOf("highest_amplifier").forGetter(Conditions::maxAmplifierRange),
+			NumberRange.IntRange.CODEC.fieldOf("longest_duration").forGetter(Conditions::maxDurationRange),
+			NumberRange.IntRange.CODEC.fieldOf("effect_count").forGetter(Conditions::effectCountRange),
+			NumberRange.IntRange.CODEC.fieldOf("unique_effect_count").forGetter(Conditions::uniqueEffectCountRange)
+			).apply(instance, Conditions::new));
+		
+		
 		public boolean matches(ItemStack stack, List<StatusEffectInstance> effects, int brewedCount, int maxAmplifier, int maxDuration, int effectCount, int uniqueEffectCount) {
 			if (this.brewedCountRange.test(brewedCount) &&
-				this.highestEffectAmplifierRange.test(maxAmplifier) &&
-				this.longestEffectDurationRange.test(maxDuration) &&
+				this.maxAmplifierRange.test(maxAmplifier) &&
+				this.maxDurationRange.test(maxDuration) &&
 				this.effectCountRange.test(effectCount) &&
 				this.uniqueEffectCountRange.test(uniqueEffectCount) &&
 				this.itemPredicate.test(stack)) {
-				Map<StatusEffect, StatusEffectInstance> effectMap = new HashMap<>();
+				Map<RegistryEntry<StatusEffect>, StatusEffectInstance> effectMap = new HashMap<>();
 				for (StatusEffectInstance instance : effects) {
 					if (!effectMap.containsKey(instance.getEffectType())) {
 						effectMap.put(instance.getEffectType(), instance);
 					}
 				}
-
+				
 				return this.statusEffectsPredicate.test(effectMap);
 			}
-
+			
 			return false;
 		}
 	}
-
+	
 }

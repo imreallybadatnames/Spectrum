@@ -1,55 +1,39 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class PreservationCheckCriterion extends AbstractCriterion<PreservationCheckCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("preservation_check");
-
-	public static PreservationCheckCriterion.Conditions create(String checkName, boolean checkPassed) {
-		return new PreservationCheckCriterion.Conditions(LootContextPredicate.EMPTY, checkName, checkPassed);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public PreservationCheckCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		String checkName = JsonHelper.getString(jsonObject, "check_name", "");
-		boolean checkPassed = JsonHelper.getBoolean(jsonObject, "check_passed", true);
-		return new PreservationCheckCriterion.Conditions(extended, checkName, checkPassed);
-	}
-
+	
 	public void trigger(ServerPlayerEntity player, String checkName, boolean checkPassed) {
 		this.trigger(player, (conditions) -> conditions.matches(checkName, checkPassed));
 	}
-
-	public record Conditions implements AbstractCriterion.Conditions {
-
-		private final String checkName;
-		private final boolean checkPassed;
-
-		public Conditions(LootContextPredicate player, String checkName, boolean checkPassed) {
-			super(ID, player);
-			this.checkName = checkName;
-			this.checkPassed = checkPassed;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("check_name", this.checkName);
-			jsonObject.addProperty("check_passed", this.checkPassed);
-			return jsonObject;
-		}
-
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		String checkName,
+		Boolean checkPassed
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			Codec.STRING.fieldOf("check_name").forGetter(Conditions::checkName),
+			Codec.BOOL.fieldOf("check_passed").forGetter(Conditions::checkPassed)
+			).apply(instance, Conditions::new));
+		
 		public boolean matches(String name, boolean checkPassed) {
 			return this.checkPassed == checkPassed && (this.checkName.isEmpty() || this.checkName.equals(name));
 		}

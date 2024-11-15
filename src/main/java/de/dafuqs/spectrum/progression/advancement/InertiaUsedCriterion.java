@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
@@ -9,78 +10,41 @@ import net.minecraft.predicate.entity.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
-import org.jetbrains.annotations.*;
+
+import java.util.*;
 
 public class InertiaUsedCriterion extends AbstractCriterion<InertiaUsedCriterion.Conditions> {
-
+	
 	public static final Identifier ID = SpectrumCommon.locate("inertia_used");
-
-	@Nullable
-	private static Block getBlock(JsonObject obj) {
-		if (obj.has("block")) {
-			Identifier identifier = Identifier.of(JsonHelper.getString(obj, "block"));
-			return Registries.BLOCK.getOrEmpty(identifier).orElseThrow(() -> new JsonSyntaxException("Unknown block type '" + identifier + "'"));
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public InertiaUsedCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate predicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		Block block = getBlock(jsonObject);
-		StatePredicate statePredicate = StatePredicate.fromJson(jsonObject.get("state"));
-		if (block != null) {
-			statePredicate.check(block.getStateManager(), (name) -> {
-				throw new JsonSyntaxException("Block " + block + " has no property " + name);
-			});
-		}
-		NumberRange.IntRange amountRange = NumberRange.IntRange.fromJson(jsonObject.get("amount"));
-
-		return new InertiaUsedCriterion.Conditions(predicate, block, statePredicate, amountRange);
-	}
-
+	
 	public void trigger(ServerPlayerEntity player, BlockState state, int amount) {
 		this.trigger(player, (conditions) -> conditions.matches(state, amount));
 	}
-
-	public record Conditions implements AbstractCriterion.Conditions {
-		@Nullable
-		private final Block block;
-		private final StatePredicate state;
-		private final NumberRange.IntRange amountRange;
-
-		public Conditions(LootContextPredicate player, @Nullable Block block, StatePredicate state, NumberRange.IntRange amountRange) {
-			super(InertiaUsedCriterion.ID, player);
-			this.block = block;
-			this.state = state;
-			this.amountRange = amountRange;
-		}
-
-		public static InertiaUsedCriterion.Conditions block(Block block, NumberRange.IntRange amountRange) {
-			return new InertiaUsedCriterion.Conditions(LootContextPredicate.EMPTY, block, StatePredicate.ANY, amountRange);
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			if (this.block != null) {
-				jsonObject.addProperty("block", Registries.BLOCK.getId(this.block).toString());
-			}
-
-			jsonObject.add("state", this.state.toJson());
-			return jsonObject;
-		}
-
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		Block block,
+		StatePredicate statePredicate,
+		NumberRange.IntRange amount
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			Registries.BLOCK.getCodec().fieldOf("block").forGetter(Conditions::block),
+			StatePredicate.CODEC.fieldOf("state").forGetter(Conditions::statePredicate),
+			NumberRange.IntRange.CODEC.fieldOf("amount").forGetter(Conditions::amount)
+		).apply(instance, Conditions::new));
+		
 		public boolean matches(BlockState state, int amount) {
 			if (this.block != null && !state.isOf(this.block)) {
 				return false;
 			} else {
-				return this.state.test(state) && amountRange.test(amount);
+				return this.statePredicate.test(state) && this.amount.test(amount);
 			}
 		}
 	}

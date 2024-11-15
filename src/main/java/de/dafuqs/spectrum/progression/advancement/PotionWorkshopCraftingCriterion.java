@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.advancement.criterion.*;
@@ -16,39 +17,25 @@ public class PotionWorkshopCraftingCriterion extends AbstractCriterion<PotionWor
 
 	public static final Identifier ID = SpectrumCommon.locate("crafted_with_potion_workshop");
 
-	public static PotionWorkshopCraftingCriterion.Conditions create(ItemPredicate[] item) {
-		return new PotionWorkshopCraftingCriterion.Conditions(LootContextPredicate.EMPTY, item);
-	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public PotionWorkshopCraftingCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		ItemPredicate[] itemPredicates = ItemPredicate.deserializeAll(jsonObject.get("items"));
-		return new PotionWorkshopCraftingCriterion.Conditions(extended, itemPredicates);
-	}
-
 	public void trigger(ServerPlayerEntity player, ItemStack itemStack) {
 		this.trigger(player, (conditions) -> conditions.matches(itemStack));
 	}
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		List<ItemPredicate> itemPredicates
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			ItemPredicate.CODEC.listOf().fieldOf("items").forGetter(Conditions::itemPredicates)
+			).apply(instance, Conditions::new));
 
-	public record Conditions implements AbstractCriterion.Conditions {
-		private final ItemPredicate[] itemPredicates;
-
-		public Conditions(LootContextPredicate player, ItemPredicate[] itemPredicates) {
-			super(ID, player);
-			this.itemPredicates = itemPredicates;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.addProperty("items", Arrays.toString(this.itemPredicates));
-			return jsonObject;
-		}
 
 		public boolean matches(ItemStack itemStack) {
 			List<ItemPredicate> list = new ObjectArrayList<>(this.itemPredicates);

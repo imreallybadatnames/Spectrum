@@ -1,66 +1,45 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
-import com.mojang.brigadier.*;
-import com.mojang.brigadier.exceptions.*;
+import com.mojang.serialization.*;
 import net.minecraft.predicate.*;
-import net.minecraft.util.*;
-import org.jetbrains.annotations.*;
 
-import java.io.StringReader;
-import java.util.function.*;
+import java.util.*;
 
-public class LongRange extends NumberRange<Long> {
+public record LongRange(Optional<Long> min, Optional<Long> max, Optional<Long> minSquared, Optional<Long> maxSquared) implements NumberRange<Long> {
 	
+	public static final Codec<LongRange> CODEC = NumberRange.createCodec(Codec.LONG, LongRange::new);
 	public static final LongRange ANY = new LongRange(null, null);
 	
-	private LongRange(@Nullable Long min, @Nullable Long max) {
-		super(min, max);
+	private LongRange(Optional<Long> min, Optional<Long> max) {
+		this(min, max, square(min), square(max));
 	}
 	
-	@Contract("_, null, _ -> new; _, !null, null -> new")
-	private static @NotNull LongRange parse(StringReader reader, @Nullable Long min, @Nullable Long max) throws CommandSyntaxException {
-		if (min != null && max != null && min > max) {
-			throw EXCEPTION_SWAPPED.createWithContext((ImmutableStringReader) reader);
-		} else {
-			return new LongRange(min, max);
-		}
+	private static Optional<Long> square(Optional<Long> value) {
+		return value.map(d -> d * d);
 	}
 	
 	public static LongRange exactly(long value) {
-		return new LongRange(value, value);
+		return new LongRange(Optional.of(value), Optional.of(value));
 	}
 	
 	public static LongRange between(long min, long max) {
-		return new LongRange(min, max);
+		return new LongRange(Optional.of(min), Optional.of(max));
 	}
 	
 	public static LongRange atLeast(long value) {
-		return new LongRange(value, null);
+		return new LongRange(Optional.of(value), Optional.empty());
 	}
 	
 	public static LongRange atMost(long value) {
-		return new LongRange(null, value);
+		return new LongRange(Optional.empty(), Optional.of(value));
 	}
 	
-	public static LongRange fromJson(@Nullable JsonElement element) {
-		return fromJson(element, ANY, JsonHelper::asLong, LongRange::new);
-	}
-	
-	public static LongRange parse(StringReader reader) throws CommandSyntaxException {
-		return fromStringReader(reader, (value) -> value);
-	}
-	
-	public static LongRange fromStringReader(StringReader reader, Function<Long, Long> converter) throws CommandSyntaxException {
-		return parse(reader);
-	}
-	
+	// TODO - Review logic
 	public boolean test(long value) {
-		if (this.min != null && this.min > value) {
+		if (this.min.isPresent() && this.min.get() > value) {
 			return false;
 		} else {
-			return this.max == null || this.max >= value;
+			return this.max.isEmpty() || this.max.get() >= value;
 		}
 	}
-	
 }

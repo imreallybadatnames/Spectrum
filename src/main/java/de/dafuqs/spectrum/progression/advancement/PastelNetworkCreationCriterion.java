@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.pastel_network.network.*;
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
@@ -10,71 +11,49 @@ import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
+import java.util.*;
+
 public class PastelNetworkCreationCriterion extends AbstractCriterion<PastelNetworkCreationCriterion.Conditions> {
-
+	
 	public static final Identifier ID = SpectrumCommon.locate("pastel_network_creation");
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	@Override
-	public PastelNetworkCreationCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate predicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-		NumberRange.IntRange totalNodes = NumberRange.IntRange.fromJson(jsonObject.get("total_nodes"));
-		NumberRange.IntRange connectionNodes = NumberRange.IntRange.fromJson(jsonObject.get("connection_nodes"));
-		NumberRange.IntRange providerNodes = NumberRange.IntRange.fromJson(jsonObject.get("provider_nodes"));
-		NumberRange.IntRange storageNodes = NumberRange.IntRange.fromJson(jsonObject.get("storage_nodes"));
-		NumberRange.IntRange senderNodes = NumberRange.IntRange.fromJson(jsonObject.get("sender_nodes"));
-		NumberRange.IntRange gatherNodes = NumberRange.IntRange.fromJson(jsonObject.get("gather_nodes"));
-		NumberRange.IntRange bufferNodes = NumberRange.IntRange.fromJson(jsonObject.get("buffer_nodes"));
-
-		return new PastelNetworkCreationCriterion.Conditions(predicate, totalNodes, connectionNodes, providerNodes, storageNodes, senderNodes, gatherNodes, bufferNodes);
-	}
-
+	
 	public void trigger(ServerPlayerEntity player, ServerPastelNetwork network) {
 		this.trigger(player, (conditions) -> conditions.matches(network.getNodes(PastelNodeType.CONNECTION).size(), network.getNodes(PastelNodeType.PROVIDER).size(),
 			network.getNodes(PastelNodeType.STORAGE).size(), network.getNodes(PastelNodeType.SENDER).size(), network.getNodes(PastelNodeType.GATHER).size(), network.getNodes(PastelNodeType.BUFFER).size()));
 	}
-
-	public record Conditions implements AbstractCriterion.Conditions {
-
-		private final NumberRange.IntRange totalNodes;
-		private final NumberRange.IntRange connectionNodes;
-		private final NumberRange.IntRange providerNodes;
-		private final NumberRange.IntRange storageNodes;
-		private final NumberRange.IntRange senderNodes;
-		private final NumberRange.IntRange gatherNodes;
-		private final NumberRange.IntRange bufferNodes;
-
-		public Conditions(LootContextPredicate playerPredicate, NumberRange.IntRange totalNodes, NumberRange.IntRange connectionNodes, NumberRange.IntRange providerNodes, NumberRange.IntRange storageNodes, NumberRange.IntRange senderNodes, NumberRange.IntRange gatherNodes, NumberRange.IntRange bufferNodes) {
-			super(PastelNetworkCreationCriterion.ID, playerPredicate);
-			this.totalNodes = totalNodes;
-			this.connectionNodes = connectionNodes;
-			this.providerNodes = providerNodes;
-			this.storageNodes = storageNodes;
-			this.senderNodes = senderNodes;
-			this.gatherNodes = gatherNodes;
-			this.bufferNodes = bufferNodes;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("total_nodes", this.totalNodes.toJson());
-			jsonObject.add("connection_nodes", this.connectionNodes.toJson());
-			jsonObject.add("provider_nodes", this.providerNodes.toJson());
-			jsonObject.add("storage_nodes", this.storageNodes.toJson());
-			jsonObject.add("sender_nodes", this.senderNodes.toJson());
-			jsonObject.add("gather_nodes", this.gatherNodes.toJson());
-			jsonObject.add("buffer_nodes", this.bufferNodes.toJson());
-			return jsonObject;
-		}
-
+	
+	@Override
+	public Codec<Conditions> getConditionsCodec() {
+		return Conditions.CODEC;
+	}
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		NumberRange.IntRange totalNodes,
+		NumberRange.IntRange connectionNodes,
+		NumberRange.IntRange providerNodes,
+		NumberRange.IntRange storageNodes,
+		NumberRange.IntRange senderNodes,
+		NumberRange.IntRange gatherNodes,
+		NumberRange.IntRange bufferNodes
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
+			NumberRange.IntRange.CODEC.fieldOf("total_nodes").forGetter(Conditions::totalNodes),
+			NumberRange.IntRange.CODEC.fieldOf("connection_nodes").forGetter(Conditions::connectionNodes),
+			NumberRange.IntRange.CODEC.fieldOf("provider_nodes").forGetter(Conditions::providerNodes),
+			NumberRange.IntRange.CODEC.fieldOf("storage_nodes").forGetter(Conditions::storageNodes),
+			NumberRange.IntRange.CODEC.fieldOf("sender_nodes").forGetter(Conditions::senderNodes),
+			NumberRange.IntRange.CODEC.fieldOf("gather_nodes").forGetter(Conditions::gatherNodes),
+			NumberRange.IntRange.CODEC.fieldOf("buffer_nodes").forGetter(Conditions::bufferNodes)
+			).apply(instance, Conditions::new));
+		
+		
 		public boolean matches(int connectionNodes, int providerNodes, int storageNodes, int senderNodes, int gatherNodes, int bufferNodes) {
 			return this.totalNodes.test(connectionNodes + providerNodes + storageNodes + senderNodes + gatherNodes) && this.connectionNodes.test(connectionNodes) && this.providerNodes.test(providerNodes) && this.storageNodes.test(storageNodes) && this.senderNodes.test(senderNodes) && this.gatherNodes.test(gatherNodes) && this.bufferNodes.test(bufferNodes);
 		}
-
+		
 	}
-
+	
 }

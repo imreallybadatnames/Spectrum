@@ -1,52 +1,38 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.predicate.item.*;
-import net.minecraft.server.network.*;
 import net.minecraft.util.*;
+
+import java.util.*;
 
 public class PastelNodeUpgradeCriterion extends AbstractCriterion<PastelNodeUpgradeCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("pastel_node_upgrade");
-
+	
 	@Override
-	protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-		var upgrade = ItemPredicate.fromJson(obj.get("upgrade"));
-		return new PastelNodeUpgradeCriterion.Conditions(playerPredicate, upgrade);
+	public Codec<PastelNodeUpgradeCriterion.Conditions> getConditionsCodec() {
+		return PastelNodeUpgradeCriterion.Conditions.CODEC;
 	}
-
-	@Override
-	public Identifier getId() {
-		return ID;
-	}
-
-	public void trigger(ServerPlayerEntity player, ItemStack upgrade) {
-		this.trigger(player, (c) -> c.matches(upgrade));
-	}
-
-	public record Conditions implements AbstractCriterion.Conditions {
-
-		private final ItemPredicate upgrade;
-
-		public Conditions(LootContextPredicate playerPredicate, ItemPredicate upgrade) {
-			super(PastelNodeUpgradeCriterion.ID, playerPredicate);
-			this.upgrade = upgrade;
-		}
-
-		@Override
-		public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-			JsonObject jsonObject = super.toJson(predicateSerializer);
-			jsonObject.add("upgrade", this.upgrade.toJson());
-			return jsonObject;
-		}
-
+	
+	public record Conditions(
+		Optional<LootContextPredicate> player,
+		ItemPredicate item
+	) implements AbstractCriterion.Conditions {
+		
+		public static final Codec<PastelNodeUpgradeCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(PastelNodeUpgradeCriterion.Conditions::player),
+			ItemPredicate.CODEC.fieldOf("upgrade").forGetter(PastelNodeUpgradeCriterion.Conditions::item)
+		).apply(instance, PastelNodeUpgradeCriterion.Conditions::new));
+		
 		public boolean matches(ItemStack stack) {
-			return upgrade.test(stack);
+			return this.item.test(stack);
 		}
-
+		
 	}
 }
