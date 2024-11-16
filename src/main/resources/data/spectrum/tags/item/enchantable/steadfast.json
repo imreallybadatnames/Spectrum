@@ -4,7 +4,7 @@
     "#minecraft:enchantable/mining",
     "#minecraft:enchantable/vanishing",
     {
-      "id": "#trinkets:enchantable/trinket",
+      "id": "#trinkets:enchantable/enchantable",
       "required": false
     }
   ]
