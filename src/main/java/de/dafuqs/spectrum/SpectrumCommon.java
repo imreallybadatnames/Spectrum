@@ -106,8 +106,6 @@ public class SpectrumCommon implements ModInitializer {
 		SpectrumBlockSoundGroups.register();
 		logInfo("Registering Fluids...");
 		SpectrumFluids.register();
-		logInfo("Registering Enchantments...");
-		SpectrumEnchantments.register();
 		logInfo("Registering Armor Materials...");
 		SpectrumArmorMaterials.register();
 		logInfo("Registering Blocks...");
