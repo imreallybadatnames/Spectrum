@@ -3,7 +3,7 @@
     "translate": "enchantment.spectrum.tight_grip"
   },
   "effects": {
-    "minecraft:attributes": [
+    "spectrum:attributes": [
       {
         "amount": {
           "type": "minecraft:linear",
@@ -12,7 +12,8 @@
         },
         "attribute": "minecraft:generic.attack_speed",
         "id": "spectrum:enchantment.tight_grip",
-        "operation": "add_multiplied_total"
+        "operation": "add_multiplied_total",
+        "required_advancement": "spectrum:unlocks/enchantments/tight_grip"
       }
     ]
   },
@@ -32,6 +33,5 @@
   ],
   "supported_items": "#spectrum:enchantable/tight_grip",
   "primary_items": "#minecraft:enchantable/sword",
-  "weight": 2,
-  "advancement_id": "spectrum:unlocks/enchantments/tight_grip"
+  "weight": 2
 }

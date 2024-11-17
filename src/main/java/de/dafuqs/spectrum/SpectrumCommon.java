@@ -116,6 +116,8 @@ public class SpectrumCommon implements ModInitializer {
 		SpectrumItemGroups.register();
 		logInfo("Registering Block Entities...");
 		SpectrumBlockEntities.register();
+		logInfo("Registering Enchantment Effect Component Types...");
+		SpectrumEnchantmentEffectComponentTypes.register();
 
 		// Pastel
 		logInfo("Registering Pastel Upgrades...");
