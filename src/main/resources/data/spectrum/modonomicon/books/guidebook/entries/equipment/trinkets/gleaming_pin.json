@@ -33,9 +33,9 @@
       "type": "spectrum:nbt_spotlight",
       "condition": {
         "type": "modonomicon:advancement",
-        "advancement_id": "spectrum:unlocks/enchantments/sniper"
+        "advancement_id": "spectrum:unlocks/enchantments/sniping"
       },
-      "title": "enchantment.spectrum.sniper",
+      "title": "enchantment.spectrum.sniping",
       "item": {
         "item": "spectrum:gleaming_pin",
         "nbt": {

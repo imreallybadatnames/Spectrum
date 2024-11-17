@@ -7,9 +7,9 @@ import net.minecraft.util.*;
 /**
  * Increases the speed of shot arrows and makes them invisible
  */
-public class SniperEnchantment extends SpectrumEnchantment {
+public class SnipingEnchantment extends SpectrumEnchantment {
 	
-	public SniperEnchantment(Rarity weight, Identifier unlockAdvancementIdentifier, EquipmentSlot... slotTypes) {
+	public SnipingEnchantment(Rarity weight, Identifier unlockAdvancementIdentifier, EquipmentSlot... slotTypes) {
 		super(weight, EnchantmentTarget.CROSSBOW, slotTypes, unlockAdvancementIdentifier);
 	}
 	

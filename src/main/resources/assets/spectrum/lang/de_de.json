@@ -80,8 +80,8 @@
   "enchantment.spectrum.inertia.desc": "Verringert Abbau-Geschwindigkeit. Erhöht sich bei Abbau eines Blocks gleichen Typs",
   "enchantment.spectrum.clovers_favor": "Glückskäfer",
   "enchantment.spectrum.clovers_favor.desc": "Höhere Chance auf seltene Beute",
-  "enchantment.spectrum.sniper": "Scharfschütze",
-  "enchantment.spectrum.sniper.desc": "Erhöhte Projektilgeschwindigkeit",
+	"enchantment.spectrum.sniping": "Scharfschütze",
+	"enchantment.spectrum.sniping.desc": "Erhöhte Projektilgeschwindigkeit",
   "enchantment.spectrum.tight_grip": "Fester Griff",
   "enchantment.spectrum.tight_grip.desc": "Verringerte Abklingzeit",
 
@@ -136,7 +136,7 @@
   "text.autoconfig.Spectrum.option.FirstStrikeEnchantmentEnabled": "Verzauberung verfügbar: Erstschlag",
   "text.autoconfig.Spectrum.option.ImprovedCriticalEnchantmentEnabled": "Verzauberung verfügbar: erhöter kritischer Treffer",
   "text.autoconfig.Spectrum.option.InertiaEnchantmentEnabled": "Verzauberung verfügbar: Trägheit",
-  "text.autoconfig.Spectrum.option.SniperEnchantmentEnabled": "Verzauberung verfügbar: Scharfschütze",
+	"text.autoconfig.Spectrum.option.SnipingEnchantmentEnabled": "Verzauberung verfügbar: Scharfschütze",
   "text.autoconfig.Spectrum.option.TightGripEnchantmentEnabled": "Verzauberung verfügbar: Fester Griff",
 
   "text.autoconfig.Spectrum.option.TreasureHunterMaxLevel": "Maximales Level für 'Schatzjäger'-Verzauberung",

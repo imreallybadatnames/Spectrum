@@ -1,6 +1,6 @@
 {
   "type": "spectrum:enchantment_upgrade",
-  "enchantment": "spectrum:sniper",
+  "enchantment": "spectrum:sniping",
   "levels": [
     {
       "experience": 200,
@@ -23,12 +23,12 @@
       "item_count": 512
     }
   ],
-  "required_advancement": "spectrum:unlocks/enchantments/sniper",
+  "required_advancement": "spectrum:unlocks/enchantments/sniping",
   "fabric:load_conditions": [
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:sniper"
+        "spectrum:sniping"
       ]
     }
   ]

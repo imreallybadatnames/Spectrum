@@ -55,7 +55,7 @@ public class SpectrumAdvancements {
 	public static final Identifier ENCHANTMENTS_RAZING = SpectrumCommon.locate("unlocks/enchantments/razing_usage");
 	public static final Identifier ENCHANTMENTS_RESONANCE_USAGE = SpectrumCommon.locate("unlocks/enchantments/resonance_usage");
 	public static final Identifier ENCHANTMENTS_SERENDIPITY_REEL = SpectrumCommon.locate("unlocks/enchantments/serendipity_reel");
-	public static final Identifier ENCHANTMENTS_SNIPER = SpectrumCommon.locate("unlocks/enchantments/sniper");
+	public static final Identifier ENCHANTMENTS_SNIPING = SpectrumCommon.locate("unlocks/enchantments/sniping");
 	public static final Identifier ENCHANTMENTS_STEADFAST = SpectrumCommon.locate("unlocks/enchantments/steadfast");
 	public static final Identifier ENCHANTMENTS_TIGHT_GRIP = SpectrumCommon.locate("unlocks/enchantments/tight_grip");
 	public static final Identifier ENCHANTMENTS_TREASURE_HUNTER = SpectrumCommon.locate("unlocks/enchantments/treasure_hunter");

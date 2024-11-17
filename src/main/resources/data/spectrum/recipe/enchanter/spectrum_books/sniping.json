@@ -36,18 +36,18 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:sniper",
+          "id": "spectrum:sniping",
           "lvl": "1s"
         }
       ]
     }
   },
-  "required_advancement": "spectrum:unlocks/enchantments/sniper",
+  "required_advancement": "spectrum:unlocks/enchantments/sniping",
   "fabric:load_conditions": [
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:sniper"
+        "spectrum:sniping"
       ]
     }
   ]

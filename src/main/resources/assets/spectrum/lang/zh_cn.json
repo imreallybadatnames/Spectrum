@@ -474,8 +474,8 @@
   "enchantment.spectrum.inertia.desc": "降低挖掘速度,但连续挖掘相同类型的方块时增加挖掘速度",
   "enchantment.spectrum.clovers_favor": "四叶草的眷佑",
   "enchantment.spectrum.clovers_favor.desc": "增加得到稀有掉落物的概率",
-  "enchantment.spectrum.sniper": "狙击",
-  "enchantment.spectrum.sniper.desc": "增加弹射物的速度",
+	"enchantment.spectrum.sniping": "狙击",
+	"enchantment.spectrum.sniping.desc": "增加弹射物的速度",
   "enchantment.spectrum.tight_grip": "利落把柄",
   "enchantment.spectrum.tight_grip.desc": "降低攻击冷却",
   "enchantment.spectrum.steadfast": "坚固",
@@ -720,7 +720,7 @@
   "text.autoconfig.Spectrum.option.ImprovedCriticalEnchantmentEnabled": "是否可获得 暴击增强 附魔",
   "text.autoconfig.Spectrum.option.InertiaEnchantmentEnabled": "是否可获得 惯性 附魔",
   "text.autoconfig.Spectrum.option.CloversFavorEnchantmentEnabled": "是否可获得 四叶草的眷佑 附魔",
-  "text.autoconfig.Spectrum.option.SniperEnchantmentEnabled": "是否可获得 狙击 附魔",
+	"text.autoconfig.Spectrum.option.SnipingEnchantmentEnabled": "是否可获得 狙击 附魔",
   "text.autoconfig.Spectrum.option.TightGripEnchantmentEnabled": "是否可获得 利落把柄 附魔",
   "text.autoconfig.Spectrum.option.SteadfastEnchantmentEnabled": "是否可获得 坚固 附魔",
   "text.autoconfig.Spectrum.option.IndestructibleEnchantmentEnabled": "是否可获得 坚不可摧 附魔",
@@ -5302,8 +5302,8 @@
   "book.spectrum.guidebook.slush.page0.text": "土壤异常柔软、湿润.闻起来有蚯蚓的味道.",
   "book.spectrum.guidebook.slush.page1.text": "永远保持湿润且富含营养的农田.植物在其上茁壮成长的更快.",
 
-  "book.spectrum.guidebook.sniper.page0.text": "相比[#](bb00bb)弓[#]()的使用率,[#](bb00bb)弩[#]()实在是太不起眼了.\\\n\\\n然而有了狙击附魔之后,终于让弩发光发热,成为又一款快准狠的远程利器.",
-  "book.spectrum.guidebook.sniper.page1.text": "增加弹射物的伤害,精准度与速度.\\\n\\\n最大等级:2\\\n适用于弩.\\\n与多重射击互斥.",
+	"book.spectrum.guidebook.sniping.page0.text": "相比[#](bb00bb)弓[#]()的使用率,[#](bb00bb)弩[#]()实在是太不起眼了.\\\n\\\n然而有了狙击附魔之后,终于让弩发光发热,成为又一款快准狠的远程利器.",
+	"book.spectrum.guidebook.sniping.page1.text": "增加弹射物的伤害,精准度与速度.\\\n\\\n最大等级:2\\\n适用于弩.\\\n与多重射击互斥.",
 
   "book.spectrum.guidebook.somnolence.page0.text": "一种[#](449900)强大到让人昏昏欲睡的效果,随效果等级提升而增强[#]().这对任何事物都有效,*包括我自己*.\\\n\\\n昏昏欲睡到[#](449900)不论是白天还是晚上,晴天还是雷雨,[#]()都能随时随地在床上睡一觉,有时候在某种方面可能会很方便!",
 

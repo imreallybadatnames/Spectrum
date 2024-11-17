@@ -136,7 +136,7 @@ public class SpectrumConfig implements ConfigData {
 	public boolean ImprovedCriticalEnchantmentEnabled = true;
 	public boolean InertiaEnchantmentEnabled = true;
 	public boolean CloversFavorEnchantmentEnabled = true;
-	public boolean SniperEnchantmentEnabled = true;
+	public boolean SnipingEnchantmentEnabled = true;
 	public boolean TightGripEnchantmentEnabled = true;
 	public boolean SteadfastEnchantmentEnabled = true;
 	public boolean IndestructibleEnchantmentEnabled = true;
