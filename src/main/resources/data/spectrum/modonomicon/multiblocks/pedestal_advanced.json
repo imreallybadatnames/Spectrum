@@ -115,7 +115,7 @@
     },
     "L": {
       "type": "modonomicon:tag",
-      "display": "spectrum:amethyst_basalt_lamp",
+      "display": "spectrum:amethyst_basalt_light",
       "tag": "#spectrum:structure/lights"
     },
     "S": {

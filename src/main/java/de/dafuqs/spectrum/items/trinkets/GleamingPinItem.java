@@ -10,7 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -43,7 +43,7 @@ public class GleamingPinItem extends SpectrumTrinketItem implements ExtendedEnch
 	}
 	
 	public static int getEffectRange(ItemStack stack) {
-		return BASE_RANGE + RANGE_BONUS_PER_LEVEL_OF_SNIPING * EnchantmentHelper.getLevel(SpectrumEnchantments.SNIPER, stack);
+		return BASE_RANGE + RANGE_BONUS_PER_LEVEL_OF_SNIPING * EnchantmentHelper.getLevel(SpectrumEnchantments.SNIPING, stack);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class GleamingPinItem extends SpectrumTrinketItem implements ExtendedEnch
 	
 	@Override
 	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == SpectrumEnchantments.SNIPER;
+		return enchantment == SpectrumEnchantments.SNIPING;
 	}
 	
 	@Override

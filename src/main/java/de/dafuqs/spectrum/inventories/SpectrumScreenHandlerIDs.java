@@ -10,7 +10,7 @@ public class SpectrumScreenHandlerIDs {
 
 	public static final Identifier PEDESTAL = SpectrumCommon.locate("pedestal");
 	public static final Identifier CRAFTING_TABLET = SpectrumCommon.locate("crafting_tablet");
-	public static final Identifier RESTOCKING_CHEST = SpectrumCommon.locate("restocking_chest");
+	public static final Identifier FABRICATION_CHEST = SpectrumCommon.locate("fabrication_chest");
 	public static final Identifier BEDROCK_ANVIL = SpectrumCommon.locate("bedrock_anvil");
 	public static final Identifier PARTICLE_SPAWNER = SpectrumCommon.locate("particle_spawner");
 	public static final Identifier COMPACTING_CHEST = SpectrumCommon.locate("compacting_chest");

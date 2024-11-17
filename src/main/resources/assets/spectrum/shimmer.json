@@ -3598,52 +3598,52 @@
       "radius": 15
     },
     {
-      "block": "spectrum:topaz_calcite_lamp",
+      "block": "spectrum:topaz_calcite_light",
       "color": "#cyan",
       "radius": 15
     },
     {
-      "block": "spectrum:amethyst_calcite_lamp",
+      "block": "spectrum:amethyst_calcite_light",
       "color": "#magenta",
       "radius": 15
     },
     {
-      "block": "spectrum:citrine_calcite_lamp",
+      "block": "spectrum:citrine_calcite_light",
       "color": "#yellow",
       "radius": 15
     },
     {
-      "block": "spectrum:onyx_calcite_lamp",
+      "block": "spectrum:onyx_calcite_light",
       "color": "#black",
       "radius": 15
     },
     {
-      "block": "spectrum:moonstone_calcite_lamp",
+      "block": "spectrum:moonstone_calcite_light",
       "color": "#white",
       "radius": 15
     },
     {
-      "block": "spectrum:topaz_basalt_lamp",
+      "block": "spectrum:topaz_basalt_light",
       "color": "#cyan",
       "radius": 15
     },
     {
-      "block": "spectrum:amethyst_basalt_lamp",
+      "block": "spectrum:amethyst_basalt_light",
       "color": "#magenta",
       "radius": 15
     },
     {
-      "block": "spectrum:citrine_basalt_lamp",
+      "block": "spectrum:citrine_basalt_light",
       "color": "#yellow",
       "radius": 15
     },
     {
-      "block": "spectrum:onyx_basalt_lamp",
+      "block": "spectrum:onyx_basalt_light",
       "color": "#black",
       "radius": 15
     },
     {
-      "block": "spectrum:moonstone_basalt_lamp",
+      "block": "spectrum:moonstone_basalt_light",
       "color": "#white",
       "radius": 15
     },
@@ -4440,7 +4440,7 @@
       "radius": 12
     },
     {
-      "block": "spectrum:slate_noxwood_lantern",
+      "block": "spectrum:slate_noxwood_lamp",
       "state": {
         "lit": true
       },
@@ -4472,7 +4472,7 @@
       "radius": 15
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -4483,7 +4483,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -4494,7 +4494,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -4505,7 +4505,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -4516,7 +4516,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -4527,7 +4527,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -4538,7 +4538,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -4549,7 +4549,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -4560,7 +4560,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -4571,7 +4571,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -4582,7 +4582,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -4593,7 +4593,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -4604,7 +4604,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -4615,7 +4615,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -4626,7 +4626,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -4637,7 +4637,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:slate_noxwood_lamp",
+      "block": "spectrum:slate_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -4670,506 +4670,506 @@
       },
       "color": "#ebony_noxwood",
       "radius": 12
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lamp",
+      "state": {
+        "lit": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 15
+    },
+    {
+      "block": "spectrum:ebony_noxwood_light",
+      "state": {
+        "axis": "x"
+      },
+      "color": "#ebony_noxwood",
+      "radius": 15
+    },
+    {
+      "block": "spectrum:ebony_noxwood_light",
+      "state": {
+        "axis": "y"
+      },
+      "color": "#ebony_noxwood",
+      "radius": 15
+    },
+    {
+      "block": "spectrum:ebony_noxwood_light",
+      "state": {
+        "axis": "z"
+      },
+      "color": "#ebony_noxwood",
+      "radius": 15
     },
     {
       "block": "spectrum:ebony_noxwood_lantern",
       "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ebony_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ebony_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxcap_gills",
+      "state": {
+        "axis": "x"
+      },
+      "color": "#ivory_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:ivory_noxcap_gills",
+      "state": {
+        "axis": "y"
+      },
+      "color": "#ivory_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:ivory_noxcap_gills",
+      "state": {
+        "axis": "z"
+      },
+      "color": "#ivory_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lamp",
+      "state": {
         "lit": true
       },
-      "color": "#ebony_noxwood",
+      "color": "#ivory_noxwood",
       "radius": 15
     },
     {
-      "block": "spectrum:ebony_noxwood_light",
-      "state": {
-        "axis": "x"
-      },
-      "color": "#ebony_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ebony_noxwood_light",
-      "state": {
-        "axis": "y"
-      },
-      "color": "#ebony_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ebony_noxwood_light",
-      "state": {
-        "axis": "z"
-      },
-      "color": "#ebony_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ebony_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ebony_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxcap_gills",
+      "block": "spectrum:ivory_noxwood_light",
       "state": {
         "axis": "x"
       },
       "color": "#ivory_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
-      "block": "spectrum:ivory_noxcap_gills",
+      "block": "spectrum:ivory_noxwood_light",
       "state": {
         "axis": "y"
       },
       "color": "#ivory_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
-      "block": "spectrum:ivory_noxcap_gills",
+      "block": "spectrum:ivory_noxwood_light",
       "state": {
         "axis": "z"
       },
       "color": "#ivory_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
       "block": "spectrum:ivory_noxwood_lantern",
       "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": true,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": true,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": true,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": true
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:ivory_noxwood_lantern",
+      "state": {
+        "alt": false,
+        "diagonal": false,
+        "hanging": false,
+        "waterlogged": false
+      },
+      "color": "#ivory_noxwood",
+      "radius": 13
+    },
+    {
+      "block": "spectrum:chestnut_noxcap_gills",
+      "state": {
+        "axis": "x"
+      },
+      "color": "#chestnut_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:chestnut_noxcap_gills",
+      "state": {
+        "axis": "y"
+      },
+      "color": "#chestnut_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:chestnut_noxcap_gills",
+      "state": {
+        "axis": "z"
+      },
+      "color": "#chestnut_noxwood",
+      "radius": 12
+    },
+    {
+      "block": "spectrum:chestnut_noxwood_lamp",
+      "state": {
         "lit": true
       },
-      "color": "#ivory_noxwood",
+      "color": "#chestnut_noxwood",
       "radius": 15
     },
     {
-      "block": "spectrum:ivory_noxwood_light",
-      "state": {
-        "axis": "x"
-      },
-      "color": "#ivory_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ivory_noxwood_light",
-      "state": {
-        "axis": "y"
-      },
-      "color": "#ivory_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ivory_noxwood_light",
-      "state": {
-        "axis": "z"
-      },
-      "color": "#ivory_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": true,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": true,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": true,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": true
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:ivory_noxwood_lamp",
-      "state": {
-        "alt": false,
-        "diagonal": false,
-        "hanging": false,
-        "waterlogged": false
-      },
-      "color": "#ivory_noxwood",
-      "radius": 13
-    },
-    {
-      "block": "spectrum:chestnut_noxcap_gills",
+      "block": "spectrum:chestnut_noxwood_light",
       "state": {
         "axis": "x"
       },
       "color": "#chestnut_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
-      "block": "spectrum:chestnut_noxcap_gills",
+      "block": "spectrum:chestnut_noxwood_light",
       "state": {
         "axis": "y"
       },
       "color": "#chestnut_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
-      "block": "spectrum:chestnut_noxcap_gills",
+      "block": "spectrum:chestnut_noxwood_light",
       "state": {
         "axis": "z"
       },
       "color": "#chestnut_noxwood",
-      "radius": 12
+      "radius": 15
     },
     {
       "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
-        "lit": true
-      },
-      "color": "#chestnut_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:chestnut_noxwood_light",
-      "state": {
-        "axis": "x"
-      },
-      "color": "#chestnut_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:chestnut_noxwood_light",
-      "state": {
-        "axis": "y"
-      },
-      "color": "#chestnut_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:chestnut_noxwood_light",
-      "state": {
-        "axis": "z"
-      },
-      "color": "#chestnut_noxwood",
-      "radius": 15
-    },
-    {
-      "block": "spectrum:chestnut_noxwood_lamp",
-      "state": {
         "alt": true,
         "diagonal": true,
         "hanging": true,
@@ -5179,7 +5179,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -5190,7 +5190,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -5201,7 +5201,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": true,
@@ -5212,7 +5212,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -5223,7 +5223,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -5234,7 +5234,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -5245,7 +5245,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": true,
         "diagonal": false,
@@ -5256,7 +5256,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -5267,7 +5267,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -5278,7 +5278,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -5289,7 +5289,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": true,
@@ -5300,7 +5300,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -5311,7 +5311,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -5322,7 +5322,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,
@@ -5333,7 +5333,7 @@
       "radius": 13
     },
     {
-      "block": "spectrum:chestnut_noxwood_lamp",
+      "block": "spectrum:chestnut_noxwood_lantern",
       "state": {
         "alt": false,
         "diagonal": false,

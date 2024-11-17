@@ -5,11 +5,11 @@ import de.dafuqs.spectrum.compat.gofish.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
@@ -48,8 +48,8 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 				int bigCatchLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.BIG_CATCH, itemStack, user);
 				int serendipityReelLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.SERENDIPITY_REEL, itemStack, user);
 				boolean inventoryInsertion = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.INVENTORY_INSERTION, itemStack, user) > 0;
-				boolean foundry = shouldAutosmelt(itemStack, user);
-				spawnBobber(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, foundry);
+				boolean shouldSmeltDrops = shouldSmeltDrops(itemStack, user);
+				spawnBobber(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, shouldSmeltDrops);
 			}
 			
 			user.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -58,15 +58,15 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 		
 		return TypedActionResult.success(itemStack, world.isClient());
 	}
-
-	public abstract void spawnBobber(PlayerEntity user, World world, int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion, boolean foundry);
+	
+	public abstract void spawnBobber(PlayerEntity user, World world, int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion, boolean shouldSmeltDrops);
 	
 	public boolean canFishIn(FluidState fluidState) {
 		return fluidState.isIn(FluidTags.WATER);
 	}
 	
-	public boolean shouldAutosmelt(ItemStack itemStack, PlayerEntity user) {
-		return SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.FOUNDRY, itemStack, user) > 0 || GoFishCompat.hasDeepfry(user.getWorld(), itemStack);
+	public boolean shouldSmeltDrops(ItemStack itemStack, PlayerEntity user) {
+		return SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.FOUNDRY, itemStack, user) > 0 || GoFishCompat.hasDeepfry(itemStack);
 	}
 
 	@Override

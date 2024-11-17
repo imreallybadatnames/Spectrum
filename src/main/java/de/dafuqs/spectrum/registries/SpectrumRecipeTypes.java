@@ -53,9 +53,9 @@ public class SpectrumRecipeTypes {
 	public static RecipeSerializer<PotionWorkshopReactingRecipe> POTION_WORKSHOP_REACTING_SERIALIZER;
 	public static RecipeType<PotionWorkshopReactingRecipe> POTION_WORKSHOP_REACTING;
 	
-	public static final String MUD_CONVERTING_ID = "mud_converting";
-	public static FluidConvertingRecipeSerializer<MudConvertingRecipe> MUD_CONVERTING_SERIALIZER;
-	public static RecipeType<MudConvertingRecipe> MUD_CONVERTING;
+	public static final String GOO_CONVERTING_ID = "goo_converting";
+	public static FluidConvertingRecipeSerializer<GooConvertingRecipe> GOO_CONVERTING_SERIALIZER;
+	public static RecipeType<GooConvertingRecipe> GOO_CONVERTING;
 	
 	public static final String LIQUID_CRYSTAL_CONVERTING_ID = "liquid_crystal_converting";
 	public static FluidConvertingRecipeSerializer<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING_SERIALIZER;
@@ -132,8 +132,8 @@ public class SpectrumRecipeTypes {
 		POTION_WORKSHOP_REACTING_SERIALIZER = registerSerializer(POTION_WORKSHOP_REACTING_ID, new PotionWorkshopReactingRecipeSerializer(PotionWorkshopReactingRecipe::new));
 		POTION_WORKSHOP_REACTING = registerRecipeType(POTION_WORKSHOP_REACTING_ID);
 		
-		MUD_CONVERTING_SERIALIZER = registerSerializer(MUD_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(MudConvertingRecipe::new));
-		MUD_CONVERTING = registerRecipeType(MUD_CONVERTING_ID);
+		GOO_CONVERTING_SERIALIZER = registerSerializer(GOO_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(GooConvertingRecipe::new));
+		GOO_CONVERTING = registerRecipeType(GOO_CONVERTING_ID);
 		
 		LIQUID_CRYSTAL_CONVERTING_SERIALIZER = registerSerializer(LIQUID_CRYSTAL_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(LiquidCrystalConvertingRecipe::new));
 		LIQUID_CRYSTAL_CONVERTING = registerRecipeType(LIQUID_CRYSTAL_CONVERTING_ID);

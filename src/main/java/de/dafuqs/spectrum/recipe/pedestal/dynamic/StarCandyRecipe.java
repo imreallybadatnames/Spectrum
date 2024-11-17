@@ -19,7 +19,7 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 	public static final RecipeSerializer<StarCandyRecipe> SERIALIZER = new EmptyRecipeSerializer<>(StarCandyRecipe::new);
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/food/star_candy");
-	public static final float PURPLE_STAR_CANDY_CHANCE = 0.02F;
+	public static final float ENCHANTED_STAR_CANDY_CHANCE = 0.02F;
 	
 	public StarCandyRecipe(Identifier id) {
 		super(id, "", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, 3, 3, generateInputs(), Map.of(BuiltinGemstoneColor.YELLOW, 1), SpectrumItems.STAR_CANDY.getDefaultStack(), 1.0F, 20, false, false);
@@ -28,8 +28,8 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 	@Override
 	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
 		if (inv instanceof PedestalBlockEntity pedestal) {
-			if (pedestal.getWorld().random.nextFloat() < PURPLE_STAR_CANDY_CHANCE) {
-				return SpectrumItems.PURPLE_STAR_CANDY.getDefaultStack();
+			if (pedestal.getWorld().random.nextFloat() < ENCHANTED_STAR_CANDY_CHANCE) {
+				return SpectrumItems.ENCHANTED_STAR_CANDY.getDefaultStack();
 			}
 		}
 		return this.output.copy();

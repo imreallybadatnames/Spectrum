@@ -10,49 +10,49 @@ import net.minecraft.particle.*;
 @Environment(EnvType.CLIENT)
 public class SpectrumBlockLeakParticles {
 
-	public static class LandingMudFactory implements ParticleFactory<SimpleParticleType> {
+	public static class LandingGooFactory implements ParticleFactory<SimpleParticleType> {
 		protected final SpriteProvider spriteProvider;
 		
-		public LandingMudFactory(SpriteProvider spriteProvider) {
+		public LandingGooFactory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
 		
 		@Override
 		public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.Landing(clientWorld, d, e, f, SpectrumFluids.MUD);
-			blockLeakParticle.setColor(SpectrumFluids.MUD_COLOR_VEC.x(), SpectrumFluids.MUD_COLOR_VEC.y(), SpectrumFluids.MUD_COLOR_VEC.z());
+			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.Landing(clientWorld, d, e, f, SpectrumFluids.GOO);
+			blockLeakParticle.setColor(SpectrumFluids.GOO_COLOR_VEC.x(), SpectrumFluids.GOO_COLOR_VEC.y(), SpectrumFluids.GOO_COLOR_VEC.z());
 			blockLeakParticle.setSprite(this.spriteProvider);
 			return blockLeakParticle;
 		}
 	}
 	
-	public static class FallingMudFactory implements ParticleFactory<SimpleParticleType> {
+	public static class FallingGooFactory implements ParticleFactory<SimpleParticleType> {
 		protected final SpriteProvider spriteProvider;
 		
-		public FallingMudFactory(SpriteProvider spriteProvider) {
+		public FallingGooFactory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
 		
 		@Override
 		public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.ContinuousFalling(clientWorld, d, e, f, SpectrumFluids.MUD, SpectrumParticleTypes.LANDING_MUD);
-			blockLeakParticle.setColor(SpectrumFluids.MUD_COLOR_VEC.x(), SpectrumFluids.MUD_COLOR_VEC.y(), SpectrumFluids.MUD_COLOR_VEC.z());
+			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.ContinuousFalling(clientWorld, d, e, f, SpectrumFluids.GOO, SpectrumParticleTypes.LANDING_GOO);
+			blockLeakParticle.setColor(SpectrumFluids.GOO_COLOR_VEC.x(), SpectrumFluids.GOO_COLOR_VEC.y(), SpectrumFluids.GOO_COLOR_VEC.z());
 			blockLeakParticle.setSprite(this.spriteProvider);
 			return blockLeakParticle;
 		}
 	}
 	
-	public static class DrippingMudFactory implements ParticleFactory<SimpleParticleType> {
+	public static class DrippingGooFactory implements ParticleFactory<SimpleParticleType> {
 		protected final SpriteProvider spriteProvider;
 		
-		public DrippingMudFactory(SpriteProvider spriteProvider) {
+		public DrippingGooFactory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
 		
 		@Override
 		public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.Dripping(clientWorld, d, e, f, SpectrumFluids.MUD, SpectrumParticleTypes.FALLING_MUD);
-			blockLeakParticle.setColor(SpectrumFluids.MUD_COLOR_VEC.x(), SpectrumFluids.MUD_COLOR_VEC.y(), SpectrumFluids.MUD_COLOR_VEC.z());
+			BlockLeakParticle blockLeakParticle = new BlockLeakParticle.Dripping(clientWorld, d, e, f, SpectrumFluids.GOO, SpectrumParticleTypes.FALLING_GOO);
+			blockLeakParticle.setColor(SpectrumFluids.GOO_COLOR_VEC.x(), SpectrumFluids.GOO_COLOR_VEC.y(), SpectrumFluids.GOO_COLOR_VEC.z());
 			blockLeakParticle.setSprite(this.spriteProvider);
 			return blockLeakParticle;
 		}

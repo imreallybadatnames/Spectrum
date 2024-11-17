@@ -14,7 +14,7 @@
       "required": false
     },
     {
-      "id": "spectrum:autosmelt",
+      "id": "spectrum:foundry",
       "required": false
     },
     {
@@ -50,7 +50,7 @@
       "required": false
     },
     {
-      "id": "spectrum:sniper",
+      "id": "spectrum:sniping",
       "required": false
     },
     {

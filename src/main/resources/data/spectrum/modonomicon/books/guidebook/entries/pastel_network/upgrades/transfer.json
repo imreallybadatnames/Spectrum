@@ -61,7 +61,7 @@
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.raw_bloodstone.text",
       "condition": {
         "type": "modonomicon:advancement",
-        "advancement_id": "spectrum:pluck_effulgent_feather"
+				"advancement_id": "spectrum:pluck_resplendent_feather"
       }
     },
     {

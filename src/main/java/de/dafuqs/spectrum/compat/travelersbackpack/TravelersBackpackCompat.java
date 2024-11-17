@@ -37,7 +37,7 @@ public class TravelersBackpackCompat extends SpectrumIntegrationPacks.ModIntegra
 	
 	@Override
 	public void register() {
-		EffectFluidRegistry.registerFluidEffect(new SpectrumEffectFluid("spectrum:mud", SpectrumFluids.MUD.getStill()) {
+		EffectFluidRegistry.registerFluidEffect(new SpectrumEffectFluid("spectrum:goo", SpectrumFluids.GOO.getStill()) {
 			@Override
 			public void affectDrinker(StorageView<FluidVariant> fluidStack, World world, Entity entity) {
 				if (entity instanceof LivingEntity livingEntity) {

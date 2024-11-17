@@ -53,7 +53,7 @@ public class DragonrotFluidBlock extends SpectrumFluidBlock {
 			return SpectrumBlocks.SLUSH.getDefaultState();
 		} else if (otherState.isIn(FluidTags.LAVA)) {
 			return Blocks.BLACKSTONE.getDefaultState();
-		} else if (otherState.isIn(SpectrumFluidTags.MUD)) {
+		} else if (otherState.isIn(SpectrumFluidTags.GOO)) {
 			return Blocks.COARSE_DIRT.getDefaultState();
 		} else if (otherState.isIn(SpectrumFluidTags.LIQUID_CRYSTAL)) {
 			return SpectrumBlocks.ROTTEN_GROUND.getDefaultState();

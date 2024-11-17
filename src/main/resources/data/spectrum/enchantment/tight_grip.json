@@ -32,5 +32,6 @@
   ],
   "supported_items": "#spectrum:enchantable/tight_grip",
   "primary_items": "#minecraft:enchantable/sword",
-  "weight": 2
+  "weight": 2,
+  "advancement_id": "spectrum:unlocks/enchantments/tight_grip"
 }

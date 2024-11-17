@@ -5,6 +5,6 @@
     "spectrum:weather_detector",
     "spectrum:item_detector",
     "spectrum:player_detector",
-    "spectrum:entity_detector"
+    "spectrum:creature_detector"
   ]
 }

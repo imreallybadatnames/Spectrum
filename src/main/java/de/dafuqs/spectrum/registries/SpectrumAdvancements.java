@@ -45,7 +45,7 @@ public class SpectrumAdvancements {
 	public static final Identifier ENCHANTMENTS_DISARMING = SpectrumCommon.locate("unlocks/enchantments/disarming");
 	public static final Identifier ENCHANTMENTS_EXUBERANCE = SpectrumCommon.locate("unlocks/enchantments/exuberance");
 	public static final Identifier ENCHANTMENTS_FIRST_STRIKE = SpectrumCommon.locate("unlocks/enchantments/first_strike");
-	public static final Identifier ENCHANTMENTS_FOUNDRY = SpectrumCommon.locate("unlocks/enchantments/autosmelt");
+	public static final Identifier ENCHANTMENTS_FOUNDRY = SpectrumCommon.locate("unlocks/enchantments/foundry");
 	public static final Identifier ENCHANTMENTS_IMPROVED_CRITICAL = SpectrumCommon.locate("unlocks/enchantments/improved_critical");
 	public static final Identifier ENCHANTMENTS_INDESTRUCTIBLE = SpectrumCommon.locate("unlocks/enchantments/indestructible");
 	public static final Identifier ENCHANTMENTS_INERTIA = SpectrumCommon.locate("unlocks/enchantments/inertia");
@@ -55,7 +55,7 @@ public class SpectrumAdvancements {
 	public static final Identifier ENCHANTMENTS_RAZING = SpectrumCommon.locate("unlocks/enchantments/razing_usage");
 	public static final Identifier ENCHANTMENTS_RESONANCE_USAGE = SpectrumCommon.locate("unlocks/enchantments/resonance_usage");
 	public static final Identifier ENCHANTMENTS_SERENDIPITY_REEL = SpectrumCommon.locate("unlocks/enchantments/serendipity_reel");
-	public static final Identifier ENCHANTMENTS_SNIPER = SpectrumCommon.locate("unlocks/enchantments/sniper");
+	public static final Identifier ENCHANTMENTS_SNIPING = SpectrumCommon.locate("unlocks/enchantments/sniping");
 	public static final Identifier ENCHANTMENTS_STEADFAST = SpectrumCommon.locate("unlocks/enchantments/steadfast");
 	public static final Identifier ENCHANTMENTS_TIGHT_GRIP = SpectrumCommon.locate("unlocks/enchantments/tight_grip");
 	public static final Identifier ENCHANTMENTS_TREASURE_HUNTER = SpectrumCommon.locate("unlocks/enchantments/treasure_hunter");
@@ -94,7 +94,7 @@ public class SpectrumAdvancements {
 	public static final Identifier LATEGAME = SpectrumCommon.locate("lategame/spectrum_lategame");
 	public static final Identifier MIDGAME = SpectrumCommon.locate("midgame/spectrum_midgame");
 	public static final Identifier MYSTERIOUS_LOCKET_SOCKETING = SpectrumCommon.locate("unlocks/mysterious_locket_socketing");
-	public static final Identifier PLUCK_EFFULGENT_FEATHER = SpectrumCommon.locate("pluck_effulgent_feather");
+	public static final Identifier PLUCK_RESPLENDENT_FEATHER = SpectrumCommon.locate("pluck_resplendent_feather");
 	public static final Identifier SOLVE_WIRELESS_REDSTONE_PRESERVATION_RUIN = SpectrumCommon.locate("solve_wireless_redstone_preservation_ruin");
 	public static final Identifier STRIKE_UP_HUMMINGSTONE_HYMN = SpectrumCommon.locate("lategame/strike_up_hummingstone_hymn");
 	public static final Identifier VIVISECT_KINDLING = SpectrumCommon.locate("mod_integration/neepmeat/vivisect_kindling");

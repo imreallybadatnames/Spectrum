@@ -21,7 +21,7 @@ public class SpectrumLootTables {
 	public static final RegistryKey<LootTable> LAVA_FISHING = keyOf("gameplay/fishing/lava/fishing");
 	public static final RegistryKey<LootTable> END_FISHING = keyOf("gameplay/fishing/end/fishing");
 	public static final RegistryKey<LootTable> DEEPER_DOWN_FISHING = keyOf("gameplay/fishing/deeper_down/fishing");
-	public static final RegistryKey<LootTable> MUD_FISHING = keyOf("gameplay/fishing/mud/fishing");
+	public static final RegistryKey<LootTable> GOO_FISHING = keyOf("gameplay/fishing/goo/fishing");
 	public static final RegistryKey<LootTable> LIQUID_CRYSTAL_FISHING = keyOf("gameplay/fishing/liquid_crystal/fishing");
 	public static final RegistryKey<LootTable> MIDNIGHT_SOLUTION_FISHING = keyOf("gameplay/fishing/midnight_solution/fishing");
 	

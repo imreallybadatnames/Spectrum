@@ -1,10 +1,10 @@
 {
-  "name": "item.spectrum.purple_star_candy",
+  "name": "item.spectrum.enchanted_star_candy",
   "condition": {
     "type": "modonomicon:advancement",
-    "advancement_id": "spectrum:hidden/collect_purple_star_candy"
+    "advancement_id": "spectrum:hidden/collect_enchanted_star_candy"
   },
-  "icon": "spectrum:purple_star_candy",
+  "icon": "spectrum:enchanted_star_candy",
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [
@@ -19,9 +19,9 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "title": "item.spectrum.purple_star_candy",
+      "title": "item.spectrum.enchanted_star_candy",
       "item": {
-        "item": "spectrum:purple_star_candy"
+        "item": "spectrum:enchanted_star_candy"
       },
       "text": "book.spectrum.guidebook.star_candy.page2.text"
     }

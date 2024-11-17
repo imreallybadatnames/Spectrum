@@ -59,7 +59,7 @@ public class SpectrumFlammableBlocks {
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_FENCE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_FENCE_GATE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_STAIRS, 5, 20);
-		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_BEAM, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_PILLAR, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.SLATE_NOXWOOD_LIGHT, 5, 20);
 		
 		
@@ -74,7 +74,7 @@ public class SpectrumFlammableBlocks {
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_FENCE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_FENCE_GATE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_STAIRS, 5, 20);
-		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_BEAM, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_PILLAR, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.EBONY_NOXWOOD_LIGHT, 5, 20);
 		
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXCAP_STEM, 5, 5);
@@ -88,7 +88,7 @@ public class SpectrumFlammableBlocks {
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_FENCE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_FENCE_GATE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_STAIRS, 5, 20);
-		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_BEAM, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_PILLAR, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.IVORY_NOXWOOD_LIGHT, 5, 20);
 		
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXCAP_STEM, 5, 5);
@@ -102,7 +102,7 @@ public class SpectrumFlammableBlocks {
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_FENCE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_FENCE_GATE, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_STAIRS, 5, 20);
-		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_BEAM, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_PILLAR, 5, 20);
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.CHESTNUT_NOXWOOD_LIGHT, 5, 20);
 		
 		FlammableBlockRegistry.getDefaultInstance().add(SpectrumBlocks.WEEPING_GALA_LOG, 2, 2);

@@ -1,11 +1,11 @@
 {
-  "name": "enchantment.spectrum.sniper",
+  "name": "enchantment.spectrum.sniping",
   "icon": "minecraft:crossbow",
   "condition": {
     "type": "modonomicon:advancement",
-    "advancement_id": "spectrum:unlocks/enchantments/sniper"
+    "advancement_id": "spectrum:unlocks/enchantments/sniping"
   },
-  "flag": "spectrum:enchantment_exists_spectrum_sniper",
+  "flag": "spectrum:enchantment_exists_spectrum_sniping",
   "category": "spectrum:enchanting",
   "hide_while_locked": true,
   "parents": [],
@@ -16,8 +16,8 @@
   "pages": [
     {
       "type": "modonomicon:text",
-      "text": "book.spectrum.guidebook.sniper.page0.text",
-      "title": "enchantment.spectrum.sniper"
+      "text": "book.spectrum.guidebook.sniping.page0.text",
+      "title": "enchantment.spectrum.sniping"
     },
     {
       "type": "spectrum:nbt_spotlight",
@@ -27,19 +27,19 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:sniper",
+              "id": "spectrum:sniping",
               "lvl": "2s"
             }
           ]
         }
       },
-      "text": "book.spectrum.guidebook.sniper.page1.text"
+      "text": "book.spectrum.guidebook.sniping.page1.text"
     },
     {
       "type": "spectrum:enchanter_crafting",
       "text": "book.spectrum.guidebook.crafting",
       "title": "container.spectrum.rei.enchanter_recipe",
-      "recipe_id": "spectrum:enchanter/spectrum_books/sniper"
+      "recipe_id": "spectrum:enchanter/spectrum_books/sniping"
     }
   ]
 }

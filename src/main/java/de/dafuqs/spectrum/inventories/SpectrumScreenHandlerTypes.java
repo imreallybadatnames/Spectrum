@@ -1,14 +1,14 @@
 package de.dafuqs.spectrum.inventories;
 
-import io.netty.buffer.ByteBuf;
+import io.netty.buffer.*;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.client.gui.screen.ingame.*;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.resource.featuretoggle.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.*;
 
 public class SpectrumScreenHandlerTypes {
 	
@@ -17,7 +17,7 @@ public class SpectrumScreenHandlerTypes {
 
     public static ScreenHandlerType<PedestalScreenHandler> PEDESTAL;
     public static ScreenHandlerType<CraftingTabletScreenHandler> CRAFTING_TABLET;
-    public static ScreenHandlerType<RestockingChestScreenHandler> RESTOCKING_CHEST;
+	public static ScreenHandlerType<FabricationChestScreenHandler> FABRICATION_CHEST;
     public static ScreenHandlerType<BedrockAnvilScreenHandler> BEDROCK_ANVIL;
     public static ScreenHandlerType<ParticleSpawnerScreenHandler> PARTICLE_SPAWNER;
     public static ScreenHandlerType<CompactingChestScreenHandler> COMPACTING_CHEST;
@@ -63,7 +63,7 @@ public class SpectrumScreenHandlerTypes {
 		BAG_OF_HOLDING = registerSimple(SpectrumScreenHandlerIDs.BAG_OF_HOLDING, BagOfHoldingScreenHandler::new);
 
         CRAFTING_TABLET = registerSimple(SpectrumScreenHandlerIDs.CRAFTING_TABLET, CraftingTabletScreenHandler::new);
-        RESTOCKING_CHEST = registerSimple(SpectrumScreenHandlerIDs.RESTOCKING_CHEST, RestockingChestScreenHandler::new);
+		FABRICATION_CHEST = registerSimple(SpectrumScreenHandlerIDs.FABRICATION_CHEST, FabricationChestScreenHandler::new);
         BEDROCK_ANVIL = registerSimple(SpectrumScreenHandlerIDs.BEDROCK_ANVIL, BedrockAnvilScreenHandler::new);
         POTION_WORKSHOP = registerSimple(SpectrumScreenHandlerIDs.POTION_WORKSHOP, PotionWorkshopScreenHandler::new);
 
@@ -86,7 +86,7 @@ public class SpectrumScreenHandlerTypes {
 
         HandledScreens.register(SpectrumScreenHandlerTypes.PEDESTAL, PedestalScreen::new);
         HandledScreens.register(SpectrumScreenHandlerTypes.CRAFTING_TABLET, CraftingTabletScreen::new);
-        HandledScreens.register(SpectrumScreenHandlerTypes.RESTOCKING_CHEST, RestockingChestScreen::new);
+		HandledScreens.register(SpectrumScreenHandlerTypes.FABRICATION_CHEST, FabricationChestScreen::new);
         HandledScreens.register(SpectrumScreenHandlerTypes.BEDROCK_ANVIL, BedrockAnvilScreen::new);
         HandledScreens.register(SpectrumScreenHandlerTypes.PARTICLE_SPAWNER, ParticleSpawnerScreen::new);
         HandledScreens.register(SpectrumScreenHandlerTypes.COMPACTING_CHEST, CompactingChestScreen::new);

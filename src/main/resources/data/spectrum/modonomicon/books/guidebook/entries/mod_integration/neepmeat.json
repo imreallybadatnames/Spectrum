@@ -153,7 +153,7 @@
       "title": "book.spectrum.guidebook.mod_integration.neepmeat.kindling_vivisection.title",
       "condition": {
         "type": "modonomicon:advancement",
-        "advancement_id": "spectrum:pluck_effulgent_feather"
+				"advancement_id": "spectrum:pluck_resplendent_feather"
       },
       "items": [
         "spectrum:kindling_head",

@@ -1,6 +1,6 @@
 {
   "name": "book.spectrum.guidebook.gemstone_lights.name",
-  "icon": "spectrum:citrine_basalt_lamp",
+  "icon": "spectrum:citrine_basalt_light",
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/gemstone_lights/any"

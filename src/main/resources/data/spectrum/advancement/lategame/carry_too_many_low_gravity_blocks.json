@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_paltaeria",
   "display": {
     "icon": {
-      "item": "spectrum:paltaeria_fragment_block"
+      "item": "spectrum:paltaeria_floatblock"
     },
     "hidden": true,
     "frame": "challenge",

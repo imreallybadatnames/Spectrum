@@ -27,7 +27,7 @@
     },
     {
       "item": "minecraft:enchanted_book",
-      "recipeViewNbt": "{StoredEnchantments: [{id: \"spectrum:sniper\", lvl:2s}]}",
+      "recipeViewNbt": "{StoredEnchantments: [{id: \"spectrum:sniping\", lvl:2s}]}",
       "matchbook": {
         "mode": "AND",
         "matches": [
@@ -36,7 +36,7 @@
             "key": "StoredEnchantments",
             "minLevel": 2,
             "maxLevel": 255,
-            "enchantmentId": "spectrum:sniper"
+            "enchantmentId": "spectrum:sniping"
           }
         ]
       }

@@ -19,7 +19,7 @@ $entries = @(
     [Template]::new("spectrum:pyrite", "spectrum:pyrite_tubing", 1),
     [Template]::new("spectrum:pyrite", "spectrum:pyrite_relief", 1),
     [Template]::new("spectrum:pyrite", "spectrum:pyrite_stack", 1),
-    [Template]::new("spectrum:pyrite", "spectrum:pyrite_panneling", 1),
+    [Template]::new("spectrum:pyrite", "spectrum:pyrite_paneling", 1),
     [Template]::new("spectrum:pyrite", "spectrum:pyrite_vent", 1)
 )
 

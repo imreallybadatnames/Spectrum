@@ -1,3 +1,6 @@
 {
-  "parent": "spectrum:block/ebony_noxwood_lantern_off"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "spectrum:item/ebony_noxwood_lantern_item"
+  }
 }

@@ -19,7 +19,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
-import net.minecraft.server.network.EntityTrackerEntry;
+import net.minecraft.server.network.*;
 import net.minecraft.state.property.*;
 import net.minecraft.util.*;
 import net.minecraft.util.crash.*;
@@ -364,8 +364,8 @@ public class FloatBlockEntity extends Entity {
 	public boolean isPaltaeriaStratineCollision(FloatBlockEntity other) {
 		Block thisBlock = this.blockState.getBlock();
 		Block otherBlock = other.getBlockState().getBlock();
-		return thisBlock == SpectrumBlocks.PALTAERIA_FRAGMENT_BLOCK && otherBlock == SpectrumBlocks.STRATINE_FRAGMENT_BLOCK
-				|| thisBlock == SpectrumBlocks.STRATINE_FRAGMENT_BLOCK && otherBlock == SpectrumBlocks.PALTAERIA_FRAGMENT_BLOCK;
+		return thisBlock == SpectrumBlocks.PALTAERIA_FLOATBLOCK && otherBlock == SpectrumBlocks.STRATINE_FLOATBLOCK
+				|| thisBlock == SpectrumBlocks.STRATINE_FLOATBLOCK && otherBlock == SpectrumBlocks.PALTAERIA_FLOATBLOCK;
 	}
 	
 	/**

@@ -57,7 +57,7 @@ public class PrintConfigCommand {
 		if (!SpectrumCommon.CONFIG.CloversFavorEnchantmentEnabled) {
 			disabledEnchantments += "Clovers Favor ";
 		}
-		if (!SpectrumCommon.CONFIG.SniperEnchantmentEnabled) {
+		if (!SpectrumCommon.CONFIG.SnipingEnchantmentEnabled) {
 			disabledEnchantments += "Sniping ";
 		}
 		if (!SpectrumCommon.CONFIG.TightGripEnchantmentEnabled) {

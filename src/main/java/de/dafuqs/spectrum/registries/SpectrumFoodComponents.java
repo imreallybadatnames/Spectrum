@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.spectrum.status_effects.*;
-import net.minecraft.component.type.FoodComponent;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 
 public class SpectrumFoodComponents {
@@ -53,7 +53,7 @@ public class SpectrumFoodComponents {
 			.snack()
 			.build();
 	
-	public static final FoodComponent PURPLE_STAR_CANDY = new FoodComponent.Builder()
+	public static final FoodComponent ENCHANTED_STAR_CANDY = new FoodComponent.Builder()
 			.nutrition(20).saturationModifier(1.2F).snack()
 			.build();
 	

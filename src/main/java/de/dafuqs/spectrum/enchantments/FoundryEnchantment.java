@@ -17,14 +17,14 @@ import java.util.*;
 
 public class FoundryEnchantment extends SpectrumEnchantment {
 	
-	private static final AutoSmeltInventory autoSmeltInventory = new AutoSmeltInventory();
+	private static final SmeltingInventory INVENTORY = new SmeltingInventory();
 	
 	public FoundryEnchantment(Rarity weight, Identifier unlockAdvancementIdentifier, EquipmentSlot... slotTypes) {
 		super(weight, EnchantmentTarget.DIGGER, slotTypes, unlockAdvancementIdentifier);
 	}
 	
-	public static ItemStack getAutoSmeltedItemStack(ItemStack inputItemStack, World world) {
-		SmeltingRecipe smeltingRecipe = autoSmeltInventory.getRecipe(inputItemStack, world);
+	public static ItemStack getSmeltedItemStack(ItemStack inputItemStack, World world) {
+		SmeltingRecipe smeltingRecipe = INVENTORY.getRecipe(inputItemStack, world);
 		if (smeltingRecipe != null) {
 			ItemStack recipeOutputStack = smeltingRecipe.getOutput(world.getRegistryManager()).copy();
 			recipeOutputStack.setCount(recipeOutputStack.getCount() * inputItemStack.getCount());
@@ -39,7 +39,7 @@ public class FoundryEnchantment extends SpectrumEnchantment {
 		List<ItemStack> returnItemStacks = new ArrayList<>();
 		
 		for (ItemStack is : originalStacks) {
-			ItemStack smeltedStack = FoundryEnchantment.getAutoSmeltedItemStack(is, world);
+			ItemStack smeltedStack = FoundryEnchantment.getSmeltedItemStack(is, world);
 			if (smeltedStack == null) {
 				returnItemStacks.add(is);
 			} else {
@@ -85,7 +85,7 @@ public class FoundryEnchantment extends SpectrumEnchantment {
 		return super.isAcceptableItem(stack) || stack.getItem() instanceof SpectrumFishingRodItem;
 	}
 	
-	public static class AutoSmeltInventory implements Inventory, RecipeInputProvider {
+	public static class SmeltingInventory implements Inventory, RecipeInputProvider {
 		ItemStack input = ItemStack.EMPTY;
 		
 		@Override

@@ -1,9 +1,9 @@
 {
   "criteria": {
-    "unlocked_fanciful_stone_ring": {
+    "unlocked_fanciful_tuff_ring": {
       "trigger": "revelationary:advancement_gotten",
       "conditions": {
-        "advancement_identifier": "spectrum:unlocks/trinkets/fanciful_stone_ring"
+        "advancement_identifier": "spectrum:unlocks/trinkets/fanciful_tuff_ring"
       }
     },
     "unlocked_fanciful_circlet": {
@@ -39,7 +39,7 @@
   },
   "requirements": [
     [
-      "unlocked_fanciful_stone_ring",
+      "unlocked_fanciful_tuff_ring",
       "unlocked_fanciful_circlet",
       "unlocked_fanciful_belt",
       "unlocked_fanciful_pendant",
