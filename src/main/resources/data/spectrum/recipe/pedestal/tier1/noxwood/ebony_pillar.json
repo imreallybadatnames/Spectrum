@@ -16,14 +16,14 @@
   ],
   "key": {
     "S": {
-      "tag": "spectrum:slate_noxcap_stems"
+      "tag": "spectrum:ebony_noxcap_stems"
     },
     "C": {
-      "item": "spectrum:slate_noxcap_block"
+      "item": "spectrum:ebony_noxcap_block"
     }
   },
   "result": {
-    "item": "spectrum:slate_noxwood_beam",
+    "item": "spectrum:ebony_noxwood_pillar",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

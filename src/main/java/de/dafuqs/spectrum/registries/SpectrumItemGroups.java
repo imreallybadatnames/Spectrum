@@ -958,7 +958,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_TRAPDOOR);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_PRESSURE_PLATE);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_BUTTON);
-		entries.add(SpectrumBlocks.SLATE_NOXWOOD_BEAM);
+		entries.add(SpectrumBlocks.SLATE_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_AMPHORA);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LIGHT);
@@ -979,7 +979,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_TRAPDOOR);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_PRESSURE_PLATE);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_BUTTON);
-		entries.add(SpectrumBlocks.EBONY_NOXWOOD_BEAM);
+		entries.add(SpectrumBlocks.EBONY_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_AMPHORA);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LIGHT);
@@ -1000,7 +1000,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_TRAPDOOR);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_PRESSURE_PLATE);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_BUTTON);
-		entries.add(SpectrumBlocks.IVORY_NOXWOOD_BEAM);
+		entries.add(SpectrumBlocks.IVORY_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_AMPHORA);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LIGHT);
@@ -1021,7 +1021,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_TRAPDOOR);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_PRESSURE_PLATE);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_BUTTON);
-		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_BEAM);
+		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_AMPHORA);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LIGHT);

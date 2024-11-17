@@ -16,14 +16,14 @@
   ],
   "key": {
     "S": {
-      "tag": "spectrum:ivory_noxcap_stems"
+      "tag": "spectrum:chestnut_noxcap_stems"
     },
     "C": {
-      "item": "spectrum:ivory_noxcap_block"
+      "item": "spectrum:chestnut_noxcap_block"
     }
   },
   "result": {
-    "item": "spectrum:ivory_noxwood_beam",
+    "item": "spectrum:chestnut_noxwood_pillar",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

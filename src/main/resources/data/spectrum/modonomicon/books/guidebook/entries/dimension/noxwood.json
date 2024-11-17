@@ -52,7 +52,7 @@
         "spectrum:slate_noxwood_trapdoor",
         "spectrum:slate_noxwood_pressure_plate",
         "spectrum:slate_noxwood_button",
-        "spectrum:slate_noxwood_beam",
+        "spectrum:slate_noxwood_pillar",
         "spectrum:slate_noxwood_amphora",
         "spectrum:slate_noxwood_lantern",
         "spectrum:slate_noxwood_light",
@@ -72,7 +72,7 @@
         "spectrum:ebony_noxwood_trapdoor",
         "spectrum:ebony_noxwood_pressure_plate",
         "spectrum:ebony_noxwood_button",
-        "spectrum:ebony_noxwood_beam",
+        "spectrum:ebony_noxwood_pillar",
         "spectrum:ebony_noxwood_amphora",
         "spectrum:ebony_noxwood_lantern",
         "spectrum:ebony_noxwood_light",
@@ -98,7 +98,7 @@
         "spectrum:ivory_noxwood_trapdoor",
         "spectrum:ivory_noxwood_pressure_plate",
         "spectrum:ivory_noxwood_button",
-        "spectrum:ivory_noxwood_beam",
+        "spectrum:ivory_noxwood_pillar",
         "spectrum:ivory_noxwood_amphora",
         "spectrum:ivory_noxwood_lantern",
         "spectrum:ivory_noxwood_light",
@@ -118,7 +118,7 @@
         "spectrum:chestnut_noxwood_trapdoor",
         "spectrum:chestnut_noxwood_pressure_plate",
         "spectrum:chestnut_noxwood_button",
-        "spectrum:chestnut_noxwood_beam",
+        "spectrum:chestnut_noxwood_pillar",
         "spectrum:chestnut_noxwood_amphora",
         "spectrum:chestnut_noxwood_lantern",
         "spectrum:chestnut_noxwood_light",
@@ -196,19 +196,19 @@
     },
     {
       "type": "spectrum:pedestal_crafting",
-      "recipe_id": "spectrum:pedestal/tier1/noxwood/slate_beam"
+      "recipe_id": "spectrum:pedestal/tier1/noxwood/slate_pillar"
     },
     {
       "type": "spectrum:pedestal_crafting",
-      "recipe_id": "spectrum:pedestal/tier1/noxwood/ebony_beam"
+      "recipe_id": "spectrum:pedestal/tier1/noxwood/ebony_pillar"
     },
     {
       "type": "spectrum:pedestal_crafting",
-      "recipe_id": "spectrum:pedestal/tier1/noxwood/ivory_beam"
+      "recipe_id": "spectrum:pedestal/tier1/noxwood/ivory_pillar"
     },
     {
       "type": "spectrum:pedestal_crafting",
-      "recipe_id": "spectrum:pedestal/tier1/noxwood/chestnut_beam"
+      "recipe_id": "spectrum:pedestal/tier1/noxwood/chestnut_pillar"
     },
     {
       "type": "spectrum:pedestal_crafting",
