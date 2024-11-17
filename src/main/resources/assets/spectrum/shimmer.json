@@ -3598,52 +3598,52 @@
       "radius": 15
     },
     {
-      "block": "spectrum:topaz_calcite_lamp",
+      "block": "spectrum:topaz_calcite_light",
       "color": "#cyan",
       "radius": 15
     },
     {
-      "block": "spectrum:amethyst_calcite_lamp",
+      "block": "spectrum:amethyst_calcite_light",
       "color": "#magenta",
       "radius": 15
     },
     {
-      "block": "spectrum:citrine_calcite_lamp",
+      "block": "spectrum:citrine_calcite_light",
       "color": "#yellow",
       "radius": 15
     },
     {
-      "block": "spectrum:onyx_calcite_lamp",
+      "block": "spectrum:onyx_calcite_light",
       "color": "#black",
       "radius": 15
     },
     {
-      "block": "spectrum:moonstone_calcite_lamp",
+      "block": "spectrum:moonstone_calcite_light",
       "color": "#white",
       "radius": 15
     },
     {
-      "block": "spectrum:topaz_basalt_lamp",
+      "block": "spectrum:topaz_basalt_light",
       "color": "#cyan",
       "radius": 15
     },
     {
-      "block": "spectrum:amethyst_basalt_lamp",
+      "block": "spectrum:amethyst_basalt_light",
       "color": "#magenta",
       "radius": 15
     },
     {
-      "block": "spectrum:citrine_basalt_lamp",
+      "block": "spectrum:citrine_basalt_light",
       "color": "#yellow",
       "radius": 15
     },
     {
-      "block": "spectrum:onyx_basalt_lamp",
+      "block": "spectrum:onyx_basalt_light",
       "color": "#black",
       "radius": 15
     },
     {
-      "block": "spectrum:moonstone_basalt_lamp",
+      "block": "spectrum:moonstone_basalt_light",
       "color": "#white",
       "radius": 15
     },

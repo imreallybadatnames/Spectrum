@@ -33,15 +33,15 @@
     "spectrum:medium_moonstone_bud": "#d0d6d7",
     "spectrum:large_moonstone_bud": "#d0d6d7",
     "spectrum:moonstone_cluster": "#d0d6d7",
-    "spectrum:amethyst_basalt_lamp": "#b440ff",
-    "spectrum:citrine_basalt_lamp": "#00ff00",
-    "spectrum:topaz_basalt_lamp": "#3bc5e6",
-    "spectrum:onyx_basalt_lamp": "#222222",
-    "spectrum:moonstone_basalt_lamp": "#d0d6d7",
-    "spectrum:amethyst_calcite_lamp": "#b440ff",
-    "spectrum:citrine_calcite_lamp": "#00ff00",
-    "spectrum:topaz_calcite_lamp": "#3bc5e6",
-    "spectrum:onyx_calcite_lamp": "#222222",
-    "spectrum:moonstone_calcite_lamp": "#d0d6d7"
+    "spectrum:amethyst_basalt_light": "#b440ff",
+    "spectrum:citrine_basalt_light": "#00ff00",
+    "spectrum:topaz_basalt_light": "#3bc5e6",
+    "spectrum:onyx_basalt_light": "#222222",
+    "spectrum:moonstone_basalt_light": "#d0d6d7",
+    "spectrum:amethyst_calcite_light": "#b440ff",
+    "spectrum:citrine_calcite_light": "#00ff00",
+    "spectrum:topaz_calcite_light": "#3bc5e6",
+    "spectrum:onyx_calcite_light": "#222222",
+    "spectrum:moonstone_calcite_light": "#d0d6d7"
   }
 }

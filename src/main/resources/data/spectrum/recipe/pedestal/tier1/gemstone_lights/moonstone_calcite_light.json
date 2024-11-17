@@ -26,7 +26,7 @@
     }
   },
   "result": {
-    "item": "spectrum:moonstone_calcite_lamp",
+    "item": "spectrum:moonstone_calcite_light",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/gemstone_lights/moonstone"

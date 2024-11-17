@@ -1098,7 +1098,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.AMETHYST_CALCITE_LIGHT);
 		entries.add(SpectrumBlocks.CITRINE_CALCITE_LIGHT);
 		entries.add(SpectrumBlocks.ONYX_CALCITE_LIGHT);
-		entries.add(SpectrumBlocks.MOONSTONE_CALCITE_LAMP);
+		entries.add(SpectrumBlocks.MOONSTONE_CALCITE_LIGHT);
 		entries.add(SpectrumBlocks.TOPAZ_BASALT_LIGHT);
 		entries.add(SpectrumBlocks.AMETHYST_BASALT_LIGHT);
 		entries.add(SpectrumBlocks.CITRINE_BASALT_LIGHT);

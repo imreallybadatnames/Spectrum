@@ -383,7 +383,7 @@ public class SpectrumBlocks {
 	public static final Block AMETHYST_CALCITE_LIGHT = new PillarBlock(gemstoneLight(POLISHED_CALCITE));
 	public static final Block CITRINE_CALCITE_LIGHT = new PillarBlock(gemstoneLight(POLISHED_CALCITE));
 	public static final Block ONYX_CALCITE_LIGHT = new PillarBlock(gemstoneLight(POLISHED_CALCITE));
-	public static final Block MOONSTONE_CALCITE_LAMP = new PillarBlock(gemstoneLight(POLISHED_CALCITE));
+	public static final Block MOONSTONE_CALCITE_LIGHT = new PillarBlock(gemstoneLight(POLISHED_CALCITE));
 
 	// GLASS
 	private static Settings gemstoneGlass(BlockSoundGroup soundGroup, MapColor mapColor) {
@@ -2338,17 +2338,17 @@ public class SpectrumBlocks {
 	}
 
 	private static void registerGemstoneLamps(Item.Settings settings) {
-		registerBlockWithItem("topaz_calcite_lamp", TOPAZ_CALCITE_LIGHT, settings, DyeColor.CYAN);
-		registerBlockWithItem("amethyst_calcite_lamp", AMETHYST_CALCITE_LIGHT, settings, DyeColor.MAGENTA);
-		registerBlockWithItem("citrine_calcite_lamp", CITRINE_CALCITE_LIGHT, settings, DyeColor.YELLOW);
-		registerBlockWithItem("onyx_calcite_lamp", ONYX_CALCITE_LIGHT, settings, DyeColor.BLACK);
-		registerBlockWithItem("moonstone_calcite_lamp", MOONSTONE_CALCITE_LAMP, settings, DyeColor.WHITE);
-
-		registerBlockWithItem("topaz_basalt_lamp", TOPAZ_BASALT_LIGHT, settings, DyeColor.CYAN);
-		registerBlockWithItem("amethyst_basalt_lamp", AMETHYST_BASALT_LIGHT, settings, DyeColor.MAGENTA);
-		registerBlockWithItem("citrine_basalt_lamp", CITRINE_BASALT_LIGHT, settings, DyeColor.YELLOW);
-		registerBlockWithItem("onyx_basalt_lamp", ONYX_BASALT_LIGHT, settings, DyeColor.BLACK);
-		registerBlockWithItem("moonstone_basalt_lamp", MOONSTONE_BASALT_LIGHT, settings, DyeColor.WHITE);
+		registerBlockWithItem("topaz_calcite_light", TOPAZ_CALCITE_LIGHT, settings, DyeColor.CYAN);
+		registerBlockWithItem("amethyst_calcite_light", AMETHYST_CALCITE_LIGHT, settings, DyeColor.MAGENTA);
+		registerBlockWithItem("citrine_calcite_light", CITRINE_CALCITE_LIGHT, settings, DyeColor.YELLOW);
+		registerBlockWithItem("onyx_calcite_light", ONYX_CALCITE_LIGHT, settings, DyeColor.BLACK);
+		registerBlockWithItem("moonstone_calcite_light", MOONSTONE_CALCITE_LIGHT, settings, DyeColor.WHITE);
+		
+		registerBlockWithItem("topaz_basalt_light", TOPAZ_BASALT_LIGHT, settings, DyeColor.CYAN);
+		registerBlockWithItem("amethyst_basalt_light", AMETHYST_BASALT_LIGHT, settings, DyeColor.MAGENTA);
+		registerBlockWithItem("citrine_basalt_light", CITRINE_BASALT_LIGHT, settings, DyeColor.YELLOW);
+		registerBlockWithItem("onyx_basalt_light", ONYX_BASALT_LIGHT, settings, DyeColor.BLACK);
+		registerBlockWithItem("moonstone_basalt_light", MOONSTONE_BASALT_LIGHT, settings, DyeColor.WHITE);
 	}
 
 	private static void registerColoredWood(Item.Settings settings) {
@@ -2919,7 +2919,7 @@ public class SpectrumBlocks {
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.TOPAZ_CALCITE_LIGHT, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.AMETHYST_CALCITE_LIGHT, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.CITRINE_CALCITE_LIGHT, RenderLayer.getTranslucent());
-		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.MOONSTONE_CALCITE_LAMP, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.MOONSTONE_CALCITE_LIGHT, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.ONYX_CALCITE_LIGHT, RenderLayer.getTranslucent());
 
 		// Gemstone Lamps

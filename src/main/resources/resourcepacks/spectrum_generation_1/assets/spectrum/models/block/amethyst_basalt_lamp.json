@@ -2,7 +2,7 @@
   "parent": "spectrum:templates/multilayer_light",
   "textures": {
     "top": "spectrum:block/polished_basalt",
-    "side": "spectrum:block/amethyst_basalt_lamp",
+    "side": "spectrum:block/amethyst_basalt_light",
     "inside": "spectrum:block/amethyst_lamp_inner"
   }
 }
