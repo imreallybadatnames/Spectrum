@@ -36,18 +36,18 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:autosmelt",
+          "id": "spectrum:foundry",
           "lvl": "1s"
         }
       ]
     }
   },
-  "required_advancement": "spectrum:unlocks/enchantments/autosmelt",
+  "required_advancement": "spectrum:unlocks/enchantments/foundry",
   "fabric:load_conditions": [
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:autosmelt"
+        "spectrum:foundry"
       ]
     }
   ]

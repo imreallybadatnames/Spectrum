@@ -45,7 +45,7 @@ public class SpectrumAdvancements {
 	public static final Identifier ENCHANTMENTS_DISARMING = SpectrumCommon.locate("unlocks/enchantments/disarming");
 	public static final Identifier ENCHANTMENTS_EXUBERANCE = SpectrumCommon.locate("unlocks/enchantments/exuberance");
 	public static final Identifier ENCHANTMENTS_FIRST_STRIKE = SpectrumCommon.locate("unlocks/enchantments/first_strike");
-	public static final Identifier ENCHANTMENTS_FOUNDRY = SpectrumCommon.locate("unlocks/enchantments/autosmelt");
+	public static final Identifier ENCHANTMENTS_FOUNDRY = SpectrumCommon.locate("unlocks/enchantments/foundry");
 	public static final Identifier ENCHANTMENTS_IMPROVED_CRITICAL = SpectrumCommon.locate("unlocks/enchantments/improved_critical");
 	public static final Identifier ENCHANTMENTS_INDESTRUCTIBLE = SpectrumCommon.locate("unlocks/enchantments/indestructible");
 	public static final Identifier ENCHANTMENTS_INERTIA = SpectrumCommon.locate("unlocks/enchantments/inertia");

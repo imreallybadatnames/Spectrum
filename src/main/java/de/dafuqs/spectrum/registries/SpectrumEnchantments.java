@@ -37,7 +37,7 @@ public class SpectrumEnchantments {
 			register("pest_control", PEST_CONTROL);
 		}
 		if (SpectrumCommon.CONFIG.FoundryEnchantmentEnabled) {
-			register("autosmelt", FOUNDRY);
+			register("foundry", FOUNDRY);
 		}
 		if (SpectrumCommon.CONFIG.InventoryInsertionEnchantmentEnabled) {
 			register("inventory_insertion", INVENTORY_INSERTION);

@@ -1,11 +1,11 @@
 {
-  "name": "enchantment.spectrum.autosmelt",
+  "name": "enchantment.spectrum.foundry",
   "icon": "minecraft:iron_pickaxe",
   "condition": {
     "type": "modonomicon:advancement",
-    "advancement_id": "spectrum:unlocks/enchantments/autosmelt"
+    "advancement_id": "spectrum:unlocks/enchantments/foundry"
   },
-  "flag": "spectrum:enchantment_exists_spectrum_autosmelt",
+  "flag": "spectrum:enchantment_exists_spectrum_foundry",
   "category": "spectrum:enchanting",
   "hide_while_locked": true,
   "parents": [],
@@ -17,7 +17,7 @@
     {
       "type": "modonomicon:text",
       "text": "book.spectrum.guidebook.foundry.page0.text",
-      "title": "enchantment.spectrum.autosmelt"
+      "title": "enchantment.spectrum.foundry"
     },
     {
       "type": "spectrum:nbt_spotlight",
@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:autosmelt",
+              "id": "spectrum:foundry",
               "lvl": "1s"
             }
           ]
@@ -39,7 +39,7 @@
       "type": "spectrum:enchanter_crafting",
       "text": "book.spectrum.guidebook.crafting",
       "title": "container.spectrum.rei.enchanter_recipe",
-      "recipe_id": "spectrum:enchanter/spectrum_books/autosmelt"
+      "recipe_id": "spectrum:enchanter/spectrum_books/foundry"
     }
   ]
 }
