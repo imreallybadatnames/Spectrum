@@ -5,7 +5,7 @@
       "nbt": {
         "Enchantments": [
           {
-            "id": "minecraft:sweeping",
+            "id": "minecraft:sweeping_edge",
             "lvl": "4s"
           }
         ]

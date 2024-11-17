@@ -1,7 +1,7 @@
 {
   "type": "spectrum:enchantment_upgrade",
   "group": "vanilla",
-  "enchantment": "minecraft:sweeping",
+  "enchantment": "minecraft:sweeping_edge",
   "levels": [
     {
       "experience": 100,
@@ -39,7 +39,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "minecraft:sweeping"
+        "minecraft:sweeping_edge"
       ]
     }
   ]
