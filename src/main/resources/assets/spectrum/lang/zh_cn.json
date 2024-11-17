@@ -1519,9 +1519,9 @@
   "block.spectrum.dragonrot": "龙腐脓浆",
 
   "block.spectrum.paltaeria_ore": "苍绿矿石",
-  "block.spectrum.paltaeria_fragment_block": "苍绿悬浮方块",
+	"block.spectrum.paltaeria_floatblock": "苍绿悬浮方块",
   "block.spectrum.stratine_ore": "绯红矿石",
-  "block.spectrum.stratine_fragment_block": "绯红悬浮方块",
+	"block.spectrum.stratine_floatblock": "绯红悬浮方块",
   "block.spectrum.hover_block": "悬浮方块",
 
   "block.spectrum.glistering_shooting_star": "闪亮流星",

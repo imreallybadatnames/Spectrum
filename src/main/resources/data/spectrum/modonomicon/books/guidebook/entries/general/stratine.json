@@ -33,13 +33,13 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "title": "block.spectrum.stratine_fragment_block",
+      "title": "block.spectrum.stratine_floatblock",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/carry_too_many_heavy_gravity_blocks"
       },
       "item": {
-        "item": "spectrum:stratine_fragment_block"
+        "item": "spectrum:stratine_floatblock"
       },
       "text": "book.spectrum.guidebook.stratine.page2.text"
     },
@@ -51,7 +51,7 @@
       },
       "text": "book.spectrum.guidebook.stratine.page3.text",
       "title": "container.spectrum.rei.pedestal_recipe",
-      "recipe_id": "spectrum:pedestal/tier1/compacting/stratine_fragment_block"
+      "recipe_id": "spectrum:pedestal/tier1/compacting/stratine_floatblock"
     }
   ]
 }

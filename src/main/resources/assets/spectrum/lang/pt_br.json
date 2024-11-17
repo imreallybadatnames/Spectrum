@@ -659,9 +659,9 @@
   "block.spectrum.flowing_midnight_solution": "Solução da Meia Noite",
 
   "block.spectrum.paltaeria_ore": "Minério de Turpálido",
-  "block.spectrum.paltaeria_fragment_block": "Bloco Flutuante de Turpálido",
+	"block.spectrum.paltaeria_floatblock": "Bloco Flutuante de Turpálido",
   "block.spectrum.stratine_ore": "Minério de Carmesim",
-  "block.spectrum.stratine_fragment_block": "Bloco Flutuante de Carmesim",
+	"block.spectrum.stratine_floatblock": "Bloco Flutuante de Carmesim",
   "block.spectrum.hover_block": "Bloco Flutuante",
 
   "block.spectrum.glistering_shooting_star": "Estrela Cadente Reluzente",

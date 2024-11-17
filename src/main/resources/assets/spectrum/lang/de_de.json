@@ -520,9 +520,9 @@
   "block.spectrum.flowing_liquid_crystal": "Flüssigkristall",
 
   "block.spectrum.paltaeria_ore": "Paltaeria Erz",
-  "block.spectrum.paltaeria_fragment_block": "Paltaeria Schwebeblock",
+	"block.spectrum.paltaeria_floatblock": "Paltaeria Schwebeblock",
   "block.spectrum.stratine_ore": "Scharlach Erz",
-  "block.spectrum.stratine_fragment_block": "Scharlach Schwebeblock",
+	"block.spectrum.stratine_floatblock": "Scharlach Schwebeblock",
 
   "block.spectrum.glistering_melon": "Glänzende Melone",
   "block.spectrum.glistering_melon_stem": "Glänzender Melonenstiel",

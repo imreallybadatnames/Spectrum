@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:stratine_fragment_block"
+      "item": "spectrum:stratine_floatblock"
     },
     "frame": "challenge",
     "title": {

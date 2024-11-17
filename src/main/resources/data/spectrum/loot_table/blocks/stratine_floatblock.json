@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "spectrum:stratine_fragment_block"
+          "name": "spectrum:stratine_floatblock"
         }
       ],
       "conditions": [

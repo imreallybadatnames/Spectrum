@@ -1,5 +1,5 @@
 {
-  "type": "spectrum:pedestal_shapeless",
+  "type": "spectrum:pedestal",
   "group": "compacting",
   "time": 80,
   "tier": "basic",
@@ -9,14 +9,19 @@
   "black": 0,
   "white": 0,
   "experience": 0.0,
-  "ingredients": [
-    {
-      "item": "spectrum:stratine_fragment_block"
-    }
+  "pattern": [
+    "###",
+    "###",
+    "###"
   ],
+  "key": {
+    "#": {
+      "item": "spectrum:stratine_fragments"
+    }
+  },
   "result": {
-    "item": "spectrum:stratine_fragments",
-    "count": 9
+    "item": "spectrum:stratine_floatblock",
+    "count": 1
   },
   "required_advancement": "spectrum:midgame/carry_too_many_heavy_gravity_blocks",
   "disable_yield_upgrades": true

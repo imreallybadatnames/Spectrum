@@ -1090,8 +1090,8 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.BLOODSTONE_BLOCK);
 		entries.add(SpectrumBlocks.BISMUTH_BLOCK);
 		
-		entries.add(SpectrumBlocks.STRATINE_FRAGMENT_BLOCK);
-		entries.add(SpectrumBlocks.PALTAERIA_FRAGMENT_BLOCK);
+		entries.add(SpectrumBlocks.STRATINE_FLOATBLOCK);
+		entries.add(SpectrumBlocks.PALTAERIA_FLOATBLOCK);
 		entries.add(SpectrumBlocks.HOVER_BLOCK);
 		
 		entries.add(SpectrumBlocks.TOPAZ_CALCITE_LIGHT);
