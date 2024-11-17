@@ -479,8 +479,8 @@ public class SpectrumS2CPacketReceiver {
 				entity.get().shouldCraft(hasToCraft);
 			});
 		})));
-
-		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.RESTOCKING_CHEST_STATUS_UPDATE, (((client, handler, buf, responseSender) -> {
+		
+		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.FABRICATION_CHEST_STATUS_UPDATE, (((client, handler, buf, responseSender) -> {
 			var pos = buf.readBlockPos();
 			var isFull = buf.readBoolean();
 			var hasValidRecipes = buf.readBoolean();
@@ -491,7 +491,7 @@ public class SpectrumS2CPacketReceiver {
 			}
 
 			client.execute(() -> {
-				var entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.RESTOCKING_CHEST);
+				var entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.FABRICATION_CHEST);
 
 				if (entity.isEmpty())
 					return;

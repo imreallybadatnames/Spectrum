@@ -340,7 +340,7 @@
   "block.spectrum.ender_hopper": "Funil Ender",
   "block.spectrum.compacting_chest": "Baú Compactador",
   "block.spectrum.compacting_chest.toggle_crafting_mode": "Alterna Modo de Fabricação",
-  "block.spectrum.restocking_chest": "Baú de Fabricação",
+	"block.spectrum.fabrication_chest": "Baú de Fabricação",
   "block.spectrum.black_hole_chest": "Baú de Buraco Negro",
   "block.spectrum.heartbound_chest": "Baú Vinculado ao Coração",
   "block.spectrum.ominous_sapling": "Muda Sinistra",

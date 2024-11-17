@@ -11,7 +11,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.text.*;
 import net.minecraft.util.collection.*;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class RestockingChestBlockEntity extends SpectrumChestBlockEntity implements SidedInventory {
+public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implements SidedInventory {
 	
 	public static final int INVENTORY_SIZE = 27 + 4 + 4; // 27 items, 4 crafting tablets, 4 result slots
 	public static final int[] CHEST_SLOTS = IntStream.rangeClosed(0, 26).toArray();
@@ -35,11 +35,11 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	float rimTarget, rimPos, lastRimTarget, tabletTarget, tabletPos, lastTabletTarget,assemblyTarget, assemblyPos, lastAssemblyTarget, ringTarget, ringPos, lastRingTarget, itemTarget, itemPos, lastItemTarget, alphaTarget, alphaValue, lastAlphaTarget, yawModTarget, yawMod, lastYawModTarget, yaw, lastYaw;
 	long interpTicks, interpLength = 1, age;
 	
-	public RestockingChestBlockEntity(BlockPos blockPos, BlockState blockState) {
-		super(SpectrumBlockEntities.RESTOCKING_CHEST, blockPos, blockState);
+	public FabricationChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+		super(SpectrumBlockEntities.FABRICATION_CHEST, blockPos, blockState);
 	}
 	
-	public static void tick(World world, BlockPos pos, BlockState state, RestockingChestBlockEntity chest) {
+	public static void tick(World world, BlockPos pos, BlockState state, FabricationChestBlockEntity chest) {
 		chest.age++;
 
 		if (world.isClient) {
@@ -119,12 +119,12 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 		return super.onSyncedBlockEvent(type, data);
 	}
 	
-	private static boolean tickCooldown(RestockingChestBlockEntity restockingChestBlockEntity) {
-		restockingChestBlockEntity.coolDownTicks--;
-		if (restockingChestBlockEntity.coolDownTicks > 0) {
+	private static boolean tickCooldown(FabricationChestBlockEntity fabricationChestBlockEntity) {
+		fabricationChestBlockEntity.coolDownTicks--;
+		if (fabricationChestBlockEntity.coolDownTicks > 0) {
 			return false;
 		} else {
-			restockingChestBlockEntity.coolDownTicks = 0;
+			fabricationChestBlockEntity.coolDownTicks = 0;
 		}
 		return true;
 	}
@@ -180,19 +180,19 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	
 	@Override
 	protected Text getContainerName() {
-		return Text.translatable("block.spectrum.restocking_chest");
+		return Text.translatable("block.spectrum.fabrication_chest");
 	}
 	
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return new RestockingChestScreenHandler(syncId, playerInventory, this);
+		return new FabricationChestScreenHandler(syncId, playerInventory, this);
 	}
 	
-	private void setCooldown(RestockingChestBlockEntity restockingChestBlockEntity, int cooldownTicks) {
-		restockingChestBlockEntity.coolDownTicks = cooldownTicks;
+	private void setCooldown(FabricationChestBlockEntity fabricationChestBlockEntity, int cooldownTicks) {
+		fabricationChestBlockEntity.coolDownTicks = cooldownTicks;
 	}
 	
-	private boolean tryCraft(RestockingChestBlockEntity chest, int index) {
+	private boolean tryCraft(FabricationChestBlockEntity chest, int index) {
 		ItemStack craftingTabletItemStack = chest.inventory.get(RECIPE_SLOTS[index]);
 		if (craftingTabletItemStack.isOf(SpectrumItems.CRAFTING_TABLET)) {
 			var recipe = CraftingTabletItem.getStoredRecipe(world, craftingTabletItemStack);
@@ -295,7 +295,7 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 		if (world != null && !world.isClient()) {
 			isFull = isFull();
 			hasValidRecipes = hasValidRecipes();
-			SpectrumS2CPacketSender.sendRestockingChestStatusUpdate(this);
+			SpectrumS2CPacketSender.sendFabricationChestStatusUpdate(this);
 		}
 	}
 

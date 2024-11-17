@@ -10,29 +10,29 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.world.*;
 
-public class RestockingChestScreenHandler extends ScreenHandler {
+public class FabricationChestScreenHandler extends ScreenHandler {
 	
 	protected final World world;
 	private final Inventory inventory;
 	
-	public RestockingChestScreenHandler(int syncId, PlayerInventory playerInventory) {
-		this(SpectrumScreenHandlerTypes.RESTOCKING_CHEST, syncId, playerInventory);
+	public FabricationChestScreenHandler(int syncId, PlayerInventory playerInventory) {
+		this(SpectrumScreenHandlerTypes.FABRICATION_CHEST, syncId, playerInventory);
 	}
 	
-	protected RestockingChestScreenHandler(ScreenHandlerType<?> type, int i, PlayerInventory playerInventory) {
-		this(type, i, playerInventory, new SimpleInventory(RestockingChestBlockEntity.INVENTORY_SIZE));
+	protected FabricationChestScreenHandler(ScreenHandlerType<?> type, int i, PlayerInventory playerInventory) {
+		this(type, i, playerInventory, new SimpleInventory(FabricationChestBlockEntity.INVENTORY_SIZE));
 	}
 	
-	public RestockingChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-		this(SpectrumScreenHandlerTypes.RESTOCKING_CHEST, syncId, playerInventory, inventory);
+	public FabricationChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+		this(SpectrumScreenHandlerTypes.FABRICATION_CHEST, syncId, playerInventory, inventory);
 	}
 	
-	protected RestockingChestScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
+	protected FabricationChestScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
 		super(type, syncId);
 		this.inventory = inventory;
 		this.world = playerInventory.player.getWorld();
 		
-		checkSize(inventory, RestockingChestBlockEntity.INVENTORY_SIZE);
+		checkSize(inventory, FabricationChestBlockEntity.INVENTORY_SIZE);
 		inventory.onOpen(playerInventory.player);
 		
 		// chest inventory
@@ -45,13 +45,13 @@ public class RestockingChestScreenHandler extends ScreenHandler {
 		
 		// crafting tablet slots
 		for (int j = 0; j < 4; j++) {
-			int slotId = RestockingChestBlockEntity.RECIPE_SLOTS[j];
+			int slotId = FabricationChestBlockEntity.RECIPE_SLOTS[j];
 			this.addSlot(new StackFilterSlot(inventory, slotId, 26 + j * 36, 18, SpectrumItems.CRAFTING_TABLET));
 		}
 		
 		// crafting result slots
 		for (int j = 0; j < 4; j++) {
-			int slotId = RestockingChestBlockEntity.RESULT_SLOTS[j];
+			int slotId = FabricationChestBlockEntity.RESULT_SLOTS[j];
 			this.addSlot(new ExtractOnlySlot(inventory, slotId, 26 + j * 36, 42));
 		}
 		
@@ -82,19 +82,19 @@ public class RestockingChestScreenHandler extends ScreenHandler {
 			ItemStack clickedStack = slot.getStack();
 			clickedStackCopy = clickedStack.copy();
 			
-			if (index < RestockingChestBlockEntity.INVENTORY_SIZE) {
+			if (index < FabricationChestBlockEntity.INVENTORY_SIZE) {
 				// => player inv
 				if (!this.insertItem(clickedStack, 35, 71, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (index > RestockingChestBlockEntity.INVENTORY_SIZE && clickedStackCopy.isOf(SpectrumItems.CRAFTING_TABLET)) {
-				if (!this.insertItem(clickedStack, RestockingChestBlockEntity.RECIPE_SLOTS[0], RestockingChestBlockEntity.RECIPE_SLOTS[RestockingChestBlockEntity.RECIPE_SLOTS.length - 1] + 1, false)) {
+			} else if (index > FabricationChestBlockEntity.INVENTORY_SIZE && clickedStackCopy.isOf(SpectrumItems.CRAFTING_TABLET)) {
+				if (!this.insertItem(clickedStack, FabricationChestBlockEntity.RECIPE_SLOTS[0], FabricationChestBlockEntity.RECIPE_SLOTS[FabricationChestBlockEntity.RECIPE_SLOTS.length - 1] + 1, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
 			
 			// chest => inventory
-			if (!this.insertItem(clickedStack, 0, RestockingChestBlockEntity.CHEST_SLOTS.length - 1, false)) {
+			if (!this.insertItem(clickedStack, 0, FabricationChestBlockEntity.CHEST_SLOTS.length - 1, false)) {
 				return ItemStack.EMPTY;
 			}
 			

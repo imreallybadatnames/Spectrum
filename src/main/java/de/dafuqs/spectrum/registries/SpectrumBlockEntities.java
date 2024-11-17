@@ -61,7 +61,7 @@ public class SpectrumBlockEntities {
 	public static BlockEntityType<ColorPickerBlockEntity> COLOR_PICKER;
 	
 	public static BlockEntityType<CompactingChestBlockEntity> COMPACTING_CHEST;
-	public static BlockEntityType<RestockingChestBlockEntity> RESTOCKING_CHEST;
+	public static BlockEntityType<FabricationChestBlockEntity> FABRICATION_CHEST;
 	public static BlockEntityType<HeartboundChestBlockEntity> HEARTBOUND_CHEST;
 	public static BlockEntityType<BlackHoleChestBlockEntity> BLACK_HOLE_CHEST;
 	public static BlockEntityType<TreasureChestBlockEntity> PRESERVATION_CHEST;
@@ -105,7 +105,7 @@ public class SpectrumBlockEntities {
 		ENDER_HOPPER = register("ender_hopper", EnderHopperBlockEntity::new, SpectrumBlocks.ENDER_HOPPER);
 		PARTICLE_SPAWNER = register("particle_spawner", ParticleSpawnerBlockEntity::new, SpectrumBlocks.PARTICLE_SPAWNER, SpectrumBlocks.CREATIVE_PARTICLE_SPAWNER);
 		COMPACTING_CHEST = register("compacting_chest", CompactingChestBlockEntity::new, SpectrumBlocks.COMPACTING_CHEST);
-		RESTOCKING_CHEST = register("restocking_chest", RestockingChestBlockEntity::new, SpectrumBlocks.RESTOCKING_CHEST);
+		FABRICATION_CHEST = register("fabrication_chest", FabricationChestBlockEntity::new, SpectrumBlocks.FABRICATION_CHEST);
 		HEARTBOUND_CHEST = register("heartbound_chest", HeartboundChestBlockEntity::new, SpectrumBlocks.HEARTBOUND_CHEST);
 		BLACK_HOLE_CHEST = register("black_hole_chest", BlackHoleChestBlockEntity::new, SpectrumBlocks.BLACK_HOLE_CHEST);
 		PRESERVATION_CHEST = register("preservation_chest", TreasureChestBlockEntity::new, SpectrumBlocks.PRESERVATION_CHEST);
@@ -157,7 +157,7 @@ public class SpectrumBlockEntities {
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.PEDESTAL, PedestalBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.HEARTBOUND_CHEST, HeartboundChestBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.COMPACTING_CHEST, CompactingChestBlockEntityRenderer::new);
-		BlockEntityRendererFactories.register(SpectrumBlockEntities.RESTOCKING_CHEST, RestockingChestBlockEntityRenderer::new);
+		BlockEntityRendererFactories.register(SpectrumBlockEntities.FABRICATION_CHEST, FabricationChestBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.PRESERVATION_CHEST, SpectrumChestBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.BLACK_HOLE_CHEST, BlackHoleChestBlockEntityRenderer::new);
 		BlockEntityRendererFactories.register(SpectrumBlockEntities.UPGRADE_BLOCK, UpgradeBlockBlockEntityRenderer::new);

@@ -1806,7 +1806,7 @@
   "block.spectrum.redstone_timer.setting.ten_seconds": "10 seconds",
   "block.spectrum.redstone_transceiver": "Redstone Transceiver",
   "block.spectrum.resonant_lily": "Resonant Lily",
-  "block.spectrum.restocking_chest": "Fabrication Chest",
+	"block.spectrum.fabrication_chest": "Fabrication Chest",
   "block.spectrum.rock_crystal": "Rock Crystal",
   "block.spectrum.rotten_ground": "Rotten Ground",
   "block.spectrum.ruin": "Ruin",

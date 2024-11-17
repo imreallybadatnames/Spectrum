@@ -248,7 +248,7 @@ public class SpectrumItemGroups {
 				
 				entries.add(SpectrumBlocks.HEARTBOUND_CHEST);
 				entries.add(SpectrumBlocks.COMPACTING_CHEST);
-				entries.add(SpectrumBlocks.RESTOCKING_CHEST);
+				entries.add(SpectrumBlocks.FABRICATION_CHEST);
 				entries.add(SpectrumBlocks.BLACK_HOLE_CHEST);
 				
 				entries.add(SpectrumBlocks.ENDER_HOPPER);

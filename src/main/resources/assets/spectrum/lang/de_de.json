@@ -205,7 +205,7 @@
   "block.spectrum.ender_dropper": "Ender Spender",
   "block.spectrum.ender_hopper": "Ender Trichter",
   "block.spectrum.compacting_chest": "Verdichtungs-Truhe",
-  "block.spectrum.restocking_chest": "Fabrikations-Truhe",
+	"block.spectrum.fabrication_chest": "Fabrikations-Truhe",
   "block.spectrum.black_hole_chest": "Schwarzloch-Truhe",
   "block.spectrum.heartbound_chest": "Herzensbindung-Truhe",
   "block.spectrum.ominous_sapling": "Ominöser Setzling",

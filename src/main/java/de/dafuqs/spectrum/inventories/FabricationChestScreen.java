@@ -8,11 +8,11 @@ import net.minecraft.entity.player.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
-public class RestockingChestScreen extends HandledScreen<RestockingChestScreenHandler> {
+public class FabricationChestScreen extends HandledScreen<FabricationChestScreenHandler> {
 	
-	public static final Identifier BACKGROUND = SpectrumCommon.locate("textures/gui/container/restocking_chest.png");
+	public static final Identifier BACKGROUND = SpectrumCommon.locate("textures/gui/container/fabrication_chest.png");
 	
-	public RestockingChestScreen(RestockingChestScreenHandler handler, PlayerInventory playerInventory, Text title) {
+	public FabricationChestScreen(FabricationChestScreenHandler handler, PlayerInventory playerInventory, Text title) {
 		super(handler, playerInventory, title);
 		this.backgroundHeight = 219;
 	}

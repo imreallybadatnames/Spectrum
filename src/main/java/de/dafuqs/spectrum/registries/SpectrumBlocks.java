@@ -937,7 +937,7 @@ public class SpectrumBlocks {
 	// FUNCTIONAL BLOCKS
 	public static final Block HEARTBOUND_CHEST = new HeartboundChestBlock(settings(MapColor.TERRACOTTA_WHITE, BlockSoundGroup.STONE, -1.0F, 3600000.0F).requiresTool().nonOpaque());
 	public static final Block COMPACTING_CHEST = new CompactingChestBlock(settings(MapColor.TERRACOTTA_WHITE, BlockSoundGroup.STONE, 4.0F, 4.0F).requiresTool().nonOpaque());
-	public static final Block RESTOCKING_CHEST = new RestockingChestBlock(settings(MapColor.ORANGE, BlockSoundGroup.STONE, 4.0F, 4.0F).requiresTool().nonOpaque());
+	public static final Block FABRICATION_CHEST = new FabricationChestBlock(settings(MapColor.ORANGE, BlockSoundGroup.STONE, 4.0F, 4.0F).requiresTool().nonOpaque());
 	public static final Block BLACK_HOLE_CHEST = new BlackHoleChestBlock(settings(MapColor.BLACK, BlockSoundGroup.STONE, 4.0F, 4.0F).requiresTool().nonOpaque());
 	public static final Block PARTICLE_SPAWNER = new ParticleSpawnerBlock(settings(MapColor.TERRACOTTA_WHITE, BlockSoundGroup.AMETHYST_BLOCK, 5.0F, 6.0F).requiresTool().nonOpaque());
 	public static final Block CREATIVE_PARTICLE_SPAWNER = new CreativeParticleSpawnerBlock(AbstractBlock.Settings.copy(SpectrumBlocks.PARTICLE_SPAWNER).strength(-1.0F, 3600000.8F).dropsNothing());
@@ -1911,7 +1911,7 @@ public class SpectrumBlocks {
 	private static void registerMagicalBlocks(Item.Settings settings) {
 		registerBlockWithItem("heartbound_chest", HEARTBOUND_CHEST, settings, DyeColor.BLUE);
 		registerBlockWithItem("compacting_chest", COMPACTING_CHEST, settings, DyeColor.YELLOW);
-		registerBlockWithItem("restocking_chest", RESTOCKING_CHEST, settings, DyeColor.YELLOW);
+		registerBlockWithItem("fabrication_chest", FABRICATION_CHEST, settings, DyeColor.YELLOW);
 		registerBlockWithItem("black_hole_chest", BLACK_HOLE_CHEST, settings, DyeColor.LIGHT_GRAY);
 
 		registerBlockWithItem("ender_hopper", ENDER_HOPPER, settings, DyeColor.PURPLE);
@@ -3092,7 +3092,7 @@ public class SpectrumBlocks {
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.REDSTONE_CALCULATOR, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.BLACK_HOLE_CHEST, RenderLayer.getTranslucent());
-		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.RESTOCKING_CHEST, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.FABRICATION_CHEST, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.QUITOXIC_REEDS, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(SpectrumBlocks.MERMAIDS_BRUSH, RenderLayer.getCutout());

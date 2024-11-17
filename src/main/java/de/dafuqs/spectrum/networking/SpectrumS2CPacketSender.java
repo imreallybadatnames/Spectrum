@@ -430,8 +430,8 @@ public class SpectrumS2CPacketSender {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.COMPACTING_CHEST_STATUS_UPDATE, buf);
 		}
 	}
-
-	public static void sendRestockingChestStatusUpdate(RestockingChestBlockEntity chest) {
+	
+	public static void sendFabricationChestStatusUpdate(FabricationChestBlockEntity chest) {
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(chest.getPos());
 		buf.writeBoolean(chest.isFullServer());
@@ -442,7 +442,7 @@ public class SpectrumS2CPacketSender {
 		}
 
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.RESTOCKING_CHEST_STATUS_UPDATE, buf);
+			ServerPlayNetworking.send(player, SpectrumS2CPackets.FABRICATION_CHEST_STATUS_UPDATE, buf);
 		}
 	}
 

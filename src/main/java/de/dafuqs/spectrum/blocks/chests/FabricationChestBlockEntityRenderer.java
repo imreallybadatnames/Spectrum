@@ -4,21 +4,21 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.*;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.*;
 import net.minecraft.client.util.math.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 @Environment(EnvType.CLIENT)
-public class RestockingChestBlockEntityRenderer implements BlockEntityRenderer<RestockingChestBlockEntity> {
+public class FabricationChestBlockEntityRenderer implements BlockEntityRenderer<FabricationChestBlockEntity> {
 	
 	private static final SpriteIdentifier spriteIdentifier = new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SpectrumCommon.locate("block/fabrication_chest"));
 	private final ModelPart rootNode;
@@ -28,7 +28,7 @@ public class RestockingChestBlockEntityRenderer implements BlockEntityRenderer<R
 	private final ModelPart assembly;
 	private final ModelPart rings;
 	
-	public RestockingChestBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+	public FabricationChestBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 		TexturedModelData texturedModelData = getTexturedModelData();
 		this.rootNode = texturedModelData.createModel();
 		this.root = rootNode.getChild("root");
@@ -56,10 +56,10 @@ public class RestockingChestBlockEntityRenderer implements BlockEntityRenderer<R
 	}
 	
 	@Override
-	public void render(RestockingChestBlockEntity chest, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	public void render(FabricationChestBlockEntity chest, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = chest.getWorld();
 		boolean bl = world != null;
-		BlockState blockState = bl ? chest.getCachedState() : SpectrumBlocks.RESTOCKING_CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
+		BlockState blockState = bl ? chest.getCachedState() : SpectrumBlocks.FABRICATION_CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
 
 		matrices.push();
 		float f = (blockState.get(ChestBlock.FACING)).asRotation();

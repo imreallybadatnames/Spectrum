@@ -8,7 +8,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.collection.*;
@@ -55,8 +55,8 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 				Inventory inventory = null;
 				if (screenHandler instanceof GenericContainerScreenHandler) {
 					inventory = ((GenericContainerScreenHandler) screenHandler).getInventory();
-				} else if (screenHandler instanceof RestockingChestScreenHandler restockingChestScreenHandler) {
-					inventory = restockingChestScreenHandler.getInventory();
+				} else if (screenHandler instanceof FabricationChestScreenHandler fabricationChestScreenHandler) {
+					inventory = fabricationChestScreenHandler.getInventory();
 				} else if (screenHandler instanceof BlackHoleChestScreenHandler blackHoleChestScreenHandler) {
 					inventory = blackHoleChestScreenHandler.getInventory();
 				} else if (screenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
