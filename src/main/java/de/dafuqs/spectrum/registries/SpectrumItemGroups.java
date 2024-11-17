@@ -960,9 +960,9 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_BUTTON);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_AMPHORA);
-		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LANTERN);
-		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LIGHT);
 		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LAMP);
+		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LIGHT);
+		entries.add(SpectrumBlocks.SLATE_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.EBONY_NOXSHROOM);
 		entries.add(SpectrumBlocks.EBONY_NOXCAP_BLOCK);
 		entries.add(SpectrumBlocks.EBONY_NOXCAP_STEM);
@@ -981,9 +981,9 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_BUTTON);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_AMPHORA);
-		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LANTERN);
-		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LIGHT);
 		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LAMP);
+		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LIGHT);
+		entries.add(SpectrumBlocks.EBONY_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.IVORY_NOXSHROOM);
 		entries.add(SpectrumBlocks.IVORY_NOXCAP_BLOCK);
 		entries.add(SpectrumBlocks.IVORY_NOXCAP_STEM);
@@ -1002,9 +1002,9 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_BUTTON);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_AMPHORA);
-		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LANTERN);
-		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LIGHT);
 		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LAMP);
+		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LIGHT);
+		entries.add(SpectrumBlocks.IVORY_NOXWOOD_LANTERN);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXSHROOM);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXCAP_BLOCK);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXCAP_STEM);
@@ -1023,9 +1023,9 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_BUTTON);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_PILLAR);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_AMPHORA);
-		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LANTERN);
-		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LIGHT);
 		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LAMP);
+		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LIGHT);
+		entries.add(SpectrumBlocks.CHESTNUT_NOXWOOD_LANTERN);
 		
 		entries.add(SpectrumBlocks.WEEPING_GALA_SPRIG);
 		entries.add(SpectrumBlocks.WEEPING_GALA_LEAVES);
