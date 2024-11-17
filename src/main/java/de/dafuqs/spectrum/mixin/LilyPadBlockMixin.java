@@ -1,15 +1,13 @@
 package de.dafuqs.spectrum.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import de.dafuqs.spectrum.registries.SpectrumFluids;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LilyPadBlock;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
+import com.llamalad7.mixinextras.injector.*;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.block.*;
+import net.minecraft.fluid.*;
+import net.minecraft.util.math.*;
+import net.minecraft.world.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(LilyPadBlock.class)
 public class LilyPadBlockMixin {
@@ -19,6 +17,6 @@ public class LilyPadBlockMixin {
             return true;
         FluidState fluidState = world.getFluidState(pos);
         FluidState fluidState2 = world.getFluidState(pos.up());
-        return (fluidState.getFluid() == SpectrumFluids.MUD || fluidState.getFluid() == SpectrumFluids.LIQUID_CRYSTAL) && fluidState2.getFluid() == Fluids.EMPTY;
+		return (fluidState.getFluid() == SpectrumFluids.GOO || fluidState.getFluid() == SpectrumFluids.LIQUID_CRYSTAL) && fluidState2.getFluid() == Fluids.EMPTY;
     }
 }

@@ -344,7 +344,7 @@
       },
       "condition": {
         "type": "modonomicon:advancement",
-        "advancement_id": "spectrum:pluck_effulgent_feather"
+				"advancement_id": "spectrum:pluck_resplendent_feather"
       },
       "text": "book.spectrum.guidebook.potion_workshop_reagents.page27.text"
     },

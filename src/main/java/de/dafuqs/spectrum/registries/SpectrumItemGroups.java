@@ -628,7 +628,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumItems.MERMAIDS_GEM);
 		entries.add(SpectrumItems.STORM_STONE);
 		entries.add(SpectrumItems.DOOMBLOOM_SEED);
-		entries.add(SpectrumItems.EFFULGENT_FEATHER);
+		entries.add(SpectrumItems.RESPLENDENT_FEATHER);
 		entries.add(SpectrumItems.DRAGONBONE_CHUNK);
 		entries.add(SpectrumItems.BONE_ASH);
 		entries.add(SpectrumItems.DOWNSTONE_FRAGMENTS);
@@ -637,7 +637,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumItems.MOONSTONE_CORE);
 		
 		entries.add(SpectrumItems.LIQUID_CRYSTAL_BUCKET);
-		entries.add(SpectrumItems.MUD_BUCKET);
+		entries.add(SpectrumItems.GOO_BUCKET);
 		entries.add(SpectrumItems.MIDNIGHT_SOLUTION_BUCKET);
 		entries.add(SpectrumItems.DRAGONROT_BUCKET);
 	}).build();
@@ -1156,11 +1156,11 @@ public class SpectrumItemGroups {
 
 		entries.add(SpectrumBlocks.JADEITE_PETAL_BLOCK);
 		entries.add(SpectrumBlocks.JADEITE_PETAL_CARPET);
-
-		entries.add(SpectrumBlocks.EFFULGENT_BLOCK);
-		entries.add(SpectrumBlocks.EFFULGENT_CUSHION);
-		entries.add(SpectrumBlocks.EFFULGENT_CARPET);
-		entries.add(SpectrumBlocks.EFFULGENT_BED);
+		
+		entries.add(SpectrumBlocks.RESPLENDENT_BLOCK);
+		entries.add(SpectrumBlocks.RESPLENDENT_CUSHION);
+		entries.add(SpectrumBlocks.RESPLENDENT_CARPET);
+		entries.add(SpectrumBlocks.RESPLENDENT_BED);
 
 		entries.add(SpectrumBlocks.WHITE_BLOCK);
 		entries.add(SpectrumBlocks.ORANGE_BLOCK);

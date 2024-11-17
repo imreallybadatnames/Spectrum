@@ -8,7 +8,7 @@
     "item": "spectrum:jadeite_petals"
   },
   "ingredient3": {
-    "item": "spectrum:effulgent_feather"
+		"item": "spectrum:resplendent_feather"
   },
   "effect": "spectrum:eternal_slumber",
   "base_duration_ticks": 1200,

@@ -61,12 +61,12 @@ public class SpectrumParticleTypes {
 	public static SimpleParticleType PRIMORDIAL_FLAME = register("primordial_flame", true);
 	public static SimpleParticleType PRIMORDIAL_FLAME_SMALL = register("primordial_flame_small", true);
 	
-	public static SimpleParticleType MUD_SPLASH = register("mud_splash", false);
-	public static SimpleParticleType DRIPPING_MUD = register("dripping_mud", false);
-	public static SimpleParticleType FALLING_MUD = register("falling_mud", false);
-	public static SimpleParticleType LANDING_MUD = register("landing_mud", false);
-	public static SimpleParticleType MUD_FISHING = register("mud_fishing", false);
-	public static SimpleParticleType MUD_POP = register("mud_pop", false);
+	public static SimpleParticleType GOO_SPLASH = register("goo_splash", false);
+	public static SimpleParticleType DRIPPING_GOO = register("dripping_goo", false);
+	public static SimpleParticleType FALLING_GOO = register("falling_goo", false);
+	public static SimpleParticleType LANDING_GOO = register("landing_goo", false);
+	public static SimpleParticleType GOO_FISHING = register("goo_fishing", false);
+	public static SimpleParticleType GOO_POP = register("goo_pop", false);
 	
 	public static SimpleParticleType LIQUID_CRYSTAL_SPLASH = register("liquid_crystal_splash", false);
 	public static SimpleParticleType DRIPPING_LIQUID_CRYSTAL = register("dripping_liquid_crystal", false);

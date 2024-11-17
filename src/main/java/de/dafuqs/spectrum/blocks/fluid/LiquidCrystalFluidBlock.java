@@ -4,15 +4,14 @@ import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.*;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.*;
 import net.minecraft.particle.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 public class LiquidCrystalFluidBlock extends SpectrumFluidBlock {
 	
@@ -57,8 +56,7 @@ public class LiquidCrystalFluidBlock extends SpectrumFluidBlock {
 		}
 		else if (otherState.isIn(FluidTags.LAVA)) {
 			return state.isStill() ? SpectrumBlocks.BLAZING_CRYSTAL.getDefaultState() : Blocks.COBBLED_DEEPSLATE.getDefaultState();
-		}
-		else if (otherState.isIn(SpectrumFluidTags.MUD)) {
+		} else if (otherState.isIn(SpectrumFluidTags.GOO)) {
 			return Blocks.CLAY.getDefaultState();
 		}
 		return null;

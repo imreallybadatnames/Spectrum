@@ -94,7 +94,7 @@ public class SpectrumAdvancements {
 	public static final Identifier LATEGAME = SpectrumCommon.locate("lategame/spectrum_lategame");
 	public static final Identifier MIDGAME = SpectrumCommon.locate("midgame/spectrum_midgame");
 	public static final Identifier MYSTERIOUS_LOCKET_SOCKETING = SpectrumCommon.locate("unlocks/mysterious_locket_socketing");
-	public static final Identifier PLUCK_EFFULGENT_FEATHER = SpectrumCommon.locate("pluck_effulgent_feather");
+	public static final Identifier PLUCK_RESPLENDENT_FEATHER = SpectrumCommon.locate("pluck_resplendent_feather");
 	public static final Identifier SOLVE_WIRELESS_REDSTONE_PRESERVATION_RUIN = SpectrumCommon.locate("solve_wireless_redstone_preservation_ruin");
 	public static final Identifier STRIKE_UP_HUMMINGSTONE_HYMN = SpectrumCommon.locate("lategame/strike_up_hummingstone_hymn");
 	public static final Identifier VIVISECT_KINDLING = SpectrumCommon.locate("mod_integration/neepmeat/vivisect_kindling");

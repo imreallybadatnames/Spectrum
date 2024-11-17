@@ -36,8 +36,8 @@
     },
     {
       "type": "spectrum:potion_workshop_crafting",
-      "title": "block.spectrum.mud",
-      "recipe_id": "spectrum:potion_workshop_crafting/mud_bucket"
+			"title": "block.spectrum.goo",
+			"recipe_id": "spectrum:potion_workshop_crafting/goo_bucket"
     },
     {
       "type": "spectrum:potion_workshop_crafting",

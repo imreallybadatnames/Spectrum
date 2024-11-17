@@ -28,13 +28,13 @@ public class SpectrumFluids {
 	public static final Identifier LIQUID_CRYSTAL_OVERLAY_TEXTURE = SpectrumCommon.locate("textures/misc/liquid_crystal_overlay.png");
 	public static final float LIQUID_CRYSTAL_OVERLAY_ALPHA = 0.6F;
 	
-	// MUD
-	public static final SpectrumFluid MUD = new MudFluid.StillMud();
-	public static final SpectrumFluid FLOWING_MUD = new MudFluid.FlowingMud();
-	public static final int MUD_TINT = 0x4e2e0a;
-	public static final Vector3f MUD_COLOR_VEC = ColorHelper.colorIntToVec(MUD_TINT);
-	public static final Identifier MUD_OVERLAY_TEXTURE = SpectrumCommon.locate("textures/misc/mud_overlay.png");
-	public static final float MUD_OVERLAY_ALPHA = 0.995F;
+	// GOO
+	public static final SpectrumFluid GOO = new GooFluid.StillGoo();
+	public static final SpectrumFluid FLOWING_GOO = new GooFluid.FlowingGoo();
+	public static final int GOO_TINT = 0x4e2e0a;
+	public static final Vector3f GOO_COLOR_VEC = ColorHelper.colorIntToVec(GOO_TINT);
+	public static final Identifier GOO_OVERLAY_TEXTURE = SpectrumCommon.locate("textures/misc/goo_overlay.png");
+	public static final float GOO_OVERLAY_ALPHA = 0.995F;
 	
 	// MIDNIGHT SOLUTION
 	public static final SpectrumFluid MIDNIGHT_SOLUTION = new MidnightSolutionFluid.Still();
@@ -54,7 +54,7 @@ public class SpectrumFluids {
 	
 	public static void register() {
 		registerFluid("liquid_crystal", LIQUID_CRYSTAL, FLOWING_LIQUID_CRYSTAL, DyeColor.LIGHT_GRAY);
-		registerFluid("mud", MUD, FLOWING_MUD, DyeColor.BROWN);
+		registerFluid("goo", GOO, FLOWING_GOO, DyeColor.BROWN);
 		registerFluid("midnight_solution", MIDNIGHT_SOLUTION, FLOWING_MIDNIGHT_SOLUTION, DyeColor.GRAY);
 		registerFluid("dragonrot", DRAGONROT, FLOWING_DRAGONROT, DyeColor.GRAY);
 	}
@@ -69,7 +69,7 @@ public class SpectrumFluids {
 	@Environment(EnvType.CLIENT)
 	public static void registerClient() {
 		setupFluidRendering(LIQUID_CRYSTAL, FLOWING_LIQUID_CRYSTAL, "liquid_crystal", LIQUID_CRYSTAL_TINT);
-		setupFluidRendering(MUD, FLOWING_MUD, "mud", MUD_TINT);
+		setupFluidRendering(GOO, FLOWING_GOO, "goo", GOO_TINT);
 		setupFluidRendering(MIDNIGHT_SOLUTION, FLOWING_MIDNIGHT_SOLUTION, "midnight_solution", MIDNIGHT_SOLUTION_TINT);
 		setupFluidRendering(DRAGONROT, FLOWING_DRAGONROT, "dragonrot", DRAGONROT_TINT);
 	}

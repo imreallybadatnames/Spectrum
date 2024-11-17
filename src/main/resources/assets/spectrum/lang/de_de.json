@@ -85,7 +85,6 @@
   "enchantment.spectrum.tight_grip": "Fester Griff",
   "enchantment.spectrum.tight_grip.desc": "Verringerte Abklingzeit",
 
-  "spectrum.subtitles.block.mud.ambient": "Schlammströmung",
   "spectrum.subtitles.block.liquid_crystal.ambient": "Flüssigkristall-Glöckchen",
   "spectrum.subtitles.dimension.ambient": "Höhlengesang",
   "spectrum.subtitles.blocks.pedestal.crafting_finished": "Sockel dingt",
@@ -510,10 +509,6 @@
   "block.spectrum.yellow_stairs": "Gelbe Plank Treppen",
   "block.spectrum.yellow_slab": "Gelbe Plank Stufe",
   "block.spectrum.yellow_fence_gate": "Gelbe Plank Fence Gate",
-
-  "item.spectrum.mud_bucket": "Eimer voll Schlamm",
-  "block.spectrum.mud": "Schlamm",
-  "block.spectrum.flowing_mud": "Schlamm",
 
   "item.spectrum.liquid_crystal_bucket": "Flüssigkristall Eimer",
   "block.spectrum.liquid_crystal": "Flüssigkristall",

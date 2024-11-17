@@ -39,7 +39,7 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
     public static final Identifier LIQUID_CRYSTAL_CONVERTING_PAGE = SpectrumCommon.locate("liquid_crystal_converting");
     public static final Identifier MIDNIGHT_SOLUTION_CONVERTING_PAGE = SpectrumCommon.locate("midnight_solution_converting");
     public static final Identifier DRAGONROT_CONVERTING_PAGE = SpectrumCommon.locate("dragonrot_converting");
-    public static final Identifier MUD_CONVERTING_PAGE = SpectrumCommon.locate("mud_converting");
+	public static final Identifier GOO_CONVERTING_PAGE = SpectrumCommon.locate("goo_converting");
     public static final Identifier CRYSTALLARIEUM_GROWING_PAGE = SpectrumCommon.locate("crystallarieum_growing");
     public static final Identifier CINDERHEARTH_SMELTING_PAGE = SpectrumCommon.locate("cinderhearth_smelting");
     public static final Identifier TITRATION_BARREL_FERMENTING_PAGE = SpectrumCommon.locate("titration_barrel_fermenting");
@@ -76,7 +76,7 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
         registerGatedRecipePage(LIQUID_CRYSTAL_CONVERTING_PAGE, SpectrumRecipeTypes.LIQUID_CRYSTAL_CONVERTING, false);
         registerGatedRecipePage(MIDNIGHT_SOLUTION_CONVERTING_PAGE, SpectrumRecipeTypes.MIDNIGHT_SOLUTION_CONVERTING, false);
         registerGatedRecipePage(DRAGONROT_CONVERTING_PAGE, SpectrumRecipeTypes.DRAGONROT_CONVERTING, false);
-        registerGatedRecipePage(MUD_CONVERTING_PAGE, SpectrumRecipeTypes.MUD_CONVERTING, false);
+		registerGatedRecipePage(GOO_CONVERTING_PAGE, SpectrumRecipeTypes.GOO_CONVERTING, false);
         registerGatedRecipePage(CRYSTALLARIEUM_GROWING_PAGE, SpectrumRecipeTypes.CRYSTALLARIEUM, false);
         registerGatedRecipePage(CINDERHEARTH_SMELTING_PAGE, SpectrumRecipeTypes.CINDERHEARTH, false);
         registerGatedRecipePage(TITRATION_BARREL_FERMENTING_PAGE, SpectrumRecipeTypes.TITRATION_BARREL, true);
@@ -149,11 +149,11 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
                 return SpectrumCommon.locate("textures/gui/guidebook/dragonrot.png");
             }
         });
-
-        PageRendererRegistry.registerPageRenderer(MUD_CONVERTING_PAGE, p -> new BookFluidConvertingPageRenderer<>((BookGatedRecipePage<MudConvertingRecipe>) p) {
+		
+		PageRendererRegistry.registerPageRenderer(GOO_CONVERTING_PAGE, p -> new BookFluidConvertingPageRenderer<>((BookGatedRecipePage<GooConvertingRecipe>) p) {
             @Override
             public Identifier getBackgroundTexture() {
-                return SpectrumCommon.locate("textures/gui/guidebook/mud.png");
+				return SpectrumCommon.locate("textures/gui/guidebook/goo.png");
             }
         });
     }

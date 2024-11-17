@@ -29,11 +29,11 @@
         }
       }
     },
-    "fished_in_mud": {
+		"fished_in_goo": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
         "fluid": {
-          "tag": "spectrum:mud"
+					"tag": "spectrum:goo"
         }
       }
     },
