@@ -1170,7 +1170,7 @@
   "block.spectrum.item_detector": "物品探测器",
   "block.spectrum.weather_detector": "天气探测器",
   "block.spectrum.light_level_detector": "光照探测器",
-  "block.spectrum.entity_detector": "生物探测器",
+	"block.spectrum.creature_detector": "生物探测器",
   "block.spectrum.block_placer": "方块放置器",
   "block.spectrum.block_detector": "方块探测器",
   "block.spectrum.block_breaker": "方块破坏器",
@@ -4127,9 +4127,9 @@
 
   "book.spectrum.guidebook.enemy_tears": "经典之作.唯一能让它更美味的就是敌人的眼泪.",
 
-  "book.spectrum.guidebook.entity_detector.name": "生物探测器",
-  "book.spectrum.guidebook.entity_detector.page0.text": "生物探测器内置的宝石对地面的微振动做出反应.\\\n这使生物探测器能够测量附近实体的数量.",
-  "book.spectrum.guidebook.entity_detector.page1.text": "对于半径为10方块的每个实体,生物探测器会额外输出1的强度.",
+	"book.spectrum.guidebook.creature_detector.name": "生物探测器",
+	"book.spectrum.guidebook.creature_detector.page0.text": "生物探测器内置的宝石对地面的微振动做出反应.\\\n这使生物探测器能够测量附近实体的数量.",
+	"book.spectrum.guidebook.creature_detector.page1.text": "对于半径为10方块的每个实体,生物探测器会额外输出1的强度.",
 
   "book.spectrum.guidebook.erasers.name": "幽影蜘蛛",
   "book.spectrum.guidebook.erasers.page0.text": "*给自己的备注:不要让它们压倒你!*",

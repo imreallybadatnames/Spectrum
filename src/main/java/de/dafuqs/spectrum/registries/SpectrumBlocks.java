@@ -60,7 +60,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.*;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.*;
-import net.minecraft.block.enums.NoteBlockInstrument;
+import net.minecraft.block.enums.*;
 import net.minecraft.block.piston.*;
 import net.minecraft.client.render.*;
 import net.minecraft.entity.*;
@@ -85,7 +85,7 @@ import java.util.*;
 import java.util.function.*;
 
 import static de.dafuqs.spectrum.SpectrumCommon.*;
-import static de.dafuqs.spectrum.registries.DeferredRegistrar.defer;
+import static de.dafuqs.spectrum.registries.DeferredRegistrar.*;
 import static de.dafuqs.spectrum.registries.SpectrumItems.*;
 import static net.minecraft.block.Blocks.*;
 
@@ -963,7 +963,7 @@ public class SpectrumBlocks {
 	public static final Block WEATHER_DETECTOR = new WeatherDetectorBlock(AbstractBlock.Settings.copy(Blocks.DAYLIGHT_DETECTOR));
 	public static final Block ITEM_DETECTOR = new ItemDetectorBlock(AbstractBlock.Settings.copy(Blocks.DAYLIGHT_DETECTOR));
 	public static final Block PLAYER_DETECTOR = new PlayerDetectorBlock(AbstractBlock.Settings.copy(Blocks.DAYLIGHT_DETECTOR));
-	public static final Block ENTITY_DETECTOR = new EntityDetectorBlock(AbstractBlock.Settings.copy(Blocks.DAYLIGHT_DETECTOR));
+	public static final Block CREATURE_DETECTOR = new EntityDetectorBlock(AbstractBlock.Settings.copy(Blocks.DAYLIGHT_DETECTOR));
 	public static final Block REDSTONE_CALCULATOR = new RedstoneCalculatorBlock(AbstractBlock.Settings.copy(Blocks.REPEATER));
 	public static final Block REDSTONE_TIMER = new RedstoneTimerBlock(AbstractBlock.Settings.copy(Blocks.REPEATER));
 	public static final Block REDSTONE_TRANSCEIVER = new RedstoneTransceiverBlock(AbstractBlock.Settings.copy(Blocks.REPEATER));
@@ -1894,7 +1894,7 @@ public class SpectrumBlocks {
 		registerBlockWithItem("weather_detector", WEATHER_DETECTOR, settings, DyeColor.RED);
 		registerBlockWithItem("item_detector", ITEM_DETECTOR, settings, DyeColor.RED);
 		registerBlockWithItem("player_detector", PLAYER_DETECTOR, settings, DyeColor.RED);
-		registerBlockWithItem("entity_detector", ENTITY_DETECTOR, settings, DyeColor.RED);
+		registerBlockWithItem("creature_detector", CREATURE_DETECTOR, settings, DyeColor.RED);
 
 		registerBlockWithItem("redstone_timer", REDSTONE_TIMER, settings, DyeColor.RED);
 		registerBlockWithItem("redstone_calculator", REDSTONE_CALCULATOR, settings, DyeColor.RED);

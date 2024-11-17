@@ -28,8 +28,8 @@
     }
   },
   "result": {
-    "item": "spectrum:entity_detector",
+    "item": "spectrum:creature_detector",
     "count": 1
   },
-  "required_advancement": "spectrum:unlocks/redstone/entity_detector"
+  "required_advancement": "spectrum:unlocks/redstone/creature_detector"
 }

@@ -236,7 +236,7 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumBlocks.WEATHER_DETECTOR);
 				entries.add(SpectrumBlocks.ITEM_DETECTOR);
 				entries.add(SpectrumBlocks.PLAYER_DETECTOR);
-				entries.add(SpectrumBlocks.ENTITY_DETECTOR);
+				entries.add(SpectrumBlocks.CREATURE_DETECTOR);
 				entries.add(SpectrumBlocks.REDSTONE_TIMER);
 				entries.add(SpectrumBlocks.REDSTONE_CALCULATOR);
 				entries.add(SpectrumBlocks.REDSTONE_TRANSCEIVER);

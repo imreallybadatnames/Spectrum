@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "spectrum:entity_detector"
+          "name": "spectrum:creature_detector"
         }
       ],
       "conditions": [

@@ -29,10 +29,8 @@ import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.fabric.api.registry.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponents;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
-import net.minecraft.component.type.UnbreakableComponent;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -42,10 +40,9 @@ import net.minecraft.text.*;
 import net.minecraft.util.*;
 
 import java.util.*;
-import java.util.function.Supplier;
 
-import static de.dafuqs.spectrum.SpectrumCommon.locate;
-import static de.dafuqs.spectrum.registries.DeferredRegistrar.defer;
+import static de.dafuqs.spectrum.SpectrumCommon.*;
+import static de.dafuqs.spectrum.registries.DeferredRegistrar.*;
 import static de.dafuqs.spectrum.registries.SpectrumFluids.*;
 
 public class SpectrumItems {
@@ -1014,7 +1011,7 @@ public class SpectrumItems {
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.WEATHER_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.ITEM_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.PLAYER_DETECTOR.asItem(), 300);
-		FuelRegistry.INSTANCE.add(SpectrumBlocks.ENTITY_DETECTOR.asItem(), 300);
+		FuelRegistry.INSTANCE.add(SpectrumBlocks.CREATURE_DETECTOR.asItem(), 300);
 
 		FuelRegistry.INSTANCE.add(SpectrumItems.PURE_COAL, 3200);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.PURE_COAL_BLOCK, 32000);

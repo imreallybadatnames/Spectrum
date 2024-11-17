@@ -218,7 +218,7 @@
   "block.spectrum.item_detector": "Item Detektor",
   "block.spectrum.weather_detector": "Wetter Detektor",
   "block.spectrum.light_level_detector": "Block Licht Detektor",
-  "block.spectrum.entity_detector": "Kreaturen Detektor",
+	"block.spectrum.creature_detector": "Kreaturen Detektor",
   "block.spectrum.block_placer": "Block Plazierer",
   "block.spectrum.redstone_transceiver": "Kabelloses Redstone",
 
