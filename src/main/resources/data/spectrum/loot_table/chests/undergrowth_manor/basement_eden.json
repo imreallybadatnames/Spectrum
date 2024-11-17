@@ -344,7 +344,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "spectrum:purple_star_candy",
+          "name": "spectrum:enchanted_star_candy",
           "weight": 0,
           "quality": 1
         }

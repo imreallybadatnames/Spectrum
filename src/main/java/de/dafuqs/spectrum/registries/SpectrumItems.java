@@ -341,7 +341,7 @@ public class SpectrumItems {
 	public static final Item DIVINATION_HEART = new Item(IS.of().food(SpectrumFoodComponents.DIVINATION_HEART));
 	
 	public static final Item STAR_CANDY = new StarCandyItem(IS.of(Rarity.UNCOMMON).food(SpectrumFoodComponents.STAR_CANDY));
-	public static final Item PURPLE_STAR_CANDY = new EnchantedStarCandyItem(IS.of(Rarity.UNCOMMON).food(SpectrumFoodComponents.PURPLE_STAR_CANDY));
+	public static final Item ENCHANTED_STAR_CANDY = new EnchantedStarCandyItem(IS.of(Rarity.UNCOMMON).food(SpectrumFoodComponents.ENCHANTED_STAR_CANDY));
 	
 	public static final Item ENCHANTED_GOLDEN_CARROT = new ItemWithGlint(IS.of(Rarity.EPIC).food(SpectrumFoodComponents.ENCHANTED_GOLDEN_CARROT));
 	public static final Item JARAMEL = new Item(IS.of().food(SpectrumFoodComponents.JARAMEL));
@@ -477,7 +477,7 @@ public class SpectrumItems {
 	// Trinkets
 	public static final Item FANCIFUL_BELT = new Item(IS.of(16, Rarity.UNCOMMON));
 	public static final Item FANCIFUL_PENDANT = new Item(IS.of(16, Rarity.UNCOMMON));
-	public static final Item FANCIFUL_STONE_RING = new Item(IS.of(16, Rarity.UNCOMMON));
+	public static final Item FANCIFUL_TUFF_RING = new Item(IS.of(16, Rarity.UNCOMMON));
 	public static final Item FANCIFUL_CIRCLET = new Item(IS.of(16, Rarity.UNCOMMON));
 	public static final Item FANCIFUL_GLOVES = new Item(IS.of(16, Rarity.UNCOMMON));
 	public static final Item FANCIFUL_BISMUTH_RING = new Item(IS.of(16, Rarity.UNCOMMON));
@@ -865,7 +865,7 @@ public class SpectrumItems {
 		
 		register("scone", SCONE, DyeColor.PINK);
 		register("star_candy", STAR_CANDY, DyeColor.PINK);
-		register("purple_star_candy", PURPLE_STAR_CANDY, DyeColor.PINK);
+		register("enchanted_star_candy", ENCHANTED_STAR_CANDY, DyeColor.PINK);
 		register("lucky_roll", LUCKY_ROLL, DyeColor.PINK);
 		register("honey_pastry", HONEY_PASTRY, DyeColor.PINK);
 		
@@ -950,7 +950,7 @@ public class SpectrumItems {
 	}
 	
 	public static void registerTrinkets() {
-		register("fanciful_stone_ring", FANCIFUL_STONE_RING, DyeColor.GREEN);
+		register("fanciful_tuff_ring", FANCIFUL_TUFF_RING, DyeColor.GREEN);
 		register("fanciful_belt", FANCIFUL_BELT, DyeColor.GREEN);
 		register("fanciful_pendant", FANCIFUL_PENDANT, DyeColor.GREEN);
 		register("fanciful_circlet", FANCIFUL_CIRCLET, DyeColor.GREEN);

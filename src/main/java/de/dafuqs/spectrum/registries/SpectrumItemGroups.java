@@ -104,7 +104,7 @@ public class SpectrumItemGroups {
 				addEquipmentEntry(SpectrumItems.KNOTTED_SWORD, entries);
 				addEquipmentEntry(SpectrumItems.NECTAR_LANCE, entries);
 				addEquipmentEntry(SpectrumItems.OMNI_ACCELERATOR, entries);
-				addEquipmentEntry(SpectrumItems.FANCIFUL_STONE_RING, entries);
+				addEquipmentEntry(SpectrumItems.FANCIFUL_TUFF_RING, entries);
 				addEquipmentEntry(SpectrumItems.FANCIFUL_BELT, entries);
 				addEquipmentEntry(SpectrumItems.FANCIFUL_PENDANT, entries);
 				addEquipmentEntry(SpectrumItems.FANCIFUL_CIRCLET, entries);
@@ -367,7 +367,7 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumItems.MILKY_RESIN);
 		entries.add(SpectrumItems.SCONE);
 		entries.add(SpectrumItems.STAR_CANDY);
-		entries.add(SpectrumItems.PURPLE_STAR_CANDY);
+		entries.add(SpectrumItems.ENCHANTED_STAR_CANDY);
 		entries.add(SpectrumItems.CHEONG);
 		entries.add(SpectrumItems.MERMAIDS_JAM);
 		entries.add(SpectrumItems.MERMAIDS_POPCORN);

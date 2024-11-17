@@ -4,7 +4,7 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/any_base_trinket"
   },
-  "icon": "spectrum:fanciful_stone_ring",
+  "icon": "spectrum:fanciful_tuff_ring",
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],
@@ -22,10 +22,10 @@
       "type": "spectrum:pedestal_crafting",
       "condition": {
         "type": "modonomicon:advancement",
-        "advancement_id": "spectrum:unlocks/trinkets/fanciful_stone_ring"
+        "advancement_id": "spectrum:unlocks/trinkets/fanciful_tuff_ring"
       },
-      "title": "item.spectrum.fanciful_stone_ring",
-      "recipe_id": "spectrum:pedestal/tier3/trinkets/fanciful_stone_ring"
+      "title": "item.spectrum.fanciful_tuff_ring",
+      "recipe_id": "spectrum:pedestal/tier3/trinkets/fanciful_tuff_ring"
     },
     {
       "type": "spectrum:pedestal_crafting",

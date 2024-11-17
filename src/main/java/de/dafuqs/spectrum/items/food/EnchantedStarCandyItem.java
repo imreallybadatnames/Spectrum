@@ -1,11 +1,10 @@
 package de.dafuqs.spectrum.items.food;
 
 import de.dafuqs.spectrum.items.trinkets.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -31,12 +30,12 @@ public class EnchantedStarCandyItem extends Item {
 		}
 		return itemStack;
 	}
-
+	
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		tooltip.add(Text.translatable("item.spectrum.purple_star_candy.tooltip").formatted(Formatting.GRAY));
-		tooltip.add(Text.translatable("item.spectrum.purple_star_candy.tooltip2").formatted(Formatting.GRAY));
+		tooltip.add(Text.translatable("item.spectrum.enchanted_star_candy.tooltip").formatted(Formatting.GRAY));
+		tooltip.add(Text.translatable("item.spectrum.enchanted_star_candy.tooltip2").formatted(Formatting.GRAY));
 	}
 	
 	@Override
