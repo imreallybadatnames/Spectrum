@@ -359,7 +359,7 @@
   "death.attack.ripping": "%1$s 被撕裂了!",
 
   "entity.spectrum.block_flooder_projectile": "方块填充物",
-  "entity.spectrum.gravity_block": "重力方块",
+  "entity.spectrum.float_block": "重力方块",
   "entity.spectrum.shooting_star": "流星",
   "entity.spectrum.lagoon_fishing_bobber": "舄湖钓鱼浮标",
   "entity.spectrum.molten_fishing_bobber": "熔岩钓鱼浮标",

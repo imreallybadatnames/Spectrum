@@ -240,7 +240,7 @@
   "death.attack.ripping": "%1$s был прокушён!",
 
   "entity.spectrum.block_flooder_projectile": "Заполнитель Блоков",
-  "entity.spectrum.gravity_block": "Гравиблок",
+  "entity.spectrum.float_block": "Гравиблок",
   "entity.spectrum.phantom_frame": "Фантомная Рамка",
   "entity.spectrum.glow_phantom_frame": "Светящаяся Фантомная Рамка",
   "entity.spectrum.shooting_star": "Упавшая Звезда",
