@@ -240,17 +240,6 @@ public class SpectrumEventListeners {
 			}
 			
 		});
-		
-		ModifyItemAttributeModifiersCallback.EVENT.register((stack, slot, attributeModifiers) -> {
-			if (slot == EquipmentSlot.MAINHAND) {
-				int tightGripLevel = EnchantmentHelper.getLevel(SpectrumEnchantments.TIGHT_GRIP, stack);
-				if (tightGripLevel > 0) {
-					float attackSpeedBonus = tightGripLevel * SpectrumCommon.CONFIG.TightGripAttackSpeedBonusPercentPerLevel;
-					EntityAttributeModifier mod = new EntityAttributeModifier(UUID.fromString("b09d9b57-eefb-4499-9150-5d8d3e644a40"), "Tight Grip modifier", attackSpeedBonus, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-					attributeModifiers.put(EntityAttributes.GENERIC_ATTACK_SPEED, mod);
-				}
-			}
-		});
 
 		EntitySleepEvents.ALLOW_BED.register((entity, sleepingPos, state, vanillaResult) -> {
 			if (entity instanceof PlayerEntity player && MiscPlayerDataComponent.get(player).isSleeping())

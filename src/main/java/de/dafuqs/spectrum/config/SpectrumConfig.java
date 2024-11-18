@@ -122,42 +122,7 @@ public class SpectrumConfig implements ConfigData {
 	@Comment("When empty, enchantments that the player has not unlocked show up with a scattered name. You can use a different name here")
 	public String NameForUnrevealedEnchantments = "";
 	
-	@Comment("""
-			Enable or disable specific enchantments. Resonance and Voiding can not be disabled.
-			This does only disable the registration of said Enchantments, not all recipes based on them (except for Enchantment Upgrade Recipes)
-			""")
-	public boolean FoundryEnchantmentEnabled = true;
-	public boolean ExuberanceEnchantmentEnabled = true;
-	public boolean InventoryInsertionEnchantmentEnabled = true;
-	public boolean PestControlEnchantmentEnabled = true;
-	public boolean TreasureHunterEnchantmentEnabled = true;
-	public boolean DisarmingEnchantmentEnabled = true;
-	public boolean FirstStrikeEnchantmentEnabled = true;
-	public boolean ImprovedCriticalEnchantmentEnabled = true;
-	public boolean InertiaEnchantmentEnabled = true;
-	public boolean CloversFavorEnchantmentEnabled = true;
-	public boolean SnipingEnchantmentEnabled = true;
-	public boolean TightGripEnchantmentEnabled = true;
-	public boolean SteadfastEnchantmentEnabled = true;
-	public boolean IndestructibleEnchantmentEnabled = true;
-	public boolean BigCatchEnchantmentEnabled = true;
-	public boolean SerendipityReelEnchantmentEnabled = true;
-	public boolean RazingEnchantmentEnabled = true;
-	public boolean InexorableEnchantmentEnabled = true;
-	
-	@Comment("The max levels for all Enchantments")
-	public int TreasureHunterMaxLevel = 3;
-	public int DisarmingMaxLevel = 2;
-	public int FirstStrikeMaxLevel = 2;
-	public int ImprovedCriticalMaxLevel = 2;
-	public int InertiaMaxLevel = 3;
-	public int CloversFavorMaxLevel = 3;
-	public int TightGripMaxLevel = 2;
-	public int BigCatchMaxLevel = 3;
-	public int SerendipityReelMaxLevel = 2;
-
 	@Comment("Exuberance increases experience gained when killing mobs. With 25% bonus XP and 5 levels this would mean 2,25x XP on max level")
-	public int ExuberanceMaxLevel = 5;
 	public float ExuberanceBonusExperiencePercentPerLevel = 0.25F;
 	
 	@Comment("In vanilla, crits are a flat 50 % damage bonus. Improved Critical increases this damage by additional 50 % per level by default")
@@ -170,8 +135,6 @@ public class SpectrumConfig implements ConfigData {
 	public float DisarmingChancePerLevelMobs = 0.01F;
 	@Comment("If > 0 the Disarming Enchantment is able to remove armor and hand tools from a hit player. Should be a far smaller chance than for mobs")
 	public float DisarmingChancePerLevelPlayers = 0.001F;
-	@Comment("The % attack speed boost each level of Tight Grip gives to a tool")
-	public float TightGripAttackSpeedBonusPercentPerLevel = 0.0625F;
 	@Comment("The duration a glow ink sac gives night vision when wearing a glow vision helmet in seconds")
 	public int GlowVisionGogglesDuration = 240;
 	@Comment("If the Omni Accelerator should be able to have interactions in PvP that can drain the targets XP, modify their equipment, ... (configured via the requires_omni_accelerator_pvp_enabled item tag)")
@@ -247,12 +210,6 @@ public class SpectrumConfig implements ConfigData {
 		if (EndermanHoldingEnderTreasureChance <= 0) {
 			EndermanHoldingEnderTreasureChance = 0.05F;
 		}
-		if (TreasureHunterMaxLevel <= 0) {
-			TreasureHunterMaxLevel = 3;
-		}
-		if (ExuberanceMaxLevel <= 0) {
-			ExuberanceMaxLevel = 5;
-		}
 		if (ExuberanceBonusExperiencePercentPerLevel <= 0) {
 			ExuberanceBonusExperiencePercentPerLevel = 0.2F;
 		}
@@ -262,13 +219,6 @@ public class SpectrumConfig implements ConfigData {
 		if (FirstStrikeDamagePerLevel <= 0) {
 			FirstStrikeDamagePerLevel = 3.0F;
 		}
-		if (BigCatchMaxLevel <= 0) {
-			BigCatchMaxLevel = 3;
-		}
-		if (SerendipityReelMaxLevel <= 0) {
-			SerendipityReelMaxLevel = 2;
-		}
-		
 		if (ShootingStarWorlds.isEmpty()) {
 			ShootingStarWorlds.add("minecraft:overworld");
 			ShootingStarWorlds.add("starry_skies:overworld");

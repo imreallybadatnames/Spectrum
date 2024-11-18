@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.spectrum.sniper"
+  },
+  "anvil_cost": 8,
+  "exclusive_set": "#spectrum:exclusive_set/sniper",
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/crossbow",
+  "weight": 1
+}
