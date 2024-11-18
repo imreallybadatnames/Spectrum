@@ -30,7 +30,7 @@
       "recipe_id": "spectrum:fusion_shrine/trinkets/gleaming_pin"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/sniping"

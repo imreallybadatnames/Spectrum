@@ -30,7 +30,7 @@
       "border": false
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "item": {
         "item": "minecraft:name_tag",
         "nbt": {

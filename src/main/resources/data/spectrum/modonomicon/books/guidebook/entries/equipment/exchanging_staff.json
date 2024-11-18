@@ -25,7 +25,7 @@
       "recipe_id": "spectrum:pedestal/tier4/exchanging_staff"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/build_enchanting_structure"
@@ -45,7 +45,7 @@
       "text": "book.spectrum.guidebook.exchanging_staff.page2.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/build_enchanting_structure"
@@ -65,7 +65,7 @@
       "text": "book.spectrum.guidebook.exchanging_staff.page3.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/resonance_usage"

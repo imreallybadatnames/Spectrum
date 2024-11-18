@@ -32,7 +32,7 @@
   "y": 2,
   "pages": [
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "title": "book.spectrum.guidebook.memories.name",
       "item": {
         "item": "spectrum:memory",
