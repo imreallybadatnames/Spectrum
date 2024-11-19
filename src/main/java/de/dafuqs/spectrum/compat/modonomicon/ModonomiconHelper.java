@@ -3,7 +3,8 @@ package de.dafuqs.spectrum.compat.modonomicon;
 import com.klikli_dev.modonomicon.api.multiblock.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.*;
-import de.dafuqs.matchbooks.recipe.*;
+
+import de.dafuqs.spectrum.recipe.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.text.*;
@@ -16,7 +17,7 @@ import java.util.*;
 public class ModonomiconHelper {
 	
 	public static void renderIngredientStack(DrawContext drawContext, BookEntryScreen parentScreen, int x, int y, int mouseX, int mouseY, IngredientStack ingredientStack) {
-		List<ItemStack> stacks = ingredientStack.getStacks();
+		List<ItemStack> stacks = ingredientStack.getMatchingStacks();
 		if (!stacks.isEmpty()) {
 			parentScreen.renderItemStack(drawContext, x, y, mouseX, mouseY, stacks.get(parentScreen.getTicksInBook() / 20 % stacks.size()));
 		}

@@ -5,7 +5,7 @@ import com.klikli_dev.modonomicon.client.gui.book.*;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
@@ -90,7 +90,7 @@ public class BookTitrationBarrelFermentingPageRenderer extends BookGatedRecipePa
         }
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 78, recipeY + 10, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 78, recipeY + 10, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
 
         // the duration
         if (!second && durationText1 != null) {

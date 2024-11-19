@@ -28,11 +28,11 @@ public class SpiritInstillingDisplay extends GatedSpectrumDisplay {
 	
 	public static EntryIngredient buildOutput(SpiritInstillerRecipe recipe) {
 		if (recipe instanceof SpawnerChangeRecipe spawnerChangeRecipe) {
-			ItemStack outputStack = recipe.getOutput(BasicDisplay.registryAccess());
+			ItemStack outputStack = recipe.getResult(BasicDisplay.registryAccess());
 			LoreHelper.setLore(outputStack, spawnerChangeRecipe.getOutputLoreText());
 			return EntryIngredients.of(outputStack);
 		} else {
-			return EntryIngredients.of(recipe.getOutput(BasicDisplay.registryAccess()));
+			return EntryIngredients.of(recipe.getResult(BasicDisplay.registryAccess()));
 		}
 	}
 	

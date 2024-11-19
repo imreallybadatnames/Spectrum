@@ -1,11 +1,12 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.mojang.blaze3d.systems.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.fusion_shrine.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
@@ -56,7 +57,7 @@ public class BookFusionShrineCraftingPageRenderer extends BookGatedRecipePageRen
         }
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 78, recipeY + 31, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 78, recipeY + 31, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
 }

@@ -72,7 +72,7 @@ public class BookEnchanterUpgradingPageRenderer extends BookGatedRecipePageRende
         parentScreen.renderItemStack(drawContext, recipeX + 81, recipeY + 46, mouseX, mouseY, SpectrumBlocks.ENCHANTER.asItem().getDefaultStack());
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 81, recipeY + 31, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 81, recipeY + 31, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
 }

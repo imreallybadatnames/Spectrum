@@ -41,7 +41,7 @@ public class BookAnvilCrushingPageRenderer extends BookGatedRecipePageRenderer<A
         parentScreen.renderItemStack(drawContext, recipeX + 16, recipeY + 15, mouseX, mouseY, recipe.createIcon());
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 64, recipeY + 29, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 64, recipeY + 29, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
 }

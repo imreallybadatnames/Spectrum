@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.mojang.blaze3d.systems.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;

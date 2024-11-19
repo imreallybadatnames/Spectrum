@@ -6,20 +6,21 @@ import de.dafuqs.spectrum.recipe.fluid_converting.*;
 import me.shedaniel.rei.api.common.display.basic.*;
 import me.shedaniel.rei.api.common.entry.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 
 public abstract class FluidConvertingDisplay extends GatedSpectrumDisplay {
 	
-	public FluidConvertingDisplay(FluidConvertingRecipe recipe) {
-		super(recipe, recipe.getIngredients().get(0), recipe.getOutput(BasicDisplay.registryAccess()));
+	public <T extends FluidConvertingRecipe> FluidConvertingDisplay(RecipeEntry<T> recipe) {
+		super(recipe.value(), recipe.value().getIngredients().getFirst(), recipe.value().getResult(BasicDisplay.registryAccess()));
 	}
 	
 	public final EntryIngredient getIn() {
-		return getInputEntries().get(0);
+		return getInputEntries().getFirst();
 	}
 	
 	public final EntryIngredient getOut() {
-		return getOutputEntries().get(0);
+		return getOutputEntries().getFirst();
 	}
 	
 	@Override

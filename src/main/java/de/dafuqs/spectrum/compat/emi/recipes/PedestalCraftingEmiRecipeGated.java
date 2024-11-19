@@ -1,9 +1,10 @@
 package de.dafuqs.spectrum.compat.emi.recipes;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.emi.*;
 import de.dafuqs.spectrum.inventories.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import dev.emi.emi.api.render.*;
 import dev.emi.emi.api.stack.*;
@@ -36,7 +37,7 @@ public class PedestalCraftingEmiRecipeGated extends GatedSpectrumEmiRecipe<Pedes
 		List<EmiIngredient> list = DefaultedList.ofSize(9 + powderSlotCount, EmiStack.EMPTY);
 		
 		for (int i = 0; i < ingredientCount; i++) {
-			list.set(recipe.getGridSlotId(i), EmiIngredient.of(ingredients.get(i).getStacks().stream().map(EmiStack::of).toList()));
+			list.set(recipe.getGridSlotId(i), EmiIngredient.of(Arrays.stream(ingredients.get(i).getIngredient().getMatchingStacks()).map(EmiStack::of).toList()));
 		}
 		for (int i = 0; i < powderSlotCount; i++) {
 			GemstoneColor color = BuiltinGemstoneColor.values()[i];
