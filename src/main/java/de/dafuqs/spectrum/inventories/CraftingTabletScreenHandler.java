@@ -117,12 +117,13 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 			inventory.setStack(11, new ItemStack(SpectrumItems.CITRINE_POWDER, 64));
 			inventory.setStack(12, new ItemStack(SpectrumItems.ONYX_POWDER, 64));
 			inventory.setStack(13, new ItemStack(SpectrumItems.MOONSTONE_POWDER, 64));
-			Optional<PedestalRecipe> optionalPedestalCraftingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PEDESTAL, inventory, world);
+			// FIXME - Improve this lol
+			Optional<PedestalRecipe> optionalPedestalCraftingRecipe = Optional.ofNullable(world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PEDESTAL, inventory, world).get().value());
 			if (optionalPedestalCraftingRecipe.isPresent()) {
 				lockableCraftingResultSlot.lock();
 				
 				PedestalRecipe pedestalRecipe = optionalPedestalCraftingRecipe.get();
-				ItemStack itemStack = pedestalRecipe.getOutput(world.getRegistryManager()).copy();
+				ItemStack itemStack = pedestalRecipe.getResult(world.getRegistryManager()).copy();
 				craftingResultInventory.setStack(0, itemStack);
 				
 				int magenta = pedestalRecipe.getGemstonePowderAmount(BuiltinGemstoneColor.CYAN);
@@ -206,9 +207,10 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 		this.craftingInventory.clear();
 	}
 	
+	// TODO - proper type checking
 	@Override
-	public boolean matches(Recipe<? super Inventory> recipe) {
-		return recipe.matches(this.craftingInventory, this.world);
+	public boolean matches(RecipeEntry recipe) {
+		return recipe.value().matches(this.craftingInventory, this.world);
 	}
 	
 	@Override
