@@ -25,6 +25,7 @@ repositories {
 	maven { url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/" } // Modonomicon
 	maven { url = "https://maven.is-immensely.gay/releases" } // Matchbooks
 	maven { url = "https://jitpack.io" } // Arrowhead, Dimensional Reverb
+	maven { url = "https://maven.wispforest.io/releases" }
 	mavenCentral()
 }
 
@@ -66,6 +67,7 @@ dependencies {
 	modCompileOnly("dev.emi:emi-fabric:${emi_version}") // https://github.com/emilyploszaj/emi
 	// https://github.com/klikli-dev/modonomicon
 	modImplementation("com.klikli_dev:modonomicon-${project.minecraft_version}-fabric:${project.modonomicon_version}") { exclude(group: "com.klikli_dev") }
+	modImplementation("io.wispforest:owo-lib:${project.owolib_version}")
 
 	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
 		case "rei": modLocalRuntime("me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"); break
