@@ -1,13 +1,14 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import oshi.util.tuples.*;
@@ -19,22 +20,22 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 	protected final int width;
 	protected final int height;
 	
-	public ShapedPedestalRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
+	public ShapedPedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 								PedestalRecipeTier tier, int width, int height, List<IngredientStack> inputs, Map<GemstoneColor, Integer> gemstonePowderInputs, ItemStack output,
 								float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
-		super(id, group, secret, requiredAdvancementIdentifier, tier, inputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
+		super(group, secret, requiredAdvancementIdentifier, tier, inputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
 		
 		this.width = width;
 		this.height = height;
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
+	public boolean matches(RecipeInput inv, World world) {
 		return getRecipeOrientation(inv) != null && super.matches(inv, world);
 	}
 	
 	// Triplet<XOffset, YOffset, Flipped>
-	public Triplet<Integer, Integer, Boolean> getRecipeOrientation(Inventory inv) {
+	public Triplet<Integer, Integer, Boolean> getRecipeOrientation(RecipeInput inv) {
 		for (int i = 0; i <= 3 - this.width; ++i) {
 			for (int j = 0; j <= 3 - this.height; ++j) {
 				if (this.matchesPattern(inv, i, j, true)) {
@@ -48,7 +49,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 		return null;
 	}
 	
-	public boolean matchesPattern(Inventory inv, int offsetX, int offsetY, boolean flipped) {
+	public boolean matchesPattern(RecipeInput inv, int offsetX, int offsetY, boolean flipped) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
 				int k = i - offsetX;
@@ -62,7 +63,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 					}
 				}
 				
-				if (!ingredient.test(inv.getStack(i + j * 3))) {
+				if (!ingredient.test(inv.getStackInSlot(i + j * 3))) {
 					return false;
 				}
 			}
@@ -75,6 +76,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 	public void consumeIngredients(PedestalBlockEntity pedestal) {
 		super.consumeIngredients(pedestal);
 		
+		// FIXME - Figure out why this broke
 		Triplet<Integer, Integer, Boolean> orientation = getRecipeOrientation(pedestal);
 		if (orientation == null) {
 			return;

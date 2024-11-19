@@ -1,36 +1,33 @@
 package de.dafuqs.spectrum.recipe.cinderhearth;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.PairCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.dafuqs.matchbooks.recipe.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.recipe.*;
+import de.dafuqs.spectrum.recipe.*;
+import io.wispforest.owo.serialization.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.*;
 import net.minecraft.util.*;
 
 import java.util.*;
 
 public class CinderhearthRecipeSerializer implements GatedRecipeSerializer<CinderhearthRecipe> {
-
-	private static final MapCodec<Pair<ItemStack, Float>> RESULT_WITH_CHANCE_CODEC = PairCodec.;
-
+	
 	private static final MapCodec<CinderhearthRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-			Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-			Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
-			Identifier.CODEC.fieldOf("required_advancement").forGetter(recipe -> recipe.requiredAdvancementIdentifier),
-			IngredientStack.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-			Codec.INT.fieldOf("time").forGetter(recipe -> recipe.time),
-			Codec.FLOAT.fieldOf("experience").forGetter(recipe -> recipe.experience),
-			RecordCodecBuilder.<Pair<ItemStack, Float>>create(resultInstance -> resultInstance.group(
-					ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(Pair::getLeft),
-					Codec.FLOAT.optionalFieldOf("chance", 1.0F).forGetter(Pair::getRight)
-			).apply(resultInstance, Pair::new)).listOf().fieldOf("results").forGetter(recipe -> recipe.resultsWithChance)
+		Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+		Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+		Identifier.CODEC.fieldOf("required_advancement").forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+		CodecUtils.toCodec(IngredientStack.Serializer.ENDEC).fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+		Codec.INT.fieldOf("time").forGetter(recipe -> recipe.time),
+		Codec.FLOAT.fieldOf("experience").forGetter(recipe -> recipe.experience),
+		RecordCodecBuilder.<Pair<ItemStack, Float>>create(resultInstance -> resultInstance.group(
+			ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(Pair::getLeft),
+			Codec.FLOAT.optionalFieldOf("chance", 1.0F).forGetter(Pair::getRight)
+		).apply(resultInstance, Pair::new)).listOf().fieldOf("results").forGetter(recipe -> recipe.resultsWithChance)
 	).apply(instance, CinderhearthRecipe::new));
 	private static final PacketCodec<RegistryByteBuf, CinderhearthRecipe> PACKET_CODEC = PacketCodec.ofStatic(CinderhearthRecipeSerializer::write, CinderhearthRecipeSerializer::read);
-
+	
 	public static void write(RegistryByteBuf buf, CinderhearthRecipe recipe) {
 		buf.writeString(recipe.group);
 		buf.writeBoolean(recipe.secret);
@@ -59,12 +56,12 @@ public class CinderhearthRecipeSerializer implements GatedRecipeSerializer<Cinde
 		}
 		return new CinderhearthRecipe(group, secret, requiredAdvancementIdentifier, ingredient, time, experience, resultsWithChance);
 	}
-
+	
 	@Override
 	public MapCodec<CinderhearthRecipe> codec() {
 		return CODEC;
 	}
-
+	
 	@Override
 	public PacketCodec<RegistryByteBuf, CinderhearthRecipe> packetCodec() {
 		return PACKET_CODEC;

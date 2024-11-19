@@ -1,16 +1,17 @@
 package de.dafuqs.spectrum.recipe.potion_workshop;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.effect.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
@@ -73,7 +74,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	public PotionWorkshopBrewingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, int craftingTime,
 									   IngredientStack ingredient1, IngredientStack ingredient2, IngredientStack ingredient3, PotionRecipeEffect recipeData) {
 		
-		super(id, group, secret, requiredAdvancementIdentifier, craftingTime, recipeData.statusEffect().getColor(), ingredient1, ingredient2, ingredient3);
+		super(group, secret, requiredAdvancementIdentifier, craftingTime, recipeData.statusEffect().getColor(), ingredient1, ingredient2, ingredient3);
 		this.recipeData = recipeData;
 		
 		registerInToastManager(getType(), this);
@@ -126,14 +127,14 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	@Override
 	public List<IngredientStack> getIngredientStacks() {
 		DefaultedList<IngredientStack> defaultedList = DefaultedList.of();
-		defaultedList.add(IngredientStack.ofStacks(SpectrumItems.MERMAIDS_GEM.getDefaultStack()));
-		defaultedList.add(IngredientStack.ofStacks(Items.GLASS_BOTTLE.getDefaultStack()));
+		defaultedList.add(IngredientStack.ofItems(1, SpectrumItems.MERMAIDS_GEM));
+		defaultedList.add(IngredientStack.ofItems(1, Items.GLASS_BOTTLE));
 		addIngredientStacks(defaultedList);
 		return defaultedList;
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		if (this.cachedOutput == null) {
 			this.cachedOutput = getPotion(Items.GLASS_BOTTLE.getDefaultStack(), Items.POTION.getDefaultStack(), new PotionMod(), null, Random.create());
 		}
@@ -141,7 +142,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inventory, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
 		ItemStack stack = new ItemStack(Items.POTION);
 		PotionUtil.setCustomPotionEffects(stack, List.of(new StatusEffectInstance(recipeData.statusEffect(), recipeData.baseDurationTicks())));
 		return stack;
@@ -354,7 +355,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 			StatusEffectInstance instance = poweredInstance.getStatusEffectInstance();
 			
 			// instant effects, like harming do not get split (that would apply harming 3x
-			if (instance.getEffectType().isInstant()) {
+			if (instance.getEffectType().value().isInstant()) {
 				splitInstances.add(poweredInstance);
 				continue;
 			}

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller;
 
 import com.google.gson.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.recipe.*;
 import net.minecraft.item.*;

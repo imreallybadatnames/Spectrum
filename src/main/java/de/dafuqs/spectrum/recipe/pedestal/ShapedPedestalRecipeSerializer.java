@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
 import com.google.gson.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.recipe.*;

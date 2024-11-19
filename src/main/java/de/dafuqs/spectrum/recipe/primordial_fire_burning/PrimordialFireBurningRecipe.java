@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<Inventory> {
+public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("lategame/collect_doombloom_seed");
 	
@@ -29,8 +30,8 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<Inventory> 
 	protected final Ingredient input;
 	protected final ItemStack output;
 	
-	public PrimordialFireBurningRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient input, ItemStack output) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public PrimordialFireBurningRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient input, ItemStack output) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.input = input;
 		this.output = output;
@@ -39,12 +40,12 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<Inventory> 
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return this.input.test(inv.getStack(0));
+	public boolean matches(RecipeInput inv, World world) {
+		return this.input.test(inv.getStackInSlot(0));
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		return this.output.copy();
 	}
 	
@@ -54,7 +55,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<Inventory> 
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return output;
 	}
 	
@@ -92,7 +93,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<Inventory> 
 	
 	public static PrimordialFireBurningRecipe getRecipeFor(@NotNull World world, ItemStack stack) {
 		AUTO_INVENTORY.setInputInventory(Collections.singletonList(stack));
-		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).orElse(null);
+		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).orElse(null).value();
 	}
 	
 	public static boolean processBlock(World world, BlockPos pos, BlockState state) {

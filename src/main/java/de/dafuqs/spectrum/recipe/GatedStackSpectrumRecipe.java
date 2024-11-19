@@ -1,13 +1,10 @@
 package de.dafuqs.spectrum.recipe;
 
-import de.dafuqs.matchbooks.recipe.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
-import net.minecraft.util.collection.*;
 
 import java.util.*;
 
@@ -18,17 +15,6 @@ public abstract class GatedStackSpectrumRecipe<C extends RecipeInput> extends Ga
 	}
 	
 	public abstract List<IngredientStack> getIngredientStacks();
-	
-	/**
-	 * Gets the recipes required ingredients
-	 *
-	 * @deprecated should not be used. Instead, use getIngredientStacks(), which includes item counts
-	 */
-	@Override
-	@Deprecated
-	public DefaultedList<Ingredient> getIngredients() {
-		return IngredientStack.listIngredients(getIngredientStacks());
-	}
 	
 	protected boolean matchIngredientStacksExclusively(Inventory inv, List<IngredientStack> ingredientStacks) {
 		// does the recipe fit into that inventory in the first place?
@@ -71,10 +57,10 @@ public abstract class GatedStackSpectrumRecipe<C extends RecipeInput> extends Ga
 		return true;
 	}
 	
-	protected boolean matchIngredientStacksExclusively(Inventory inv, List<IngredientStack> ingredients, int[] slots) {
+	protected boolean matchIngredientStacksExclusively(RecipeInput recipeInput, List<IngredientStack> ingredients, int[] slots) {
 		int inputStackCount = 0;
 		for (int slot : slots) {
-			if (!inv.getStack(slot).isEmpty()) {
+			if (!recipeInput.getStackInSlot(slot).isEmpty()) {
 				inputStackCount++;
 			}
 		}
@@ -85,7 +71,7 @@ public abstract class GatedStackSpectrumRecipe<C extends RecipeInput> extends Ga
 		for (IngredientStack ingredient : ingredients) {
 			boolean found = false;
 			for (int slot : slots) {
-				if (ingredient.test(inv.getStack(slot))) {
+				if (ingredient.test(recipeInput.getStackInSlot(slot))) {
 					found = true;
 					break;
 				}

@@ -1,8 +1,9 @@
 package de.dafuqs.spectrum.recipe.potion_workshop;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.potion_workshop.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -25,7 +26,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	public PotionWorkshopCraftingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
 										IngredientStack baseIngredient, boolean consumeBaseIngredient, int requiredExperience, IngredientStack ingredient1, IngredientStack ingredient2, IngredientStack ingredient3, ItemStack output, int craftingTime, int color) {
 		
-		super(id, group, secret, requiredAdvancementIdentifier, craftingTime, color, ingredient1, ingredient2, ingredient3);
+		super(group, secret, requiredAdvancementIdentifier, craftingTime, color, ingredient1, ingredient2, ingredient3);
 		this.output = output;
 		this.baseIngredient = baseIngredient;
 		this.requiredExperience = requiredExperience;
@@ -107,7 +108,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return output;
 	}
 	

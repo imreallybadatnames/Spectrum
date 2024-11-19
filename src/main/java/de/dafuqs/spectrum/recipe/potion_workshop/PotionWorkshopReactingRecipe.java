@@ -49,7 +49,7 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<Inventory>
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager manager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return item.getDefaultStack();
 	}
 	

@@ -6,11 +6,14 @@ import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+
+import java.util.*;
 
 public class AnvilCrusher {
 
@@ -18,9 +21,9 @@ public class AnvilCrusher {
 		ItemStack thisItemStack = itemEntity.getStack();
 		World world = itemEntity.getWorld();
 		
-		var inventory = new SingleStackRecipeInput(thisItemStack);
+		SingleStackRecipeInput inventory = new SingleStackRecipeInput(thisItemStack);
 		
-		var optionalAnvilCrushingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.ANVIL_CRUSHING, inventory, world);
+		Optional<RecipeEntry<AnvilCrushingRecipe>> optionalAnvilCrushingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.ANVIL_CRUSHING, inventory, world);
 		if (optionalAnvilCrushingRecipe.isPresent()) {
 			// Item can be crafted via anvil. Do anvil crafting
 			AnvilCrushingRecipe recipe = optionalAnvilCrushingRecipe.get().value();

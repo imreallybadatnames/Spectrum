@@ -9,16 +9,18 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
+// TODO - Refactor
 public record PotionRecipeEffect(boolean applicableToPotions, boolean applicableToTippedArrows,
 								 boolean applicableToPotionFillabes, boolean applicableToWeapons,
 								 int baseDurationTicks, float baseYield, int potencyHardCap, float potencyModifier,
-								 StatusEffect statusEffect,
+								 RegistryEntry<StatusEffect> statusEffect,
 								 InkColor inkColor, int inkCost) {
 	
 	public static PotionRecipeEffect read(JsonObject jsonObject) {
@@ -36,7 +38,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 		if (!Registries.STATUS_EFFECT.containsId(statusEffectIdentifier)) {
 			throw new JsonParseException("Potion Workshop Recipe has a status effect set that does not exist or is disabled: " + statusEffectIdentifier); // otherwise, recipe sync would break multiplayer joining with the non-existing status effect
 		}
-		StatusEffect statusEffect = Registries.STATUS_EFFECT.get(statusEffectIdentifier);
+		RegistryEntry.Reference<StatusEffect> statusEffect = Registries.STATUS_EFFECT.getEntry(statusEffectIdentifier).orElseThrow();
 		
 		String inkColorString = JsonHelper.getString(jsonObject, "ink_color");
 		Optional<InkColor> inkColor = InkColor.ofIdString(inkColorString);
@@ -50,7 +52,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 	}
 	
 	public void write(PacketByteBuf packetByteBuf) {
-		packetByteBuf.writeIdentifier(Registries.STATUS_EFFECT.getId(statusEffect));
+		packetByteBuf.writeIdentifier(Registries.STATUS_EFFECT.getId(statusEffect.value()));
 		packetByteBuf.writeInt(baseDurationTicks);
 		packetByteBuf.writeFloat(baseYield);
 		packetByteBuf.writeInt(potencyHardCap);
@@ -64,7 +66,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 	}
 	
 	public static PotionRecipeEffect read(PacketByteBuf packetByteBuf) {
-		StatusEffect statusEffect = Registries.STATUS_EFFECT.get(packetByteBuf.readIdentifier());
+		RegistryEntry.Reference<StatusEffect> statusEffect = Registries.STATUS_EFFECT.getEntry(packetByteBuf.readIdentifier()).orElseThrow();
 		int baseDurationTicks = packetByteBuf.readInt();
 		float baseYield = packetByteBuf.readFloat();
 		int hardCap = packetByteBuf.readInt();
@@ -82,7 +84,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 	public @Nullable InkPoweredStatusEffectInstance getStatusEffectInstance(@NotNull PotionMod potionMod, Random random) {
 		float potency = potionMod.flatPotencyBonus;
 		int durationTicks = baseDurationTicks() + potionMod.flatDurationBonusTicks;
-		switch (statusEffect().getCategory()) {
+		switch (statusEffect().value().getCategory()) {
 			case BENEFICIAL -> {
 				potency += potionMod.flatPotencyBonusPositiveEffects;
 				durationTicks += potionMod.flatDurationBonusPositiveEffects;
@@ -94,7 +96,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 			default -> {
 			}
 		}
-		durationTicks = statusEffect().isInstant() ? 1 : (int) (durationTicks * potionMod.durationMultiplier);
+		durationTicks = statusEffect().value().isInstant() ? 1 : (int) (durationTicks * potionMod.durationMultiplier);
 		
 		if (potencyModifier() == 0.0F) {
 			potency = 0; // effects that only have 1 level, like night vision
@@ -119,7 +121,7 @@ public record PotionRecipeEffect(boolean applicableToPotions, boolean applicable
 		
 		if (potency >= 0 && durationTicks > 0) {
 			int effectColor = potionMod.getColor(random);
-			return new InkPoweredStatusEffectInstance(new StatusEffectInstance(statusEffect(), durationTicks, (int) potency, !potionMod.noParticles, !potionMod.noParticles), new InkCost(inkColor(), inkCost()), effectColor, potionMod.unidentifiable, potionMod.incurable);
+			return new InkPoweredStatusEffectInstance(new StatusEffectInstance(statusEffect, durationTicks, (int) potency, !potionMod.noParticles, !potionMod.noParticles), new InkCost(inkColor(), inkCost()), effectColor, potionMod.unidentifiable, potionMod.incurable);
 		} else {
 			// the effect is so borked that the effect would be too weak
 			return null;

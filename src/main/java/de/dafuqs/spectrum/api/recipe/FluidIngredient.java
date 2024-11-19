@@ -60,6 +60,7 @@ public class FluidIngredient {
         return Optional.ofNullable(this.fluid);
     }
     public Optional<TagKey<Fluid>> tag() {
+        // TODO - Migrate this to Spectrum
         return RegistryHelper.tryGetTagKey(Registries.FLUID, this.tag);
     }
     public boolean isTag() {

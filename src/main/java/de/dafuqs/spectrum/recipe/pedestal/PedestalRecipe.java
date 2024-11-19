@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
@@ -12,9 +11,9 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory> {
+public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("place_pedestal");
 	
@@ -44,10 +43,10 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory>
 	// - Yield upgrades disabled (item multiplication)
 	protected final boolean noBenefitsFromYieldUpgrades;
 	
-	public PedestalRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
+	public PedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 						  PedestalRecipeTier tier, List<IngredientStack> inputs, Map<GemstoneColor, Integer> powderInputs, ItemStack output,
 						  float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.tier = tier;
 		this.inputs = inputs;
@@ -74,22 +73,22 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory>
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
+	public boolean matches(RecipeInput inv, World world) {
 		return enoughPowderPresent(inv);
 	}
 	
-	protected boolean enoughPowderPresent(Inventory inventory) {
+	protected boolean enoughPowderPresent(RecipeInput recipeInput) {
 		int topazPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.CYAN, 0);
 		int amethystPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.MAGENTA, 0);
 		int citrinePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.YELLOW, 0);
 		int onyxPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.BLACK, 0);
 		int moonstonePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.WHITE, 0);
 		
-		return ((topazPowderAmount == 0 || isStackAtLeast(inventory.getStack(9), SpectrumItems.TOPAZ_POWDER, topazPowderAmount))
-				&& (amethystPowderAmount == 0 || isStackAtLeast(inventory.getStack(10), SpectrumItems.AMETHYST_POWDER, amethystPowderAmount))
-				&& (citrinePowderAmount == 0 || isStackAtLeast(inventory.getStack(11), SpectrumItems.CITRINE_POWDER, citrinePowderAmount))
-				&& (onyxPowderAmount == 0 || isStackAtLeast(inventory.getStack(12), SpectrumItems.ONYX_POWDER, onyxPowderAmount))
-				&& (moonstonePowderAmount == 0 || isStackAtLeast(inventory.getStack(13), SpectrumItems.MOONSTONE_POWDER, moonstonePowderAmount)));
+		return ((topazPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(9), SpectrumItems.TOPAZ_POWDER, topazPowderAmount))
+				&& (amethystPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(10), SpectrumItems.AMETHYST_POWDER, amethystPowderAmount))
+				&& (citrinePowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(11), SpectrumItems.CITRINE_POWDER, citrinePowderAmount))
+				&& (onyxPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(12), SpectrumItems.ONYX_POWDER, onyxPowderAmount))
+				&& (moonstonePowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(13), SpectrumItems.MOONSTONE_POWDER, moonstonePowderAmount)));
 	}
 	
 	private boolean isStackAtLeast(ItemStack sourceItemStack, Item item, int amount) {
@@ -102,7 +101,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory>
 	}
 
 	@Override
-	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
 		return this.output.copy();
 	}
 
@@ -111,7 +110,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory>
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return this.output;
 	}
 	
@@ -166,7 +165,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<Inventory>
 			choices.add(SpectrumSoundEvents.PEDESTAL_CRAFTING_FINISHED_MOONSTONE);
 		}
 		
-		if (choices.size() == 0) {
+		if (choices.isEmpty()) {
 			return SpectrumSoundEvents.PEDESTAL_CRAFTING_FINISHED_GENERIC;
 		} else {
 			return choices.get(random.nextInt(choices.size()));

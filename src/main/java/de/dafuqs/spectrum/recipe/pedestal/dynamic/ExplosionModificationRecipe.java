@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.recipe.pedestal.dynamic;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
@@ -10,6 +10,7 @@ import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -24,7 +25,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/modular_explosives");
 	
 	public ExplosionModificationRecipe(Identifier id) {
-		super(id, "", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), Map.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
+		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), Map.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
 	}
 	
 	private static List<IngredientStack> collectIngredients() {
@@ -39,7 +40,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public boolean matches(Inventory inventory, World world) {
+	public boolean matches(RecipeInput inventory, World world) {
 		ItemStack nonModStack = validateGridAndFindModularExplosiveStack(inventory);
 		if (!(nonModStack.getItem() instanceof ModularExplosionProvider modularExplosionProvider)) {
 			return false;
@@ -91,7 +92,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inventory, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
 		ItemStack output = validateGridAndFindModularExplosiveStack(inventory).copy();
 		
 		Pair<List<ExplosionArchetype>, List<ExplosionModifier>> pair = findArchetypeAndModifiers(inventory);
@@ -135,10 +136,10 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	 * Iterates all stacks in the grid and returns the modular explosive
 	 * if the grid only contains that one and modifiers
 	 */
-	public ItemStack validateGridAndFindModularExplosiveStack(Inventory inventory) {
+	public ItemStack validateGridAndFindModularExplosiveStack(RecipeInput inventory) {
 		ItemStack foundStack = ItemStack.EMPTY;
 		for (int slot : CRAFTING_GRID_SLOTS) {
-			ItemStack stack = inventory.getStack(slot);
+			ItemStack stack = inventory.getStackInSlot(slot);
 			if (!stack.isEmpty()
 					&& stack.getItem() instanceof ModularExplosionProvider
 					&& ExplosionModifierProviders.getModifier(stack) == null
@@ -155,11 +156,11 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 		return foundStack;
 	}
 	
-	public Pair<List<ExplosionArchetype>, List<ExplosionModifier>> findArchetypeAndModifiers(Inventory inventory) {
+	public Pair<List<ExplosionArchetype>, List<ExplosionModifier>> findArchetypeAndModifiers(RecipeInput inventory) {
 		List<ExplosionModifier> modifiers = new ArrayList<>();
 		List<ExplosionArchetype> archetypes = new ArrayList<>();
 		for (int slot : CRAFTING_GRID_SLOTS) {
-			ItemStack stack = inventory.getStack(slot);
+			ItemStack stack = inventory.getStackInSlot(slot);
 			if (!stack.isEmpty()) {
 				ExplosionModifier modifier = ExplosionModifierProviders.getModifier(stack);
 				if (modifier != null) {

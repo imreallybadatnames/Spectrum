@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.recipe.fusion_shrine;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.predicate.world.*;
@@ -53,10 +53,10 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	// copy all nbt data from the first stack in the ingredients to the output stack
 	protected final boolean copyNbt;
 	
-	public FusionShrineRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
+	public FusionShrineRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 							  List<IngredientStack> craftingInputs, FluidIngredient fluid, ItemStack output, float experience, int craftingTime, boolean yieldUpgradesDisabled, boolean playCraftingFinishedEffects, boolean copyNbt,
 							  List<WorldConditionPredicate> worldConditions, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.craftingInputs = craftingInputs;
 		this.fluid = fluid;
@@ -95,7 +95,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	}
 	
 	@Override
-	public ItemStack craft(FusionShrineBlockEntity inv, DynamicRegistryManager drm) {
+	public ItemStack craft(FusionShrineBlockEntity inv, RegistryWrapper.WrapperLookup drm) {
 		return output.copy();
 	}
 	
@@ -105,7 +105,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return output;
 	}
 	
