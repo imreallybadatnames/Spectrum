@@ -15,8 +15,6 @@ import java.util.*;
 
 public class CinderhearthRecipeSerializer implements GatedRecipeSerializer<CinderhearthRecipe> {
 
-	private static final MapCodec<Pair<ItemStack, Float>> RESULT_WITH_CHANCE_CODEC = PairCodec.;
-
 	private static final MapCodec<CinderhearthRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 			Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
 			Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),

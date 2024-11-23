@@ -3,7 +3,7 @@
     "translate": "enchantment.spectrum.tight_grip"
   },
   "effects": {
-    "spectrum:attributes": [
+    "minecraft:attributes": [
       {
         "amount": {
           "type": "minecraft:linear",
@@ -12,26 +12,24 @@
         },
         "attribute": "minecraft:generic.attack_speed",
         "id": "spectrum:enchantment.tight_grip",
-        "operation": "add_multiplied_total",
-        "required_advancement": "spectrum:unlocks/enchantments/tight_grip"
+        "operation": "add_multiplied_total"
       }
     ]
   },
   "anvil_cost": 4,
   "exclusive_set": "#spectrum:exclusive_set/tight_grip",
   "max_cost": {
-    "base": 35,
+    "base": 0,
     "per_level_above_first": 0
   },
   "max_level": 2,
   "min_cost": {
-    "base": 5,
+    "base": 0,
     "per_level_above_first": 0
   },
   "slots": [
     "mainhand"
   ],
   "supported_items": "#spectrum:enchantable/tight_grip",
-  "primary_items": "#minecraft:enchantable/sword",
-  "weight": 2
+  "weight": 0
 }

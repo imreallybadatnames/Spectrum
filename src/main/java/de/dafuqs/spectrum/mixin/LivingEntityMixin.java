@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.*;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.*;
 import com.llamalad7.mixinextras.sugar.ref.*;
+import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.damage_type.*;
 import de.dafuqs.spectrum.api.entity.*;
@@ -25,6 +26,8 @@ import de.dafuqs.spectrum.status_effects.*;
 import dev.emi.trinkets.api.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
 import net.minecraft.block.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -35,6 +38,9 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -47,6 +53,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -681,4 +688,31 @@ public abstract class LivingEntityMixin {
 			float amount) {
 		return !source.isIn(SpectrumDamageTypeTags.USES_SET_HEALTH);
 	}
+
+	@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
+	private void spectrum$getEquipmentChanges$removeConditionalEffects(CallbackInfo ci, Map<EquipmentSlot, ItemStack> map, EquipmentSlot equipmentSlot, ItemStack itemStack) {
+		var livingEntity = (LivingEntity) (Object) this;
+		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level) -> builder.add(enchantment, level));
+		itemStack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
+	}
+
+	@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
+	private void spectrum$getEquipmentChanges$applyConditionalEffects(CallbackInfo ci, Map<EquipmentSlot, ItemStack> map, Map.Entry<EquipmentSlot, ItemStack> entry, EquipmentSlot equipmentSlot, ItemStack itemStack) {
+		var livingEntity = (LivingEntity) (Object) this;
+		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level) -> {
+			builder.add(enchantment, level);
+			enchantment.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CONDITIONAL).forEach(c -> {
+				if (!(livingEntity instanceof PlayerEntity playerEntity) || AdvancementHelper.hasAdvancement(playerEntity, c.advancementId())) {
+					var registry = livingEntity.getWorld().getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT);
+					var optEnchant = registry.flatMap(r -> r.getOptional(RegistryKey.of(RegistryKeys.ENCHANTMENT, c.enchantmentId())));
+					if (optEnchant.isPresent())
+						builder.add(optEnchant.get(), level);
+				}
+			});
+		});
+		itemStack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
+	}
+
 }

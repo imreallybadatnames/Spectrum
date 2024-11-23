@@ -1,5 +1,7 @@
 {
   "values": [
+    "spectrum:tight_grip",
+    "spectrum:cloaked/tight_grip",
     {
       "id": "malum:rebound",
       "required": false

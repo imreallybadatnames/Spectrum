@@ -1,0 +1,30 @@
+{
+  "description": {
+    "translate": "enchantment.spectrum.cloaked"
+  },
+  "effects": {
+    "spectrum:cloaked": [
+      {
+        "advancement": "spectrum:unlocks/enchantments/tight_grip",
+        "enchantment": "spectrum:tight_grip"
+      }
+    ]
+  },
+  "anvil_cost": 0,
+  "exclusive_set": "#spectrum:exclusive_set/tight_grip",
+  "max_cost": {
+    "base": 35,
+    "per_level_above_first": 0
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#spectrum:enchantable/tight_grip",
+  "primary_items": "#minecraft:enchantable/sword",
+  "weight": 2
+}

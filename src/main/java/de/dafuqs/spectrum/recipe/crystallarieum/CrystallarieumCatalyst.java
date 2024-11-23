@@ -10,9 +10,6 @@ import net.minecraft.util.*;
 
 public class CrystallarieumCatalyst {
 
-	public static final MapCodec<> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-
-	).apply(CrystallarieumCatalyst::new));
 	public static final PacketCodec<RegistryByteBuf, CrystallarieumCatalyst> PACKET_CODEC = PacketCodec.ofStatic(CrystallarieumCatalyst::write, CrystallarieumCatalyst::read);
 	
 	public static final CrystallarieumCatalyst EMPTY = new CrystallarieumCatalyst(Ingredient.EMPTY, 1.0F, 1.0F, 0.0F);
