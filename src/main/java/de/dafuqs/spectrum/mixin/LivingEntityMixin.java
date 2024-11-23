@@ -703,10 +703,7 @@ public abstract class LivingEntityMixin {
 			builder.add(enchantment, level);
 			enchantment.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).forEach(c -> {
 				if (!(livingEntity instanceof PlayerEntity playerEntity) || AdvancementHelper.hasAdvancement(playerEntity, c.advancementId())) {
-					var registry = livingEntity.getWorld().getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT);
-					var optEnchant = registry.flatMap(r -> r.getOptional(RegistryKey.of(RegistryKeys.ENCHANTMENT, c.enchantmentId())));
-					if (optEnchant.isPresent())
-						builder.add(optEnchant.get(), level);
+					builder.add(c.enchantment(), level);
 				}
 			});
 		});

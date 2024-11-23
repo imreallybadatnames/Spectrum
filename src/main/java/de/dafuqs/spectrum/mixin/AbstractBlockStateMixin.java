@@ -15,7 +15,7 @@ public abstract class AbstractBlockStateMixin {
 	
 	@ModifyVariable(method = "onStacksDropped", at = @At("HEAD"), ordinal = 0, argsOnly = true)
 	public boolean spectrum$preventXPDropsWhenUsingResonance(boolean dropExperience, ServerWorld world, BlockPos pos, ItemStack stack) {
-		if (ResonanceDropsDataLoader.preventNextXPDrop && EnchantmentHelper.getLevel(SpectrumEnchantments.RESONANCE, stack) > 0) {
+		if (ResonanceDropsDataLoader.preventNextXPDrop && EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.RESONANT_BLOCK_DROPS)) {
 			ResonanceDropsDataLoader.preventNextXPDrop = false;
 			return false;
 		}

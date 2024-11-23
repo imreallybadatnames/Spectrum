@@ -1,7 +1,5 @@
 package de.dafuqs.spectrum.enchantments;
 
-import de.dafuqs.spectrum.registries.*;
-import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.util.*;
 
@@ -24,11 +22,6 @@ public class PestControlEnchantment extends SpectrumEnchantment {
 	@Override
 	public int getMaxLevel() {
 		return 1;
-	}
-	
-	@Override
-	public boolean canAccept(Enchantment other) {
-		return super.canAccept(other) && other != SpectrumEnchantments.RESONANCE;
 	}
 	
 }

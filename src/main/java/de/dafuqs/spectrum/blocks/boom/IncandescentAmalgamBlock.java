@@ -131,7 +131,7 @@ public class IncandescentAmalgamBlock extends PlacedItemBlock implements Waterlo
 	public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		if (!state.get(WATERLOGGED)
 				&& !player.isCreative()
-				&& EnchantmentHelper.getLevel(SpectrumEnchantments.RESONANCE, player.getStackInHand(player.getActiveHand())) == 0) {
+				&& !EnchantmentHelper.hasAnyEnchantmentsIn(player.getStackInHand(player.getActiveHand()), SpectrumEnchantmentTags.PREVENTS_INCANDESCENT_EXPLOSION)) {
 
 			explode(world, pos);
 		}

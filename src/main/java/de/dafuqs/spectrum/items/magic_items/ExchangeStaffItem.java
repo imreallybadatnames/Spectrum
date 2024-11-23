@@ -237,8 +237,7 @@ public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnch
 	
 	@Override
 	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.FORTUNE || enchantment == Enchantments.SILK_TOUCH
-				|| enchantment == SpectrumEnchantments.RESONANCE;
+		return enchantment == Enchantments.FORTUNE || enchantment == Enchantments.SILK_TOUCH;
 	}
 	
 	@Override

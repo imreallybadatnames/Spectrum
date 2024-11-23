@@ -75,7 +75,7 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
 	
 	@Override
 	public int getBackgroundColor(@Nullable PlayerEntity player, ItemStack stack, float tickDelta) {
-		var resonance = EnchantmentHelper.getLevel(SpectrumEnchantments.RESONANCE, stack) > 0;
+		var resonance = EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.RESONANT_BLOCK_DROPS);
 		var silkTouch = EnchantmentHelper.hasSilkTouch(stack);
 		var fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, stack) > 0;
 		

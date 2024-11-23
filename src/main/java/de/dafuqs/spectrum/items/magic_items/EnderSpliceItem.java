@@ -126,7 +126,7 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 		} else if (user instanceof ServerPlayerEntity playerEntity) {
 			Criteria.CONSUME_ITEM.trigger(playerEntity, itemStack);
 			
-			boolean resonance = EnchantmentHelper.getLevel(SpectrumEnchantments.RESONANCE, itemStack) > 0;
+			boolean resonance = EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, SpectrumEnchantmentTags.DIMENSIONAL_TELEPORT);
 			
 			// If Dimension & Pos stored => Teleport to that position
 			Optional<Pair<String, Vec3d>> teleportTargetPos = getTeleportTargetPos(itemStack);
@@ -303,7 +303,7 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 	
 	@Override
 	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == SpectrumEnchantments.RESONANCE || enchantment == SpectrumEnchantments.INDESTRUCTIBLE || enchantment == Enchantments.UNBREAKING;
+		return enchantment == SpectrumEnchantments.INDESTRUCTIBLE || enchantment == Enchantments.UNBREAKING;
 	}
 	
 	@Override

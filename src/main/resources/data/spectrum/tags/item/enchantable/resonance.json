@@ -1,5 +1,7 @@
 {
   "values": [
-    "#minecraft:enchantable/mining"
+    "#minecraft:enchantable/mining",
+    "spectrum:ender_splice",
+    "spectrum:exchanging_staff"
   ]
 }

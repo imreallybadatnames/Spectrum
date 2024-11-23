@@ -13,6 +13,8 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -133,15 +135,12 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 			// switching to another enchantment
 			// fortune handling is a bit special. Its level is preserved in NBT,
 			// to restore the original enchant level when switching back
-			case SELECT_FORTUNE -> {
+			case SELECT_FORTUNE ->
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), Enchantments.FORTUNE);
-			}
-			case SELECT_SILK_TOUCH -> {
+			case SELECT_SILK_TOUCH ->
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), Enchantments.SILK_TOUCH);
-			}
-			case SELECT_RESONANCE -> {
+			case SELECT_RESONANCE ->
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), SpectrumEnchantments.RESONANCE);
-			}
 			case ENABLE_RIGHT_CLICK_ACTIONS -> {
 				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
 						comp -> comp.apply(nbt -> nbt.remove(RIGHT_CLICK_DISABLED_NBT_STRING)));
@@ -165,8 +164,14 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		}
 	}
 	
-	private static void enchantAndRemoveOthers(PlayerEntity player, ItemStack stack, Text message, Enchantment enchantment) {
-		int existingLevel = EnchantmentHelper.getLevel(enchantment, stack);
+	private static void enchantAndRemoveOthers(PlayerEntity player, ItemStack stack, Text message, RegistryKey<Enchantment> enchantment) {
+		var wrapper = player.getWorld().getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT).orElse(null);
+		if (wrapper == null)
+			return;
+
+		var entry = wrapper.getOptional(enchantment).orElse(null);
+
+		int existingLevel = EnchantmentHelper.getLevel(entry, stack);
 		if (existingLevel > 0) {
 			player.sendMessage(Text.translatable("item.spectrum.workstaff.message.already_has_the_enchantment"), true);
 			return;
@@ -182,7 +187,7 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 						comp -> comp.apply(nbt -> nbt.remove("FortuneLevel")));
 			}
 		} else {
-			int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, stack);
+			int fortuneLevel = EnchantmentHelper.getLevel(wrapper.getOptional(Enchantments.FORTUNE).orElse(null), stack);
 			if (fortuneLevel > 0) {
 				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
 						comp -> comp.apply(nbt -> nbt.putInt("FortuneLevel", fortuneLevel)));
