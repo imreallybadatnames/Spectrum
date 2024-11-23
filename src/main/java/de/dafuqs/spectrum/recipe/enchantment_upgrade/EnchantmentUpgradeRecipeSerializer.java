@@ -13,18 +13,6 @@ import java.util.*;
 
 public class EnchantmentUpgradeRecipeSerializer implements GatedRecipeSerializer<EnchantmentUpgradeRecipe> {
 	
-	public static final List<EnchantmentUpgradeRecipe> enchantmentUpgradeRecipesToInject = new ArrayList<>();
-	
-	public final EnchantmentUpgradeRecipeSerializer.RecipeFactory recipeFactory;
-	
-	public EnchantmentUpgradeRecipeSerializer(EnchantmentUpgradeRecipeSerializer.RecipeFactory recipeFactory) {
-		this.recipeFactory = recipeFactory;
-	}
-	
-	public interface RecipeFactory {
-		EnchantmentUpgradeRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Enchantment enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount);
-	}
-	
 	@Override
 	public EnchantmentUpgradeRecipe read(Identifier identifier, JsonObject jsonObject) {
 		String group = readGroup(jsonObject);

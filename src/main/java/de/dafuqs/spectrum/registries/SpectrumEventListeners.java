@@ -176,7 +176,7 @@ public class SpectrumEventListeners {
 			
 			SpectrumCommon.logInfo("Injecting dynamic recipes into recipe manager...");
 			FirestarterIdolBlock.addBlockSmeltingRecipes(server);
-			injectEnchantmentUpgradeRecipes(server);
+			//injectEnchantmentUpgradeRecipes(server);
 		});
 		
 		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
@@ -377,7 +377,7 @@ public class SpectrumEventListeners {
 				SpectrumCommon.CACHED_ITEM_TAG_MAP.clear();
 				
 				if (SpectrumCommon.minecraftServer != null) {
-					injectEnchantmentUpgradeRecipes(SpectrumCommon.minecraftServer);
+					//injectEnchantmentUpgradeRecipes(SpectrumCommon.minecraftServer);
 					FirestarterIdolBlock.addBlockSmeltingRecipes(SpectrumCommon.minecraftServer);
 				}
 			}
@@ -389,26 +389,27 @@ public class SpectrumEventListeners {
 		});
 	}
 	
+	// TODO - Remove this KubeJS specific compat code.
 	// It could have been so much easier and performant, but KubeJS overrides the ENTIRE recipe manager
 	// and cancels all sorts of functions at HEAD unconditionally, so Spectrum cannot mixin into it
-	public static void injectEnchantmentUpgradeRecipes(MinecraftServer minecraftServer) {
-		if (!EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.isEmpty()) {
-			ImmutableMap<Identifier, Recipe<?>> collectedRecipes = EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.stream().collect(ImmutableMap.toImmutableMap(EnchantmentUpgradeRecipe::getId, enchantmentUpgradeRecipe -> enchantmentUpgradeRecipe));
-			Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes = ((RecipeManagerAccessor) minecraftServer.getRecipeManager()).getRecipes();
-			
-			ArrayList<Recipe<?>> newList = new ArrayList<>();
-			for (Map<Identifier, Recipe<?>> r : recipes.values()) {
-				newList.addAll(r.values());
-			}
-			for (Recipe<?> recipe : collectedRecipes.values()) {
-				if (!newList.contains(recipe)) {
-					newList.add(recipe);
-				}
-			}
-			
-			minecraftServer.getRecipeManager().setRecipes(newList);
-		}
-	}
+//	public static void injectEnchantmentUpgradeRecipes(MinecraftServer minecraftServer) {
+//		if (!EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.isEmpty()) {
+//			ImmutableMap<Identifier, Recipe<?>> collectedRecipes = EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.stream().collect(ImmutableMap.toImmutableMap(EnchantmentUpgradeRecipe::getId, enchantmentUpgradeRecipe -> enchantmentUpgradeRecipe));
+//			Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes = ((RecipeManagerAccessor) minecraftServer.getRecipeManager()).getRecipes();
+//
+//			ArrayList<Recipe<?>> newList = new ArrayList<>();
+//			for (Map<Identifier, Recipe<?>> r : recipes.values()) {
+//				newList.addAll(r.values());
+//			}
+//			for (Recipe<?> recipe : collectedRecipes.values()) {
+//				if (!newList.contains(recipe)) {
+//					newList.add(recipe);
+//				}
+//			}
+//
+//			minecraftServer.getRecipeManager().setRecipes(newList);
+//		}
+//	}
 	
 	public static int getFluidLuminance(Fluid fluid) {
 		return fluidLuminance.getOrDefault(fluid, 0);
