@@ -2,21 +2,20 @@
   "description": {
     "translate": "enchantment.spectrum.resonance"
   },
-  "anvil_cost": 8,
+  "anvil_cost": 0,
   "exclusive_set": "#spectrum:exclusive_set/resonance",
   "max_cost": {
-    "base": 100,
+    "base": 0,
     "per_level_above_first": 0
   },
   "max_level": 1,
   "min_cost": {
-    "base": 25,
+    "base": 0,
     "per_level_above_first": 0
   },
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/mining",
-  "primary_items": "#minecraft:enchantable/mining_loot",
-  "weight": 1
+  "supported_items": "#spectrum:enchantable/resonance",
+  "weight": 0
 }

@@ -28,7 +28,7 @@
             "key": "StoredEnchantments",
             "minLevel": 1,
             "maxLevel": 255,
-            "enchantmentId": "spectrum:resonance"
+            "enchantmentId": "spectrum:cloaked/resonance"
           }
         ]
       }

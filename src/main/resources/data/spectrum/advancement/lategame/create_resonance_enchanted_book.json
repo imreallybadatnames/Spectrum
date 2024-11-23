@@ -21,7 +21,7 @@
           ],
           "stored_enchantments": [
             {
-              "enchantment": "spectrum:resonance"
+              "enchantment": "spectrum:cloaked/resonance"
             }
           ]
         }
@@ -36,7 +36,7 @@
           ],
           "stored_enchantments": [
             {
-              "enchantment": "spectrum:resonance"
+              "enchantment": "spectrum:cloaked/resonance"
             }
           ]
         }

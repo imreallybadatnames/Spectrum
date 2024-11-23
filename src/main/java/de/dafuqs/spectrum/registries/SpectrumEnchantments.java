@@ -8,7 +8,7 @@ import net.minecraft.registry.*;
 
 public class SpectrumEnchantments {
 	
-	public static final SpectrumEnchantment RESONANCE = new ResonanceEnchantment(Enchantment.Rarity.VERY_RARE, SpectrumAdvancements.ENCHANTMENTS_RESONANCE_USAGE, EquipmentSlot.MAINHAND); // Silk Touch, just for different blocks
+	public static final RegistryKey<Enchantment> RESONANCE = of("cloaked/resonance"); // Silk Touch, just for different blocks
 	public static final RegistryKey<Enchantment> VOIDING = of("cloaked/voiding"); // Voids all items mined
 	public static final SpectrumEnchantment PEST_CONTROL = new PestControlEnchantment(Enchantment.Rarity.VERY_RARE, SpectrumAdvancements.ENCHANTMENTS_PEST_CONTROL, EquipmentSlot.MAINHAND); // Kills silverfish when mining infested blocks
 	public static final SpectrumEnchantment FOUNDRY = new FoundryEnchantment(Enchantment.Rarity.RARE, SpectrumAdvancements.ENCHANTMENTS_FOUNDRY, EquipmentSlot.MAINHAND); // applies smelting recipe before dropping items after mining
