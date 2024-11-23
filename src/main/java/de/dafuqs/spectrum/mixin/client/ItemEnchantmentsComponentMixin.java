@@ -14,7 +14,7 @@ public class ItemEnchantmentsComponentMixin {
 
     @Redirect(method = "appendTooltip(Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/Object2IntOpenHashMap;getInt(Ljava/lang/Object;)I"))
     public int spectrum$appendTooltip$object2IntEntrySet(Object2IntOpenHashMap<RegistryEntry<Enchantment>> enchantments, RegistryEntry<Enchantment> registryEntry) {
-        return registryEntry.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CONDITIONAL).isEmpty() ? enchantments.getInt(registryEntry) : 0;
+        return registryEntry.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).isEmpty() ? enchantments.getInt(registryEntry) : 0;
     }
 
 }

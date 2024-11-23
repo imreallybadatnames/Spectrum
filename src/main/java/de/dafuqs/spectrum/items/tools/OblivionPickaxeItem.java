@@ -1,19 +1,20 @@
 package de.dafuqs.spectrum.items.tools;
 
+import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
-import java.util.*;
-
 public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 	
-	public OblivionPickaxeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(material, attackDamage, attackSpeed, settings);
+	public OblivionPickaxeItem(ToolMaterial material, Settings settings) {
+		super(material, settings);
 	}
 	
 	@Override
@@ -22,7 +23,7 @@ public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 		
 		// Break the tool if it is used without the voiding enchantment
 		// Otherwise this would be a VERY cheap early game diamond tier tool
-		if (!world.isClient && !EnchantmentHelper.get(stack).containsKey(SpectrumEnchantments.VOIDING)) {
+		if (!world.isClient && !EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.NO_BLOCK_DROPS)) {
 			stack.damage(5000, miner, EquipmentSlot.MAINHAND);
 		}
 		
@@ -30,15 +31,10 @@ public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of(SpectrumEnchantments.VOIDING, 1);
+	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
+		impl.getOptional(SpectrumEnchantments.VOIDING).ifPresent(e -> builder.add(e, 1));
 	}
 	
-	@Override
-	public ItemStack getDefaultStack() {
-		return getDefaultEnchantedStack(this);
-	}
-
 	@Override
 	public boolean hasGlint(ItemStack stack) {
 		return false;

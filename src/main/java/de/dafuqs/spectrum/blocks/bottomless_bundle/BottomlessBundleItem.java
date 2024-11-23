@@ -156,7 +156,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 		NbtCompound voidBundleCompound = voidBundleStack.getOrCreateNbt();
 		NbtCompound storedItemCompound = new NbtCompound();
 
-		boolean hasVoiding = EnchantmentHelper.getLevel(SpectrumEnchantments.VOIDING, voidBundleStack) > 0;
+		boolean hasVoiding = EnchantmentHelper.hasAnyEnchantmentsIn(voidBundleStack, SpectrumEnchantmentTags.DELETES_OVERFLOW);
 		int maxStoredAmount = getMaxStoredAmount(voidBundleStack);
 		int newAmount = Math.min(maxStoredAmount, storedItemCompound.getInt("Count") + amount);
 		int overflowAmount = hasVoiding ? 0 : Math.max(0, amount - maxStoredAmount);
@@ -367,7 +367,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 						firstStack.getName().getString()).formatted(Formatting.GRAY));
 			}
 		}
-		if (EnchantmentHelper.getLevel(SpectrumEnchantments.VOIDING, stack) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.DELETES_OVERFLOW)) {
 			tooltip.add(Text.translatable("item.spectrum.bottomless_bundle.tooltip.voiding"));
 		}
 	}
@@ -409,7 +409,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 			} else if (itemStack.getItem().canBeNested()) {
 				ItemStack firstStack = getFirstBundledStack(stack);
 				if (firstStack.isEmpty() || ItemStack.areItemsAndComponentsEqual(firstStack, itemStack)) {
-					boolean hasVoiding = EnchantmentHelper.getLevel(SpectrumEnchantments.VOIDING, stack) > 0;
+					boolean hasVoiding = EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.DELETES_OVERFLOW_IN_INVENTORY);
 					int amountAbleToStore = hasVoiding ? itemStack.getCount() : Math.min(itemStack.getCount(), (getMaxStoredAmount(stack) - getStoredAmount(stack)));
 					if (amountAbleToStore > 0) {
 						addToBundle(stack, slot.takeStackRange(itemStack.getCount(), amountAbleToStore, player));
@@ -511,7 +511,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 	
 	@Override
 	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.POWER || enchantment == SpectrumEnchantments.VOIDING;
+		return enchantment == Enchantments.POWER;
 	}
 	
 	@Override

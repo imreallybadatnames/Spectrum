@@ -33,10 +33,10 @@ public abstract class BlockMixin {
 	@ModifyReturnValue(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"))
 	private static List<ItemStack> spectrum$getDroppedStacks(List<ItemStack> original, BlockState state, ServerWorld world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack) {
 		List<ItemStack> droppedStacks = original;
-		Map<Enchantment, Integer> enchantmentMap = EnchantmentHelper.get(stack);
-		
+		var enchantmentMap = stack.getEnchantments();
+
 		// Voiding curse: no drops
-		if (enchantmentMap.containsKey(SpectrumEnchantments.VOIDING)) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.NO_BLOCK_DROPS)) {
 			world.spawnParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.05);
 			droppedStacks.clear();
 			return droppedStacks;

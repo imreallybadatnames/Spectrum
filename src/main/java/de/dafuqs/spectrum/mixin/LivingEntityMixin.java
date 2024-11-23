@@ -40,7 +40,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -53,7 +52,6 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -703,7 +701,7 @@ public abstract class LivingEntityMixin {
 		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
 		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level) -> {
 			builder.add(enchantment, level);
-			enchantment.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CONDITIONAL).forEach(c -> {
+			enchantment.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).forEach(c -> {
 				if (!(livingEntity instanceof PlayerEntity playerEntity) || AdvancementHelper.hasAdvancement(playerEntity, c.advancementId())) {
 					var registry = livingEntity.getWorld().getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT);
 					var optEnchant = registry.flatMap(r -> r.getOptional(RegistryKey.of(RegistryKeys.ENCHANTMENT, c.enchantmentId())));

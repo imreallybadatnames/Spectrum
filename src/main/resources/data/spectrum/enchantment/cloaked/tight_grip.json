@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.spectrum.cloaked"
+    "translate": "enchantment.spectrum.tight_grip.cloaked"
   },
   "effects": {
     "spectrum:cloaked": [
@@ -10,7 +10,7 @@
       }
     ]
   },
-  "anvil_cost": 0,
+  "anvil_cost": 4,
   "exclusive_set": "#spectrum:exclusive_set/tight_grip",
   "max_cost": {
     "base": 35,

@@ -1,20 +1,23 @@
 package de.dafuqs.spectrum.helpers;
 
+import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class SpectrumEnchantmentHelper {
-	
+
 	/**
 	 * Adds an enchantment to an ItemStack. If the stack already has that enchantment, it gets upgraded instead
 	 *

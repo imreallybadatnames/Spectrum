@@ -1,22 +1,22 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.item.*;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-
-import java.util.*;
+import net.minecraft.registry.RegistryWrapper;
 
 public class RazorFalchionItem extends SwordItem implements Preenchanted {
 	
-	public RazorFalchionItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-		super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
+	public RazorFalchionItem(ToolMaterial toolMaterial, Settings settings) {
+		super(toolMaterial, settings);
 	}
-	
+
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of(Enchantments.LOOTING, 3);
+	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
+		impl.getOptional(Enchantments.LOOTING).ifPresent(e -> builder.add(e, 3));
 	}
-	
+
 	@Override
 	public ItemStack getDefaultStack() {
 		return getDefaultEnchantedStack(this);

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
+import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -106,7 +107,7 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 		if (itemStack.getItem() instanceof BottomlessBundleItem) {
 			this.bottomlessBundleStack = itemStack;
 			// cache once, use many times
-			this.isVoiding = EnchantmentHelper.getLevel(SpectrumEnchantments.VOIDING, bottomlessBundleStack) > 0;
+			this.isVoiding = EnchantmentHelper.hasAnyEnchantmentsIn(bottomlessBundleStack, SpectrumEnchantmentTags.DELETES_OVERFLOW);
 			this.powerLevel = EnchantmentHelper.getLevel(Enchantments.POWER, itemStack);
 			return true;
 		}
