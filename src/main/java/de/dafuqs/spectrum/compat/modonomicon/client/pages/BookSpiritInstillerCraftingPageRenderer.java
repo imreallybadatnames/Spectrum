@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.mojang.blaze3d.systems.*;
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
@@ -55,7 +55,7 @@ public class BookSpiritInstillerCraftingPageRenderer extends BookGatedRecipePage
         parentScreen.renderItemStack(drawContext, recipeX + 44, recipeY + 25, mouseX, mouseY, ITEM_BOWL_STACK);
 
         // the output
-        parentScreen.renderItemStack(drawContext, recipeX + 79, recipeY + 8, mouseX, mouseY, recipe.getOutput(world.getRegistryManager()));
+        parentScreen.renderItemStack(drawContext, recipeX + 79, recipeY + 8, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));
     }
 
 }

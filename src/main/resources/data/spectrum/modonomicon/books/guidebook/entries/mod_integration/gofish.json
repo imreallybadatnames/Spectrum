@@ -40,7 +40,7 @@
       "text": "book.spectrum.guidebook.mod_integration.gofish.page1.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "title": "book.spectrum.guidebook.mod_integration.gofish.page2.title",
       "item": {
         "item": "minecraft:enchanted_book",

@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.recipe.titration_barrel.dynamic;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
@@ -32,14 +31,14 @@ public class SuspiciousBrewRecipe extends TitrationBarrelRecipe {
 	public static final ItemStack OUTPUT_STACK = getDefaultStackWithCount(SpectrumItems.SUSPICIOUS_BREW, 4);
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/food/suspicious_brew");
 	public static final List<IngredientStack> INGREDIENT_STACKS = new ArrayList<>() {{
-		add(IngredientStack.of(Ingredient.fromTag(ItemTags.SMALL_FLOWERS)));
-		add(IngredientStack.of(Ingredient.fromTag(ItemTags.SMALL_FLOWERS)));
-		add(IngredientStack.of(Ingredient.fromTag(ItemTags.SMALL_FLOWERS)));
-		add(IngredientStack.of(Ingredient.fromTag(ItemTags.SMALL_FLOWERS)));
+		add(IngredientStack.ofTag(ItemTags.SMALL_FLOWERS, 1));
+		add(IngredientStack.ofTag(ItemTags.SMALL_FLOWERS, 1));
+		add(IngredientStack.ofTag(ItemTags.SMALL_FLOWERS, 1));
+		add(IngredientStack.ofTag(ItemTags.SMALL_FLOWERS, 1));
 	}};
 	
-	public SuspiciousBrewRecipe(Identifier identifier) {
-		super(identifier, "", false, UNLOCK_IDENTIFIER, INGREDIENT_STACKS, FluidIngredient.of(Fluids.WATER), OUTPUT_STACK, TAPPING_ITEM, MIN_FERMENTATION_TIME_HOURS, new FermentationData(1.25F, 0.01F, List.of()));
+	public SuspiciousBrewRecipe() {
+		super("", false, UNLOCK_IDENTIFIER, INGREDIENT_STACKS, FluidIngredient.of(Fluids.WATER), OUTPUT_STACK, TAPPING_ITEM, MIN_FERMENTATION_TIME_HOURS, new FermentationData(1.25F, 0.01F, List.of()));
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class SuspiciousBrewRecipe extends TitrationBarrelRecipe {
 	// taken from SuspiciousStewItem
 	private Optional<Pair<StatusEffect, Integer>> getStewEffectFrom(ItemStack stack) {
 		if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof FlowerBlock flowerBlock) {
-			return Optional.of(Pair.of(flowerBlock.getEffectInStew(), flowerBlock.getEffectInStewDuration()));
+			return Optional.of(Pair.of(flowerBlock.getStewEffects(), flowerBlock.getEffectInStewDuration()));
 		}
 		return Optional.empty();
 	}

@@ -37,7 +37,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "minecraft:sweeping",
+          "id": "minecraft:sweeping_edge",
           "lvl": "1s"
         }
       ]
@@ -48,7 +48,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "minecraft:sweeping"
+        "minecraft:sweeping_edge"
       ]
     }
   ]

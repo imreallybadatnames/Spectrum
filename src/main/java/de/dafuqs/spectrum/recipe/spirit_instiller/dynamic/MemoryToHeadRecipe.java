@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.mob_head.*;
@@ -27,13 +26,13 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 	public static final RecipeSerializer<MemoryToHeadRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MemoryToHeadRecipe::new);
 	
 	public MemoryToHeadRecipe(Identifier identifier) {
-		super(identifier, "", false, SpectrumCommon.locate("unlocks/memory_to_head"),
+		super("", false, SpectrumCommon.locate("unlocks/memory_to_head"),
 				IngredientStack.ofItems(1, SpectrumBlocks.MEMORY), IngredientStack.ofItems(4, SpectrumItems.VEGETAL), IngredientStack.ofItems(4, SpectrumItems.QUITOXIC_POWDER),
 				new ItemStack(Blocks.ZOMBIE_HEAD), 200, 1, true);
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		ItemStack resultStack = ItemStack.EMPTY;
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 			ServerWorld world = (ServerWorld) spiritInstillerBlockEntity.getWorld();

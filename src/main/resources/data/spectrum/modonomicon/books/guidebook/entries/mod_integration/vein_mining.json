@@ -23,7 +23,7 @@
   "y": 6,
   "pages": [
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "title": "book.spectrum.guidebook.mod_integration.vein_mining.name",
       "item": {
         "item": "spectrum:multitool",

@@ -1,9 +1,9 @@
 {
   "description": {
-    "translate": "enchantment.spectrum.autosmelt"
+    "translate": "enchantment.spectrum.foundry"
   },
   "anvil_cost": 4,
-  "exclusive_set": "#spectrum:exclusive_set/autosmelt",
+  "exclusive_set": "#spectrum:exclusive_set/foundry",
   "max_cost": {
     "base": 65,
     "per_level_above_first": 0
@@ -16,7 +16,7 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#spectrum:enchantable/autosmelt",
+  "supported_items": "#spectrum:enchantable/foundry",
   "primary_items": "#minecraft:enchantable/mining_loot",
   "weight": 2
 }

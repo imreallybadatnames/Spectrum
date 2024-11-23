@@ -54,19 +54,19 @@ public class SpectrumRecipeTypes {
 	public static RecipeType<PotionWorkshopReactingRecipe> POTION_WORKSHOP_REACTING;
 	
 	public static final String GOO_CONVERTING_ID = "goo_converting";
-	public static FluidConvertingRecipeSerializer<GooConvertingRecipe> GOO_CONVERTING_SERIALIZER;
+	public static FluidConvertingRecipeSerializer GOO_CONVERTING_SERIALIZER;
 	public static RecipeType<GooConvertingRecipe> GOO_CONVERTING;
 	
 	public static final String LIQUID_CRYSTAL_CONVERTING_ID = "liquid_crystal_converting";
-	public static FluidConvertingRecipeSerializer<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING_SERIALIZER;
+	public static FluidConvertingRecipeSerializer LIQUID_CRYSTAL_CONVERTING_SERIALIZER;
 	public static RecipeType<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING;
 	
 	public static final String MIDNIGHT_SOLUTION_CONVERTING_ID = "midnight_solution_converting";
-	public static FluidConvertingRecipeSerializer<MidnightSolutionConvertingRecipe> MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER;
+	public static FluidConvertingRecipeSerializer MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER;
 	public static RecipeType<MidnightSolutionConvertingRecipe> MIDNIGHT_SOLUTION_CONVERTING;
 	
 	public static final String DRAGONROT_CONVERTING_ID = "dragonrot_converting";
-	public static FluidConvertingRecipeSerializer<DragonrotConvertingRecipe> DRAGONROT_CONVERTING_SERIALIZER;
+	public static FluidConvertingRecipeSerializer DRAGONROT_CONVERTING_SERIALIZER;
 	public static RecipeType<DragonrotConvertingRecipe> DRAGONROT_CONVERTING;
 
 	public static final String SPIRIT_INSTILLING_ID = "spirit_instiller";
@@ -107,8 +107,8 @@ public class SpectrumRecipeTypes {
 	}
 	
 	public static void registerSerializer() {
-		SHAPED_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPED_PEDESTAL_RECIPE_ID, new ShapedPedestalRecipeSerializer(ShapedPedestalRecipe::new));
-		SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPELESS_PEDESTAL_RECIPE_ID, new ShapelessPedestalRecipeSerializer(ShapelessPedestalRecipe::new));
+		SHAPED_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPED_PEDESTAL_RECIPE_ID, new ShapedPedestalRecipeSerializer((id2, group2, secret2, requiredAdvancementIdentifier2, tier1, width, height, inputs1, gemstonePowderInputs1, output1, experience1, craftingTime1, skipRecipeRemainders1, noBenefitsFromYieldUpgrades1) -> new ShapedPedestalRecipe(group2, secret2, requiredAdvancementIdentifier2, tier1, width, height, inputs1, gemstonePowderInputs1, output1, experience1, craftingTime1, skipRecipeRemainders1, noBenefitsFromYieldUpgrades1)));
+		SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPELESS_PEDESTAL_RECIPE_ID, new ShapelessPedestalRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades) -> new ShapelessPedestalRecipe(group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades)));
 		PEDESTAL = registerRecipeType(SHAPED_PEDESTAL_RECIPE_ID);
 		
 		ANVIL_CRUSHING_RECIPE_SERIALIZER = registerSerializer(ANVIL_CRUSHING_ID, new AnvilCrushingRecipeSerializer());
@@ -117,10 +117,10 @@ public class SpectrumRecipeTypes {
 		FUSION_SHRINE_RECIPE_SERIALIZER = registerSerializer(FUSION_SHRINE_ID, new FusionShrineRecipeSerializer(FusionShrineRecipe::new));
 		FUSION_SHRINE = registerRecipeType(FUSION_SHRINE_ID);
 		
-		ENCHANTER_RECIPE_SERIALIZER = registerSerializer(ENCHANTER_ID, new EnchanterRecipeSerializer(EnchanterRecipe::new));
+		ENCHANTER_RECIPE_SERIALIZER = registerSerializer(ENCHANTER_ID, new EnchanterRecipeSerializer((id1, group1, secret1, requiredAdvancementIdentifier1, inputs, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt) -> new EnchanterRecipe(group1, secret1, requiredAdvancementIdentifier1, inputs, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt)));
 		ENCHANTER = registerRecipeType(ENCHANTER_ID);
 		
-		ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = registerSerializer(ENCHANTMENT_UPGRADE_ID, new EnchantmentUpgradeRecipeSerializer(EnchantmentUpgradeRecipe::new));
+		ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = registerSerializer(ENCHANTMENT_UPGRADE_ID, new EnchantmentUpgradeRecipeSerializer((id1, group1, secret1, requiredAdvancementIdentifier1, enchantment, enchantmentDestinationLevel, requiredExperience, requiredItem, requiredItemCount) -> new EnchantmentUpgradeRecipe(group1, secret1, requiredAdvancementIdentifier1, enchantment, enchantmentDestinationLevel, requiredExperience, requiredItem, requiredItemCount)));
 		ENCHANTMENT_UPGRADE = registerRecipeType(ENCHANTMENT_UPGRADE_ID);
 		
 		POTION_WORKSHOP_BREWING_RECIPE_SERIALIZER = registerSerializer(POTION_WORKSHOP_BREWING_ID, new PotionWorkshopBrewingRecipeSerializer(PotionWorkshopBrewingRecipe::new));
@@ -132,34 +132,34 @@ public class SpectrumRecipeTypes {
 		POTION_WORKSHOP_REACTING_SERIALIZER = registerSerializer(POTION_WORKSHOP_REACTING_ID, new PotionWorkshopReactingRecipeSerializer(PotionWorkshopReactingRecipe::new));
 		POTION_WORKSHOP_REACTING = registerRecipeType(POTION_WORKSHOP_REACTING_ID);
 		
-		GOO_CONVERTING_SERIALIZER = registerSerializer(GOO_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(GooConvertingRecipe::new));
+		GOO_CONVERTING_SERIALIZER = registerSerializer(GOO_CONVERTING_ID, new FluidConvertingRecipeSerializer());
 		GOO_CONVERTING = registerRecipeType(GOO_CONVERTING_ID);
 		
-		LIQUID_CRYSTAL_CONVERTING_SERIALIZER = registerSerializer(LIQUID_CRYSTAL_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(LiquidCrystalConvertingRecipe::new));
+		LIQUID_CRYSTAL_CONVERTING_SERIALIZER = registerSerializer(LIQUID_CRYSTAL_CONVERTING_ID, new FluidConvertingRecipeSerializer());
 		LIQUID_CRYSTAL_CONVERTING = registerRecipeType(LIQUID_CRYSTAL_CONVERTING_ID);
 		
-		MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = registerSerializer(MIDNIGHT_SOLUTION_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(MidnightSolutionConvertingRecipe::new));
+		MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = registerSerializer(MIDNIGHT_SOLUTION_CONVERTING_ID, new FluidConvertingRecipeSerializer());
 		MIDNIGHT_SOLUTION_CONVERTING = registerRecipeType(MIDNIGHT_SOLUTION_CONVERTING_ID);
 		
-		DRAGONROT_CONVERTING_SERIALIZER = registerSerializer(DRAGONROT_CONVERTING_ID, new FluidConvertingRecipeSerializer<>(DragonrotConvertingRecipe::new));
+		DRAGONROT_CONVERTING_SERIALIZER = registerSerializer(DRAGONROT_CONVERTING_ID, new FluidConvertingRecipeSerializer());
 		DRAGONROT_CONVERTING = registerRecipeType(DRAGONROT_CONVERTING_ID);
 
-		SPIRIT_INSTILLING_SERIALIZER = registerSerializer(SPIRIT_INSTILLING_ID, new SpiritInstillerRecipeSerializer(SpiritInstillerRecipe::new));
+		SPIRIT_INSTILLING_SERIALIZER = registerSerializer(SPIRIT_INSTILLING_ID, new SpiritInstillerRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades) -> new SpiritInstillerRecipe(group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades)));
 		SPIRIT_INSTILLING = registerRecipeType(SPIRIT_INSTILLING_ID);
 
-		INK_CONVERTING_RECIPE_SERIALIZER = registerSerializer(INK_CONVERTING_ID, new InkConvertingRecipeSerializer(InkConvertingRecipe::new));
+		INK_CONVERTING_RECIPE_SERIALIZER = registerSerializer(INK_CONVERTING_ID, new InkConvertingRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, inputIngredient, color, amount) -> new InkConvertingRecipe(group, secret, requiredAdvancementIdentifier, inputIngredient, color, amount)));
 		INK_CONVERTING = registerRecipeType(INK_CONVERTING_ID);
 
-		CRYSTALLARIEUM_RECIPE_SERIALIZER = registerSerializer(CRYSTALLARIEUM_ID, new CrystallarieumRecipeSerializer(CrystallarieumRecipe::new));
+		CRYSTALLARIEUM_RECIPE_SERIALIZER = registerSerializer(CRYSTALLARIEUM_ID, new CrystallarieumRecipeSerializer());
 		CRYSTALLARIEUM = registerRecipeType(CRYSTALLARIEUM_ID);
 		
 		CINDERHEARTH_RECIPE_SERIALIZER = registerSerializer(CINDERHEARTH_ID, new CinderhearthRecipeSerializer());
 		CINDERHEARTH = registerRecipeType(CINDERHEARTH_ID);
 		
-		TITRATION_BARREL_RECIPE_SERIALIZER = registerSerializer(TITRATION_BARREL_ID, new TitrationBarrelRecipeSerializer(TitrationBarrelRecipe::new));
+		TITRATION_BARREL_RECIPE_SERIALIZER = registerSerializer(TITRATION_BARREL_ID, new TitrationBarrelRecipeSerializer());
 		TITRATION_BARREL = registerRecipeType(TITRATION_BARREL_ID);
 		
-		PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER = registerSerializer(PRIMORDIAL_FIRE_BURNING_ID, new PrimordialFireBurningRecipeSerializer(PrimordialFireBurningRecipe::new));
+		PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER = registerSerializer(PRIMORDIAL_FIRE_BURNING_ID, new PrimordialFireBurningRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, input, output) -> new PrimordialFireBurningRecipe(group, secret, requiredAdvancementIdentifier, input, output)));
 		PRIMORDIAL_FIRE_BURNING = registerRecipeType(PRIMORDIAL_FIRE_BURNING_ID);
 		
 	}

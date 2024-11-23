@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
@@ -15,7 +15,7 @@ public class SpawnerMaxNearbyEntitiesChangeRecipe extends SpawnerChangeRecipe {
 	protected static final int DEFAULT_MAX_ENTITIES = 6;
 	protected static final int MAX_MAX_ENTITIES = 40;
 	public SpawnerMaxNearbyEntitiesChangeRecipe(Identifier identifier) {
-		super(identifier, IngredientStack.ofItems(4, SpectrumItems.MERMAIDS_GEM));
+		super(IngredientStack.ofItems(4, SpectrumItems.MERMAIDS_GEM));
 	}
 	
 	@Override

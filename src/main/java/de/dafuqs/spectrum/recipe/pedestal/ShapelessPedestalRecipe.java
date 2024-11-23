@@ -1,12 +1,13 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -14,16 +15,16 @@ import java.util.*;
 
 public class ShapelessPedestalRecipe extends PedestalRecipe {
 	
-	public ShapelessPedestalRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
+	public ShapelessPedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 								   PedestalRecipeTier tier, List<IngredientStack> craftingInputs, Map<GemstoneColor, Integer> gemstonePowderInputs, ItemStack output,
 								   float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
 		
-		super(id, group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
+		super(group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return matchIngredientStacksExclusively(inv, getIngredientStacks(), CRAFTING_GRID_SLOTS) && super.matches(inv, world);
+	public boolean matches(RecipeInput recipeInput, World world) {
+		return matchIngredientStacksExclusively(recipeInput, getIngredientStacks(), CRAFTING_GRID_SLOTS) && super.matches(recipeInput, world);
 	}
 	
 	@Override

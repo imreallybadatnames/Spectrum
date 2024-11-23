@@ -17,7 +17,7 @@ public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
 	public static final RecipeSerializer<MemoryDementiaRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MemoryDementiaRecipe::new);
 	
 	public MemoryDementiaRecipe(Identifier identifier) {
-		super(identifier, "", false, UNLOCK_IDENTIFIER,
+		super("", false, UNLOCK_IDENTIFIER,
 				Ingredient.ofStacks(MemoryItem.getForEntityType(EntityType.BEE, 1), MemoryItem.getForEntityType(EntityType.FOX, 10), MemoryItem.getForEntityType(EntityType.SKELETON, 5), MemoryItem.getForEntityType(EntityType.HUSK, 50), MemoryItem.getForEntityType(EntityType.BLAZE, -1)),
 				SpectrumBlocks.MEMORY.asItem().getDefaultStack());
 	}
@@ -28,7 +28,7 @@ public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		ItemStack stack = inv.getStack(0);
 		stack.setNbt(null);
 		return stack;

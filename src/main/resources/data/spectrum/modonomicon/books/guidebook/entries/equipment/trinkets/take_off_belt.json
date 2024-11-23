@@ -30,7 +30,7 @@
       "text": "book.spectrum.guidebook.take_off_belt.page1.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/vanilla_projectile"
@@ -50,7 +50,7 @@
       "text": "book.spectrum.guidebook.take_off_belt.page2.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/vanilla_quitoxic"

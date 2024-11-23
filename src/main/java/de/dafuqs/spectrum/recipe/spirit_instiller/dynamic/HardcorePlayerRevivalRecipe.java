@@ -1,19 +1,20 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic;
 
 import com.mojang.authlib.*;
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
-import net.fabricmc.fabric.api.dimension.v1.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.*;
 import net.minecraft.server.network.*;
@@ -28,16 +29,16 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 	
 	public static final RecipeSerializer<HardcorePlayerRevivalRecipe> SERIALIZER = new EmptyRecipeSerializer<>(HardcorePlayerRevivalRecipe::new);
 	
-	public HardcorePlayerRevivalRecipe(Identifier identifier) {
-		super(identifier, "", false, null,
-				IngredientStack.of(Ingredient.ofItems(Blocks.PLAYER_HEAD.asItem())), IngredientStack.of(Ingredient.ofItems(Items.TOTEM_OF_UNDYING)), IngredientStack.of(Ingredient.ofItems(Items.ENCHANTED_GOLDEN_APPLE)),
+	public HardcorePlayerRevivalRecipe() {
+		super("", false, null,
+				IngredientStack.ofItems(1, Blocks.PLAYER_HEAD.asItem()), IngredientStack.ofItems(1, Items.TOTEM_OF_UNDYING), IngredientStack.ofItems(1, Items.ENCHANTED_GOLDEN_APPLE),
 				ItemStack.EMPTY, 1200, 100, true);
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
-			GameProfile gameProfile = getSkullOwner(inv.getStack(SpiritInstillerRecipe.CENTER_INGREDIENT));
+			GameProfile gameProfile = getSkullOwner(inv.getStackInSlot(SpiritInstillerRecipe.CENTER_INGREDIENT));
 			if (gameProfile != null) {
 				ServerPlayerEntity revivedPlayer = SpectrumCommon.minecraftServer.getPlayerManager().getPlayer(gameProfile.getName());
 				if (revivedPlayer != null) {
@@ -53,7 +54,8 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 						case COUNTERCLOCKWISE_90 -> yaw = 180.0F;
 					}
 					
-					FabricDimensions.teleport(revivedPlayer, (ServerWorld) spiritInstillerBlockEntity.getWorld(), new TeleportTarget(Vec3d.ofCenter(spiritInstillerBlockEntity.getPos().up()), new Vec3d(0, 0, 0), yaw, revivedPlayer.getPitch()));
+					BlockPos pos = spiritInstillerBlockEntity.getPos();
+					revivedPlayer.teleport((ServerWorld) spiritInstillerBlockEntity.getWorld(), pos.getX(), pos.getY(), pos.getZ(), revivedPlayer.getYaw(), revivedPlayer.getPitch());
 				}
 			}
 		}
@@ -61,8 +63,8 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 	}
 	
 	@Override
-	public boolean canCraftWithStacks(Inventory inventory) {
-		ItemStack instillerStack = inventory.getStack(0);
+	public boolean canCraftWithStacks(RecipeInput inventory) {
+		ItemStack instillerStack = inventory.getStackInSlot(0);
 		if (instillerStack.isOf(Blocks.PLAYER_HEAD.asItem())) {
 			GameProfile gameProfile = getSkullOwner(instillerStack);
 			if (gameProfile == null) {
@@ -83,16 +85,14 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 	
 	@Nullable
 	private GameProfile getSkullOwner(ItemStack instillerStack) {
-		GameProfile gameProfile = null;
-		NbtCompound nbtCompound = instillerStack.getNbt();
-		if (nbtCompound != null) {
-			if (nbtCompound.contains("SkullOwner", NbtElement.COMPOUND_TYPE)) {
-				gameProfile = NbtHelper.toGameProfile(nbtCompound.getCompound("SkullOwner"));
-			} else if (nbtCompound.contains("SkullOwner", NbtElement.STRING_TYPE) && !StringUtils.isBlank(nbtCompound.getString("SkullOwner"))) {
-				gameProfile = new GameProfile(null, nbtCompound.getString("SkullOwner"));
-			}
+		if (instillerStack.contains(DataComponentTypes.PROFILE)) {
+			return instillerStack.get(DataComponentTypes.PROFILE).gameProfile();
 		}
-		return gameProfile;
+		// TODO - Check for legacy Custom Data?
+		//			} else if (nbtCompound.contains("SkullOwner", NbtElement.STRING_TYPE) && !StringUtils.isBlank(nbtCompound.getString("SkullOwner"))) {
+		//				gameProfile = new GameProfile(null, nbtCompound.getString("SkullOwner"));
+		//			}
+		return null;
 	}
 	
 }

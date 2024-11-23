@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe.fusion_shrine;
 
 import com.google.gson.*;
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.predicate.world.*;
 import de.dafuqs.spectrum.api.recipe.*;

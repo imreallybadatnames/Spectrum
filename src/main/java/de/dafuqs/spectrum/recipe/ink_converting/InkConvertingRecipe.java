@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -14,7 +15,7 @@ import net.minecraft.world.*;
 
 import java.util.*;
 
-public class InkConvertingRecipe extends GatedSpectrumRecipe<Inventory> {
+public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/place_color_picker");
 	protected static final List<Item> INPUT_ITEMS = new ArrayList<>();
@@ -23,8 +24,8 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<Inventory> {
 	protected final InkColor color;
 	protected final long amount;
 	
-	public InkConvertingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient inputIngredient, InkColor color, long amount) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public InkConvertingRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient inputIngredient, InkColor color, long amount) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.inputIngredient = inputIngredient;
 		this.color = color;
@@ -45,12 +46,12 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
+	public boolean matches(RecipeInput inv, World world) {
 		return this.inputIngredient.test(inv.getStack(0));
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		return ItemStack.EMPTY;
 	}
 	
@@ -60,7 +61,7 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return ItemStack.EMPTY;
 	}
 	

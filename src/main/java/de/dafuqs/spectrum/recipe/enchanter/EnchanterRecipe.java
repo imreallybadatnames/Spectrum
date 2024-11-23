@@ -7,12 +7,13 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.world.*;
 
-public class EnchanterRecipe extends GatedSpectrumRecipe<Inventory> {
+public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/build_enchanting_structure");
 	
@@ -25,8 +26,8 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<Inventory> {
 	// copy all nbt data from the first stack in the ingredients to the output stack
 	protected final boolean copyNbt;
 	
-	public EnchanterRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, DefaultedList<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public EnchanterRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, DefaultedList<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.inputs = inputs;
 		this.output = output;
@@ -39,22 +40,22 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		if (inv.size() > 9) {
+	public boolean matches(RecipeInput inv, World world) {
+		if (inv.getSize() > 9) {
 			// the item on the enchanter
-			if (!inputs.get(0).test(inv.getStack(0))) {
+			if (!inputs.getFirst().test(inv.getStackInSlot(0))) {
 				return false;
 			}
 			// is there an experience provider with enough XP?
 			if (this.getRequiredExperience() > 0
-					&& !(inv.getStack(1).getItem() instanceof ExperienceStorageItem)
-					&& ExperienceStorageItem.getStoredExperience(inv.getStack(1)) < this.getRequiredExperience()) {
+					&& !(inv.getStackInSlot(1).getItem() instanceof ExperienceStorageItem)
+					&& ExperienceStorageItem.getStoredExperience(inv.getStackInSlot(1)) < this.getRequiredExperience()) {
 				return false;
 			}
 			
 			// match stacks
 			for (int i = 1; i < 9; i++) {
-				if (!inputs.get(i).test(inv.getStack(i + 1))) {
+				if (!inputs.get(i).test(inv.getStackInSlot(i + 1))) {
 					return false;
 				}
 			}
@@ -65,9 +66,9 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		if (this.copyNbt) {
-			return copyNbt(inv.getStack(0), output.copy());
+			return copyNbt(inv.getStackInSlot(0), output.copy());
 		}
 		return output.copy();
 	}
@@ -78,7 +79,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return output;
 	}
 	

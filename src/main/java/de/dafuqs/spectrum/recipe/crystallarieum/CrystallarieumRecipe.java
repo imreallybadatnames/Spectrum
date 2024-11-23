@@ -132,7 +132,7 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 	
 	public CrystallarieumCatalyst getCatalyst(ItemStack itemStack) {
 		for (CrystallarieumCatalyst catalyst : this.catalysts) {
-			if (catalyst.ingredient.test(itemStack)) {
+			if (catalyst.ingredient().test(itemStack)) {
 				return catalyst;
 			}
 		}

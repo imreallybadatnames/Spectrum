@@ -28,7 +28,7 @@
       "recipe_id": "spectrum:pedestal/tier3/ender_splice"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/build_enchanting_structure"
@@ -48,7 +48,7 @@
       "text": "book.spectrum.guidebook.ender_splice.page2.text"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:lategame/create_resonance_enchanted_book"

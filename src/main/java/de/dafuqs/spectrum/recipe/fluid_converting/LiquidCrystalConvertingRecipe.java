@@ -15,7 +15,7 @@ public class LiquidCrystalConvertingRecipe extends FluidConvertingRecipe {
 	private static final Set<Item> outputItems = new HashSet<>();
 	
 	public LiquidCrystalConvertingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, @NotNull Ingredient inputIngredient, ItemStack outputItemStack) {
-		super(id, group, secret, requiredAdvancementIdentifier, inputIngredient, outputItemStack);
+		super(group, secret, requiredAdvancementIdentifier, inputIngredient, outputItemStack);
 		outputItems.add(outputItemStack.getItem());
 	}
 	

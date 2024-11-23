@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.api.block;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.collection.*;
 
 /**
@@ -10,7 +11,7 @@ import net.minecraft.util.collection.*;
  * <p>
  * Originally by Juuz
  */
-public interface ImplementedInventory extends Inventory {
+public interface ImplementedInventory extends Inventory, RecipeInput {
 	
 	/**
 	 * Retrieves the item list of this inventory.
@@ -22,6 +23,7 @@ public interface ImplementedInventory extends Inventory {
 	 * Creates an inventory from the item list.
 	 */
 	static ImplementedInventory of(DefaultedList<ItemStack> items) {
+		// FIXME
 		return () -> items;
 	}
 	

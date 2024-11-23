@@ -1,13 +1,12 @@
 package de.dafuqs.spectrum.recipe.cinderhearth;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.random.Random;
@@ -83,7 +82,7 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackReci
 
 	@Override
 	public List<IngredientStack> getIngredientStacks() {
-		return List.of(ingredient);
+		return List.of(this.ingredient);
 	}
 
 	public float getExperience() {

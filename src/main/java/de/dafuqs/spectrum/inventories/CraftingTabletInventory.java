@@ -4,10 +4,11 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.collection.*;
 
-public class CraftingTabletInventory extends CraftingInventory {
+public class CraftingTabletInventory extends CraftingInventory implements RecipeInput {
 	
 	private final DefaultedList<ItemStack> gemAndOutputStacks;
 	private final ScreenHandler handler;
@@ -82,5 +83,15 @@ public class CraftingTabletInventory extends CraftingInventory {
 	@Override
 	public void provideRecipeInputs(RecipeMatcher recipeMatcher) {
 		super.provideRecipeInputs(recipeMatcher);
+	}
+	
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return getStack(slot);
+	}
+	
+	@Override
+	public int getSize() {
+		return size();
 	}
 }

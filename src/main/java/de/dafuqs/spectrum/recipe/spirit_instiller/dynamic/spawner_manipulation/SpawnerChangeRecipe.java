@@ -1,8 +1,9 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
-import de.dafuqs.matchbooks.recipe.*;
+
 import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
@@ -10,6 +11,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -18,20 +20,20 @@ import net.minecraft.world.*;
 
 public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	
-	public SpawnerChangeRecipe(Identifier identifier, IngredientStack ingredient, IngredientStack ingredient2, Identifier requiredAdvancementIdentifier) {
-		super(identifier, "spawner_manipulation", false, requiredAdvancementIdentifier,
-				IngredientStack.ofItems(Items.SPAWNER), ingredient, ingredient2,
+	public SpawnerChangeRecipe(IngredientStack ingredient, IngredientStack ingredient2, Identifier requiredAdvancementIdentifier) {
+		super("spawner_manipulation", false, requiredAdvancementIdentifier,
+				IngredientStack.ofItems(1, Items.SPAWNER), ingredient, ingredient2,
 				Items.SPAWNER.getDefaultStack(), 200, 0, true);
 	}
 
-	public SpawnerChangeRecipe(Identifier identifier, IngredientStack ingredient) {
-		super(identifier, "spawner_manipulation", false, SpectrumAdvancements.SPAWNER_MANIPULATION,
-				IngredientStack.ofItems(Items.SPAWNER), ingredient, IngredientStack.ofItems(4, SpectrumItems.VEGETAL),
+	public SpawnerChangeRecipe(IngredientStack ingredient) {
+		super("spawner_manipulation", false, SpectrumAdvancements.SPAWNER_MANIPULATION,
+				IngredientStack.ofItems(1, Items.SPAWNER), ingredient, IngredientStack.ofItems(4, SpectrumItems.VEGETAL),
 				Items.SPAWNER.getDefaultStack(), 200, 0, true);
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		ItemStack resultStack = ItemStack.EMPTY;
 		
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
@@ -67,12 +69,12 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	}
 	
 	@Override
-	public boolean canCraftWithStacks(Inventory inventory) {
-		NbtCompound blockEntityTag = inventory.getStack(0).getSubNbt("BlockEntityTag");
+	public boolean canCraftWithStacks(RecipeInput inventory) {
+		NbtCompound blockEntityTag = inventory.getStackInSlot(0).getSubNbt("BlockEntityTag");
 		if (blockEntityTag == null) {
 			return true;
 		}
-		return canCraftWithBlockEntityTag(blockEntityTag, inventory.getStack(1), inventory.getStack(2));
+		return canCraftWithBlockEntityTag(blockEntityTag, inventory.getStackInSlot(1), inventory.getStackInSlot(2));
 	}
 	
 	// Overwrite these

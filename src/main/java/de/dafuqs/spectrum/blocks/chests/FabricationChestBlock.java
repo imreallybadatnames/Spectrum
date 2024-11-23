@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.chests;
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -11,8 +12,8 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 public class FabricationChestBlock extends SpectrumChestBlock {
-
-	public static final MapCodec<RestockingChestBlock> CODEC = createCodec(RestockingChestBlock::new);
+	
+	public static final MapCodec<FabricationChestBlock> CODEC = createCodec(FabricationChestBlock::new);
 
 	protected static final VoxelShape CHEST_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 	
@@ -34,7 +35,7 @@ public class FabricationChestBlock extends SpectrumChestBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return validateTicker(type, SpectrumBlockEntities.FABRICATION_CHEST, RestockingChestBlockEntity::tick);
+		return validateTicker(type, SpectrumBlockEntities.FABRICATION_CHEST, FabricationChestBlock::tick);
 	}
 	
 	@Override

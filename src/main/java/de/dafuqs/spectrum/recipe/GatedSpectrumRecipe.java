@@ -9,7 +9,7 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
-public abstract class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C> {
+public class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C> {
 	
 	public final String group;
 	public final boolean secret;

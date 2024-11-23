@@ -25,7 +25,7 @@
       "recipe_id": "spectrum:pedestal/tier2/natures_staff"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/build_enchanting_structure"

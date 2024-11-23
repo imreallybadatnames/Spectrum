@@ -19,6 +19,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 
@@ -428,8 +429,8 @@ public class SpectrumItemGroups {
 		
 		// adding all beverages from recipes
 		if (SpectrumCommon.minecraftServer != null) {
-			for (ITitrationBarrelRecipe recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.TITRATION_BARREL)) {
-				ItemStack output = recipe.getOutput(SpectrumCommon.minecraftServer.getRegistryManager()).copy();
+			for (RecipeEntry<ITitrationBarrelRecipe> recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.TITRATION_BARREL)) {
+				ItemStack output = recipe.value().getResult(SpectrumCommon.minecraftServer.getRegistryManager()).copy();
 				if (output.getItem() instanceof VariantBeverageItem) {
 					output.setCount(1);
 					entries.add(output);

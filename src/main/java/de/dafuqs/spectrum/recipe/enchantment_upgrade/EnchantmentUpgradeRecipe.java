@@ -8,6 +8,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -15,7 +16,7 @@ import net.minecraft.world.*;
 
 import java.util.*;
 
-public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<Inventory> {
+public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	protected final Enchantment enchantment;
 	protected final int enchantmentDestinationLevel;
@@ -26,8 +27,8 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<Inventory> {
 	protected final DefaultedList<Ingredient> inputs;
 	protected final ItemStack output;
 	
-	public EnchantmentUpgradeRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Enchantment enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public EnchantmentUpgradeRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Enchantment enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.enchantment = enchantment;
 		this.enchantmentDestinationLevel = enchantmentDestinationLevel;
@@ -49,28 +50,28 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		if (inv.size() > 9) {
-			if (!inputs.get(0).test(inv.getStack(0))) {
+	public boolean matches(RecipeInput inv, World world) {
+		if (inv.getSize() > 9) {
+			if (!inputs.get(0).test(inv.getStackInSlot(0))) {
 				return false;
 			}
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(inv.getStack(0));
+			Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(inv.getStackInSlot(0));
 			if (!enchantments.containsKey(enchantment) || enchantments.get(enchantment) != enchantmentDestinationLevel - 1) {
 				return false;
 			}
 			if (this.getRequiredExperience() > 0
-					&& (!(inv.getStack(1).getItem() instanceof ExperienceStorageItem)
-					|| !(ExperienceStorageItem.getStoredExperience(inv.getStack(1)) >= this.getRequiredExperience()))) {
+					&& (!(inv.getStackInSlot(1).getItem() instanceof ExperienceStorageItem)
+					|| !(ExperienceStorageItem.getStoredExperience(inv.getStackInSlot(1)) >= this.getRequiredExperience()))) {
 				return false;
 			}
 			
 			Ingredient inputIngredient = inputs.get(1);
 			int ingredientsFound = 0;
 			for (int i = 1; i < 9; i++) {
-				ItemStack currentStack = inv.getStack(i + 1);
+				ItemStack currentStack = inv.getStackInSlot(i + 1);
 				
 				if (!currentStack.isEmpty()) {
-					ItemStack slotStack = inv.getStack(i + 1);
+					ItemStack slotStack = inv.getStackInSlot(i + 1);
 					if (inputIngredient.test(slotStack)) {
 						ingredientsFound += slotStack.getCount();
 					} else {
@@ -85,7 +86,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		return output.copy();
 	}
 	
@@ -95,7 +96,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<Inventory> {
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return output;
 	}
 	

@@ -29,7 +29,7 @@
       "title": "book.spectrum.guidebook.serendipity_reel.name"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "title": "book.spectrum.guidebook.enchantment_characteristics",
       "item": {
         "item": "spectrum:lagoon_rod",

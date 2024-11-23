@@ -48,7 +48,7 @@
       "recipe_id": "spectrum:mod_integration/malum/pedestal/chorusless_ender_splice"
     },
     {
-      "type": "spectrum:nbt_spotlight",
+      "type": "modonomicom:spotlight",
       "title": "book.spectrum.guidebook.mod_integration.malum.scythe_enchants.title",
       "item": {
         "item": "malum:crude_scythe",

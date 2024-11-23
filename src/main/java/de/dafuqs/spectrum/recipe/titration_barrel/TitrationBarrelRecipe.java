@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.recipe.titration_barrel;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
@@ -31,16 +30,26 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 		add(100);
 	}};
 	
-	protected final List<IngredientStack> inputStacks;
-	protected final ItemStack outputItemStack;
-	protected final Item tappingItem;
-	protected final FluidIngredient fluid;
+	public final List<IngredientStack> inputStacks;
+	public final ItemStack outputItemStack;
+	public final Item tappingItem;
+	public final FluidIngredient fluid;
 	
-	protected final int minFermentationTimeHours;
-	protected final FermentationData fermentationData;
+	public final int minFermentationTimeHours;
+	public final FermentationData fermentationData;
 	
-	public TitrationBarrelRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, List<IngredientStack> inputStacks, FluidIngredient fluid, ItemStack outputItemStack, Item tappingItem, int minFermentationTimeHours, FermentationData fermentationData) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public TitrationBarrelRecipe(
+		String group,
+		boolean secret,
+		Identifier requiredAdvancementIdentifier,
+		List<IngredientStack> inputStacks,
+		FluidIngredient fluid,
+		ItemStack outputItemStack,
+		Item tappingItem,
+		int minFermentationTimeHours,
+		FermentationData fermentationData
+	) {
+		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.inputStacks = inputStacks;
 		this.fluid = fluid;
@@ -88,7 +97,7 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	
 	@Override
 	@Deprecated
-	public ItemStack craft(TitrationBarrelBlockEntity inventory, DynamicRegistryManager drm) {
+	public ItemStack craft(TitrationBarrelBlockEntity inventory, RegistryWrapper.WrapperLookup drm) {
 		return getDefaultTap(1).copy();
 	}
 	
@@ -104,7 +113,7 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	}
 	
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager registryManager) {
+	public ItemStack getResult(RegistryWrapper.WrapperLookup registryManager) {
 		return getDefaultTap(1);
 	}
 	
@@ -181,7 +190,7 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 					}
 				}
 				if (potency > -1) {
-					effects.add(new StatusEffectInstance(entry.statusEffect(), (int) (durationTicks * durationMultiplier), potency));
+					effects.add(new StatusEffectInstance(Registries.STATUS_EFFECT.entryOf(Registries.STATUS_EFFECT.getKey(entry.statusEffect()).get()), (int) (durationTicks * durationMultiplier), potency));
 				}
 			}
 			

@@ -1,14 +1,16 @@
 package de.dafuqs.spectrum.compat.REI.plugins;
 
-import de.dafuqs.matchbooks.recipe.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.REI.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import me.shedaniel.rei.api.common.category.*;
 import me.shedaniel.rei.api.common.display.basic.*;
 import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.util.collection.*;
 
 import java.util.*;
@@ -27,14 +29,14 @@ public class PedestalCraftingDisplay extends GatedSpectrumDisplay {
 	 *
 	 * @param recipe The recipe
 	 */
-	public PedestalCraftingDisplay(PedestalRecipe recipe) {
-		super(recipe, mapIngredients(recipe), Collections.singletonList(EntryIngredients.of(recipe.getOutput(BasicDisplay.registryAccess()))));
-		this.pedestalRecipeTier = recipe.getTier();
-		this.width = recipe.getWidth();
-		this.height = recipe.getHeight();
-		this.experience = recipe.getExperience();
-		this.craftingTime = recipe.getCraftingTime();
-		this.shapeless = recipe.isShapeless();
+	public PedestalCraftingDisplay(RecipeEntry<PedestalRecipe> recipe) {
+		super(recipe.value(), mapIngredients(recipe.value()), Collections.singletonList(EntryIngredients.of(recipe.value().getResult(BasicDisplay.registryAccess()))));
+		this.pedestalRecipeTier = recipe.value().getTier();
+		this.width = recipe.value().getWidth();
+		this.height = recipe.value().getHeight();
+		this.experience = recipe.value().getExperience();
+		this.craftingTime = recipe.value().getCraftingTime();
+		this.shapeless = recipe.value().isShapeless();
 	}
 	
 	private static List<EntryIngredient> mapIngredients(PedestalRecipe recipe) {

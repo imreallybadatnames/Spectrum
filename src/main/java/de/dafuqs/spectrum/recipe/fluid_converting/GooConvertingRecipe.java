@@ -14,8 +14,8 @@ public class GooConvertingRecipe extends FluidConvertingRecipe {
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/goo");
 	private static final Set<Item> outputItems = new HashSet<>();
 	
-	public GooConvertingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, @NotNull Ingredient inputIngredient, ItemStack outputItemStack) {
-		super(id, group, secret, requiredAdvancementIdentifier, inputIngredient, outputItemStack);
+	public GooConvertingRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, @NotNull Ingredient inputIngredient, ItemStack outputItemStack) {
+		super(group, secret, requiredAdvancementIdentifier, inputIngredient, outputItemStack);
 		outputItems.add(outputItemStack.getItem());
 	}
 	

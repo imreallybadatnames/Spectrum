@@ -16,7 +16,7 @@ public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
 	public static final RecipeSerializer<EnchantedBookUnsoulingRecipe> SERIALIZER = new EmptyRecipeSerializer<>(EnchantedBookUnsoulingRecipe::new);
 	
 	public EnchantedBookUnsoulingRecipe(Identifier identifier) {
-		super(identifier, "", false, UNLOCK_IDENTIFIER,
+		super("", false, UNLOCK_IDENTIFIER,
 				Ingredient.ofStacks(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SOUL_SPEED, 1, false, false).getRight()),
 				SpectrumEnchantmentHelper.addOrUpgradeEnchantment(Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SWIFT_SNEAK, 1, false, false).getRight());
 	}
@@ -28,7 +28,7 @@ public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inv, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		ItemStack stack = inv.getStack(0);
 		
 		int level = EnchantmentHelper.get(stack).getOrDefault(Enchantments.SOUL_SPEED, 0);

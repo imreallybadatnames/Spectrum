@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.api.recipe;
 
-import com.google.gson.*;
 import net.minecraft.network.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;

@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.inventories;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.collection.*;
 
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.*;
  * Vanilla does autocrafting, too!
  * See SheepEntity::createDyeMixingCraftingInventory
  */
-public class AutoCraftingInventory extends AutoInventory {
+public class AutoCraftingInventory extends AutoInventory implements RecipeInput {
 	
 	List<ItemStack> inputInventory;
 	
@@ -38,6 +39,16 @@ public class AutoCraftingInventory extends AutoInventory {
 	@Override
 	public int size() {
 		return inputInventory.size();
+	}
+	
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return getStack(slot);
+	}
+	
+	@Override
+	public int getSize() {
+		return size();
 	}
 	
 	@Override
