@@ -33,13 +33,17 @@ public interface ImplementedInventory extends Inventory, RecipeInput {
 	static ImplementedInventory ofSize(int size) {
 		return of(DefaultedList.ofSize(size, ItemStack.EMPTY));
 	}
-	
+
 	/**
 	 * Returns the inventory size.
 	 */
 	@Override
 	default int size() {
 		return getItems().size();
+	}
+	@Override
+	default int getSize() {
+		return size();
 	}
 	
 	/**
@@ -64,6 +68,10 @@ public interface ImplementedInventory extends Inventory, RecipeInput {
 	@Override
 	default ItemStack getStack(int slot) {
 		return getItems().get(slot);
+	}
+	@Override
+	default ItemStack getStackInSlot(int slot) {
+		return getStack(slot);
 	}
 	
 	/**

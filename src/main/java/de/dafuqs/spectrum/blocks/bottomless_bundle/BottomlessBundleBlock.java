@@ -151,7 +151,7 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 		if (!world.isClient) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof BottomlessBundleBlockEntity bottomlessBundleBlockEntity) {
-				bottomlessBundleBlockEntity.setBundle(itemStack.copy());
+				bottomlessBundleBlockEntity.setBundle(itemStack.copy(), world.getRegistryManager());
 				world.updateComparators(pos, this);
 			}
 		}

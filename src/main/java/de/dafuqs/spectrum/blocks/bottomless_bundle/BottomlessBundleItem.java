@@ -16,6 +16,7 @@ import net.minecraft.client.render.item.*;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -115,11 +116,7 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 	}
 
 	public static boolean isLocked(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null) {
-			return compound.getBoolean("Locked");
-		}
-		return false;
+		return itemStack.contains(DataComponentTypes.LOCK);
 	}
 
 	public static ItemStack getFirstBundledStack(ItemStack voidBundleStack) {
@@ -229,14 +226,13 @@ public class BottomlessBundleItem extends BundleItem implements InventoryInserti
 		ItemStack itemStack = user.getStackInHand(hand);
 		if (user.isSneaking()) {
 			ItemStack handStack = user.getStackInHand(hand);
-			NbtCompound compound = handStack.getOrCreateNbt();
-			if (compound.contains("Locked")) {
-				compound.remove("Locked");
+			if (handStack.contains(DataComponentTypes.LOCK)) {
+				handStack.remove(DataComponentTypes.LOCK);
 				if (world.isClient) {
 					playZipSound(user, 0.8F);
 				}
 			} else {
-				compound.putBoolean("Locked", true);
+				handStack.set(DataComponentTypes.LOCK, ContainerLock.EMPTY);
 				if (world.isClient) {
 					playZipSound(user, 1.0F);
 				}

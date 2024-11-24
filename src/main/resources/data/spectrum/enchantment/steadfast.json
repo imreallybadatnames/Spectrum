@@ -17,5 +17,5 @@
   ],
   "supported_items": "#spectrum:enchantable/steadfast",
   "primary_items": "#minecraft:enchantable/durability",
-  "weight": 8
+  "weight": 10
 }

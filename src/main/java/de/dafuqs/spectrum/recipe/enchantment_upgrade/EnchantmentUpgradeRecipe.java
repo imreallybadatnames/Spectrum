@@ -10,6 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.world.*;
@@ -18,7 +19,7 @@ import java.util.*;
 
 public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
-	protected final Enchantment enchantment;
+	protected final RegistryEntry<Enchantment> enchantment;
 	protected final int enchantmentDestinationLevel;
 	protected final int requiredExperience;
 	protected final Item requiredItem;
@@ -27,7 +28,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	protected final DefaultedList<Ingredient> inputs;
 	protected final ItemStack output;
 	
-	public EnchantmentUpgradeRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Enchantment enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount) {
+	public EnchantmentUpgradeRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, RegistryEntry<Enchantment> enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.enchantment = enchantment;
@@ -142,7 +143,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return requiredItemCount;
 	}
 	
-	public Enchantment getEnchantment() {
+	public RegistryEntry<Enchantment> getEnchantment() {
 		return enchantment;
 	}
 	
@@ -151,7 +152,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	}
 	
 	public boolean requiresUnlockedOverEnchanting() {
-		return this.enchantmentDestinationLevel > this.enchantment.getMaxLevel();
+		return this.enchantmentDestinationLevel > this.enchantment.value().getMaxLevel();
 	}
 	
 }

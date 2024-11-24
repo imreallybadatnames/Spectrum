@@ -8,13 +8,14 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -27,7 +28,7 @@ import java.util.*;
 public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Preenchanted {
 	
 	protected static final InkCost BASE_COST_PER_AOE_MINING_RANGE_INCREMENT = new InkCost(InkColors.WHITE, 3); // TODO: make pricier once ink networking is in
-	
+
 	public enum GUIToggle {
 		SELECT_SILK_TOUCH("item.spectrum.workstaff.message.silk_touch"),
 		SELECT_FORTUNE("item.spectrum.workstaff.message.fortune"),
@@ -165,13 +166,9 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	}
 	
 	private static void enchantAndRemoveOthers(PlayerEntity player, ItemStack stack, Text message, RegistryKey<Enchantment> enchantment) {
-		var wrapper = player.getWorld().getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT).orElse(null);
-		if (wrapper == null)
-			return;
+		var registryLookup = player.getWorld().getRegistryManager();
 
-		var entry = wrapper.getOptional(enchantment).orElse(null);
-
-		int existingLevel = EnchantmentHelper.getLevel(entry, stack);
+		int existingLevel = SpectrumEnchantmentHelper.getLevel(registryLookup, enchantment, stack);
 		if (existingLevel > 0) {
 			player.sendMessage(Text.translatable("item.spectrum.workstaff.message.already_has_the_enchantment"), true);
 			return;
@@ -187,7 +184,7 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 						comp -> comp.apply(nbt -> nbt.remove("FortuneLevel")));
 			}
 		} else {
-			int fortuneLevel = EnchantmentHelper.getLevel(wrapper.getOptional(Enchantments.FORTUNE).orElse(null), stack);
+			int fortuneLevel = SpectrumEnchantmentHelper.getLevel(registryLookup, Enchantments.FORTUNE, stack);
 			if (fortuneLevel > 0) {
 				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
 						comp -> comp.apply(nbt -> nbt.putInt("FortuneLevel", fortuneLevel)));
@@ -195,13 +192,13 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		}
 		
 		ItemStack newStack = stack.copy();
-		var result = SpectrumEnchantmentHelper.removeEnchantments(newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.RESONANCE, Enchantments.FORTUNE);
+		var result = SpectrumEnchantmentHelper.removeEnchantments(registryLookup, newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.RESONANCE, Enchantments.FORTUNE);
 		if (result.getRight() == 0) {
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				triggerUnenchantedWorkstaffAdvancement(serverPlayerEntity);
 			}
 		} else {
-			var result2 = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(result.getLeft(), enchantment, level, false, AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.APPLY_CONFLICTING_ENCHANTMENTS));
+			var result2 = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(registryLookup, result.getLeft(), enchantment, level, false, AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.APPLY_CONFLICTING_ENCHANTMENTS));
 			if (result2.getLeft()) {
 				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
 						comp -> comp.apply(nbt ->
@@ -214,13 +211,13 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	}
 	
 	private static void triggerUnenchantedWorkstaffAdvancement(ServerPlayerEntity player) {
-		player.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
+		player.playSoundToPlayer(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
 		Support.grantAdvancementCriterion(player, "lategame/trigger_unenchanted_workstaff", "code_triggered");
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of(Enchantments.FORTUNE, 4);
+	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> registryLookup, ItemEnchantmentsComponent.Builder builder) {
+		registryLookup.getOptional(Enchantments.FORTUNE).ifPresent(e -> builder.add(e, 4));
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
-import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -10,6 +9,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
@@ -67,7 +67,7 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
-		this.setBundleUnsynced(ItemStack.fromNbt(nbt.getCompound("Bundle")));
+		this.setBundleUnsynced(ItemStack.fromNbt(registryLookup, nbt.getCompound("Bundle")).orElse(SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack()), registryLookup);
 
 		// Handle old data by syncing into bundle
 		if (nbt.contains("StorageVariant")) {
@@ -103,19 +103,19 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 		nbt.put("Bundle", bundleCompound);
 	}
 
-	private boolean setBundleUnsynced(ItemStack itemStack) {
+	private boolean setBundleUnsynced(ItemStack itemStack, RegistryWrapper.WrapperLookup registryLookup) {
 		if (itemStack.getItem() instanceof BottomlessBundleItem) {
 			this.bottomlessBundleStack = itemStack;
 			// cache once, use many times
 			this.isVoiding = EnchantmentHelper.hasAnyEnchantmentsIn(bottomlessBundleStack, SpectrumEnchantmentTags.DELETES_OVERFLOW);
-			this.powerLevel = EnchantmentHelper.getLevel(Enchantments.POWER, itemStack);
+			this.powerLevel = EnchantmentHelper.getLevel(registryLookup.getOptionalWrapper(RegistryKeys.ENCHANTMENT).flatMap(impl -> impl.getOptional(Enchantments.POWER)).orElse(null), itemStack);
 			return true;
 		}
 		return false;
 	}
 
-	public void setBundle(@NotNull ItemStack itemStack) {
-		if (setBundleUnsynced(itemStack)) syncStorageWithBundle();
+	public void setBundle(@NotNull ItemStack itemStack, RegistryWrapper.WrapperLookup registryLookup) {
+		if (setBundleUnsynced(itemStack, registryLookup)) syncStorageWithBundle();
 	}
 
 	public ItemStack retrieveBundle() {
