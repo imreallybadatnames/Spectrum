@@ -1,92 +1,62 @@
 package de.dafuqs.spectrum.recipe.enchantment_upgrade;
 
-import com.google.gson.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
-import net.minecraft.enchantment.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.registry.*;
-import net.minecraft.util.*;
 
 import java.util.*;
 
-public class EnchantmentUpgradeRecipeSerializer implements GatedRecipeSerializer<EnchantmentUpgradeRecipe> {
+public class EnchantmentUpgradeRecipeSerializer extends EndecRecipeSerializer<EnchantmentUpgradeRecipe> implements GatedRecipeSerializer<EnchantmentUpgradeRecipe> {
 	
-	public static final List<EnchantmentUpgradeRecipe> enchantmentUpgradeRecipesToInject = new ArrayList<>();
+//	public static final StructEndec<EnchantmentUpgradeRecipe> RECIPE_ENDEC = StructEndecBuilder.of(
+//		Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+//		Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+//		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+//		MinecraftEndecs.IDENTIFIER.fieldOf("enchantment", recipe -> recipe.enchantmentIdentifier),
+//		Endec.INT.fieldOf("enchantment_destination_level", recipe -> recipe.enchantmentDestinationLevel),
+//		/// unwrap into these specific fields
+//		Endec.INT.fieldOf("required_experience", recipe -> recipe.requiredExperience),
+//		MinecraftEndecs.ofRegistry(Registries.ITEM).fieldOf("required_item",recipe -> recipe.requiredItem),
+//		Endec.INT.fieldOf("required_item_count", recipe -> recipe.requiredItemCount),
+//		///
+//		EnchantmentUpgradeRecipe::new
+//	);
 	
-	public final EnchantmentUpgradeRecipeSerializer.RecipeFactory recipeFactory;
-	
-	public EnchantmentUpgradeRecipeSerializer(EnchantmentUpgradeRecipeSerializer.RecipeFactory recipeFactory) {
-		this.recipeFactory = recipeFactory;
-	}
-	
-	public interface RecipeFactory {
-		EnchantmentUpgradeRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Enchantment enchantment, int enchantmentDestinationLevel, int requiredExperience, Item requiredItem, int requiredItemCount);
-	}
-	
-	@Override
-	public EnchantmentUpgradeRecipe read(Identifier identifier, JsonObject jsonObject) {
-		String group = readGroup(jsonObject);
-		boolean secret = readSecret(jsonObject);
-		Identifier requiredAdvancementIdentifier = readRequiredAdvancementIdentifier(jsonObject);
-		
-		Identifier enchantmentIdentifier = Identifier.tryParse(JsonHelper.getString(jsonObject, "enchantment"));
-		
-		if (!Registries.ENCHANTMENT.containsId(enchantmentIdentifier)) {
-			throw new JsonParseException("Enchantment Upgrade Recipe " + identifier + " has an enchantment set that does not exist or is disabled: " + enchantmentIdentifier); // otherwise, recipe sync would break multiplayer joining with the non-existing enchantment
-		}
-		
-		Enchantment enchantment = Registries.ENCHANTMENT.get(enchantmentIdentifier);
-		
-		JsonArray levelArray = JsonHelper.getArray(jsonObject, "levels");
-		int level;
-		int requiredExperience;
-		Item requiredItem;
-		int requiredItemCount;
-		EnchantmentUpgradeRecipe recipe = null;
-		for (int i = 0; i < levelArray.size(); i++) {
-			JsonObject currentElement = levelArray.get(i).getAsJsonObject();
-			level = i + 2;
-			requiredExperience = JsonHelper.getInt(currentElement, "experience");
-			requiredItem = Registries.ITEM.get(Identifier.tryParse(JsonHelper.getString(currentElement, "item")));
-			requiredItemCount = JsonHelper.getInt(currentElement, "item_count");
-			
-			recipe = this.recipeFactory.create(SpectrumCommon.locate(identifier.getPath() + "_level_" + (i + 2)), group, secret, requiredAdvancementIdentifier, enchantment, level, requiredExperience, requiredItem, requiredItemCount);
-			if (!enchantmentUpgradeRecipesToInject.contains(recipe) && i < levelArray.size() - 1) { // we return the last one, no need to inject
-				enchantmentUpgradeRecipesToInject.add(recipe);
+	// FIXME - Experimental. Will likely break as I don't believe the recipes are properly being registered
+	// Maybe the recipe injection code (KubeJS compat) is easier?
+	public static final StructEndec<EnchantmentUpgradeRecipe> ENDEC = StructEndecBuilder.of(
+		Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+		Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+		MinecraftEndecs.IDENTIFIER.fieldOf("enchantment", recipe -> recipe.enchantmentIdentifier),
+		EnchantUpgradeLevelEntry.ENDEC.listOf().xmap(enchantUpgradeLevelEntries -> {
+			List<EnchantUpgradeLevelEntry> entries = new ArrayList<>();
+			for (EnchantUpgradeLevelEntry enchantmentUpgradeRecipe : enchantUpgradeLevelEntries) {
+				entries.add(new EnchantUpgradeLevelEntry(
+					enchantmentUpgradeRecipe.experience(),
+					enchantmentUpgradeRecipe.requiredItem(),
+					enchantmentUpgradeRecipe.count())
+				);
 			}
-		}
-		
-		return recipe;
+			return entries;
+		}, o -> o).fieldOf("levels", EnchantmentUpgradeRecipe::getDefaultLevelEntry),
+		EnchantmentUpgradeRecipe::createRecipes
+	);
+	
+	public EnchantmentUpgradeRecipeSerializer() {
+		super(ENDEC);
 	}
 	
-	@Override
-	public void write(PacketByteBuf packetByteBuf, EnchantmentUpgradeRecipe recipe) {
-		packetByteBuf.writeString(recipe.group);
-		packetByteBuf.writeBoolean(recipe.secret);
-		writeNullableIdentifier(packetByteBuf, recipe.requiredAdvancementIdentifier);
-		
-		packetByteBuf.writeIdentifier(Registries.ENCHANTMENT.getId(recipe.enchantment));
-		packetByteBuf.writeInt(recipe.enchantmentDestinationLevel);
-		packetByteBuf.writeInt(recipe.requiredExperience);
-		packetByteBuf.writeIdentifier(Registries.ITEM.getId(recipe.requiredItem));
-		packetByteBuf.writeInt(recipe.requiredItemCount);
+	public record EnchantUpgradeLevelEntry(int experience, Item requiredItem, int count) {
+		public static final Endec<EnchantUpgradeLevelEntry> ENDEC = StructEndecBuilder.of(
+			Endec.INT.fieldOf("experience", EnchantUpgradeLevelEntry::experience),
+			MinecraftEndecs.ofRegistry(Registries.ITEM).fieldOf("required_item", EnchantUpgradeLevelEntry::requiredItem),
+			Endec.INT.fieldOf("count", EnchantUpgradeLevelEntry::count),
+			EnchantUpgradeLevelEntry::new
+		);
 	}
-	
-	@Override
-	public EnchantmentUpgradeRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-		String group = packetByteBuf.readString();
-		boolean secret = packetByteBuf.readBoolean();
-		Identifier requiredAdvancementIdentifier = readNullableIdentifier(packetByteBuf);
-		
-		Enchantment enchantment = Registries.ENCHANTMENT.get(packetByteBuf.readIdentifier());
-		int enchantmentDestinationLevel = packetByteBuf.readInt();
-		int requiredExperience = packetByteBuf.readInt();
-		Item requiredItem = Registries.ITEM.get(packetByteBuf.readIdentifier());
-		int requiredItemCount = packetByteBuf.readInt();
-		
-		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, enchantment, enchantmentDestinationLevel, requiredExperience, requiredItem, requiredItemCount);
-	}
-	
 }

@@ -1,86 +1,30 @@
 package de.dafuqs.spectrum.recipe.enchanter;
 
-import com.google.gson.*;
 import de.dafuqs.spectrum.api.recipe.*;
-import de.dafuqs.spectrum.recipe.*;
-import net.minecraft.item.*;
-import net.minecraft.network.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.recipe.*;
-import net.minecraft.util.*;
-import net.minecraft.util.collection.*;
 
-public class EnchanterRecipeSerializer implements GatedRecipeSerializer<EnchanterRecipe> {
+import java.util.*;
+
+public class EnchanterRecipeSerializer extends EndecRecipeSerializer<EnchanterRecipe> implements GatedRecipeSerializer<EnchanterRecipe> {
 	
-	public final EnchanterRecipeSerializer.RecipeFactory recipeFactory;
+	public static final StructEndec<EnchanterRecipe> ENDEC = StructEndecBuilder.of(
+		Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+		Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+		CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).listOf().optionalFieldOf("ingredients", recipe -> recipe.inputs, List.of()),
+		MinecraftEndecs.ITEM_STACK.fieldOf("output", recipe -> recipe.output),
+		Endec.INT.optionalFieldOf("required_experience", recipe -> recipe.requiredExperience, 0),
+		Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
+		Endec.BOOLEAN.optionalFieldOf("disable_yield_and_efficiency_upgrades", recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades, false),
+		Endec.BOOLEAN.optionalFieldOf("copy_components", recipe -> recipe.copyNbt, false),
+		EnchanterRecipe::new
+	);
 	
-	public EnchanterRecipeSerializer(EnchanterRecipeSerializer.RecipeFactory recipeFactory) {
-		this.recipeFactory = recipeFactory;
+	public EnchanterRecipeSerializer() {
+		super(ENDEC);
 	}
-	
-	public interface RecipeFactory {
-		EnchanterRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, DefaultedList<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt);
-	}
-	
-	@Override
-	public EnchanterRecipe read(Identifier identifier, JsonObject jsonObject) {
-		String group = readGroup(jsonObject);
-		boolean secret = readSecret(jsonObject);
-		Identifier requiredAdvancementIdentifier = readRequiredAdvancementIdentifier(jsonObject);
-		
-		JsonArray ingredientArray = JsonHelper.getArray(jsonObject, "ingredients");
-		DefaultedList<Ingredient> craftingInputs = DefaultedList.ofSize(ingredientArray.size());
-		for (int i = 0; i < ingredientArray.size(); i++) {
-			craftingInputs.add(Ingredient.fromJson(ingredientArray.get(i)));
-		}
-		
-		ItemStack output = RecipeUtils.itemStackWithNbtFromJson(JsonHelper.getObject(jsonObject, "result"));
-		
-		int requiredExperience = JsonHelper.getInt(jsonObject, "required_experience", 0);
-		int craftingTime = JsonHelper.getInt(jsonObject, "time", 200);
-		
-		boolean noBenefitsFromYieldAndEfficiencyUpgrades = JsonHelper.getBoolean(jsonObject, "disable_yield_and_efficiency_upgrades", false);
-		boolean copyNbt = JsonHelper.getBoolean(jsonObject, "copy_nbt", false);
-		
-		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, craftingInputs, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt);
-	}
-	
-	@Override
-	public void write(PacketByteBuf packetByteBuf, EnchanterRecipe recipe) {
-		packetByteBuf.writeString(recipe.group);
-		packetByteBuf.writeBoolean(recipe.secret);
-		writeNullableIdentifier(packetByteBuf, recipe.requiredAdvancementIdentifier);
-		
-		packetByteBuf.writeShort(recipe.inputs.size());
-		for (Ingredient ingredient : recipe.inputs) {
-			ingredient.write(packetByteBuf);
-		}
-		
-		packetByteBuf.writeItemStack(recipe.output);
-		packetByteBuf.writeInt(recipe.craftingTime);
-		packetByteBuf.writeInt(recipe.requiredExperience);
-		packetByteBuf.writeBoolean(recipe.noBenefitsFromYieldAndEfficiencyUpgrades);
-		packetByteBuf.writeBoolean(recipe.copyNbt);
-	}
-	
-	@Override
-	public EnchanterRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-		String group = packetByteBuf.readString();
-		boolean secret = packetByteBuf.readBoolean();
-		Identifier requiredAdvancementIdentifier = readNullableIdentifier(packetByteBuf);
-		
-		short craftingInputCount = packetByteBuf.readShort();
-		DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(craftingInputCount, Ingredient.EMPTY);
-		for (short i = 0; i < craftingInputCount; i++) {
-			ingredients.set(i, Ingredient.fromPacket(packetByteBuf));
-		}
-		
-		ItemStack output = packetByteBuf.readItemStack();
-		int craftingTime = packetByteBuf.readInt();
-		int requiredExperience = packetByteBuf.readInt();
-		boolean noBenefitsFromYieldAndEfficiencyUpgrades = packetByteBuf.readBoolean();
-		boolean copyNbt = packetByteBuf.readBoolean();
-		
-		return this.recipeFactory.create(identifier, group, secret, requiredAdvancementIdentifier, ingredients, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt);
-	}
-	
 }

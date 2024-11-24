@@ -98,7 +98,7 @@ public abstract class SpectrumFluid extends FlowableFluid {
 				if (world.random.nextInt(100) == 0) {
 					ItemStack itemStack = itemEntity.getStack();
 					FluidConvertingRecipe recipe = getConversionRecipeFor(getDippingRecipeType(), world, itemStack);
-					if (recipe != null && !recipe.getOutput(world.getRegistryManager()).isOf(itemStack.getItem())) { // do not try to convert items into itself for performance reasons
+					if (recipe != null && !recipe.getResult(world.getRegistryManager()).isOf(itemStack.getItem())) { // do not try to convert items into itself for performance reasons
 						world.playSound(null, itemEntity.getBlockPos(), SoundEvents.BLOCK_WOOL_BREAK, SoundCategory.NEUTRAL, 1.0F, 0.9F + world.getRandom().nextFloat() * 0.2F);
 						
 						ItemStack result = craft(recipe, itemStack, world);
@@ -121,9 +121,11 @@ public abstract class SpectrumFluid extends FlowableFluid {
 	
 	private static final AutoCraftingInventory AUTO_INVENTORY = new AutoCraftingInventory(1, 1);
 	
-	public <R extends FluidConvertingRecipe> R getConversionRecipeFor(RecipeType<R> recipeType, @NotNull World world, ItemStack itemStack) {
+	
+	public @Nullable <R extends FluidConvertingRecipe> R getConversionRecipeFor(RecipeType<R> recipeType, @NotNull World world, ItemStack itemStack) {
 		AUTO_INVENTORY.setInputInventory(Collections.singletonList(itemStack));
-		return world.getRecipeManager().getFirstMatch(recipeType, AUTO_INVENTORY, world).orElse(null);
+		RecipeEntry<R> entry = world.getRecipeManager().getFirstMatch(recipeType, AUTO_INVENTORY, world).orElse(null);
+		return entry == null ? null : entry.value();
 	}
 	
 	public ItemStack craft(FluidConvertingRecipe recipe, ItemStack itemStack, World world) {

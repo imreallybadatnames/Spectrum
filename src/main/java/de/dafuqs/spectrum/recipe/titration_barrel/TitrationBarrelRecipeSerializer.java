@@ -19,6 +19,7 @@ public class TitrationBarrelRecipeSerializer extends EndecRecipeSerializer<Titra
 	
 	public static final StructEndec<TitrationBarrelRecipe> ENDEC = StructEndecBuilder.<RegistryByteBuf, TitrationBarrelRecipe>of(
 		CodecUtils.toEndec(Ingredient.ALLOW_EMPTY_CODEC).fieldOf("ingredients", s -> s.ingredients),
+		// FIXME
 		TitrationBarrelRecipe::new
 	);
 	

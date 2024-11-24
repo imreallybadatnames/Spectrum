@@ -117,10 +117,10 @@ public class SpectrumRecipeTypes {
 		FUSION_SHRINE_RECIPE_SERIALIZER = registerSerializer(FUSION_SHRINE_ID, new FusionShrineRecipeSerializer(FusionShrineRecipe::new));
 		FUSION_SHRINE = registerRecipeType(FUSION_SHRINE_ID);
 		
-		ENCHANTER_RECIPE_SERIALIZER = registerSerializer(ENCHANTER_ID, new EnchanterRecipeSerializer((id1, group1, secret1, requiredAdvancementIdentifier1, inputs, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt) -> new EnchanterRecipe(group1, secret1, requiredAdvancementIdentifier1, inputs, output, craftingTime, requiredExperience, noBenefitsFromYieldAndEfficiencyUpgrades, copyNbt)));
+		ENCHANTER_RECIPE_SERIALIZER = registerSerializer(ENCHANTER_ID, new EnchanterRecipeSerializer());
 		ENCHANTER = registerRecipeType(ENCHANTER_ID);
 		
-		ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = registerSerializer(ENCHANTMENT_UPGRADE_ID, new EnchantmentUpgradeRecipeSerializer((id1, group1, secret1, requiredAdvancementIdentifier1, enchantment, enchantmentDestinationLevel, requiredExperience, requiredItem, requiredItemCount) -> new EnchantmentUpgradeRecipe(group1, secret1, requiredAdvancementIdentifier1, enchantment, enchantmentDestinationLevel, requiredExperience, requiredItem, requiredItemCount)));
+		ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = registerSerializer(ENCHANTMENT_UPGRADE_ID, new EnchantmentUpgradeRecipeSerializer());
 		ENCHANTMENT_UPGRADE = registerRecipeType(ENCHANTMENT_UPGRADE_ID);
 		
 		POTION_WORKSHOP_BREWING_RECIPE_SERIALIZER = registerSerializer(POTION_WORKSHOP_BREWING_ID, new PotionWorkshopBrewingRecipeSerializer(PotionWorkshopBrewingRecipe::new));
