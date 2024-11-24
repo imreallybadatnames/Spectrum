@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
@@ -13,11 +12,13 @@ import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.world.*;
 
+import java.util.*;
+
 public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/build_enchanting_structure");
 	
-	protected final DefaultedList<Ingredient> inputs; // first input is the center, all others around clockwise
+	protected final List<Ingredient> inputs; // first input is the center, all others around clockwise
 	protected final ItemStack output;
 	
 	protected final int requiredExperience;
@@ -26,7 +27,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	// copy all nbt data from the first stack in the ingredients to the output stack
 	protected final boolean copyNbt;
 	
-	public EnchanterRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, DefaultedList<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt) {
+	public EnchanterRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, List<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.inputs = inputs;
@@ -105,7 +106,9 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public DefaultedList<Ingredient> getIngredients() {
-		return inputs;
+		DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(inputs.size());
+		ingredients.addAll(inputs);
+		return ingredients;
 	}
 	
 	public int getRequiredExperience() {

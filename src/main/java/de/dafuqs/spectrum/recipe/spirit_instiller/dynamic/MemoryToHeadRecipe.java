@@ -14,6 +14,7 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
@@ -25,9 +26,9 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 	
 	public static final RecipeSerializer<MemoryToHeadRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MemoryToHeadRecipe::new);
 	
-	public MemoryToHeadRecipe(Identifier identifier) {
+	public MemoryToHeadRecipe() {
 		super("", false, SpectrumCommon.locate("unlocks/memory_to_head"),
-				IngredientStack.ofItems(1, SpectrumBlocks.MEMORY), IngredientStack.ofItems(4, SpectrumItems.VEGETAL), IngredientStack.ofItems(4, SpectrumItems.QUITOXIC_POWDER),
+				IngredientStack.ofItems(1, SpectrumBlocks.MEMORY.asItem()), IngredientStack.ofItems(4, SpectrumItems.VEGETAL), IngredientStack.ofItems(4, SpectrumItems.QUITOXIC_POWDER),
 				new ItemStack(Blocks.ZOMBIE_HEAD), 200, 1, true);
 	}
 	
@@ -50,7 +51,7 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			Optional<Entity> optionalEntity = MemoryBlockEntity.hatchEntity(world, pos, spiritInstillerBlockEntity.getStack(0));
 			if (optionalEntity.isPresent()) {
 				if (optionalEntity.get() instanceof LivingEntity livingEntity) {
-					LootTable lootTable = world.getServer().getLootManager().getLootTable(livingEntity.getLootTable());
+					LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(livingEntity.getLootTable());
 					
 					LootContextParameterSet.Builder builder = new LootContextParameterSet.Builder(world)
 							.add(LootContextParameters.THIS_ENTITY, livingEntity)
@@ -78,8 +79,8 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 	}
 	
 	@Override
-	public boolean canCraftWithStacks(Inventory inventory) {
-		ItemStack instillerStack = inventory.getStack(0);
+	public boolean canCraftWithStacks(RecipeInput inventory) {
+		ItemStack instillerStack = inventory.getStackInSlot(0);
 		return getSkullTypeForMemory(instillerStack).isPresent();
 	}
 	
@@ -88,6 +89,7 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			return Optional.empty();
 		}
 		
+		// FIXME - Migrate to component
 		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack.getNbt());
 		if (optionalMemoryEntity.isEmpty()) {
 			return Optional.empty();
