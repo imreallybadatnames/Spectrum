@@ -2,6 +2,9 @@ package de.dafuqs.spectrum.api.recipe;
 
 import com.google.gson.*;
 import de.dafuqs.matchbooks.recipe.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -16,6 +19,19 @@ import java.util.*;
 import java.util.stream.*;
 
 public class FluidIngredient {
+    public static final Endec<FluidIngredient> ENDEC = StructEndecBuilder.of(
+        MinecraftEndecs.ofRegistry(Registries.FLUID).optionalFieldOf("fluid", o -> o.fluid, Fluids.EMPTY),
+        MinecraftEndecs.IDENTIFIER.optionalFieldOf("tag", o -> o.tag, () -> null),
+        FluidIngredient::new
+    ).validate(fluidIngredient -> {
+        boolean hasFluid = fluidIngredient.fluid != null;
+        boolean isTag = fluidIngredient.tag != null;
+        
+        if ((hasFluid && isTag) || !(hasFluid || isTag)) {
+            throw new AssertionError("Invalid FluidIngredient object");
+        }
+    });
+    
     private final @Nullable Fluid fluid;
     private final @Nullable Identifier tag;
     // Compare against EMPTY to check if empty.
