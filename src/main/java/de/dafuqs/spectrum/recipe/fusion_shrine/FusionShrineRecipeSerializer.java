@@ -5,26 +5,37 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.predicate.world.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.recipe.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class FusionShrineRecipeSerializer implements GatedRecipeSerializer<FusionShrineRecipe> {
-	
-	public final FusionShrineRecipeSerializer.RecipeFactory recipeFactory;
-	
-	public FusionShrineRecipeSerializer(FusionShrineRecipeSerializer.RecipeFactory recipeFactory) {
-		this.recipeFactory = recipeFactory;
-	}
 
-	public interface RecipeFactory {
-		FusionShrineRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
-								  List<IngredientStack> craftingInputs, FluidIngredient fluid, ItemStack output, float experience, int craftingTime, boolean noBenefitsFromYieldUpgrades, boolean playCraftingFinishedEffects, boolean copyNbt,
-								  List<WorldConditionPredicate> worldConditions, FusionShrineRecipeWorldEffect startWorldEffect, List<FusionShrineRecipeWorldEffect> duringWorldEffects, FusionShrineRecipeWorldEffect finishWorldEffect, Text description);
-	}
+	public static final StructEndec<FusionShrineRecipe> ENDEC = StructEndecBuilder.<FusionShrineRecipe>of(
+		Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+		Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+		IngredientStack.Serializer.ENDEC.listOf().fieldOf("ingredients", recipe -> recipe.craftingInputs),
+		FluidIngredient.ENDEC.optionalFieldOf("fluid", recipe -> recipe.fluid, FluidIngredient.EMPTY),
+		MinecraftEndecs.ITEM_STACK.fieldOf("output", recipe -> recipe.output),
+		Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 0f),
+		Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
+		Endec.BOOLEAN.optionalFieldOf("disable_yield_upgrades", recipe -> recipe.yieldUpgradesDisabled, false),
+		Endec.BOOLEAN.optionalFieldOf("play_crafting_finished_effects", recipe -> recipe.playCraftingFinishedEffects, true),
+		Endec.BOOLEAN.optionalFieldOf("copy_components", recipe -> recipe.copyNbt, false),
+		// TODO - List of WorldConditionPredicates
+		// TODO - FusionShrineRecipeWorldEffect when starting
+		// TODO - List of FusionShrineRecipeWorldEffect during the craft
+		// TODO - FusionShrineRecipeWorldEffect when craft is finished
+		MinecraftEndecs.TEXT.optionalFieldOf("description", recipe -> recipe.description, Text.EMPTY),
+	);
 	
 	@Override
 	public FusionShrineRecipe read(Identifier identifier, JsonObject jsonObject) {

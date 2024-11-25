@@ -159,7 +159,7 @@ public class SpectrumRecipeTypes {
 		TITRATION_BARREL_RECIPE_SERIALIZER = registerSerializer(TITRATION_BARREL_ID, new TitrationBarrelRecipeSerializer());
 		TITRATION_BARREL = registerRecipeType(TITRATION_BARREL_ID);
 		
-		PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER = registerSerializer(PRIMORDIAL_FIRE_BURNING_ID, new PrimordialFireBurningRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, input, output) -> new PrimordialFireBurningRecipe(group, secret, requiredAdvancementIdentifier, input, output)));
+		PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER = registerSerializer(PRIMORDIAL_FIRE_BURNING_ID, new PrimordialFireBurningRecipeSerializer());
 		PRIMORDIAL_FIRE_BURNING = registerRecipeType(PRIMORDIAL_FIRE_BURNING_ID);
 		
 	}

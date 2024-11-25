@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
@@ -47,7 +46,7 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public boolean matches(RecipeInput inv, World world) {
-		return this.inputIngredient.test(inv.getStack(0));
+		return this.inputIngredient.test(inv.getStackInSlot(0));
 	}
 	
 	@Override
