@@ -5,6 +5,10 @@ import io.wispforest.endec.*;
 import io.wispforest.endec.impl.*;
 import io.wispforest.owo.serialization.*;
 import io.wispforest.owo.serialization.endec.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.*;
 
@@ -32,7 +36,7 @@ public class EnchantmentUpgradeRecipeSerializer extends EndecRecipeSerializer<En
 		Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
 		Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
 		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-		MinecraftEndecs.IDENTIFIER.fieldOf("enchantment", recipe -> recipe.enchantmentIdentifier),
+		CodecUtils.toEndec(Enchantment.ENTRY_CODEC).fieldOf("enchantment", recipe -> recipe.enchantmentEntry),
 		EnchantUpgradeLevelEntry.ENDEC.listOf().xmap(enchantUpgradeLevelEntries -> {
 			List<EnchantUpgradeLevelEntry> entries = new ArrayList<>();
 			for (EnchantUpgradeLevelEntry enchantmentUpgradeRecipe : enchantUpgradeLevelEntries) {

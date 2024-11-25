@@ -21,7 +21,6 @@ import java.util.*;
 
 public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
-	protected final Identifier enchantmentIdentifier;
 	protected final RegistryEntry<Enchantment> enchantmentEntry;
 	protected final int enchantmentDestinationLevel;
 	protected final int requiredExperience;
@@ -35,7 +34,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		String group,
 		boolean secret,
 		Identifier requiredAdvancementIdentifier,
-		Identifier enchantmentIdentifier,
+		RegistryEntry<Enchantment> enchantmentEntry,
 		int enchantmentDestinationLevel,
 		int requiredExperience,
 		Item requiredItem,
@@ -43,7 +42,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
-		this.enchantmentIdentifier = enchantmentIdentifier;
+		this.enchantmentEntry = enchantmentEntry;
 		this.enchantmentDestinationLevel = enchantmentDestinationLevel;
 		this.requiredExperience = requiredExperience;
 		this.requiredItem = requiredItem;
@@ -52,9 +51,6 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		DefaultedList<Ingredient> inputs = DefaultedList.ofSize(2, Ingredient.EMPTY);
 		
 		ItemStack ingredientStack = new ItemStack(Items.ENCHANTED_BOOK);
-		// FIXME - This is probably not correct...
-		RegistryWrapper.WrapperLookup drm = SpectrumCommon.getRegistryLookup().orElseThrow();
-		enchantmentEntry = drm.createRegistryLookup().getOptionalEntry(RegistryKeys.ENCHANTMENT, RegistryKey.of(RegistryKeys.ENCHANTMENT.getRegistry(), enchantmentIdentifier)).get();
 		ingredientStack.addEnchantment(enchantmentEntry, enchantmentDestinationLevel - 1);
 		inputs.set(0, Ingredient.ofStacks(ingredientStack));
 		inputs.set(1, Ingredient.ofStacks(new ItemStack(requiredItem)));
@@ -171,11 +167,11 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return this.enchantmentDestinationLevel > this.enchantmentEntry.value().getMaxLevel();
 	}
 	
-	public static EnchantmentUpgradeRecipe createRecipes(String group, Boolean secret, Identifier requiredAdvancementId, Identifier enchantId, List<EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry> enchantUpgradeLevelEntries) {
+	public static EnchantmentUpgradeRecipe createRecipes(String group, Boolean secret, Identifier requiredAdvancementId, RegistryEntry<Enchantment> enchantEntry, List<EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry> enchantUpgradeLevelEntries) {
 		List<EnchantmentUpgradeRecipe> recipes = new ArrayList<>();
 		for (EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry enchantUpgradeLevelEntry : enchantUpgradeLevelEntries) {
 			recipes.add(new EnchantmentUpgradeRecipe(
-				group, secret, requiredAdvancementId, enchantId, enchantUpgradeLevelEntries.size(), enchantUpgradeLevelEntry.experience(), enchantUpgradeLevelEntry.requiredItem(), enchantUpgradeLevelEntry.count()
+				group, secret, requiredAdvancementId, enchantEntry, enchantUpgradeLevelEntries.size(), enchantUpgradeLevelEntry.experience(), enchantUpgradeLevelEntry.requiredItem(), enchantUpgradeLevelEntry.count()
 			));
 		}
 		return recipes.getFirst();
