@@ -17,6 +17,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
@@ -144,7 +145,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	}
 	
 	@Override
-	public RegistryEntry<BannerPattern> getPattern() {
+	public RegistryKey<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.CRAFTING_TABLET;
 	}
 	

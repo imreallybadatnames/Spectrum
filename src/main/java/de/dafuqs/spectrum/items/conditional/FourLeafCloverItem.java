@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -19,7 +20,7 @@ public class FourLeafCloverItem extends CloakedBlockItem implements LoomPatternP
 	}
 	
 	@Override
-	public RegistryEntry<BannerPattern> getPattern() {
+	public RegistryKey<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.FOUR_LEAF_CLOVER;
 	}
 

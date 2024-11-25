@@ -13,6 +13,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.stat.*;
@@ -113,7 +114,7 @@ public class GuidebookItem extends Item implements LoomPatternProvider {
 	}
 	
 	@Override
-	public RegistryEntry<BannerPattern> getPattern() {
+	public RegistryKey<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.GUIDEBOOK;
 	}
 

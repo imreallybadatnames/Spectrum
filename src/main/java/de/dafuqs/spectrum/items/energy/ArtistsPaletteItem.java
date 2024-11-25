@@ -16,6 +16,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -70,7 +71,7 @@ public class ArtistsPaletteItem extends SpectrumTrinketItem implements InkStorag
 	}
 	
 	@Override
-	public RegistryEntry<BannerPattern> getPattern() {
+	public RegistryKey<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.PALETTE;
 	}
 	

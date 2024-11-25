@@ -5,6 +5,7 @@ import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.world.biome.*;
 
+@SuppressWarnings("unused")
 public class SpectrumBiomeTags {
 	
 	public static final TagKey<Biome> DD_BIOMES = getReference("in_deeper_down");

@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.registries;
 
 import net.minecraft.sound.*;
 
+@SuppressWarnings("unused")
 public class SpectrumBlockSoundGroups {
 	
 	// float volume, float pitch, SoundEvent breakSound, SoundEvent stepSound, SoundEvent placeSound, SoundEvent hitSound, SoundEvent fallSound

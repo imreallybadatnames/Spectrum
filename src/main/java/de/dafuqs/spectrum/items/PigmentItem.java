@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -34,7 +35,7 @@ public class PigmentItem extends CloakedItem implements LoomPatternProvider {
 	}
 	
 	@Override
-	public RegistryEntry<BannerPattern> getPattern() {
+	public RegistryKey<BannerPattern> getPattern() {
 		return SpectrumBannerPatterns.PIGMENT;
 	}
 	

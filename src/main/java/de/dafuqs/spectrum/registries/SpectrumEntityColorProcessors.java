@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.entity.*;
 import net.minecraft.entity.*;
+import net.minecraft.nbt.NbtCompound;
 
 import java.util.*;
 
@@ -22,14 +23,18 @@ public class SpectrumEntityColorProcessors {
 			if (entity.getCollarColor() == dyeColor) {
 				return false;
 			}
-			entity.setCollarColor(dyeColor);
+			var compound = new NbtCompound();
+			compound.putInt("CollarColor", dyeColor.getId());
+			entity.readCustomDataFromNbt(compound);
 			return true;
 		});
 		EntityColorProcessorRegistry.register(EntityType.CAT, (entity, dyeColor) -> {
 			if (entity.getCollarColor() == dyeColor) {
 				return false;
 			}
-			entity.setCollarColor(dyeColor);
+			var compound = new NbtCompound();
+			compound.putInt("CollarColor", dyeColor.getId());
+			entity.readCustomDataFromNbt(compound);
 			return true;
 		});
 		EntityColorProcessorRegistry.register(EntityType.SHULKER, (entity, dyeColor) -> {

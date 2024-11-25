@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.status_effects.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 
+@SuppressWarnings("unused")
 public class SpectrumFoodComponents {
 	
 	public static final FoodComponent MOONSTRUCK_NECTAR = new FoodComponent.Builder()

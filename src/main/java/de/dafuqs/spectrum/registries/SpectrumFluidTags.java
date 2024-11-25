@@ -5,6 +5,7 @@ import net.minecraft.fluid.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 
+@SuppressWarnings("unused")
 public class SpectrumFluidTags {
 	
 	public static final TagKey<Fluid> SWIMMABLE_FLUID = of("swimmable_fluid");

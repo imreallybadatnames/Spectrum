@@ -178,9 +178,11 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.STAFF_OF_REMEMBRANCE);
 				entries.add(SpectrumItems.CONSTRUCTORS_STAFF);
 				entries.add(SpectrumItems.EXCHANGING_STAFF);
-				entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), Enchantments.FORTUNE, 3, false, false).getRight());
-				entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), Enchantments.SILK_TOUCH, 1, false, false).getRight());
-				entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), SpectrumEnchantments.RESONANCE, 1, false, false).getRight());
+				displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(impl -> {
+					impl.getOptional(Enchantments.FORTUNE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 3, false, false).getRight()));
+					impl.getOptional(Enchantments.SILK_TOUCH).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
+					impl.getOptional(SpectrumEnchantments.RESONANCE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
+				});
 				entries.add(SpectrumItems.BLOCK_FLOODER);
 				entries.add(SpectrumItems.ENDER_SPLICE);
 				entries.add(SpectrumEnchantmentHelper.getMaxEnchantedStack(SpectrumItems.ENDER_SPLICE));

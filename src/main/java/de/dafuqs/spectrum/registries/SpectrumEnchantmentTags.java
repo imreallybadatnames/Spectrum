@@ -3,10 +3,7 @@ package de.dafuqs.spectrum.registries;
 import de.dafuqs.spectrum.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
-
-import java.util.*;
 
 public class SpectrumEnchantmentTags {
 

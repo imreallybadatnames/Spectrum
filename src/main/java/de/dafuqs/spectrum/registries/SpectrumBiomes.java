@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.*;
 import net.minecraft.registry.*;
 import net.minecraft.world.biome.*;
 
+@SuppressWarnings("unused")
 public class SpectrumBiomes {
 	
 	public static final RegistryKey<Biome> BLACK_LANGAST = getKey("black_langast");

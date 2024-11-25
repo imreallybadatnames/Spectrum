@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.entry.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
@@ -19,6 +20,10 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
 	@Shadow
 	@Final
 	private Slot patternSlot;
+
+	@Shadow
+	@Final
+	private RegistryEntryLookup<BannerPattern> bannerPatternLookup;
 	
 	private LoomScreenHandlerMixin() {
 		super(null, 0);
@@ -27,7 +32,7 @@ public abstract class LoomScreenHandlerMixin extends ScreenHandler {
 	@Inject(method = "getPatternsFor(Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("HEAD"), cancellable = true)
 	private void spectrum$getPatternsFor(ItemStack stack, CallbackInfoReturnable<List<RegistryEntry<BannerPattern>>> cir) {
 		if (stack.getItem() instanceof LoomPatternProvider loomPatternProvider) {
-			cir.setReturnValue(loomPatternProvider.getPatterns());
+			cir.setReturnValue(LoomPatternProvider.getPatterns(bannerPatternLookup, loomPatternProvider));
 		}
 	}
 	

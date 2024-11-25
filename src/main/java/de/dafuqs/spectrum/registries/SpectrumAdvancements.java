@@ -5,6 +5,7 @@ import net.minecraft.util.*;
 
 import static de.dafuqs.spectrum.SpectrumCommon.*;
 
+@SuppressWarnings("unused")
 public class SpectrumAdvancements {
 	
 	// Revelations

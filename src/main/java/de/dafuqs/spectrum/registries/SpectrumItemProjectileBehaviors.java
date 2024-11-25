@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
@@ -15,7 +16,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.thrown.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -98,7 +98,7 @@ public class SpectrumItemProjectileBehaviors {
 				}
 				return stack;
 			}
-		}, ItemTags.MUSIC_DISCS);
+		}, ConventionalItemTags.MUSIC_DISCS);
 		
 		ItemProjectileBehavior.register(new ItemProjectileBehavior.Default() {
 			@Override
@@ -209,14 +209,15 @@ public class SpectrumItemProjectileBehaviors {
 		ItemProjectileBehavior.register(new ItemProjectileBehavior.Default() {
 			@Override
 			public ItemStack onEntityHit(ItemProjectileEntity projectile, ItemStack stack, @Nullable Entity owner, EntityHitResult hitResult) {
-				Entity target = hitResult.getEntity();
-				List<ItemStack> equipment = new ArrayList<>();
-				target.getItemsEquipped().forEach(equipment::add);
-				Collections.shuffle(equipment);
-				
-				for (ItemStack equip : equipment) {
-					if (EnchantmentCanvasItem.tryExchangeEnchantments(stack, equip, target)) {
-						return stack;
+				if (hitResult.getEntity() instanceof LivingEntity livingTarget) {
+					List<ItemStack> equipment = new ArrayList<>();
+					livingTarget.getEquippedItems().forEach(equipment::add);
+					Collections.shuffle(equipment);
+
+					for (ItemStack equip : equipment) {
+						if (EnchantmentCanvasItem.tryExchangeEnchantments(stack, equip, livingTarget)) {
+							return stack;
+						}
 					}
 				}
 				return stack;
@@ -235,7 +236,7 @@ public class SpectrumItemProjectileBehaviors {
 						int experienceOverflow = ExperienceStorageItem.addStoredExperience(stack, xpToTransfer);
 						
 						target.addExperience(-xpToTransfer + experienceOverflow);
-						target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.3F, 0.8F + target.getWorld().getRandom().nextFloat() * 0.4F);
+						target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 0.3F, 0.8F + target.getWorld().getRandom().nextFloat() * 0.4F);
 						return stack;
 					}
 				}
@@ -246,7 +247,7 @@ public class SpectrumItemProjectileBehaviors {
 		ItemProjectileBehavior.register(new ItemProjectileBehavior.Default() {
 			@Override
 			public ItemStack onEntityHit(ItemProjectileEntity projectile, ItemStack stack, @Nullable Entity owner, EntityHitResult hitResult) {
-				Recipe<?> recipe = CraftingTabletItem.getStoredRecipe(projectile.getWorld(), stack);
+				var recipe = CraftingTabletItem.getStoredRecipe(projectile.getWorld(), stack).value();
 				if (recipe instanceof CraftingRecipe craftingRecipe && hitResult.getEntity() instanceof ServerPlayerEntity target) {
 					CraftingTabletItem.tryCraftRecipe(target, craftingRecipe, projectile.getWorld());
 				}

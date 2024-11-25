@@ -6,6 +6,7 @@ import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 
+@SuppressWarnings("unused")
 public class SpectrumBlockTags {
 	
 	// PLANTS

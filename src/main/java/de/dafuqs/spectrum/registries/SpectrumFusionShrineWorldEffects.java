@@ -14,6 +14,7 @@ import net.minecraft.world.level.*;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class SpectrumFusionShrineWorldEffects {
 
 	public static FusionShrineRecipeWorldEffect WEATHER_CLEAR = FusionShrineRecipeWorldEffect.register("weather_clear", new FusionShrineRecipeWorldEffect.SingleTimeRecipeWorldEffect() {
@@ -104,7 +105,7 @@ public class SpectrumFusionShrineWorldEffects {
 		@Override
 		public void trigger(ServerWorld world, BlockPos pos) {
 			if (world.getRandom().nextFloat() < 0.1) {
-				world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.5F, 0.8F + world.random.nextFloat() * 0.4F);
+				world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS, 0.5F, 0.8F + world.random.nextFloat() * 0.4F);
 				SpectrumS2CPacketSender.playParticles(world, pos.up(), ParticleTypes.EXPLOSION, 1);
 			}
 		}
@@ -112,7 +113,7 @@ public class SpectrumFusionShrineWorldEffects {
 	public static FusionShrineRecipeWorldEffect SINGLE_VISUAL_EXPLOSION_ON_SHRINE = FusionShrineRecipeWorldEffect.register("single_visual_explosion_on_shrine", new FusionShrineRecipeWorldEffect.SingleTimeRecipeWorldEffect() {
 		@Override
 		public void trigger(ServerWorld world, BlockPos pos) {
-			world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.8F, 0.8F + world.random.nextFloat() * 0.4F);
+			world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS, 0.8F, 0.8F + world.random.nextFloat() * 0.4F);
 			SpectrumS2CPacketSender.playParticles(world, pos, ParticleTypes.EXPLOSION, 1);
 		}
 	});
