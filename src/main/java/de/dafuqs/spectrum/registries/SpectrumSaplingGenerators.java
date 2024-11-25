@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryKeys;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public class SpectrumSaplingGenerators {
 
     private static final Map<String, SaplingGenerator> GENERATORS = new Object2ObjectArrayMap<>();

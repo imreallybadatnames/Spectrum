@@ -23,7 +23,7 @@ public class DivinityStatusEffect extends SpectrumStatusEffect {
 	}
 	
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		World world = entity.getWorld();
 		if (amplifier > CIRCLET_AMPLIFIER && world.isClient) { // the circlet gives divinity 0, not showing effects; the ascension one does
 			ParticleHelper.playParticleWithPatternAndVelocityClient(entity.getWorld(), entity.getPos(), SpectrumParticleTypes.RED_CRAFTING, VectorPattern.EIGHT, 0.2);
@@ -43,6 +43,8 @@ public class DivinityStatusEffect extends SpectrumStatusEffect {
 				entity.heal(amplifier / 2F);
 			}
 		}
+
+		return super.applyUpdateEffect(entity, amplifier);
 	}
 	
 	@Override
@@ -51,8 +53,8 @@ public class DivinityStatusEffect extends SpectrumStatusEffect {
 	}
 
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onApplied(entity, attributes, amplifier);
+	public void onApplied(LivingEntity entity, int amplifier) {
+		super.onApplied(entity, amplifier);
 		World world = entity.getWorld();
 		if (entity instanceof PlayerEntity) {
 			if (entity instanceof ServerPlayerEntity player) {
@@ -67,10 +69,9 @@ public class DivinityStatusEffect extends SpectrumStatusEffect {
 	}
 
 	@Override
-	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onRemoved(entity, attributes, amplifier);
-		World world = entity.getWorld();
-		if (world.isClient) {
+	public void onRemoved(AttributeContainer attributes) {
+		super.onRemoved(attributes);
+		if (entity.getWorld().isClient) {
 			FabricLoader.getInstance().getObjectShare().put("healthoverlay:forceHardcoreHearts", false);
 		}
 	}

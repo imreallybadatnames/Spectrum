@@ -19,8 +19,9 @@ public class GravityStatusEffect extends SpectrumStatusEffect {
 	}
 	
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		applyGravityEffect(entity, gravityPerLevel * (amplifier + 1));
+		return super.applyUpdateEffect(entity, amplifier);
 	}
 	
 	public static void applyGravityEffect(Entity entity, double additionalYVelocity) {

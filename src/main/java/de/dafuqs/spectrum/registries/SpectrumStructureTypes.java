@@ -14,7 +14,7 @@ public class SpectrumStructureTypes {
 		UNDERGROUND_JIGSAW = register("underground_jigsaw", UndergroundJigsawStructure.CODEC);
 	}
 	
-	private static <S extends Structure> StructureType<S> register(String id, Codec<S> codec) {
+	private static <S extends Structure> StructureType<S> register(String id, MapCodec<S> codec) {
 		return Registry.register(Registries.STRUCTURE_TYPE, SpectrumCommon.locate(id), () -> codec);
 	}
 	

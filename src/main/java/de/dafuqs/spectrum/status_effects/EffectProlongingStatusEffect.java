@@ -2,8 +2,6 @@ package de.dafuqs.spectrum.status_effects;
 
 import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 
 public class EffectProlongingStatusEffect extends SpectrumStatusEffect implements StackableStatusEffect {
@@ -13,17 +11,7 @@ public class EffectProlongingStatusEffect extends SpectrumStatusEffect implement
 	public EffectProlongingStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);
 	}
-	
-	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-	
-	}
-	
-	@Override
-	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-	
-	}
-	
+
 	public static boolean canBeExtended(StatusEffect statusEffect) {
 		return !SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.NO_DURATION_EXTENSION, statusEffect);
 	}

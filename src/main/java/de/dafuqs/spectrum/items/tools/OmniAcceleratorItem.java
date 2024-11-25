@@ -71,7 +71,7 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 		
 		ItemStack shootStack = shootStackOptional.get();
 		OmniAcceleratorProjectile projectile = OmniAcceleratorProjectile.get(shootStack);
-		if (projectile.createProjectile(shootStack, user, world) != null) {
+		if (projectile.createProjectile(shootStack, user, world, stack) != null) {
 			world.playSound(null, user.getX(), user.getY(), user.getZ(), projectile.getSoundEffect(), SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
 			if (!player.isCreative()) {
 				decrementFirstItem(stack);
@@ -92,7 +92,7 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 						if (count > 1) {
 							stackNbt.putByte("Count", (byte) (count - 1));
 						} else {
-							itemsList.remove(0);
+							itemsList.removeFirst();
 							if (itemsList.isEmpty()) {
 								nbt.remove("Items");
 							}

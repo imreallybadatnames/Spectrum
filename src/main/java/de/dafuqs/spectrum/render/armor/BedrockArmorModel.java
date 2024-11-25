@@ -18,6 +18,7 @@ public class BedrockArmorModel extends BipedEntityModel<LivingEntity> {
         this.slot = slot;
     }
 
+    @SuppressWarnings("unused")
     public static ModelData getModelData() {
         ModelData data = new ModelData();
         var root = data.getRoot();
@@ -129,9 +130,9 @@ public class BedrockArmorModel extends BipedEntityModel<LivingEntity> {
     }
 
     @Override
-    public void render(MatrixStack ms, VertexConsumer buffer, int light, int overlay, float r, float g, float b, float a) {
+    public void render(MatrixStack ms, VertexConsumer buffer, int light, int overlay, int color) {
         renderArmorPart(slot);
-        super.render(ms, buffer, light, overlay, r, g, b, a);
+        super.render(ms, buffer, light, overlay, color);
     }
 
     public static Pair<Float, Float> computeFrontClothRotation(PlayerEntity player, float delta) {

@@ -116,10 +116,10 @@ public class SpectrumStatusEffects {
 	 * Stacking $(thing)Frenzy$() (applying the effect while they already have it) increases these effects amplitude
 	 */
 	public static final RegistryEntry<StatusEffect> FRENZY = registerStatusEffect("frenzy", new FrenzyStatusEffect(StatusEffectCategory.NEUTRAL, 0x990000)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, locate("effect.frenzy.attack_speed"), FrenzyStatusEffect.ATTACK_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, locate("effect.frenzy.attack_damage"), FrenzyStatusEffect.ATTACK_DAMAGE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, locate("effect.frenzy.movement_speed"), FrenzyStatusEffect.MOVEMENT_SPEED_PER_STAGE, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, locate("effect.frenzy.knockback_resistance"), FrenzyStatusEffect.KNOCKBACK_RESISTANCE_PER_STAGE, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, locate("effect.frenzy.attack_speed"), 0.1D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, locate("effect.frenzy.attack_damage"), 0.5D, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, locate("effect.frenzy.movement_speed"), 0.1D, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, locate("effect.frenzy.knockback_resistance"), 0.25D, EntityAttributeModifier.Operation.ADD_VALUE)
 			.addAttributeModifier(SpectrumEntityAttributes.MENTAL_PRESENCE, locate("effect.frenzy.mental_presence"), 5, EntityAttributeModifier.Operation.ADD_VALUE));
 	
 	/**

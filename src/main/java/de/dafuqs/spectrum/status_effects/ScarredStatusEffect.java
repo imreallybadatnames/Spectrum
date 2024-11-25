@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.status_effects;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 
 public class ScarredStatusEffect extends SpectrumStatusEffect {
@@ -11,12 +10,11 @@ public class ScarredStatusEffect extends SpectrumStatusEffect {
 	}
 	
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onApplied(entity, attributes, amplifier);
+	public void onApplied(LivingEntity entity, int amplifier) {
+		super.onApplied(entity, amplifier);
 		if (entity.isSprinting()) {
 			entity.setSprinting(false);
 		}
 	}
-	
-	
+
 }

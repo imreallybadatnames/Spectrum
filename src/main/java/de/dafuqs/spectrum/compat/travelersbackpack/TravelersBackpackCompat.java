@@ -14,7 +14,6 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.world.*;
 
 import java.util.*;
@@ -71,8 +70,8 @@ public class TravelersBackpackCompat extends SpectrumIntegrationPacks.ModIntegra
 					for (ItemStack equip : equipment) {
 						ItemEnchantmentsComponent enchants = EnchantmentHelper.getEnchantments(equip);
 						if (!enchants.isEmpty()) {
-							Set<RegistryEntry<Enchantment>> enchantments = enchants.getEnchantments();
-							Enchantment enchantment = enchantments.stream().skip(new Random().nextInt(enchantments.size())).findFirst().orElse(null).value();
+							var enchantments = enchants.getEnchantments();
+							var enchantment = enchantments.stream().toList().get(new Random().nextInt(enchantments.size()));
 							SpectrumEnchantmentHelper.removeEnchantments(equip, enchantment);
 						}
 					}

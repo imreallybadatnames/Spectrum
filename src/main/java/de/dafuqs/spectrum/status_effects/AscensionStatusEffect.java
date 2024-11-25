@@ -20,29 +20,30 @@ public class AscensionStatusEffect extends SpectrumStatusEffect {
 	}
 	
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		World world = entity.getWorld();
 		if (world.isClient) {
 			ParticleHelper.playParticleWithPatternAndVelocityClient(entity.getWorld(), entity.getPos(), SpectrumParticleTypes.WHITE_SPARKLE_RISING, VectorPattern.EIGHT, 0.2);
 		}
+		return super.applyUpdateEffect(entity, amplifier);
 	}
 	
 	@Override
 	public boolean canApplyUpdateEffect(int duration, int amplifier) {
 		return duration % 4 == 0;
 	}
-	
+
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onApplied(entity, attributes, amplifier);
+	public void onApplied(LivingEntity entity, int amplifier) {
+		super.onApplied(entity, amplifier);
 		if (entity instanceof ServerPlayerEntity player) {
 			SpectrumS2CPacketSender.playAscensionAppliedEffects(player);
 		}
 	}
 	
 	@Override
-	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onRemoved(entity, attributes, amplifier);
+	public void onRemoved(AttributeContainer attributes) {
+		super.onRemoved(attributes);
 		
 		// only apply divinity if ascension ran out
 		// does not apply when curing the effect by other means, such as drinking milk

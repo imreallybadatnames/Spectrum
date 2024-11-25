@@ -145,7 +145,7 @@ public class SpectrumItemProjectileBehaviors {
 					
 					World world = projectile.getWorld();
 					OmniAcceleratorProjectile newProjectile = OmniAcceleratorProjectile.get(optionalAcceleratorContentStack.get());
-					Entity newEntity = newProjectile.createProjectile(acceleratorContentStack, livingOwner, world);
+					Entity newEntity = newProjectile.createProjectile(acceleratorContentStack, livingOwner, world, accelerator);
 					
 					if (newEntity != null) {
 						Vec3d pos = hitResult.getPos();

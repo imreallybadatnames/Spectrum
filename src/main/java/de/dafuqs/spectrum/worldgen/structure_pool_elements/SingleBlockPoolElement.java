@@ -20,7 +20,7 @@ import java.util.*;
 
 public class SingleBlockPoolElement extends StructurePoolElement {
 	
-	public static final Codec<SingleBlockPoolElement> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+	public static final MapCodec<SingleBlockPoolElement> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
 			BlockState.CODEC.fieldOf("block").forGetter((pool) -> pool.state),
 			NbtCompound.CODEC.fieldOf("nbt").forGetter((pool) -> pool.blockNbt),
 			projectionGetter()
@@ -54,7 +54,7 @@ public class SingleBlockPoolElement extends StructurePoolElement {
 	
 	@Override
 	public List<StructureTemplate.StructureBlockInfo> getStructureBlockInfos(StructureTemplateManager structureTemplateManager, BlockPos pos, BlockRotation rotation, Random random) {
-		return List.of(new StructureTemplate.StructureBlockInfo(pos, Blocks.JIGSAW.getDefaultState().with(JigsawBlock.ORIENTATION, JigsawOrientation.byDirections(Direction.DOWN, Direction.SOUTH)), jigsawNbt));
+		return List.of(new StructureTemplate.StructureBlockInfo(pos, Blocks.JIGSAW.getDefaultState().with(JigsawBlock.ORIENTATION, Orientation.byDirections(Direction.DOWN, Direction.SOUTH)), jigsawNbt));
 	}
 	
 	@Override
@@ -64,7 +64,7 @@ public class SingleBlockPoolElement extends StructurePoolElement {
 	}
 	
 	@Override
-	public boolean generate(StructureTemplateManager structureTemplateManager, StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, BlockPos pos, BlockPos pivot, BlockRotation rotation, BlockBox box, Random random, boolean keepJigsaws) {
+	public boolean generate(StructureTemplateManager structureTemplateManager, StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, BlockPos pos, BlockPos pivot, BlockRotation rotation, BlockBox box, Random random, StructureLiquidSettings liquidSettings, boolean keepJigsaws) {
 		if (keepJigsaws) {
 			return true;
 		}
@@ -76,7 +76,7 @@ public class SingleBlockPoolElement extends StructurePoolElement {
 			
 			BlockEntity blockEntity = world.getBlockEntity(pos.down());
 			if (blockEntity != null) {
-				blockEntity.readNbt(this.blockNbt);
+				blockEntity.readComponentlessNbt(this.blockNbt, world.getRegistryManager());
 				return true;
 			}
 		}

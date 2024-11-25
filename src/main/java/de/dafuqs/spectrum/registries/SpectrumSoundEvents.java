@@ -5,6 +5,7 @@ import net.minecraft.registry.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 
+@SuppressWarnings("unused")
 public class SpectrumSoundEvents {
 	
 	// Music

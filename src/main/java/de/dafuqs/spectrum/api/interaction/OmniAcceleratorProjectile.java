@@ -18,7 +18,7 @@ public interface OmniAcceleratorProjectile {
 	
 	List<Pair<ItemPredicate, OmniAcceleratorProjectile>> PROJECTILES = new ArrayList<>();
 	
-	OmniAcceleratorProjectile DEFAULT = (stack, shooter, world) -> {
+	OmniAcceleratorProjectile DEFAULT = (stack, shooter, world, shotFrom) -> {
 		ItemProjectileEntity itemProjectileEntity = new ItemProjectileEntity(world, shooter);
 		itemProjectileEntity.setItem(stack);
 		itemProjectileEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 0.5F);
@@ -57,7 +57,7 @@ public interface OmniAcceleratorProjectile {
 	 * @return The created projectile. If not null, the fired stack will be decremented and the getSoundEffect() sound will play
 	 */
 	@Nullable
-	Entity createProjectile(ItemStack stack, LivingEntity shooter, World world);
+	Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom);
 	
 	/**
 	 * The sound effect to play when the projectile has been fired successfully

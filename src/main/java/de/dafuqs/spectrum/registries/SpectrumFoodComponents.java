@@ -43,8 +43,8 @@ public class SpectrumFoodComponents {
 			.nutrition(-1)
 			.saturationModifier(0)
 			.alwaysEdible()
-			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.ETERNAL_SLUMBER, 6000, 0), 0.95F)
-			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.FATAL_SLUMBER, 100, 0), 0.05F)
+			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.ETERNAL_SLUMBER, 6000), 0.95F)
+			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.FATAL_SLUMBER, 100), 0.05F)
 			.build();
 
 	public static final FoodComponent STAR_CANDY = new FoodComponent.Builder()

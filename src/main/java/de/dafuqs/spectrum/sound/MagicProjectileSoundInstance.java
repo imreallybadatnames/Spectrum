@@ -81,7 +81,7 @@ public class MagicProjectileSoundInstance extends AbstractSoundInstance implemen
 		this.repeat = false;
 
 		if (projectile.isRemoved() && !playedExplosion) {
-			client.player.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, Math.max(0.1F, this.volume / 4), 1.1F + client.world.random.nextFloat() * 0.2F);
+			client.player.playSoundToPlayer(SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.NEUTRAL, Math.max(0.1F, this.volume / 4), 1.1F + client.world.random.nextFloat() * 0.2F);
 			projectile.spawnImpactParticles();
 			playedExplosion = true;
 		}

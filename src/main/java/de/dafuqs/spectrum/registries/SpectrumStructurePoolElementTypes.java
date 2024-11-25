@@ -14,7 +14,7 @@ public class SpectrumStructurePoolElementTypes {
 	 */
 	public static final StructurePoolElementType<SingleBlockPoolElement> SINGLE_BLOCK_ELEMENT = registerType("single_block_element", SingleBlockPoolElement.CODEC);
 
-	static <P extends StructurePoolElement> StructurePoolElementType<P> registerType(String id, Codec<P> codec) {
+	static <P extends StructurePoolElement> StructurePoolElementType<P> registerType(String id, MapCodec<P> codec) {
 		return Registry.register(Registries.STRUCTURE_POOL_ELEMENT, SpectrumCommon.locate(id), () -> codec);
 	}
 	

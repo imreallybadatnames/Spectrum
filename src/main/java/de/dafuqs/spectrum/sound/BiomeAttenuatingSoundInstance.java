@@ -16,15 +16,16 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class BiomeAttenuatingSoundInstance extends AbstractSoundInstance implements TickableSoundInstance {
 
-    public static Optional<BiomeAttenuatingSoundInstance> WIND_HIGH = Optional.empty();
-    public static Optional<BiomeAttenuatingSoundInstance> WIND_LOW = Optional.empty();
-    public static Optional<BiomeAttenuatingSoundInstance> SHOWER = Optional.empty();
-    public static Optional<BiomeAttenuatingSoundInstance> LAMENTS = Optional.empty();
+    @Nullable public static BiomeAttenuatingSoundInstance WIND_HIGH = null;
+    @Nullable public static BiomeAttenuatingSoundInstance WIND_LOW = null;
+    @Nullable public static BiomeAttenuatingSoundInstance SHOWER = null;
+    @Nullable public static BiomeAttenuatingSoundInstance LAMENTS = null;
     private static boolean clear = true;
     private final MinecraftClient client = MinecraftClient.getInstance();
     private static final int MAX_DURATION = 80;
@@ -135,47 +136,47 @@ public class BiomeAttenuatingSoundInstance extends AbstractSoundInstance impleme
         var client = MinecraftClient.getInstance();
         clear = false;
 
-        if (WIND_HIGH.map(TickableSoundInstance::isDone).orElse(false)) {
-            WIND_HIGH = Optional.empty();
+        if (WIND_HIGH != null && WIND_HIGH.isDone()) {
+            WIND_HIGH = null;
         }
 
-        if (WIND_LOW.map(TickableSoundInstance::isDone).orElse(false)) {
-            WIND_LOW = Optional.empty();
+        if (WIND_LOW != null && WIND_LOW.isDone()) {
+            WIND_LOW = null;
         }
 
-        if (SHOWER.map(TickableSoundInstance::isDone).orElse(false)) {
-            SHOWER = Optional.empty();
+        if (SHOWER != null && SHOWER.isDone()) {
+            SHOWER = null;
         }
 
-        if (LAMENTS.map(TickableSoundInstance::isDone).orElse(false)) {
-            LAMENTS = Optional.empty();
+        if (LAMENTS != null && LAMENTS.isDone()) {
+            LAMENTS = null;
         }
 
         if (biome.matchesKey(SpectrumBiomes.HOWLING_SPIRES)) {
-            if (WIND_HIGH.isEmpty()) {
-                WIND_HIGH = Optional.of(new BiomeAttenuatingSoundInstance(SpectrumBiomes.HOWLING_SPIRES, SpectrumSoundEvents.HOWLING_WIND_HIGH, 0.525F, false));
-                client.getSoundManager().play(WIND_HIGH.get());
+            if (WIND_HIGH == null) {
+                WIND_HIGH = new BiomeAttenuatingSoundInstance(SpectrumBiomes.HOWLING_SPIRES, SpectrumSoundEvents.HOWLING_WIND_HIGH, 0.525F, false);
+                client.getSoundManager().play(WIND_HIGH);
             }
 
-            if (WIND_LOW.isEmpty()) {
-                WIND_LOW = Optional.of(new BiomeAttenuatingSoundInstance(SpectrumBiomes.HOWLING_SPIRES, SpectrumSoundEvents.HOWLING_WIND_LOW, 1.8F, true));
-                client.getSoundManager().play(WIND_LOW.get());
+            if (WIND_LOW == null) {
+                WIND_LOW = new BiomeAttenuatingSoundInstance(SpectrumBiomes.HOWLING_SPIRES, SpectrumSoundEvents.HOWLING_WIND_LOW, 1.8F, true);
+                client.getSoundManager().play(WIND_LOW);
             }
         }
         else if (biome.matchesKey(SpectrumBiomes.DEEP_DRIPSTONE_CAVES)) {
-            if (SHOWER.isEmpty()) {
-                SHOWER = Optional.of(new BiomeAttenuatingSoundInstance(SpectrumBiomes.DEEP_DRIPSTONE_CAVES, SpectrumSoundEvents.SHOWER, 2F, false));
-                client.getSoundManager().play(SHOWER.get());
+            if (SHOWER == null) {
+                SHOWER = new BiomeAttenuatingSoundInstance(SpectrumBiomes.DEEP_DRIPSTONE_CAVES, SpectrumSoundEvents.SHOWER, 2F, false);
+                client.getSoundManager().play(SHOWER);
             }
         }
         else if (biome.matchesKey(SpectrumBiomes.DRAGONROT_SWAMP)) {
-            if (LAMENTS.isEmpty()) {
-                LAMENTS = Optional.of(new BiomeAttenuatingSoundInstance(SpectrumBiomes.DRAGONROT_SWAMP, SpectrumSoundEvents.LAMENTS, 1.25F, true));
-                client.getSoundManager().play(LAMENTS.get());
+            if (LAMENTS == null) {
+                LAMENTS = new BiomeAttenuatingSoundInstance(SpectrumBiomes.DRAGONROT_SWAMP, SpectrumSoundEvents.LAMENTS, 1.25F, true);
+                client.getSoundManager().play(LAMENTS);
             }
-            if (SHOWER.isEmpty()) {
-                SHOWER = Optional.of(new BiomeAttenuatingSoundInstance(SpectrumBiomes.DRAGONROT_SWAMP, SpectrumSoundEvents.SHOWER, 2F, false));
-                client.getSoundManager().play(SHOWER.get());
+            if (SHOWER == null) {
+                SHOWER = new BiomeAttenuatingSoundInstance(SpectrumBiomes.DRAGONROT_SWAMP, SpectrumSoundEvents.SHOWER, 2F, false);
+                client.getSoundManager().play(SHOWER);
             }
         }
     }
@@ -184,24 +185,24 @@ public class BiomeAttenuatingSoundInstance extends AbstractSoundInstance impleme
         if (clear)
             return;
 
-        if (WIND_HIGH.isPresent()) {
-            WIND_HIGH.get().finished = true;
-            WIND_HIGH = Optional.empty();
+        if (WIND_HIGH != null) {
+            WIND_HIGH.finished = true;
+            WIND_HIGH = null;
         }
 
-        if (WIND_LOW.isPresent()) {
-            WIND_LOW.get().finished = true;
-            WIND_LOW = Optional.empty();
+        if (WIND_LOW != null) {
+            WIND_LOW.finished = true;
+            WIND_LOW = null;
         }
 
-        if (SHOWER.isPresent()) {
-            SHOWER.get().finished = true;
-            SHOWER = Optional.empty();
+        if (SHOWER != null) {
+            SHOWER.finished = true;
+            SHOWER = null;
         }
 
-        if (LAMENTS.isPresent()) {
-            LAMENTS.get().finished = true;
-            LAMENTS = Optional.empty();
+        if (LAMENTS != null) {
+            LAMENTS.finished = true;
+            LAMENTS = null;
         }
 
         clear = true;

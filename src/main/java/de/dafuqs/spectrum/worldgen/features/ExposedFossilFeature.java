@@ -23,7 +23,8 @@ public class ExposedFossilFeature extends Feature<FossilFeatureConfig> {
 		super(codec);
 	}
 	
-	@Override
+    @Override
+	@SuppressWarnings("resource")
 	public boolean generate(FeatureContext<FossilFeatureConfig> context) {
 		Random random = context.getRandom();
 		StructureWorldAccess structureWorldAccess = context.getWorld();

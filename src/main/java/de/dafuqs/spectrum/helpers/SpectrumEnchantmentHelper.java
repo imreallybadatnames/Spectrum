@@ -124,15 +124,9 @@ public class SpectrumEnchantmentHelper {
 				|| newEnchantments.stream().anyMatch(newEnchantment ->
 						EnchantmentHelper.isCompatible(existingEnchantments, newEnchantment));
 	}
-	
-	/**
-	 * Removes the enchantments on a stack of items / enchanted book
-	 * @param itemStack    the stack
-	 * @param enchantments the enchantments to remove
-	 * @return The resulting stack & the count of enchants that were removed
-	 */
+
 	@SafeVarargs
-    public static Pair<ItemStack, Integer> removeEnchantments(RegistryWrapper.WrapperLookup registryLookup, @NotNull ItemStack itemStack, RegistryKey<Enchantment>... enchantmentKeys) {
+	public static Pair<ItemStack, Integer> removeEnchantments(RegistryWrapper.WrapperLookup registryLookup, @NotNull ItemStack itemStack, RegistryKey<Enchantment>... enchantmentKeys) {
 		if (!EnchantmentHelper.hasEnchantments(itemStack)) {
 			return new Pair<>(itemStack, 0);
 		}
@@ -142,9 +136,27 @@ public class SpectrumEnchantmentHelper {
 			return new Pair<>(itemStack, 0);
 		}
 
+		return removeEnchantments(itemStack, Arrays.stream(enchantmentKeys)
+				.map(key -> wrapper.getOptional(key).orElse(null))
+				.filter(Objects::nonNull)
+				.toList());
+	}
+
+	@SafeVarargs
+	public static Pair<ItemStack, Integer> removeEnchantments(@NotNull ItemStack itemStack, RegistryEntry<Enchantment>... enchantments) {
+		return removeEnchantments(itemStack, Arrays.stream(enchantments).toList());
+	}
+
+	/**
+	 * Removes the enchantments on a stack of items / enchanted book
+	 * @param itemStack    the stack
+	 * @param enchantments the enchantments to remove
+	 * @return The resulting stack & the count of enchants that were removed
+	 */
+    public static <T extends RegistryEntry<Enchantment>> Pair<ItemStack, Integer> removeEnchantments(@NotNull ItemStack itemStack, List<T> enchantments) {
 		var removals = new AtomicInteger(0);
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack));
-		Arrays.stream(enchantmentKeys).map(key -> wrapper.getOptional(key).orElse(null)).filter(Objects::nonNull).forEach(enchantment -> {
+		enchantments.forEach(enchantment -> {
 			if (builder.getLevel(enchantment) > 0) {
 				builder.set(enchantment, 0);
 				removals.getAndIncrement();

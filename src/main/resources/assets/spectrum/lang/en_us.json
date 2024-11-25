@@ -5004,6 +5004,10 @@
   "itemGroup.spectrum.pure_resources": "Pure Resources",
   "itemGroup.spectrum.resources": "Resources",
 
+  "jukebox_song.spectrum.credits": "Radiarc - Irrelevance Fading",
+  "jukebox_song.spectrum.divinity": "Proper Motions - Everreflective",
+  "jukebox_song.spectrum.discovery": "DaveJF - The Mist",
+
   "message.spectrum.needs_item_to_harvest": "Harvesting requires a ",
 
   "multiblock.spectrum.abyssal_vines": "Abyssal Vines",

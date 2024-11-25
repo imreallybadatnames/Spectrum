@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.structure.pool.*;
+import net.minecraft.structure.pool.alias.StructurePoolAliasLookup;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.*;
@@ -27,9 +28,10 @@ import java.util.function.*;
  * This different jigsaw structure uses the chunk generator sample instead of a heightmap for its placement
  * Making it easier to place at a position that matches a certain condition
  */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class UndergroundJigsawStructure extends Structure {
 	
-	public static final Codec<UndergroundJigsawStructure> CODEC = RecordCodecBuilder.<UndergroundJigsawStructure>mapCodec((instance) ->
+	public static final MapCodec<UndergroundJigsawStructure> CODEC = RecordCodecBuilder.mapCodec((instance) ->
 			instance.group(UndergroundJigsawStructure.configCodecBuilder(instance),
 					StructurePool.REGISTRY_CODEC.fieldOf("start_pool").forGetter((structure) -> structure.startPool),
 					Identifier.CODEC.optionalFieldOf("start_jigsaw_name").forGetter((structure) -> structure.startJigsawName),
@@ -39,7 +41,7 @@ public class UndergroundJigsawStructure extends Structure {
 					Codec.intRange(0, 64).fieldOf("placement_check_width").forGetter((structure) -> structure.placementCheckWidth),
 					Codec.intRange(0, 64).fieldOf("placement_check_height").forGetter((structure) -> structure.placementCheckHeight),
 					Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter((structure) -> structure.maxDistanceFromCenter)
-			).apply(instance, UndergroundJigsawStructure::new)).codec();
+			).apply(instance, UndergroundJigsawStructure::new));
 	
 	protected final RegistryEntry<StructurePool> startPool;
 	protected final Optional<Identifier> startJigsawName;
@@ -86,7 +88,18 @@ public class UndergroundJigsawStructure extends Structure {
 			return Optional.empty();
 		}
 		
-		return StructurePoolBasedGenerator.generate(context, this.startPool, this.startJigsawName, this.size, new BlockPos(x, floorHeight.get(), z), false, Optional.empty(), this.maxDistanceFromCenter);
+		return StructurePoolBasedGenerator.generate(
+				context,
+				this.startPool,
+				this.startJigsawName,
+				this.size,
+				new BlockPos(x, floorHeight.get(), z),
+				false,
+				Optional.empty(),
+				this.maxDistanceFromCenter,
+				StructurePoolAliasLookup.EMPTY,
+				JigsawStructure.DEFAULT_DIMENSION_PADDING,
+				JigsawStructure.DEFAULT_LIQUID_SETTINGS);
 	}
 	
 	@Override

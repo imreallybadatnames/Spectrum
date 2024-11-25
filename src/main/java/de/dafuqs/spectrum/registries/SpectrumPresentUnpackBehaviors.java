@@ -5,6 +5,8 @@ import de.dafuqs.spectrum.blocks.boom.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.present.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.projectile.*;
@@ -98,7 +100,8 @@ public class SpectrumPresentUnpackBehaviors {
 				entity.setItem(stack);
 				world.spawnEntity(entity);
 			}
-			world.syncWorldEvent(WorldEvents.SPLASH_POTION_SPLASHED, pos, PotionUtil.getColor(Potions.WATER));
+			var component = stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT);
+			world.syncWorldEvent(WorldEvents.SPLASH_POTION_SPLASHED, pos, component.getColor());
 			return ItemStack.EMPTY;
 		};
 		PresentBlock.registerBehavior(Items.SPLASH_POTION, POTION_BEHAVIOR);
@@ -110,7 +113,7 @@ public class SpectrumPresentUnpackBehaviors {
 				totalXP += 3 + random.nextInt(5) + random.nextInt(5);
 			}
 			
-			world.syncWorldEvent(WorldEvents.SPLASH_POTION_SPLASHED, pos, PotionUtil.getColor(Potions.WATER));
+			world.syncWorldEvent(WorldEvents.SPLASH_POTION_SPLASHED, pos, new PotionContentsComponent(Potions.WATER).getColor());
 			ExperienceOrbEntity.spawn(world, Vec3d.ofCenter(pos), totalXP);
 			return ItemStack.EMPTY;
 		});

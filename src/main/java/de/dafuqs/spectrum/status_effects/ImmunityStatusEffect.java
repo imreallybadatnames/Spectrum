@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.status_effects;
 
 import de.dafuqs.spectrum.items.trinkets.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 
 public class ImmunityStatusEffect extends StatusEffect {
@@ -17,14 +16,14 @@ public class ImmunityStatusEffect extends StatusEffect {
 	}
 
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		super.applyUpdateEffect(entity, amplifier);
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		WhispyCircletItem.removeNegativeStatusEffects(entity);
+		return super.applyUpdateEffect(entity, amplifier);
 	}
 
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		super.onApplied(entity, attributes, amplifier);
+	public void onApplied(LivingEntity entity, int amplifier) {
+		super.onApplied(entity, amplifier);
 		WhispyCircletItem.removeNegativeStatusEffects(entity);
 	}
 	

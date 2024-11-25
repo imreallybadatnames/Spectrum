@@ -18,7 +18,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 	public static void register() {
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				PotionEntity potionEntity = new PotionEntity(world, shooter);
 				potionEntity.setItem(stack);
 				potionEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), -20.0F, 2.0F, 1.0F);
@@ -34,7 +34,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				PotionEntity potionEntity = new PotionEntity(world, shooter);
 				potionEntity.setItem(stack);
 				potionEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), -20.0F, 2.0F, 1.0F);
@@ -50,7 +50,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				EnderPearlEntity enderPearlEntity = new EnderPearlEntity(world, shooter);
 				enderPearlEntity.setItem(stack);
 				enderPearlEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 1.0F);
@@ -66,9 +66,9 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				if (stack.getItem() instanceof ArrowItem arrowItem) {
-					PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, stack, shooter);
+					PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, stack, shooter, shotFrom);
 					arrowEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 1.0F);
 					world.spawnEntity(arrowEntity);
 					return arrowEntity;
@@ -84,7 +84,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				SnowballEntity snowballEntity = new SnowballEntity(world, shooter);
 				snowballEntity.setItem(stack);
 				snowballEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 1.0F);
@@ -100,7 +100,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				EggEntity eggEntity = new EggEntity(world, shooter);
 				eggEntity.setItem(stack);
 				eggEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 1.0F);
@@ -116,7 +116,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				Vec3d pos = shooter.getPos();
 				TntEntity tntEntity = new TntEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, shooter);
 				OmniAcceleratorProjectile.setVelocity(tntEntity, shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.0F, 1.0F);
@@ -135,7 +135,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				BlockFlooderProjectile blockFlooderProjectile = new BlockFlooderProjectile(world, shooter);
 				blockFlooderProjectile.setItem(stack);
 				blockFlooderProjectile.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 1.5F, 1.0F);
@@ -151,7 +151,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				ParametricMiningDeviceEntity entity = new ParametricMiningDeviceEntity(world, shooter);
 				entity.setItem(stack);
 				entity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0, 1.5F, 0F);
@@ -167,7 +167,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				FireworkRocketEntity fireworkRocketEntity = new FireworkRocketEntity(world, stack, shooter);
 				fireworkRocketEntity.setVelocity(shooter, shooter.getPitch(), shooter.getYaw(), 0, 1.5F, 0F);
 				world.spawnEntity(fireworkRocketEntity);
@@ -182,7 +182,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
-			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world, ItemStack shotFrom) {
 				ShootingStarEntity shootingStarEntity = ((ShootingStarItem) stack.getItem()).getEntityForStack(world, shooter.getEyePos(), stack);
 				OmniAcceleratorProjectile.setVelocity(shootingStarEntity, shooter, shooter.getPitch(), shooter.getYaw(), 0, 3.0F, 0F);
 				world.spawnEntity(shootingStarEntity);

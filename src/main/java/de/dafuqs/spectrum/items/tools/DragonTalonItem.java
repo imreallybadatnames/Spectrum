@@ -27,7 +27,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class DragonTalonItem extends MalachiteBidentItem implements MergeableItem, SlotReservingItem, ExtendedEnchantable, TranstargetItem, SlotBackgroundEffectProvider {
+public class DragonTalonItem extends MalachiteBidentItem implements MergeableItem, SlotReservingItem, ExtendedEnchantable, SlotBackgroundEffectProvider {
 	
 	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("3b9a13c8-a9a7-4545-8c32-e60baf25823e");
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers, phantomModifiers;
@@ -216,11 +216,6 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 	@Override
 	public Map<Enchantment, Integer> getDefaultEnchantments() {
 		return Map.of();
-	}
-	
-	@Override
-	public EnchantmentTarget getRealTarget() {
-		return EnchantmentTarget.WEAPON;
 	}
 	
 	@Override

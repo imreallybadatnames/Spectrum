@@ -25,8 +25,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 
-import java.util.*;
-
 public abstract class MidnightSolutionFluid extends SpectrumFluid {
 	
 	@Override
@@ -139,14 +137,16 @@ public abstract class MidnightSolutionFluid extends SpectrumFluid {
 		ItemStack itemStack = itemEntity.getStack();
 		// if the item is enchanted: remove enchantments and spawn XP
 		// basically disenchanting the item
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(itemStack);
+		var enchantments = EnchantmentHelper.getEnchantments(itemStack);
 		if (!enchantments.isEmpty()) {
-			int randomEnchantmentIndex = world.random.nextInt(enchantments.size());
-			Enchantment enchantmentToRemove = (Enchantment) enchantments.keySet().toArray()[randomEnchantmentIndex];
+			int randomEnchantmentIndex = world.random.nextInt(enchantments.getSize());
+			var entry = enchantments.getEnchantmentEntries().stream().toList().get(randomEnchantmentIndex);
+			var enchantmentToRemove = entry.getKey();
+			var level = entry.getIntValue();
 			Pair<ItemStack, Integer> result = SpectrumEnchantmentHelper.removeEnchantments(itemStack, enchantmentToRemove);
 			
 			if (result.getRight() > 0) {
-				int experience = EnchanterBlockEntity.getEnchantingPrice(itemStack, enchantmentToRemove, enchantments.get(enchantmentToRemove));
+				int experience = EnchanterBlockEntity.getEnchantingPrice(itemStack, enchantmentToRemove, level);
 				experience /= EXPERIENCE_DISENCHANT_RETURN_DIV;
 				if (experience > 0) {
 					ExperienceOrbEntity experienceOrbEntity = new ExperienceOrbEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), experience);

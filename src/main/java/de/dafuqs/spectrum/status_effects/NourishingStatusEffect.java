@@ -13,15 +13,16 @@ public class NourishingStatusEffect extends SpectrumStatusEffect {
 	
 	@Override
 	public String getTranslationKey() {
-		return StatusEffects.SATURATION.getTranslationKey();
+		return StatusEffects.SATURATION.value().getTranslationKey();
 	}
 	
 	@Override
-	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
 		World world = entity.getWorld();
 		if (!world.isClient && entity instanceof PlayerEntity playerEntity) {
 			playerEntity.getHungerManager().add(1, 0.25F);
 		}
+		return super.applyUpdateEffect(entity, amplifier);
 	}
 	
 	@Override

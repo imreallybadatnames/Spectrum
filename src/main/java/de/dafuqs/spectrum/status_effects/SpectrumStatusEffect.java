@@ -12,8 +12,6 @@ public class SpectrumStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
-	
 	}
-	
 	
 }

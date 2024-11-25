@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 
+@SuppressWarnings("unused")
 public class SpectrumStampDataCategories {
 
     public static StampDataCategory UNIQUE = register(StampDataCategory.UNIQUE, StampDataCategory.UNIQUE.getId());
