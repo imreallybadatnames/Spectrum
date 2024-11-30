@@ -36,7 +36,7 @@
             "key": "StoredEnchantments",
             "minLevel": 2,
             "maxLevel": 255,
-            "enchantmentId": "spectrum:sniping"
+            "enchantmentId": "spectrum:cloaked/sniping"
           }
         ]
       }

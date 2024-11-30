@@ -2,19 +2,20 @@
   "description": {
     "translate": "enchantment.spectrum.serendipity_reel"
   },
-  "anvil_cost": 4,
+  "anvil_cost": 0,
+  "exclusive_set": "#spectrum:exclusive_set/serendipity_reel",
   "max_cost": {
-    "base": 120,
+    "base": 0,
     "per_level_above_first": 0
   },
   "max_level": 2,
   "min_cost": {
-    "base": 40,
+    "base": 0,
     "per_level_above_first": 0
   },
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/fishing",
-  "weight": 2
+  "supported_items": "#spectrum:enchantable/serendipity_reel",
+  "weight": 1
 }

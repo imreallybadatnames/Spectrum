@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:tight_grip",
+              "id": "spectrum:cloaked/tight_grip",
               "lvl": "2s"
             }
           ]

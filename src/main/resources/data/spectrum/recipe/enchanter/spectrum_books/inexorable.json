@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:inexorable",
+          "id": "spectrum:cloaked/inexorable",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:inexorable"
+        "spectrum:cloaked/inexorable"
       ]
     }
   ]

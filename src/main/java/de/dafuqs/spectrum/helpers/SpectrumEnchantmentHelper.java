@@ -202,14 +202,6 @@ public class SpectrumEnchantmentHelper {
 				.orElse(0);
 	}
 
-	public static int getUsableLevel(SpectrumEnchantment enchantment, ItemStack itemStack, Entity entity) {
-		int level = EnchantmentHelper.getLevel(enchantment, itemStack);
-		if (level > 0 && !enchantment.canEntityUse(entity)) {
-			level = 0;
-		}
-		return level;
-	}
-
 	public static Optional<RegistryWrapper.Impl<Enchantment>> getRegistry(RegistryWrapper.WrapperLookup registryLookup) {
 		return registryLookup.getOptionalWrapper(RegistryKeys.ENCHANTMENT);
 	}

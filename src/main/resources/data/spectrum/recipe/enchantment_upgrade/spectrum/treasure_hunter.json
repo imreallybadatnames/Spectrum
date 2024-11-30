@@ -28,7 +28,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:treasure_hunter"
+        "spectrum:cloaked/treasure_hunter"
       ]
     }
   ]

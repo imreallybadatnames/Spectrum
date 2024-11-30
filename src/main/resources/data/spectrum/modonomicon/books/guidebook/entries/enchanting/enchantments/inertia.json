@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:inertia",
+              "id": "spectrum:cloaked/inertia",
               "lvl": "3s"
             }
           ]

@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:sniping",
+          "id": "spectrum:cloaked/sniping",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:sniping"
+        "spectrum:cloaked/sniping"
       ]
     }
   ]

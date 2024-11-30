@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:clovers_favor",
+              "id": "spectrum:cloaked/clovers_favor",
               "lvl": "3s"
             }
           ]

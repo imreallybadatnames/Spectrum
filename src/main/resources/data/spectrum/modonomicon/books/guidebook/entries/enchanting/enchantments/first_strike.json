@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:first_strike",
+              "id": "spectrum:cloaked/first_strike",
               "lvl": "2s"
             }
           ]

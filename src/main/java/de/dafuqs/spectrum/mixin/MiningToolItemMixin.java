@@ -33,7 +33,7 @@ public abstract class MiningToolItemMixin {
 		if (stack != null) { // thank you, gobber
 			long inertiaAmount = 0;
 
-			if (SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.INERTIA, stack, miner) > 0) {
+			if (SpectrumEnchantmentHelper.getLevel(miner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack) > 0) {
 				NbtCompound compound = stack.getOrCreateNbt();
 				Identifier brokenBlockIdentifier = Registries.BLOCK.getId(state.getBlock());
 				if (compound.getString("Inertia_LastMinedBlock").equals(brokenBlockIdentifier.toString())) {

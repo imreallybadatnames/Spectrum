@@ -1,22 +1,15 @@
 package de.dafuqs.spectrum.enchantments;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.block.*;
-import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.item.*;
 import net.minecraft.sound.*;
-import net.minecraft.util.*;
 
 import java.util.*;
 
-public class DisarmingEnchantment extends SpectrumEnchantment {
-	
-	public DisarmingEnchantment(Rarity weight, Identifier unlockAdvancementIdentifier, EquipmentSlot... slotTypes) {
-		super(weight, EnchantmentTarget.WEAPON, slotTypes, unlockAdvancementIdentifier);
-	}
+public class DisarmingEnchantment {
 	
 	public static void disarmEntity(LivingEntity livingEntity) {
 		// since endermen save their carried block as blockState, not in hand
@@ -53,25 +46,5 @@ public class DisarmingEnchantment extends SpectrumEnchantment {
 			break;
 		}
 	}
-	
-	@Override
-	public int getMinPower(int level) {
-		return 10;
-	}
-	
-	@Override
-	public int getMaxPower(int level) {
-		return super.getMinPower(level) + 30;
-	}
-	
-	@Override
-	public int getMaxLevel() {
-		return SpectrumCommon.CONFIG.DisarmingMaxLevel;
-	}
-	
-	@Override
-	public boolean isAcceptableItem(ItemStack stack) {
-		return super.isAcceptableItem(stack) || stack.getItem() instanceof AxeItem;
-	}
-	
+
 }

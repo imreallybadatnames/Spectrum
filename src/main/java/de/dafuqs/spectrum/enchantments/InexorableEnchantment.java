@@ -4,16 +4,10 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
-import net.minecraft.item.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
-import net.minecraft.util.*;
 
-public class InexorableEnchantment extends SpectrumEnchantment {
-    
-    public InexorableEnchantment(Rarity weight, Identifier unlockAdvancementIdentifier, EquipmentSlot... slotTypes) {
-        super(weight, EnchantmentTarget.ARMOR_CHEST, slotTypes, unlockAdvancementIdentifier);
-    }
+public class InexorableEnchantment {
     
     public static void checkAndRemoveSlowdownModifiers(LivingEntity entity) {
 		var armorInexorable = isArmorActive(entity);
@@ -57,31 +51,6 @@ public class InexorableEnchantment extends SpectrumEnchantment {
         }
     }
     
-    @Override
-    public int getMinPower(int level) {
-        return 50;
-    }
-    
-    @Override
-    public int getMaxPower(int level) {
-        return 100;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
-
-    @Override
-    public boolean isAcceptableItem(ItemStack stack) {
-        var item = stack.getItem();
-
-        if (item instanceof ArmorItem armor)
-            return armor.getSlotType() == EquipmentSlot.CHEST;
-
-        return item instanceof ToolItem || item instanceof TridentItem;
-    }
-
     public static boolean isArmorActive(LivingEntity entity) {
         return EnchantmentHelper.getLevel(SpectrumEnchantments.INEXORABLE, entity.getEquippedStack(EquipmentSlot.CHEST)) > 0;
     }

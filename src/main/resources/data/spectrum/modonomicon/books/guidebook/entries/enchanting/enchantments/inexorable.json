@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:inexorable",
+              "id": "spectrum:cloaked/inexorable",
               "lvl": "1s"
             }
           ]

@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:disarming",
+              "id": "spectrum:cloaked/disarming",
               "lvl": "2s"
             }
           ]

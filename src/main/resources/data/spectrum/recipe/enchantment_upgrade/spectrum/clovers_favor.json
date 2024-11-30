@@ -1,6 +1,6 @@
 {
   "type": "spectrum:enchantment_upgrade",
-  "enchantment": "spectrum:clovers_favor",
+  "enchantment": "spectrum:cloaked/clovers_favor",
   "levels": [
     {
       "experience": 200,
@@ -33,7 +33,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:clovers_favor"
+        "spectrum:cloaked/clovers_favor"
       ]
     }
   ]

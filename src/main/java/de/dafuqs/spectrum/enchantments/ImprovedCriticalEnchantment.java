@@ -24,32 +24,5 @@ public class ImprovedCriticalEnchantment extends SpectrumEnchantment {
 		return SpectrumCommon.CONFIG.ImprovedCriticalExtraDamageMultiplierPerLevel * improvedCriticalLevel;
 	}
 	
-	@Override
-	public int getMinPower(int level) {
-		return 10;
-	}
-	
-	@Override
-	public int getMaxPower(int level) {
-		return super.getMinPower(level) + 30;
-	}
-	
-	@Override
-	public int getMaxLevel() {
-		return SpectrumCommon.CONFIG.ImprovedCriticalMaxLevel;
-	}
-	
-	@Override
-	public boolean canAccept(Enchantment other) {
-		return other != Enchantments.SHARPNESS && !(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && other == EnchantmentRegistry.HAUNTED.get())
-		&& super.canAccept(other);
-	}
-	
-	@Override
-	public boolean isAcceptableItem(ItemStack stack) {
-		return super.isAcceptableItem(stack) || stack.getItem() instanceof AxeItem ||
-				(SpectrumIntegrationPacks.isIntegrationPackActive(SpectrumIntegrationPacks.MALUM_ID) && stack.getItem() instanceof MalumScytheItem);
-	}
-	
 }
 

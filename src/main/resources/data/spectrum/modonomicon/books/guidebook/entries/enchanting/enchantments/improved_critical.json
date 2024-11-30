@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:improved_critical",
+              "id": "spectrum:cloaked/improved_critical",
               "lvl": "2s"
             }
           ]

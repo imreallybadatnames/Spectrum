@@ -5,7 +5,7 @@
   "effects": {
     "spectrum:cloaked": [
       {
-        "effect": "spectrum:pest_control",
+        "effect": "spectrum:treasure_hunter",
         "requirements": [
           {
             "type": "minecraft:inverted",

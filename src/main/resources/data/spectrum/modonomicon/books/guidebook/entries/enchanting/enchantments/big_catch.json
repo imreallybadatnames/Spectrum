@@ -10,7 +10,7 @@
       },
       {
         "type": "spectrum:enchantment_registered",
-        "enchantment_id": "spectrum:big_catch"
+        "enchantment_id": "spectrum:cloaked/big_catch"
       }
     ]
   },
@@ -36,7 +36,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:big_catch",
+              "id": "spectrum:cloaked/big_catch",
               "lvl": "3s"
             }
           ]

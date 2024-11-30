@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:disarming",
+          "id": "spectrum:cloaked/disarming",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:disarming"
+        "spectrum:cloaked/disarming"
       ]
     }
   ]

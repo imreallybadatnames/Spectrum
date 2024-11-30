@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:foundry",
+              "id": "spectrum:cloaked/foundry",
               "lvl": "1s"
             }
           ]

@@ -42,7 +42,7 @@ public abstract class ServerPlayerEntityMixin {
 			}
 			
 			if (source.getAttacker() instanceof LivingEntity livingSource) {
-				int disarmingLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.DISARMING, livingSource.getMainHandStack(), livingSource);
+				int disarmingLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), SpectrumEnchantments.DISARMING, livingSource.getMainHandStack());
 				if (disarmingLevel > 0 && Math.random() < disarmingLevel * SpectrumCommon.CONFIG.DisarmingChancePerLevelPlayers) {
 					DisarmingEnchantment.disarmEntity(thisPlayer);
 				}

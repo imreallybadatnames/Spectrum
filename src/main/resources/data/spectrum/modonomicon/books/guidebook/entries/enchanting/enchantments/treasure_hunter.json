@@ -35,7 +35,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:treasure_hunter",
+              "id": "spectrum:cloaked/treasure_hunter",
               "lvl": "3s"
             }
           ]

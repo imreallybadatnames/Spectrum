@@ -109,7 +109,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 		var difMod = 4F;
 		var airborne = !owner.isOnGround();
 		var sneaking = owner.isSneaking();
-		var inertia = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.INERTIA, getTrackedStack(), owner);
+		var inertia = SpectrumEnchantmentHelper.getLevel(owner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, getTrackedStack());
 		
 		if (sneaking)
 			difMod *= 3;

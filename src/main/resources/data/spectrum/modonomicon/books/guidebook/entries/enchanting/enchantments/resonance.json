@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:resonance",
+              "id": "spectrum:cloaked/resonance",
               "lvl": "1s"
             }
           ]

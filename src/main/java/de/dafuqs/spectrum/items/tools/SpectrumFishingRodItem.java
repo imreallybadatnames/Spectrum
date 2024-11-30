@@ -42,12 +42,13 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 		} else {
 			world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
 			if (!world.isClient) {
-				int luckOfTheSeaLevel = EnchantmentHelper.getLuckOfTheSea(itemStack);
-				int lureLevel = EnchantmentHelper.getLure(itemStack);
-				int exuberanceLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.EXUBERANCE, itemStack, user);
-				int bigCatchLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.BIG_CATCH, itemStack, user);
-				int serendipityReelLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.SERENDIPITY_REEL, itemStack, user);
-				boolean inventoryInsertion = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.INVENTORY_INSERTION, itemStack, user) > 0;
+				var drm = world.getRegistryManager();
+				int luckOfTheSeaLevel = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.LUCK_OF_THE_SEA, itemStack);
+				int lureLevel = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.LURE, itemStack);
+				int exuberanceLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.EXUBERANCE, itemStack);
+				int bigCatchLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.BIG_CATCH, itemStack);
+				int serendipityReelLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.SERENDIPITY_REEL, itemStack);
+				boolean inventoryInsertion = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.INVENTORY_INSERTION, itemStack) > 0;
 				boolean shouldSmeltDrops = shouldSmeltDrops(itemStack, user);
 				spawnBobber(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, shouldSmeltDrops);
 			}

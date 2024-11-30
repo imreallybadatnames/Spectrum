@@ -1,6 +1,6 @@
 {
   "type": "spectrum:enchantment_upgrade",
-  "enchantment": "spectrum:sniping",
+  "enchantment": "spectrum:cloaked/sniping",
   "levels": [
     {
       "experience": 200,
@@ -28,7 +28,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:sniping"
+        "spectrum:cloaked/sniping"
       ]
     }
   ]

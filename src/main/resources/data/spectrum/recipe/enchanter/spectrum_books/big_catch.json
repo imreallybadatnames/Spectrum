@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:big_catch",
+          "id": "spectrum:cloaked/big_catch",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:big_catch"
+        "spectrum:cloaked/big_catch"
       ]
     }
   ]

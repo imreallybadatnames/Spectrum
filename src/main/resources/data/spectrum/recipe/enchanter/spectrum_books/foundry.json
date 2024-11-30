@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:foundry"
+        "spectrum:cloaked/foundry"
       ]
     }
   ]

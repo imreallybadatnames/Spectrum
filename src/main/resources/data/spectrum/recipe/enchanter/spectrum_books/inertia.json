@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:inertia",
+          "id": "spectrum:cloaked/inertia",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:inertia"
+        "spectrum:cloaked/inertia"
       ]
     }
   ]

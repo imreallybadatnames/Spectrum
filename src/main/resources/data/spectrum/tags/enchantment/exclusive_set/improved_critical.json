@@ -1,5 +1,6 @@
 {
   "values": [
+    "#spectrum:improved_critical",
     "minecraft:sharpness",
     {
       "id": "malum:haunted",

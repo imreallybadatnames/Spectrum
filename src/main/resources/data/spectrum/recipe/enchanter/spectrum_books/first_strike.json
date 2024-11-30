@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:first_strike",
+          "id": "spectrum:cloaked/first_strike",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:first_strike"
+        "spectrum:cloaked/first_strike"
       ]
     }
   ]

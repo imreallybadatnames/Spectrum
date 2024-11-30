@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:clovers_favor",
+          "id": "spectrum:cloaked/clovers_favor",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:clovers_favor"
+        "spectrum:cloaked/clovers_favor"
       ]
     }
   ]

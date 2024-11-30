@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:pest_control",
+              "id": "spectrum:cloaked/pest_control",
               "lvl": "1s"
             }
           ]

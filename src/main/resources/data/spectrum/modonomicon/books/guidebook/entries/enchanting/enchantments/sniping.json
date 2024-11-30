@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:sniping",
+              "id": "spectrum:cloaked/sniping",
               "lvl": "2s"
             }
           ]

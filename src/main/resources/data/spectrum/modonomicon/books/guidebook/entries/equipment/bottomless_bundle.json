@@ -71,7 +71,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:voiding",
+              "id": "spectrum:cloaked/voiding",
               "lvl": "1s"
             }
           ]

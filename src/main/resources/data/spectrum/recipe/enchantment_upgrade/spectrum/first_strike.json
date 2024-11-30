@@ -1,6 +1,6 @@
 {
   "type": "spectrum:enchantment_upgrade",
-  "enchantment": "spectrum:first_strike",
+  "enchantment": "spectrum:cloaked/first_strike",
   "levels": [
     {
       "experience": 200,
@@ -28,7 +28,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:first_strike"
+        "spectrum:cloaked/first_strike"
       ]
     }
   ]

@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:steadfast",
+              "id": "spectrum:cloaked/steadfast",
               "lvl": "1s"
             }
           ]

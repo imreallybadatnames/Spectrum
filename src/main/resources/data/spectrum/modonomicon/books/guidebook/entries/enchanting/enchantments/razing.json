@@ -27,7 +27,7 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:razing",
+              "id": "spectrum:cloaked/razing",
               "lvl": "3s"
             }
           ]

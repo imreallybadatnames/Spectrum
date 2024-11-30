@@ -20,7 +20,7 @@ public abstract class FirstStrikeEnchantmentMixin {
 		if (source.getAttacker() instanceof LivingEntity livingAttacker) {
 			if (amount != 0F && target.getHealth() == target.getMaxHealth()) {
 				ItemStack mainHandStack = livingAttacker.getMainHandStack();
-				int level = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.FIRST_STRIKE, mainHandStack, livingAttacker);
+				int level = SpectrumEnchantmentHelper.getLevel(livingAttacker.getWorld().getRegistryManager(), SpectrumEnchantments.FIRST_STRIKE, mainHandStack);
 				if (level > 0) {
 					float additionalDamage = getAdditionalFirstStrikeEnchantmentDamage(level);
 					amount += additionalDamage;

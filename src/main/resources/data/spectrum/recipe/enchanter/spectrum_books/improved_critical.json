@@ -36,7 +36,7 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "spectrum:improved_critical",
+          "id": "spectrum:cloaked/improved_critical",
           "lvl": "1s"
         }
       ]
@@ -47,7 +47,7 @@
     {
       "condition": "spectrum:enchantments_exist",
       "values": [
-        "spectrum:improved_critical"
+        "spectrum:cloaked/improved_critical"
       ]
     }
   ]

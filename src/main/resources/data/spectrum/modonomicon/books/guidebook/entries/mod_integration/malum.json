@@ -55,43 +55,43 @@
         "nbt": {
           "Enchantments": [
             {
-              "id": "spectrum:clovers_favor",
+              "id": "spectrum:cloaked/clovers_favor",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:exuberance",
+              "id": "spectrum:cloaked/exuberance",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:first_strike",
+              "id": "spectrum:cloaked/first_strike",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:improved_critical",
+              "id": "spectrum:cloaked/improved_critical",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:inventory_insertion",
+              "id": "spectrum:cloaked/inventory_insertion",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:treasure_hunter",
+              "id": "spectrum:cloaked/treasure_hunter",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:tight_grip",
+              "id": "spectrum:cloaked/tight_grip",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:steadfast",
+              "id": "spectrum:cloaked/steadfast",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:indestructible",
+              "id": "spectrum:cloaked/indestructible",
               "lvl": "1s"
             },
             {
-              "id": "spectrum:inexorable",
+              "id": "spectrum:cloaked/inexorable",
               "lvl": "1s"
             }
           ]
