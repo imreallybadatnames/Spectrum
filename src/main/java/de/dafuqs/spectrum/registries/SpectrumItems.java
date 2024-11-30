@@ -140,7 +140,7 @@ public class SpectrumItems {
 	public static final Item DRAGONRENDING_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterials.ToolMaterial.DRACONIC, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterials.ToolMaterial.DRACONIC.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterials.ToolMaterial.DRACONIC, 1, -2.8F))) {
 		@Override
 		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(SpectrumEnchantments.RAZING).ifPresent(e -> builder.add(e, 3));
+			impl.getOptional(SpectrumEnchantments.CLOAKED_RAZING).ifPresent(e -> builder.add(e, 3));
 		}
 	};
 	public static final SpectrumFishingRodItem LAGOON_ROD = new LagoonRodItem(IS.of().maxDamage(256));

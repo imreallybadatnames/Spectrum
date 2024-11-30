@@ -21,7 +21,7 @@ public class SpectrumEnchantments {
 	public static final SpectrumEnchantment INEXORABLE = new InexorableEnchantment(Enchantment.Rarity.VERY_RARE, SpectrumAdvancements.ENCHANTMENTS_INEXORABLE, EquipmentSlot.MAINHAND, EquipmentSlot.CHEST, EquipmentSlot.OFFHAND); // prevents mining & movement slowdowns
 	public static final SpectrumEnchantment INVENTORY_INSERTION = new InventoryInsertionEnchantment(Enchantment.Rarity.RARE, SpectrumAdvancements.ENCHANTMENTS_INVENTORY_INSERTION, EquipmentSlot.MAINHAND); // don't drop items into the world, add to inv instead
 	public static final RegistryKey<Enchantment> CLOAKED_PEST_CONTROL = of("cloaked/pest_control");
-	public static final SpectrumEnchantment RAZING = new RazingEnchantment(Enchantment.Rarity.UNCOMMON, SpectrumAdvancements.ENCHANTMENTS_RAZING, EquipmentSlot.MAINHAND); // increased mining speed for very hard blocks
+	public static final RegistryKey<Enchantment> CLOAKED_RAZING = of("cloaked/razing");
 	public static final RegistryKey<Enchantment> CLOAKED_RESONANCE = of("cloaked/resonance");
 	public static final SpectrumEnchantment SERENDIPITY_REEL = new SerendipityReelEnchantment(Enchantment.Rarity.RARE, SpectrumAdvancements.ENCHANTMENTS_SERENDIPITY_REEL, EquipmentSlot.MAINHAND); // Increase luck when fishing
 	public static final SpectrumEnchantment SNIPING = new SnipingEnchantment(Enchantment.Rarity.VERY_RARE, SpectrumAdvancements.ENCHANTMENTS_SNIPING, EquipmentSlot.MAINHAND); // Increases projectile speed => increased damage + range
@@ -32,6 +32,7 @@ public class SpectrumEnchantments {
 
 	public static final RegistryKey<Enchantment> FOUNDRY = of("foundry"); // applies smelting recipe before dropping items after mining
 	public static final RegistryKey<Enchantment> PEST_CONTROL = of("pest_control"); // Kills silverfish when mining infested blocks
+	public static final RegistryKey<Enchantment> RAZING = of("razing"); // increased mining speed for very hard blocks
 	public static final RegistryKey<Enchantment> RESONANCE = of("resonance"); // Silk Touch, just for different blocks
 	public static final RegistryKey<Enchantment> TIGHT_GRIP = of("tight_grip"); // Increases attack speed
 	public static final RegistryKey<Enchantment> TREASURE_HUNTER = of("treasure_hunter"); // Drops mob heads

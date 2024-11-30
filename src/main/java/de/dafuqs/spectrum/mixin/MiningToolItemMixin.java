@@ -60,7 +60,7 @@ public abstract class MiningToolItemMixin {
 		}
 		
 		// RAZING GAMING
-		int razingLevel = EnchantmentHelper.getLevel(SpectrumEnchantments.RAZING, stack);
+		int razingLevel = SpectrumEnchantmentHelper.getLevel(lookup, SpectrumEnchantments.RAZING, stack);
 		if (razingLevel > 0 && state.isIn(this.effectiveBlocks)) {
 			float hardness = state.getBlock().getHardness();
 			original = (float) Math.max(1 + hardness, Math.pow(2, 1 + razingLevel / 8F));
