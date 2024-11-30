@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.helpers;
 
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.enchantments.*;
+import de.dafuqs.spectrum.mixin.accessors.EnchantmentAccessor;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
@@ -9,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -16,6 +18,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SpectrumEnchantmentHelper {
+
+	public static void addRevealedEnchantments(Enchantment enchantment, ServerWorld world, int level, Entity user, ItemEnchantmentsComponent.Builder builder) {
+		EnchantmentAccessor.invokeApplyEffects(
+				enchantment.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED),
+				EnchantmentAccessor.invokeCreateEnchantedEntityLootContext(world, level, user, user.getPos()),
+				e -> builder.add(e, level));
+	}
 
 	public static Pair<Boolean, ItemStack> addOrUpgradeEnchantment(RegistryWrapper.WrapperLookup registryLookup, ItemStack stack, RegistryKey<Enchantment> enchantmentKey, int level, boolean forceEvenIfNotApplicable, boolean allowEnchantmentConflicts) {
 		return getEntry(registryLookup, enchantmentKey)

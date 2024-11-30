@@ -1,8 +1,9 @@
 {
   "values": [
-    "spectrum:cloaked/resonance",
-    "spectrum:cloaked/voiding",
+    "spectrum:cloaked/foundry",
     "spectrum:cloaked/pest_control",
-    "spectrum:cloaked/tight_grip"
+    "spectrum:cloaked/resonance",
+    "spectrum:cloaked/tight_grip",
+    "spectrum:cloaked/voiding"
   ]
 }

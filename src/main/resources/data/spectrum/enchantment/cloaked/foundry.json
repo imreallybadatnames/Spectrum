@@ -1,11 +1,11 @@
 {
   "description": {
-    "translate": "enchantment.spectrum.voiding.cloaked"
+    "translate": "enchantment.spectrum.foundry.cloaked"
   },
   "effects": {
     "spectrum:cloaked": [
       {
-        "effect": "spectrum:voiding",
+        "effect": "spectrum:foundry",
         "requirements": [
           {
             "type": "minecraft:inverted",
@@ -24,7 +24,19 @@
               "type_specific": {
                 "type": "player",
                 "advancements": {
-                  "spectrum:unlocks/enchantments/voiding_usage": true
+                  "spectrum:unlocks/enchantments/foundry": true
+                }
+              }
+            }
+          },
+          {
+            "type": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "spectrum:unlocks/equipment/molten_rod": true
                 }
               }
             }
@@ -34,19 +46,20 @@
     ]
   },
   "anvil_cost": 4,
-  "exclusive_set": "#spectrum:exclusive_set/voiding",
+  "exclusive_set": "#spectrum:exclusive_set/foundry",
   "max_cost": {
-    "base": 50,
+    "base": 65,
     "per_level_above_first": 0
   },
   "max_level": 1,
   "min_cost": {
-    "base": 25,
+    "base": 15,
     "per_level_above_first": 0
   },
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#spectrum:enchantable/voiding",
+  "supported_items": "#spectrum:enchantable/foundry",
+  "primary_items": "#minecraft:enchantable/mining_loot",
   "weight": 2
 }

@@ -2,7 +2,7 @@
   "description": {
     "translate": "enchantment.spectrum.pest_control"
   },
-  "anvil_cost": 8,
+  "anvil_cost": 0,
   "exclusive_set": "#spectrum:exclusion_set/pest_control",
   "max_cost": {
     "base": 0,
@@ -16,6 +16,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/mining_loot",
+  "supported_items": "#spectrum:enchantable/pest_control",
   "weight": 1
 }

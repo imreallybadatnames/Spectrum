@@ -85,6 +85,7 @@
     "WorldMixin",
     "accessors.BiomeAccessor",
     "accessors.DensityCapAccessor",
+    "accessors.EnchantmentAccessor",
     "accessors.EnchantmentHelperAccessor",
     "accessors.ExplosionAccessor",
     "accessors.FluidBlockAccessor",

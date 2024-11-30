@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.mixin;
 import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.spectrum.data_loaders.*;
 import de.dafuqs.spectrum.enchantments.*;
+import de.dafuqs.spectrum.helpers.FoundryHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -49,8 +50,8 @@ public abstract class BlockMixin {
 		
 		if (!droppedStacks.isEmpty()) {
 			// Foundry enchant: try smelting recipe for each stack
-			if (enchantmentMap.containsKey(SpectrumEnchantments.FOUNDRY) && SpectrumEnchantments.FOUNDRY.canEntityUse(entity)) {
-				droppedStacks = FoundryEnchantment.applyFoundry(world, droppedStacks);
+			if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.SMELTS_MORE_LOOT)) {
+				droppedStacks = FoundryHelper.applyFoundry(world, droppedStacks);
 			}
 			
 			// Inventory Insertion enchant? Add it to players inventory if there is room

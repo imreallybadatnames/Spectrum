@@ -15,6 +15,7 @@ public class SpectrumEnchantmentTags {
 	public static final TagKey<Enchantment> NO_BLOCK_DROPS = of("effect/no_block_drops");
 	public static final TagKey<Enchantment> PREVENTS_INCANDESCENT_EXPLOSION = of("effect/prevents_incandescent_explosion");
 	public static final TagKey<Enchantment> RESONANT_BLOCK_DROPS = of("effect/resonant_block_drops");
+	public static final TagKey<Enchantment> SMELTS_MORE_LOOT = of("effect/smelts_more_loot");
 	public static final TagKey<Enchantment> CLOAKED = of("cloaked");
 	public static final TagKey<Enchantment> SPECTRUM_ENCHANTMENT = of("enchantments");
 

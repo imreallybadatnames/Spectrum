@@ -5,8 +5,31 @@
   "effects": {
     "spectrum:cloaked": [
       {
-        "advancement": "spectrum:unlocks/enchantments/tight_grip",
-        "enchantment": "spectrum:tight_grip"
+        "effect": "spectrum:tight_grip",
+        "requirements": [
+          {
+            "type": "minecraft:inverted",
+            "term": {
+              "type": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "player"
+              }
+            }
+          },
+          {
+            "type": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "spectrum:unlocks/enchantments/tight_grip": true
+                }
+              }
+            }
+          }
+        ]
       }
     ]
   },

@@ -66,7 +66,7 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 	}
 	
 	public boolean shouldSmeltDrops(ItemStack itemStack, PlayerEntity user) {
-		return SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.FOUNDRY, itemStack, user) > 0 || GoFishCompat.hasDeepfry(itemStack);
+		return EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, SpectrumEnchantmentTags.SMELTS_MORE_LOOT) || GoFishCompat.hasDeepfry(user.getWorld(), itemStack);
 	}
 
 	@Override

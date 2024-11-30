@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.data_loaders.*;
 import de.dafuqs.spectrum.data_loaders.EntityFishingDataLoader.*;
 import de.dafuqs.spectrum.enchantments.*;
+import de.dafuqs.spectrum.helpers.FoundryHelper;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
@@ -566,7 +567,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 		}
 		
 		if (isAblaze()) {
-			list = FoundryEnchantment.applyFoundry(this.getWorld(), list);
+			list = FoundryHelper.applyFoundry(this.getWorld(), list);
 		}
 		
 		float exuberanceMod = ExuberanceEnchantment.getExuberanceMod(this.exuberanceLevel);

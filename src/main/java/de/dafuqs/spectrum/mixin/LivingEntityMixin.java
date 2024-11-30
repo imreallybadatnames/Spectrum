@@ -36,6 +36,10 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.registry.RegistryKey;
@@ -691,22 +695,24 @@ public abstract class LivingEntityMixin {
 	private void spectrum$getEquipmentChanges$removeConditionalEffects(CallbackInfo ci, Map<EquipmentSlot, ItemStack> map, EquipmentSlot equipmentSlot, ItemStack itemStack) {
 		var livingEntity = (LivingEntity) (Object) this;
 		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level) -> builder.add(enchantment, level));
+		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level, context) ->
+				builder.set(enchantment, 0));
 		itemStack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
 	}
 
 	@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void spectrum$getEquipmentChanges$applyConditionalEffects(CallbackInfo ci, Map<EquipmentSlot, ItemStack> map, Map.Entry<EquipmentSlot, ItemStack> entry, EquipmentSlot equipmentSlot, ItemStack itemStack) {
 		var livingEntity = (LivingEntity) (Object) this;
+		if (!(livingEntity.getWorld() instanceof ServerWorld serverWorld))
+			return;
+
 		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level) -> {
+
+		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level, context) -> {
 			builder.add(enchantment, level);
-			enchantment.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).forEach(c -> {
-				if (!(livingEntity instanceof PlayerEntity playerEntity) || AdvancementHelper.hasAdvancement(playerEntity, c.advancementId())) {
-					builder.add(c.enchantment(), level);
-				}
-			});
+			SpectrumEnchantmentHelper.addRevealedEnchantments(enchantment.value(), serverWorld, level, livingEntity, builder);
 		});
+
 		itemStack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
 	}
 

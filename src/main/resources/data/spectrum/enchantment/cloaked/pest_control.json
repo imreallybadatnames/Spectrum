@@ -5,8 +5,31 @@
   "effects": {
     "spectrum:cloaked": [
       {
-        "advancement": "spectrum:unlocks/enchantments/pest_control",
-        "enchantment": "spectrum:pest_control"
+        "effect": "spectrum:pest_control",
+        "requirements": [
+          {
+            "type": "minecraft:inverted",
+            "term": {
+              "type": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "player"
+              }
+            }
+          },
+          {
+            "type": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "player",
+                "advancements": {
+                  "spectrum:unlocks/enchantments/pest_control": true
+                }
+              }
+            }
+          }
+        ]
       }
     ]
   },
@@ -24,6 +47,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/mining_loot",
+  "supported_items": "#spectrum:enchantable/pest_control",
   "weight": 1
 }
