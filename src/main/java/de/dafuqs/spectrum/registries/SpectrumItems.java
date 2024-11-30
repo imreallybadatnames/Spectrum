@@ -134,7 +134,7 @@ public class SpectrumItems {
 	public static final Item RESONANT_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterials.ToolMaterial.LOW_HEALTH_MINING_LEVEL_4, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterials.ToolMaterial.LOW_HEALTH.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterials.ToolMaterial.LOW_HEALTH_MINING_LEVEL_4, 1, -2.8F))) {
 		@Override
 		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(SpectrumEnchantments.RESONANCE).ifPresent(e -> builder.add(e, 1));
+			impl.getOptional(SpectrumEnchantments.CLOAKED_RESONANCE).ifPresent(e -> builder.add(e, 1));
 		}
 	};
 	public static final Item DRAGONRENDING_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterials.ToolMaterial.DRACONIC, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterials.ToolMaterial.DRACONIC.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterials.ToolMaterial.DRACONIC, 1, -2.8F))) {

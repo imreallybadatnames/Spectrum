@@ -7,9 +7,12 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
@@ -213,6 +216,34 @@ public class SpectrumEnchantmentHelper {
 
 	public static Optional<RegistryEntry<Enchantment>> getEntry(RegistryWrapper.WrapperLookup lookup, RegistryKey<Enchantment> key) {
 		return getRegistry(lookup).flatMap(impl -> impl.getOptional(key));
+	}
+
+	public static int getEquipmentLevel(RegistryWrapper.WrapperLookup lookup, RegistryKey<Enchantment> key, LivingEntity entity) {
+		return getEntry(lookup, key).map(e -> EnchantmentHelper.getEquipmentLevel(e, entity)).orElse(0);
+	}
+
+	public static void doTreasureHunterForPlayer(ServerPlayerEntity thisEntity, DamageSource source) {
+		if (!thisEntity.isSpectator() && source.getAttacker() instanceof LivingEntity) {
+			ServerWorld serverWorld = ((ServerWorld) thisEntity.getWorld());
+			int damageSourceTreasureHunt = getEquipmentLevel(
+					serverWorld.getRegistryManager(),
+					SpectrumEnchantments.TREASURE_HUNTER,
+					(LivingEntity) source.getAttacker());
+			if (damageSourceTreasureHunt > 0) {
+				boolean shouldDropHead = serverWorld.getRandom().nextFloat() < 0.2 * damageSourceTreasureHunt;
+				if (shouldDropHead) {
+					ItemStack headItemStack = new ItemStack(Items.PLAYER_HEAD);
+
+					NbtCompound compoundTag = new NbtCompound();
+					compoundTag.putString("SkullOwner", thisEntity.getName().getString());
+
+					headItemStack.setNbt(compoundTag);
+
+					ItemEntity headEntity = new ItemEntity(serverWorld, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), headItemStack);
+					serverWorld.spawnEntity(headEntity);
+				}
+			}
+		}
 	}
 
 }

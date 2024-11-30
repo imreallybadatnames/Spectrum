@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.items.tools;
 
-import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
@@ -32,7 +31,7 @@ public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 	
 	@Override
 	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-		impl.getOptional(SpectrumEnchantments.VOIDING).ifPresent(e -> builder.add(e, 1));
+		impl.getOptional(SpectrumEnchantments.CLOAKED_VOIDING).ifPresent(e -> builder.add(e, 1));
 	}
 	
 	@Override

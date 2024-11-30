@@ -2,10 +2,10 @@ package de.dafuqs.spectrum.loot.conditions;
 
 import com.google.common.collect.*;
 import com.google.gson.*;
+import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.loot.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.player.*;
@@ -53,10 +53,10 @@ public class RandomChanceWithTreasureHunterLootCondition implements LootConditio
 		Entity entity = lootContext.get(LootContextParameters.KILLER_ENTITY);
 		int treasureHunterLevel = 0;
 		if (entity instanceof PlayerEntity playerEntity) {
-			if (!SpectrumEnchantments.TREASURE_HUNTER.canEntityUse(playerEntity)) {
-				return false;
-			}
-			treasureHunterLevel = EnchantmentHelper.getEquipmentLevel(SpectrumEnchantments.TREASURE_HUNTER, (LivingEntity) entity);
+			treasureHunterLevel = SpectrumEnchantmentHelper.getEquipmentLevel(
+					playerEntity.getWorld().getRegistryManager(),
+					SpectrumEnchantments.TREASURE_HUNTER,
+					(LivingEntity) entity);
 		}
 		
 		if (treasureHunterLevel == 0) {

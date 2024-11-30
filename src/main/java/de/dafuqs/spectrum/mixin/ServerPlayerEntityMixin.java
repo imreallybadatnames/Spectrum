@@ -25,7 +25,7 @@ public abstract class ServerPlayerEntityMixin {
 	
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	protected void spectrum$dropPlayerHeadWithTreasureHunt(DamageSource source, CallbackInfo ci) {
-		TreasureHunterEnchantment.doTreasureHunterForPlayer((ServerPlayerEntity) (Object) this, source);
+		SpectrumEnchantmentHelper.doTreasureHunterForPlayer((ServerPlayerEntity) (Object) this, source);
 	}
 	
 	@Inject(at = @At("RETURN"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")

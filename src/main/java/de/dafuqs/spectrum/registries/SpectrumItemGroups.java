@@ -181,7 +181,7 @@ public class SpectrumItemGroups {
 				displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(impl -> {
 					impl.getOptional(Enchantments.FORTUNE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 3, false, false).getRight()));
 					impl.getOptional(Enchantments.SILK_TOUCH).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
-					impl.getOptional(SpectrumEnchantments.RESONANCE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
+					impl.getOptional(SpectrumEnchantments.CLOAKED_RESONANCE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
 				});
 				entries.add(SpectrumItems.BLOCK_FLOODER);
 				entries.add(SpectrumItems.ENDER_SPLICE);

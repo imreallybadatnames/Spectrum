@@ -141,7 +141,7 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 			case SELECT_SILK_TOUCH ->
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), Enchantments.SILK_TOUCH);
 			case SELECT_RESONANCE ->
-				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), SpectrumEnchantments.RESONANCE);
+				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), SpectrumEnchantments.CLOAKED_RESONANCE);
 			case ENABLE_RIGHT_CLICK_ACTIONS -> {
 				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
 						comp -> comp.apply(nbt -> nbt.remove(RIGHT_CLICK_DISABLED_NBT_STRING)));
@@ -192,7 +192,7 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		}
 		
 		ItemStack newStack = stack.copy();
-		var result = SpectrumEnchantmentHelper.removeEnchantments(registryLookup, newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.RESONANCE, Enchantments.FORTUNE);
+		var result = SpectrumEnchantmentHelper.removeEnchantments(registryLookup, newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.CLOAKED_RESONANCE, Enchantments.FORTUNE);
 		if (result.getRight() == 0) {
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				triggerUnenchantedWorkstaffAdvancement(serverPlayerEntity);
