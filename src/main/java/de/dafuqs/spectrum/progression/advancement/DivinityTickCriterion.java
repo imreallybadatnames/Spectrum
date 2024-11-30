@@ -1,11 +1,9 @@
 package de.dafuqs.spectrum.progression.advancement;
 
-import com.google.gson.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
-import net.minecraft.command.*;
 import net.minecraft.predicate.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.server.network.*;

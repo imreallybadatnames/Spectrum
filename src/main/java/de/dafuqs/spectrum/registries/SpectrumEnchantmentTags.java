@@ -5,16 +5,19 @@ import net.minecraft.enchantment.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 
+@SuppressWarnings("unused")
 public class SpectrumEnchantmentTags {
 
-	public static final TagKey<Enchantment> DELETES_OVERFLOW = of("deletes_overflow");
-	public static final TagKey<Enchantment> DELETES_OVERFLOW_IN_INVENTORY = of("deletes_overflow_in_inventory");
-	public static final TagKey<Enchantment> DIMENSIONAL_TELEPORT = of("dimensional_teleport");
-	public static final TagKey<Enchantment> NO_BLOCK_DROPS = of("no_block_drops");
-	public static final TagKey<Enchantment> PREVENTS_INCANDESCENT_EXPLOSION = of("prevents_incandescent_explosion");
-	public static final TagKey<Enchantment> RESONANT_BLOCK_DROPS = of("resonant_block_drops");
+	public static final TagKey<Enchantment> AUTO_KILLS_SILVERFISH = of("effect/auto_kills_silverfish");
+	public static final TagKey<Enchantment> DELETES_OVERFLOW = of("effect/deletes_overflow");
+	public static final TagKey<Enchantment> DELETES_OVERFLOW_IN_INVENTORY = of("effect/deletes_overflow_in_inventory");
+	public static final TagKey<Enchantment> DIMENSIONAL_TELEPORT = of("effect/dimensional_teleport");
+	public static final TagKey<Enchantment> NO_BLOCK_DROPS = of("effect/no_block_drops");
+	public static final TagKey<Enchantment> PREVENTS_INCANDESCENT_EXPLOSION = of("effect/prevents_incandescent_explosion");
+	public static final TagKey<Enchantment> RESONANT_BLOCK_DROPS = of("effect/resonant_block_drops");
+	public static final TagKey<Enchantment> CLOAKED = of("cloaked");
 	public static final TagKey<Enchantment> SPECTRUM_ENCHANTMENT = of("enchantments");
-	
+
 	private static TagKey<Enchantment> of(String id) {
 		return TagKey.of(RegistryKeys.ENCHANTMENT, SpectrumCommon.locate(id));
 	}

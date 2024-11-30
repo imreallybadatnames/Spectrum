@@ -46,7 +46,7 @@ public class TitrationBarrelTappingCriterion extends AbstractCriterion<Titration
 			if (this.ingredientCountRange.isEmpty()) return false;
 
 			if (this.ingameDaysAgeRange.get().test(ingameDaysAge) && this.ingredientCountRange.get().test(ingredientCount)) {
-				List<ItemPredicate> list = new ObjectArrayList<>(this.tappedItemsPredicate.get());
+				List<ItemPredicate> list = new ObjectArrayList<>(this.tappedItemsPredicate.orElse(List.of()));
 				if (list.isEmpty()) {
 					return true;
 				} else {

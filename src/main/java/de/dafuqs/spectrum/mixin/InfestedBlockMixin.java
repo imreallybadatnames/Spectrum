@@ -24,7 +24,7 @@ public abstract class InfestedBlockMixin {
 			ci.cancel();
 		}
 		
-		if (EnchantmentHelper.getLevel(SpectrumEnchantments.PEST_CONTROL, stack) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.AUTO_KILLS_SILVERFISH)) {
 			SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
 			if (silverfishEntity != null) {
 				silverfishEntity.refreshPositionAndAngles(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, 0.0F, 0.0F);
