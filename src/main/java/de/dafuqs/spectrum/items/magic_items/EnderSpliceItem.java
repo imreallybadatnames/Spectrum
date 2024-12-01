@@ -156,11 +156,11 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 	}
 	
 	private static void decrementWithChance(ItemStack itemStack, World world, ServerPlayerEntity playerEntity) {
-		if (EnchantmentHelper.getLevel(SpectrumEnchantments.INDESTRUCTIBLE, itemStack) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT)) {
 			return;
 		}
 		if (!playerEntity.getAbilities().creativeMode) {
-			int unbreakingLevel = EnchantmentHelper.getLevel(Enchantments.UNBREAKING, itemStack);
+			int unbreakingLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.UNBREAKING, itemStack);
 			if (unbreakingLevel == 0) {
 				itemStack.decrement(1);
 			} else {
@@ -303,7 +303,7 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 	
 	@Override
 	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == SpectrumEnchantments.INDESTRUCTIBLE || enchantment == Enchantments.UNBREAKING;
+		return enchantment == Enchantments.UNBREAKING;
 	}
 	
 	@Override

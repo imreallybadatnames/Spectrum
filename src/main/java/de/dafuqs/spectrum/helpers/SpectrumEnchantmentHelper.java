@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.helpers;
 
+import de.dafuqs.spectrum.SpectrumCommon;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.mixin.accessors.EnchantmentAccessor;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
@@ -12,6 +12,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.*;
@@ -236,6 +237,16 @@ public class SpectrumEnchantmentHelper {
 				}
 			}
 		}
+	}
+
+	public static float getAddtionalCritDamageMultiplier(int improvedCriticalLevel) {
+		return SpectrumCommon.CONFIG.ImprovedCriticalExtraDamageMultiplierPerLevel * improvedCriticalLevel;
+	}
+
+	public static RegistryEntryList<Item> getBlacklist(Enchantment enchantment) {
+		return enchantment.effects().getOrDefault(
+				SpectrumEnchantmentEffectComponentTypes.BLACKLISTED_ITEMS,
+				RegistryEntryList.empty());
 	}
 
 }

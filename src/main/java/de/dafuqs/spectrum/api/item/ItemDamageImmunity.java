@@ -28,12 +28,11 @@ public class ItemDamageImmunity {
 			return false;
 		}
 		
-		// does itemStack have Damage Proof enchantment?
-		if (EnchantmentHelper.getLevel(SpectrumEnchantments.STEADFAST, itemStack) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, SpectrumEnchantmentTags.PREVENTS_ITEM_DAMAGE)) {
 			return true;
-			// is item immune to this specific kind of damage?
 		}
-		
+
+		// is item immune to this specific kind of damage?
 		Item item = itemStack.getItem();
 		if (damageSourceImmunities.containsKey(item)) {
 			for (TagKey<DamageType> type : damageSourceImmunities.get(item)) {

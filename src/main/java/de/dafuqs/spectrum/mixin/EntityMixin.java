@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
@@ -36,7 +37,8 @@ public abstract class EntityMixin {
 
 	@ModifyVariable(method = "slowMovement", at = @At(value = "LOAD"), argsOnly = true)
 	private Vec3d spectrum$applyInexorableAntiBlockSlowdown(Vec3d multiplier) {
-		if ((Object) this instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
+		var entity = (Entity) (Object) this;
+		if (entity instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
 			return Vec3d.ZERO;
 		}
 		return multiplier;
@@ -44,7 +46,8 @@ public abstract class EntityMixin {
 	
 	@Inject(method = "getVelocityMultiplier", at = @At("RETURN"), cancellable = true)
 	private void spectrum$applyInexorableAntiSlowdown(CallbackInfoReturnable<Float> cir) {
-		if ((Object) this instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
+		var entity = (Entity) (Object) this;
+		if (entity instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
 			cir.setReturnValue(Math.max(cir.getReturnValue(), 1F));
 		}
 	}
@@ -53,7 +56,12 @@ public abstract class EntityMixin {
 	public void spectrum$dropStack(ItemStack stack, CallbackInfoReturnable<ItemEntity> cir) {
 		if ((Object) this instanceof LivingEntity thisLivingEntity) {
 			if (thisLivingEntity.isDead() && thisLivingEntity.getAttacker() instanceof PlayerEntity killer) {
-				if (EnchantmentHelper.getEquipmentLevel(SpectrumEnchantments.INVENTORY_INSERTION, killer) > 0) {
+				var hasInventoryInsertion = thisLivingEntity.getWorld().getRegistryManager()
+						.getOptionalWrapper(RegistryKeys.ENCHANTMENT)
+						.flatMap(impl -> impl.getOptional(SpectrumEnchantments.INVENTORY_INSERTION))
+						.map(e -> EnchantmentHelper.getEquipmentLevel(e, killer) > 0)
+						.orElse(false);
+				if (hasInventoryInsertion) {
 					Item item = stack.getItem();
 					int count = stack.getCount();
 					

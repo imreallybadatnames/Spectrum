@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -71,7 +72,7 @@ public abstract class ExplosionModifier {
 	}
 	
 	@ApiStatus.OverrideOnly
-	public void addEnchantments(ItemStack stack) {
+	public void addEnchantments(ServerWorld world, ItemStack stack) {
 	}
 	
 	@ApiStatus.OverrideOnly

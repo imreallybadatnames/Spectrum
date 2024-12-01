@@ -54,7 +54,7 @@ public class ModularExplosion {
 			if (optionalExplosionShape.isPresent()) {
 				shape = optionalExplosionShape.get();
 			}
-			explosionEffect.addEnchantments(miningStack);
+			explosionEffect.addEnchantments(world, miningStack);
 		}
 		
 		float blastDamage = baseDamage * damageMod;
@@ -114,7 +114,7 @@ public class ModularExplosion {
 			Vec3d particle = orientation.toVector(r).add(pos);
 			Collections.shuffle(types);
 			
-			world.spawnParticles(types.get(0), particle.getX(), particle.getY(), particle.getZ(), 1, 0, 0, 0, 0);
+			world.spawnParticles(types.getFirst(), particle.getX(), particle.getY(), particle.getZ(), 1, 0, 0, 0, 0);
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class ModularExplosion {
 			}
 		}
 		
-		boolean hasInventoryInsertion = EnchantmentHelper.getLevel(SpectrumEnchantments.INVENTORY_INSERTION, miningStack) > 0;
+		boolean hasInventoryInsertion = EnchantmentHelper.hasAnyEnchantmentsIn(miningStack, SpectrumEnchantmentTags.INVENTORY_INSERTION_EFFECT);
 		for (Pair<ItemStack, BlockPos> stackPosPair : drops) {
 			if (owner != null && hasInventoryInsertion) {
 				owner.getInventory().offerOrDrop(stackPosPair.getFirst());

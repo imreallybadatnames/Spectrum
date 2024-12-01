@@ -94,9 +94,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		}
 		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, jeopardantModifier);
 		
-		if (SpectrumEnchantments.IMPROVED_CRITICAL.canEntityUse(player)) {
-			int improvedCriticalLevel = SpectrumEnchantmentHelper.getUsableLevel(SpectrumEnchantments.IMPROVED_CRITICAL, player.getMainHandStack(), player);
-			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_UUID, ImprovedCriticalEnchantment.EXTRA_CRIT_DAMAGE_MULTIPLIER_ATTRIBUTE_NAME, ImprovedCriticalEnchantment.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
+		int improvedCriticalLevel = SpectrumEnchantmentHelper.getLevel(target.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, player.getMainHandStack());
+		if (improvedCriticalLevel > 0) {
+			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(UUID.fromString("e9bca8d4-9dcb-4e9e-8a7b-48b129c7ec5a"), "spectrum:improved_critical", SpectrumEnchantmentHelper.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
 			map.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, improvedCriticalModifier);
 		}
 		

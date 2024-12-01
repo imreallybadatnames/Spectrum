@@ -184,7 +184,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 		}
 		
 		if (!attacked.isOnGround() && propelled) {
-			damage *= 3 + ImprovedCriticalEnchantment.getAddtionalCritDamageMultiplier(SpectrumEnchantmentHelper.getLevel(owner.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, stack));
+			damage *= 3 + SpectrumEnchantmentHelper.getAddtionalCritDamageMultiplier(SpectrumEnchantmentHelper.getLevel(owner.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, stack));
 			crit = true;
 		}
 		

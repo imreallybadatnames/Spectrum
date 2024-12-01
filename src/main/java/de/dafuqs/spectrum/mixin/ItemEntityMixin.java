@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.mixin;
 
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
@@ -29,7 +28,7 @@ public abstract class ItemEntityMixin {
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/item/ItemStack;DDD)V")
 	public void ItemEntity(World world, double x, double y, double z, ItemStack stack, double velocityX, double velocityY, double velocityZ, CallbackInfo ci) {
 		// item stacks that are enchanted with damage proof should never despawn
-		if (EnchantmentHelper.getLevel(SpectrumEnchantments.STEADFAST, stack) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.PREVENTS_ITEM_DAMAGE)) {
 			setNeverDespawn();
 		}
 	}
@@ -42,7 +41,7 @@ public abstract class ItemEntityMixin {
 			int worldMinY = thisItemEntity.getWorld().getBottomY();
 			if (!thisItemEntity.isOnGround()
 					&& thisItemEntity.getPos().getY() < worldMinY + 2
-					&& EnchantmentHelper.getLevel(SpectrumEnchantments.STEADFAST, thisItemEntity.getStack()) > 0) {
+					&& EnchantmentHelper.hasAnyEnchantmentsIn(thisItemEntity.getStack(), SpectrumEnchantmentTags.PREVENTS_ITEM_DAMAGE)) {
 				
 				if (thisItemEntity.getPos().getY() < worldMinY + 1) {
 					thisItemEntity.setPosition(thisItemEntity.getPos().x, worldMinY + 1, thisItemEntity.getPos().z);
@@ -67,11 +66,11 @@ public abstract class ItemEntityMixin {
 	
 	@Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("HEAD"), cancellable = true)
 	private void isDamageProof(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-		if (ItemDamageImmunity.isImmuneTo(((ItemEntity) (Object) this).getStack(), source)) {
+		ItemEntity thisItemEntity = (ItemEntity) (Object) this;
+		if (ItemDamageImmunity.isImmuneTo(thisItemEntity.getStack(), source)) {
 			callbackInfoReturnable.setReturnValue(true);
 		}
 		if(source.isOf(SpectrumDamageTypes.PRIMORDIAL_FIRE)) {
-			ItemEntity thisItemEntity = ((ItemEntity) (Object) this);
 			World world = thisItemEntity.getWorld();
 
 			if(PrimordialFireBurningRecipe.processItemEntity(world, thisItemEntity)) {

@@ -31,7 +31,8 @@
           }
         ]
       }
-    ]
+    ],
+    "spectrum:blacklisted_items": "#spectrum:indestructible_blacklisted"
   },
   "anvil_cost": 4,
   "exclusive_set": "#spectrum:exclusive_set/indestructible",

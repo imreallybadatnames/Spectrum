@@ -130,7 +130,9 @@ public class SpectrumConfig implements ConfigData {
 	
 	@Comment("Flat additional damage dealt with each level of the First Strike enchantment")
 	public float FirstStrikeDamagePerLevel = 2.0F;
-	
+
+	//TODO: Re-add the settings to disable certain enchants
+
 	@Comment("The percentile a mobs armor/hand stacks are being dropped when hit with a Disarming enchanted weapon per the enchantments level")
 	public float DisarmingChancePerLevelMobs = 0.01F;
 	@Comment("If > 0 the Disarming Enchantment is able to remove armor and hand tools from a hit player. Should be a far smaller chance than for mobs")

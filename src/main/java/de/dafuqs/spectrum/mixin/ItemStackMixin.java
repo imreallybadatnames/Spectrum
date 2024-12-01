@@ -53,7 +53,7 @@ public abstract class ItemStackMixin {
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getNbt()Lnet/minecraft/nbt/NbtCompound;"), method = "isDamageable()Z", cancellable = true)
 	public void spectrum$applyIndestructibleEnchantment(CallbackInfoReturnable<Boolean> cir) {
-		if (SpectrumCommon.CONFIG.IndestructibleEnchantmentEnabled && EnchantmentHelper.getLevel(SpectrumEnchantments.INDESTRUCTIBLE, (ItemStack) (Object) this) > 0) {
+		if (EnchantmentHelper.hasAnyEnchantmentsIn((ItemStack) (Object) this, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT)) {
 			cir.setReturnValue(false);
 		}
 	}

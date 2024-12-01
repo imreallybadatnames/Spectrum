@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.mixin;
 
+import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
@@ -12,7 +13,7 @@ public abstract class CrossbowItemMixin {
 	
 	@Inject(method = "getSpeed(Lnet/minecraft/item/ItemStack;)F", at = @At("RETURN"), cancellable = true)
 	private static void getSpeed(ItemStack stack, CallbackInfoReturnable<Float> cir) {
-		int snipingLevel = EnchantmentHelper.getLevel(SpectrumEnchantments.SNIPING, stack);
+		int snipingLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.SNIPING, stack);
 		if (snipingLevel > 0) {
 			cir.setReturnValue(cir.getReturnValue() + 1.0F * snipingLevel);
 		}

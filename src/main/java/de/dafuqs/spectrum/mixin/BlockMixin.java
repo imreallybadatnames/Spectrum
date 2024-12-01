@@ -34,7 +34,6 @@ public abstract class BlockMixin {
 	@ModifyReturnValue(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"))
 	private static List<ItemStack> spectrum$getDroppedStacks(List<ItemStack> original, BlockState state, ServerWorld world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack) {
 		List<ItemStack> droppedStacks = original;
-		var enchantmentMap = stack.getEnchantments();
 
 		// Voiding curse: no drops
 		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.NO_BLOCK_DROPS)) {
@@ -54,8 +53,8 @@ public abstract class BlockMixin {
 				droppedStacks = FoundryHelper.applyFoundry(world, droppedStacks);
 			}
 			
-			// Inventory Insertion enchant? Add it to players inventory if there is room
-			if (enchantmentMap.containsKey(SpectrumEnchantments.INVENTORY_INSERTION) && SpectrumEnchantments.INVENTORY_INSERTION.canEntityUse(entity)) {
+			// Inventory insertion enchant: add it to the player's inventory if there is room
+			if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.INVENTORY_INSERTION_EFFECT)) {
 				List<ItemStack> leftoverReturnStacks = new ArrayList<>();
 				
 				if (entity instanceof PlayerEntity playerEntity) {

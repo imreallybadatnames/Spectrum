@@ -12,8 +12,11 @@ public class SpectrumEnchantmentTags {
 	public static final TagKey<Enchantment> DELETES_OVERFLOW = of("effect/deletes_overflow");
 	public static final TagKey<Enchantment> DELETES_OVERFLOW_IN_INVENTORY = of("effect/deletes_overflow_in_inventory");
 	public static final TagKey<Enchantment> DIMENSIONAL_TELEPORT = of("effect/dimensional_teleport");
+	public static final TagKey<Enchantment> INDESTRUCTIBLE_EFFECT = of("effect/indestructible");
+	public static final TagKey<Enchantment> INVENTORY_INSERTION_EFFECT = of("effect/inventory_insertion");
 	public static final TagKey<Enchantment> NO_BLOCK_DROPS = of("effect/no_block_drops");
 	public static final TagKey<Enchantment> PREVENTS_INCANDESCENT_EXPLOSION = of("effect/prevents_incandescent_explosion");
+	public static final TagKey<Enchantment> PREVENTS_ITEM_DAMAGE = of("effect/prevents_item_damage");
 	public static final TagKey<Enchantment> RESONANT_BLOCK_DROPS = of("effect/resonant_block_drops");
 	public static final TagKey<Enchantment> SMELTS_MORE_LOOT = of("effect/smelts_more_loot");
 	public static final TagKey<Enchantment> CLOAKED = of("cloaked");
