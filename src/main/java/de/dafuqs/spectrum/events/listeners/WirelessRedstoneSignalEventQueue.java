@@ -16,23 +16,16 @@ public class WirelessRedstoneSignalEventQueue extends EventQueue<WirelessRedston
 	
 	@Override
 	public void acceptEvent(World world, GameEvent.Message event, Vec3d sourcePos) {
-		if (world instanceof ServerWorld && event.getEvent() instanceof RedstoneTransferGameEvent redstoneTransferEvent) {
+		if (world instanceof ServerWorld && event.getEvent() == SpectrumGameEvents.WIRELESS_REDSTONE_SIGNAL) {
 			Vec3d pos = event.getEmitterPos();
-			WirelessRedstoneSignalEventQueue.EventEntry eventEntry = new WirelessRedstoneSignalEventQueue.EventEntry(redstoneTransferEvent, MathHelper.floor(pos.distanceTo(sourcePos)));
+			var eventEntry = new WirelessRedstoneSignalEventQueue.EventEntry(event, MathHelper.floor(pos.distanceTo(sourcePos)));
 			int delay = eventEntry.distance * 2;
 			this.schedule(eventEntry, delay);
 			SpectrumS2CPacketSender.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.REDSTONE));
 		}
 	}
-	
-	public static class EventEntry {
-		public final RedstoneTransferGameEvent gameEvent;
-		public final int distance;
-		
-		public EventEntry(RedstoneTransferGameEvent gameEvent, int distance) {
-			this.gameEvent = gameEvent;
-			this.distance = distance;
-		}
+
+	public record EventEntry(GameEvent.Message gameEvent, int distance) {
 	}
 	
 }
