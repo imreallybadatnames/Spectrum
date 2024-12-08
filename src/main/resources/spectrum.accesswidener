@@ -10,6 +10,9 @@ accessible class net/minecraft/structure/pool/StructurePoolBasedGenerator$Struct
 accessible class net/minecraft/world/biome/Biome$Weather
 accessible class net/minecraft/world/SpawnDensityCapper$DensityCap
 
+extendable method net/minecraft/component/type/BundleContentsComponent$Builder addInternal (Lnet/minecraft/item/ItemStack;)I
+extendable method net/minecraft/component/type/BundleContentsComponent$Builder getMaxAllowed (Lnet/minecraft/item/ItemStack;)I
+
 accessible method net/minecraft/client/particle/BlockLeakParticle$Dripping <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;Lnet/minecraft/particle/ParticleEffect;)V
 accessible method net/minecraft/client/particle/BlockLeakParticle$ContinuousFalling  <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;Lnet/minecraft/particle/ParticleEffect;)V
 accessible method net/minecraft/client/particle/BlockLeakParticle$Landing  <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;)V

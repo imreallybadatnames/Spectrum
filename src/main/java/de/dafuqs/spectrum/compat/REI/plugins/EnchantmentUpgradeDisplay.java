@@ -12,13 +12,14 @@ import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.enchantment.*;
+import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class EnchantmentUpgradeDisplay extends EnchanterDisplay {
 	
-	protected final Enchantment enchantment;
+	protected final RegistryEntry<Enchantment> enchantment;
 	protected final int enchantmentDestinationLevel;
 	
 	protected final int requiredExperience;
@@ -35,7 +36,7 @@ public class EnchantmentUpgradeDisplay extends EnchanterDisplay {
 	
 	private static List<EntryIngredient> buildIngredients(EnchantmentUpgradeRecipe recipe) {
 		List<EntryIngredient> inputs = new ArrayList<>();
-		inputs.add(EntryIngredients.ofIngredient(recipe.getIngredients().get(0))); // the center stack
+		inputs.add(EntryIngredients.ofIngredient(recipe.getIngredients().getFirst())); // the center stack
 		int requiredItemCountSplit = recipe.getRequiredItemCount() / 8;
 		int requiredItemCountModulo = recipe.getRequiredItemCount() % 8;
 		for (int i = 0; i < 8; i++) {
@@ -58,7 +59,7 @@ public class EnchantmentUpgradeDisplay extends EnchanterDisplay {
 		if (!AdvancementHelper.hasAdvancement(client.player, EnchanterRecipe.UNLOCK_IDENTIFIER) || !super.isUnlocked()) {
 			return false;
 		}
-		if (enchantmentDestinationLevel > enchantment.getMaxLevel()) {
+		if (enchantmentDestinationLevel > enchantment.value().getMaxLevel()) {
 			return AdvancementHelper.hasAdvancement(client.player, SpectrumAdvancements.OVERENCHANTING);
 		} else {
 			return true;

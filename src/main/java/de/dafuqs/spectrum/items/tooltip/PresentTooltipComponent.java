@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.items.tooltip;
 
+import de.dafuqs.spectrum.api.gui.SpectrumTooltipComponent;
 import net.fabricmc.api.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.gui.*;
@@ -8,7 +9,7 @@ import net.minecraft.item.*;
 import java.util.*;
 
 @Environment(EnvType.CLIENT)
-public class PresentTooltipComponent extends SpectrumTooltipComponent {
+public class PresentTooltipComponent implements SpectrumTooltipComponent {
 	
 	private final List<ItemStack> itemStacks;
 	
@@ -31,9 +32,9 @@ public class PresentTooltipComponent extends SpectrumTooltipComponent {
 		int n = x + 1;
 		int o = y + 1;
 		for (int i = 0; i < this.itemStacks.size(); i++) {
-			this.drawSlot(context, n + i * 18, o, i, this.itemStacks.get(i), textRenderer);
+			SpectrumTooltipComponent.drawSlot(context, n + i * 18, o, i, this.itemStacks.get(i), textRenderer);
 		}
-		this.drawOutline(context, x, y, this.itemStacks.size(), 1);
+		SpectrumTooltipComponent.drawOutline(context, x, y, this.itemStacks.size(), 1);
 	}
 	
 }

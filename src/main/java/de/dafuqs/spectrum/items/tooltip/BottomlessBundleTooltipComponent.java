@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.items.tooltip;
 
+import de.dafuqs.spectrum.api.gui.SpectrumTooltipComponent;
 import net.fabricmc.api.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.gui.*;
@@ -9,7 +10,7 @@ import net.minecraft.util.collection.*;
 import java.util.*;
 
 @Environment(EnvType.CLIENT)
-public class BottomlessBundleTooltipComponent extends SpectrumTooltipComponent {
+public class BottomlessBundleTooltipComponent implements SpectrumTooltipComponent {
 	
 	private static final int MAX_DISPLAYED_SLOTS = 5;
 	private final List<ItemStack> itemStacks;
@@ -18,17 +19,17 @@ public class BottomlessBundleTooltipComponent extends SpectrumTooltipComponent {
 	private final boolean drawDots;
 	
 	public BottomlessBundleTooltipComponent(BottomlessBundleTooltipData data) {
-		int amount = data.amount();
+		long amount = data.amount();
 		
-		int maxCount = data.itemStack().getMaxCount();
+		long maxCount = data.itemStack().getMaxCount();
 		double totalStacks = (float) amount / (float) maxCount;
 		this.displayedSlotCount = Math.max(2, Math.min(MAX_DISPLAYED_SLOTS + 1, (int) Math.ceil(totalStacks) + 1));
 		
 		this.itemStacks = DefaultedList.ofSize(5, ItemStack.EMPTY);
 		for (int i = 0; i < Math.min(5, displayedSlotCount + 1); i++) {
 			ItemStack slotStack = data.itemStack().copy();
-			int stackAmount = Math.min(maxCount, amount - i * maxCount);
-			slotStack.setCount(stackAmount);
+			var stackAmount = Math.min(maxCount, amount - i * maxCount);
+			slotStack.setCount((int) Math.min(stackAmount, Integer.MAX_VALUE));
 			this.itemStacks.set(i, slotStack);
 		}
 		drawDots = totalStacks > MAX_DISPLAYED_SLOTS;
@@ -41,7 +42,7 @@ public class BottomlessBundleTooltipComponent extends SpectrumTooltipComponent {
 	
 	@Override
 	public int getWidth(TextRenderer textRenderer) {
-		return this.displayedSlotCount * 20 + 2 + 4;
+		return displayedSlotCount * 20 + 2 + 4;
 	}
 	
 	@Override
@@ -53,22 +54,22 @@ public class BottomlessBundleTooltipComponent extends SpectrumTooltipComponent {
 			if (i == displayedSlotCount - 1) {
 				if (displayedSlotCount == MAX_DISPLAYED_SLOTS + 1) {
 					if (drawDots) {
-						this.drawDottedSlot(context, n + 5 * 18, o);
+						SpectrumTooltipComponent.drawDottedSlot(context, n + 5 * 18, o);
 					} else {
-						this.drawSlot(context, n + i * 18, o, i, ItemStack.EMPTY, textRenderer);
+						SpectrumTooltipComponent.drawSlot(context, n + i * 18, o, i, ItemStack.EMPTY, textRenderer);
 					}
 				} else {
-					if (this.itemStacks.size() - 1 < i) {
-						this.drawSlot(context, n + i * 18, o, i, ItemStack.EMPTY, textRenderer);
+					if (itemStacks.size() - 1 < i) {
+						SpectrumTooltipComponent.drawSlot(context, n + i * 18, o, i, ItemStack.EMPTY, textRenderer);
 					} else {
-						this.drawSlot(context, n + i * 18, o, i, this.itemStacks.get(i), textRenderer);
+						SpectrumTooltipComponent.drawSlot(context, n + i * 18, o, i, itemStacks.get(i), textRenderer);
 					}
 				}
 			} else {
-				this.drawSlot(context, n + i * 18, o, i, this.itemStacks.get(i), textRenderer);
+				SpectrumTooltipComponent.drawSlot(context, n + i * 18, o, i, itemStacks.get(i), textRenderer);
 			}
 		}
-		this.drawOutline(context, x, y, displayedSlotCount, 1);
+		SpectrumTooltipComponent.drawOutline(context, x, y, displayedSlotCount, 1);
 	}
 	
 }

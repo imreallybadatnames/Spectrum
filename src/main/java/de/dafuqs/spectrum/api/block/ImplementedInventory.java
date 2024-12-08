@@ -26,6 +26,10 @@ public interface ImplementedInventory extends Inventory, RecipeInput {
 		// FIXME
 		return () -> items;
 	}
+
+	static ImplementedInventory of(ItemStack... items) {
+		return of(DefaultedList.copyOf(ItemStack.EMPTY, items));
+	}
 	
 	/**
 	 * Creates a new inventory with the specified size.
@@ -150,7 +154,6 @@ public interface ImplementedInventory extends Inventory, RecipeInput {
 	}
 	
 	default void inventoryChanged() {
-	
 	}
 	
 }

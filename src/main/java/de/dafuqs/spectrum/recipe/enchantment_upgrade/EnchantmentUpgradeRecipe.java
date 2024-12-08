@@ -1,8 +1,6 @@
 package de.dafuqs.spectrum.recipe.enchantment_upgrade;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
 import de.dafuqs.spectrum.registries.*;
@@ -65,7 +63,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	@Override
 	public boolean matches(RecipeInput inv, World world) {
 		if (inv.getSize() > 9) {
-			if (!inputs.get(0).test(inv.getStackInSlot(0))) {
+			if (!inputs.getFirst().test(inv.getStackInSlot(0))) {
 				return false;
 			}
 			ItemEnchantmentsComponent enchantments = inv.getStackInSlot(0).getEnchantments();
@@ -155,8 +153,8 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return requiredItemCount;
 	}
 	
-	public Enchantment getEnchantment() {
-		return enchantmentEntry.value();
+	public RegistryEntry<Enchantment> getEnchantment() {
+		return enchantmentEntry;
 	}
 	
 	public int getEnchantmentDestinationLevel() {

@@ -108,23 +108,20 @@ public class SpectrumItemProviders {
 		ItemProviderRegistry.register(SpectrumItems.BOTTOMLESS_BUNDLE, new ItemProvider() {
 			@Override
 			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
-				ItemStack bundledStack = BottomlessBundleItem.getFirstBundledStack(stack);
-				if (bundledStack.isOf(requestedItem)) {
-					int prevAmount = BottomlessBundleItem.getStoredAmount(stack);
-					int amountToRemove = Math.min(prevAmount, amount);
-					BottomlessBundleItem.removeBundledStackAmount(stack, amountToRemove);
-					return amountToRemove;
-				}
-				return 0;
+				var builder = BottomlessBundleItem.BottomlessStack.Builder.of(player.getWorld(), stack);
+				var removed = builder.remove(amount);
+				if (removed == null || !removed.isOf(requestedItem))
+					return 0;
+				stack.set(SpectrumDataComponentTypes.BOTTOMLESS_STACK, builder.build());
+				return removed.getCount();
 			}
 			
 			@Override
 			public int getItemCount(PlayerEntity player, ItemStack stack, Item requestedItem) {
-				ItemStack bundledStack = BottomlessBundleItem.getFirstBundledStack(stack);
-				if (bundledStack.isOf(requestedItem)) {
-					return BottomlessBundleItem.getStoredAmount(stack);
-				}
-				return 0;
+				var bottomlessStack = stack.get(SpectrumDataComponentTypes.BOTTOMLESS_STACK);
+				if (bottomlessStack == null || !bottomlessStack.template().isOf(requestedItem))
+					return 0;
+				return bottomlessStack.count();
 			}
 		});
 		

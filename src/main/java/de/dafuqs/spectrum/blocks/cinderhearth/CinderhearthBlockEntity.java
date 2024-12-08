@@ -105,7 +105,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		return slot >= FIRST_OUTPUT_SLOT_ID;
 	}
 
-	enum CinderHearthStructureType {
+	public enum CinderHearthStructureType {
 		NONE,
 		WITH_LAVA,
 		WITHOUT_LAVA
@@ -255,7 +255,8 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		}
 	}
 	
-	public static void serverTick(World world, BlockPos blockPos, BlockState blockState, CinderhearthBlockEntity cinderhearthBlockEntity) {
+	@SuppressWarnings("unused")
+    public static void serverTick(World world, BlockPos blockPos, BlockState blockState, CinderhearthBlockEntity cinderhearthBlockEntity) {
 		if (cinderhearthBlockEntity.upgrades == null) {
 			cinderhearthBlockEntity.calculateUpgrades();
 		}
@@ -449,7 +450,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			
 			// use up input ingredient
 			ItemStack inputStackCopy = inputStack.copy();
-			int amountToDecrementInput = cinderhearth.currentRecipe instanceof CinderhearthRecipe cinderhearthRecipe ? cinderhearthRecipe.getIngredientStacks().get(0).getCount() : 1;
+			int amountToDecrementInput = cinderhearth.currentRecipe instanceof CinderhearthRecipe cinderhearthRecipe ? cinderhearthRecipe.getIngredientStacks().getFirst().getCount() : 1;
 			inputStack.decrement(amountToDecrementInput);
 			
 			if (remainder.isEmpty()) {

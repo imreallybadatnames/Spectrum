@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
+import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;

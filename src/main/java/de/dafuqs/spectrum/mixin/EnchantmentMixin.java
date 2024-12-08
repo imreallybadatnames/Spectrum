@@ -1,9 +1,11 @@
 package de.dafuqs.spectrum.mixin;
 
+import de.dafuqs.spectrum.SpectrumCommon;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -34,7 +36,10 @@ public abstract class EnchantmentMixin {
 	@Unique
 	private static boolean spectrum$modifyIsSupported(Enchantment enchantment, ItemStack stack, boolean original) {
 		var isExtendedEnchantable = stack.getItem() instanceof ExtendedEnchantable extendedEnchantable
-				&& extendedEnchantable.acceptsEnchantment(enchantment);
+				&& SpectrumCommon.getRegistryLookup()
+				.flatMap(r -> r.getOptionalWrapper(RegistryKeys.ENCHANTMENT))
+				.map(impl -> extendedEnchantable.acceptsEnchantment(impl, enchantment))
+				.orElse(false);
 		var isBlacklisted = stack.isIn(SpectrumEnchantmentHelper.getBlacklist(enchantment));
 		return (original || isExtendedEnchantable) && !isBlacklisted;
 	}

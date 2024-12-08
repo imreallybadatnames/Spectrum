@@ -34,7 +34,7 @@ public class FusionShrineRecipeSerializer implements GatedRecipeSerializer<Fusio
 		// TODO - FusionShrineRecipeWorldEffect when starting
 		// TODO - List of FusionShrineRecipeWorldEffect during the craft
 		// TODO - FusionShrineRecipeWorldEffect when craft is finished
-		MinecraftEndecs.TEXT.optionalFieldOf("description", recipe -> recipe.description, Text.EMPTY),
+		MinecraftEndecs.TEXT.optionalFieldOf("description", recipe -> recipe.description, Text.EMPTY)
 	);
 	
 	@Override

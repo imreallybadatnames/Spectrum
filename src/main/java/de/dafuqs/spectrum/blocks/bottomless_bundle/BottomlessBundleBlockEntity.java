@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
+import com.mojang.datafixers.util.Pair;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -29,7 +30,8 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 		@Override
 		protected boolean canInsert(ItemVariant variant) {
 			return variant.getItem().canBeNested()
-					&& (this.variant.isBlank() || this.variant.isOf(variant.getItem()) && this.variant.nbtMatches(variant.getNbt()));
+					&& (this.variant.isBlank() || this.variant.isOf(variant.getItem())
+					&& ItemStack.areItemsAndComponentsEqual(this.variant.toStack(), variant.toStack()));
 		}
 
 		@Override
@@ -67,11 +69,13 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
-		this.setBundleUnsynced(ItemStack.fromNbt(registryLookup, nbt.getCompound("Bundle")).orElse(SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack()), registryLookup);
+		this.setBundleUnsynced(ItemStack.fromNbt(registryLookup, nbt.getCompound("Bundle"))
+				.orElse(SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack()), registryLookup);
 
 		// Handle old data by syncing into bundle
 		if (nbt.contains("StorageVariant")) {
-			this.storage.variant = ItemVariant.fromNbt(nbt.getCompound("StorageVariant"));
+			this.storage.variant = ItemVariant.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("StorageVariant"))
+					.result().map(Pair::getFirst).orElse(ItemVariant.of(ItemStack.EMPTY));
 			this.storage.amount = nbt.getLong("StorageCount");
 			syncBundleWithStorage();
 		} else syncStorageWithBundle();
@@ -79,28 +83,21 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 
 	// Trivial sync methods. Call whenever bundle/storage contents need to be synced with each other [(de)serialization, bundle stack set, bundle block break loot]
 	private void syncBundleWithStorage() {
-		if (this.storage.variant == null || this.storage.amount == 0) {
-			BottomlessBundleItem.setBundledStack(this.bottomlessBundleStack, ItemStack.EMPTY, 0);
-		} else {
-			BottomlessBundleItem.setBundledStack(this.bottomlessBundleStack, this.storage.variant.toStack(), (int) this.storage.amount);
-		}
+		var builder = BottomlessBundleItem.BottomlessStack.Builder.of(this.world, this.bottomlessBundleStack);
+		builder.add(this.storage);
+		this.bottomlessBundleStack.set(SpectrumDataComponentTypes.BOTTOMLESS_STACK, builder.build());
 	}
 
 	private void syncStorageWithBundle() {
-		this.storage.variant = ItemVariant.of(BottomlessBundleItem.getFirstBundledStack(bottomlessBundleStack));
+		this.storage.variant = ItemVariant.of(BottomlessBundleItem.getTemplateStack(bottomlessBundleStack));
 		this.storage.amount = BottomlessBundleItem.getStoredAmount(bottomlessBundleStack);
 	}
 	
 	@Override
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
-
-		// sync bundle data
 		syncBundleWithStorage();
-
-		NbtCompound bundleCompound = new NbtCompound();
-		bottomlessBundleStack.writeNbt(bundleCompound);
-		nbt.put("Bundle", bundleCompound);
+		nbt.put("Bundle", this.bottomlessBundleStack.encodeAllowEmpty(registryLookup));
 	}
 
 	private boolean setBundleUnsynced(ItemStack itemStack, RegistryWrapper.WrapperLookup registryLookup) {
