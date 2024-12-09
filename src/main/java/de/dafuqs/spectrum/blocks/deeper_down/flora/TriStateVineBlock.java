@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
-import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
@@ -34,12 +33,6 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
         this.growthTickChance = growthChance;
         this.spreadChance = spreadChance;
         this.overgrowth = overgrowth;
-    }
-
-    @Override
-    public MapCodec<? extends TriStateVineBlock> getCodec() {
-        //TODO: Make the codec
-        return null;
     }
 
     @Override
@@ -150,8 +143,6 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
 
         return count;
     }
-
-
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {

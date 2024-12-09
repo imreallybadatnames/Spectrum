@@ -74,7 +74,7 @@ public class PylonBlock extends Block implements Waterloggable {
                     break updateFloor;
 
                if (floorFacing == placementDirection.getOpposite()) {
-                   var floorSection = floorState.get(SECTION);;
+                   var floorSection = floorState.get(SECTION);
                    var newFloor = updatePylonBelow(world.getBlockState(floorPos.offset(placementDirection)), floorState, floorSection);
                    world.setBlockState(floorPos, newFloor);
                }

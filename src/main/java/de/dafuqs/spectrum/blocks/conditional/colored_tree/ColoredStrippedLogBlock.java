@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.revelations.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
@@ -11,7 +12,12 @@ import net.minecraft.util.math.*;
 import java.util.*;
 
 public class ColoredStrippedLogBlock extends PillarBlock implements RevelationAware, ColoredTree {
-	
+
+	public static final MapCodec<ColoredStrippedLogBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			createSettingsCodec(),
+			DyeColor.CODEC.fieldOf("color").forGetter(ColoredStrippedLogBlock::getColor)
+	).apply(instance, ColoredStrippedLogBlock::new));
+
 	private static final Map<DyeColor, ColoredStrippedLogBlock> LOGS = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
@@ -24,8 +30,7 @@ public class ColoredStrippedLogBlock extends PillarBlock implements RevelationAw
 
 	@Override
 	public MapCodec<? extends ColoredStrippedLogBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

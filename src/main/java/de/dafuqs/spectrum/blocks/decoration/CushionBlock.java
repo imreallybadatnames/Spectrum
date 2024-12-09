@@ -90,7 +90,7 @@ public class CushionBlock extends Block {
             world.spawnEntity(seat);
         }
         else {
-            seat = seats.get(0);
+            seat = seats.getFirst();
         }
 
         return seat;

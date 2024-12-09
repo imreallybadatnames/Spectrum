@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -11,6 +12,11 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class SmallDragonjagBlock extends PlantBlock implements Dragonjag, Fertilizable {
+
+	public static final MapCodec<SmallDragonjagBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			Dragonjag.Variant.CODEC.fieldOf("variant").forGetter(SmallDragonjagBlock::getVariant)
+	).apply(i, SmallDragonjagBlock::new));
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 8.0, 14.0);
     protected static final Map<Dragonjag.Variant, Block> VARIANTS = new HashMap<>();
@@ -24,8 +30,7 @@ public class SmallDragonjagBlock extends PlantBlock implements Dragonjag, Fertil
 
 	@Override
 	public MapCodec<? extends SmallDragonjagBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

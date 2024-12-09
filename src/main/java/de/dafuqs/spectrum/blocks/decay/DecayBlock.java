@@ -9,6 +9,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -68,8 +69,13 @@ public abstract class DecayBlock extends Block {
 
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-		if (entity instanceof LivingEntity && !entity.isFireImmune() && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
-			entity.damage(SpectrumDamageTypes.decay(world), damageOnTouching);
+		if (entity instanceof LivingEntity livingEntity && !entity.isFireImmune()) {
+			var frostWalker = world.getRegistryManager().getOptionalWrapper(RegistryKeys.ENCHANTMENT)
+					.flatMap(impl -> impl.getOptional(Enchantments.FROST_WALKER))
+					.map(e -> EnchantmentHelper.getEquipmentLevel(e, livingEntity))
+					.orElse(0);
+			if (frostWalker == 0)
+				entity.damage(SpectrumDamageTypes.decay(world), damageOnTouching);
 		}
 		super.onSteppedOn(world, pos, state, entity);
 	}

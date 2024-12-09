@@ -66,7 +66,7 @@ public class ShimmerstoneLightBlock extends FacingBlock {
 	
 	@Override
 	public BlockState getPlacementState(@NotNull ItemPlacementContext ctx) {
-		boolean inverted = false;
+		boolean inverted;
 		if (ctx.getSide().getOffsetY() != 0) {
 			inverted = ctx.getHorizontalPlayerFacing().getOffsetX() != 0;
 		} else {

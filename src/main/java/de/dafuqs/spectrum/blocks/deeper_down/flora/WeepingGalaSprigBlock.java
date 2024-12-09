@@ -8,14 +8,15 @@ import net.minecraft.world.*;
 
 public class WeepingGalaSprigBlock extends SaplingBlock {
 
+	public static final MapCodec<WeepingGalaSprigBlock> CODEC = createCodec(WeepingGalaSprigBlock::new);
+
 	public WeepingGalaSprigBlock(AbstractBlock.Settings settings) {
 		super(SpectrumSaplingGenerators.WEEPING_GALA_SAPLING_GENERATOR, settings);
 	}
 
 	@Override
 	public MapCodec<? extends WeepingGalaSprigBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 
 	@Override

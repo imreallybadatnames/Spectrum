@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -11,15 +12,20 @@ import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
 public class GemstonePlayerOnlyGlassBlock extends GemstoneGlassBlock {
-	
+
+	public final MapCodec<GemstonePlayerOnlyGlassBlock> codec;
+
 	public GemstonePlayerOnlyGlassBlock(Settings settings, GemstoneColor gemstoneColor) {
 		super(settings, gemstoneColor);
+		this.codec = RecordCodecBuilder.mapCodec(i -> i.group(
+				createSettingsCodec(),
+				gemstoneColor.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor)
+		).apply(i, GemstonePlayerOnlyGlassBlock::new));
 	}
 
 	@Override
 	public MapCodec<? extends GemstonePlayerOnlyGlassBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return codec;
 	}
 
 	@Override

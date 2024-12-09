@@ -10,7 +10,6 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -25,6 +24,7 @@ import java.util.*;
 
 public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
 
+    public static final MapCodec<WeepingGalaFrondsTipBlock> CODEC = createCodec(WeepingGalaFrondsTipBlock::new);
     public static final EnumProperty<Form> FORM = EnumProperty.of("form", Form.class);
 
     public WeepingGalaFrondsTipBlock(Settings settings) {
@@ -32,11 +32,8 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
         setDefaultState(getDefaultState().with(FORM, Form.TIP));
     }
 
-    public static final MapCodec<WeepingGalaFrondsTipBlock> CODEC = createCodec(WeepingGalaFrondsTipBlock::new);
-
     @Override
     public MapCodec<? extends WeepingGalaFrondsTipBlock> getCodec() {
-        //TODO: Make the codec
         return CODEC;
     }
 
@@ -56,7 +53,7 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
                 reference.update(world);
             }
             else {
-                for (ItemStack rareStack : getResinStacks(state, world, pos, ItemStack.EMPTY, RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN))) {
+                for (ItemStack rareStack : getResinStacks(state, world, pos, ItemStack.EMPTY, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN)) {
                     dropStack(world, pos, rareStack);
                 }
                 world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_DRIP, SoundCategory.BLOCKS, 1, 0.9F + random.nextFloat() * 0.2F);
@@ -71,7 +68,7 @@ public class WeepingGalaFrondsTipBlock extends WeepingGalaFrondsBlock {
         var reference = BlockReference.of(state, pos);
         if (reference.getProperty(FORM) == Form.RESIN) {
             if (!world.isClient()) {
-                for (ItemStack rareStack : getResinStacks(state, (ServerWorld) world, pos, player.getMainHandStack(), RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN))) {
+                for (ItemStack rareStack : getResinStacks(state, (ServerWorld) world, pos, player.getMainHandStack(), SpectrumLootTables.WEEPING_GALA_SPRIG_RESIN)) {
                     dropStack(world, pos, rareStack);
                 }
             }

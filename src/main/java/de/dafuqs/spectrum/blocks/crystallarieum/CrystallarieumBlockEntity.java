@@ -15,6 +15,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -55,7 +56,8 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 		this.canWork = true;
 	}
 	
-	public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, CrystallarieumBlockEntity crystallarieum) {
+	@SuppressWarnings("unused")
+    public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, CrystallarieumBlockEntity crystallarieum) {
 		if (crystallarieum.canWork && crystallarieum.currentRecipe != null) {
 			ParticleEffect particleEffect = SpectrumParticleTypes.getSparkleRisingParticle(crystallarieum.currentRecipe.getInkColor().getDyeColor());
 			
@@ -67,7 +69,8 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 			}
 		}
 	}
-	
+
+	@SuppressWarnings("unused")
 	public static void serverTick(@NotNull World world, BlockPos blockPos, BlockState blockState, CrystallarieumBlockEntity crystallarieum) {
 		if (crystallarieum.canWork) {
 			transferInk(crystallarieum);
@@ -97,7 +100,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 		}
 		
 		// advance growing
-		float consumedInkFloat = (recipe.getInkPerSecond() * crystallarieum.currentCatalyst.growthAccelerationMod * crystallarieum.currentCatalyst.inkConsumptionMod);
+		float consumedInkFloat = (recipe.getInkPerSecond() * crystallarieum.currentCatalyst.growthAccelerationMod() * crystallarieum.currentCatalyst.inkConsumptionMod());
 		int consumedInt = Support.getIntFromDecimalWithChance(consumedInkFloat, world.random);
 		if (crystallarieum.inkStorage.drainEnergy(recipe.getInkColor(), consumedInt) < consumedInt) {
 			crystallarieum.canWork = false;
@@ -107,10 +110,10 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 		}
 		
 		crystallarieum.setInkDirty();
-		crystallarieum.currentGrowthStageTicks += SECOND * crystallarieum.currentCatalyst.growthAccelerationMod;
+		crystallarieum.currentGrowthStageTicks += (int) (SECOND * crystallarieum.currentCatalyst.growthAccelerationMod());
 		
 		// check if a catalyst should get used up
-		if (world.random.nextFloat() < crystallarieum.currentCatalyst.consumeChancePerSecond) {
+		if (world.random.nextFloat() < crystallarieum.currentCatalyst.consumeChancePerSecond()) {
 			ItemStack catalystStack = crystallarieum.getStack(CATALYST_SLOT_ID);
 			catalystStack.decrement(1);
 			crystallarieum.updateInClientWorld();
@@ -166,8 +169,8 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
 			this.inkStorage = IndividualCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
@@ -187,8 +190,8 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		
 		nbt.put("InkStorage", this.inkStorage.toNbt());
 		nbt.put("Looper", this.tickLooper.toNbt());
@@ -235,7 +238,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 				if (!creative) {
 					itemStack.decrement(1);
 				}
-				BlockState placedState = recipe.getGrowthStages().get(0);
+				BlockState placedState = recipe.getGrowthStages().getFirst();
 				world.setBlockState(pos.up(), placedState);
 				onTopBlockChange(placedState, recipe);
 				changed = true;

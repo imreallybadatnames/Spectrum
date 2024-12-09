@@ -33,13 +33,13 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 		this.stateManager = new ViewerCountManager() {
 			@Override
 			protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
-				playSound(world, pos, state, getOpenSound());
+				playSound(world, pos, getOpenSound());
 				onOpen();
 			}
 			
 			@Override
 			protected void onContainerClose(World world, BlockPos pos, BlockState state) {
-				playSound(world, pos, state, getCloseSound());
+				playSound(world, pos, getCloseSound());
 				onClose();
 			}
 			
@@ -68,11 +68,12 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 		};
 	}
 	
-	private static void playSound(World world, BlockPos pos, BlockState state, SoundEvent soundEvent) {
+	private static void playSound(World world, BlockPos pos, SoundEvent soundEvent) {
 		world.playSound(null, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, soundEvent, SoundCategory.BLOCKS, 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
 	}
 	
-	public static void clientTick(World world, BlockPos pos, BlockState state, SpectrumChestBlockEntity blockEntity) {
+	@SuppressWarnings("unused")
+    public static void clientTick(World world, BlockPos pos, BlockState state, SpectrumChestBlockEntity blockEntity) {
 		blockEntity.lidAnimator.step();
 	}
 	

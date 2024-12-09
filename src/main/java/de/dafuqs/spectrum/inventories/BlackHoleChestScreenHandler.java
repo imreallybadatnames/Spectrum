@@ -9,7 +9,8 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.*;
@@ -18,7 +19,6 @@ import net.minecraft.world.*;
 
 import java.util.function.Function;
 
-@SuppressWarnings("UnstableApiUsage")
 public class BlackHoleChestScreenHandler extends ScreenHandler {
 	
 	protected static final int ROWS = 3;
@@ -27,10 +27,22 @@ public class BlackHoleChestScreenHandler extends ScreenHandler {
 	private final Inventory inventory;
 	protected BlackHoleChestBlockEntity blackHoleChestBlockEntity;
 	protected Inventory filterInventory;
-	
-	public BlackHoleChestScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf packetByteBuf) {
-		this(syncId, playerInventory, packetByteBuf.readBlockPos(),
-				(handler) -> FilterConfigurable.getFilterInventoryFromPacketHandler(syncId, playerInventory, packetByteBuf, handler));
+
+	public record ExtendedData(BlockPos pos, FilterConfigurable.ExtendedData filters) {
+
+		public static final PacketCodec<RegistryByteBuf, ExtendedData> PACKET_CODEC = PacketCodec.tuple(
+				BlockPos.PACKET_CODEC,
+				ExtendedData::pos,
+				FilterConfigurable.ExtendedData.PACKET_CODEC,
+				ExtendedData::filters,
+				ExtendedData::new
+		);
+
+	}
+
+	public BlackHoleChestScreenHandler(int syncId, PlayerInventory playerInventory, ExtendedData data) {
+		this(syncId, playerInventory, data.pos(), handler ->
+				FilterConfigurable.getFilterInventoryFromExtendedData(syncId, playerInventory, data.filters(), handler));
 	}
 	
 	private BlackHoleChestScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos readBlockPos, Function<ScreenHandler, Inventory> filterInventoryFactory) {

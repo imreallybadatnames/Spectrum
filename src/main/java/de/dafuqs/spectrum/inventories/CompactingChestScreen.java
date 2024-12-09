@@ -1,28 +1,23 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
-import net.fabricmc.fabric.api.client.networking.v1.*;
-import net.fabricmc.fabric.api.networking.v1.*;
+import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.network.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
 public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHandler> {
 	
 	public static final Identifier BACKGROUND = SpectrumCommon.locate("textures/gui/container/compacting_chest.png");
-	private AutoCompactingInventory.AutoCraftingMode autoCraftingMode;
-	
+
 	public CompactingChestScreen(CompactingChestScreenHandler handler, PlayerInventory playerInventory, Text title) {
 		super(handler, playerInventory, title);
 		this.backgroundHeight = 178;
-		this.autoCraftingMode = handler.getCurrentCraftingMode();
 	}
 	
 	@Override
@@ -30,10 +25,10 @@ public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHa
 		super.init();
 		
 		//client.keyboard.setRepeatEvents(true);
-		setupInputFields(handler.getBlockEntity());
+		setupInputFields();
 	}
 	
-	protected void setupInputFields(CompactingChestBlockEntity compactingChestBlockEntity) {
+	protected void setupInputFields() {
 		int x = (this.width - this.backgroundWidth) / 2 + 3;
 		int y = (this.height - this.backgroundHeight) / 2 + 3;
 		
@@ -46,8 +41,8 @@ public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHa
 	}
 	
 	private void craftingModeButtonPressed(ButtonWidget buttonWidget) {
-		autoCraftingMode = AutoCompactingInventory.AutoCraftingMode.values()[(autoCraftingMode.ordinal() + 1) % AutoCompactingInventory.AutoCraftingMode.values().length];
-		this.onValuesChanged();
+		handler.toggleMode();
+		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPacket(handler.getCraftingMode()));
 	}
 	
 	@Override
@@ -70,13 +65,12 @@ public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHa
 		drawContext.drawTexture(BACKGROUND, x, y, 0 ,0, backgroundWidth, backgroundHeight);
 
 		// the selected crafting mode
-		drawContext.drawTexture(BACKGROUND, x + 154, y + 6, 176, 16 * autoCraftingMode.ordinal(), 16, 16);
-
+		drawContext.drawTexture(BACKGROUND, x + 154, y + 6, 176, 16 * handler.getCraftingMode().ordinal(), 16, 16);
 	}
 	
 	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		renderBackground(drawContext);
+		renderBackground(drawContext, mouseX, mouseY, delta);
 		super.render(drawContext, mouseX, mouseY, delta);
 		
 		if (mouseX > x + 153 && mouseX < x + 153 + 16 && mouseY > y + 5 && mouseY < y + 5 + 16) {
@@ -84,12 +78,6 @@ public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHa
 		} else {
 			drawMouseoverTooltip(drawContext, mouseX, mouseY);
 		}
-	}
-	
-	private void onValuesChanged() {
-		PacketByteBuf packetByteBuf = PacketByteBufs.create();
-		packetByteBuf.writeInt(autoCraftingMode.ordinal());
-		ClientPlayNetworking.send(SpectrumC2SPackets.CHANGE_COMPACTING_CHEST_SETTINGS_PACKET_ID, packetByteBuf);
 	}
 	
 }

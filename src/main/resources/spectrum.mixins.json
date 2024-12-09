@@ -90,6 +90,7 @@
     "accessors.DensityCapAccessor",
     "accessors.EnchantmentAccessor",
     "accessors.EnchantmentHelperAccessor",
+    "accessors.ExperienceDroppingBlockAccessor",
     "accessors.ExplosionAccessor",
     "accessors.FluidBlockAccessor",
     "accessors.FoxEntityAccessor",

@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.inventories;
 
-import io.netty.buffer.*;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.client.gui.screen.ingame.*;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.resource.featuretoggle.*;
@@ -45,7 +45,7 @@ public class SpectrumScreenHandlerTypes {
 		return Registry.register(Registries.SCREEN_HANDLER, id, type);
 	}
 	
-	public static <T extends ScreenHandler, D> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<ByteBuf, D> packetCodec) {
+	public static <T extends ScreenHandler, D> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<? super RegistryByteBuf, D> packetCodec) {
 		return Registry.register(Registries.SCREEN_HANDLER, id, new ExtendedScreenHandlerType<>(factory, packetCodec));
 	}
 	
@@ -55,8 +55,8 @@ public class SpectrumScreenHandlerTypes {
 
         PEDESTAL = registerExtended(SpectrumScreenHandlerIDs.PEDESTAL, PedestalScreenHandler::new);
         PARTICLE_SPAWNER = registerExtended(SpectrumScreenHandlerIDs.PARTICLE_SPAWNER, ParticleSpawnerScreenHandler::new);
-        COMPACTING_CHEST = registerExtended(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
-        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new);
+        COMPACTING_CHEST = registerSimple(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
+        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new, BlackHoleChestScreenHandler.ExtendedData.PACKET_CODEC);
         COLOR_PICKER = registerExtended(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
         CINDERHEARTH = registerExtended(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new, BlockPos.PACKET_CODEC);
 		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new);

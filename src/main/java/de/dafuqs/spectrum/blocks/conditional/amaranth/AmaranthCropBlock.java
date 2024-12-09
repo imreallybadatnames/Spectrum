@@ -17,7 +17,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class AmaranthCropBlock extends TallCropBlock implements RevelationAware {
-	
+
+	public static final MapCodec<AmaranthCropBlock> CODEC = createCodec(AmaranthCropBlock::new);
 	protected static final int LAST_SINGLE_BLOCK_AGE = 2;
 	protected static final int MAX_AGE = 7;
 
@@ -39,8 +40,7 @@ public class AmaranthCropBlock extends TallCropBlock implements RevelationAware 
 
 	@Override
 	public MapCodec<? extends AmaranthCropBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

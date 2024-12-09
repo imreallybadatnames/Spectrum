@@ -2,13 +2,19 @@ package de.dafuqs.spectrum.blocks.decoration;
 
 import com.google.common.collect.*;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 
 import java.util.*;
 
 public class ColoredSlabBlock extends SlabBlock {
-	
+
+	public static final MapCodec<ColoredSlabBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			createSettingsCodec(),
+			DyeColor.CODEC.fieldOf("color").forGetter(ColoredSlabBlock::getColor)
+	).apply(instance, ColoredSlabBlock::new));
+
 	private static final Map<DyeColor, ColoredSlabBlock> BLOCKS = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
@@ -20,8 +26,7 @@ public class ColoredSlabBlock extends SlabBlock {
 
 	@Override
 	public MapCodec<? extends ColoredSlabBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	public DyeColor getColor() {

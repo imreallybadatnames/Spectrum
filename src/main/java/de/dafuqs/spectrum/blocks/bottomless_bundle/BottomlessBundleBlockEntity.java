@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
-import com.mojang.datafixers.util.Pair;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -42,7 +41,11 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 		
 		@Override
 		protected ItemVariant getBlankVariant() {
-			return this.variant; // lock to the item the player set it to when placing it down
+			// lock to the item the player set it to when placing it down
+			// variant will only ever be null upon initialization, where it'll be set to the bundle
+			return this.variant == null
+					? ItemVariant.of(BottomlessBundleItem.getTemplateStack(bottomlessBundleStack))
+					: this.variant;
 		}
 
 		@Override
@@ -71,14 +74,7 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 		super.readNbt(nbt, registryLookup);
 		this.setBundleUnsynced(ItemStack.fromNbt(registryLookup, nbt.getCompound("Bundle"))
 				.orElse(SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack()), registryLookup);
-
-		// Handle old data by syncing into bundle
-		if (nbt.contains("StorageVariant")) {
-			this.storage.variant = ItemVariant.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("StorageVariant"))
-					.result().map(Pair::getFirst).orElse(ItemVariant.of(ItemStack.EMPTY));
-			this.storage.amount = nbt.getLong("StorageCount");
-			syncBundleWithStorage();
-		} else syncStorageWithBundle();
+		syncStorageWithBundle();
 	}
 
 	// Trivial sync methods. Call whenever bundle/storage contents need to be synced with each other [(de)serialization, bundle stack set, bundle block break loot]

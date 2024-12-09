@@ -1,7 +1,8 @@
 package de.dafuqs.spectrum.blocks;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import de.dafuqs.spectrum.blocks.conditional.amaranth.AmaranthBushelBlock;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.block.enums.*;
@@ -22,6 +23,10 @@ import org.jetbrains.annotations.*;
  * This class is fully usable on its own, but it is recommended to extend it.
  */
 public class TallCropBlock extends CropBlock {
+    public static final MapCodec<TallCropBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            createSettingsCodec(),
+            Codec.INT.fieldOf("last_single_block_age").forGetter(TallCropBlock::getLastSingleBlockAge)
+    ).apply(instance, TallCropBlock::new));
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
     public final int lastSingleBlockAge;
 
@@ -35,8 +40,7 @@ public class TallCropBlock extends CropBlock {
 
     @Override
     public MapCodec<? extends TallCropBlock> getCodec() {
-        //TODO: Make the codec
-        return null;
+        return CODEC;
     }
 
     @Override
@@ -213,5 +217,9 @@ public class TallCropBlock extends CropBlock {
     @Override
     public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
         super.afterBreak(world, player, pos, Blocks.AIR.getDefaultState(), blockEntity, stack);
+    }
+
+    public int getLastSingleBlockAge() {
+        return lastSingleBlockAge;
     }
 }

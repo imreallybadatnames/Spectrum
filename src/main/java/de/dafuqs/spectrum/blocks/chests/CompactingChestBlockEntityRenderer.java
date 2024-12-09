@@ -14,6 +14,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+@SuppressWarnings("unused")
 @Environment(EnvType.CLIENT)
 public class CompactingChestBlockEntityRenderer implements BlockEntityRenderer<CompactingChestBlockEntity> {
 	
@@ -69,7 +70,7 @@ public class CompactingChestBlockEntityRenderer implements BlockEntityRenderer<C
 			}
 			case CRAFTING -> {
 				chest.pistonTarget = (float) (Math.sin((chest.activeTicks % 500000 + tickDelta) / 10F) * 5 + 4);
-				chest.driverTarget = (float) (Math.sin(((chest.activeTicks + 13) % 500000 + tickDelta) / 10F) * 5 + 5);;
+				chest.driverTarget = (float) (Math.sin(((chest.activeTicks + 13) % 500000 + tickDelta) / 10F) * 5 + 5);
 				chest.capTarget = 0;
 			}
 			case CLOSED -> {

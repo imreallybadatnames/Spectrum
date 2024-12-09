@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.component_type;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.blocks.present.PresentBlock;
+import de.dafuqs.spectrum.helpers.CodecHelper;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -30,7 +31,7 @@ public record WrappedPresentComponent(
     public static final PacketCodec<RegistryByteBuf, WrappedPresentComponent> PACKET_CODEC = PacketCodec.tuple(
             PacketCodecs.BOOL,
             WrappedPresentComponent::wrapped,
-            PacketCodecs.VAR_INT.xmap(i -> PresentBlock.WrappingPaper.values()[i], PresentBlock.WrappingPaper::ordinal),
+            CodecHelper.ofPacketEnum(PresentBlock.WrappingPaper.class),
             WrappedPresentComponent::variant,
             PacketCodecs.map(HashMap::new, DyeColor.PACKET_CODEC, PacketCodecs.VAR_INT),
             WrappedPresentComponent::colors,

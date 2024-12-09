@@ -9,6 +9,7 @@ import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
+import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.networking.v1.*;
@@ -73,13 +74,12 @@ public class SpectrumC2SPacketReceiver {
 			}
 		});
 		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.CHANGE_COMPACTING_CHEST_SETTINGS_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+		ServerPlayNetworking.registerGlobalReceiver(ChangeCompactingChestSettingsPacket.ID, (payload, context) -> {
 			// receive the client packet...
-			if (player.currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
+			if (context.player().currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
 				BlockEntity blockEntity = compactingChestScreenHandler.getBlockEntity();
 				if (blockEntity instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-					/// ...apply the new settings...
-					compactingChestBlockEntity.applySettings(buf);
+					compactingChestBlockEntity.applySettings(payload);
 				}
 			}
 		});

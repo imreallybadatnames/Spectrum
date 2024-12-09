@@ -18,6 +18,7 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 @Environment(EnvType.CLIENT)
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class FabricationChestBlockEntityRenderer implements BlockEntityRenderer<FabricationChestBlockEntity> {
 	
 	private static final SpriteIdentifier spriteIdentifier = new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SpectrumCommon.locate("block/fabrication_chest"));
@@ -157,7 +158,7 @@ public class FabricationChestBlockEntityRenderer implements BlockEntityRenderer<
 		matrices.scale(0.8F, 0.8F, 0.8F);
 
 		if (outputs.size() == 1) {
-			MinecraftClient.getInstance().getItemRenderer().renderItem(null, outputs.get(0), ModelTransformationMode.GROUND, false, matrices, vertexConsumers, world, light, overlay, 0);
+			MinecraftClient.getInstance().getItemRenderer().renderItem(null, outputs.getFirst(), ModelTransformationMode.GROUND, false, matrices, vertexConsumers, world, light, overlay, 0);
 		}
 		else {
 			var rotation = 360F / outputs.size();

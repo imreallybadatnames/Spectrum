@@ -17,7 +17,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.*;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
@@ -34,7 +33,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory, SidedInventory, EventQueue.Callback<Object> {
+public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory<BlackHoleChestScreenHandler.ExtendedData>, SidedInventory, EventQueue.Callback<Object> {
 	
 	public static final int INVENTORY_SIZE = 28;
 	public static final int ITEM_FILTER_SLOT_COUNT = 5;
@@ -54,7 +53,8 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 		this.filterItems = DefaultedList.ofSize(ITEM_FILTER_SLOT_COUNT, ItemVariant.blank());
 	}
 
-	public static void tick(@NotNull World world, BlockPos pos, BlockState state, BlackHoleChestBlockEntity chest) {
+	@SuppressWarnings("unused")
+    public static void tick(@NotNull World world, BlockPos pos, BlockState state, BlackHoleChestBlockEntity chest) {
 		chest.updateFullState();
 		chest.age++;
 
@@ -307,9 +307,9 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	@Override
-	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		buf.writeBlockPos(this.pos);
-		FilterConfigurable.writeScreenOpeningData(buf, filterItems, 1, ITEM_FILTER_SLOT_COUNT, ITEM_FILTER_SLOT_COUNT);
+	public BlackHoleChestScreenHandler.ExtendedData getScreenOpeningData(ServerPlayerEntity player) {
+		var filters = new FilterConfigurable.ExtendedData(filterItems, 1, ITEM_FILTER_SLOT_COUNT, ITEM_FILTER_SLOT_COUNT);
+		return new BlackHoleChestScreenHandler.ExtendedData(pos, filters);
 	}
 
 	public List<ItemVariant> getItemFilters() {
@@ -364,4 +364,5 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 		CLOSED_INACTIVE,
 		FULL
 	}
+
 }

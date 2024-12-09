@@ -16,6 +16,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationAxis;
 
 @Environment(EnvType.CLIENT)
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class HeartboundChestBlockEntityRenderer implements BlockEntityRenderer<HeartboundChestBlockEntity> {
 
 	private static final SpriteIdentifier SPRITE = new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SpectrumCommon.locate("block/heartbound_chest"));

@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.registries.SpectrumSaplingGenerators;
 import net.minecraft.block.*;
@@ -10,7 +12,12 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class ColoredSaplingBlock extends SaplingBlock implements RevelationAware, ColoredTree {
-	
+
+	public static final MapCodec<ColoredSaplingBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			createSettingsCodec(),
+			DyeColor.CODEC.fieldOf("color").forGetter(ColoredSaplingBlock::getColor)
+	).apply(instance, ColoredSaplingBlock::new));
+
 	private static final Map<DyeColor, ColoredSaplingBlock> SAPLINGS = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
@@ -19,6 +26,11 @@ public class ColoredSaplingBlock extends SaplingBlock implements RevelationAware
 		this.color = color;
 		SAPLINGS.put(color, this);
 		RevelationAware.register(this);
+	}
+
+	@Override
+	public MapCodec<? extends ColoredSaplingBlock> getCodec() {
+		return CODEC;
 	}
 	
 	@Override
