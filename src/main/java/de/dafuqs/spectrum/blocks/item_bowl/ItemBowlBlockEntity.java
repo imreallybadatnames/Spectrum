@@ -56,7 +56,8 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 		return super.toInitialChunkDataNbt(registryLookup);
 	}
 	
-	public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, ItemBowlBlockEntity itemBowlBlockEntity) {
+	@SuppressWarnings("unused")
+    public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, ItemBowlBlockEntity itemBowlBlockEntity) {
 		ItemStack storedStack = itemBowlBlockEntity.getStack(0);
 		if (!storedStack.isEmpty()) {
 			Optional<DyeColor> optionalItemColor = ColorRegistry.ITEM_COLORS.getMapping(storedStack.getItem());

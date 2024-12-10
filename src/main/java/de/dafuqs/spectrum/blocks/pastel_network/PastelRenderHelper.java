@@ -27,25 +27,25 @@ public class PastelRenderHelper {
 		final Camera camera = client.gameRenderer.getCamera();
 		final double[] billBoard = billboard((vec.x) * 1, (vec.y) * 1, (vec.z) * 1, camera.getPos().x, camera.getPos().y, camera.getPos().z, axis.x, axis.y, axis.z);
 		
-		final Matrix4f model = matrices.peek().getPositionMatrix();
-		final Matrix3f normal = matrices.peek().getNormalMatrix();
+		final MatrixStack.Entry entry = matrices.peek();
+		final Matrix4f model = entry.getPositionMatrix();
 		final VertexConsumer buffer = vertexConsumers.getBuffer(RenderLayer.getBeaconBeam(BEAM_TEXTURE_ID, true));
-		renderBeamFace(billBoard, model, normal, buffer, color[1], color[2], color[3], color[0], dist, 0, 0, BEAM_WIDTH, -BEAM_WIDTH, 0, 0.5F, 0, 1);
-		renderBeamFace(billBoard, model, normal, buffer, color[1], color[2], color[3], color[0], dist, -BEAM_WIDTH, -BEAM_WIDTH, 0, 0, 0.5F, 1, 0, 1);
+		renderBeamFace(billBoard, model, entry, buffer, color[1], color[2], color[3], color[0], dist, 0, 0, BEAM_WIDTH, -BEAM_WIDTH, 0, 0.5F, 0, 1);
+		renderBeamFace(billBoard, model, entry, buffer, color[1], color[2], color[3], color[0], dist, -BEAM_WIDTH, -BEAM_WIDTH, 0, 0, 0.5F, 1, 0, 1);
 		
 		matrices.pop();
 	}
 
-    private static void renderBeamFace(final double[] mat, final Matrix4f positionMatrix, final Matrix3f normalMatrix, final VertexConsumer vertices, final float red, final float green, final float blue, final float alpha, final float length, final float x1, final float z1, final float x2, final float z2, final float u1, final float u2, final float v1, final float v2) {
-        renderBeamVertex(mat, positionMatrix, normalMatrix, vertices, red, green, blue, alpha, x1, length, z1, u2, v1);
-        renderBeamVertex(mat, positionMatrix, normalMatrix, vertices, red, green, blue, alpha, x1, 0, z1, u2, v2);
-        renderBeamVertex(mat, positionMatrix, normalMatrix, vertices, red, green, blue, alpha, x2, 0, z2, u1, v2);
-        renderBeamVertex(mat, positionMatrix, normalMatrix, vertices, red, green, blue, alpha, x2, length, z2, u1, v1);
+    private static void renderBeamFace(final double[] mat, final Matrix4f positionMatrix, final MatrixStack.Entry entry, final VertexConsumer vertices, final float red, final float green, final float blue, final float alpha, final float length, final float x1, final float z1, final float x2, final float z2, final float u1, final float u2, final float v1, final float v2) {
+        renderBeamVertex(mat, positionMatrix, entry, vertices, red, green, blue, alpha, x1, length, z1, u2, v1);
+        renderBeamVertex(mat, positionMatrix, entry, vertices, red, green, blue, alpha, x1, 0, z1, u2, v2);
+        renderBeamVertex(mat, positionMatrix, entry, vertices, red, green, blue, alpha, x2, 0, z2, u1, v2);
+        renderBeamVertex(mat, positionMatrix, entry, vertices, red, green, blue, alpha, x2, length, z2, u1, v1);
     }
 
-    private static void renderBeamVertex(final double[] mat, final Matrix4f positionMatrix, final Matrix3f normalMatrix, final VertexConsumer vertices, final float red, final float green, final float blue, final float alpha, final float x, final float y, final float z, final float u, final float v) {
+    private static void renderBeamVertex(final double[] mat, final Matrix4f positionMatrix, final MatrixStack.Entry entry, final VertexConsumer vertices, final float red, final float green, final float blue, final float alpha, final float x, final float y, final float z, final float u, final float v) {
         final Vec3d transform = transform(new Vec3d(x, y, z), mat);
-        vertices.vertex(positionMatrix, (float) transform.x, (float) transform.y, (float) transform.z).color(red, green, blue, alpha).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(15728880).normal(normalMatrix, 0.0F, 1.0F, 0.0F).next();
+        vertices.vertex(positionMatrix, (float) transform.x, (float) transform.y, (float) transform.z).color(red, green, blue, alpha).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(15728880).normal(entry, 0.0F, 1.0F, 0.0F);
     }
 
     private static Vec3d transform(final Vec3d vec, final double[] mat) {

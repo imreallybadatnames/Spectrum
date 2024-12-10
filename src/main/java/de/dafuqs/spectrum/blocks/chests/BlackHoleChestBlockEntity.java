@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.chests;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.events.listeners.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -33,7 +34,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory<BlackHoleChestScreenHandler.ExtendedData>, SidedInventory, EventQueue.Callback<Object> {
+public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory<FilterConfigurable.ExtendedData>, SidedInventory, EventQueue.Callback<Object> {
 	
 	public static final int INVENTORY_SIZE = 28;
 	public static final int ITEM_FILTER_SLOT_COUNT = 5;
@@ -45,7 +46,7 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	private boolean isOpen, isFull, hasXPStorage;
 	float storageTarget, storagePos, lastStorageTarget, capTarget, capPos, lastCapTarget, orbTarget, orbPos, lastOrbTarget, yawTarget, orbYaw, lastYawTarget;
 	long interpTicks, interpLength = 1, age, storedXP, maxStoredXP;
-
+	private final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos);
 	
 	public BlackHoleChestBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(SpectrumBlockEntities.BLACK_HOLE_CHEST, blockPos, blockState);
@@ -209,7 +210,7 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return new BlackHoleChestScreenHandler(syncId, playerInventory, this);
+		return new BlackHoleChestScreenHandler(syncId, playerInventory, this, propertyDelegate, makeExtendedData());
 	}
 	
 	@Override
@@ -307,9 +308,12 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	@Override
-	public BlackHoleChestScreenHandler.ExtendedData getScreenOpeningData(ServerPlayerEntity player) {
-		var filters = new FilterConfigurable.ExtendedData(filterItems, 1, ITEM_FILTER_SLOT_COUNT, ITEM_FILTER_SLOT_COUNT);
-		return new BlackHoleChestScreenHandler.ExtendedData(pos, filters);
+	public FilterConfigurable.ExtendedData getScreenOpeningData(ServerPlayerEntity player) {
+		return makeExtendedData();
+	}
+
+	private FilterConfigurable.ExtendedData makeExtendedData() {
+		return new FilterConfigurable.ExtendedData(filterItems, 1, ITEM_FILTER_SLOT_COUNT, ITEM_FILTER_SLOT_COUNT);
 	}
 
 	public List<ItemVariant> getItemFilters() {

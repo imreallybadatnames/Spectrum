@@ -20,8 +20,8 @@ import java.util.*;
 @Environment(EnvType.CLIENT)
 public class FusionShrineBlockEntityRenderer<T extends FusionShrineBlockEntity> implements BlockEntityRenderer<T> {
 	
-	public FusionShrineBlockEntityRenderer(Context ctx) {
-	
+	@SuppressWarnings("unused")
+    public FusionShrineBlockEntityRenderer(Context ctx) {
 	}
 	
 	private static void renderFluid(VertexConsumer builder, Matrix4f pos, Sprite sprite, int light, int overlay, float x1, float x2, float y, float z1, float z2, int[] color) {

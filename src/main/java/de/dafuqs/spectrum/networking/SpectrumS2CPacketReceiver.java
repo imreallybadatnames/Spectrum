@@ -17,6 +17,7 @@ import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.map.*;
+import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationS2CPacket;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
@@ -45,6 +46,7 @@ import org.joml.*;
 
 import java.util.*;
 
+@SuppressWarnings("resource")
 @Environment(EnvType.CLIENT)
 public class SpectrumS2CPacketReceiver {
 	
@@ -266,17 +268,12 @@ public class SpectrumS2CPacketReceiver {
 			});
 		});
 		
-		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.CHANGE_PARTICLE_SPAWNER_SETTINGS_CLIENT_PACKET_ID, (client, handler, buf, responseSender) -> {
-			BlockPos pos = buf.readBlockPos();
-			ParticleSpawnerConfiguration configuration = ParticleSpawnerConfiguration.fromBuf(buf);
-			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				if (client.world.getBlockEntity(pos) instanceof ParticleSpawnerBlockEntity particleSpawnerBlockEntity) {
-					particleSpawnerBlockEntity.applySettings(configuration);
-				}
-			});
-		});
+		ClientPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationS2CPacket.ID, (packet, context) -> context.client().execute(() -> {
+            // Everything in this lambda is running on the render thread
+            if (context.client().world.getBlockEntity(packet.pos()) instanceof ParticleSpawnerBlockEntity particleSpawnerBlockEntity) {
+                particleSpawnerBlockEntity.applySettings(packet.configuration());
+            }
+        }));
 		
 		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.PASTEL_TRANSMISSION, (client, handler, buf, responseSender) -> {
 			UUID networkUUID = buf.readUuid();

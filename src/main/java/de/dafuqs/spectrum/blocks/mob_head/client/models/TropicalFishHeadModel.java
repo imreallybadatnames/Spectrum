@@ -7,6 +7,7 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.ColorHelper;
 
 @Environment(EnvType.CLIENT)
 public class TropicalFishHeadModel extends SpectrumSkullModel {
@@ -48,16 +49,17 @@ public class TropicalFishHeadModel extends SpectrumSkullModel {
 	}
 	
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, int argb) {
 		float scale = getScale();
 		matrices.scale(scale, scale, scale);
-		
-		float[] colorComponents = DyeColor.RED.getColorComponents();
-		this.render(matrices, vertices, light, overlay, colorComponents[0], colorComponents[1], colorComponents[2], alpha);
+
+		int alpha = ColorHelper.Argb.getAlpha(argb);
+		int red = ColorHelper.Argb.withAlpha(alpha, DyeColor.RED.getEntityColor());
+		this.render(matrices, vertices, light, overlay, red);
 		
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(PATTERN_TEXTURE));
-		float[] colorComponents2 = DyeColor.BLUE.getColorComponents();
-		this.pattern.render(matrices, vertexConsumer, light, overlay, colorComponents2[0], colorComponents2[1], colorComponents2[2], alpha);
+		int blue = ColorHelper.Argb.withAlpha(alpha, DyeColor.BLUE.getEntityColor());
+		this.pattern.render(matrices, vertexConsumer, light, overlay, blue);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.gemstone;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.sound.*;
@@ -9,7 +10,13 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class SpectrumGemstoneBlock extends AmethystBlock {
-	
+
+	public static final MapCodec<SpectrumGemstoneBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			SoundEvent.CODEC.fieldOf("hit_sound_event").forGetter(b -> b.hitSoundEvent),
+			SoundEvent.CODEC.fieldOf("chime_sound_event").forGetter(b -> b.chimeSoundEvent)
+	).apply(i, SpectrumGemstoneBlock::new));
+
 	private final SoundEvent hitSoundEvent;
 	private final SoundEvent chimeSoundEvent;
 	
@@ -21,8 +28,7 @@ public class SpectrumGemstoneBlock extends AmethystBlock {
 
 	@Override
 	public MapCodec<? extends SpectrumGemstoneBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

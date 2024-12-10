@@ -8,17 +8,17 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.util.*;
-import org.joml.*;
+import net.minecraft.util.math.ColorHelper;
 
 @Environment(EnvType.CLIENT)
 public class LizardHeadModel extends SpectrumSkullModel {
 	
 	public static final Identifier HEAD_TEXTURE = SpectrumCommon.locate("textures/entity/lizard/lizard_head.png");
 	
-	protected final Vector3f color;
+	protected final int color;
 	protected final ModelPart frills;
 	
-	public LizardHeadModel(ModelPart root, ModelPart frills, Vector3f color) {
+	public LizardHeadModel(ModelPart root, ModelPart frills, int color) {
 		super(root);
 		this.color = color;
 		this.frills = frills;
@@ -60,14 +60,15 @@ public class LizardHeadModel extends SpectrumSkullModel {
 	}
 	
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, int argb) {
 		float scale = getScale();
 		matrices.scale(scale, scale, scale);
 		
-		this.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+		this.render(matrices, vertices, light, overlay, argb);
 		
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(HEAD_TEXTURE));
-		this.frills.render(matrices, vertexConsumer, light, overlay, color.x, color.y, color.z, alpha);
+		int alpha = ColorHelper.Argb.getAlpha(argb);
+		this.frills.render(matrices, vertexConsumer, light, overlay, ColorHelper.Argb.withAlpha(alpha, color));
 	}
 	
 }

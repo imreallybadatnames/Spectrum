@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.networking;
 
 import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.networking.packet.*;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.util.*;
 
 public class SpectrumS2CPackets {
@@ -32,7 +34,6 @@ public class SpectrumS2CPackets {
 	public static final Identifier PLAY_TAKE_OFF_BELT_SOUND_INSTANCE = SpectrumCommon.locate("play_take_off_belt_sound_instance");
 
 	// Others
-	public static final Identifier CHANGE_PARTICLE_SPAWNER_SETTINGS_CLIENT_PACKET_ID = SpectrumCommon.locate("change_particle_spawner_settings_client");
 	public static final Identifier START_SKY_LERPING = SpectrumCommon.locate("start_sky_lerping");
 	public static final Identifier PLAY_MEMORY_MANIFESTING_PARTICLES = SpectrumCommon.locate("play_memory_manifesting_particles");
 	public static final Identifier UPDATE_BOSS_BAR = SpectrumCommon.locate("update_boss_bar");
@@ -49,5 +50,9 @@ public class SpectrumS2CPackets {
 	public static final Identifier BLACK_HOLE_CHEST_STATUS_UPDATE = SpectrumCommon.locate("black_hole_chest_status");
 	public static final Identifier FABRICATION_CHEST_STATUS_UPDATE = SpectrumCommon.locate("fabrication_chest_status");
 	public static final Identifier PASTEL_NODE_STATUS_UPDATE = SpectrumCommon.locate("pastel_node_status");
+
+	public static void register() {
+		PayloadTypeRegistry.playC2S().register(ParticleSpawnerConfigurationS2CPacket.ID, ParticleSpawnerConfigurationS2CPacket.CODEC);
+	}
 
 }

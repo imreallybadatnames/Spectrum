@@ -12,7 +12,8 @@ public class EraserHeadModel extends SpectrumSkullModel {
 		super(root);
 	}
 	
-	public static TexturedModelData getTexturedModelData() {
+	@SuppressWarnings("unused")
+    public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 
 		ModelPartData body = modelData.getRoot().addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0F, 0.0F));

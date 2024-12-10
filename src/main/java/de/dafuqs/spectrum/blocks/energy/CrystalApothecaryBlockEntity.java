@@ -49,7 +49,8 @@ public class CrystalApothecaryBlockEntity extends LootableContainerBlockEntity i
 		this.compensationWorldTime = -1;
 	}
 	
-	public static void tick(World world, BlockPos pos, BlockState state, CrystalApothecaryBlockEntity blockEntity) {
+	@SuppressWarnings("unused")
+    public static void tick(World world, BlockPos pos, BlockState state, CrystalApothecaryBlockEntity blockEntity) {
 		if (!world.isClient) {
 			blockEntity.blockPosEventTransferListener.tick(world);
 			if (world.getTime() % 1000 == 0) {

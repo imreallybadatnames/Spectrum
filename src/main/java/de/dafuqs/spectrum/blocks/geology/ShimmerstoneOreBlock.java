@@ -1,7 +1,9 @@
 package de.dafuqs.spectrum.blocks.geology;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.blocks.conditional.*;
+import de.dafuqs.spectrum.mixin.accessors.ExperienceDroppingBlockAccessor;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
@@ -16,14 +18,20 @@ import net.minecraft.world.*;
 
 public class ShimmerstoneOreBlock extends CloakedOreBlock {
 
-    public ShimmerstoneOreBlock(UniformIntProvider uniformIntProvider, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
-        super(uniformIntProvider, settings, cloakAdvancementIdentifier, cloakBlockState);
+    public static final MapCodec<ShimmerstoneOreBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(b -> ((ExperienceDroppingBlockAccessor) b).getExperienceDropped()),
+            createSettingsCodec(),
+            Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
+            BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+    ).apply(instance, ShimmerstoneOreBlock::new));
+
+    public ShimmerstoneOreBlock(IntProvider experienceDropped, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
+        super(experienceDropped, settings, cloakAdvancementIdentifier, cloakBlockState);
     }
 
     @Override
     public MapCodec<? extends ShimmerstoneOreBlock> getCodec() {
-        //TODO: Make the codec
-        return null;
+        return CODEC;
     }
 
     @Override

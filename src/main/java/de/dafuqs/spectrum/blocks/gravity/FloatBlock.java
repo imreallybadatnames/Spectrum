@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.blocks.gravity;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
@@ -9,7 +11,12 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 
 public class FloatBlock extends FallingBlock {
-	
+
+	public static final MapCodec<FloatBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			Codec.FLOAT.fieldOf("gravity_mod").forGetter(FloatBlock::getGravityMod)
+	).apply(i, FloatBlock::new));
+
 	private final float gravityMod;
 	
 	public FloatBlock(Settings settings, float gravityMod) {
@@ -19,8 +26,7 @@ public class FloatBlock extends FallingBlock {
 
 	@Override
 	public MapCodec<? extends FloatBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	public float getGravityMod() {

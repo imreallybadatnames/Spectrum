@@ -14,16 +14,16 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-@SuppressWarnings("unused")
 @Environment(EnvType.CLIENT)
 public class CompactingChestBlockEntityRenderer implements BlockEntityRenderer<CompactingChestBlockEntity> {
-	
+
 	private static final SpriteIdentifier SPRITE_IDENTIFIER = new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SpectrumCommon.locate("block/compacting_chest"));
 	private final ModelPart root;
 	private final ModelPart driver;
 	private final ModelPart piston;
 	private final ModelPart cap;
-	
+
+	@SuppressWarnings("unused")
 	public CompactingChestBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 		TexturedModelData texturedModelData = getTexturedModelData();
 		root = texturedModelData.createModel();
@@ -32,7 +32,8 @@ public class CompactingChestBlockEntityRenderer implements BlockEntityRenderer<C
 		piston = fakeRoot.getChild("piston");
 		cap = fakeRoot.getChild("cap");
 	}
-	
+
+	@SuppressWarnings("unused")
 	public static @NotNull TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();

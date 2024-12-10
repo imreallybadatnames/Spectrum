@@ -1,7 +1,9 @@
 package de.dafuqs.spectrum.blocks.pastel_network.network;
 
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
+import de.dafuqs.spectrum.helpers.CodecHelper;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -18,17 +20,15 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 	
 	private final List<ServerPastelNetwork> networks = new ArrayList<>();
 	
-	public ServerPastelNetworkManager() {
-		super();
-	}
-	
 	@Override
 	public boolean isDirty() {
 		return true;
 	}
 	
 	public static ServerPastelNetworkManager get(ServerWorld world) {
-		return world.getPersistentStateManager().getOrCreate(ServerPastelNetworkManager::fromNbt, ServerPastelNetworkManager::new, PERSISTENT_STATE_ID);
+		// TODO: We need to spoof a datafixer type, null will prevent data from being read
+		var type = new PersistentState.Type<>(ServerPastelNetworkManager::new, ServerPastelNetworkManager::fromNbt, null);
+		return world.getPersistentStateManager().getOrCreate(type, PERSISTENT_STATE_ID);
 	}
 
 	@Override
@@ -37,20 +37,19 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
+	public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		NbtList networkList = new NbtList();
 		for (ServerPastelNetwork network : this.networks) {
-			NbtCompound compound = network.toNbt();
-			networkList.add(compound);
+			CodecHelper.toNbt(ServerPastelNetwork.CODEC, network, networkList::add);
 		}
 		nbt.put("Networks", networkList);
 		return nbt;
 	}
 	
-	public static ServerPastelNetworkManager fromNbt(NbtCompound nbt) {
+	public static ServerPastelNetworkManager fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		ServerPastelNetworkManager manager = new ServerPastelNetworkManager();
 		for (NbtElement element : nbt.getList("Networks", NbtElement.COMPOUND_TYPE)) {
-			manager.networks.add(ServerPastelNetwork.fromNbt((NbtCompound) element));
+			CodecHelper.fromNbt(ServerPastelNetwork.CODEC, element, manager.networks::add);
 		}
 		return manager;
 	}

@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
+import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
@@ -13,7 +14,6 @@ import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.cinderhearth.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class CinderhearthBlockEntity extends LockableContainerBlockEntity implements MultiblockCrafter, SidedInventory, ExtendedScreenHandlerFactory<BlockPos>, InkStorageBlockEntity<IndividualCappedInkStorage>, RecipeInputProvider {
+public class CinderhearthBlockEntity extends LockableContainerBlockEntity implements MultiblockCrafter, SidedInventory, InkStorageBlockEntity<IndividualCappedInkStorage>, RecipeInputProvider {
 	
 	public static final int INVENTORY_SIZE = 11;
 	public static final int INPUT_SLOT_ID = 0;
@@ -116,26 +116,28 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		this.inkStorage = new IndividualCappedInkStorage(INK_STORAGE_SIZE, USED_INK_COLORS);
 		
-		this.propertyDelegate = new PropertyDelegate() {
+		this.propertyDelegate = new BlockPosDelegate(pos) {
 			@Override
 			public int get(int index) {
-				if (index == 0) {
-					return CinderhearthBlockEntity.this.craftingTime;
-				}
-				return CinderhearthBlockEntity.this.craftingTimeTotal;
+				return switch (index) {
+					case 3 -> craftingTime;
+					case 4 -> craftingTimeTotal;
+					default -> super.get(index);
+				};
 			}
 			
 			@Override
 			public void set(int index, int value) {
 				switch (index) {
-					case 0 -> CinderhearthBlockEntity.this.craftingTime = value;
-					case 1 -> CinderhearthBlockEntity.this.craftingTimeTotal = value;
+					case 3 -> CinderhearthBlockEntity.this.craftingTime = value;
+					case 4 -> CinderhearthBlockEntity.this.craftingTimeTotal = value;
+					default -> set(index, value);
 				}
 			}
 			
 			@Override
 			public int size() {
-				return 2;
+				return super.size() + 2;
 			}
 		};
 	}
@@ -199,14 +201,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return new CinderhearthScreenHandler(syncId, playerInventory, this.pos, this.propertyDelegate);
+		return new CinderhearthScreenHandler(syncId, playerInventory, this.propertyDelegate);
 	}
 
-	@Override
-	public BlockPos getScreenOpeningData(ServerPlayerEntity player) {
-		return pos;
-	}
-	
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);

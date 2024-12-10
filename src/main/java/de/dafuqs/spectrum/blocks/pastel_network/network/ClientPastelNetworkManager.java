@@ -97,7 +97,7 @@ public class ClientPastelNetworkManager implements PastelNetworkManager {
 		PastelNetwork network = node.getParentNetwork();
 		if (network != null) {
 			network.removeNode(node, reason);
-			if (network.nodes.size() == 0) {
+			if (network.nodes.isEmpty()) {
 				this.networks.remove(network);
 			}
 		}
@@ -109,7 +109,8 @@ public class ClientPastelNetworkManager implements PastelNetworkManager {
 		return network;
 	}
 	
-	public void renderLines(WorldRenderContext context) {
+	@SuppressWarnings("resource")
+    public void renderLines(WorldRenderContext context) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		for (PastelNetwork network : this.networks) {
 			if (network.getWorld().getDimension() != context.world().getDimension()) continue;
@@ -128,7 +129,7 @@ public class ClientPastelNetworkManager implements PastelNetworkManager {
 				PastelRenderHelper.renderLineTo(context.matrixStack(), context.consumers(), colors, source.getPos(), target.getPos());
 				PastelRenderHelper.renderLineTo(context.matrixStack(), context.consumers(), colors, target.getPos(), source.getPos());
 				
-				if (client.options.debugEnabled) {
+				if (!client.getDebugHud().shouldShowDebugHud()) {
 					Vec3d offset = Vec3d.ofCenter(target.getPos()).subtract(Vec3d.of(source.getPos()));
 					Vec3d normalized = offset.normalize();
 					Matrix4f positionMatrix = context.matrixStack().peek().getPositionMatrix();

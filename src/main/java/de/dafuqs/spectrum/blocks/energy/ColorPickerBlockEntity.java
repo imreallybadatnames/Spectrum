@@ -5,20 +5,19 @@ import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
+import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.ink_converting.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
@@ -28,6 +27,7 @@ import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class ColorPickerBlockEntity extends LootableContainerBlockEntity implements ExtendedScreenHandlerFactory, PlayerOwned, InkStorageBlockEntity<TotalCappedInkStorage> {
+public class ColorPickerBlockEntity extends LootableContainerBlockEntity implements PlayerOwned, InkStorageBlockEntity<TotalCappedInkStorage> {
 	
 	public static final int INVENTORY_SIZE = 2; // input & output slots
 	public static final int INPUT_SLOT_ID = 0;
@@ -49,6 +49,27 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	protected @Nullable InkConvertingRecipe cachedRecipe;
 	protected @Nullable InkColor selectedColor;
 	private UUID ownerUUID;
+	private final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
+		@Override
+		public int get(int index) {
+			if (index == 3)
+				return selectedColor == null ? -1 : selectedColor.getDyeColor().getId();
+			return super.get(index);
+		}
+
+		@Override
+		public void set(int index, int value) {
+			if (index == 3)
+				selectedColor = value == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(value));
+			else
+				super.set(index, value);
+		}
+
+		@Override
+		public int size() {
+			return super.size() + 1;
+		}
+	};
 	
 	public ColorPickerBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(SpectrumBlockEntities.COLOR_PICKER, blockPos, blockState);
@@ -58,7 +79,8 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		this.selectedColor = null;
 	}
 	
-	public static void tick(World world, BlockPos pos, BlockState state, ColorPickerBlockEntity blockEntity) {
+	@SuppressWarnings("unused")
+    public static void tick(World world, BlockPos pos, BlockState state, ColorPickerBlockEntity blockEntity) {
 		if (!world.isClient) {
 			blockEntity.inkDirty = false;
 			if (!blockEntity.paused) {
@@ -118,7 +140,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-		return new ColorPickerScreenHandler(syncId, playerInventory, this.pos, this.selectedColor);
+		return new ColorPickerScreenHandler(syncId, playerInventory, this.propertyDelegate);
 	}
 	
 	@Override
@@ -186,18 +208,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	public int size() {
 		return INVENTORY_SIZE;
 	}
-	
-	@Override
-	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		buf.writeBlockPos(pos);
-		if (this.selectedColor == null) {
-			buf.writeBoolean(false);
-		} else {
-			buf.writeBoolean(true);
-			buf.writeString(selectedColor.getID().toString());
-		}
-	}
-	
+
 	protected boolean tryConvertPigmentToEnergy(ServerWorld world) {
 		InkConvertingRecipe recipe = getInkConvertingRecipe(world);
 		if (recipe != null) {

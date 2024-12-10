@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.fluid;
 
-import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.*;
@@ -10,7 +9,6 @@ import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.mob.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.network.packet.s2c.play.*;
@@ -105,7 +103,7 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
 		
-		if (!world.isClient && entity instanceof LivingEntity livingEntity) {
+		if (world instanceof ServerWorld serverWorld && entity instanceof LivingEntity livingEntity) {
 			// just check every 20 ticks for performance
 			if (!livingEntity.isDead() && world.getTime() % 20 == 0 && !(livingEntity instanceof Monster)) {
 				var dragon = entity.getType().isIn(SpectrumEntityTypeTags.DRACONIC);
@@ -126,7 +124,7 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 					else if(existingEffect.getDuration() < 500) {
 						((StatusEffectInstanceAccessor) existingEffect).setDuration(300);
 
-						((ServerWorld) world).getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect));
+						serverWorld.getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect, true));
 					}
 
 					existingEffect = livingEntity.getStatusEffect(SpectrumStatusEffects.DEADLY_POISON);
@@ -138,10 +136,9 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 					if (existingEffect != null) {
 						if (existingEffect.getDuration() <= cut) {
 							livingEntity.removeStatusEffect(SpectrumStatusEffects.IMMUNITY);
-						}
-						else {
+						} else {
 							((StatusEffectInstanceAccessor) existingEffect).setDuration(existingEffect.getDuration() - cut);
-							((ServerWorld) world).getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect));
+							serverWorld.getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect, true));
 						}
 					}
 

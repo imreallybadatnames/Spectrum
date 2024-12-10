@@ -11,7 +11,7 @@ import net.minecraft.world.chunk.light.*;
 import org.jetbrains.annotations.*;
 
 public class SpectrumSpreadableBlock extends SnowyBlock {
-	
+
 	protected final @Nullable Block blockAbleToSpreadTo;
 	private final BlockState deadState;
 	

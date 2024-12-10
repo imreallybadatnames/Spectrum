@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.chests;
 
+import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.helpers.InventoryHelper;
 import de.dafuqs.spectrum.inventories.AutoCompactingInventory;
 import de.dafuqs.spectrum.inventories.CompactingChestScreenHandler;
@@ -44,28 +45,25 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity {
 	float pistonPos, pistonTarget, lastPistonTarget, driverPos, driverTarget, lastDriverTarget, capPos, capTarget, lastCapTarget;
 	long interpTicks, interpLength = 1, activeTicks, craftingTicks;
 
-	private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
+	private final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
 		@Override
 		public int get(int index) {
-			return switch (index) {
-				case 0 -> pos.getX();
-				case 1 -> pos.getY();
-				case 2 -> pos.getZ();
-				case 3 -> autoCraftingMode.ordinal();
-				default -> 0;
-			};
+			if (index == 3)
+				return autoCraftingMode.ordinal();
+			return super.get(index);
 		}
 
 		@Override
 		public void set(int index, int value) {
-            if (index == 3) {
+            if (index == 3)
                 autoCraftingMode = AutoCompactingInventory.AutoCraftingMode.values()[value];
-            }
+            else
+				super.set(index, value);
 		}
 
 		@Override
 		public int size() {
-			return 4;
+			return super.size() + 1;
 		}
 	};
 

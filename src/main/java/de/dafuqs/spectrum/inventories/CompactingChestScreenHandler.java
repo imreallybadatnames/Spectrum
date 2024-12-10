@@ -1,7 +1,9 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.blocks.chests.*;
+import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
 import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -21,18 +23,13 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 	}
 
 	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-		this(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId, playerInventory, inventory, propertyDelegate);
-	}
-
-	protected CompactingChestScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-		super(type, syncId);
+		super(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId);
 
 		this.inventory = inventory;
 		this.propertyDelegate = propertyDelegate;
 
-		var pos = new BlockPos(propertyDelegate.get(0), propertyDelegate.get(1), propertyDelegate.get(2));
 		this.compactingChestBlockEntity = playerInventory.player.getWorld()
-				.getBlockEntity(pos, SpectrumBlockEntities.COMPACTING_CHEST)
+				.getBlockEntity(getBlockPos(), SpectrumBlockEntities.COMPACTING_CHEST)
 				.orElse(null);
 
 		checkSize(inventory, 27);
@@ -105,6 +102,12 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		this.propertyDelegate.set(3, newOrdinal);
 		sendContentUpdates();
 	}
+
+	@Override
+	public void sendContentUpdates() {
+		super.sendContentUpdates();
+		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPacket(getCraftingMode()));
+	}
 	
 	public Inventory getInventory() {
 		return this.inventory;
@@ -114,6 +117,10 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 	public void onClosed(PlayerEntity player) {
 		super.onClosed(player);
 		this.inventory.onClose(player);
+	}
+
+	public BlockPos getBlockPos() {
+		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
 	}
 	
 	public CompactingChestBlockEntity getBlockEntity() {

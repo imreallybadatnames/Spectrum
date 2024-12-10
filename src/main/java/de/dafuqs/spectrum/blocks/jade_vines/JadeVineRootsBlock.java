@@ -117,7 +117,7 @@ public class JadeVineRootsBlock extends BlockWithEntity implements JadeVine, Nat
 				if (world.random.nextBoolean() && tryGrowUpwards(state, world, pos)) {
 					rememberGrownTime(world, pos);
 					world.playSound(null, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS, 0.5F, 0.9F + 0.2F * world.random.nextFloat() * 0.2F);
-				} else if (tryGrowDownwards(state, world, pos)) {
+				} else if (tryGrowDownwards(world, pos)) {
 					rememberGrownTime(world, pos);
 					world.playSound(null, pos, SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS, 0.5F, 0.9F + 0.2F * world.random.nextFloat() * 0.2F);
 				} else {
@@ -268,7 +268,7 @@ public class JadeVineRootsBlock extends BlockWithEntity implements JadeVine, Nat
 		return false;
 	}
 	
-	boolean tryGrowDownwards(@NotNull BlockState blockState, @NotNull World world, @NotNull BlockPos blockPos) {
+	boolean tryGrowDownwards(@NotNull World world, @NotNull BlockPos blockPos) {
 		blockPos = blockPos.down();
 		while (world.getBlockState(blockPos).getBlock() instanceof JadeVineRootsBlock) {
 			// search down until no jade vines roots are hit anymore

@@ -222,7 +222,7 @@ public class JadeVinePlantBlock extends Block implements JadeVine, NaturesStaffT
 		return false;
 	}
 	
-	enum JadeVinesPlantPart implements StringIdentifiable {
+	public enum JadeVinesPlantPart implements StringIdentifiable {
 		BASE,
 		MIDDLE,
 		TIP;
@@ -250,7 +250,7 @@ public class JadeVinePlantBlock extends Block implements JadeVine, NaturesStaffT
 
 	}
 
-	enum JadeVinesGrowthStage {
+	public enum JadeVinesGrowthStage {
 		DEAD,
 		LEAVES,
 		PETALS,

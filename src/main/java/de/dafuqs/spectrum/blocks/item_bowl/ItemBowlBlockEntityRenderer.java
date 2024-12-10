@@ -14,8 +14,8 @@ public class ItemBowlBlockEntityRenderer implements BlockEntityRenderer<ItemBowl
 	
 	final double radiant = Math.toRadians(360.0F);
 	
-	public ItemBowlBlockEntityRenderer(BlockEntityRendererFactory.Context renderContext) {
-	
+	@SuppressWarnings("unused")
+    public ItemBowlBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 	
 	@Override

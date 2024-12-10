@@ -7,6 +7,7 @@ import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.predicate.item.*;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -14,7 +15,11 @@ import java.util.*;
 public class PastelNodeUpgradeCriterion extends AbstractCriterion<PastelNodeUpgradeCriterion.Conditions> {
 
 	public static final Identifier ID = SpectrumCommon.locate("pastel_node_upgrade");
-	
+
+	public void trigger(ServerPlayerEntity player, ItemStack stack) {
+		this.trigger(player, conditions -> conditions.matches(stack));
+	}
+
 	@Override
 	public Codec<PastelNodeUpgradeCriterion.Conditions> getConditionsCodec() {
 		return PastelNodeUpgradeCriterion.Conditions.CODEC;

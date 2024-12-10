@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.api.block.FilterConfigurable;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.network.RegistryByteBuf;
@@ -8,7 +9,6 @@ import net.minecraft.registry.*;
 import net.minecraft.resource.featuretoggle.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
 
 public class SpectrumScreenHandlerTypes {
 	
@@ -54,11 +54,11 @@ public class SpectrumScreenHandlerTypes {
         WORKSTAFF = registerSimple(SpectrumScreenHandlerIDs.WORKSTAFF, WorkstaffScreenHandler::new);
 
         PEDESTAL = registerExtended(SpectrumScreenHandlerIDs.PEDESTAL, PedestalScreenHandler::new);
-        PARTICLE_SPAWNER = registerExtended(SpectrumScreenHandlerIDs.PARTICLE_SPAWNER, ParticleSpawnerScreenHandler::new);
+        PARTICLE_SPAWNER = registerSimple(SpectrumScreenHandlerIDs.PARTICLE_SPAWNER, ParticleSpawnerScreenHandler::new);
         COMPACTING_CHEST = registerSimple(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
-        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new, BlackHoleChestScreenHandler.ExtendedData.PACKET_CODEC);
-        COLOR_PICKER = registerExtended(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
-        CINDERHEARTH = registerExtended(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new, BlockPos.PACKET_CODEC);
+        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new, FilterConfigurable.ExtendedData.PACKET_CODEC);
+        COLOR_PICKER = registerSimple(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
+        CINDERHEARTH = registerSimple(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new);
 		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new);
 		BAG_OF_HOLDING = registerSimple(SpectrumScreenHandlerIDs.BAG_OF_HOLDING, BagOfHoldingScreenHandler::new);
 

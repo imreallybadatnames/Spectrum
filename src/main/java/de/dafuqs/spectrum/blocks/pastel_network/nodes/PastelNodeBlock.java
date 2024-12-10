@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.pastel_network.nodes;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.decoration.*;
@@ -32,6 +33,11 @@ import java.util.*;
 
 public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityProvider {
 
+	public static final MapCodec<PastelNodeBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			StringIdentifiable.createCodec(PastelNodeType::values).fieldOf("node_type").forGetter(b -> b.pastelNodeType)
+	).apply(i, PastelNodeBlock::new));
+
 	public static final BooleanProperty LIT = Properties.LIT;
 	public static final BooleanProperty EMITTING = Properties.POWERED;
 
@@ -54,8 +60,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 
 	@Override
 	public MapCodec<? extends PastelNodeBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 
 	@Override

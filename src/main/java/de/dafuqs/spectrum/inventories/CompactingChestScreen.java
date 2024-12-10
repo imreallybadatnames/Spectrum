@@ -2,8 +2,6 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.gui.widget.*;
@@ -42,7 +40,6 @@ public class CompactingChestScreen extends HandledScreen<CompactingChestScreenHa
 	
 	private void craftingModeButtonPressed(ButtonWidget buttonWidget) {
 		handler.toggleMode();
-		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPacket(handler.getCraftingMode()));
 	}
 	
 	@Override

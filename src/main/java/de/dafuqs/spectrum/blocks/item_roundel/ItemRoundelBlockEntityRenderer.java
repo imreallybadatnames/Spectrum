@@ -16,8 +16,8 @@ public class ItemRoundelBlockEntityRenderer<T extends ItemRoundelBlockEntity> im
 	
 	private static final float distance = 0.29F;
 	
-	public ItemRoundelBlockEntityRenderer(BlockEntityRendererFactory.Context renderContext) {
-	
+	@SuppressWarnings("unused")
+    public ItemRoundelBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 	
 	@Override
