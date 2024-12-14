@@ -17,6 +17,13 @@ public class ShapelessPedestalRecipeSerializer extends PedestalRecipeSerializer<
 		MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
 		PedestalRecipeTier.ENDEC.optionalFieldOf("tier", recipe -> recipe.tier, PedestalRecipeTier.BASIC),
 		IngredientStack.Serializer.ENDEC.listOf().fieldOf("ingredients", recipe -> recipe.inputs),
+		// TODO - Generally the circular between list <-> map isn't great.
+		// Noaaan 14.12.2024
+		// Maps are a bit better since they have caching, but they are tricky to serialize
+		// Lists are easy to serialize, allow for scaling, but require unboxing (I assume for deserializing)
+		// It isn't impossible to do this, although I don't grasp serialization well enough to do this
+		// The challenge here isn't preventing the field limit being hit,
+		// but rather making the gemstone powder/color input expandable in a meaningful way (non-enum?).
 		GemstoneColorInput.ENDEC.listOf().fieldOf("gemstone_powder", recipe -> GemstoneColorInput.convertToList(recipe.powderInputs)),
 		MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.output),
 		Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 0f),

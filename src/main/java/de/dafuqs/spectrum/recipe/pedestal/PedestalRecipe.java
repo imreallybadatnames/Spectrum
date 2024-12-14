@@ -44,13 +44,13 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	protected final boolean noBenefitsFromYieldUpgrades;
 	
 	public PedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
-						  PedestalRecipeTier tier, List<IngredientStack> inputs, Map<GemstoneColor, Integer> powderInputs, ItemStack output,
+						  PedestalRecipeTier tier, List<IngredientStack> inputs, List<GemstoneColorInput> powderInputs, ItemStack output,
 						  float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.tier = tier;
 		this.inputs = inputs;
-		this.powderInputs = powderInputs;
+		this.powderInputs = GemstoneColorInput.convertToMap(powderInputs);
 		this.output = output;
 		this.experience = experience;
 		this.craftingTime = craftingTime;

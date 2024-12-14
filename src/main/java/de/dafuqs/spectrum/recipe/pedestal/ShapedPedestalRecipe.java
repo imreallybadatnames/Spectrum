@@ -28,7 +28,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 		int width,
 		int height,
 		List<IngredientStack> inputs,
-		Map<GemstoneColor, Integer> gemstonePowderInputs,
+		List<GemstoneColorInput> gemstonePowderInputs,
 		ItemStack output,
 		float experience,
 		int craftingTime,

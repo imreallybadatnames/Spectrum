@@ -23,4 +23,12 @@ public record GemstoneColorInput(GemstoneColor gemstoneColor, int amount) {
 		}
 		return list;
 	}
+
+	public static Map<GemstoneColor, Integer> convertToMap(List<GemstoneColorInput> powderInputs) {
+		HashMap<GemstoneColor, Integer> map = new HashMap<>();
+		for (GemstoneColorInput powderInput : powderInputs) {
+			map.put(powderInput.gemstoneColor, powderInput.amount);
+		}
+		return map;
+	}
 }
