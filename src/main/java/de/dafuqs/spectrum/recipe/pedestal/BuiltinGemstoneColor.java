@@ -20,10 +20,10 @@ public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 
 	public static final Endec<BuiltinGemstoneColor> ENDEC = Endec.forEnum(BuiltinGemstoneColor.class);
 
-	public static final StructEndec<BuiltinGemstoneColor> STRING_ENDEC = StructEndecBuilder.of(
+	public static final StructEndec<GemstoneColor> STRING_ENDEC = StructEndecBuilder.of(
 		CodecUtils.toEndec(DyeColor.CODEC).fieldOf("color", BuiltinGemstoneColor::getDyeColor),
 		BuiltinGemstoneColor::of
-	);
+	).xmap(t -> t, color -> BuiltinGemstoneColor.valueOf(color.asString()));
 
 	BuiltinGemstoneColor(DyeColor dyeColor) {
 		this.dyeColor = dyeColor;
@@ -47,8 +47,9 @@ public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 				return BuiltinGemstoneColor.WHITE;
 			}
 			default -> throw new RuntimeException("Tried getting powder item for a color which does not have one");
+		}
 	}
-	}
+
 	@Override
 	public DyeColor getDyeColor() {
 		return this.dyeColor;
@@ -78,8 +79,7 @@ public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 
 	@Override
 	public Codec<GemstoneColor> getCodec() {
-		return StringIdentifiable.createCodec(BuiltinGemstoneColor::values).xmap(t -> t,
-				g -> BuiltinGemstoneColor.valueOf(g.asString()));
+		return CodecUtils.toCodec(STRING_ENDEC);
 	}
 
 	@Override
