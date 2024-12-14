@@ -73,7 +73,7 @@ public abstract class MidnightSolutionFluid extends SpectrumFluid {
 		
 		if (state.getHeight() < 1.0) {
 			for (Direction direction : Direction.values()) {
-				if (MidnightSolutionFluidBlock.tryConvertNeighbor(world, pos, pos.offset(direction))) {
+				if (MidnightSolutionFluidBlock.tryConvertNeighbor(world, pos.offset(direction))) {
 					break;
 				}
 			}

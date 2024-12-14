@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 @Environment(EnvType.CLIENT)
 public class JadeVineRootsBlockEntityRenderer implements BlockEntityRenderer<JadeVineRootsBlockEntity> {
 	
-	public JadeVineRootsBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-	
+	@SuppressWarnings("unused")
+    public JadeVineRootsBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 	
 	@Override

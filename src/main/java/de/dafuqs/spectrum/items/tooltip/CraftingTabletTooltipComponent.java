@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.items.tooltip;
 
+import de.dafuqs.spectrum.api.gui.SpectrumTooltipComponent;
 import net.fabricmc.api.*;
 import net.minecraft.client.font.*;
 import net.minecraft.client.gui.*;
@@ -9,7 +10,7 @@ import net.minecraft.text.*;
 import org.joml.*;
 
 @Environment(EnvType.CLIENT)
-public class CraftingTabletTooltipComponent extends SpectrumTooltipComponent {
+public class CraftingTabletTooltipComponent implements SpectrumTooltipComponent {
 	
 	private final ItemStack itemStack;
 	private final OrderedText description;
@@ -33,8 +34,8 @@ public class CraftingTabletTooltipComponent extends SpectrumTooltipComponent {
 	public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext context) {
 		int n = x + 1;
 		int o = y + 1;
-		this.drawSlot(context, n, o, 0, itemStack, textRenderer);
-		this.drawOutline(context, x, y, 1, 1);
+		SpectrumTooltipComponent.drawSlot(context, n, o, 0, itemStack, textRenderer);
+		SpectrumTooltipComponent.drawOutline(context, x, y, 1, 1);
 	}
 	
 	@Override

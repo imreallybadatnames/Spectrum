@@ -36,11 +36,11 @@ public class EndermanHeadModel extends SpectrumSkullModel {
 		this.eyes.pitch = pitch * ROTATION_VEC;
 	}
 	
-	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, float red, float green, float blue, float alpha) {
-		super.render(matrices, vertices, vertexConsumerProvider, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, int argb) {
+		super.render(matrices, vertices, vertexConsumerProvider, light, overlay, argb);
 		
 		VertexConsumer eyesVertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEyes(EYES_TEXTURE));
-		this.eyes.render(matrices, eyesVertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+		this.eyes.render(matrices, eyesVertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, -1);
 	}
 	
 }

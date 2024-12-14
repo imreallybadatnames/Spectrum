@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -19,7 +20,12 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class TallDragonjagBlock extends TallPlantBlock implements Dragonjag, Fertilizable, NaturesStaffTriggered {
-    
+
+    public static final MapCodec<TallDragonjagBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+            createSettingsCodec(),
+            Dragonjag.Variant.CODEC.fieldOf("variant").forGetter(TallDragonjagBlock::getVariant)
+    ).apply(i, TallDragonjagBlock::new));
+
     protected static final VoxelShape SHAPE_UPPER = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 7.0, 14.0);
     protected static final VoxelShape SHAPE_UPPER_DEAD = Block.createCuboidShape(2.0, 0.0, 2.0, 10.0, 3.0, 14.0);
     protected static final VoxelShape SHAPE_LOWER = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
@@ -37,8 +43,7 @@ public class TallDragonjagBlock extends TallPlantBlock implements Dragonjag, Fer
 
     @Override
     public MapCodec<? extends TallDragonjagBlock> getCodec() {
-        //TODO: Make the codec
-        return null;
+        return CODEC;
     }
 	
 	@Override

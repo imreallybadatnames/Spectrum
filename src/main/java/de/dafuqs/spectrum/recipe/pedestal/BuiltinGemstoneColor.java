@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
+import com.mojang.serialization.Codec;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
 import io.wispforest.endec.*;
@@ -8,9 +9,7 @@ import io.wispforest.owo.serialization.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 
-import java.util.*;
-
-public enum BuiltinGemstoneColor implements GemstoneColor {
+public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 	CYAN(DyeColor.CYAN),
 	MAGENTA(DyeColor.MAGENTA),
 	YELLOW(DyeColor.YELLOW),
@@ -50,7 +49,6 @@ public enum BuiltinGemstoneColor implements GemstoneColor {
 			default -> throw new RuntimeException("Tried getting powder item for a color which does not have one");
 	}
 	}
-
 	@Override
 	public DyeColor getDyeColor() {
 		return this.dyeColor;
@@ -78,12 +76,14 @@ public enum BuiltinGemstoneColor implements GemstoneColor {
 		}
 	}
 
-	/**
-	 * Used for recipe Endecs to Validate whether the strings in the powder inputs exist in the enum
-	 */
-	public static void validate(Map<String, Integer> powderInputs) {
-		for (String s : powderInputs.keySet()) {
-			valueOf(s);
-		}
+	@Override
+	public Codec<GemstoneColor> getCodec() {
+		return StringIdentifiable.createCodec(BuiltinGemstoneColor::values).xmap(t -> t,
+				g -> BuiltinGemstoneColor.valueOf(g.asString()));
+	}
+
+	@Override
+	public String asString() {
+		return name();
 	}
 }

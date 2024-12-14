@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.mob_head;
 
 import com.google.common.collect.*;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.helpers.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.block.*;
@@ -19,9 +20,15 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class SpectrumSkullBlock extends SkullBlock {
-	
+
+	public static final MapCodec<SpectrumSkullBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			SpectrumSkullType.CODEC.fieldOf("kind").forGetter(b -> b.skullType),
+			createSettingsCodec()
+	).apply(i, SpectrumSkullBlock::new));
+
 	public static BiMap<SpectrumSkullType, Block> MOB_HEADS = EnumHashBiMap.create(SpectrumSkullType.class);
 	public static Map<EntityType<?>, SpectrumSkullType> ENTITY_TYPE_TO_SKULL_TYPE = new Object2ObjectOpenHashMap<>();
+	private final SpectrumSkullType skullType;
 	
 	@Nullable
 	private static BlockPattern witherBossPattern;
@@ -30,12 +37,12 @@ public class SpectrumSkullBlock extends SkullBlock {
 		super(skullType, settings);
 		MOB_HEADS.put(skullType, this);
 		ENTITY_TYPE_TO_SKULL_TYPE.put(skullType.getEntityType(), skullType);
+		this.skullType = skullType;
 	}
 
 	@Override
 	public MapCodec<? extends SpectrumSkullBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override
@@ -124,12 +131,13 @@ public class SpectrumSkullBlock extends SkullBlock {
 	
 	private static BlockPattern getWitherSkullPattern() {
 		if (witherBossPattern == null) {
-			witherBossPattern = BlockPatternBuilder.start().aisle("^^^", "###", "~#~")
-					.where('#', (pos) -> pos.getBlockState().isIn(BlockTags.WITHER_SUMMON_BASE_BLOCKS))
-					.where('^', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(SpectrumSkullBlock.getBlock(SpectrumSkullType.WITHER).get()).or(BlockStatePredicate.forBlock(SpectrumWallSkullBlock.getMobWallHead(SpectrumSkullType.WITHER)))))
-					.where('~', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(Blocks.AIR))).build();
+			getBlock(SpectrumSkullType.WITHER).ifPresent(b ->
+				witherBossPattern = BlockPatternBuilder.start().aisle("^^^", "###", "~#~")
+						.where('#', (pos) -> pos.getBlockState().isIn(BlockTags.WITHER_SUMMON_BASE_BLOCKS))
+						.where('^', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(b).or(BlockStatePredicate.forBlock(SpectrumWallSkullBlock.getMobWallHead(SpectrumSkullType.WITHER)))))
+						.where('~', CachedBlockPosition.matchesBlockState(BlockStatePredicate.forBlock(Blocks.AIR))).build()
+			);
 		}
-		
 		return witherBossPattern;
 	}
 	

@@ -17,6 +17,7 @@ import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.*;
 
 @Environment(EnvType.CLIENT)
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class BlackHoleChestBlockEntityRenderer implements BlockEntityRenderer<BlackHoleChestBlockEntity> {
 	
 	private static final SpriteIdentifier defaultSprite = new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, SpectrumCommon.locate("block/black_hole_chest"));
@@ -128,10 +129,13 @@ public class BlackHoleChestBlockEntityRenderer implements BlockEntityRenderer<Bl
             orbLight = light;
         }
 
-        orb.forEachCuboid(matrixStack, ((matrix, path, index, cuboid) -> {
-			cuboid.renderCuboid(matrixStack.peek(), vertexConsumer, index == 0 ? orbLight : light, overlay, -1);
-		}));
-
+        orb.forEachCuboid(matrixStack, (matrix, path, index, cuboid) -> cuboid.renderCuboid(
+				matrixStack.peek(),
+				vertexConsumer,
+				index == 0 ? orbLight : light,
+				overlay,
+				-1
+		));
 
 		matrixStack.pop();
 	}

@@ -39,7 +39,7 @@ public class MidnightSolutionFluidBlock extends SpectrumFluidBlock {
 		return new Pair<>(SpectrumParticleTypes.GRAY_SPARKLE_RISING, SpectrumParticleTypes.MIDNIGHT_SOLUTION_FISHING);
 	}
 
-	public static boolean tryConvertNeighbor(@NotNull World world, BlockPos pos, BlockPos fromPos) {
+	public static boolean tryConvertNeighbor(@NotNull World world, BlockPos fromPos) {
 		FluidState fluidState = world.getFluidState(fromPos);
 		if (!fluidState.isEmpty() && fluidState.isIn(SpectrumFluidTags.MIDNIGHT_SOLUTION_CONVERTED)) {
 			world.setBlockState(fromPos, SpectrumBlocks.MIDNIGHT_SOLUTION.getDefaultState());

@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.api.item;
 
 import net.minecraft.enchantment.*;
+import net.minecraft.registry.RegistryWrapper;
 
 /**
  * Items with that Interface will be able to be enchanted with the given enchants
@@ -9,5 +10,5 @@ import net.minecraft.enchantment.*;
  */
 public interface ExtendedEnchantable {
 	
-	boolean acceptsEnchantment(Enchantment enchantment);
+	boolean acceptsEnchantment(RegistryWrapper.Impl<Enchantment> impl, Enchantment enchantment);
 }

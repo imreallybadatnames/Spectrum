@@ -37,9 +37,4 @@ public class KindlingHeadModel extends SpectrumSkullModel {
         return TexturedModelData.of(modelData, 128, 128);
     }
 
-    @Override
-    public float getScale() {
-        return 0.86F;
-    }
-
 }

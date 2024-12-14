@@ -35,7 +35,7 @@ public class FabricationChestBlock extends SpectrumChestBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-		return validateTicker(type, SpectrumBlockEntities.FABRICATION_CHEST, FabricationChestBlock::tick);
+		return validateTicker(type, SpectrumBlockEntities.FABRICATION_CHEST, FabricationChestBlockEntity::tick);
 	}
 	
 	@Override

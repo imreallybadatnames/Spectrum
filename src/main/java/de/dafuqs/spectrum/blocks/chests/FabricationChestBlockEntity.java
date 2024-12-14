@@ -28,7 +28,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 	public static final int[] CHEST_SLOTS = IntStream.rangeClosed(0, 26).toArray();
 	public static final int[] RECIPE_SLOTS = IntStream.rangeClosed(27, 30).toArray();
 	public static final int[] RESULT_SLOTS = IntStream.rangeClosed(31, 34).toArray();
-	private List<ItemStack> cachedOutputs = new ArrayList<>(4);
+	private final List<ItemStack> cachedOutputs = new ArrayList<>(4);
 	private int coolDownTicks = 0;
 	private boolean isOpen, isFull, hasValidRecipes;
 	private State state;
@@ -39,7 +39,8 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 		super(SpectrumBlockEntities.FABRICATION_CHEST, blockPos, blockState);
 	}
 	
-	public static void tick(World world, BlockPos pos, BlockState state, FabricationChestBlockEntity chest) {
+	@SuppressWarnings("unused")
+    public static void tick(World world, BlockPos pos, BlockState state, FabricationChestBlockEntity chest) {
 		chest.age++;
 
 		if (world.isClient) {
@@ -172,7 +173,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 				continue;
 
 			var recipe = CraftingTabletItem.getStoredRecipe(world, tablet).value();
-			if (isRecipeValid(recipe) && isRecipeCraftable(recipe, i) && canSlotFitCraftingOutput(inventory.get(RESULT_SLOTS[i]), recipe))
+			if (isRecipeValid(recipe) && isRecipeCraftable(recipe) && canSlotFitCraftingOutput(inventory.get(RESULT_SLOTS[i]), recipe))
 				return true;
 		}
 		return false;
@@ -224,7 +225,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 		return recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe;
 	}
 
-	private boolean isRecipeCraftable(Recipe<?> recipe, int index) {
+	private boolean isRecipeCraftable(Recipe<?> recipe) {
 		var ingredients = recipe.getIngredients();
 
 		if (!InventoryHelper.hasInInventory(ingredients, this))
@@ -333,12 +334,6 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 			return false;
         return slot.isEmpty() || slot.getCount() + recipe.getResult(world.getRegistryManager()).getCount() < slot.getMaxCount();
     }
-
-	public void updateState(boolean full, boolean hasValidRecipes, List<ItemStack> cachedOutputs) {
-		this.isFull = full;
-		this.hasValidRecipes = hasValidRecipes;
-		this.cachedOutputs = cachedOutputs;
-	}
 
 	public State getState() {
 		return state;

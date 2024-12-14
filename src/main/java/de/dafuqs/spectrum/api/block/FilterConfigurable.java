@@ -9,6 +9,8 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.*;
@@ -58,6 +60,15 @@ public interface FilterConfigurable {
         return inventory;
     }
 
+    static Inventory getFilterInventoryFromDataClicker(ExtendedData data, ShadowSlotClicker clicker) {
+        var size = data.filterItems().size();
+        Inventory inventory = new FilterInventory(clicker, size);
+        for (int i = 0; i < size; i++) {
+            inventory.setStack(i, data.filterItems().get(i).toStack());
+        }
+        return inventory;
+    }
+
     static Pair<Inventory, Integer[]> getFilterInventoryWithRowDataFromPacket(int syncId, @NotNull PlayerInventory playerInventory, PacketByteBuf packetByteBuf, @NotNull ScreenHandler thisHandler) {
         var inventory = getFilterInventoryFromPacketHandler(syncId, playerInventory, packetByteBuf, thisHandler);
         var arr = new Integer[]{
@@ -67,6 +78,11 @@ public interface FilterConfigurable {
         };
 
         return new Pair<>(inventory, arr);
+    }
+
+    static Inventory getFilterInventoryFromExtendedData(int syncId, @NotNull PlayerInventory playerInventory, ExtendedData data, @NotNull ScreenHandler handler) {
+        final var clicker = new ShadowSlotClicker.FromHandler(handler, playerInventory.player, syncId);
+        return getFilterInventoryFromDataClicker(data, clicker);
     }
 
     static Inventory getFilterInventoryFromPacketHandler(int syncId, @NotNull PlayerInventory playerInventory, PacketByteBuf packetByteBuf, @NotNull ScreenHandler thisHandler) {
@@ -142,15 +158,15 @@ public interface FilterConfigurable {
         }
     }
 
-    static void writeScreenOpeningData(PacketByteBuf buf, FilterConfigurable configurable) {
+    static void writeScreenOpeningData(RegistryByteBuf buf, FilterConfigurable configurable) {
         writeScreenOpeningData(buf, configurable.getItemFilters(), configurable.getFilterRows(), configurable.getSlotsPerRow(), configurable.getDrawnSlots());
     }
 
-    static void writeScreenOpeningData(PacketByteBuf buf, List<ItemVariant> filterItems, int rows, int slotsPerRow, int drawnSlots) {
+    static void writeScreenOpeningData(RegistryByteBuf buf, List<ItemVariant> filterItems, int rows, int slotsPerRow, int drawnSlots) {
         buf.writeInt(filterItems.size());
         for (ItemVariant filterItem : filterItems) {
             // The difference between just using filterItem.toNbt() is that ItemVariant nbt uses "item" while ItemStack uses "id"
-            buf.writeItemStack(filterItem.toStack());
+            ItemStack.PACKET_CODEC.encode(buf, filterItem.toStack());
         }
         buf.writeInt(rows);
         buf.writeInt(slotsPerRow);
@@ -159,6 +175,22 @@ public interface FilterConfigurable {
 
     default boolean hasEmptyFilter() {
         return getItemFilters().stream().allMatch(ItemVariant::isBlank);
+    }
+
+    record ExtendedData(List<ItemVariant> filterItems, int rows, int slotsPerRow, int drawnSlots) {
+
+        public static final PacketCodec<RegistryByteBuf, ExtendedData> PACKET_CODEC = PacketCodec.tuple(
+                ItemVariant.PACKET_CODEC.collect(PacketCodecs.toList()),
+                ExtendedData::filterItems,
+                PacketCodecs.VAR_INT,
+                ExtendedData::rows,
+                PacketCodecs.VAR_INT,
+                ExtendedData::slotsPerRow,
+                PacketCodecs.VAR_INT,
+                ExtendedData::drawnSlots,
+                ExtendedData::new
+        );
+
     }
 
 }

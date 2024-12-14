@@ -1,11 +1,13 @@
 package de.dafuqs.spectrum.blocks.conditional.blood_orchid;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.type.SuspiciousStewEffectsComponent;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -25,20 +27,28 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class BloodOrchidBlock extends FlowerBlock implements Fertilizable, RevelationAware {
-	
+
+	public static final MapCodec<BloodOrchidBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			STEW_EFFECT_CODEC.forGetter(FlowerBlock::getStewEffects),
+			createSettingsCodec()
+	).apply(instance, BloodOrchidBlock::new));
+
 	public static final Identifier ADVANCEMENT_IDENTIFIER = SpectrumCommon.locate("midgame/collect_blood_orchid_petal");
 	public static final IntProperty AGE = Properties.AGE_5;
 	
-	public BloodOrchidBlock(RegistryEntry<StatusEffect> suspiciousStewEffect, float effectLengthInSeconds, Settings settings) {
-		super(suspiciousStewEffect, effectLengthInSeconds, settings);
+	public BloodOrchidBlock(RegistryEntry<StatusEffect> stewEffect, float effectLengthInSeconds, Settings settings) {
+		this(createStewEffectList(stewEffect, effectLengthInSeconds), settings);
+	}
+
+	public BloodOrchidBlock(SuspiciousStewEffectsComponent stewEffects, AbstractBlock.Settings settings) {
+		super(stewEffects, settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
 		RevelationAware.register(this);
 	}
 
 	@Override
 	public MapCodec<? extends BloodOrchidBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

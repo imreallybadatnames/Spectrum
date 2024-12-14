@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.conditional.colored_tree;
 
 import com.google.common.collect.*;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.registries.client.*;
 import net.minecraft.block.*;
@@ -11,7 +12,12 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class ColoredLeavesBlock extends LeavesBlock implements RevelationAware, ColoredTree {
-	
+
+	public static final MapCodec<ColoredLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			createSettingsCodec(),
+			DyeColor.CODEC.fieldOf("color").forGetter(ColoredLeavesBlock::getColor)
+	).apply(instance, ColoredLeavesBlock::new));
+
 	private static final Map<DyeColor, ColoredLeavesBlock> LEAVES = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
@@ -24,8 +30,7 @@ public class ColoredLeavesBlock extends LeavesBlock implements RevelationAware, 
 
 	@Override
 	public MapCodec<? extends ColoredLeavesBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

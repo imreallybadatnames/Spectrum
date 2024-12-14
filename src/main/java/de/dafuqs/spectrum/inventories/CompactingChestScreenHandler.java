@@ -1,11 +1,12 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.blocks.chests.*;
-import net.minecraft.block.entity.*;
+import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
+import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.math.*;
@@ -13,41 +14,24 @@ import net.minecraft.util.math.*;
 public class CompactingChestScreenHandler extends ScreenHandler {
 
 	private final Inventory inventory;
+	private final PropertyDelegate propertyDelegate;
 	protected final int ROWS = 3;
 	protected CompactingChestBlockEntity compactingChestBlockEntity;
-	protected AutoCompactingInventory.AutoCraftingMode currentCraftingMode;
-	
-	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf packetByteBuf) {
-		this(syncId, playerInventory, packetByteBuf.readBlockPos(), packetByteBuf.readInt());
+
+	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory) {
+		this(syncId, playerInventory, new SimpleInventory(27), new ArrayPropertyDelegate(4));
 	}
-	
-	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos readBlockPos, int currentCraftingMode) {
-		this(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId, playerInventory);
-		
-		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(readBlockPos);
-		if (blockEntity instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-			this.compactingChestBlockEntity = compactingChestBlockEntity;
-		}
-		this.currentCraftingMode = AutoCompactingInventory.AutoCraftingMode.values()[currentCraftingMode];
-	}
-	
-	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, CompactingChestBlockEntity compactingChestBlockEntity) {
-		this(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId, playerInventory, compactingChestBlockEntity);
-		this.compactingChestBlockEntity = compactingChestBlockEntity;
-	}
-	
-	protected CompactingChestScreenHandler(ScreenHandlerType<?> type, int i, PlayerInventory playerInventory) {
-		this(type, i, playerInventory, new SimpleInventory(27));
-	}
-	
-	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-		this(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId, playerInventory, inventory);
-	}
-	
-	protected CompactingChestScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
-		super(type, syncId);
+
+	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+		super(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId);
+
 		this.inventory = inventory;
-		
+		this.propertyDelegate = propertyDelegate;
+
+		this.compactingChestBlockEntity = playerInventory.player.getWorld()
+				.getBlockEntity(getBlockPos(), SpectrumBlockEntities.COMPACTING_CHEST)
+				.orElse(null);
+
 		checkSize(inventory, 27);
 		inventory.onOpen(playerInventory.player);
 		
@@ -70,6 +54,8 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		for (j = 0; j < 9; ++j) {
 			this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 170 + i));
 		}
+
+		this.addProperties(propertyDelegate);
 	}
 	
 	@Override
@@ -86,14 +72,14 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 			itemStack = itemStack2.copy();
 			if (index < this.ROWS * 9) {
 				if (!this.insertItem(itemStack2, this.ROWS * 9, this.slots.size(), true)) {
-					if (inventory instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-						compactingChestBlockEntity.inventoryChanged();
+					if (inventory instanceof CompactingChestBlockEntity compactor) {
+						compactor.inventoryChanged();
 					}
 					return ItemStack.EMPTY;
 				}
 			} else if (!this.insertItem(itemStack2, 0, this.ROWS * 9, false)) {
-				if (inventory instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-					compactingChestBlockEntity.inventoryChanged();
+				if (inventory instanceof CompactingChestBlockEntity compactor) {
+					compactor.inventoryChanged();
 				}
 				return ItemStack.EMPTY;
 			}
@@ -105,10 +91,22 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 			}
 		}
 		
-		if (inventory instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-			compactingChestBlockEntity.inventoryChanged();
+		if (inventory instanceof CompactingChestBlockEntity compactor) {
+			compactor.inventoryChanged();
 		}
 		return itemStack;
+	}
+
+	public void toggleMode() {
+		var newOrdinal = (getCraftingMode().ordinal() + 1) % AutoCompactingInventory.AutoCraftingMode.values().length;
+		this.propertyDelegate.set(3, newOrdinal);
+		sendContentUpdates();
+	}
+
+	@Override
+	public void sendContentUpdates() {
+		super.sendContentUpdates();
+		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPacket(getCraftingMode()));
 	}
 	
 	public Inventory getInventory() {
@@ -120,13 +118,17 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		super.onClosed(player);
 		this.inventory.onClose(player);
 	}
+
+	public BlockPos getBlockPos() {
+		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+	}
 	
 	public CompactingChestBlockEntity getBlockEntity() {
 		return this.compactingChestBlockEntity;
 	}
 	
-	public AutoCompactingInventory.AutoCraftingMode getCurrentCraftingMode() {
-		return currentCraftingMode;
+	public AutoCompactingInventory.AutoCraftingMode getCraftingMode() {
+		return AutoCompactingInventory.AutoCraftingMode.values()[propertyDelegate.get(3)];
 	}
 	
 }

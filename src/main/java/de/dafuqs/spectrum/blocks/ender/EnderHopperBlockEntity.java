@@ -37,13 +37,14 @@ public class EnderHopperBlockEntity extends BlockEntity implements PlayerOwnedWi
 		super(SpectrumBlockEntities.ENDER_HOPPER, blockPos, blockState);
 	}
 	
-	public static void onEntityCollided(World world, BlockPos pos, BlockState state, Entity entity, EnderHopperBlockEntity enderHopperBlockEntity) {
+	public static void onEntityCollided(BlockPos pos, Entity entity, EnderHopperBlockEntity enderHopperBlockEntity) {
 		if (entity instanceof ItemEntity itemEntity && VoxelShapes.matchesAnywhere(VoxelShapes.cuboid(entity.getBoundingBox().offset((-pos.getX()), (-pos.getY()), (-pos.getZ()))), enderHopperBlockEntity.getInputAreaShape(), BooleanBiFunction.AND)) {
 			insertIntoEnderChest(enderHopperBlockEntity, itemEntity);
 		}
 	}
 	
-	public static void serverTick(World world, BlockPos pos, BlockState state, EnderHopperBlockEntity enderHopperBlockEntity) {
+	@SuppressWarnings("unused")
+    public static void serverTick(World world, BlockPos pos, BlockState state, EnderHopperBlockEntity enderHopperBlockEntity) {
 		--enderHopperBlockEntity.transferCooldown;
 		if (!enderHopperBlockEntity.needsCooldown()) {
 			enderHopperBlockEntity.setCooldown(0);

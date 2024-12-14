@@ -117,7 +117,7 @@ public class BlockFlooderBlock extends BlockWithEntity {
 				}
 			}
 			
-			if (neighboringBlockAmounts.size() > 0) {
+			if (!neighboringBlockAmounts.isEmpty()) {
 				int max = 0;
 				Block maxBlock = null;
 				

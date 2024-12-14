@@ -12,6 +12,7 @@ public class IronGolemHeadModel extends SpectrumSkullModel {
         super(root);
     }
 
+    @SuppressWarnings("unused")
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();

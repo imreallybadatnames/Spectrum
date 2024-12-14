@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.fusion_shrine;
 
+import com.mojang.datafixers.util.Pair;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.api.recipe.*;
@@ -18,6 +19,7 @@ import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -66,6 +68,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
         super(SpectrumBlockEntities.FUSION_SHRINE, pos, state, INVENTORY_SIZE);
     }
 
+    @SuppressWarnings("unused")
     public static void clientTick(@NotNull World world, BlockPos blockPos, BlockState blockState, FusionShrineBlockEntity fusionShrineBlockEntity) {
         if (!fusionShrineBlockEntity.isEmpty()) {
             int randomSlot = world.getRandom().nextInt(fusionShrineBlockEntity.size());
@@ -110,7 +113,8 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 		this.inventoryChanged();
 	}
 
-	public static void serverTick(@NotNull World world, BlockPos blockPos, BlockState blockState, FusionShrineBlockEntity fusionShrineBlockEntity) {
+	@SuppressWarnings("unused")
+    public static void serverTick(@NotNull World world, BlockPos blockPos, BlockState blockState, FusionShrineBlockEntity fusionShrineBlockEntity) {
 		if (fusionShrineBlockEntity.upgrades == null) {
 			fusionShrineBlockEntity.calculateUpgrades();
 		}
@@ -186,7 +190,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 				return fusionShrineBlockEntity.currentRecipe;
 			}
 		}
-		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.FUSION_SHRINE, fusionShrineBlockEntity, world).orElse(null);
+		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.FUSION_SHRINE, fusionShrineBlockEntity, world).map(RecipeEntry::value).orElse(null);
 	}
 	
 	private static void craft(World world, BlockPos blockPos, FusionShrineBlockEntity fusionShrineBlockEntity, FusionShrineRecipe recipe) {
@@ -217,7 +221,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.fluidStorage.variant = FluidVariant.fromNbt(nbt.getCompound("FluidVariant"));
+        this.fluidStorage.variant = FluidVariant.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("FluidVariant")).result().map(Pair::getFirst).orElse(FluidVariant.blank());
         this.fluidStorage.amount = nbt.getLong("FluidAmount");
 
         this.craftingTime = nbt.getShort("CraftingTime");
@@ -237,7 +241,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 	@Override
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        nbt.put("FluidVariant", this.fluidStorage.variant.toNbt());
+		FluidVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.fluidStorage.variant).result().ifPresent(v -> nbt.put("FluidVariant", v));
         nbt.putLong("FluidAmount", this.fluidStorage.amount);
         nbt.putShort("CraftingTime", (short) this.craftingTime);
         nbt.putShort("CraftingTimeTotal", (short) this.craftingTimeTotal);

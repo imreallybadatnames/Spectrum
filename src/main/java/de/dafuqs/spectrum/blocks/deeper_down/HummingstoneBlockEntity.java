@@ -20,6 +20,7 @@ public class HummingstoneBlockEntity extends BlockEntity implements Hummingstone
         this.listener = new HummingstoneEventQueue(new BlockPositionSource(this.pos), RANGE, this);
     }
     
+    @SuppressWarnings("unused")
     public static void serverTick(@NotNull World world, BlockPos pos, BlockState state, @NotNull HummingstoneBlockEntity blockEntity) {
         blockEntity.listener.tick(world);
     }

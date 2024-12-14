@@ -11,7 +11,9 @@ import net.minecraft.util.*;
 import java.util.*;
 
 public class FourLeafCloverBlock extends CloverBlock implements RevelationAware {
-	
+
+	public static final MapCodec<FourLeafCloverBlock> CODEC = createCodec(FourLeafCloverBlock::new);
+
 	public FourLeafCloverBlock(Settings settings) {
 		super(settings);
 		RevelationAware.register(this);
@@ -19,8 +21,7 @@ public class FourLeafCloverBlock extends CloverBlock implements RevelationAware 
 
 	@Override
 	public MapCodec<? extends FourLeafCloverBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

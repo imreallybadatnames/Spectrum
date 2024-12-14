@@ -12,8 +12,8 @@ import net.minecraft.util.math.*;
 @Environment(EnvType.CLIENT)
 public class CrystallarieumBlockEntityRenderer<T extends CrystallarieumBlockEntity> implements BlockEntityRenderer<T> {
 
-	public CrystallarieumBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-
+	@SuppressWarnings("unused")
+    public CrystallarieumBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 	
 	@Override

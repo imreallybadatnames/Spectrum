@@ -9,6 +9,9 @@ import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
+import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
+import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationC2SPacket;
+import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationS2CPacket;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.networking.v1.*;
@@ -17,7 +20,6 @@ import net.minecraft.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.recipe.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
@@ -51,35 +53,30 @@ public class SpectrumC2SPacketReceiver {
 			}
 		});
 		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.CHANGE_PARTICLE_SPAWNER_SETTINGS_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+		ServerPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationC2SPacket.ID, (packet, context) -> {
 			// receive the client packet...
-			if (player.currentScreenHandler instanceof ParticleSpawnerScreenHandler particleSpawnerScreenHandler) {
+			if (context.player().currentScreenHandler instanceof ParticleSpawnerScreenHandler particleSpawnerScreenHandler) {
 				ParticleSpawnerBlockEntity blockEntity = particleSpawnerScreenHandler.getBlockEntity();
 				if (blockEntity != null) {
-					/// ...apply the new settings...
-					ParticleSpawnerConfiguration configuration = ParticleSpawnerConfiguration.fromBuf(buf);
-					blockEntity.applySettings(configuration);
+					// ...apply the new settings...
+					blockEntity.applySettings(packet.configuration());
 					
 					// ...and distribute it to all clients again
-					PacketByteBuf outgoingBuf = PacketByteBufs.create();
-					outgoingBuf.writeBlockPos(blockEntity.getPos());
-					configuration.write(outgoingBuf);
-					
 					// Iterate over all players tracking a position in the world and send the packet to each player
 					for (ServerPlayerEntity serverPlayerEntity : PlayerLookup.tracking((ServerWorld) blockEntity.getWorld(), blockEntity.getPos())) {
-						ServerPlayNetworking.send(serverPlayerEntity, SpectrumS2CPackets.CHANGE_PARTICLE_SPAWNER_SETTINGS_CLIENT_PACKET_ID, outgoingBuf);
+						ServerPlayNetworking.send(serverPlayerEntity, new ParticleSpawnerConfigurationS2CPacket(blockEntity.getPos(), blockEntity.getConfiguration()));
 					}
 				}
 			}
 		});
 		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.CHANGE_COMPACTING_CHEST_SETTINGS_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+		ServerPlayNetworking.registerGlobalReceiver(ChangeCompactingChestSettingsPacket.ID, (payload, context) -> {
 			// receive the client packet...
-			if (player.currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
+			if (context.player().currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
 				BlockEntity blockEntity = compactingChestScreenHandler.getBlockEntity();
 				if (blockEntity instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-					/// ...apply the new settings...
-					compactingChestBlockEntity.applySettings(buf);
+					// apply the new settings
+					compactingChestBlockEntity.applySettings(payload);
 				}
 			}
 		});

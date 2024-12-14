@@ -12,8 +12,8 @@ import net.minecraft.util.math.*;
 @Environment(EnvType.CLIENT)
 public class ColorPickerBlockEntityRenderer<T extends ColorPickerBlockEntity> implements BlockEntityRenderer<T> {
 	
-	public ColorPickerBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-	
+	@SuppressWarnings("unused")
+    public ColorPickerBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 	}
 	
 	@Override

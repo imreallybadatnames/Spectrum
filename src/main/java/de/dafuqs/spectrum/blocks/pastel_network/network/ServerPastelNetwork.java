@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.blocks.pastel_network.network;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.SpectrumS2CPacketSender;
-import net.minecraft.nbt.*;
-import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -14,15 +14,30 @@ import java.util.*;
 
 public class ServerPastelNetwork extends PastelNetwork {
 
-	// new transfers are checked for every 10 ticks
-	private final TickLooper transferLooper = new TickLooper(10);
+	public static final Codec<ServerPastelNetwork> CODEC = RecordCodecBuilder.create(i -> i.group(
+			Uuids.CODEC.fieldOf("uuid").forGetter(ServerPastelNetwork::getUUID),
+			World.CODEC.xmap(k -> (World) SpectrumCommon.minecraftServer.getWorld(k), World::getRegistryKey).fieldOf("world").forGetter(b -> b.world),
+			TickLooper.CODEC.fieldOf("looper").forGetter(b -> b.transferLooper),
+			SchedulerMap.getCodec(PastelTransmission.CODEC).fieldOf("transmissions").forGetter(b -> b.transmissions)
+	).apply(i, ServerPastelNetwork::new));
 
-	protected final SchedulerMap<PastelTransmission> transmissions = new SchedulerMap<>();
+	// new transfers are checked for every 10 ticks
+	private final TickLooper transferLooper;
+	protected final SchedulerMap<PastelTransmission> transmissions;
 	protected final PastelTransmissionLogic transmissionLogic;
 
 	public ServerPastelNetwork(World world, @Nullable UUID uuid) {
+		this(uuid, world, new TickLooper(10), new SchedulerMap<>());
+	}
+	public ServerPastelNetwork(UUID uuid, World world, TickLooper transferLoop, SchedulerMap<PastelTransmission> transmissions) {
 		super(world, uuid);
+		this.transferLooper = transferLoop;
+		this.transmissions = transmissions;
 		this.transmissionLogic = new PastelTransmissionLogic(this);
+
+		for (var entry : transmissions) {
+			entry.getKey().setNetwork(this);
+		}
 	}
 
 	@Override
@@ -119,40 +134,5 @@ public class ServerPastelNetwork extends PastelNetwork {
 		transmission.setNetwork(this);
 		this.transmissions.put(transmission, travelTime);
 	}
-	
-	public NbtCompound toNbt() {
-		NbtCompound compound = new NbtCompound();
-		compound.putUuid("UUID", this.uuid);
-		compound.putString("World", this.getWorld().getRegistryKey().getValue().toString());
-		compound.put("Looper", this.transferLooper.toNbt());
-		
-		NbtList transmissionList = new NbtList();
-        for (Map.Entry<PastelTransmission, Integer> transmission : this.transmissions) {
-            NbtCompound transmissionCompound = new NbtCompound();
-            transmissionCompound.putInt("Delay", transmission.getValue());
-            transmissionCompound.put("Transmission", transmission.getKey().toNbt());
-            transmissionList.add(transmissionCompound);
-        }
-        compound.put("Transmissions", transmissionList);
 
-        return compound;
-    }
-
-    public static ServerPastelNetwork fromNbt(NbtCompound compound) {
-		World world = SpectrumCommon.minecraftServer.getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(compound.getString("World"))));
-		UUID uuid = compound.getUuid("UUID");
-
-		ServerPastelNetwork network = new ServerPastelNetwork(world, uuid);
-		if (compound.contains("Looper", NbtElement.COMPOUND_TYPE)) {
-			network.transferLooper.readNbt(compound.getCompound("Looper"));
-		}
-
-		for (NbtElement e : compound.getList("Transmissions", NbtElement.COMPOUND_TYPE)) {
-			NbtCompound t = (NbtCompound) e;
-			int delay = t.getInt("Delay");
-			PastelTransmission transmission = PastelTransmission.fromNbt(t.getCompound("Transmission"));
-			network.addTransmission(transmission, delay);
-		}
-		return network;
-	}
 }

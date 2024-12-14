@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.networking.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.network.*;
@@ -33,16 +32,18 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		}
 	}
 	
-	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos) {
-		this(syncId, playerInventory, blockPos, new ArrayPropertyDelegate(2));
+	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory) {
+		this(syncId, playerInventory, new ArrayPropertyDelegate(5));
 	}
 
-	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos, PropertyDelegate propertyDelegate) {
+	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.CINDERHEARTH, syncId);
+
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
-		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(blockPos);
+
+		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(getBlockPos());
 		if (blockEntity instanceof CinderhearthBlockEntity cinderhearthBlockEntity) {
 			this.blockEntity = cinderhearthBlockEntity;
 		} else {
@@ -121,13 +122,17 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		
 		return itemStack;
 	}
+
+	public BlockPos getBlockPos() {
+		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+	}
 	
 	public int getCraftingTime() {
-		return this.propertyDelegate.get(0);
+		return this.propertyDelegate.get(3);
 	}
 	
 	public int getCraftingTimeTotal() {
-		return this.propertyDelegate.get(1);
+		return this.propertyDelegate.get(4);
 	}
 	
 }

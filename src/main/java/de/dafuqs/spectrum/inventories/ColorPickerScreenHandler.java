@@ -8,10 +8,10 @@ import de.dafuqs.spectrum.networking.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.network.*;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -22,10 +22,10 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 	public static final int PLAYER_INVENTORY_START_Y = 84;
 	
 	protected final World world;
-	protected ColorPickerBlockEntity blockEntity;
-	
 	public final ServerPlayerEntity player;
-	
+	private final PropertyDelegate propertyDelegate;
+	protected ColorPickerBlockEntity blockEntity;
+
 	@Override
 	public void sendContentUpdates() {
 		super.sendContentUpdates();
@@ -35,15 +35,20 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		}
 	}
 	
-	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-		this(syncId, playerInventory, buf.readBlockPos(), buf.readBoolean() ? InkColor.ofId(buf.readIdentifier()).orElse(InkColors.CYAN) : null);
+	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory) {
+		this(syncId, playerInventory, new ArrayPropertyDelegate(4));
 	}
-	
-	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos readBlockPos, @Nullable InkColor selectedColor) {
+
+	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.COLOR_PICKER, syncId);
+
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
-		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(readBlockPos);
+		this.propertyDelegate = propertyDelegate;
+
+		var selectedColor = propertyDelegate.get(3) == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(propertyDelegate.get(3)));
+
+		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(getBlockPos());
 		if (blockEntity instanceof ColorPickerBlockEntity colorPickerBlockEntity) {
 			this.blockEntity = colorPickerBlockEntity;
 			this.blockEntity.setSelectedColor(selectedColor);
@@ -73,6 +78,8 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		if (this.player != null) {
 			SpectrumS2CPacketSender.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
 		}
+
+		addProperties(propertyDelegate);
 	}
 	
 	@Override
@@ -114,6 +121,10 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		}
 		
 		return itemStack;
+	}
+
+	public BlockPos getBlockPos() {
+		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
 	}
 	
 	@Override

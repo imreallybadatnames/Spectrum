@@ -15,7 +15,6 @@ import org.jgrapht.graph.*;
 import java.util.*;
 import java.util.function.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class PastelTransmissionLogic {
 	
 	private enum TransferMode {

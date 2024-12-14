@@ -169,7 +169,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 			return null;
 		}
 		if (this.duringWorldEffects.size() == 1) {
-			return this.duringWorldEffects.get(0);
+			return this.duringWorldEffects.getFirst();
 		}
 		
 		// we really have to calculate the current effect, huh?

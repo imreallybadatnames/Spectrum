@@ -178,7 +178,10 @@ public class SpectrumCommon implements ModInitializer {
 		
 		logInfo("Registering Commands...");
 		SpectrumCommands.register();
-		
+
+		logInfo("Registering Custom Packets...");
+		SpectrumC2SPackets.register();
+
 		logInfo("Registering Client To ServerPackage Receivers...");
 		SpectrumC2SPacketReceiver.registerC2SReceivers();
 		

@@ -1,14 +1,14 @@
 package de.dafuqs.spectrum.inventories;
 
-import io.netty.buffer.*;
+import de.dafuqs.spectrum.api.block.FilterConfigurable;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
 import net.minecraft.client.gui.screen.ingame.*;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.resource.featuretoggle.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
 
 public class SpectrumScreenHandlerTypes {
 	
@@ -45,7 +45,7 @@ public class SpectrumScreenHandlerTypes {
 		return Registry.register(Registries.SCREEN_HANDLER, id, type);
 	}
 	
-	public static <T extends ScreenHandler, D> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<ByteBuf, D> packetCodec) {
+	public static <T extends ScreenHandler, D> ScreenHandlerType<T> registerExtended(Identifier id, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<? super RegistryByteBuf, D> packetCodec) {
 		return Registry.register(Registries.SCREEN_HANDLER, id, new ExtendedScreenHandlerType<>(factory, packetCodec));
 	}
 	
@@ -54,11 +54,11 @@ public class SpectrumScreenHandlerTypes {
         WORKSTAFF = registerSimple(SpectrumScreenHandlerIDs.WORKSTAFF, WorkstaffScreenHandler::new);
 
         PEDESTAL = registerExtended(SpectrumScreenHandlerIDs.PEDESTAL, PedestalScreenHandler::new);
-        PARTICLE_SPAWNER = registerExtended(SpectrumScreenHandlerIDs.PARTICLE_SPAWNER, ParticleSpawnerScreenHandler::new);
-        COMPACTING_CHEST = registerExtended(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
-        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new);
-        COLOR_PICKER = registerExtended(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
-        CINDERHEARTH = registerExtended(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new, BlockPos.PACKET_CODEC);
+        PARTICLE_SPAWNER = registerSimple(SpectrumScreenHandlerIDs.PARTICLE_SPAWNER, ParticleSpawnerScreenHandler::new);
+        COMPACTING_CHEST = registerSimple(SpectrumScreenHandlerIDs.COMPACTING_CHEST, CompactingChestScreenHandler::new);
+        BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new, FilterConfigurable.ExtendedData.PACKET_CODEC);
+        COLOR_PICKER = registerSimple(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
+        CINDERHEARTH = registerSimple(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new);
 		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new);
 		BAG_OF_HOLDING = registerSimple(SpectrumScreenHandlerIDs.BAG_OF_HOLDING, BagOfHoldingScreenHandler::new);
 

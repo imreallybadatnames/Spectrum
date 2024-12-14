@@ -112,8 +112,8 @@ public class EnderHopperBlock extends BlockWithEntity {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof EnderHopperBlockEntity) {
-			EnderHopperBlockEntity.onEntityCollided(world, pos, state, entity, (EnderHopperBlockEntity) blockEntity);
+		if (blockEntity instanceof EnderHopperBlockEntity enderHopperBlockEntity) {
+			EnderHopperBlockEntity.onEntityCollided(pos, entity, enderHopperBlockEntity);
 		}
 	}
 	

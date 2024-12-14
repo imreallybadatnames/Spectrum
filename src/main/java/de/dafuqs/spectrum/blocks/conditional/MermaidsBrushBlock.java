@@ -25,6 +25,7 @@ import java.util.*;
 
 public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, RevelationAware, FluidLogging.SpectrumFluidFillable {
 
+	public static final MapCodec<MermaidsBrushBlock> CODEC = createCodec(MermaidsBrushBlock::new);
 	private static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 	
 	public static final EnumProperty<FluidLogging.State> LOGGED = FluidLogging.ANY_EXCLUDING_NONE;
@@ -38,8 +39,7 @@ public class MermaidsBrushBlock extends PlantBlock implements Fertilizable, Reve
 
 	@Override
 	public MapCodec<? extends MermaidsBrushBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

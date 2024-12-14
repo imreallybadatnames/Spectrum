@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.farming;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;

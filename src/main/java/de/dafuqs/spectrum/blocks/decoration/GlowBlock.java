@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.decoration;
 
 import com.google.common.collect.*;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -10,7 +11,12 @@ import net.minecraft.world.*;
 import java.util.*;
 
 public class GlowBlock extends Block {
-	
+
+	public static final MapCodec<GlowBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			DyeColor.CODEC.fieldOf("color").forGetter(GlowBlock::getColor)
+	).apply(i, GlowBlock::new));
+
 	private static final Map<DyeColor, GlowBlock> GLOWBLOCKS = Maps.newEnumMap(DyeColor.class);
 	protected final DyeColor color;
 	
@@ -22,8 +28,7 @@ public class GlowBlock extends Block {
 
 	@Override
 	public MapCodec<? extends GlowBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	public DyeColor getColor() {

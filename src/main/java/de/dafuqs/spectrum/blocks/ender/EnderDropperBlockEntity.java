@@ -8,6 +8,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
 
@@ -88,16 +89,16 @@ public class EnderDropperBlockEntity extends BlockEntity implements PlayerOwnedW
 	}
 	
 	@Override
-	public void readNbt(NbtCompound nbt) {
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.readNbt(nbt, registryLookup);
 		
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		this.ownerName = PlayerOwned.readOwnerName(nbt);
 	}
 	
 	@Override
-	public void writeNbt(NbtCompound nbt) {
-		super.writeNbt(nbt);
+	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+		super.writeNbt(nbt, registryLookup);
 		
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		PlayerOwned.writeOwnerName(nbt, this.ownerName);

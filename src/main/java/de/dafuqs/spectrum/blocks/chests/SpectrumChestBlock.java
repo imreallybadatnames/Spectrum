@@ -19,9 +19,6 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-import java.util.Iterator;
-import java.util.List;
-
 public abstract class SpectrumChestBlock extends BlockWithEntity {
 	
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;

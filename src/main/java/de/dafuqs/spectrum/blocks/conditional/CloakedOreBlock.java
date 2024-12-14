@@ -1,7 +1,9 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.revelationary.api.revelations.*;
+import de.dafuqs.spectrum.mixin.accessors.ExperienceDroppingBlockAccessor;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -14,13 +16,20 @@ import net.minecraft.util.math.intprovider.*;
 import java.util.*;
 
 public class CloakedOreBlock extends ExperienceDroppingBlock implements RevelationAware {
-	
+
+	public static final MapCodec<CloakedOreBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(b -> ((ExperienceDroppingBlockAccessor) b).getExperienceDropped()),
+			createSettingsCodec(),
+			Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
+			BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+	).apply(instance, CloakedOreBlock::new));
+
 	protected static boolean dropXP;
 	protected final Identifier cloakAdvancementIdentifier;
 	protected final BlockState cloakBlockState;
 	
-	public CloakedOreBlock(UniformIntProvider uniformIntProvider, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
-		super(uniformIntProvider, settings);
+	public CloakedOreBlock(IntProvider experienceDropped, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {
+		super(experienceDropped, settings);
 		this.cloakAdvancementIdentifier = cloakAdvancementIdentifier;
 		this.cloakBlockState = cloakBlockState;
 		RevelationAware.register(this);
@@ -28,8 +37,7 @@ public class CloakedOreBlock extends ExperienceDroppingBlock implements Revelati
 
 	@Override
 	public MapCodec<? extends CloakedOreBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override

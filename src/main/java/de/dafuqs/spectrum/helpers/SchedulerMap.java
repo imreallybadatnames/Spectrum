@@ -1,5 +1,7 @@
 package de.dafuqs.spectrum.helpers;
 
+import com.mojang.serialization.Codec;
+
 import java.util.*;
 
 // TODO: migrate to net.minecraft.world.tick ?
@@ -68,6 +70,10 @@ public class SchedulerMap<K> implements Iterable<Map.Entry<K, Integer>> {
     @Override
     public Iterator<Map.Entry<K, Integer>> iterator() {
         return map.entrySet().iterator();
+    }
+
+    public static <K> Codec<SchedulerMap<K>> getCodec(Codec<K> keyCodec) {
+        return Codec.unboundedMap(keyCodec, Codec.INT).xmap(SchedulerMap::new, s -> s.map);
     }
 
     public interface Callback {

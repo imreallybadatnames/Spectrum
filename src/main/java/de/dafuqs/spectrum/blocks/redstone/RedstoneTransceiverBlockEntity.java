@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.blocks.redstone;
 
 import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.events.listeners.*;
+import de.dafuqs.spectrum.helpers.EventHelper;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -37,7 +38,7 @@ public class RedstoneTransceiverBlockEntity extends BlockEntity implements Wirel
 		if (isSender(world, pos)) {
 			if (blockEntity.currentSignal != blockEntity.cachedSignal) {
 				blockEntity.currentSignal = blockEntity.cachedSignal;
-				blockEntity.getWorld().emitGameEvent(null, SpectrumGameEvents.WIRELESS_REDSTONE_SIGNALS.get(state.get(RedstoneTransceiverBlock.CHANNEL)).get(blockEntity.currentSignal), blockEntity.getPos());
+				blockEntity.getWorld().emitGameEvent(SpectrumGameEvents.WIRELESS_REDSTONE_SIGNAL, blockEntity.getPos(), new GameEvent.Emitter(null, state));
 			}
 		} else {
 			blockEntity.listener.tick(world);
@@ -76,15 +77,15 @@ public class RedstoneTransceiverBlockEntity extends BlockEntity implements Wirel
 	@Override
 	public boolean canAcceptEvent(World world, GameEventListener listener, GameEvent.Message message, Vec3d sourcePos) {
 		return !this.isRemoved()
-				&& message.getEvent() instanceof RedstoneTransferGameEvent redstoneTransferGameEvent
+				&& message.getEvent() == SpectrumGameEvents.WIRELESS_REDSTONE_SIGNAL
 				&& !isSender(this.getWorld(), this.pos)
-				&& redstoneTransferGameEvent.getDyeColor() == getChannel(this.getWorld(), this.pos);
+				&& EventHelper.getRedstoneEventDyeColor(message) == getChannel(this.getWorld(), this.pos);
 	}
 	
 	@Override
 	public void triggerEvent(World world, GameEventListener listener, WirelessRedstoneSignalEventQueue.EventEntry redstoneEvent) {
-		if (!isSender(this.getWorld(), this.pos) && redstoneEvent.gameEvent.getDyeColor() == getChannel(this.getWorld(), this.pos)) {
-			int receivedSignal = redstoneEvent.gameEvent.getPower();
+		if (!isSender(this.getWorld(), this.pos) && EventHelper.getRedstoneEventDyeColor(redstoneEvent.gameEvent()) == getChannel(this.getWorld(), this.pos)) {
+			int receivedSignal = EventHelper.getRedstoneEventPower(world, redstoneEvent.gameEvent());
 			this.currentSignal = receivedSignal;
 			// trigger a block update in all cases, even when powered does not change. That way connected blocks
 			// can react on the strength change of the block, since we store the power in the block entity, not the block state

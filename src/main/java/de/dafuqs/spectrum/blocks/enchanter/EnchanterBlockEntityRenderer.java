@@ -15,7 +15,8 @@ public class EnchanterBlockEntityRenderer implements BlockEntityRenderer<Enchant
 	protected static final double ITEM_STACK_RENDER_HEIGHT = 0.95F;
 	protected static EntityRenderDispatcher dispatcher;
 
-	public EnchanterBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+	@SuppressWarnings("unused")
+    public EnchanterBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 		dispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
 	}
 

@@ -5,46 +5,26 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
-import net.minecraft.util.*;
-import net.minecraft.util.collection.*;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.*;
 
 import java.util.*;
 
 public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithName {
 	
-	protected final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(PresentItem.MAX_STORAGE_STACKS, ItemStack.EMPTY);
-	protected Map<DyeColor, Integer> colors = new HashMap<>();
-	
-	private UUID ownerUUID;
-	private String ownerName;
+	protected ItemStack presentStack = ItemStack.EMPTY;
 	private UUID openerUUID;
-	
 	protected int openingTicks = 0;
-	
+
 	public PresentBlockEntity(BlockPos pos, BlockState state) {
 		super(SpectrumBlockEntities.PRESENT, pos, state);
-	}
-	
-	public void setDataFromPresentStack(ItemStack stack) {
-		List<ItemStack> s = PresentItem.getBundledStacks(stack).toList();
-		for (int i = 0; i < PresentItem.MAX_STORAGE_STACKS && i < s.size(); i++) {
-			this.stacks.set(i, s.get(i));
-		}
-		this.colors = PresentItem.getColors(stack);
-		
-		Optional<Pair<UUID, String>> wrapper = PresentItem.getWrapper(stack);
-		if (wrapper.isPresent()) {
-			this.ownerUUID = wrapper.get().getLeft();
-			this.ownerName = wrapper.get().getRight();
-		}
-		this.markDirty();
 	}
 	
 	public void triggerAdvancement() {
@@ -56,9 +36,9 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 			}
 		}
 		
-		UUID wrapperUUID = getOwnerUUID();
-		if (wrapperUUID != null) {
-			PlayerEntity wrapper = PlayerOwned.getPlayerEntityIfOnline(wrapperUUID);
+		UUID ownerUUID = getOwnerUUID();
+		if (ownerUUID != null) {
+			PlayerEntity wrapper = PlayerOwned.getPlayerEntityIfOnline(ownerUUID);
 			if (wrapper != null) {
 				Support.grantAdvancementCriterion((ServerPlayerEntity) wrapper, "gift_or_open_present", "gifted_or_opened_present");
 			}
@@ -68,10 +48,7 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
-		Inventories.readNbt(nbt, this.stacks, registryLookup);
-		this.colors = PresentItem.getColors(nbt);
-		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
-		this.ownerName = PlayerOwned.readOwnerName(nbt);
+		this.presentStack = ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("Bundle"));
 		if (nbt.contains("OpenerUUID")) {
 			this.openerUUID = nbt.getUuid("OpenerUUID");
 		} else {
@@ -85,14 +62,7 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	@Override
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
-		if (!this.stacks.isEmpty()) {
-			Inventories.writeNbt(nbt, this.stacks, registryLookup);
-		}
-		if (!this.colors.isEmpty()) {
-			PresentItem.setColors(nbt, this.colors);
-		}
-		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
-		PlayerOwned.writeOwnerName(nbt, this.ownerName);
+		nbt.put("Present", this.presentStack.encodeAllowEmpty(registryLookup));
 		if (this.openerUUID != null) {
 			nbt.putUuid("OpenerUUID", this.openerUUID);
 		}
@@ -109,18 +79,17 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	
 	@Override
 	public UUID getOwnerUUID() {
-		return this.ownerUUID;
+		return PresentItem.getOwner(this.presentStack).flatMap(ProfileComponent::id).orElse(null);
 	}
-	
+
 	@Override
 	public String getOwnerName() {
-		return this.ownerName;
+		return PresentItem.getOwner(this.presentStack).flatMap(ProfileComponent::name).orElse("???");
 	}
-	
+
 	@Override
 	public void setOwner(PlayerEntity playerEntity) {
-		this.ownerUUID = playerEntity.getUuid();
-		this.ownerName = playerEntity.getName().getString();
+		PresentItem.setOwner(this.presentStack, playerEntity);
 		markDirty();
 	}
 	
@@ -133,25 +102,31 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 		return this.openerUUID;
 	}
 	
-	public ItemStack retrievePresent(PresentBlock.WrappingPaper wrappingPaper) {
-		ItemStack presentStack = SpectrumBlocks.PRESENT.asItem().getDefaultStack();
-		for (ItemStack contentStack : this.stacks) {
-			PresentItem.addToPresent(presentStack, contentStack);
-		}
-		PresentItem.wrap(presentStack, wrappingPaper, this.colors);
-		if (this.ownerUUID != null && this.ownerName != null) {
-			PresentItem.setWrapper(presentStack, this.ownerUUID, this.ownerName);
-		}
-		return presentStack;
+	public ItemStack retrievePresent() {
+		return this.presentStack.copy();
+	}
+
+	public Map<DyeColor, Integer> getColors() {
+		return PresentItem.getWrapData(this.presentStack).colors();
+	}
+
+	public List<ItemStack> getStacks() {
+		return PresentItem.getBundledStacks(this.presentStack).toList();
+	}
+
+	public DefaultedList<ItemStack> getDefaultedStacks() {
+		var list = DefaultedList.copyOf(ItemStack.EMPTY);
+		list.addAll(PresentItem.getBundledStacks(this.presentStack).toList());
+		return list;
+	}
+
+	public void setPresent(ItemStack present) {
+		this.presentStack = present;
+		markDirty();
 	}
 	
 	public boolean isEmpty() {
-		for (int i = 0; i < PresentItem.MAX_STORAGE_STACKS; i++) {
-			if (!stacks.get(i).isEmpty()) {
-				return false;
-			}
-		}
-		return true;
+		return PresentItem.isEmpty(this.presentStack);
 	}
-	
+
 }

@@ -5,7 +5,7 @@ import net.minecraft.util.*;
 
 import java.util.*;
 
-public enum PastelNodeType {
+public enum PastelNodeType implements StringIdentifiable {
 	CONNECTION(List.of(Text.translatable("block.spectrum.connection_node.tooltip")), false, false),
 	STORAGE(List.of(Text.translatable("block.spectrum.storage_node.tooltip").formatted(Formatting.WHITE), Text.translatable("block.spectrum.pastel_network_nodes.tooltip.placing").formatted(Formatting.GRAY)), true, true),
 	BUFFER(List.of(Text.translatable("block.spectrum.buffer_node.tooltip").formatted(Formatting.WHITE), Text.translatable("block.spectrum.pastel_network_nodes.tooltip.placing").formatted(Formatting.GRAY)), true, true),
@@ -32,5 +32,10 @@ public enum PastelNodeType {
 
 	public boolean hasOuterRing() {
 		return hasOuterRing;
+	}
+
+	@Override
+	public String asString() {
+		return name();
 	}
 }

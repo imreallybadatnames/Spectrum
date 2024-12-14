@@ -217,7 +217,7 @@ public class SpectrumS2CPacketSender {
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeUuid(network.getUUID());
 		buf.writeInt(travelTime);
-		PastelTransmission.writeToBuf(buf, transmission);
+		PastelTransmission.write(buf, transmission);
 	
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) network.getWorld(), transmission.getStartPos())) {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_TRANSMISSION, buf);
