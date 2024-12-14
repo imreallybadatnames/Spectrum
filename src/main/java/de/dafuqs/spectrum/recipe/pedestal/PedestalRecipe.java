@@ -74,23 +74,19 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	
 	@Override
 	public boolean matches(RecipeInput inv, World world) {
-		return enoughPowderPresent(inv);
-	}
-	
-	protected boolean enoughPowderPresent(RecipeInput recipeInput) {
 		int topazPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.CYAN, 0);
 		int amethystPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.MAGENTA, 0);
 		int citrinePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.YELLOW, 0);
 		int onyxPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.BLACK, 0);
 		int moonstonePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.WHITE, 0);
-		
-		return ((topazPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(9), SpectrumItems.TOPAZ_POWDER, topazPowderAmount))
-				&& (amethystPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(10), SpectrumItems.AMETHYST_POWDER, amethystPowderAmount))
-				&& (citrinePowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(11), SpectrumItems.CITRINE_POWDER, citrinePowderAmount))
-				&& (onyxPowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(12), SpectrumItems.ONYX_POWDER, onyxPowderAmount))
-				&& (moonstonePowderAmount == 0 || isStackAtLeast(recipeInput.getStackInSlot(13), SpectrumItems.MOONSTONE_POWDER, moonstonePowderAmount)));
+
+		return ((topazPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(9), SpectrumItems.TOPAZ_POWDER, topazPowderAmount))
+				&& (amethystPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(10), SpectrumItems.AMETHYST_POWDER, amethystPowderAmount))
+				&& (citrinePowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(11), SpectrumItems.CITRINE_POWDER, citrinePowderAmount))
+				&& (onyxPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(12), SpectrumItems.ONYX_POWDER, onyxPowderAmount))
+				&& (moonstonePowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(13), SpectrumItems.MOONSTONE_POWDER, moonstonePowderAmount)));
 	}
-	
+
 	private boolean isStackAtLeast(ItemStack sourceItemStack, Item item, int amount) {
 		return sourceItemStack.getItem().equals(item) && sourceItemStack.getCount() >= amount;
 	}

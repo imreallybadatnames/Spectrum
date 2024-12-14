@@ -16,24 +16,36 @@ import oshi.util.tuples.*;
 import java.util.*;
 
 public class ShapedPedestalRecipe extends PedestalRecipe {
-	
+
 	protected final int width;
 	protected final int height;
-	
-	public ShapedPedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
-								PedestalRecipeTier tier, int width, int height, List<IngredientStack> inputs, Map<GemstoneColor, Integer> gemstonePowderInputs, ItemStack output,
-								float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
+
+	public ShapedPedestalRecipe(
+		String group,
+		boolean secret,
+		Identifier requiredAdvancementIdentifier,
+		PedestalRecipeTier tier,
+		int width,
+		int height,
+		List<IngredientStack> inputs,
+		Map<GemstoneColor, Integer> gemstonePowderInputs,
+		ItemStack output,
+		float experience,
+		int craftingTime,
+		boolean skipRecipeRemainders,
+		boolean noBenefitsFromYieldUpgrades
+	) {
 		super(group, secret, requiredAdvancementIdentifier, tier, inputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
-		
+
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	@Override
 	public boolean matches(RecipeInput inv, World world) {
 		return getRecipeOrientation(inv) != null && super.matches(inv, world);
 	}
-	
+
 	// Triplet<XOffset, YOffset, Flipped>
 	public Triplet<Integer, Integer, Boolean> getRecipeOrientation(RecipeInput inv) {
 		for (int i = 0; i <= 3 - this.width; ++i) {
@@ -48,7 +60,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 		}
 		return null;
 	}
-	
+
 	public boolean matchesPattern(RecipeInput inv, int offsetX, int offsetY, boolean flipped) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
@@ -62,67 +74,67 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 						ingredient = this.inputs.get(k + l * this.width);
 					}
 				}
-				
+
 				if (!ingredient.test(inv.getStackInSlot(i + j * 3))) {
 					return false;
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public void consumeIngredients(PedestalBlockEntity pedestal) {
 		super.consumeIngredients(pedestal);
-		
+
 		// FIXME - Figure out why this broke
 		Triplet<Integer, Integer, Boolean> orientation = getRecipeOrientation(pedestal);
 		if (orientation == null) {
 			return;
 		}
-		
+
 		for (int x = 0; x < this.width; x++) {
 			for (int y = 0; y < this.height; y++) {
 				int ingredientStackId = orientation.getC() ? ((this.width - 1) - x) + this.width * y : x + this.width * y;
 				int slot = (x + orientation.getA()) + 3 * (y + orientation.getB());
-				
+
 				IngredientStack ingredientStackAtPos = this.inputs.get(ingredientStackId);
 				ItemStack slotStack = pedestal.getStack(slot);
 				if (!ingredientStackAtPos.test(slotStack)) {
 					SpectrumCommon.logError("Looks like DaFuqs fucked up Spectrums Pedestal recipe matching. Go open up a report with the recipe that was crafted and an image of the pedestals contents, please! :)");
 				}
-				
+
 				if (!slotStack.isEmpty()) {
 					decrementGridSlot(pedestal, slot, ingredientStackAtPos.getCount(), slotStack);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SpectrumRecipeTypes.SHAPED_PEDESTAL_RECIPE_SERIALIZER;
 	}
-	
+
 	@Override
 	public RecipeType<?> getType() {
 		return SpectrumRecipeTypes.PEDESTAL;
 	}
-	
+
 	@Override
 	public int getWidth() {
 		return this.width;
 	}
-	
+
 	@Override
 	public int getHeight() {
 		return this.height;
 	}
-	
+
 	@Override
 	public boolean isShapeless() {
 		return false;
 	}
-	
+
 }

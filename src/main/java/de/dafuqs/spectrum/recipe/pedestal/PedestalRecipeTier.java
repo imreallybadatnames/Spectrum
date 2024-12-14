@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.recipe.pedestal;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -18,7 +19,9 @@ public enum PedestalRecipeTier {
 	
 	private final Identifier unlockAdvancementId;
 	private final GemstoneColor[] gemstoneColors;
-	
+
+	public static final Endec<PedestalRecipeTier> ENDEC = Endec.forEnum(PedestalRecipeTier.class);
+
 	PedestalRecipeTier(Identifier unlockAdvancementId, GemstoneColor[] gemstoneColors) {
 		this.unlockAdvancementId = unlockAdvancementId;
 		this.gemstoneColors = gemstoneColors;

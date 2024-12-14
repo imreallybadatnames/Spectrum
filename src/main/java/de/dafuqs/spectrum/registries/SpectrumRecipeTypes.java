@@ -107,8 +107,8 @@ public class SpectrumRecipeTypes {
 	}
 	
 	public static void registerSerializer() {
-		SHAPED_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPED_PEDESTAL_RECIPE_ID, new ShapedPedestalRecipeSerializer((id2, group2, secret2, requiredAdvancementIdentifier2, tier1, width, height, inputs1, gemstonePowderInputs1, output1, experience1, craftingTime1, skipRecipeRemainders1, noBenefitsFromYieldUpgrades1) -> new ShapedPedestalRecipe(group2, secret2, requiredAdvancementIdentifier2, tier1, width, height, inputs1, gemstonePowderInputs1, output1, experience1, craftingTime1, skipRecipeRemainders1, noBenefitsFromYieldUpgrades1)));
-		SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPELESS_PEDESTAL_RECIPE_ID, new ShapelessPedestalRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades) -> new ShapelessPedestalRecipe(group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades)));
+		SHAPED_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPED_PEDESTAL_RECIPE_ID, new ShapedPedestalRecipeSerializer());
+		SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = registerSerializer(SHAPELESS_PEDESTAL_RECIPE_ID, new ShapelessPedestalRecipeSerializer());
 		PEDESTAL = registerRecipeType(SHAPED_PEDESTAL_RECIPE_ID);
 		
 		ANVIL_CRUSHING_RECIPE_SERIALIZER = registerSerializer(ANVIL_CRUSHING_ID, new AnvilCrushingRecipeSerializer());
@@ -147,7 +147,7 @@ public class SpectrumRecipeTypes {
 		SPIRIT_INSTILLING_SERIALIZER = registerSerializer(SPIRIT_INSTILLING_ID, new SpiritInstillerRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades) -> new SpiritInstillerRecipe(group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades)));
 		SPIRIT_INSTILLING = registerRecipeType(SPIRIT_INSTILLING_ID);
 
-		INK_CONVERTING_RECIPE_SERIALIZER = registerSerializer(INK_CONVERTING_ID, new InkConvertingRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, inputIngredient, color, amount) -> new InkConvertingRecipe(group, secret, requiredAdvancementIdentifier, inputIngredient, color, amount)));
+		INK_CONVERTING_RECIPE_SERIALIZER = registerSerializer(INK_CONVERTING_ID, new InkConvertingRecipeSerializer());
 		INK_CONVERTING = registerRecipeType(INK_CONVERTING_ID);
 
 		CRYSTALLARIEUM_RECIPE_SERIALIZER = registerSerializer(CRYSTALLARIEUM_ID, new CrystallarieumRecipeSerializer());
