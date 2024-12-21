@@ -14,18 +14,12 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "G": {
-      "item": "minecraft:gunpowder"
-    }
+    "P": "minecraft:paper",
+    "S": "spectrum:shimmerstone_gem",
+    "G": "minecraft:gunpowder"
   },
   "result": {
-    "item": "spectrum:present",
+    "id": "spectrum:present",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/present"

@@ -14,18 +14,12 @@
     "B S"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:orange_pigment"
-    },
-    "B": {
-      "item": "minecraft:blaze_rod"
-    },
-    "S": {
-      "item": "minecraft:string"
-    }
+    "P": "spectrum:orange_pigment",
+    "B": "minecraft:blaze_rod",
+    "S": "minecraft:string"
   },
   "result": {
-    "item": "spectrum:molten_rod",
+    "id": "spectrum:molten_rod",
     "nbt": {
       "Enchantments": [
         {

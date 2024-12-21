@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "C": {
-      "item": "spectrum:citrine_shard"
-    },
-    "G": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "minecraft:smooth_basalt",
+    "C": "spectrum:citrine_shard",
+    "G": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:lucky_pickaxe",
+    "id": "spectrum:lucky_pickaxe",
     "nbt": {
       "Enchantments": [
         {

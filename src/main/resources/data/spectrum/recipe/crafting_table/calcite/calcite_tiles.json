@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:calcite_bricks"
-    }
+    "W": "spectrum:calcite_bricks"
   },
   "result": {
-    "item": "spectrum:calcite_tiles",
+    "id": "spectrum:calcite_tiles",
     "count": 4
   }
 }

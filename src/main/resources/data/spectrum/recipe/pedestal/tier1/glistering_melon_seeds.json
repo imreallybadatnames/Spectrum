@@ -14,18 +14,12 @@
     "VGV"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "M": {
-      "item": "minecraft:melon_seeds"
-    },
-    "V": {
-      "item": "spectrum:vegetal"
-    }
+    "G": "minecraft:gold_ingot",
+    "M": "minecraft:melon_seeds",
+    "V": "spectrum:vegetal"
   },
   "result": {
-    "item": "spectrum:glistering_melon_seeds",
+    "id": "spectrum:glistering_melon_seeds",
     "count": 1
   },
   "required_advancement": "spectrum:collect_vegetal"

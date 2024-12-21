@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:glowstone_cluster"
-  },
+  "ingredient": "spectrum:glowstone_cluster",
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 3.0,
   "result": {
-    "item": "minecraft:glowstone_dust",
+    "id": "minecraft:glowstone_dust",
     "count": 12
   },
   "particleEffectIdentifier": "explosion",

@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "techreborn:mixed_metal_ingot"
-  },
+  "ingredient": "techreborn:mixed_metal_ingot",
   "results": [
     {
-      "item": "techreborn:advanced_alloy_ingot",
+      "id": "techreborn:advanced_alloy_ingot",
       "count": 2
     }
   ],

@@ -7,16 +7,12 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:netherite_sword"
-    },
+    "minecraft:netherite_sword",
     {
       "item": "spectrum:bismuth_crystal",
       "count": 4
     },
-    {
-      "item": "spectrum:moonstruck_nectar"
-    },
+    "spectrum:moonstruck_nectar",
     {
       "item": "spectrum:red_pigment",
       "count": 4
@@ -34,9 +30,7 @@
       "count": 4
     }
   ],
-  "result": {
-    "item": "spectrum:dreamflayer"
-  },
+  "result": "spectrum:dreamflayer",
   "required_advancement": "spectrum:unlocks/equipment/dreamflayer",
   "world_conditions": [
     {

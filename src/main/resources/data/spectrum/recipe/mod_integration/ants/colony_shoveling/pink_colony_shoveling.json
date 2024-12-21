@@ -1,9 +1,7 @@
 {
   "type": "ants:colony_shoveling",
   "group": "spectrum_leaves_shoveling",
-  "hive_ingredient": {
-    "item": "spectrum:pink_leaves"
-  },
+  "hive_ingredient": "spectrum:pink_leaves",
   "result" : {
     "item": "minecraft:pink_dye",
 	"count": 6

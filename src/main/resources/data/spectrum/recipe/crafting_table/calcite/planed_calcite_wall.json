@@ -5,12 +5,10 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:planed_calcite"
-    }
+    "X": "spectrum:planed_calcite"
   },
   "result": {
-    "item": "spectrum:planed_calcite_wall",
+    "id": "spectrum:planed_calcite_wall",
     "count": 6
   }
 }

@@ -6,15 +6,9 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_pendant"
-    },
-    {
-      "item": "minecraft:totem_of_undying"
-    },
-    {
-      "item": "spectrum:moonstruck_nectar"
-    },
+    "spectrum:fanciful_pendant",
+    "minecraft:totem_of_undying",
+    "spectrum:moonstruck_nectar",
     {
       "item": "spectrum:neolith",
       "count": 2
@@ -24,9 +18,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:totem_pendant"
-  },
+  "result": "spectrum:totem_pendant",
   "required_advancement": "spectrum:unlocks/trinkets/totem_pendant",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

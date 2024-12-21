@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:bismuth_block"
-    }
+    "spectrum:bismuth_block"
   ],
   "result": {
-    "item": "spectrum:bismuth_crystal",
+    "id": "spectrum:bismuth_crystal",
     "count": 9
   },
   "required_advancement": "spectrum:lategame/collect_bismuth_crystal",

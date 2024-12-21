@@ -14,15 +14,11 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:stratine_fragments"
-    },
-    "X": {
-      "item": "minecraft:emerald"
-    }
+    "#": "spectrum:stratine_fragments",
+    "X": "minecraft:emerald"
   },
   "result": {
-    "item": "spectrum:stratine_gem",
+    "id": "spectrum:stratine_gem",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_stratine_gem",

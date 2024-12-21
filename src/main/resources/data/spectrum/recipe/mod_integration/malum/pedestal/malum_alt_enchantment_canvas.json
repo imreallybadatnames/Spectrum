@@ -14,15 +14,11 @@
     "PCP"
   ],
   "key": {
-    "C": {
-      "item": "malum:astral_weave"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    }
+    "C": "malum:astral_weave",
+    "P": "spectrum:purple_pigment"
   },
   "result": {
-    "item": "spectrum:enchantment_canvas",
+    "id": "spectrum:enchantment_canvas",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/items/enchantment_canvas",

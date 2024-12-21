@@ -6,20 +6,14 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_belt"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
+    "spectrum:fanciful_belt",
+    "spectrum:refined_azurite",
     {
       "item": "spectrum:blue_pigment",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:azure_dike_belt"
-  },
+  "result": "spectrum:azure_dike_belt",
   "required_advancement": "spectrum:unlocks/trinkets/azure_dike_belt",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

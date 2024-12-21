@@ -15,15 +15,11 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:lime_pigment"
-    },
-    "S": {
-      "item": "minecraft:spore_blossom"
-    }
+    "P": "spectrum:lime_pigment",
+    "S": "minecraft:spore_blossom"
   },
   "result": {
-    "item": "spectrum:lime_spore_blossom",
+    "id": "spectrum:lime_spore_blossom",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/lime"

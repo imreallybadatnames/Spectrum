@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_emerald"
-    }
+    "G": "spectrum:pure_emerald"
   },
   "result": {
-    "item": "spectrum:pure_emerald_block",
+    "id": "spectrum:pure_emerald_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

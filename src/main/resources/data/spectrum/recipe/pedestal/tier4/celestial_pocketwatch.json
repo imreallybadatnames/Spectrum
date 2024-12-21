@@ -14,18 +14,12 @@
     "PAP"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "C": {
-      "item": "spectrum:paltaeria_gem"
-    },
-    "P": {
-      "item": "spectrum:magenta_pigment"
-    }
+    "A": "minecraft:amethyst_shard",
+    "C": "spectrum:paltaeria_gem",
+    "P": "spectrum:magenta_pigment"
   },
   "result": {
-    "item": "spectrum:celestial_pocketwatch",
+    "id": "spectrum:celestial_pocketwatch",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/celestial_pocketwatch"

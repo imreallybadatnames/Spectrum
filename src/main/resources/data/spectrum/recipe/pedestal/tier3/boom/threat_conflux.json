@@ -14,18 +14,12 @@
     "GSG"
   ],
   "key": {
-    "M": {
-      "item": "spectrum:midnight_chip"
-    },
-    "G": {
-      "item": "minecraft:gunpowder"
-    },
-    "S": {
-      "item": "spectrum:stratine_gem"
-    }
+    "M": "spectrum:midnight_chip",
+    "G": "minecraft:gunpowder",
+    "S": "spectrum:stratine_gem"
   },
   "result": {
-    "item": "spectrum:threat_conflux",
+    "id": "spectrum:threat_conflux",
     "count": 2,
     "nbt": {
       "explosion_data": {

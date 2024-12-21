@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_pendant"
-    },
+    "spectrum:fanciful_pendant",
     {
       "item": "spectrum:paltaeria_gem",
       "count": 3
@@ -22,9 +20,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:greater_potion_pendant"
-  },
+  "result": "spectrum:greater_potion_pendant",
   "required_advancement": "spectrum:unlocks/trinkets/greater_potion_pendant",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

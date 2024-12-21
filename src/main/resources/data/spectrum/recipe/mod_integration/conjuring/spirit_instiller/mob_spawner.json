@@ -10,12 +10,8 @@
     "item": "minecraft:soul_torch",
     "count": 8
   },
-  "center_ingredient": {
-    "item": "conjuring:conjuration_essence"
-  },
-  "result": {
-    "item": "minecraft:spawner"
-  },
+  "center_ingredient": "conjuring:conjuration_essence",
+  "result": "minecraft:spawner",
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",

@@ -6,14 +6,8 @@
     "#W#"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "W": {
-      "item": "spectrum:gray_planks"
-    }
+    "#": "minecraft:stick",
+    "W": "spectrum:gray_planks"
   },
-  "result": {
-    "item": "spectrum:gray_fence_gate"
-  }
+  "result": "spectrum:gray_fence_gate"
 }

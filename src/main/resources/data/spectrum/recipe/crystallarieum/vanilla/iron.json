@@ -1,8 +1,6 @@
 {
   "type": "spectrum:crystallarieum_growing",
-  "ingredient": {
-    "item": "minecraft:raw_iron"
-  },
+  "ingredient": "minecraft:raw_iron",
   "growth_stage_states": [
     "spectrum:small_iron_bud[facing=up]",
     "spectrum:large_iron_bud[facing=up]",
@@ -14,25 +12,19 @@
   "grows_without_catalyst": false,
   "catalysts": [
     {
-      "ingredient": {
-        "item": "minecraft:iron_nugget"
-      },
+      "ingredient": "minecraft:iron_nugget",
       "growth_acceleration_mod": 4.0,
       "ink_consumption_mod": 0.5,
       "consume_chance_per_second": 0.2
     },
     {
-      "ingredient": {
-        "item": "spectrum:bedrock_dust"
-      },
+      "ingredient": "spectrum:bedrock_dust",
       "growth_acceleration_mod": 8.0,
       "ink_consumption_mod": 2.0,
       "consume_chance_per_second": 0.05
     },
     {
-      "ingredient": {
-        "item": "spectrum:neolith"
-      },
+      "ingredient": "spectrum:neolith",
       "growth_acceleration_mod": 1.5,
       "ink_consumption_mod": 0.25,
       "consume_chance_per_second": 0.02

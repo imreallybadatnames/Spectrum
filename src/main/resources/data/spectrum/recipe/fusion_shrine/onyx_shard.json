@@ -6,19 +6,11 @@
     "fluid": "minecraft:lava"
   },
   "ingredients": [
-    {
-      "item": "spectrum:topaz_shard"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "spectrum:citrine_shard"
-    }
+    "spectrum:topaz_shard",
+    "minecraft:amethyst_shard",
+    "spectrum:citrine_shard"
   ],
-  "result": {
-    "item": "spectrum:onyx_shard"
-  },
+  "result": "spectrum:onyx_shard",
   "required_advancement": "spectrum:unlocks/blocks/fusion_shrine",
   "world_conditions": [
     {

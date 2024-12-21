@@ -15,18 +15,12 @@
     "F"
   ],
   "key": {
-    "M": {
-      "item": "spectrum:raw_malachite"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "F": {
-			"tag": "spectrum:resplendent_feathers"
-    }
+    "M": "spectrum:raw_malachite",
+    "S": "minecraft:stick",
+    "F": "#spectrum:resplendent_feathers"
   },
   "result": {
-    "item": "spectrum:malachite_glass_arrow",
+    "id": "spectrum:malachite_glass_arrow",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/malachite/glass_arrows"

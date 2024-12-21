@@ -1,9 +1,5 @@
 {
   "type": "spectrum:primordial_fire_burning",
-  "ingredient": {
-    "item": "minecraft:soul_campfire"
-  },
-  "result": {
-    "item": "minecraft:campfire"
-  }
+  "ingredient": "minecraft:soul_campfire",
+  "result": "minecraft:campfire"
 }

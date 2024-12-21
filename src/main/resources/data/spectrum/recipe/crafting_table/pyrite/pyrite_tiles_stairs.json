@@ -6,12 +6,10 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:pyrite_tiles"
-    }
+    "X": "spectrum:pyrite_tiles"
   },
   "result": {
-    "item": "spectrum:pyrite_tiles_stairs",
+    "id": "spectrum:pyrite_tiles_stairs",
     "count": 4
   }
 }

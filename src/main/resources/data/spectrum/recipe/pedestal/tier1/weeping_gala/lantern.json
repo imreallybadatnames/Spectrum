@@ -14,15 +14,11 @@
     "P"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "P": {
-      "item": "spectrum:weeping_gala_planks"
-    }
+    "S": "spectrum:shimmerstone_gem",
+    "P": "spectrum:weeping_gala_planks"
   },
   "result": {
-    "item": "spectrum:weeping_gala_lantern",
+    "id": "spectrum:weeping_gala_lantern",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_weeping_gala"

@@ -1,8 +1,6 @@
 {
   "type": "minecraft:blasting",
-  "ingredient": {
-    "tag": "spectrum:moonstone_ores"
-  },
+  "ingredient": "#spectrum:moonstone_ores",
   "result": "spectrum:moonstone_shard",
   "experience": 0.25,
   "cookingtime": 100

@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_netherite_scrap"
-    }
+    "G": "spectrum:pure_netherite_scrap"
   },
   "result": {
-    "item": "spectrum:pure_netherite_scrap_block",
+    "id": "spectrum:pure_netherite_scrap_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

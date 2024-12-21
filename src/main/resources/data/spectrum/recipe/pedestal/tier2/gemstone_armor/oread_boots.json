@@ -13,18 +13,12 @@
     "T T"
   ],
   "key": {
-    "T": {
-      "item": "spectrum:topaz_shard"
-    },
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "G": {
-      "item": "minecraft:phantom_membrane"
-    }
+    "T": "spectrum:topaz_shard",
+    "A": "minecraft:amethyst_shard",
+    "G": "minecraft:phantom_membrane"
   },
   "result": {
-    "item": "spectrum:oread_boots",
+    "id": "spectrum:oread_boots",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_vanilla/phantom_membrane"

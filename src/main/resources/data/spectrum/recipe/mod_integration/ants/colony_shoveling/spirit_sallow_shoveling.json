@@ -1,8 +1,6 @@
 {
   "type": "ants:colony_shoveling",
-  "hive_ingredient": {
-    "item": "spectrum:spirit_sallow_leaves"
-  },
+  "hive_ingredient": "spectrum:spirit_sallow_leaves",
   "result" : {
     "item": "minecraft:glowstone_dust",
 	"count": 6

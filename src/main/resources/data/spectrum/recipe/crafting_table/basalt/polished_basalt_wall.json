@@ -5,12 +5,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_basalt"
-    }
+    "W": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:polished_basalt_wall",
+    "id": "spectrum:polished_basalt_wall",
     "count": 6
   }
 }

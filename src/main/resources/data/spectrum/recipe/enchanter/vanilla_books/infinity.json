@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:red_pigment"
-    },
-    {
-      "item": "spectrum:red_pigment"
-    },
-    {
-      "item": "spectrum:quitoxic_powder"
-    },
-    {
-      "item": "spectrum:neolith"
-    },
-    {
-      "item": "spectrum:red_pigment"
-    },
-    {
-      "item": "spectrum:red_pigment"
-    },
-    {
-      "item": "spectrum:quitoxic_powder"
-    },
-    {
-      "item": "spectrum:neolith"
-    }
+    "minecraft:book",
+    "spectrum:red_pigment",
+    "spectrum:red_pigment",
+    "spectrum:quitoxic_powder",
+    "spectrum:neolith",
+    "spectrum:red_pigment",
+    "spectrum:red_pigment",
+    "spectrum:quitoxic_powder",
+    "spectrum:neolith"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

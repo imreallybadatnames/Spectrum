@@ -1,8 +1,6 @@
 {
   "type": "spectrum:ink_converting",
-  "ingredient": {
-    "item": "spectrum:cyan_block"
-  },
+  "ingredient": "spectrum:cyan_block",
   "ink_color": "spectrum:cyan",
   "amount": 900,
   "required_advancement": "spectrum:hidden/collect_pigment/cyan"

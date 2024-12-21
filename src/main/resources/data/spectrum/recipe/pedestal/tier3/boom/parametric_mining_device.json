@@ -14,18 +14,12 @@
     "MGM"
   ],
   "key": {
-    "M": {
-      "item": "spectrum:midnight_chip"
-    },
-    "G": {
-      "item": "minecraft:gunpowder"
-    },
-    "S": {
-      "item": "spectrum:stratine_gem"
-    }
+    "M": "spectrum:midnight_chip",
+    "G": "minecraft:gunpowder",
+    "S": "spectrum:stratine_gem"
   },
   "result": {
-    "item": "spectrum:parametric_mining_device",
+    "id": "spectrum:parametric_mining_device",
     "count": 8,
     "nbt": {
       "explosion_data": {

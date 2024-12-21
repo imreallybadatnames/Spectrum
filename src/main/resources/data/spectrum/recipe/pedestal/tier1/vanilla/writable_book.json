@@ -9,18 +9,10 @@
   "white": 0,
   "experience": 0.1,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "tag": "spectrum:pigments"
-    },
-    {
-      "item": "minecraft:feather"
-    }
+    "minecraft:book",
+    "#spectrum:pigments",
+    "minecraft:feather"
   ],
-  "result": {
-    "item": "minecraft:writable_book"
-  },
+  "result": "minecraft:writable_book",
   "required_advancement": "spectrum:collect_pigment"
 }

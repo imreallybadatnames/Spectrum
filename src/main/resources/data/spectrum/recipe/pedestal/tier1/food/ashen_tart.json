@@ -14,24 +14,14 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "M": {
-      "tag": "c:milk"
-    },
-    "B": {
-      "item": "minecraft:sweet_berries"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "E": "#c:eggs",
+    "M": "#c:milk",
+    "B": "minecraft:sweet_berries"
   },
   "result": {
-    "item": "spectrum:ashen_tart",
+    "id": "spectrum:ashen_tart",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/tarts"

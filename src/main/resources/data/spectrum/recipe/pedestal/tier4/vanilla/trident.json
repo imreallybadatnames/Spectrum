@@ -14,18 +14,12 @@
     "S  "
   ],
   "key": {
-    "M": {
-      "item": "spectrum:mermaids_gem"
-    },
-    "P": {
-      "item": "minecraft:prismarine_shard"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "M": "spectrum:mermaids_gem",
+    "P": "minecraft:prismarine_shard",
+    "S": "minecraft:stick"
   },
   "result": {
-    "item": "minecraft:trident",
+    "id": "minecraft:trident",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/build_complex_pedestal_structure"

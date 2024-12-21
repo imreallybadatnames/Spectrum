@@ -15,18 +15,12 @@
     "DDD"
   ],
   "key": {
-    "C": {
-      "item": "minecraft:calcite"
-    },
-    "D": {
-      "item": "spectrum:orange_pigment"
-    },
-    "G": {
-      "item": "minecraft:glow_ink_sac"
-    }
+    "C": "minecraft:calcite",
+    "D": "spectrum:orange_pigment",
+    "G": "minecraft:glow_ink_sac"
   },
   "result": {
-    "item": "chalk:orange_glow_chalk",
+    "id": "chalk:orange_glow_chalk",
     "nbt": {
       "Unbreakable": 1
     }

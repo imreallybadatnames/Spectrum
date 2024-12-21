@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "M": {
-      "item": "spectrum:moonstone_shard"
-    },
-    "P": {
-      "item": "spectrum:resonance_shard"
-    }
+    "S": "minecraft:smooth_basalt",
+    "M": "spectrum:moonstone_shard",
+    "P": "spectrum:resonance_shard"
   },
   "result": {
-    "item": "spectrum:resonant_pickaxe",
+    "id": "spectrum:resonant_pickaxe",
     "nbt": {
       "Enchantments": [
         {

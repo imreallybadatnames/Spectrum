@@ -5,12 +5,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:pink_planks"
-    }
+    "#": "spectrum:pink_planks"
   },
   "result": {
-    "item": "spectrum:pink_slab",
+    "id": "spectrum:pink_slab",
     "count": 6
   }
 }

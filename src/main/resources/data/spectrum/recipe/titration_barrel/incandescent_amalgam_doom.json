@@ -32,7 +32,7 @@
     "angels_share_percent_per_mc_day": -0.02
   },
   "result": {
-    "item": "spectrum:incandescent_amalgam",
+    "id": "spectrum:incandescent_amalgam",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/items/incandescent_amalgam_doom"

@@ -14,18 +14,12 @@
     "OOO"
   ],
   "key": {
-    "O": {
-      "item": "minecraft:obsidian"
-    },
-    "W": {
-      "item": "malum:warp_flux"
-    },
-    "T": {
-      "item": "spectrum:radiating_ender"
-    }
+    "O": "minecraft:obsidian",
+    "W": "malum:warp_flux",
+    "T": "spectrum:radiating_ender"
   },
   "result": {
-    "item": "spectrum:bag_of_holding",
+    "id": "spectrum:bag_of_holding",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/bag_of_holding",

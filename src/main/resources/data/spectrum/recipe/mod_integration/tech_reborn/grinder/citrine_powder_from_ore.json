@@ -3,13 +3,11 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "tag": "spectrum:citrine_ores"
-    }
+    "#spectrum:citrine_ores"
   ],
   "results": [
     {
-      "item": "spectrum:citrine_powder",
+      "id": "spectrum:citrine_powder",
       "count": 12
     }
   ],

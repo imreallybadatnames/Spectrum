@@ -5,12 +5,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:calcite"
-    }
+    "W": "minecraft:calcite"
   },
   "result": {
-    "item": "spectrum:calcite_wall",
+    "id": "spectrum:calcite_wall",
     "count": 6
   }
 }

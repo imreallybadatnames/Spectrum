@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:anvil"
-    },
+    "minecraft:anvil",
     {
       "item": "spectrum:bedrock_dust",
       "count": 27
@@ -25,7 +23,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_anvil",
+    "id": "spectrum:bedrock_anvil",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/equipment/bedrock_tools",

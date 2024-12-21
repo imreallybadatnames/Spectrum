@@ -15,15 +15,11 @@
     "WXW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_calcite"
-    },
-    "X": {
-      "item": "spectrum:topaz_shard"
-    }
+    "W": "spectrum:polished_calcite",
+    "X": "spectrum:topaz_shard"
   },
   "result": {
-    "item": "spectrum:topaz_chiseled_calcite",
+    "id": "spectrum:topaz_chiseled_calcite",
     "count": 1
   },
   "required_advancement": "spectrum:create_onyx_shard"

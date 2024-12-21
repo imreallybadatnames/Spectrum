@@ -1,8 +1,6 @@
 {
   "type": "spectrum:crystallarieum_growing",
-  "ingredient": {
-    "item": "minecraft:coal"
-  },
+  "ingredient": "minecraft:coal",
   "growth_stage_states": [
     "spectrum:small_coal_bud[facing=up]",
     "spectrum:large_coal_bud[facing=up]",
@@ -14,25 +12,19 @@
   "grows_without_catalyst": false,
   "catalysts": [
     {
-      "ingredient": {
-        "item": "minecraft:charcoal"
-      },
+      "ingredient": "minecraft:charcoal",
       "growth_acceleration_mod": 2.0,
       "ink_consumption_mod": 0.4,
       "consume_chance_per_second": 0.2
     },
     {
-      "ingredient": {
-        "item": "spectrum:incandescent_essence"
-      },
+      "ingredient": "spectrum:incandescent_essence",
       "growth_acceleration_mod": 16.0,
       "ink_consumption_mod": 2.0,
       "consume_chance_per_second": 0.05
     },
     {
-      "ingredient": {
-        "item": "spectrum:vegetal"
-      },
+      "ingredient": "spectrum:vegetal",
       "growth_acceleration_mod": 0.75,
       "ink_consumption_mod": 0.05,
       "consume_chance_per_second": 0.4

@@ -13,18 +13,12 @@
     "MPS"
   ],
   "key": {
-    "M": {
-      "tag": "c:mushrooms"
-    },
-    "P": {
-      "item": "spectrum:yellow_pigment"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "M": "#c:mushrooms",
+    "P": "spectrum:yellow_pigment",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "botania:yellow_mushroom",
+    "id": "botania:yellow_mushroom",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/yellow",

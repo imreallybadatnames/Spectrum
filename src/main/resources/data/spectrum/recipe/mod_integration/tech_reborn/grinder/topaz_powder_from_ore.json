@@ -3,13 +3,11 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "tag": "spectrum:topaz_ores"
-    }
+    "#spectrum:topaz_ores"
   ],
   "results": [
     {
-      "item": "spectrum:topaz_powder",
+      "id": "spectrum:topaz_powder",
       "count": 12
     }
   ],

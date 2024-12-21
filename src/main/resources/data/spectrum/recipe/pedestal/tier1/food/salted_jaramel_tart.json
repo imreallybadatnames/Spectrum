@@ -15,24 +15,14 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "M": {
-      "tag": "c:milk"
-    },
-    "G": {
-      "item": "minecraft:ghast_tear"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "E": "#c:eggs",
+    "M": "#c:milk",
+    "G": "minecraft:ghast_tear"
   },
   "result": {
-    "item": "spectrum:salted_jaramel_tart",
+    "id": "spectrum:salted_jaramel_tart",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/tarts"

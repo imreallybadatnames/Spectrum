@@ -3,36 +3,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:purple_pigment"
-    },
-    {
-      "item": "spectrum:purple_pigment"
-    },
-    {
-      "item": "create:brass_sheet"
-    },
-    {
-      "item": "minecraft:baked_potato"
-    },
-    {
-      "item": "spectrum:purple_pigment"
-    },
-    {
-      "item": "spectrum:purple_pigment"
-    },
-    {
-      "item": "create:brass_sheet"
-    },
-    {
-      "item": "minecraft:baked_potato"
-    }
+    "minecraft:book",
+    "spectrum:purple_pigment",
+    "spectrum:purple_pigment",
+    "create:brass_sheet",
+    "minecraft:baked_potato",
+    "spectrum:purple_pigment",
+    "spectrum:purple_pigment",
+    "create:brass_sheet",
+    "minecraft:baked_potato"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

@@ -15,12 +15,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:bone_ash_tiles"
-    }
+    "W": "spectrum:bone_ash_tiles"
   },
   "result": {
-    "item": "spectrum:bone_ash_tile_stairs",
+    "id": "spectrum:bone_ash_tile_stairs",
     "count": 6
   },
   "required_advancement": "spectrum:break_cracked_dragonbone",

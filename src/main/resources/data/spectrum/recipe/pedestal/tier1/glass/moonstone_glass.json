@@ -15,15 +15,11 @@
     "GPG"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:moonstone_shard"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "P": "spectrum:moonstone_shard",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:moonstone_glass",
+    "id": "spectrum:moonstone_glass",
     "count": 8
   },
   "required_advancement": "spectrum:lategame/collect_moonstone"

@@ -15,18 +15,12 @@
     "XYX"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:topaz_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    }
+    "S": "spectrum:topaz_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:topaz_decostone",
+    "id": "spectrum:topaz_decostone",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/decostones/topaz_decostone"

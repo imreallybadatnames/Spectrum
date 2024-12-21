@@ -13,15 +13,9 @@
     "UC"
   ],
   "ingredients": [
-    {
-      "item": "spectrum:fresh_chocolate"
-    },
-    {
-      "item": "spectrum:myceylon"
-    },
-    {
-      "item": "spectrum:clotted_cream"
-    },
+    "spectrum:fresh_chocolate",
+    "spectrum:myceylon",
+    "spectrum:clotted_cream",
     {
       "item": "spectrum:infused_beverage",
       "recipeViewNbt": "{Variant: \"sawblade_holly_liquor\", Color: 13723654 }",
@@ -38,7 +32,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:slushslide",
+    "id": "spectrum:slushslide",
     "count": 2
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_2"

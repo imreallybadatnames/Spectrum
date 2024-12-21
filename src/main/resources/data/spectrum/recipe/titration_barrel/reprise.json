@@ -19,7 +19,7 @@
     "fermentation_speed_mod": 0.5
   },
   "result": {
-    "item": "spectrum:reprise",
+    "id": "spectrum:reprise",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/food/reprise"

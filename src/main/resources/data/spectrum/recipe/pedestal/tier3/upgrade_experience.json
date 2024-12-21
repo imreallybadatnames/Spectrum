@@ -14,24 +14,14 @@
     "YYY"
   ],
   "key": {
-    "E": {
-      "item": "minecraft:emerald_block"
-    },
-    "X": {
-      "item": "spectrum:polished_calcite"
-    },
-    "Y": {
-      "item": "spectrum:polished_basalt"
-    },
-    "L": {
-      "item": "spectrum:storm_stone"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    }
+    "E": "minecraft:emerald_block",
+    "X": "spectrum:polished_calcite",
+    "Y": "spectrum:polished_basalt",
+    "L": "spectrum:storm_stone",
+    "P": "spectrum:purple_pigment"
   },
   "result": {
-    "item": "spectrum:upgrade_experience",
+    "id": "spectrum:upgrade_experience",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_experience"

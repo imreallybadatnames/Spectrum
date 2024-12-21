@@ -7,12 +7,10 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:ebony_noxwood_planks"
-    }
+    "#": "spectrum:ebony_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:ebony_noxwood_door",
+    "id": "spectrum:ebony_noxwood_door",
     "count": 3
   }
 }

@@ -14,15 +14,11 @@
     "XXX"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:blast_furnace"
-    },
-    "X": {
-      "item": "spectrum:polished_calcite"
-    }
+    "B": "minecraft:blast_furnace",
+    "X": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "alloy_forgery:polished_calcite_forge_controller"
+    "id": "alloy_forgery:polished_calcite_forge_controller"
   },
   "fabric:load_conditions": [
     {

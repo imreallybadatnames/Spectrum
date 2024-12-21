@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:cyan_pigment"
-    }
+    "G": "spectrum:cyan_pigment"
   },
   "result": {
-    "item": "spectrum:cyan_block",
+    "id": "spectrum:cyan_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/cyan",

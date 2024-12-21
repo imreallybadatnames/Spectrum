@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:white_pigment"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "spectrum:white_pigment",
+    "R": "minecraft:redstone",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:white_lamp",
+    "id": "spectrum:white_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/colored_lamps/white_lamp"

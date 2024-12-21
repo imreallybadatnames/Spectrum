@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:light_blue_pigment"
-    }
+    "G": "spectrum:light_blue_pigment"
   },
   "result": {
-    "item": "spectrum:light_blue_block",
+    "id": "spectrum:light_blue_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/light_blue",

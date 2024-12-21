@@ -10,12 +10,8 @@
       "item": "spectrum:downstone_fragments",
       "count": 4
     },
-    {
-      "item": "spectrum:aether_vestiges"
-    },
-    {
-      "item": "spectrum:moonstone_core"
-    },
+    "spectrum:aether_vestiges",
+    "spectrum:moonstone_core",
     {
       "item": "spectrum:refined_azurite",
       "count": 16
@@ -25,9 +21,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:azuresque_dike_core"
-  },
+  "result": "spectrum:azuresque_dike_core",
   "required_advancement": "spectrum:unlocks/trinkets/azuresque_dike_core",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

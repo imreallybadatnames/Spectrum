@@ -15,18 +15,12 @@
     "GPG"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "S": "spectrum:shimmerstone_gem",
+    "P": "spectrum:purple_pigment",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:radiant_semi_permeable_glass",
+    "id": "spectrum:radiant_semi_permeable_glass",
     "count": 6
   },
   "required_advancement": "spectrum:midgame/build_advanced_pedestal_structure"

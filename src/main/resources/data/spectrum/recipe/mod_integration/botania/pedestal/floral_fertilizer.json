@@ -13,18 +13,12 @@
     "MPS"
   ],
   "key": {
-    "M": {
-      "item": "minecraft:bone_meal"
-    },
-    "P": {
-      "tag": "spectrum:pigments"
-    },
-    "S": {
-      "tag": "spectrum:pigments"
-    }
+    "M": "minecraft:bone_meal",
+    "P": "#spectrum:pigments",
+    "S": "#spectrum:pigments"
   },
   "result": {
-    "item": "botania:fertilizer",
+    "id": "botania:fertilizer",
     "count": 4
   },
   "required_advancement": "spectrum:collect_pigment",

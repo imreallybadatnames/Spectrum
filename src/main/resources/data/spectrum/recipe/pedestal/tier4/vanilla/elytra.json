@@ -14,21 +14,13 @@
     "MPM"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:paltaeria_gem"
-    },
-    "P": {
-      "item": "spectrum:paltaeria_fragments"
-    },
-    "M": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "C": {
-      "item": "minecraft:popped_chorus_fruit"
-    }
+    "G": "spectrum:paltaeria_gem",
+    "P": "spectrum:paltaeria_fragments",
+    "M": "minecraft:phantom_membrane",
+    "C": "minecraft:popped_chorus_fruit"
   },
   "result": {
-    "item": "minecraft:elytra",
+    "id": "minecraft:elytra",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_paltaeria_gem"

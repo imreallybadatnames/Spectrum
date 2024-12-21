@@ -9,21 +9,13 @@
   "white": 0,
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "spectrum:four_leaf_clover"
-    }
+    "minecraft:string",
+    "minecraft:paper",
+    "minecraft:paper",
+    "spectrum:four_leaf_clover"
   ],
   "result": {
-    "item": "minecraft:name_tag",
+    "id": "minecraft:name_tag",
     "count": 1
   },
   "required_advancement": "spectrum:collect_four_leaf_clover"

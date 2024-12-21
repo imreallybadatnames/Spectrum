@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_coal"
-    }
+    "G": "spectrum:pure_coal"
   },
   "result": {
-    "item": "spectrum:pure_coal_block",
+    "id": "spectrum:pure_coal_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

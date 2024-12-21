@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_lapis"
-  },
+  "ingredient": "spectrum:pure_lapis",
   "results": [
     {
-      "item": "minecraft:lapis_lazuli",
+      "id": "minecraft:lapis_lazuli",
       "count": 4
     },
     {

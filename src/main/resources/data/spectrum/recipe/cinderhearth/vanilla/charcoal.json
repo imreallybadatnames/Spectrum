@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "tag": "minecraft:logs_that_burn"
-  },
+  "ingredient": "#minecraft:logs_that_burn",
   "results": [
     {
-      "item": "minecraft:charcoal",
+      "id": "minecraft:charcoal",
       "count": 2
     }
   ],

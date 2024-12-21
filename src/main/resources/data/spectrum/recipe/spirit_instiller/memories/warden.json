@@ -3,18 +3,14 @@
   "group": "boss_memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:warden_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:sculk_catalyst"
-  },
+  "ingredient1": "spectrum:warden_head",
+  "ingredient2": "minecraft:sculk_catalyst",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:warden"

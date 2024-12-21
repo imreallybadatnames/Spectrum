@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_gloves"
-    },
+    "spectrum:fanciful_gloves",
     {
       "item": "spectrum:neolith",
       "count": 8
@@ -22,9 +20,7 @@
       "count": 8
     }
   ],
-  "result": {
-    "item": "spectrum:gloves_of_dawns_grasp"
-  },
+  "result": "spectrum:gloves_of_dawns_grasp",
   "required_advancement": "spectrum:unlocks/trinkets/gloves_of_dawns_grasp",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

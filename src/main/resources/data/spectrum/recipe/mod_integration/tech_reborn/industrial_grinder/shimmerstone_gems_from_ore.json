@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:shimmerstone_ores"
-    }
+    "#spectrum:shimmerstone_ores"
   ],
   "results": [
     {
-      "item": "spectrum:shimmerstone_gem",
+      "id": "spectrum:shimmerstone_gem",
       "count": 6
     }
   ],

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:blue_orchid"
-  },
+  "ingredient": "minecraft:blue_orchid",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:light_blue_dye",
+    "id": "minecraft:light_blue_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

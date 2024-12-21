@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:gray_concrete"
-  },
+  "ingredient": "minecraft:gray_concrete",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0,
   "result": {
-    "item": "minecraft:gray_concrete_powder",
+    "id": "minecraft:gray_concrete_powder",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

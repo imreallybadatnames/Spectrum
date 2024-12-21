@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:citrine_ores"
-    }
+    "#spectrum:citrine_ores"
   ],
   "results": [
     {
-      "item": "spectrum:citrine_shard",
+      "id": "spectrum:citrine_shard",
       "count": 6
     },
     {

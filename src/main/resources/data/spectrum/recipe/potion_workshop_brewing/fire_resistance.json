@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "vanilla_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:magma_cream"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:magma_cream",
   "effect": "minecraft:fire_resistance",
   "base_duration_ticks": 3600,
   "potency_modifier": 0.0,

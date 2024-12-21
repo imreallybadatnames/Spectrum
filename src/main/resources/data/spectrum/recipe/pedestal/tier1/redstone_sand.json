@@ -14,15 +14,11 @@
     " R "
   ],
   "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "minecraft:sand"
-    }
+    "R": "minecraft:redstone",
+    "S": "minecraft:sand"
   },
   "result": {
-    "item": "spectrum:redstone_sand",
+    "id": "spectrum:redstone_sand",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/redstone_sand"

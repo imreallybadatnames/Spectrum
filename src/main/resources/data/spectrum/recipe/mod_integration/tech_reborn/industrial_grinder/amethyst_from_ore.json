@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:amethyst_ores"
-    }
+    "#spectrum:amethyst_ores"
   ],
   "results": [
     {
-      "item": "minecraft:amethyst_shard",
+      "id": "minecraft:amethyst_shard",
       "count": 6
     },
     {

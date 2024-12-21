@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_copper"
-    }
+    "G": "spectrum:pure_copper"
   },
   "result": {
-    "item": "spectrum:pure_copper_block",
+    "id": "spectrum:pure_copper_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

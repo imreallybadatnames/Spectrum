@@ -3,18 +3,14 @@
   "group": "boss_memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:wither_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:wither_rose"
-  },
+  "ingredient1": "spectrum:wither_head",
+  "ingredient2": "minecraft:wither_rose",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:wither"

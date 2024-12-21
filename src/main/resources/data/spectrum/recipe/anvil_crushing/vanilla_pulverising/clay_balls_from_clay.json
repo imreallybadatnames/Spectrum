@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:clay"
-  },
+  "ingredient": "minecraft:clay",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:clay_ball",
+    "id": "minecraft:clay_ball",
     "count": 4
   },
   "particleEffectIdentifier": "cloud",

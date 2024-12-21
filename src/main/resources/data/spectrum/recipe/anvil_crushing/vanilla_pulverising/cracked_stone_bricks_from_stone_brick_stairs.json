@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:stone_brick_stairs"
-  },
+  "ingredient": "minecraft:stone_brick_stairs",
   "crushedItemsPerPointOfDamage": 0.5,
   "experience": 0,
   "result": {
-    "item": "minecraft:cracked_stone_bricks",
+    "id": "minecraft:cracked_stone_bricks",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

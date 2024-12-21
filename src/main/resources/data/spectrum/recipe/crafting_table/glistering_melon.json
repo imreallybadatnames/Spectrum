@@ -6,11 +6,7 @@
     "MMM"
   ],
   "key": {
-    "M": {
-      "item": "minecraft:glistering_melon_slice"
-    }
+    "M": "minecraft:glistering_melon_slice"
   },
-  "result": {
-    "item": "spectrum:glistering_melon"
-  }
+  "result": "spectrum:glistering_melon"
 }

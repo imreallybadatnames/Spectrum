@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:iron_cluster"
-  },
+  "ingredient": "spectrum:iron_cluster",
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 3.0,
   "result": {
-    "item": "minecraft:iron_ingot",
+    "id": "minecraft:iron_ingot",
     "count": 6
   },
   "particleEffectIdentifier": "explosion",

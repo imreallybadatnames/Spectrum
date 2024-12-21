@@ -15,21 +15,13 @@
     "III"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:ivory_noxcap_stem"
-    },
-    "G": {
-      "item": "spectrum:ivory_noxcap_gills"
-    },
-    "I": {
-      "item": "minecraft:quartz"
-    },
-    "X": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:ivory_noxcap_stem",
+    "G": "spectrum:ivory_noxcap_gills",
+    "I": "minecraft:quartz",
+    "X": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:ivory_noxwood_lamp",
+    "id": "spectrum:ivory_noxwood_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

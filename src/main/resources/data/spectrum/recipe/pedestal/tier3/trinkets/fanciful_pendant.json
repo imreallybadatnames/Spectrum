@@ -14,15 +14,11 @@
     "LG "
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "L": {
-      "item": "minecraft:lapis_lazuli"
-    }
+    "G": "minecraft:gold_ingot",
+    "L": "minecraft:lapis_lazuli"
   },
   "result": {
-    "item": "spectrum:fanciful_pendant",
+    "id": "spectrum:fanciful_pendant",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/trinkets/fanciful_pendant"

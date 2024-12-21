@@ -14,27 +14,15 @@
     "FPF"
   ],
   "key": {
-    "V": {
-      "item": "spectrum:nectered_viognier"
-    },
-    "F": {
-      "item": "spectrum:myceylon"
-    },
-    "K": {
-      "item": "spectrum:incandescent_essence"
-    },
-    "A": {
-      "item": "spectrum:peach_jam"
-    },
-    "E": {
-      "item": "spectrum:clotted_cream"
-    },
-    "P": {
-      "item": "spectrum:glass_peach"
-    }
+    "V": "spectrum:nectered_viognier",
+    "F": "spectrum:myceylon",
+    "K": "spectrum:incandescent_essence",
+    "A": "spectrum:peach_jam",
+    "E": "spectrum:clotted_cream",
+    "P": "spectrum:glass_peach"
   },
   "result": {
-    "item": "spectrum:peaches_flambe",
+    "id": "spectrum:peaches_flambe",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/imperial_cookbook"

@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:red_pigment"
-    }
+    "G": "spectrum:red_pigment"
   },
   "result": {
-    "item": "spectrum:red_block",
+    "id": "spectrum:red_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/red",

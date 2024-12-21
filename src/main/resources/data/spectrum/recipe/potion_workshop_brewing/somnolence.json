@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "sleep_potions",
-  "ingredient1": {
-    "item": "spectrum:nightdew_sprout"
-  },
-  "ingredient2": {
-    "item": "spectrum:neolith"
-  },
-  "ingredient3": {
-    "item": "spectrum:onyx_shard"
-  },
+  "ingredient1": "spectrum:nightdew_sprout",
+  "ingredient2": "spectrum:neolith",
+  "ingredient3": "spectrum:onyx_shard",
   "effect": "spectrum:somnolence",
   "base_duration_ticks": 1200,
   "potency_modifier": 0.75,

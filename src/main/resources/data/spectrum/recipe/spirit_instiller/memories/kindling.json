@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:kindling_head"
-  },
-  "ingredient2": {
-    "tag": "spectrum:kindling_food"
-  },
+  "ingredient1": "spectrum:kindling_head",
+  "ingredient2": "#spectrum:kindling_food",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "spectrum:kindling"

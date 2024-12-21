@@ -10,12 +10,10 @@
   "white": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:bedrock_storage_block"
-    }
+    "spectrum:bedrock_storage_block"
   ],
   "result": {
-    "item": "spectrum:bedrock_dust",
+    "id": "spectrum:bedrock_dust",
     "count": 9
   },
   "required_advancement": "spectrum:midgame/break_decayed_bedrock",

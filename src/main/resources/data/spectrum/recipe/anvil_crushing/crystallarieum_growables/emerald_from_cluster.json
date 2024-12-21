@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:emerald_cluster"
-  },
+  "ingredient": "spectrum:emerald_cluster",
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 3.0,
   "result": {
-    "item": "minecraft:emerald",
+    "id": "minecraft:emerald",
     "count": 6
   },
   "particleEffectIdentifier": "explosion",

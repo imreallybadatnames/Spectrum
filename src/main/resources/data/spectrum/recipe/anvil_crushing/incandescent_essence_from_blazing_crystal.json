@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:blazing_crystal"
-  },
+  "ingredient": "spectrum:blazing_crystal",
   "crushedItemsPerPointOfDamage": 1.5,
   "experience": 4.0,
   "result": {
-    "item": "spectrum:incandescent_essence",
+    "id": "spectrum:incandescent_essence",
     "count": 16
   },
   "particleEffectIdentifier": "enchanted_hit",

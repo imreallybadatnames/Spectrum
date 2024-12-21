@@ -1,9 +1,7 @@
 {
   "type": "farmersdelight:cutting",
   "ingredients": [
-    {
-      "item": "spectrum:topaz_block"
-    }
+    "spectrum:topaz_block"
   ],
   "result": [
     {

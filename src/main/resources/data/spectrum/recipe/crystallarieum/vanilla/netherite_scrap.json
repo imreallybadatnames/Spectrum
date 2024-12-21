@@ -1,8 +1,6 @@
 {
   "type": "spectrum:crystallarieum_growing",
-  "ingredient": {
-    "item": "minecraft:netherite_scrap"
-  },
+  "ingredient": "minecraft:netherite_scrap",
   "growth_stage_states": [
     "spectrum:small_netherite_scrap_bud[facing=up]",
     "spectrum:large_netherite_scrap_bud[facing=up]",
@@ -14,33 +12,25 @@
   "grows_without_catalyst": false,
   "catalysts": [
     {
-      "ingredient": {
-        "item": "spectrum:incandescent_essence"
-      },
+      "ingredient": "spectrum:incandescent_essence",
       "growth_acceleration_mod": 1.5,
       "ink_consumption_mod": 2.0,
       "consume_chance_per_second": 0.02
     },
     {
-      "ingredient": {
-        "item": "minecraft:fire_charge"
-      },
+      "ingredient": "minecraft:fire_charge",
       "growth_acceleration_mod": 1.0,
       "ink_consumption_mod": 0.25,
       "consume_chance_per_second": 0.02
     },
     {
-      "ingredient": {
-        "item": "minecraft:gold_ingot"
-      },
+      "ingredient": "minecraft:gold_ingot",
       "growth_acceleration_mod": 16.0,
       "ink_consumption_mod": 2.5,
       "consume_chance_per_second": 0.02
     },
     {
-      "ingredient": {
-        "item": "spectrum:stratine_fragments"
-      },
+      "ingredient": "spectrum:stratine_fragments",
       "growth_acceleration_mod": 2.0,
       "ink_consumption_mod": 0.125,
       "consume_chance_per_second": 0.02

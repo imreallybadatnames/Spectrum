@@ -14,15 +14,9 @@
     "EEE"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:fresh_chocolate"
-    },
-    "E": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "C": {
-      "item": "spectrum:clotted_cream"
-    },
+    "X": "spectrum:fresh_chocolate",
+    "E": "spectrum:amaranth_grains",
+    "C": "spectrum:clotted_cream",
     "S": {
       "item": "spectrum:infused_beverage",
       "recipeViewNbt": "{Variant: \"sawblade_holly_liquor\", Color: 13723654 }",
@@ -41,7 +35,7 @@
     }
   },
   "result": {
-    "item": "spectrum:berliner",
+    "id": "spectrum:berliner",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_2"

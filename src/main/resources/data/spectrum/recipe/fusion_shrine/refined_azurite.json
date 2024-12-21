@@ -10,16 +10,10 @@
       "item": "spectrum:raw_azurite",
       "count": 4
     },
-    {
-      "item": "spectrum:neolith"
-    },
-    {
-      "item": "minecraft:diamond"
-    }
+    "spectrum:neolith",
+    "minecraft:diamond"
   ],
-  "result": {
-    "item": "spectrum:refined_azurite"
-  },
+  "result": "spectrum:refined_azurite",
   "required_advancement": "spectrum:unlocks/resources/refined_azurite",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

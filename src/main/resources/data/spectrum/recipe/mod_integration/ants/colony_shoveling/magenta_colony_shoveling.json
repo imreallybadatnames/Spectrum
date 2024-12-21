@@ -1,9 +1,7 @@
 {
   "type": "ants:colony_shoveling",
   "group": "spectrum_leaves_shoveling",
-  "hive_ingredient": {
-    "item": "spectrum:magenta_leaves"
-  },
+  "hive_ingredient": "spectrum:magenta_leaves",
   "result" : {
     "item": "minecraft:magenta_dye",
 	"count": 6

@@ -1,9 +1,5 @@
 {
   "type": "spectrum:primordial_fire_burning",
-  "ingredient": {
-    "item": "minecraft:soul_soil"
-  },
-  "result": {
-    "item": "minecraft:dirt"
-  }
+  "ingredient": "minecraft:soul_soil",
+  "result": "minecraft:dirt"
 }

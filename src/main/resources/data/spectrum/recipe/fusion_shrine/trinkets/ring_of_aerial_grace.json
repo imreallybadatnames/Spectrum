@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_bismuth_ring"
-    },
+    "spectrum:fanciful_bismuth_ring",
     {
       "item": "minecraft:popped_chorus_fruit",
       "count": 8
@@ -17,13 +15,9 @@
       "item": "spectrum:paltaeria_fragments",
       "count": 8
     },
-    {
-      "item": "spectrum:paltaeria_gem"
-    }
+    "spectrum:paltaeria_gem"
   ],
-  "result": {
-    "item": "spectrum:ring_of_aerial_grace"
-  },
+  "result": "spectrum:ring_of_aerial_grace",
   "required_advancement": "spectrum:unlocks/trinkets/ring_of_aerial_grace",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

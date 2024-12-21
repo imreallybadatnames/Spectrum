@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:gray_pigment"
-    }
+    "G": "spectrum:gray_pigment"
   },
   "result": {
-    "item": "spectrum:gray_block",
+    "id": "spectrum:gray_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/gray",

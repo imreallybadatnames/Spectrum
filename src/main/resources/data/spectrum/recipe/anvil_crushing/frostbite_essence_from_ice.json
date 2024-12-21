@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "tag": "c:ice"
-  },
+  "ingredient": "#c:ice",
   "crushedItemsPerPointOfDamage": 1.5,
   "experience": 0.25,
   "result": {
-    "item": "spectrum:frostbite_essence",
+    "id": "spectrum:frostbite_essence",
     "count": 1
   },
   "particleEffectIdentifier": "enchanted_hit",

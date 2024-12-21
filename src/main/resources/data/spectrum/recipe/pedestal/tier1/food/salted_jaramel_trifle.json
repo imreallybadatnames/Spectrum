@@ -15,24 +15,14 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "B": {
-      "item": "minecraft:bone_meal"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "G": {
-      "item": "minecraft:ghast_tear"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "B": "minecraft:bone_meal",
+    "E": "#c:eggs",
+    "G": "minecraft:ghast_tear"
   },
   "result": {
-    "item": "spectrum:salted_jaramel_trifle",
+    "id": "spectrum:salted_jaramel_trifle",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/trifles"

@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_echo"
-    }
+    "G": "spectrum:pure_echo"
   },
   "result": {
-    "item": "spectrum:pure_echo_block",
+    "id": "spectrum:pure_echo_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

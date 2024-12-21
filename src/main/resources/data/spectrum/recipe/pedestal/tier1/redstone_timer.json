@@ -13,21 +13,13 @@
     "III"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "I": {
-      "item": "minecraft:copper_ingot"
-    }
+    "A": "minecraft:amethyst_shard",
+    "R": "minecraft:redstone",
+    "T": "minecraft:redstone_torch",
+    "I": "minecraft:copper_ingot"
   },
   "result": {
-    "item": "spectrum:redstone_timer",
+    "id": "spectrum:redstone_timer",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/redstone_timer"

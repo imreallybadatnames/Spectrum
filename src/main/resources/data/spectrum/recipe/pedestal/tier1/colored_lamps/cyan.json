@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:cyan_pigment"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "spectrum:cyan_pigment",
+    "R": "minecraft:redstone",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:cyan_lamp",
+    "id": "spectrum:cyan_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/colored_lamps/cyan_lamp"

@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_glowstone"
-  },
+  "ingredient": "spectrum:pure_glowstone",
   "results": [
     {
-      "item": "minecraft:glowstone_dust",
+      "id": "minecraft:glowstone_dust",
       "count": 4
     },
     {

@@ -13,15 +13,11 @@
     "U"
   ],
   "ingredients": [
-    {
-      "item": "spectrum:upgrade_efficiency"
-    },
-    {
-      "item": "spectrum:pure_emerald"
-    }
+    "spectrum:upgrade_efficiency",
+    "spectrum:pure_emerald"
   ],
   "result": {
-    "item": "spectrum:upgrade_efficiency2",
+    "id": "spectrum:upgrade_efficiency2",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_efficiency2"

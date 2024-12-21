@@ -15,12 +15,10 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:bedrock_dust"
-    }
+    "B": "spectrum:bedrock_dust"
   },
   "result": {
-    "item": "spectrum:bedrock_storage_block",
+    "id": "spectrum:bedrock_storage_block",
     "count": 1
   },
   "required_advancement": "spectrum:midgame/break_decayed_bedrock",

@@ -6,26 +6,16 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_circlet"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
-    {
-      "item": "spectrum:paltaeria_gem"
-    },
-    {
-      "item": "spectrum:moonstone_shard"
-    },
+    "spectrum:fanciful_circlet",
+    "spectrum:refined_azurite",
+    "spectrum:paltaeria_gem",
+    "spectrum:moonstone_shard",
     {
       "item": "spectrum:white_pigment",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:puff_circlet"
-  },
+  "result": "spectrum:puff_circlet",
   "required_advancement": "spectrum:unlocks/trinkets/puff_circlet",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

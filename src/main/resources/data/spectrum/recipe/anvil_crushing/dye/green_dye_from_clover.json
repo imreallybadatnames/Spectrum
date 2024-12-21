@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:clover"
-  },
+  "ingredient": "spectrum:clover",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:green_dye",
+    "id": "minecraft:green_dye",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

@@ -6,24 +6,14 @@
     "CRC"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:citrine_shard"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "W": {
-      "item": "spectrum:polished_basalt"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "tag": "minecraft:planks"
-    }
+    "S": "spectrum:citrine_shard",
+    "C": "spectrum:polished_calcite",
+    "W": "spectrum:polished_basalt",
+    "R": "minecraft:redstone",
+    "T": "#minecraft:planks"
   },
   "result": {
-    "item": "spectrum:pedestal_basic_citrine",
+    "id": "spectrum:pedestal_basic_citrine",
     "count": 1
   }
 }

@@ -24,9 +24,7 @@
       "count": 3
     }
   ],
-  "result": {
-    "item": "minecraft:diamond_horse_armor"
-  },
+  "result": "minecraft:diamond_horse_armor",
   "required_advancement": "spectrum:create_onyx_shard",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

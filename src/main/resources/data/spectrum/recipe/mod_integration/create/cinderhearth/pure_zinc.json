@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_zinc"
-  },
+  "ingredient": "spectrum:pure_zinc",
   "results": [
     {
-      "item": "create:zinc_ingot",
+      "id": "create:zinc_ingot",
       "count": 2
     }
   ],

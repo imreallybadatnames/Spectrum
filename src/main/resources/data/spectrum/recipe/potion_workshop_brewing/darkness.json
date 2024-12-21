@@ -1,14 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:echo_shard"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:echo_shard",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "minecraft:darkness",
   "base_duration_ticks": 600,
   "potency_modifier": 0.0,

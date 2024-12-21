@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:brown_pigment"
-    },
-    {
-      "item": "spectrum:brown_pigment"
-    },
-    {
-      "item": "minecraft:wet_sponge"
-    },
-    {
-      "item": "spectrum:mermaids_gem"
-    },
-    {
-      "item": "spectrum:brown_pigment"
-    },
-    {
-      "item": "spectrum:brown_pigment"
-    },
-    {
-      "item": "minecraft:wet_sponge"
-    },
-    {
-      "item": "spectrum:mermaids_gem"
-    }
+    "minecraft:book",
+    "spectrum:brown_pigment",
+    "spectrum:brown_pigment",
+    "minecraft:wet_sponge",
+    "spectrum:mermaids_gem",
+    "spectrum:brown_pigment",
+    "spectrum:brown_pigment",
+    "minecraft:wet_sponge",
+    "spectrum:mermaids_gem"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

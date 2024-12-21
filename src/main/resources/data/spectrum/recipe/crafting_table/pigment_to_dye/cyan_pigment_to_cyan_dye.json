@@ -2,11 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "pigment_to_dye",
   "ingredients": [
-    {
-      "item": "spectrum:cyan_pigment"
-    }
+    "spectrum:cyan_pigment"
   ],
-  "result": {
-    "item": "minecraft:cyan_dye"
-  }
+  "result": "minecraft:cyan_dye"
 }

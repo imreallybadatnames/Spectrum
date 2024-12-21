@@ -2,18 +2,10 @@
   "type": "spectrum:spirit_instiller",
   "time": 400,
   "experience": 8.0,
-  "ingredient1": {
-    "item": "spectrum:moonstruck_nectar"
-  },
-  "ingredient2": {
-    "item": "botania:terrasteel_ingot"
-  },
-  "center_ingredient": {
-    "item": "minecraft:wheat_seeds"
-  },
-  "result": {
-    "item": "botania:overgrowth_seed"
-  },
+  "ingredient1": "spectrum:moonstruck_nectar",
+  "ingredient2": "botania:terrasteel_ingot",
+  "center_ingredient": "minecraft:wheat_seeds",
+  "result": "botania:overgrowth_seed",
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",

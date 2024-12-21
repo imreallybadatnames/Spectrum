@@ -2,12 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "group": "compacting",
   "ingredients": [
-    {
-      "item": "spectrum:citrine_storage_block"
-    }
+    "spectrum:citrine_storage_block"
   ],
   "result": {
-    "item": "spectrum:citrine_shard",
+    "id": "spectrum:citrine_shard",
     "count": 9
   }
 }

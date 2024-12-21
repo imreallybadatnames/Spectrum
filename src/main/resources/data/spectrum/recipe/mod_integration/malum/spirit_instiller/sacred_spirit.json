@@ -2,9 +2,7 @@
   "type": "spectrum:spirit_instiller",
   "time":150,
   "experience": 0.75,
-  "ingredient1": {
-    "item": "spectrum:moonstone_powder"
-  },
+  "ingredient1": "spectrum:moonstone_powder",
   "ingredient2": {
     "item": "spectrum:white_pigment",
     "count": 4
@@ -14,7 +12,7 @@
     "count": 2
   },
   "result": {
-    "item": "malum:sacred_spirit",
+    "id": "malum:sacred_spirit",
     "count": 2
   },
   "required_advancement": "spectrum:mod_integration/malum/understand_color_and_spirit",

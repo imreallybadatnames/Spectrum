@@ -14,18 +14,12 @@
     "ACA"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "A": {
-      "item": "spectrum:refined_azurite"
-    }
+    "B": "spectrum:polished_basalt",
+    "C": "spectrum:polished_calcite",
+    "A": "spectrum:refined_azurite"
   },
   "result": {
-    "item": "spectrum:spirit_instiller",
+    "id": "spectrum:spirit_instiller",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/spirit_instiller"

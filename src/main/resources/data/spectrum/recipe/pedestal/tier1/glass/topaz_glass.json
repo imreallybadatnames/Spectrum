@@ -15,15 +15,11 @@
     "GPG"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:topaz_shard"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "P": "spectrum:topaz_shard",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:topaz_glass",
+    "id": "spectrum:topaz_glass",
     "count": 8
   },
   "required_advancement": "spectrum:hidden/collect_shards/topaz"

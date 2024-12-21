@@ -13,15 +13,11 @@
     "U"
   ],
   "ingredients": [
-    {
-      "item": "spectrum:upgrade_yield"
-    },
-    {
-      "item": "spectrum:pure_diamond"
-    }
+    "spectrum:upgrade_yield",
+    "spectrum:pure_diamond"
   ],
   "result": {
-    "item": "spectrum:upgrade_yield2",
+    "id": "spectrum:upgrade_yield2",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_yield2"

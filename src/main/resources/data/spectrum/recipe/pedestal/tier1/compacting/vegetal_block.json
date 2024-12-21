@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:vegetal"
-    }
+    "A": "spectrum:vegetal"
   },
   "result": {
-    "item": "spectrum:vegetal_block",
+    "id": "spectrum:vegetal_block",
     "count": 1
   },
   "required_advancement": "spectrum:collect_vegetal",

@@ -6,12 +6,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:onyx_shard"
-    }
+    "G": "spectrum:onyx_shard"
   },
   "result": {
-    "item": "spectrum:onyx_storage_block",
+    "id": "spectrum:onyx_storage_block",
     "count": 1
   }
 }

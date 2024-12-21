@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:iron_ingot"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:iron_ingot",
   "effect": "extraalchemy:magnetism",
   "base_duration_ticks": 3600,
   "potency_modifier": 1.0,

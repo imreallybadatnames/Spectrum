@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amethyst_powder"
-    }
+    "A": "spectrum:amethyst_powder"
   },
   "result": {
-    "item": "spectrum:amethyst_powder_block",
+    "id": "spectrum:amethyst_powder_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_shards/amethyst",

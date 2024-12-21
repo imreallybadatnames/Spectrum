@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:basal_marble_tiles"
-    }
+    "W": "spectrum:basal_marble_tiles"
   },
   "result": {
-    "item": "spectrum:basal_marble_tile_slab",
+    "id": "spectrum:basal_marble_tile_slab",
     "count": 6
   }
 }

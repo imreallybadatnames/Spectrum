@@ -14,15 +14,11 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:paltaeria_fragments"
-    },
-    "X": {
-      "item": "minecraft:diamond"
-    }
+    "#": "spectrum:paltaeria_fragments",
+    "X": "minecraft:diamond"
   },
   "result": {
-    "item": "spectrum:paltaeria_gem",
+    "id": "spectrum:paltaeria_gem",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_paltaeria_gem",

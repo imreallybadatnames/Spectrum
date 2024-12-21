@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "botania:red_mystical_flower"
-  },
+  "ingredient": "botania:red_mystical_flower",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.2,
   "result": {
-    "item": "botania:red_petal",
+    "id": "botania:red_petal",
     "count": 4
   },
   "particleEffectIdentifier": "cloud",

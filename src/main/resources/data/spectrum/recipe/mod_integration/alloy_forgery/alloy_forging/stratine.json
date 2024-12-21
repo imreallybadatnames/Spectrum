@@ -1,9 +1,7 @@
 {
   "type": "alloy_forgery:forging",
   "inputs": [
-    {
-      "item": "spectrum:stratine_ore"
-    }
+    "spectrum:stratine_ore"
   ],
   "output": {
     "id": "spectrum:stratine_fragments",

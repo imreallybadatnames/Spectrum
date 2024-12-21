@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:weathered_polished_shale_clay"
-    }
+    "W": "spectrum:weathered_polished_shale_clay"
   },
   "result": {
-    "item": "spectrum:weathered_shale_clay_bricks",
+    "id": "spectrum:weathered_shale_clay_bricks",
     "count": 4
   }
 }

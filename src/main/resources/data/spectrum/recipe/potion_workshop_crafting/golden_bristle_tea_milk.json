@@ -1,23 +1,15 @@
 {
   "type": "spectrum:potion_workshop_crafting",
   "group": "deserts",
-  "base_ingredient": {
-    "item": "minecraft:glass_bottle"
-  },
+  "base_ingredient": "minecraft:glass_bottle",
   "use_up_base_ingredient": true,
   "secret": true,
   "color": 15853164,
-  "ingredient1": {
-    "item": "spectrum:sawblade_holly_berry"
-  },
-  "ingredient2": {
-    "item": "minecraft:honey_bottle"
-  },
-  "ingredient3": {
-    "tag": "c:milk"
-  },
+  "ingredient1": "spectrum:sawblade_holly_berry",
+  "ingredient2": "minecraft:honey_bottle",
+  "ingredient3": "#c:milk",
   "result": {
-    "item": "spectrum:golden_bristle_tea",
+    "id": "spectrum:golden_bristle_tea",
     "nbt": {
       "Milk": true
     },

@@ -16,12 +16,10 @@
     {
       "item": "spectrum:upgrade_speed2"
     },
-    {
-      "item": "spectrum:pure_iron"
-    }
+    "spectrum:pure_iron"
   ],
   "result": {
-    "item": "spectrum:upgrade_speed3",
+    "id": "spectrum:upgrade_speed3",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_speed3"

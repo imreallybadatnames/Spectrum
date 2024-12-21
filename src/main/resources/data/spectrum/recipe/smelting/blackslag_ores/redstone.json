@@ -1,9 +1,7 @@
 {
   "type": "minecraft:smelting",
   "group": "redstone",
-  "ingredient": {
-    "item": "spectrum:blackslag_redstone_ore"
-  },
+  "ingredient": "spectrum:blackslag_redstone_ore",
   "result": "minecraft:redstone",
   "experience": 0.7,
   "cookingtime": 200

@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "spectrum:frostbite_crystal"
-    }
+    "spectrum:frostbite_crystal"
   ],
   "results": [
     {
-      "item": "spectrum:frostbite_essence",
+      "id": "spectrum:frostbite_essence",
       "count": 12,
       "chance": 1.0
     },

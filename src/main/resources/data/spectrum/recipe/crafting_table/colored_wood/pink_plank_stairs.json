@@ -7,12 +7,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:pink_planks"
-    }
+    "#": "spectrum:pink_planks"
   },
   "result": {
-    "item": "spectrum:pink_stairs",
+    "id": "spectrum:pink_stairs",
     "count": 4
   }
 }

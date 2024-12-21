@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:calcite"
-    }
+    "W": "minecraft:calcite"
   },
   "result": {
-    "item": "spectrum:calcite_stairs",
+    "id": "spectrum:calcite_stairs",
     "count": 6
   }
 }

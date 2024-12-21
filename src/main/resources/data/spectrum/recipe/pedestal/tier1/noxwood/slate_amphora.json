@@ -15,21 +15,13 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:slate_noxwood_slab"
-    },
-    "P": {
-      "item": "spectrum:slate_noxwood_planks"
-    },
-    "I": {
-      "item": "minecraft:prismarine_crystals"
-    },
-    "A": {
-      "item": "minecraft:paper"
-    }
+    "S": "spectrum:slate_noxwood_slab",
+    "P": "spectrum:slate_noxwood_planks",
+    "I": "minecraft:prismarine_crystals",
+    "A": "minecraft:paper"
   },
   "result": {
-    "item": "spectrum:slate_noxwood_amphora",
+    "id": "spectrum:slate_noxwood_amphora",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

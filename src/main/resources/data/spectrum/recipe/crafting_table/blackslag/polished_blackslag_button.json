@@ -1,11 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "spectrum:polished_blackslag"
-    }
+    "spectrum:polished_blackslag"
   ],
-  "result": {
-    "item": "spectrum:polished_blackslag_button"
-  }
+  "result": "spectrum:polished_blackslag_button"
 }

@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "vanilla_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:sugar"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:sugar",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "minecraft:slowness",
   "base_duration_ticks": 1800,
   "potency_modifier": 1.5,

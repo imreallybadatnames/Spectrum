@@ -15,18 +15,12 @@
     "SSS"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:weeping_gala_planks"
-    },
-    "G": {
-      "item": "minecraft:redstone"
-    },
-    "X": {
-      "item": "spectrum:shimmerstone_block"
-    }
+    "S": "spectrum:weeping_gala_planks",
+    "G": "minecraft:redstone",
+    "X": "spectrum:shimmerstone_block"
   },
   "result": {
-    "item": "spectrum:weeping_gala_lamp",
+    "id": "spectrum:weeping_gala_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:hidden/collect_weeping_gala"

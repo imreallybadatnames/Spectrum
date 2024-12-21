@@ -14,12 +14,8 @@
 		"###"
 	],
 	"key": {
-		"F": {
-			"item": "spectrum:resplendent_block"
-		},
-		"#": {
-			"tag": "minecraft:planks"
-		}
+      "F": "spectrum:resplendent_block",
+      "#": "#minecraft:planks"
 	},
 	"result": {
 		"item": "spectrum:resplendent_bed",

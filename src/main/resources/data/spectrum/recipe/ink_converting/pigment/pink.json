@@ -1,8 +1,6 @@
 {
   "type": "spectrum:ink_converting",
-  "ingredient": {
-    "item": "spectrum:pink_pigment"
-  },
+  "ingredient": "spectrum:pink_pigment",
   "ink_color": "spectrum:pink",
   "amount": 100,
   "required_advancement": "spectrum:hidden/collect_pigment/pink"

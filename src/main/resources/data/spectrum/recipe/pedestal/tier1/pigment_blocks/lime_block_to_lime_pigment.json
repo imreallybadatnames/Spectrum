@@ -9,12 +9,10 @@
   "white": 0,
   "black": 0,
   "ingredients": [
-    {
-      "item": "spectrum:lime_block"
-    }
+    "spectrum:lime_block"
   ],
   "result": {
-    "item": "spectrum:lime_pigment",
+    "id": "spectrum:lime_pigment",
     "count": 9
   },
   "required_advancement": "spectrum:hidden/collect_pigment/lime",

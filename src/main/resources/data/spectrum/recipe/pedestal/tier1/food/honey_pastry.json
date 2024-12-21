@@ -14,21 +14,13 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "H": {
-      "item": "minecraft:honey_bottle"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "S": {
-      "item": "minecraft:sugar"
-    }
+    "A": "spectrum:amaranth_grains",
+    "H": "minecraft:honey_bottle",
+    "E": "#c:eggs",
+    "S": "minecraft:sugar"
   },
   "result": {
-    "item": "spectrum:honey_pastry",
+    "id": "spectrum:honey_pastry",
     "count": 1
   },
   "required_advancement": "spectrum:collect_amaranth_bushel"

@@ -14,16 +14,12 @@
     "XXX"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:blast_furnace"
-    },
-    "X": {
-      "item": "spectrum:pyrite"
-    }
+    "B": "minecraft:blast_furnace",
+    "X": "spectrum:pyrite"
   },
   "required_advancement": "spectrum:hidden/collect_pyrite",
   "result": {
-    "item": "alloy_forgery:pyrite_forge_controller"
+    "id": "alloy_forgery:pyrite_forge_controller"
   },
   "fabric:load_conditions": [
     {

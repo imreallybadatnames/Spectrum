@@ -1,8 +1,6 @@
 {
   "type": "spectrum:crystallarieum_growing",
-  "ingredient": {
-    "item": "minecraft:redstone"
-  },
+  "ingredient": "minecraft:redstone",
   "growth_stage_states": [
     "spectrum:small_redstone_bud[facing=up]",
     "spectrum:large_redstone_bud[facing=up]",
@@ -14,25 +12,19 @@
   "grows_without_catalyst": false,
   "catalysts": [
     {
-      "ingredient": {
-        "item": "spectrum:storm_stone"
-      },
+      "ingredient": "spectrum:storm_stone",
       "growth_acceleration_mod": 8.0,
       "ink_consumption_mod": 2.0,
       "consume_chance_per_second": 0.01
     },
     {
-      "ingredient": {
-        "item": "spectrum:shimmerstone_gem"
-      },
+      "ingredient": "spectrum:shimmerstone_gem",
       "growth_acceleration_mod": 1.0,
       "ink_consumption_mod": 0.25,
       "consume_chance_per_second": 0.02
     },
     {
-      "ingredient": {
-        "item": "spectrum:stardust"
-      },
+      "ingredient": "spectrum:stardust",
       "growth_acceleration_mod": 1.5,
       "ink_consumption_mod": 0.5,
       "consume_chance_per_second": 0.005

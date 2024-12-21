@@ -6,16 +6,10 @@
     "fluid": "spectrum:dragonrot"
   },
   "ingredients": [
-    {
-      "item": "spectrum:pure_netherite_scrap"
-    },
-    {
-      "item": "spectrum:pure_gold"
-    }
+    "spectrum:pure_netherite_scrap",
+    "spectrum:pure_gold"
   ],
-  "result": {
-    "item": "minecraft:netherite_ingot"
-  },
+  "result": "minecraft:netherite_ingot",
   "required_advancement": "spectrum:lategame/collect_pure_resource",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

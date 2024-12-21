@@ -7,12 +7,8 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
+    "minecraft:iron_sword",
+    "minecraft:diamond",
     {
       "item": "spectrum:nightdew_sprout",
       "count": 3
@@ -30,9 +26,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:knotted_sword"
-  },
+  "result": "spectrum:knotted_sword",
   "required_advancement": "spectrum:unlocks/equipment/knotted_sword",
   "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",

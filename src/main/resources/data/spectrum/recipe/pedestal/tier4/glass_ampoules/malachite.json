@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:paltaeria_fragments"
-    },
-    "S": {
-      "item": "spectrum:raw_malachite"
-    },
-    "R": {
-      "item": "spectrum:resonance_shard"
-    }
+    "P": "spectrum:paltaeria_fragments",
+    "S": "spectrum:raw_malachite",
+    "R": "spectrum:resonance_shard"
   },
   "result": {
-    "item": "spectrum:malachite_glass_ampoule",
+    "id": "spectrum:malachite_glass_ampoule",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/items/glass_ampoules"

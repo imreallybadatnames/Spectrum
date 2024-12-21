@@ -14,15 +14,11 @@
     "RRR"
   ],
   "key": {
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    },
-    "R": {
-      "item": "minecraft:rabbit_hide"
-    }
+    "Q": "spectrum:quitoxic_powder",
+    "R": "minecraft:rabbit_hide"
   },
   "result": {
-    "item": "spectrum:bottomless_bundle",
+    "id": "spectrum:bottomless_bundle",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/bottomless_bundle"

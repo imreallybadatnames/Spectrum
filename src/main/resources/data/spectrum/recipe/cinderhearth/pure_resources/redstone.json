@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_redstone"
-  },
+  "ingredient": "spectrum:pure_redstone",
   "results": [
     {
-      "item": "minecraft:redstone",
+      "id": "minecraft:redstone",
       "count": 4
     },
     {

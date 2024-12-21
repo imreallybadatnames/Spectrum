@@ -6,12 +6,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:slate_noxwood_planks"
-    }
+    "#": "spectrum:slate_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:slate_noxwood_trapdoor",
+    "id": "spectrum:slate_noxwood_trapdoor",
     "count": 2
   }
 }

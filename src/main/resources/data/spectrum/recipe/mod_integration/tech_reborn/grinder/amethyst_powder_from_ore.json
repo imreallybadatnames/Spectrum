@@ -3,13 +3,11 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "tag": "spectrum:amethyst_ores"
-    }
+    "#spectrum:amethyst_ores"
   ],
   "results": [
     {
-      "item": "spectrum:amethyst_powder",
+      "id": "spectrum:amethyst_powder",
       "count": 12
     }
   ],

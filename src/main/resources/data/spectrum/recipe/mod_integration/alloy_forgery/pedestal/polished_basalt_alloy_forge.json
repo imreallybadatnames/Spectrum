@@ -14,15 +14,11 @@
     "XXX"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:blast_furnace"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    }
+    "B": "minecraft:blast_furnace",
+    "X": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "alloy_forgery:polished_basalt_forge_controller"
+    "id": "alloy_forgery:polished_basalt_forge_controller"
   },
   "fabric:load_conditions": [
     {

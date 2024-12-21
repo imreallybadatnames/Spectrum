@@ -1,14 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:amethyst_cluster"
-    }
+    "minecraft:paper",
+    "minecraft:amethyst_cluster"
   ],
-  "result": {
-    "item": "spectrum:amethyst_cluster_banner_pattern"
-  }
+  "result": "spectrum:amethyst_cluster_banner_pattern"
 }

@@ -7,9 +7,7 @@
       "count": 2
     }
   ],
-  "fluid": {
-    "tag": "c:honey"
-  },
+  "fluid": "#c:honey",
   "tapping_item": "minecraft:glass_bottle",
   "min_fermentation_time_hours": 24,
   "fermentation_data": {
@@ -97,7 +95,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "count": 4,
     "nbt": {
       "Variant": "mead",

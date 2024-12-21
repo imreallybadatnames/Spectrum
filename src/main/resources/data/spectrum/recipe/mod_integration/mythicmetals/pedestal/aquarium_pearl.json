@@ -15,15 +15,11 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "mythicmetals:aquarium_block"
-    },
-    "H": {
-      "item": "minecraft:heart_of_the_sea"
-    }
+    "A": "mythicmetals:aquarium_block",
+    "H": "minecraft:heart_of_the_sea"
   },
   "result": {
-    "item": "mythicmetals:aquarium_pearl",
+    "id": "mythicmetals:aquarium_pearl",
     "count": 1
   },
   "required_advancement": "mythicmetals:aquarium_pearl",

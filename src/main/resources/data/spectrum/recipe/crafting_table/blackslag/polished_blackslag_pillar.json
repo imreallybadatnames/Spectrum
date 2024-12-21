@@ -5,12 +5,10 @@
     "#"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_blackslag"
-    }
+    "#": "spectrum:polished_blackslag"
   },
   "result": {
-    "item": "spectrum:polished_blackslag_pillar",
+    "id": "spectrum:polished_blackslag_pillar",
     "count": 2
   }
 }

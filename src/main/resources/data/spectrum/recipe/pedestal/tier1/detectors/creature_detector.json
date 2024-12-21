@@ -14,21 +14,13 @@
     "SSS"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:glass"
-    },
-    "C": {
-      "item": "spectrum:moonstone_shard"
-    },
-    "Q": {
-      "item": "minecraft:quartz"
-    },
-    "S": {
-      "tag": "minecraft:wooden_slabs"
-    }
+    "B": "minecraft:glass",
+    "C": "spectrum:moonstone_shard",
+    "Q": "minecraft:quartz",
+    "S": "#minecraft:wooden_slabs"
   },
   "result": {
-    "item": "spectrum:creature_detector",
+    "id": "spectrum:creature_detector",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/creature_detector"

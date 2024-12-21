@@ -7,19 +7,11 @@
   },
   "secret": true,
   "ingredients": [
-    {
-      "item": "spectrum:refined_malachite"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
-    {
-      "item": "spectrum:refined_bloodstone"
-    }
+    "spectrum:refined_malachite",
+    "spectrum:refined_azurite",
+    "spectrum:refined_bloodstone"
   ],
-  "result": {
-    "item": "minecraft:raw_copper"
-  },
+  "result": "minecraft:raw_copper",
   "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [

@@ -14,21 +14,13 @@
     "YYY"
   ],
   "key": {
-    "Y": {
-      "item": "spectrum:polished_basalt"
-    },
-    "P": {
-      "item": "spectrum:paltaeria_gem"
-    },
-    "C": {
-      "item": "spectrum:stratine_gem"
-    },
-    "L": {
-      "item": "spectrum:light_blue_pigment"
-    }
+    "Y": "spectrum:polished_basalt",
+    "P": "spectrum:paltaeria_gem",
+    "C": "spectrum:stratine_gem",
+    "L": "spectrum:light_blue_pigment"
   },
   "result": {
-    "item": "spectrum:upgrade_yield",
+    "id": "spectrum:upgrade_yield",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_yield"

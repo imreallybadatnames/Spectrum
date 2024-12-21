@@ -13,15 +13,11 @@
     "PS"
   ],
   "key": {
-    "P": {
-      "item": "botania:red_mystical_flower"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "botania:red_mystical_flower",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "botania:red_shiny_flower",
+    "id": "botania:red_shiny_flower",
     "count": 1
   },
   "required_advancement": "spectrum:collect_shimmerstone",

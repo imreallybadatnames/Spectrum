@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:lime_planks"
-    }
+    "#": "spectrum:lime_planks"
   },
-  "result": {
-    "item": "spectrum:lime_pressure_plate"
-  }
+  "result": "spectrum:lime_pressure_plate"
 }

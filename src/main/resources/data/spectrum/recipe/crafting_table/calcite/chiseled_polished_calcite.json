@@ -6,12 +6,10 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_calcite"
-    }
+    "#": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:chiseled_polished_calcite",
+    "id": "spectrum:chiseled_polished_calcite",
     "count": 5
   }
 }

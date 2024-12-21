@@ -15,15 +15,11 @@
     " D "
   ],
   "key": {
-    "C": {
-      "item": "minecraft:calcite"
-    },
-    "D": {
-      "item": "spectrum:light_blue_pigment"
-    }
+    "C": "minecraft:calcite",
+    "D": "spectrum:light_blue_pigment"
   },
   "result": {
-    "item": "chalk:light_blue_chalk",
+    "id": "chalk:light_blue_chalk",
     "nbt": {
       "Unbreakable": 1
     }

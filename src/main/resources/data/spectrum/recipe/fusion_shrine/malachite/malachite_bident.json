@@ -7,9 +7,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:trident"
-    },
+    "minecraft:trident",
     {
       "item": "spectrum:refined_malachite",
       "count": 8
@@ -28,7 +26,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:malachite_bident",
+    "id": "spectrum:malachite_bident",
     "nbt": {
       "Enchantments": [
         {

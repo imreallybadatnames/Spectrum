@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:red_mushroom"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:red_mushroom",
   "effect": "extraalchemy:growing",
   "base_duration_ticks": 900,
   "potency_modifier": 1.0,

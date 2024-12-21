@@ -2,9 +2,7 @@
   "type": "spectrum:spirit_instiller",
   "time": 150,
   "experience": 0.75,
-  "ingredient1": {
-    "item": "spectrum:bedrock_dust"
-  },
+  "ingredient1": "spectrum:bedrock_dust",
   "ingredient2": {
     "item": "spectrum:brown_pigment",
     "count": 4
@@ -14,7 +12,7 @@
     "count": 2
   },
   "result": {
-    "item": "malum:earthen_spirit",
+    "id": "malum:earthen_spirit",
     "count": 2
   },
   "required_advancement": "spectrum:mod_integration/malum/understand_color_and_spirit",

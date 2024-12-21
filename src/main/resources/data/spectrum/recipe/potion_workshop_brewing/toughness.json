@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:glass_peach"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:glass_peach",
   "effect": "spectrum:toughness",
   "base_duration_ticks": 1200,
   "potency_modifier": 0.5,

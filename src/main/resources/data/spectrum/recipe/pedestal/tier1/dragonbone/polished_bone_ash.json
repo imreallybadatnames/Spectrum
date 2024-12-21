@@ -15,12 +15,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:bone_ash"
-    }
+    "#": "spectrum:bone_ash"
   },
   "result": {
-    "item": "spectrum:polished_bone_ash",
+    "id": "spectrum:polished_bone_ash",
     "count": 1
   },
   "required_advancement": "spectrum:break_cracked_dragonbone",

@@ -6,28 +6,14 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:topaz_shard"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "spectrum:citrine_shard"
-    },
-    {
-      "item": "spectrum:onyx_shard"
-    },
-    {
-      "item": "spectrum:moonstone_shard"
-    },
-    {
-      "item": "spectrum:moonstone_core"
-    }
+    "spectrum:topaz_shard",
+    "minecraft:amethyst_shard",
+    "spectrum:citrine_shard",
+    "spectrum:onyx_shard",
+    "spectrum:moonstone_shard",
+    "spectrum:moonstone_core"
   ],
-  "result": {
-    "item": "spectrum:spectral_shard"
-  },
+  "result": "spectrum:spectral_shard",
   "required_advancement": "spectrum:unlocks/resources/spectral_shard",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

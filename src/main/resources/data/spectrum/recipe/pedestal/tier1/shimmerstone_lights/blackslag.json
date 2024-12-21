@@ -15,15 +15,11 @@
     "TST"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "T": {
-      "item": "spectrum:polished_blackslag"
-    }
+    "S": "spectrum:shimmerstone_gem",
+    "T": "spectrum:polished_blackslag"
   },
   "result": {
-    "item": "spectrum:blackslag_shimmerstone_light",
+    "id": "spectrum:blackslag_shimmerstone_light",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/blocks/blackslag_shimmerstone_light"

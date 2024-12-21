@@ -14,18 +14,12 @@
     " B "
   ],
   "key": {
-    "P": {
-      "item": "spectrum:blue_pigment"
-    },
-    "S": {
-      "item": "spectrum:radiating_ender"
-    },
-    "B": {
-      "item": "minecraft:polished_blackstone"
-    }
+    "P": "spectrum:blue_pigment",
+    "S": "spectrum:radiating_ender",
+    "B": "minecraft:polished_blackstone"
   },
   "result": {
-    "item": "spectrum:ender_hopper",
+    "id": "spectrum:ender_hopper",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/ender_blocks"

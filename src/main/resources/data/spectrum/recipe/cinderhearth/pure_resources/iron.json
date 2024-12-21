@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_iron"
-  },
+  "ingredient": "spectrum:pure_iron",
   "results": [
     {
-      "item": "minecraft:iron_ingot",
+      "id": "minecraft:iron_ingot",
       "count": 2
     }
   ],

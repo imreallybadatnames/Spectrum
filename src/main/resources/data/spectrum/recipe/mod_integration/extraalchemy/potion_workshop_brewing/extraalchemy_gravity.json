@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:glowstone_dust"
-  },
-  "ingredient2": {
-    "item": "minecraft:nether_brick"
-  },
+  "ingredient1": "minecraft:glowstone_dust",
+  "ingredient2": "minecraft:nether_brick",
   "effect": "extraalchemy:gravity",
   "base_duration_ticks": 1200,
   "potency_modifier": 1.0,

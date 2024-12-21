@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_certus_quartz"
-  },
+  "ingredient": "spectrum:pure_certus_quartz",
   "results": [
     {
-      "item": "ae2:certus_quartz_crystal",
+      "id": "ae2:certus_quartz_crystal",
       "count": 4
     },
     {

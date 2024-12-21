@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:refined_bloodstone"
-    }
+    "A": "spectrum:refined_bloodstone"
   },
   "result": {
-    "item": "spectrum:bloodstone_block",
+    "id": "spectrum:bloodstone_block",
     "count": 1
   },
   "required_advancement": "spectrum:grow_bloodstone_in_crystallarieum",

@@ -15,15 +15,11 @@
     "GPG"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:onyx_shard"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "P": "spectrum:onyx_shard",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:onyx_glass",
+    "id": "spectrum:onyx_glass",
     "count": 8
   },
   "required_advancement": "spectrum:create_onyx_shard"

@@ -5,12 +5,10 @@
     "# #"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_calcite"
-    }
+    "#": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:polished_calcite_crest",
+    "id": "spectrum:polished_calcite_crest",
     "count": 3
   }
 }

@@ -14,12 +14,10 @@
     " L "
   ],
   "key": {
-    "L": {
-      "item": "minecraft:tuff"
-    }
+    "L": "minecraft:tuff"
   },
   "result": {
-    "item": "spectrum:fanciful_tuff_ring",
+    "id": "spectrum:fanciful_tuff_ring",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/trinkets/fanciful_tuff_ring"

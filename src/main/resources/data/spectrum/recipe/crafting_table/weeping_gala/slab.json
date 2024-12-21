@@ -5,12 +5,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:weeping_gala_planks"
-    }
+    "#": "spectrum:weeping_gala_planks"
   },
   "result": {
-    "item": "spectrum:weeping_gala_slab",
+    "id": "spectrum:weeping_gala_slab",
     "count": 6
   }
 }

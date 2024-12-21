@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:paltaeria_gem"
-    },
-    "S": {
-      "item": "spectrum:refined_azurite"
-    },
-    "R": {
-      "item": "spectrum:resonance_shard"
-    }
+    "P": "spectrum:paltaeria_gem",
+    "S": "spectrum:refined_azurite",
+    "R": "spectrum:resonance_shard"
   },
   "result": {
-    "item": "spectrum:azurite_glass_ampoule",
+    "id": "spectrum:azurite_glass_ampoule",
     "count": 32
   },
   "required_advancement": "spectrum:unlocks/items/glass_ampoules"

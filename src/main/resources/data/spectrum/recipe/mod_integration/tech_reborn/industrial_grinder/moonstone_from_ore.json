@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:moonstone_ores"
-    }
+    "#spectrum:moonstone_ores"
   ],
   "results": [
     {
-      "item": "spectrum:moonstone_shard",
+      "id": "spectrum:moonstone_shard",
       "count": 6
     },
     {

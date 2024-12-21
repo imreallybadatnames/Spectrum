@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:endermite_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:ender_pearl"
-  },
+  "ingredient1": "spectrum:endermite_head",
+  "ingredient2": "minecraft:ender_pearl",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:endermite"

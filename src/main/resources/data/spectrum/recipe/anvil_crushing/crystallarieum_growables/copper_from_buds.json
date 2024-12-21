@@ -1,17 +1,13 @@
 {
   "type": "spectrum:anvil_crushing",
   "ingredient": [
-    {
-      "item": "spectrum:small_copper_bud"
-    },
-    {
-      "item": "spectrum:large_copper_bud"
-    }
+    "spectrum:small_copper_bud",
+    "spectrum:large_copper_bud"
   ],
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 2.0,
   "result": {
-    "item": "minecraft:copper_ingot",
+    "id": "minecraft:copper_ingot",
     "count": 1
   },
   "particleEffectIdentifier": "explosion",

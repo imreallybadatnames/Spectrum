@@ -1,12 +1,8 @@
 {
   "type": "ants:colony_harvesting",
   "group": "spectrum_leaves_harvesting",
-  "hive_ingredient": {
-    "item": "spectrum:blue_leaves"
-  },
-  "hand_ingredient": {
-    "item": "spectrum:vegetal"
-  },
+  "hive_ingredient": "spectrum:blue_leaves",
+  "hand_ingredient": "spectrum:vegetal",
   "result" : {
     "item": "spectrum:blue_pigment",
 	"count": 6

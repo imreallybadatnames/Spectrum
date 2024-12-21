@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "minecraft:smooth_basalt"
-    }
+    "W": "minecraft:smooth_basalt"
   },
   "result": {
-    "item": "spectrum:smooth_basalt_slab",
+    "id": "spectrum:smooth_basalt_slab",
     "count": 6
   }
 }

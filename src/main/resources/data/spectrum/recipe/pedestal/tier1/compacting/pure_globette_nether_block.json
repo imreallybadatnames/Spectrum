@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_globette_nether"
-    }
+    "G": "spectrum:pure_globette_nether"
   },
   "result": {
-    "item": "spectrum:pure_globette_nether_block",
+    "id": "spectrum:pure_globette_nether_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

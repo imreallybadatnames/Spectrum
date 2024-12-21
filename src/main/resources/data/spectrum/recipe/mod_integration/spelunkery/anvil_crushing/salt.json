@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spelunkery:rock_salt"
-  },
+  "ingredient": "spelunkery:rock_salt",
   "crushedItemsPerPointOfDamage": 1.25,
   "experience": 0.01,
   "result": {
-    "item": "spelunkery:salt",
+    "id": "spelunkery:salt",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

@@ -14,15 +14,11 @@
     "U"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "U": {
-      "item": "minecraft:sugar"
-    }
+    "S": "minecraft:stick",
+    "U": "minecraft:sugar"
   },
   "result": {
-    "item": "spectrum:sugar_stick",
+    "id": "spectrum:sugar_stick",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/rock_candy"

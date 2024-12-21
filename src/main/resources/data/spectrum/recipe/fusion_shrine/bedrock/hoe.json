@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_hoe"
-    },
+    "minecraft:golden_hoe",
     {
       "item": "spectrum:bedrock_dust",
       "count": 2
@@ -33,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_hoe",
+    "id": "spectrum:bedrock_hoe",
     "nbt": {
       "Enchantments": [
         {

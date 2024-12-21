@@ -15,12 +15,10 @@
     "SSS"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:shimmerstone_block",
+    "id": "spectrum:shimmerstone_block",
     "count": 1
   },
   "required_advancement": "spectrum:collect_shimmerstone",

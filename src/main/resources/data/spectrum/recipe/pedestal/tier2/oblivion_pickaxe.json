@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:calcite"
-    },
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    },
-    "P": {
-      "item": "minecraft:phantom_membrane"
-    }
+    "S": "minecraft:calcite",
+    "Q": "spectrum:quitoxic_powder",
+    "P": "minecraft:phantom_membrane"
   },
   "result": {
-    "item": "spectrum:oblivion_pickaxe",
+    "id": "spectrum:oblivion_pickaxe",
     "nbt": {
       "Enchantments": [
         {

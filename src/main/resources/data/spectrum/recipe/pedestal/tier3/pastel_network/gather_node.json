@@ -15,21 +15,13 @@
     "YXY"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:onyx_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    },
-    "A": {
-      "item": "spectrum:raw_azurite"
-    }
+    "S": "spectrum:onyx_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite",
+    "A": "spectrum:raw_azurite"
   },
   "result": {
-    "item": "spectrum:gather_node",
+    "id": "spectrum:gather_node",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/pastel_network"

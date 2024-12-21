@@ -7,12 +7,8 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "spectrum:malachite_bident"
-    },
-    {
-      "item": "spectrum:moonstone_core"
-    },
+    "spectrum:malachite_bident",
+    "spectrum:moonstone_core",
     {
       "item": "spectrum:pure_prismarine",
       "count": 8
@@ -31,7 +27,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:ferocious_glass_crest_bident",
+    "id": "spectrum:ferocious_glass_crest_bident",
     "nbt": {
       "Enchantments": [
         {

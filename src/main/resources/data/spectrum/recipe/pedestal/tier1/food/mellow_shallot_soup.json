@@ -14,27 +14,15 @@
     "JEJ"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:germinated_jade_vine_bulb"
-    },
-    "B": {
-      "item": "spectrum:jadeite_lotus_bulb"
-    },
-    "C": {
-      "item": "spectrum:nephrite_blossom_bulb"
-    },
-    "J": {
-      "item": "spectrum:frostbite_essence"
-    },
-    "E": {
-      "item": "spectrum:moonstruck_nectar"
-    },
-    "R": {
-      "item": "spectrum:aqua_regia"
-    }
+    "A": "spectrum:germinated_jade_vine_bulb",
+    "B": "spectrum:jadeite_lotus_bulb",
+    "C": "spectrum:nephrite_blossom_bulb",
+    "J": "spectrum:frostbite_essence",
+    "E": "spectrum:moonstruck_nectar",
+    "R": "spectrum:aqua_regia"
   },
   "result": {
-    "item": "spectrum:mellow_shallot_soup",
+    "id": "spectrum:mellow_shallot_soup",
     "count": 4
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/imbrifer_cookbook"

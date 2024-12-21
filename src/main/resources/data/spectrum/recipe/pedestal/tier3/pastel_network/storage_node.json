@@ -15,21 +15,13 @@
     "YXY"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:topaz_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    },
-    "A": {
-      "item": "spectrum:raw_azurite"
-    }
+    "S": "spectrum:topaz_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite",
+    "A": "spectrum:raw_azurite"
   },
   "result": {
-    "item": "spectrum:storage_node",
+    "id": "spectrum:storage_node",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/pastel_network"

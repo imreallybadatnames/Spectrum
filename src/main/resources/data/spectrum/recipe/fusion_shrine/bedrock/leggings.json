@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_leggings"
-    },
+    "minecraft:golden_leggings",
     {
       "item": "spectrum:bedrock_dust",
       "count": 7
@@ -29,7 +27,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_leggings",
+    "id": "spectrum:bedrock_leggings",
     "nbt": {
       "Enchantments": [
         {

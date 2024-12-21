@@ -5,12 +5,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:magenta_planks"
-    }
+    "#": "spectrum:magenta_planks"
   },
   "result": {
-    "item": "spectrum:magenta_slab",
+    "id": "spectrum:magenta_slab",
     "count": 6
   }
 }

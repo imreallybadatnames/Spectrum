@@ -13,21 +13,13 @@
     "BEJ"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:crawfish"
-    },
-    "J": {
-      "item": "spectrum:myceylon"
-    },
-    "E": {
-      "item": "spectrum:incandescent_essence"
-    },
-    "B": {
-      "item": "spectrum:glass_peach"
-    }
+    "A": "spectrum:crawfish",
+    "J": "spectrum:myceylon",
+    "E": "spectrum:incandescent_essence",
+    "B": "spectrum:glass_peach"
   },
   "result": {
-    "item": "spectrum:crawfish_cocktail",
+    "id": "spectrum:crawfish_cocktail",
     "count": 3
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/imbrifer_cookbook"

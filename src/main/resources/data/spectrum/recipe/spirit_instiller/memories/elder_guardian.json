@@ -3,18 +3,14 @@
   "group": "boss_memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:elder_guardian_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:prismarine"
-  },
+  "ingredient1": "spectrum:elder_guardian_head",
+  "ingredient2": "minecraft:prismarine",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:elder_guardian"

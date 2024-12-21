@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "tag": "spectrum:smelts_to_bone_ash"
-  },
+  "ingredient": "#spectrum:smelts_to_bone_ash",
   "results": [
     {
-      "item": "spectrum:polished_bone_ash",
+      "id": "spectrum:polished_bone_ash",
       "count": 1
     }
   ],

@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:basal_marble"
-    }
+    "W": "spectrum:basal_marble"
   },
   "result": {
-    "item": "spectrum:basal_marble_stairs",
+    "id": "spectrum:basal_marble_stairs",
     "count": 6
   }
 }

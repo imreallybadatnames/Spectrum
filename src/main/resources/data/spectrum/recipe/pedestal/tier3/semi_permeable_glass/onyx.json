@@ -15,18 +15,12 @@
     "GPG"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:onyx_shard"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "S": "spectrum:onyx_shard",
+    "P": "spectrum:purple_pigment",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:onyx_semi_permeable_glass",
+    "id": "spectrum:onyx_semi_permeable_glass",
     "count": 6
   },
   "required_advancement": "spectrum:midgame/build_advanced_pedestal_structure"

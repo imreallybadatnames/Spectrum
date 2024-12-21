@@ -6,14 +6,8 @@
     "#W#"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "W": {
-      "item": "spectrum:lime_planks"
-    }
+    "#": "minecraft:stick",
+    "W": "spectrum:lime_planks"
   },
-  "result": {
-    "item": "spectrum:lime_fence_gate"
-  }
+  "result": "spectrum:lime_fence_gate"
 }

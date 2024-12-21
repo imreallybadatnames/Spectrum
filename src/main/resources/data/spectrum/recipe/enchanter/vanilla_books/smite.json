@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:black_pigment"
-    },
-    {
-      "item": "spectrum:black_pigment"
-    },
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "spectrum:storm_stone"
-    },
-    {
-      "item": "spectrum:black_pigment"
-    },
-    {
-      "item": "spectrum:black_pigment"
-    },
-    {
-      "item": "minecraft:rotten_flesh"
-    },
-    {
-      "item": "spectrum:storm_stone"
-    }
+    "minecraft:book",
+    "spectrum:black_pigment",
+    "spectrum:black_pigment",
+    "minecraft:rotten_flesh",
+    "spectrum:storm_stone",
+    "spectrum:black_pigment",
+    "spectrum:black_pigment",
+    "minecraft:rotten_flesh",
+    "spectrum:storm_stone"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

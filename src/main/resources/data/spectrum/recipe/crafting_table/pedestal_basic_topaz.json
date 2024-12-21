@@ -6,24 +6,14 @@
     "CRC"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:topaz_shard"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "W": {
-      "item": "spectrum:polished_basalt"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "tag": "minecraft:planks"
-    }
+    "S": "spectrum:topaz_shard",
+    "C": "spectrum:polished_calcite",
+    "W": "spectrum:polished_basalt",
+    "R": "minecraft:redstone",
+    "T": "#minecraft:planks"
   },
   "result": {
-    "item": "spectrum:pedestal_basic_topaz",
+    "id": "spectrum:pedestal_basic_topaz",
     "count": 1
   }
 }

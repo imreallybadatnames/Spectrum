@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "spectrum:amaranth_bushel"
-    }
+    "spectrum:amaranth_bushel"
   ],
   "results": [
     {
-      "item": "spectrum:amaranth_grains",
+      "id": "spectrum:amaranth_grains",
       "count": 2,
       "chance": 1.0
     },

@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:basalt_tiles"
-    }
+    "W": "spectrum:basalt_tiles"
   },
   "result": {
-    "item": "spectrum:basalt_tile_stairs",
+    "id": "spectrum:basalt_tile_stairs",
     "count": 6
   }
 }

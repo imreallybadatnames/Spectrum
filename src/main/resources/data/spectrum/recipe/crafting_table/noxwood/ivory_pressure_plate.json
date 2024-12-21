@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:ivory_noxwood_planks"
-    }
+    "#": "spectrum:ivory_noxwood_planks"
   },
-  "result": {
-    "item": "spectrum:ivory_noxwood_pressure_plate"
-  }
+  "result": "spectrum:ivory_noxwood_pressure_plate"
 }

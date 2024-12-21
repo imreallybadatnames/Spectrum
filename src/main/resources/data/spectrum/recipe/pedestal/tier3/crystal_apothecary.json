@@ -14,18 +14,12 @@
     "BCB"
   ],
   "key": {
-    "L": {
-      "item": "spectrum:storm_stone"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    }
+    "L": "spectrum:storm_stone",
+    "C": "spectrum:polished_calcite",
+    "B": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:crystal_apothecary",
+    "id": "spectrum:crystal_apothecary",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/crystal_apothecary"

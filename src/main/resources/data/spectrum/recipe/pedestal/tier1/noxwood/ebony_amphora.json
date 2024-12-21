@@ -15,21 +15,13 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:ebony_noxwood_slab"
-    },
-    "P": {
-      "item": "spectrum:ebony_noxwood_planks"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "A": {
-      "item": "minecraft:paper"
-    }
+    "S": "spectrum:ebony_noxwood_slab",
+    "P": "spectrum:ebony_noxwood_planks",
+    "I": "minecraft:iron_ingot",
+    "A": "minecraft:paper"
   },
   "result": {
-    "item": "spectrum:ebony_noxwood_amphora",
+    "id": "spectrum:ebony_noxwood_amphora",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

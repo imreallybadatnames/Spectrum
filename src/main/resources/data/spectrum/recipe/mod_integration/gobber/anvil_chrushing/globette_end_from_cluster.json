@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:globette_end_cluster"
-  },
+  "ingredient": "spectrum:globette_end_cluster",
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 3.0,
   "result": {
-    "item": "gobber2:gobber2_globette_end",
+    "id": "gobber2:gobber2_globette_end",
     "count": 6
   },
   "particleEffectIdentifier": "explosion",

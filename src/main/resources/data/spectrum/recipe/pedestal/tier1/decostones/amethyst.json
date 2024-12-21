@@ -15,18 +15,12 @@
     "XYX"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    }
+    "S": "minecraft:amethyst_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:amethyst_decostone",
+    "id": "spectrum:amethyst_decostone",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/decostones/amethyst_decostone"

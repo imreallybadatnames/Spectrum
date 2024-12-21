@@ -1,9 +1,7 @@
 {
   "type": "farmersdelight:cutting",
   "ingredients": [
-    {
-      "item": "spectrum:moonstone_block"
-    }
+    "spectrum:moonstone_block"
   ],
   "result": [
     {

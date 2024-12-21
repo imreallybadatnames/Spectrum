@@ -10,12 +10,10 @@
   "white": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:paltaeria_floatblock"
-    }
+    "spectrum:paltaeria_floatblock"
   ],
   "result": {
-    "item": "spectrum:paltaeria_fragments",
+    "id": "spectrum:paltaeria_fragments",
     "count": 9
   },
   "required_advancement": "spectrum:lategame/carry_too_many_low_gravity_blocks",

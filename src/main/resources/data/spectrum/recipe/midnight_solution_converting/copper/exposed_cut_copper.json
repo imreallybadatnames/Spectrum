@@ -1,10 +1,8 @@
 {
   "type": "spectrum:midnight_solution_converting",
-  "ingredient": {
-    "item": "minecraft:cut_copper"
-  },
+  "ingredient": "minecraft:cut_copper",
   "result": {
-    "item": "minecraft:exposed_cut_copper",
+    "id": "minecraft:exposed_cut_copper",
     "count": 1
   }
 }

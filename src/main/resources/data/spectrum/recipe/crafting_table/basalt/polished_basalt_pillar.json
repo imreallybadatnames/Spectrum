@@ -5,12 +5,10 @@
     "#"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_basalt"
-    }
+    "#": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:polished_basalt_pillar",
+    "id": "spectrum:polished_basalt_pillar",
     "count": 2
   }
 }

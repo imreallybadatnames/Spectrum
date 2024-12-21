@@ -6,12 +6,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:ebony_noxwood_planks"
-    }
+    "#": "spectrum:ebony_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:ebony_noxwood_trapdoor",
+    "id": "spectrum:ebony_noxwood_trapdoor",
     "count": 2
   }
 }

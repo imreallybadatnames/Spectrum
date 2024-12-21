@@ -2,11 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "pigment_to_dye",
   "ingredients": [
-    {
-      "item": "spectrum:gray_pigment"
-    }
+    "spectrum:gray_pigment"
   ],
-  "result": {
-    "item": "minecraft:gray_dye"
-  }
+  "result": "minecraft:gray_dye"
 }

@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "minecraft:sand"
-  },
+  "ingredient": "minecraft:sand",
   "results": [
     {
-      "item": "minecraft:glass",
+      "id": "minecraft:glass",
       "count": 2
     }
   ],

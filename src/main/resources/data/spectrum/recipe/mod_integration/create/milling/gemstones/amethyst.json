@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "minecraft:amethyst_shard"
-    }
+    "minecraft:amethyst_shard"
   ],
   "results": [
     {
-      "item": "spectrum:amethyst_powder",
+      "id": "spectrum:amethyst_powder",
       "count": 2,
       "chance": 1.0
     }

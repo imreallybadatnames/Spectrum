@@ -7,12 +7,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:magenta_planks"
-    }
+    "#": "spectrum:magenta_planks"
   },
   "result": {
-    "item": "spectrum:magenta_stairs",
+    "id": "spectrum:magenta_stairs",
     "count": 4
   }
 }

@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:stardust"
-    }
+    "A": "spectrum:stardust"
   },
   "result": {
-    "item": "spectrum:stardust_block",
+    "id": "spectrum:stardust_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_stardust",

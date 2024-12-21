@@ -14,24 +14,14 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "P": {
-      "item": "spectrum:polished_calcite"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "G": {
-      "item": "spectrum:stratine_fragments"
-    },
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    }
+    "B": "spectrum:polished_basalt",
+    "P": "spectrum:polished_calcite",
+    "C": "minecraft:copper_ingot",
+    "G": "spectrum:stratine_fragments",
+    "Q": "spectrum:quitoxic_powder"
   },
   "result": {
-    "item": "spectrum:potion_workshop",
+    "id": "spectrum:potion_workshop",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/potion_workshop"

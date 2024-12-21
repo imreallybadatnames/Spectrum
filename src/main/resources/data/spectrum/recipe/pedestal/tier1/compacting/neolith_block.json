@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:neolith"
-    }
+    "A": "spectrum:neolith"
   },
   "result": {
-    "item": "spectrum:neolith_block",
+    "id": "spectrum:neolith_block",
     "count": 1
   },
   "required_advancement": "spectrum:midgame/collect_neolith",

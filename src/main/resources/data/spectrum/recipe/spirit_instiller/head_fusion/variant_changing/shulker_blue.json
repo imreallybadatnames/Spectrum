@@ -14,8 +14,6 @@
     "item": "spectrum:vegetal",
     "count": 1
   },
-  "result": {
-    "item": "spectrum:shulker_blue_head"
-  },
+  "result": "spectrum:shulker_blue_head",
   "required_advancement": "spectrum:unlocks/head_fusion/basic_recipes"
 }

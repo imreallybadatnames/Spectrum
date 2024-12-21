@@ -6,12 +6,8 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_belt"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
+    "spectrum:fanciful_belt",
+    "minecraft:rabbit_foot",
     {
       "item": "spectrum:storm_stone",
       "count": 2
@@ -21,9 +17,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:take_off_belt"
-  },
+  "result": "spectrum:take_off_belt",
   "required_advancement": "spectrum:unlocks/trinkets/take_off_belt",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

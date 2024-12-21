@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_bismuth_ring"
-    },
+    "spectrum:fanciful_bismuth_ring",
     {
       "item": "minecraft:gold_block",
       "count": 64
@@ -17,13 +15,9 @@
       "item": "spectrum:moonstone_shard",
       "count": 64
     },
-    {
-      "item": "spectrum:resonant_lily"
-    }
+    "spectrum:resonant_lily"
   ],
-  "result": {
-    "item": "spectrum:neat_ring"
-  },
+  "result": "spectrum:neat_ring",
   "required_advancement": "spectrum:unlocks/trinkets/neat_ring",
   "world_conditions": [],
   "start_crafting_effect": "play_glass_breaking_sound",

@@ -14,21 +14,13 @@
     "BCB"
   ],
   "key": {
-    "L": {
-      "item": "minecraft:lapis_block"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "S": {
-      "item": "spectrum:stratine_fragments"
-    }
+    "L": "minecraft:lapis_block",
+    "B": "spectrum:polished_basalt",
+    "C": "spectrum:polished_calcite",
+    "S": "spectrum:stratine_fragments"
   },
   "result": {
-    "item": "spectrum:enchanter",
+    "id": "spectrum:enchanter",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/enchanter"

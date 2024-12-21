@@ -15,21 +15,13 @@
     " F "
   ],
   "key": {
-    "T": {
-      "item": "spectrum:citrine_shard"
-    },
-    "M": {
-      "item": "spectrum:raw_malachite"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "F": {
-			"tag": "spectrum:resplendent_feathers"
-    }
+    "T": "spectrum:citrine_shard",
+    "M": "spectrum:raw_malachite",
+    "S": "minecraft:stick",
+    "F": "#spectrum:resplendent_feathers"
   },
   "result": {
-    "item": "spectrum:citrine_glass_arrow",
+    "id": "spectrum:citrine_glass_arrow",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/malachite/glass_arrows"

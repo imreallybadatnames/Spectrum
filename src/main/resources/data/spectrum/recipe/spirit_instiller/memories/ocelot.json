@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:ocelot_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:string"
-  },
+  "ingredient1": "spectrum:ocelot_head",
+  "ingredient2": "minecraft:string",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:ocelot"

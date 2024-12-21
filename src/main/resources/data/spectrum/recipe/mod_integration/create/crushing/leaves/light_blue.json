@@ -1,13 +1,11 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    {
-      "item": "spectrum:light_blue_leaves"
-    }
+    "spectrum:light_blue_leaves"
   ],
   "results": [
     {
-      "item": "spectrum:light_blue_pigment",
+      "id": "spectrum:light_blue_pigment",
       "count": 1,
       "chance": 1.0
     },

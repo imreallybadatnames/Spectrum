@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_circlet"
-    },
+    "spectrum:fanciful_circlet",
     {
       "item": "spectrum:refined_malachite",
       "count": 8
@@ -26,9 +24,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:circlet_of_arrogance"
-  },
+  "result": "spectrum:circlet_of_arrogance",
   "required_advancement": "spectrum:unlocks/trinkets/circlet_of_arrogance",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

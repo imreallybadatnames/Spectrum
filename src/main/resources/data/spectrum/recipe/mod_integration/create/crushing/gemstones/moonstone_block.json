@@ -1,13 +1,11 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    {
-      "item": "spectrum:moonstone_block"
-    }
+    "spectrum:moonstone_block"
   ],
   "results": [
     {
-      "item": "spectrum:moonstone_shard",
+      "id": "spectrum:moonstone_shard",
       "count": 1
     },
     {

@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:exposed_shale_clay_bricks"
-    }
+    "W": "spectrum:exposed_shale_clay_bricks"
   },
   "result": {
-    "item": "spectrum:exposed_shale_clay_tiles",
+    "id": "spectrum:exposed_shale_clay_tiles",
     "count": 4
   }
 }

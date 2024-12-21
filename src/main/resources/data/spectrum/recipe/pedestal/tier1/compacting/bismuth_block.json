@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:bismuth_crystal"
-    }
+    "G": "spectrum:bismuth_crystal"
   },
   "result": {
-    "item": "spectrum:bismuth_block",
+    "id": "spectrum:bismuth_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_bismuth_crystal",

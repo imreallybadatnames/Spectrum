@@ -14,24 +14,14 @@
     "YMY"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:pink_pigment"
-    },
-    "Y": {
-      "item": "spectrum:yellow_pigment"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "M": {
-      "item": "spectrum:mermaids_gem"
-    }
+    "P": "spectrum:pink_pigment",
+    "Y": "spectrum:yellow_pigment",
+    "B": "minecraft:bucket",
+    "S": "spectrum:shimmerstone_gem",
+    "M": "spectrum:mermaids_gem"
   },
   "result": {
-    "item": "spectrum:liquid_crystal_bucket",
+    "id": "spectrum:liquid_crystal_bucket",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/liquid_crystal"

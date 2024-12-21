@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:jadeite_petal_block"
-    }
+    "spectrum:jadeite_petal_block"
   ],
   "result": {
-    "item": "spectrum:jadeite_petals",
+    "id": "spectrum:jadeite_petals",
     "count": 4
   },
   "required_advancement": "spectrum:hidden/collect_jadeite",

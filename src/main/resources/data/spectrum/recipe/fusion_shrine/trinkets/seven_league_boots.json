@@ -6,23 +6,15 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "minecraft:leather_boots"
-    },
-    {
-      "item": "spectrum:four_leaf_clover"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    },
+    "minecraft:leather_boots",
+    "spectrum:four_leaf_clover",
+    "minecraft:phantom_membrane",
     {
       "item": "spectrum:purple_pigment",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:seven_league_boots"
-  },
+  "result": "spectrum:seven_league_boots",
   "required_advancement": "spectrum:unlocks/trinkets/seven_league_boots",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

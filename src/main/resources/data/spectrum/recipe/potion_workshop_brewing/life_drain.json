@@ -1,14 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:downstone_fragments"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:downstone_fragments",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "spectrum:life_drain",
   "base_duration_ticks": 300,
   "potency_modifier": 1.0,

@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:shimmerstone_gem"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:shimmerstone_gem",
   "effect": "minecraft:glowing",
   "base_duration_ticks": 1800,
   "potency_modifier": 0.0,

@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:exposed_shale_clay_tiles"
-    }
+    "W": "spectrum:exposed_shale_clay_tiles"
   },
   "result": {
-    "item": "spectrum:exposed_shale_clay_tile_stairs",
+    "id": "spectrum:exposed_shale_clay_tile_stairs",
     "count": 6
   }
 }

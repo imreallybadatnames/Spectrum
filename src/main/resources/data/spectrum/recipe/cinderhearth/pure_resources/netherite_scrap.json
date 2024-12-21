@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_netherite_scrap"
-  },
+  "ingredient": "spectrum:pure_netherite_scrap",
   "results": [
     {
-      "item": "minecraft:netherite_scrap",
+      "id": "minecraft:netherite_scrap",
       "count": 2
     }
   ],

@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "biomemakeover:wart"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "biomemakeover:wart",
   "effect": "biomemakeover:antidote",
   "base_duration_ticks": 0,
   "potency_modifier": 0,

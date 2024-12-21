@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:blue_planks"
-    }
+    "#": "spectrum:blue_planks"
   },
-  "result": {
-    "item": "spectrum:blue_pressure_plate"
-  }
+  "result": "spectrum:blue_pressure_plate"
 }

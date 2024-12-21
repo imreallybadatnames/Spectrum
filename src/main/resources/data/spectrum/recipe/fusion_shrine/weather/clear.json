@@ -6,9 +6,7 @@
     "fluid": "minecraft:water"
   },
   "ingredients": [
-    {
-      "item": "minecraft:sunflower"
-    }
+    "minecraft:sunflower"
   ],
   "required_advancement": "spectrum:unlocks/weather/clear",
   "world_conditions": [

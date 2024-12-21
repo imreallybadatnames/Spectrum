@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:blue_pigment"
-    },
-    {
-      "item": "spectrum:blue_pigment"
-    },
-    {
-      "item": "minecraft:feather"
-    },
-    {
-      "item": "spectrum:quitoxic_powder"
-    },
-    {
-      "item": "spectrum:blue_pigment"
-    },
-    {
-      "item": "spectrum:blue_pigment"
-    },
-    {
-      "item": "minecraft:feather"
-    },
-    {
-      "item": "spectrum:quitoxic_powder"
-    }
+    "minecraft:book",
+    "spectrum:blue_pigment",
+    "spectrum:blue_pigment",
+    "minecraft:feather",
+    "spectrum:quitoxic_powder",
+    "spectrum:blue_pigment",
+    "spectrum:blue_pigment",
+    "minecraft:feather",
+    "spectrum:quitoxic_powder"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

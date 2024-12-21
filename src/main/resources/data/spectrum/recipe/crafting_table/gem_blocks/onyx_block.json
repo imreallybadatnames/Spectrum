@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:onyx_shard"
-    }
+    "W": "spectrum:onyx_shard"
   },
   "result": {
-    "item": "spectrum:onyx_block",
+    "id": "spectrum:onyx_block",
     "count": 1
   }
 }

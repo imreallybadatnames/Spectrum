@@ -1,9 +1,5 @@
 {
   "type": "spectrum:primordial_fire_burning",
-  "ingredient": {
-    "item": "minecraft:soul_sand"
-  },
-  "result": {
-    "item": "minecraft:sand"
-  }
+  "ingredient": "minecraft:soul_sand",
+  "result": "minecraft:sand"
 }

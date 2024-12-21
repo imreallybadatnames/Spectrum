@@ -15,15 +15,11 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "X": "spectrum:polished_basalt",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:item_bowl_basalt",
+    "id": "spectrum:item_bowl_basalt",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/item_bowl"

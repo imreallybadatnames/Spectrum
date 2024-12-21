@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "sleep_potions",
-  "ingredient1": {
-    "item": "spectrum:nectardew_burgeon"
-  },
-  "ingredient2": {
-    "item": "spectrum:evernectar"
-  },
-  "ingredient3": {
-    "item": "spectrum:moonstone_powder"
-  },
+  "ingredient1": "spectrum:nectardew_burgeon",
+  "ingredient2": "spectrum:evernectar",
+  "ingredient3": "spectrum:moonstone_powder",
   "effect": "spectrum:fatal_slumber",
   "base_duration_ticks": 200,
   "potency_modifier": 0.1,

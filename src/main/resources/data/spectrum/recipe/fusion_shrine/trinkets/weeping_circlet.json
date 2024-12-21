@@ -6,12 +6,8 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_circlet"
-    },
-    {
-      "item": "minecraft:heart_of_the_sea"
-    },
+    "spectrum:fanciful_circlet",
+    "minecraft:heart_of_the_sea",
     {
       "item": "spectrum:mermaids_gem",
       "count": 8
@@ -25,9 +21,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:weeping_circlet"
-  },
+  "result": "spectrum:weeping_circlet",
   "required_advancement": "spectrum:unlocks/trinkets/weeping_circlet",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:basalt_bricks"
-    }
+    "W": "spectrum:basalt_bricks"
   },
   "result": {
-    "item": "spectrum:basalt_brick_slab",
+    "id": "spectrum:basalt_brick_slab",
     "count": 6
   }
 }

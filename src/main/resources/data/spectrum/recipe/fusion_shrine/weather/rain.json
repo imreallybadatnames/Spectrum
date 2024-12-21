@@ -6,9 +6,7 @@
     "fluid": "minecraft:water"
   },
   "ingredients": [
-    {
-      "item": "spectrum:mermaids_gem"
-    }
+    "spectrum:mermaids_gem"
   ],
   "required_advancement": "spectrum:unlocks/weather/rain",
   "world_conditions": [

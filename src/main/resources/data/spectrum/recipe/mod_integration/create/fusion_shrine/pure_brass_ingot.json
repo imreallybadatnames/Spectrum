@@ -6,15 +6,11 @@
     "fluid": "spectrum:dragonrot"
   },
   "ingredients": [
-    {
-      "item": "spectrum:pure_copper"
-    },
-    {
-      "item": "spectrum:pure_zinc"
-    }
+    "spectrum:pure_copper",
+    "spectrum:pure_zinc"
   ],
   "result": {
-    "item": "create:brass_ingot",
+    "id": "create:brass_ingot",
     "count": 4
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

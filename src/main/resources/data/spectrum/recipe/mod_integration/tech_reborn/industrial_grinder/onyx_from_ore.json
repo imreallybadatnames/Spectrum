@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:onyx_ores"
-    }
+    "#spectrum:onyx_ores"
   ],
   "results": [
     {
-      "item": "spectrum:onyx_shard",
+      "id": "spectrum:onyx_shard",
       "count": 6
     },
     {

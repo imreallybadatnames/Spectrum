@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:chestnut_noxwood_planks"
-    }
+    "#": "spectrum:chestnut_noxwood_planks"
   },
-  "result": {
-    "item": "spectrum:chestnut_noxwood_pressure_plate"
-  }
+  "result": "spectrum:chestnut_noxwood_pressure_plate"
 }

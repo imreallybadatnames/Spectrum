@@ -5,12 +5,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:blackslag"
-    }
+    "W": "spectrum:blackslag"
   },
   "result": {
-    "item": "spectrum:blackslag_wall",
+    "id": "spectrum:blackslag_wall",
     "count": 6
   }
 }

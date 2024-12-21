@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "spectrum:moonstone_shard"
-    }
+    "spectrum:moonstone_shard"
   ],
   "results": [
     {
-      "item": "spectrum:moonstone_powder",
+      "id": "spectrum:moonstone_powder",
       "count": 2,
       "chance": 1.0
     }

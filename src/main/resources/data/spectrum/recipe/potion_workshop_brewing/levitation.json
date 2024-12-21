@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:paltaeria_fragments"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:paltaeria_fragments",
   "effect": "minecraft:levitation",
   "base_duration_ticks": 200,
   "potency_modifier": 1.0,

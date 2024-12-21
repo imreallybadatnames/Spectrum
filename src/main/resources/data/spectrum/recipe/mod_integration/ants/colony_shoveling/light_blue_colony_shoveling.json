@@ -1,9 +1,7 @@
 {
   "type": "ants:colony_shoveling",
   "group": "spectrum_leaves_shoveling",
-  "hive_ingredient": {
-    "item": "spectrum:light_blue_leaves"
-  },
+  "hive_ingredient": "spectrum:light_blue_leaves",
   "result" : {
     "item": "minecraft:light_blue_dye",
 	"count": 6

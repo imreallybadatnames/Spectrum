@@ -14,15 +14,9 @@
     "AHA"
   ],
   "key": {
-    "E": {
-      "tag": "c:mushrooms"
-    },
-    "J": {
-      "item": "spectrum:clotted_cream"
-    },
-    "A": {
-      "item": "minecraft:potato"
-    },
+    "E": "#c:mushrooms",
+    "J": "spectrum:clotted_cream",
+    "A": "minecraft:potato",
     "M": {
       "item": "spectrum:infused_beverage",
       "recipeViewNbt": "{Variant: \"malt_beer\", Color: 8272724 }",
@@ -39,12 +33,10 @@
 
       }
     },
-    "H": {
-      "item": "minecraft:cooked_rabbit"
-    }
+    "H": "minecraft:cooked_rabbit"
   },
   "result": {
-    "item": "spectrum:hare_roast",
+    "id": "spectrum:hare_roast",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_1"

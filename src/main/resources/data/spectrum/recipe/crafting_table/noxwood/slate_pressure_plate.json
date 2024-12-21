@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:slate_noxwood_planks"
-    }
+    "#": "spectrum:slate_noxwood_planks"
   },
-  "result": {
-    "item": "spectrum:slate_noxwood_pressure_plate"
-  }
+  "result": "spectrum:slate_noxwood_pressure_plate"
 }

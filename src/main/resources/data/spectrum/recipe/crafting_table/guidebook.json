@@ -6,15 +6,11 @@
     " S "
   ],
   "key": {
-    "S": {
-      "tag": "spectrum:gemstone_shards"
-    },
-    "B": {
-      "item": "minecraft:book"
-    }
+    "S": "#spectrum:gemstone_shards",
+    "B": "minecraft:book"
   },
   "result": {
-    "item": "spectrum:guidebook",
+    "id": "spectrum:guidebook",
     "count": 1
   }
 }

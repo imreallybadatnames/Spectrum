@@ -15,18 +15,12 @@
     "SSS"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:chestnut_noxcap_stem"
-    },
-    "G": {
-      "item": "spectrum:chestnut_noxcap_gills"
-    },
-    "X": {
-      "item": "spectrum:shimmerstone_block"
-    }
+    "S": "spectrum:chestnut_noxcap_stem",
+    "G": "spectrum:chestnut_noxcap_gills",
+    "X": "spectrum:shimmerstone_block"
   },
   "result": {
-    "item": "spectrum:chestnut_noxwood_light",
+    "id": "spectrum:chestnut_noxwood_light",
     "count": 4
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

@@ -9,21 +9,13 @@
   "white": 0,
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "spectrum:amaranth_grains"
-    },
-    {
-      "tag": "c:eggs"
-    },
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    {
-      "item": "spectrum:clotted_cream"
-    }
+    "spectrum:amaranth_grains",
+    "#c:eggs",
+    "minecraft:sweet_berries",
+    "spectrum:clotted_cream"
   ],
   "result": {
-    "item": "spectrum:scone",
+    "id": "spectrum:scone",
     "count": 2
   },
   "required_advancement": "spectrum:collect_amaranth_bushel"

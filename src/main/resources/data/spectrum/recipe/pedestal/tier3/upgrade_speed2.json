@@ -13,15 +13,11 @@
     "U"
   ],
   "ingredients": [
-    {
-      "item": "spectrum:storm_stone"
-    },
-    {
-      "item": "spectrum:upgrade_speed"
-    }
+    "spectrum:storm_stone",
+    "spectrum:upgrade_speed"
   ],
   "result": {
-    "item": "spectrum:upgrade_speed2",
+    "id": "spectrum:upgrade_speed2",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_speed2"

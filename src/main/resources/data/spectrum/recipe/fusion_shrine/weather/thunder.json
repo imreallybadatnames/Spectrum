@@ -6,9 +6,7 @@
     "fluid": "minecraft:water"
   },
   "ingredients": [
-    {
-      "item": "spectrum:storm_stone"
-    }
+    "spectrum:storm_stone"
   ],
   "required_advancement": "spectrum:unlocks/weather/thunder",
   "world_conditions": [

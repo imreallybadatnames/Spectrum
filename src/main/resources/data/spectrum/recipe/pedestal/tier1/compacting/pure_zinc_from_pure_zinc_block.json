@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:pure_zinc_block"
-    }
+    "spectrum:pure_zinc_block"
   ],
   "result": {
-    "item": "spectrum:pure_zinc",
+    "id": "spectrum:pure_zinc",
     "count": 9
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

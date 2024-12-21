@@ -14,12 +14,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:radiant_glass"
-    }
+    "G": "spectrum:radiant_glass"
   },
   "result": {
-    "item": "spectrum:radiant_glass_pane",
+    "id": "spectrum:radiant_glass_pane",
     "count": 16
   },
   "required_advancement": "spectrum:unlocks/blocks/radiant_glass"

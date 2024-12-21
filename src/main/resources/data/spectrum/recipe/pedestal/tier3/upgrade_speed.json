@@ -14,27 +14,15 @@
     "YCY"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:polished_calcite"
-    },
-    "Y": {
-      "item": "spectrum:polished_basalt"
-    },
-    "A": {
-      "item": "minecraft:amethyst_block"
-    },
-    "T": {
-      "item": "spectrum:topaz_block"
-    },
-    "C": {
-      "item": "spectrum:citrine_block"
-    },
-    "P": {
-      "item": "spectrum:magenta_pigment"
-    }
+    "X": "spectrum:polished_calcite",
+    "Y": "spectrum:polished_basalt",
+    "A": "minecraft:amethyst_block",
+    "T": "spectrum:topaz_block",
+    "C": "spectrum:citrine_block",
+    "P": "spectrum:magenta_pigment"
   },
   "result": {
-    "item": "spectrum:upgrade_speed",
+    "id": "spectrum:upgrade_speed",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/upgrades/upgrade_speed"

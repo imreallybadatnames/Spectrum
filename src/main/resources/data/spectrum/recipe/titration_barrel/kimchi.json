@@ -19,7 +19,7 @@
   },
   "min_fermentation_time_hours": 4,
   "result": {
-    "item": "spectrum:kimchi",
+    "id": "spectrum:kimchi",
     "count": 8
   }
 }

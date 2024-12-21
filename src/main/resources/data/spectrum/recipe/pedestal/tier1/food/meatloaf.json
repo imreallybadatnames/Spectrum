@@ -14,18 +14,10 @@
     "JEJ"
   ],
   "key": {
-    "E": {
-      "item": "spectrum:lizard_meat"
-    },
-    "A": {
-      "item": "minecraft:beetroot"
-    },
-    "M": {
-      "item": "spectrum:myceylon"
-    },
-    "H": {
-      "item": "minecraft:honey_bottle"
-    },
+    "E": "spectrum:lizard_meat",
+    "A": "minecraft:beetroot",
+    "M": "spectrum:myceylon",
+    "H": "minecraft:honey_bottle",
     "J": {
       "item": "spectrum:infused_beverage",
       "recipeViewNbt": "{Variant: \"malt_beer\", Color: 8272724 }",
@@ -44,7 +36,7 @@
     }
   },
   "result": {
-    "item": "spectrum:meatloaf",
+    "id": "spectrum:meatloaf",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_1"

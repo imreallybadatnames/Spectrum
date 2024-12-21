@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:sandstone_slab"
-  },
+  "ingredient": "minecraft:sandstone_slab",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0,
   "result": {
-    "item": "minecraft:sand",
+    "id": "minecraft:sand",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

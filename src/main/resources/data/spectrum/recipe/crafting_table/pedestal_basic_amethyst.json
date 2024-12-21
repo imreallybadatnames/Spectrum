@@ -6,24 +6,14 @@
     "CRC"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "W": {
-      "item": "spectrum:polished_basalt"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "tag": "minecraft:planks"
-    }
+    "S": "minecraft:amethyst_shard",
+    "C": "spectrum:polished_calcite",
+    "W": "spectrum:polished_basalt",
+    "R": "minecraft:redstone",
+    "T": "#minecraft:planks"
   },
   "result": {
-    "item": "spectrum:pedestal_basic_amethyst",
+    "id": "spectrum:pedestal_basic_amethyst",
     "count": 1
   }
 }

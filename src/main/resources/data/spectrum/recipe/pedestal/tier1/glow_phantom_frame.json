@@ -15,24 +15,14 @@
     "SFS"
   ],
   "key": {
-    "L": {
-      "item": "minecraft:leather"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "C": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "F": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "G": {
-      "item": "minecraft:glow_ink_sac"
-    }
+    "L": "minecraft:leather",
+    "S": "minecraft:stick",
+    "C": "spectrum:shimmerstone_gem",
+    "F": "minecraft:phantom_membrane",
+    "G": "minecraft:glow_ink_sac"
   },
   "result": {
-    "item": "spectrum:glow_phantom_frame",
+    "id": "spectrum:glow_phantom_frame",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/phantom_frames"

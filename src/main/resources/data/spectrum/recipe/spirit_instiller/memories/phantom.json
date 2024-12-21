@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:phantom_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:phantom_membrane"
-  },
+  "ingredient1": "spectrum:phantom_head",
+  "ingredient2": "minecraft:phantom_membrane",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:phantom"

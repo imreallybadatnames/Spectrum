@@ -1,9 +1,7 @@
 {
   "type": "alloy_forgery:forging",
   "inputs": [
-    {
-      "item": "spectrum:dragonbone_chunk"
-    }
+    "spectrum:dragonbone_chunk"
   ],
   "output": {
     "id": "spectrum:bone_ash",

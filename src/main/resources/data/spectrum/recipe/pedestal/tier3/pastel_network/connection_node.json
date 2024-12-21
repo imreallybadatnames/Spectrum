@@ -15,21 +15,13 @@
     "YXY"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:quartz"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    },
-    "A": {
-      "item": "spectrum:raw_azurite"
-    }
+    "S": "minecraft:quartz",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite",
+    "A": "spectrum:raw_azurite"
   },
   "result": {
-    "item": "spectrum:connection_node",
+    "id": "spectrum:connection_node",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/blocks/pastel_network"

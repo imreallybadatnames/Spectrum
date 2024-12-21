@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "minecraft:iron_ingot"
-  },
+  "ingredient": "minecraft:iron_ingot",
   "results": [
     {
-      "item": "techreborn:refined_iron_ingot",
+      "id": "techreborn:refined_iron_ingot",
       "count": 2
     }
   ],

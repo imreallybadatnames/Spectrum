@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_quartz"
-    }
+    "G": "spectrum:pure_quartz"
   },
   "result": {
-    "item": "spectrum:pure_quartz_block",
+    "id": "spectrum:pure_quartz_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

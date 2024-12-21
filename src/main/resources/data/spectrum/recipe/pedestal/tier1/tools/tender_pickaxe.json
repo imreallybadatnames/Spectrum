@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "T": {
-      "item": "spectrum:topaz_shard"
-    },
-    "M": {
-      "item": "spectrum:mermaids_gem"
-    }
+    "S": "minecraft:smooth_basalt",
+    "T": "spectrum:topaz_shard",
+    "M": "spectrum:mermaids_gem"
   },
   "result": {
-    "item": "spectrum:tender_pickaxe",
+    "id": "spectrum:tender_pickaxe",
     "nbt": {
       "Enchantments": [
         {

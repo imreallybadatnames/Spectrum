@@ -15,21 +15,13 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:chestnut_noxwood_slab"
-    },
-    "P": {
-      "item": "spectrum:chestnut_noxwood_planks"
-    },
-    "I": {
-      "item": "minecraft:copper_ingot"
-    },
-    "A": {
-      "item": "minecraft:paper"
-    }
+    "S": "spectrum:chestnut_noxwood_slab",
+    "P": "spectrum:chestnut_noxwood_planks",
+    "I": "minecraft:copper_ingot",
+    "A": "minecraft:paper"
   },
   "result": {
-    "item": "spectrum:chestnut_noxwood_amphora",
+    "id": "spectrum:chestnut_noxwood_amphora",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

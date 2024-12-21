@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:citrine_shard"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:citrine_shard",
   "effect": "spectrum:nourishing",
   "base_duration_ticks": 900,
   "potency_modifier": 1.0,

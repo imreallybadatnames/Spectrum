@@ -5,12 +5,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:blackslag_tiles"
-    }
+    "W": "spectrum:blackslag_tiles"
   },
   "result": {
-    "item": "spectrum:blackslag_tile_wall",
+    "id": "spectrum:blackslag_tile_wall",
     "count": 6
   }
 }

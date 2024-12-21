@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "malum",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "malum:rotting_essence"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "malum:rotting_essence",
   "effect": "minecraft:poison",
   "base_duration_ticks": 900,
   "potency_modifier": 1.0,

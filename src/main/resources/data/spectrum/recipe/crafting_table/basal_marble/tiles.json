@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:basal_marble_bricks"
-    }
+    "W": "spectrum:basal_marble_bricks"
   },
   "result": {
-    "item": "spectrum:basal_marble_tiles",
+    "id": "spectrum:basal_marble_tiles",
     "count": 4
   }
 }

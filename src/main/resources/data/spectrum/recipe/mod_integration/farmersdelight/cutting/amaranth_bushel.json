@@ -1,18 +1,14 @@
 {
   "type": "farmersdelight:cutting",
   "ingredients": [
-    {
-      "item": "spectrum:amaranth_bushel"
-    }
+    "spectrum:amaranth_bushel"
   ],
   "result": [
     {
       "item": "spectrum:amaranth_grains",
       "count": 2
     },
-    {
-      "item": "farmersdelight:straw"
-    }
+    "farmersdelight:straw"
   ],
   "tool": {
     "tag": "c:tools/knives"

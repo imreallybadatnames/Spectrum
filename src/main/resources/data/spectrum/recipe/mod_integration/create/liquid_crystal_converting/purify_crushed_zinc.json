@@ -1,11 +1,9 @@
 {
   "type": "spectrum:liquid_crystal_converting",
   "required_advancement": "spectrum:unlocks/blocks/liquid_crystal",
-  "ingredient": {
-    "item": "create:crushed_raw_zinc"
-  },
+  "ingredient": "create:crushed_raw_zinc",
   "result": {
-    "item": "minecraft:gunpowder",
+    "id": "minecraft:gunpowder",
     "count": 1
   },
   "fabric:load_conditions": [

@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:topaz_powder"
-    }
+    "A": "spectrum:topaz_powder"
   },
   "result": {
-    "item": "spectrum:topaz_powder_block",
+    "id": "spectrum:topaz_powder_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_shards/topaz",

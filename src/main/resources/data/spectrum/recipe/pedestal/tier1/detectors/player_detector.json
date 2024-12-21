@@ -14,21 +14,13 @@
     "SSS"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:glass"
-    },
-    "C": {
-      "item": "spectrum:onyx_shard"
-    },
-    "Q": {
-      "item": "minecraft:quartz"
-    },
-    "S": {
-      "tag": "minecraft:wooden_slabs"
-    }
+    "B": "minecraft:glass",
+    "C": "spectrum:onyx_shard",
+    "Q": "minecraft:quartz",
+    "S": "#minecraft:wooden_slabs"
   },
   "result": {
-    "item": "spectrum:player_detector",
+    "id": "spectrum:player_detector",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/player_detector"

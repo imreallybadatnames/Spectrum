@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "minecraft:ancient_debris"
-  },
+  "ingredient": "minecraft:ancient_debris",
   "results": [
     {
-      "item": "minecraft:netherite_scrap",
+      "id": "minecraft:netherite_scrap",
       "count": 1
     },
     {

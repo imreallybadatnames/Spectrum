@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:medium_citrine_bud"
-  },
+  "ingredient": "spectrum:medium_citrine_bud",
   "crushedItemsPerPointOfDamage": 0.6,
   "experience": 0.4,
   "result": {
-    "item": "spectrum:citrine_powder",
+    "id": "spectrum:citrine_powder",
     "count": 6
   },
   "particleEffectIdentifier": "explosion",

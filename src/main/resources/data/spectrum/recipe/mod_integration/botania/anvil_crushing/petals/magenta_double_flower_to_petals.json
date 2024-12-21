@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "botania:magenta_double_flower"
-  },
+  "ingredient": "botania:magenta_double_flower",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.2,
   "result": {
-    "item": "botania:magenta_petal",
+    "id": "botania:magenta_petal",
     "count": 8
   },
   "particleEffectIdentifier": "cloud",

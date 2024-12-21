@@ -15,15 +15,11 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:weeping_gala_slab"
-    },
-    "P": {
-      "item": "spectrum:weeping_gala_planks"
-    }
+    "S": "spectrum:weeping_gala_slab",
+    "P": "spectrum:weeping_gala_planks"
   },
   "result": {
-    "item": "spectrum:weeping_gala_barrel",
+    "id": "spectrum:weeping_gala_barrel",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_weeping_gala"

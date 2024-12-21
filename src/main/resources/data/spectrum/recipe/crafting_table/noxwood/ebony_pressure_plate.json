@@ -5,11 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:ebony_noxwood_planks"
-    }
+    "#": "spectrum:ebony_noxwood_planks"
   },
-  "result": {
-    "item": "spectrum:ebony_noxwood_pressure_plate"
-  }
+  "result": "spectrum:ebony_noxwood_pressure_plate"
 }

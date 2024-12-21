@@ -1,10 +1,8 @@
 {
   "type": "spectrum:midnight_solution_converting",
-  "ingredient": {
-    "item": "neepmeat:polished_metal"
-  },
+  "ingredient": "neepmeat:polished_metal",
   "result": {
-    "item": "neepmeat:rusty_metal",
+    "id": "neepmeat:rusty_metal",
     "count": 1
   },
   "fabric:load_conditions": [

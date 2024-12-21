@@ -14,18 +14,10 @@
     "PBP"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "B": {
-      "item": "minecraft:bamboo"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    }
+    "A": "minecraft:phantom_membrane",
+    "B": "minecraft:bamboo",
+    "P": "spectrum:purple_pigment"
   },
-  "result": {
-    "item": "spectrum:enchantment_canvas"
-  },
+  "result": "spectrum:enchantment_canvas",
   "required_advancement": "spectrum:unlocks/items/enchantment_canvas"
 }

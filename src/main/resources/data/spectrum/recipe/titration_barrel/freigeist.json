@@ -29,7 +29,7 @@
   "min_fermentation_time_hours": 48,
   "tapping_item": "minecraft:glass_bottle",
   "result": {
-    "item": "spectrum:freigeist",
+    "id": "spectrum:freigeist",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/food/freigeist"

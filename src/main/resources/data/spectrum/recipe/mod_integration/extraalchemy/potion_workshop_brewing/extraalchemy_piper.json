@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:wheat"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:wheat",
   "effect": "extraalchemy:piper",
   "base_duration_ticks": 2400,
   "potency_modifier": 0,

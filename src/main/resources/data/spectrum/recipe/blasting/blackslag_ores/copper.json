@@ -1,9 +1,7 @@
 {
   "type": "minecraft:blasting",
   "group": "copper",
-  "ingredient": {
-    "item": "spectrum:blackslag_copper_ore"
-  },
+  "ingredient": "spectrum:blackslag_copper_ore",
   "result": "minecraft:raw_copper",
   "experience": 1.0,
   "cookingtime": 100

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:white_tulip"
-  },
+  "ingredient": "minecraft:white_tulip",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:light_gray_dye",
+    "id": "minecraft:light_gray_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

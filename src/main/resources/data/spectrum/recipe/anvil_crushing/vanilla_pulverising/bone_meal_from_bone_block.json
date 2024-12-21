@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:bone_block"
-  },
+  "ingredient": "minecraft:bone_block",
   "crushedItemsPerPointOfDamage": 1.5,
   "experience": 0,
   "result": {
-    "item": "minecraft:bone_meal",
+    "id": "minecraft:bone_meal",
     "count": 9
   },
   "particleEffectIdentifier": "cloud",

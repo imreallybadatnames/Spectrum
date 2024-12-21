@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_bismuth_ring"
-    },
+    "spectrum:fanciful_bismuth_ring",
     {
       "item": "spectrum:incandescent_essence",
       "count": 8
@@ -22,9 +20,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:ring_of_pursuit"
-  },
+  "result": "spectrum:ring_of_pursuit",
   "required_advancement": "spectrum:unlocks/trinkets/ring_of_pursuit",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

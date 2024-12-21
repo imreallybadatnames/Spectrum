@@ -14,21 +14,13 @@
     "BBB"
   ],
   "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:storm_stone"
-    },
-    "B": {
-      "item": "spectrum:polished_bone_ash"
-    },
-    "C": {
-      "item": "spectrum:pyrite"
-    }
+    "R": "minecraft:redstone",
+    "S": "spectrum:storm_stone",
+    "B": "spectrum:polished_bone_ash",
+    "C": "spectrum:pyrite"
   },
   "result": {
-    "item": "spectrum:block_breaker",
+    "id": "spectrum:block_breaker",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/block_breaker"

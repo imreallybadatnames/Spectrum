@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:salmon"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:salmon",
   "effect": "extraalchemy:sails",
   "base_duration_ticks": 2400,
   "potency_modifier": 1.0,

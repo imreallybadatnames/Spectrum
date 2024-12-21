@@ -14,30 +14,16 @@
     "AWA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "C": {
-      "item": "spectrum:clotted_cream"
-    },
-    "M": {
-      "tag": "spectrum:common_meats"
-    },
-    "F": {
-      "tag": "spectrum:water_meats"
-    },
-    "L": {
-      "tag": "spectrum:lean_meats"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "W": {
-      "tag": "spectrum:drinkable_spirits"
-    }
+    "A": "spectrum:amaranth_grains",
+    "C": "spectrum:clotted_cream",
+    "M": "#spectrum:common_meats",
+    "F": "#spectrum:water_meats",
+    "L": "#spectrum:lean_meats",
+    "E": "#c:eggs",
+    "W": "#spectrum:drinkable_spirits"
   },
   "result": {
-    "item": "spectrum:triple_meat_pot_pie",
+    "id": "spectrum:triple_meat_pot_pie",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/triple_meat_pot_pie"

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:cornflower"
-  },
+  "ingredient": "minecraft:cornflower",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:blue_dye",
+    "id": "minecraft:blue_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

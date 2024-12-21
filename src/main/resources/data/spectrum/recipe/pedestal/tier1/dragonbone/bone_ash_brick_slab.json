@@ -13,12 +13,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:bone_ash_bricks"
-    }
+    "W": "spectrum:bone_ash_bricks"
   },
   "result": {
-    "item": "spectrum:bone_ash_brick_slab",
+    "id": "spectrum:bone_ash_brick_slab",
     "count": 6
   },
   "required_advancement": "spectrum:break_cracked_dragonbone",

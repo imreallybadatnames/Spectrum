@@ -1,9 +1,7 @@
 {
   "type": "farmersdelight:cutting",
   "ingredients": [
-    {
-      "item": "spectrum:onyx_block"
-    }
+    "spectrum:onyx_block"
   ],
   "result": [
     {

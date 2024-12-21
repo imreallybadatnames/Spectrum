@@ -7,15 +7,9 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:diamond_pickaxe"
-    },
-    {
-      "item": "minecraft:diamond_axe"
-    },
-    {
-      "item": "minecraft:diamond_shovel"
-    },
+    "minecraft:diamond_pickaxe",
+    "minecraft:diamond_axe",
+    "minecraft:diamond_shovel",
     {
       "item": "spectrum:refined_malachite",
       "count": 8
@@ -34,7 +28,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:malachite_workstaff",
+    "id": "spectrum:malachite_workstaff",
     "nbt": {
       "Enchantments": [
         {

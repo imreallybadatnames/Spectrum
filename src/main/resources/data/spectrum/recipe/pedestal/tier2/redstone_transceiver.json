@@ -13,21 +13,13 @@
     "SSS"
   ],
   "key": {
-    "O": {
-      "item": "spectrum:onyx_shard"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "S": {
-      "item": "minecraft:stone"
-    }
+    "O": "spectrum:onyx_shard",
+    "R": "minecraft:redstone",
+    "T": "minecraft:redstone_torch",
+    "S": "minecraft:stone"
   },
   "result": {
-    "item": "spectrum:redstone_transceiver",
+    "id": "spectrum:redstone_transceiver",
     "count": 2
   },
   "required_advancement": "spectrum:create_onyx_shard"

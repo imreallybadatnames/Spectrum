@@ -6,15 +6,11 @@
     "W#W"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "W": {
-      "item": "spectrum:ebony_noxwood_planks"
-    }
+    "#": "minecraft:stick",
+    "W": "spectrum:ebony_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:ebony_noxwood_fence",
+    "id": "spectrum:ebony_noxwood_fence",
     "count": 3
   }
 }

@@ -15,24 +15,14 @@
     "CIC"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:chestnut_noxwood_slab"
-    },
-    "G": {
-      "item": "spectrum:chestnut_noxcap_gills"
-    },
-    "C": {
-      "item": "spectrum:chestnut_noxcap_block"
-    },
-    "I": {
-      "item": "minecraft:copper_ingot"
-    },
-    "H": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:chestnut_noxwood_slab",
+    "G": "spectrum:chestnut_noxcap_gills",
+    "C": "spectrum:chestnut_noxcap_block",
+    "I": "minecraft:copper_ingot",
+    "H": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:chestnut_noxwood_lantern",
+    "id": "spectrum:chestnut_noxwood_lantern",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

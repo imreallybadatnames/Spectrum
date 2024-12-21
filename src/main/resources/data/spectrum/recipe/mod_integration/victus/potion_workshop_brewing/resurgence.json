@@ -1,14 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:ghast_tear"
-  },
-  "ingredient3": {
-    "item": "minecraft:magma_cream"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:ghast_tear",
+  "ingredient3": "minecraft:magma_cream",
   "effect": "victus:resurgence",
   "base_duration_ticks": 400,
   "potency_modifier": 1.0,

@@ -14,18 +14,12 @@
     "S  "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "G": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "B": {
-      "item": "spectrum:blue_pigment"
-    }
+    "S": "minecraft:stick",
+    "G": "spectrum:shimmerstone_gem",
+    "B": "spectrum:blue_pigment"
   },
   "result": {
-    "item": "spectrum:radiance_staff",
+    "id": "spectrum:radiance_staff",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/radiance_staff"

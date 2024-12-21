@@ -13,9 +13,7 @@
 		"BB"
 	],
 	"key": {
-		"B": {
-			"item": "spectrum:resplendent_block"
-		}
+      "B": "spectrum:resplendent_block"
 	},
 	"result": {
 		"item": "spectrum:resplendent_carpet",

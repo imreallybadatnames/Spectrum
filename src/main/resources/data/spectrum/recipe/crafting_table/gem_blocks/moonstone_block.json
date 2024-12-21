@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:moonstone_shard"
-    }
+    "W": "spectrum:moonstone_shard"
   },
   "result": {
-    "item": "spectrum:moonstone_block",
+    "id": "spectrum:moonstone_block",
     "count": 1
   }
 }

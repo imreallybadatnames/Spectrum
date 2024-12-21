@@ -15,21 +15,13 @@
     "III"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:chestnut_noxcap_stem"
-    },
-    "G": {
-      "item": "spectrum:chestnut_noxcap_gills"
-    },
-    "I": {
-      "item": "minecraft:copper_ingot"
-    },
-    "X": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:chestnut_noxcap_stem",
+    "G": "spectrum:chestnut_noxcap_gills",
+    "I": "minecraft:copper_ingot",
+    "X": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:chestnut_noxwood_lamp",
+    "id": "spectrum:chestnut_noxwood_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

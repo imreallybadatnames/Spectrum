@@ -1,15 +1,11 @@
 {
   "type": "spectrum:potion_workshop_crafting",
-  "base_ingredient": {
-    "item": "minecraft:bucket"
-  },
+  "base_ingredient": "minecraft:bucket",
   "use_up_base_ingredient": true,
   "color": 2451682,
   "ingredient1": {
     "item": "spectrum:light_blue_pigment",
     "count": 4
   },
-  "result": {
-    "item": "minecraft:water_bucket"
-  }
+  "result": "minecraft:water_bucket"
 }

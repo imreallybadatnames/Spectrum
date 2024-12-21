@@ -5,12 +5,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_calcite"
-    }
+    "W": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:polished_calcite_wall",
+    "id": "spectrum:polished_calcite_wall",
     "count": 6
   }
 }

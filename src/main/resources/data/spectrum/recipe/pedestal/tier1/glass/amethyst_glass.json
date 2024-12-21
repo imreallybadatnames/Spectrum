@@ -15,15 +15,11 @@
     "GPG"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "P": "minecraft:amethyst_shard",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:amethyst_glass",
+    "id": "spectrum:amethyst_glass",
     "count": 8
   },
   "required_advancement": "spectrum:hidden/collect_shards/amethyst"

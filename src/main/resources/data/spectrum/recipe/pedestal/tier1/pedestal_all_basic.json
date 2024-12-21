@@ -9,18 +9,12 @@
   "black": 0,
   "experience": 4.0,
   "ingredients": [
-    {
-      "item": "spectrum:topaz_shard"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "spectrum:citrine_shard"
-    }
+    "spectrum:topaz_shard",
+    "minecraft:amethyst_shard",
+    "spectrum:citrine_shard"
   ],
   "result": {
-    "item": "spectrum:pedestal_all_basic",
+    "id": "spectrum:pedestal_all_basic",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/cmy_pedestal",

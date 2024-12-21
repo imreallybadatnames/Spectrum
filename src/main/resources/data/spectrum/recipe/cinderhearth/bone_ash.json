@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:dragonbone_chunk"
-  },
+  "ingredient": "spectrum:dragonbone_chunk",
   "results": [
     {
-      "item": "spectrum:bone_ash",
+      "id": "spectrum:bone_ash",
       "count": 45
     }
   ],

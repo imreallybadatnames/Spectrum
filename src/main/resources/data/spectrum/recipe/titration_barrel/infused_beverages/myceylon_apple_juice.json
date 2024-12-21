@@ -29,7 +29,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "count": 4,
     "nbt": {
       "Variant": "myceylon_apple_juice",

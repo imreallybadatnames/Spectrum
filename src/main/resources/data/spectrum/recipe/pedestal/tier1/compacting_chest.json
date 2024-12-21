@@ -14,21 +14,13 @@
     "TBT"
   ],
   "key": {
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "B": {
-      "item": "minecraft:copper_block"
-    },
-    "T": {
-      "item": "spectrum:polished_basalt"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
+    "C": "minecraft:copper_ingot",
+    "B": "minecraft:copper_block",
+    "T": "spectrum:polished_basalt",
+    "I": "minecraft:iron_ingot"
   },
   "result": {
-    "item": "spectrum:compacting_chest",
+    "id": "spectrum:compacting_chest",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/compacting_chest"

@@ -14,24 +14,14 @@
     "PPP"
   ],
   "key": {
-    "C": {
-      "item": "spectrum:cyan_pigment"
-    },
-    "M": {
-      "item": "spectrum:magenta_pigment"
-    },
-    "Y": {
-      "item": "spectrum:yellow_pigment"
-    },
-    "P": {
-      "item": "spectrum:polished_calcite"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    }
+    "C": "spectrum:cyan_pigment",
+    "M": "spectrum:magenta_pigment",
+    "Y": "spectrum:yellow_pigment",
+    "P": "spectrum:polished_calcite",
+    "B": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:color_picker",
+    "id": "spectrum:color_picker",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/color_picker"

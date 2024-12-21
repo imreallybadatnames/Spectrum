@@ -14,18 +14,12 @@
     "EPE"
   ],
   "key": {
-    "E": {
-      "item": "minecraft:ender_eye"
-    },
-    "R": {
-      "item": "spectrum:radiating_ender"
-    },
-    "P": {
-      "item": "spectrum:paltaeria_fragments"
-    }
+    "E": "minecraft:ender_eye",
+    "R": "spectrum:radiating_ender",
+    "P": "spectrum:paltaeria_fragments"
   },
   "result": {
-    "item": "spectrum:perturbed_eye",
+    "id": "spectrum:perturbed_eye",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/items/perturbed_eye"

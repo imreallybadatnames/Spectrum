@@ -2,12 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "spectrum:light_gray_logs"
-    }
+    "#spectrum:light_gray_logs"
   ],
   "result": {
-    "item": "spectrum:light_gray_planks",
+    "id": "spectrum:light_gray_planks",
     "count": 4
   }
 }

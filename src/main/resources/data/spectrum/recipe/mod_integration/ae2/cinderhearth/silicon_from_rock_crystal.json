@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:rock_crystal"
-  },
+  "ingredient": "spectrum:rock_crystal",
   "results": [
     {
-      "item": "ae2:silicon",
+      "id": "ae2:silicon",
       "count": 24
     }
   ],

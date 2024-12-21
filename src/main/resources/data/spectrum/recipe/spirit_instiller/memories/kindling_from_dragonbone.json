@@ -7,15 +7,13 @@
     "item": "spectrum:dragonbone_chunk",
     "count": 8
   },
-  "ingredient2": {
-    "tag": "spectrum:kindling_food"
-  },
+  "ingredient2": "#spectrum:kindling_food",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "spectrum:kindling"

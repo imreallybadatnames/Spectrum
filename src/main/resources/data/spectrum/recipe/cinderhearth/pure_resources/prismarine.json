@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_prismarine"
-  },
+  "ingredient": "spectrum:pure_prismarine",
   "results": [
     {
-      "item": "minecraft:prismarine_crystals",
+      "id": "minecraft:prismarine_crystals",
       "count": 4
     },
     {

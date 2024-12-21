@@ -1,9 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "the_bumblezone",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
+  "ingredient1": "minecraft:nether_wart",
   "ingredient2": {
     "item": "the_bumblezone:bee_stinger"
   },

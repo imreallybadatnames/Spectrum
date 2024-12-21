@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:vex_head"
-  },
-  "ingredient2": {
-    "tag": "minecraft:banners"
-  },
+  "ingredient1": "spectrum:vex_head",
+  "ingredient2": "#minecraft:banners",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:vex"

@@ -1,17 +1,13 @@
 {
   "type": "spectrum:anvil_crushing",
   "ingredient": [
-    {
-      "item": "spectrum:small_fluix_bud"
-    },
-    {
-      "item": "spectrum:large_fluix_bud"
-    }
+    "spectrum:small_fluix_bud",
+    "spectrum:large_fluix_bud"
   ],
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 2.0,
   "result": {
-    "item": "ae2:fluix_dust",
+    "id": "ae2:fluix_dust",
     "count": 2
   },
   "particleEffectIdentifier": "explosion",

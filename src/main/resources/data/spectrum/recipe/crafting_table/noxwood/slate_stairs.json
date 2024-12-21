@@ -7,12 +7,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:slate_noxwood_planks"
-    }
+    "#": "spectrum:slate_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:slate_noxwood_stairs",
+    "id": "spectrum:slate_noxwood_stairs",
     "count": 4
   }
 }

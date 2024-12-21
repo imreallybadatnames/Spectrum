@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:infested_mossy_stone_bricks"
-  },
+  "ingredient": "minecraft:infested_mossy_stone_bricks",
   "crushedItemsPerPointOfDamage": 0.5,
   "experience": 0,
   "result": {
-    "item": "minecraft:mossy_cobblestone",
+    "id": "minecraft:mossy_cobblestone",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

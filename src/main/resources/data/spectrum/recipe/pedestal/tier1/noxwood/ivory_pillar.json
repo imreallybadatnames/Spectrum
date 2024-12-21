@@ -15,15 +15,11 @@
     "CC"
   ],
   "key": {
-    "S": {
-      "tag": "spectrum:ivory_noxcap_stems"
-    },
-    "C": {
-      "item": "spectrum:ivory_noxcap_block"
-    }
+    "S": "#spectrum:ivory_noxcap_stems",
+    "C": "spectrum:ivory_noxcap_block"
   },
   "result": {
-    "item": "spectrum:ivory_noxwood_pillar",
+    "id": "spectrum:ivory_noxwood_pillar",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

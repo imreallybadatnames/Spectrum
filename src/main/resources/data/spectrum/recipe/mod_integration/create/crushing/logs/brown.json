@@ -1,13 +1,11 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    {
-      "tag": "spectrum:brown_logs"
-    }
+    "#spectrum:brown_logs"
   ],
   "results": [
     {
-      "item": "spectrum:brown_pigment",
+      "id": "spectrum:brown_pigment",
       "count": 1,
       "chance": 1.0
     },

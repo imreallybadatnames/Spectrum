@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:ancient_debris"
-  },
+  "ingredient": "minecraft:ancient_debris",
   "crushedItemsPerPointOfDamage": 0.01,
   "experience": 2.0,
   "result": {
-    "item": "create:cinder_flour",
+    "id": "create:cinder_flour",
     "count": 64
   },
   "particleEffectIdentifier": "enchanted_hit",

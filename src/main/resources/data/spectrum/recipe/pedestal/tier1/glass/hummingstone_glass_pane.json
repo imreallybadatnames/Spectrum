@@ -13,12 +13,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:hummingstone_glass"
-    }
+    "G": "spectrum:hummingstone_glass"
   },
   "result": {
-    "item": "spectrum:hummingstone_glass_pane",
+    "id": "spectrum:hummingstone_glass_pane",
     "count": 16
   },
   "required_advancement": "spectrum:lategame/collect_hummingstone"

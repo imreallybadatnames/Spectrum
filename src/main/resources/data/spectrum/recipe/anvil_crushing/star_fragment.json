@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "tag": "spectrum:shooting_stars"
-  },
+  "ingredient": "#spectrum:shooting_stars",
   "crushedItemsPerPointOfDamage": 0.3,
   "experience": 5.0,
   "result": {
-    "item": "spectrum:star_fragment",
+    "id": "spectrum:star_fragment",
     "count": 2
   },
   "particleEffectIdentifier": "explosion",

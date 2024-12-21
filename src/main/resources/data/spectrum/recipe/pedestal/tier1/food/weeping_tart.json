@@ -14,24 +14,14 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "M": {
-      "tag": "c:milk"
-    },
-    "K": {
-      "item": "minecraft:kelp"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "E": "#c:eggs",
+    "M": "#c:milk",
+    "K": "minecraft:kelp"
   },
   "result": {
-    "item": "spectrum:weeping_tart",
+    "id": "spectrum:weeping_tart",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/tarts"

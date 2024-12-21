@@ -10,12 +10,10 @@
   "white": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:stratine_floatblock"
-    }
+    "spectrum:stratine_floatblock"
   ],
   "result": {
-    "item": "spectrum:stratine_fragments",
+    "id": "spectrum:stratine_fragments",
     "count": 9
   },
   "required_advancement": "spectrum:midgame/carry_too_many_heavy_gravity_blocks",

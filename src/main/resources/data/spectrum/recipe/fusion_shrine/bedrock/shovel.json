@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_shovel"
-    },
+    "minecraft:golden_shovel",
     {
       "item": "spectrum:bedrock_dust",
       "count": 1
@@ -33,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_shovel",
+    "id": "spectrum:bedrock_shovel",
     "nbt": {
       "Enchantments": [
         {

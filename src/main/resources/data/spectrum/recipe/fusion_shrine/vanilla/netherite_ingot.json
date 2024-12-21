@@ -6,19 +6,11 @@
     "fluid": "minecraft:lava"
   },
   "ingredients": [
-    {
-      "item": "minecraft:netherite_scrap"
-    },
-    {
-      "item": "minecraft:gold_ingot"
-    },
-    {
-      "item": "spectrum:midnight_aberration"
-    }
+    "minecraft:netherite_scrap",
+    "minecraft:gold_ingot",
+    "spectrum:midnight_aberration"
   ],
-  "result": {
-    "item": "minecraft:netherite_ingot"
-  },
+  "result": "minecraft:netherite_ingot",
   "required_advancement": "spectrum:unlocks/resources/netherite_ingot",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

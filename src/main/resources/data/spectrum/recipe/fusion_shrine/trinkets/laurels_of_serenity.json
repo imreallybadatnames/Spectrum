@@ -6,12 +6,8 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_pendant"
-    },
-    {
-      "item": "spectrum:nectardew_burgeon"
-    },
+    "spectrum:fanciful_pendant",
+    "spectrum:nectardew_burgeon",
     {
       "item": "spectrum:nightdew_sprout",
       "count": 3
@@ -25,9 +21,7 @@
       "count": 2
     }
   ],
-  "result": {
-    "item": "spectrum:laurels_of_serenity"
-  },
+  "result": "spectrum:laurels_of_serenity",
   "required_advancement": "spectrum:unlocks/trinkets/laurels_of_serenity",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

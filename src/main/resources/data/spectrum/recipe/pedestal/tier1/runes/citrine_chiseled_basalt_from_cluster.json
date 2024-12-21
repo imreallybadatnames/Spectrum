@@ -15,15 +15,11 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_basalt"
-    },
-    "X": {
-      "item": "spectrum:citrine_cluster"
-    }
+    "W": "spectrum:polished_basalt",
+    "X": "spectrum:citrine_cluster"
   },
   "result": {
-    "item": "spectrum:citrine_chiseled_basalt",
+    "id": "spectrum:citrine_chiseled_basalt",
     "count": 8
   },
   "required_advancement": "spectrum:create_onyx_shard"

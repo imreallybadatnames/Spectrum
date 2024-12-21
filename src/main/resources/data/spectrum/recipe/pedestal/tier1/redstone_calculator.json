@@ -13,21 +13,13 @@
     "SSS"
   ],
   "key": {
-    "C": {
-      "item": "spectrum:citrine_shard"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "S": {
-      "item": "minecraft:stone"
-    }
+    "C": "spectrum:citrine_shard",
+    "R": "minecraft:redstone",
+    "T": "minecraft:redstone_torch",
+    "S": "minecraft:stone"
   },
   "result": {
-    "item": "spectrum:redstone_calculator",
+    "id": "spectrum:redstone_calculator",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/redstone_calculator"

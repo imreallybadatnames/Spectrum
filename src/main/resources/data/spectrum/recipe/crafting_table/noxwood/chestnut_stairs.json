@@ -7,12 +7,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:chestnut_noxwood_planks"
-    }
+    "#": "spectrum:chestnut_noxwood_planks"
   },
   "result": {
-    "item": "spectrum:chestnut_noxwood_stairs",
+    "id": "spectrum:chestnut_noxwood_stairs",
     "count": 4
   }
 }

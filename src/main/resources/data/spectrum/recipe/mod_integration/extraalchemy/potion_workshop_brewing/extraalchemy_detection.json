@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:sugar"
-  },
-  "ingredient2": {
-    "item": "minecraft:kelp"
-  },
+  "ingredient1": "minecraft:sugar",
+  "ingredient2": "minecraft:kelp",
   "effect": "extraalchemy:detection",
   "base_duration_ticks": 1200,
   "potency_modifier": 1.0,

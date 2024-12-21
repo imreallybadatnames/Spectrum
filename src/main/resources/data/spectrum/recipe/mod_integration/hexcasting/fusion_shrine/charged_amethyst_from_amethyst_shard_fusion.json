@@ -8,12 +8,10 @@
       "item": "minecraft:amethyst_shard",
       "count": 8
     },
-    {
-      "item": "spectrum:storm_stone"
-    }
+    "spectrum:storm_stone"
   ],
   "result": {
-    "item": "hexcasting:charged_amethyst",
+    "id": "hexcasting:charged_amethyst",
 	"count": 8
   },
   "required_advancement": "spectrum:midgame/collect_storm_stone",

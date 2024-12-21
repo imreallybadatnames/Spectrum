@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "spectrum:topaz_shard"
-    }
+    "spectrum:topaz_shard"
   ],
   "results": [
     {
-      "item": "spectrum:topaz_powder",
+      "id": "spectrum:topaz_powder",
       "count": 2,
       "chance": 1.0
     }

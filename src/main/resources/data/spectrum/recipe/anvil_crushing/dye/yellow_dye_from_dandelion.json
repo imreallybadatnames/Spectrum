@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:dandelion"
-  },
+  "ingredient": "minecraft:dandelion",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:yellow_dye",
+    "id": "minecraft:yellow_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

@@ -14,18 +14,12 @@
     "S  "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "O": {
-      "item": "spectrum:orange_pigment"
-    },
-    "B": {
-      "item": "spectrum:stratine_fragments"
-    }
+    "S": "minecraft:stick",
+    "O": "spectrum:orange_pigment",
+    "B": "spectrum:stratine_fragments"
   },
   "result": {
-    "item": "spectrum:constructors_staff",
+    "id": "spectrum:constructors_staff",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/constructors_staff"

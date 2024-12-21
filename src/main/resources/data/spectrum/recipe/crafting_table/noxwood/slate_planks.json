@@ -2,12 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "spectrum:slate_noxcap_stems"
-    }
+    "#spectrum:slate_noxcap_stems"
   ],
   "result": {
-    "item": "spectrum:slate_noxwood_planks",
+    "id": "spectrum:slate_noxwood_planks",
     "count": 4
   }
 }

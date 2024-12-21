@@ -15,18 +15,12 @@
     "XYX"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:citrine_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    }
+    "S": "spectrum:citrine_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:citrine_decostone",
+    "id": "spectrum:citrine_decostone",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/decostones/citrine_decostone"

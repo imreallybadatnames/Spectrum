@@ -14,21 +14,13 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "C": {
-      "item": "spectrum:four_leaf_clover"
-    },
-    "M": {
-      "tag": "c:milk"
-    },
-    "S": {
-      "item": "minecraft:sugar"
-    }
+    "A": "spectrum:amaranth_grains",
+    "C": "spectrum:four_leaf_clover",
+    "M": "#c:milk",
+    "S": "minecraft:sugar"
   },
   "result": {
-    "item": "spectrum:lucky_roll",
+    "id": "spectrum:lucky_roll",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/food/lucky_roll"

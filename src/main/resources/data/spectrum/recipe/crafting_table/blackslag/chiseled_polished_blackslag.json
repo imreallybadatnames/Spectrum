@@ -6,12 +6,10 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_blackslag"
-    }
+    "#": "spectrum:polished_blackslag"
   },
   "result": {
-    "item": "spectrum:chiseled_polished_blackslag",
+    "id": "spectrum:chiseled_polished_blackslag",
     "count": 5
   }
 }

@@ -1,8 +1,6 @@
 {
   "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "spectrum:basal_marble"
-  },
+  "ingredient": "spectrum:basal_marble",
   "result": "spectrum:polished_basal_marble",
   "experience": 0.1,
   "cookingtime": 100

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:netherrack"
-  },
+  "ingredient": "minecraft:netherrack",
   "crushedItemsPerPointOfDamage": 4,
   "experience": 0,
   "result": {
-    "item": "minecraft:red_sand",
+    "id": "minecraft:red_sand",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

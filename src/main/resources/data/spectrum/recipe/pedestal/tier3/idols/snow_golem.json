@@ -15,21 +15,13 @@
     "QVQ"
   ],
   "key": {
-    "H": {
-      "item": "spectrum:snow_golem_head"
-    },
-    "V": {
-      "item": "spectrum:vegetal"
-    },
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    },
-    "S": {
-      "item": "spectrum:stardust"
-    }
+    "H": "spectrum:snow_golem_head",
+    "V": "spectrum:vegetal",
+    "Q": "spectrum:quitoxic_powder",
+    "S": "spectrum:stardust"
   },
   "result": {
-    "item": "spectrum:snow_golem_idol",
+    "id": "spectrum:snow_golem_idol",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/idols"

@@ -108,7 +108,7 @@
   },
   "tapping_item": "minecraft:glass_bottle",
   "result": {
-    "item": "spectrum:bristle_mead",
+    "id": "spectrum:bristle_mead",
     "count": 4
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/brewers_handbook",

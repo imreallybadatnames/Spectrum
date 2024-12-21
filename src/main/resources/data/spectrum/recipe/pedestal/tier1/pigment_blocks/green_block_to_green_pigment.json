@@ -9,12 +9,10 @@
   "white": 0,
   "black": 0,
   "ingredients": [
-    {
-      "item": "spectrum:green_block"
-    }
+    "spectrum:green_block"
   ],
   "result": {
-    "item": "spectrum:green_pigment",
+    "id": "spectrum:green_pigment",
     "count": 9
   },
   "required_advancement": "spectrum:hidden/collect_pigment/green",

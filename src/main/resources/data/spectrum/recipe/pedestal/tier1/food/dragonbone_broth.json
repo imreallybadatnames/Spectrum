@@ -14,21 +14,13 @@
     "VBV"
   ],
   "key": {
-    "Y": {
-      "item": "spectrum:prickly_bayleaf"
-    },
-    "D": {
-      "item": "spectrum:dragonbone_chunk"
-    },
-    "V": {
-      "tag": "c:fruits"
-    },
-    "B": {
-      "item": "minecraft:bowl"
-    }
+    "Y": "spectrum:prickly_bayleaf",
+    "D": "spectrum:dragonbone_chunk",
+    "V": "#c:fruits",
+    "B": "minecraft:bowl"
   },
   "result": {
-    "item": "spectrum:dragonbone_broth",
+    "id": "spectrum:dragonbone_broth",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/dragonbone_broth"

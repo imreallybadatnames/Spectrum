@@ -1,13 +1,9 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "tag": "c:zinc_ores"
-  },
+  "ingredient": "#c:zinc_ores",
   "crushedItemsPerPointOfDamage": 0.75,
   "experience": 0.5,
-  "result": {
-    "item": "create:crushed_raw_zinc"
-  },
+  "result": "create:crushed_raw_zinc",
   "particleEffectIdentifier": "enchanted_hit",
   "soundEventIdentifier": "block.metal.break",
   "fabric:load_conditions": [

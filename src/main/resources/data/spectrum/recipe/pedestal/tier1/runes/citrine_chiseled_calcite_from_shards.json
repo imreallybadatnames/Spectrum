@@ -15,15 +15,11 @@
     "WXW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_calcite"
-    },
-    "X": {
-      "item": "spectrum:citrine_shard"
-    }
+    "W": "spectrum:polished_calcite",
+    "X": "spectrum:citrine_shard"
   },
   "result": {
-    "item": "spectrum:citrine_chiseled_calcite",
+    "id": "spectrum:citrine_chiseled_calcite",
     "count": 1
   },
   "required_advancement": "spectrum:create_onyx_shard"

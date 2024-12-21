@@ -15,15 +15,11 @@
     " S "
   ],
   "key": {
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "G": "minecraft:glass",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:radiant_glass",
+    "id": "spectrum:radiant_glass",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/blocks/radiant_glass"

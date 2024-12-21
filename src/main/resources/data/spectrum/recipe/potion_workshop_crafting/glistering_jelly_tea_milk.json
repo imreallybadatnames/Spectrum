@@ -1,23 +1,15 @@
 {
   "type": "spectrum:potion_workshop_crafting",
   "group": "glistering_jelly_tea",
-  "base_ingredient": {
-    "item": "minecraft:glass_bottle"
-  },
+  "base_ingredient": "minecraft:glass_bottle",
   "use_up_base_ingredient": true,
   "secret": true,
   "color": 13803816,
-  "ingredient1": {
-    "item": "spectrum:jade_jelly"
-  },
-  "ingredient2": {
-    "item": "minecraft:glistering_melon_slice"
-  },
-  "ingredient3": {
-    "tag": "c:milk"
-  },
+  "ingredient1": "spectrum:jade_jelly",
+  "ingredient2": "minecraft:glistering_melon_slice",
+  "ingredient3": "#c:milk",
   "result": {
-    "item": "spectrum:glistering_jelly_tea",
+    "id": "spectrum:glistering_jelly_tea",
     "nbt": {
       "Milk": true
     },

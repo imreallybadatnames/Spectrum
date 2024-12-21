@@ -15,15 +15,11 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "mythicmetals:banglum_block"
-    },
-    "H": {
-      "item": "spectrum:incandescent_amalgam"
-    }
+    "A": "mythicmetals:banglum_block",
+    "H": "spectrum:incandescent_amalgam"
   },
   "result": {
-    "item": "mythicmetals:banglum_chunk",
+    "id": "mythicmetals:banglum_chunk",
     "count": 1
   },
   "required_advancement": "spectrum:mod_integration/mythicmetals/unlock_banglum",

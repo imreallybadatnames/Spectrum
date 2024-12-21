@@ -6,7 +6,7 @@
   "crushedItemsPerPointOfDamage": 0.5,
   "experience": 0.1,
   "result": {
-    "item": "ae2:sky_dust"
+    "id": "ae2:sky_dust"
   },
   "particleEffectIdentifier": "enchanted_hit",
   "particleCount": 10,

@@ -15,21 +15,13 @@
     "III"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:slate_noxcap_stem"
-    },
-    "G": {
-      "item": "spectrum:slate_noxcap_gills"
-    },
-    "I": {
-      "item": "minecraft:prismarine_crystals"
-    },
-    "X": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:slate_noxcap_stem",
+    "G": "spectrum:slate_noxcap_gills",
+    "I": "minecraft:prismarine_crystals",
+    "X": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:slate_noxwood_lamp",
+    "id": "spectrum:slate_noxwood_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

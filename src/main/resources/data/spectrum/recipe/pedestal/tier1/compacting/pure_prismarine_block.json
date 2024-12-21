@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_prismarine"
-    }
+    "G": "spectrum:pure_prismarine"
   },
   "result": {
-    "item": "spectrum:pure_prismarine_block",
+    "id": "spectrum:pure_prismarine_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

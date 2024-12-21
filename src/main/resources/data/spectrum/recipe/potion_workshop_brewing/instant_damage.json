@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "vanilla_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:spider_eye"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:spider_eye",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "minecraft:instant_damage",
   "base_duration_ticks": 0,
   "potency_modifier": 0.5,

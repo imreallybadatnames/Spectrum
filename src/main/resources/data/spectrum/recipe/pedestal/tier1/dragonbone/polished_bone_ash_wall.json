@@ -14,12 +14,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_bone_ash"
-    }
+    "W": "spectrum:polished_bone_ash"
   },
   "result": {
-    "item": "spectrum:polished_bone_ash_wall",
+    "id": "spectrum:polished_bone_ash_wall",
     "count": 6
   },
   "required_advancement": "spectrum:break_cracked_dragonbone",

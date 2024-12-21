@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "tag": "spectrum:azurite_ores"
-    }
+    "#spectrum:azurite_ores"
   ],
   "results": [
     {
-      "item": "spectrum:raw_azurite",
+      "id": "spectrum:raw_azurite",
       "count": 4
     }
   ],

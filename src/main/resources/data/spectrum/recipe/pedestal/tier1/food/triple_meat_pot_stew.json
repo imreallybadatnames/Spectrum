@@ -14,30 +14,16 @@
     "CBC"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:prickly_bayleaf"
-    },
-    "C": {
-      "item": "spectrum:clotted_cream"
-    },
-    "M": {
-      "tag": "spectrum:common_meats"
-    },
-    "F": {
-      "tag": "spectrum:water_meats"
-    },
-    "L": {
-      "tag": "spectrum:lean_meats"
-    },
-    "W": {
-      "tag": "spectrum:drinkable_spirits"
-    },
-    "B": {
-      "item": "minecraft:bowl"
-    }
+    "P": "spectrum:prickly_bayleaf",
+    "C": "spectrum:clotted_cream",
+    "M": "#spectrum:common_meats",
+    "F": "#spectrum:water_meats",
+    "L": "#spectrum:lean_meats",
+    "W": "#spectrum:drinkable_spirits",
+    "B": "minecraft:bowl"
   },
   "result": {
-    "item": "spectrum:triple_meat_pot_stew",
+    "id": "spectrum:triple_meat_pot_stew",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/triple_meat_pot_stew"

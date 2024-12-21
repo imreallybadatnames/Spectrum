@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:infested_cobblestone"
-  },
+  "ingredient": "minecraft:infested_cobblestone",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0,
   "result": {
-    "item": "minecraft:gravel",
+    "id": "minecraft:gravel",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "vanilla_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:milky_resin"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:milky_resin",
   "effect": "minecraft:regeneration",
   "base_duration_ticks": 300,
   "potency_modifier": 2.0,

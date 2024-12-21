@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "item": "spectrum:paltaeria_ore"
-    }
+    "spectrum:paltaeria_ore"
   ],
   "results": [
     {
-      "item": "spectrum:paltaeria_fragments",
+      "id": "spectrum:paltaeria_fragments",
       "count": 6
     }
   ],

@@ -14,7 +14,7 @@
     "count": 2
   },
   "result": {
-    "item": "malum:aerial_spirit",
+    "id": "malum:aerial_spirit",
     "count": 2
   },
   "required_advancement": "spectrum:mod_integration/malum/understand_color_and_spirit",

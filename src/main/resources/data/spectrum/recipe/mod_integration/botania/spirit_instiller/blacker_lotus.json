@@ -10,12 +10,8 @@
     "item": "spectrum:jade_vine_petals",
     "count": 4
   },
-  "center_ingredient": {
-    "item": "botania:black_lotus"
-  },
-  "result": {
-    "item": "botania:blacker_lotus"
-  },
+  "center_ingredient": "botania:black_lotus",
+  "result": "botania:blacker_lotus",
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",

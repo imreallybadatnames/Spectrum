@@ -14,18 +14,12 @@
     "GPG"
   ],
   "key": {
-    "E": {
-      "item": "minecraft:emerald"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    },
-    "G": {
-      "item": "spectrum:green_pigment"
-    }
+    "E": "minecraft:emerald",
+    "P": "spectrum:purple_pigment",
+    "G": "spectrum:green_pigment"
   },
   "result": {
-    "item": "spectrum:knowledge_gem",
+    "id": "spectrum:knowledge_gem",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/knowledge_gem"

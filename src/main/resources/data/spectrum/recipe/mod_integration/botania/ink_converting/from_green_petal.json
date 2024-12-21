@@ -1,8 +1,6 @@
 {
   "type": "spectrum:ink_converting",
-  "ingredient": {
-    "item": "botania:green_petal"
-  },
+  "ingredient": "botania:green_petal",
   "ink_color": "spectrum:green",
   "amount": 25,
   "required_advancement": "spectrum:hidden/collect_pigment/green",

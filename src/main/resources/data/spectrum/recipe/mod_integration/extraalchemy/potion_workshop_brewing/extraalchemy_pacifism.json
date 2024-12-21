@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:golden_apple"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:golden_apple",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "extraalchemy:pacifism",
   "base_duration_ticks": 500,
   "potency_modifier": 1.0,

@@ -14,15 +14,11 @@
     "T T"
   ],
   "key": {
-    "T": {
-      "item": "minecraft:tuff"
-    },
-    "L": {
-      "item": "minecraft:leather"
-    }
+    "T": "minecraft:tuff",
+    "L": "minecraft:leather"
   },
   "result": {
-    "item": "spectrum:fanciful_gloves",
+    "id": "spectrum:fanciful_gloves",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/trinkets/fanciful_gloves"

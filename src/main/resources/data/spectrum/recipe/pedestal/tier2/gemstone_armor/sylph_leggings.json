@@ -14,21 +14,13 @@
     "C C"
   ],
   "key": {
-    "T": {
-      "item": "spectrum:topaz_shard"
-    },
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "C": {
-      "item": "spectrum:citrine_shard"
-    },
-    "P": {
-      "item": "minecraft:ghast_tear"
-    }
+    "T": "spectrum:topaz_shard",
+    "A": "minecraft:amethyst_shard",
+    "C": "spectrum:citrine_shard",
+    "P": "minecraft:ghast_tear"
   },
   "result": {
-    "item": "spectrum:sylph_leggings",
+    "id": "spectrum:sylph_leggings",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_vanilla/ghast_tear"

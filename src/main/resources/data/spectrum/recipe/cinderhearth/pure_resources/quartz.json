@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_quartz"
-  },
+  "ingredient": "spectrum:pure_quartz",
   "results": [
     {
-      "item": "minecraft:quartz",
+      "id": "minecraft:quartz",
       "count": 4
     },
     {

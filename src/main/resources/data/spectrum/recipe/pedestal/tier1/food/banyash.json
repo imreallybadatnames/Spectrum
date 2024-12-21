@@ -14,15 +14,9 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:crawfish"
-    },
-    "J": {
-      "item": "minecraft:sweet_berries"
-    },
-    "E": {
-      "tag": "c:mushrooms"
-    },
+    "A": "spectrum:crawfish",
+    "J": "minecraft:sweet_berries",
+    "E": "#c:mushrooms",
     "M": {
       "item": "spectrum:infused_beverage",
       "recipeViewNbt": "{Variant: \"rum\", Color: 10505507 }",
@@ -39,12 +33,10 @@
 
       }
     },
-    "B": {
-      "item": "spectrum:prickly_bayleaf"
-    }
+    "B": "spectrum:prickly_bayleaf"
   },
   "result": {
-    "item": "spectrum:banyash",
+    "id": "spectrum:banyash",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_1"

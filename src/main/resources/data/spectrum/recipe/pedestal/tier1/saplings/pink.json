@@ -15,18 +15,12 @@
     "DDD"
   ],
   "key": {
-    "S": {
-      "tag": "minecraft:saplings"
-    },
-    "V": {
-      "item": "spectrum:vegetal"
-    },
-    "D": {
-      "item": "minecraft:pink_dye"
-    }
+    "S": "#minecraft:saplings",
+    "V": "spectrum:vegetal",
+    "D": "minecraft:pink_dye"
   },
   "result": {
-    "item": "spectrum:pink_sapling",
+    "id": "spectrum:pink_sapling",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/colored_saplings/pink_sapling"

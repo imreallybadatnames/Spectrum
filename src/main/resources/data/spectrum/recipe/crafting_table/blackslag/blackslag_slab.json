@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:blackslag"
-    }
+    "W": "spectrum:blackslag"
   },
   "result": {
-    "item": "spectrum:blackslag_slab",
+    "id": "spectrum:blackslag_slab",
     "count": 6
   }
 }

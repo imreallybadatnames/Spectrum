@@ -4,36 +4,18 @@
   "time": 600,
   "required_experience": 250,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:gray_pigment"
-    },
-    {
-      "item": "spectrum:gray_pigment"
-    },
-    {
-      "item": "minecraft:honeycomb"
-    },
-    {
-      "item": "spectrum:stratine_fragments"
-    },
-    {
-      "item": "spectrum:gray_pigment"
-    },
-    {
-      "item": "spectrum:gray_pigment"
-    },
-    {
-      "item": "minecraft:honeycomb"
-    },
-    {
-      "item": "spectrum:stratine_fragments"
-    }
+    "minecraft:book",
+    "spectrum:gray_pigment",
+    "spectrum:gray_pigment",
+    "minecraft:honeycomb",
+    "spectrum:stratine_fragments",
+    "spectrum:gray_pigment",
+    "spectrum:gray_pigment",
+    "minecraft:honeycomb",
+    "spectrum:stratine_fragments"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

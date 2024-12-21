@@ -14,21 +14,13 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "B": {
-      "item": "minecraft:bone_meal"
-    },
-    "E": {
-      "tag": "c:eggs"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "B": "minecraft:bone_meal",
+    "E": "#c:eggs"
   },
   "result": {
-    "item": "spectrum:jaramel_trifle",
+    "id": "spectrum:jaramel_trifle",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/trifles"

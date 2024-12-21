@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "ingredient": {
-    "tag": "spectrum:amethyst_ores"
-  },
+  "ingredient": "#spectrum:amethyst_ores",
   "result": "minecraft:amethyst_shard",
   "experience": 0.25,
   "cookingtime": 200

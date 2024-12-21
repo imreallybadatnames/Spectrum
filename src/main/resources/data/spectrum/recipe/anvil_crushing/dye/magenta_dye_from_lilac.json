@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:lilac"
-  },
+  "ingredient": "minecraft:lilac",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:magenta_dye",
+    "id": "minecraft:magenta_dye",
     "count": 4
   },
   "particleEffectIdentifier": "cloud",

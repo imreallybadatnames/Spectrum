@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_diamond"
-  },
+  "ingredient": "spectrum:pure_diamond",
   "results": [
     {
-      "item": "minecraft:diamond",
+      "id": "minecraft:diamond",
       "count": 2
     }
   ],

@@ -1,14 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:citrine_shard"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:citrine_shard",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "minecraft:hunger",
   "base_duration_ticks": 900,
   "potency_modifier": 1.0,

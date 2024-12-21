@@ -14,24 +14,14 @@
     "YRY"
   ],
   "key": {
-    "P": {
-      "tag": "spectrum:pigments"
-    },
-    "S": {
-      "item": "spectrum:star_fragment"
-    },
-    "X": {
-      "item": "spectrum:polished_calcite"
-    },
-    "Y": {
-      "item": "spectrum:polished_basalt"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "P": "#spectrum:pigments",
+    "S": "spectrum:star_fragment",
+    "X": "spectrum:polished_calcite",
+    "Y": "spectrum:polished_basalt",
+    "R": "minecraft:redstone"
   },
   "result": {
-    "item": "spectrum:particle_spawner",
+    "id": "spectrum:particle_spawner",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/particle_spawner"

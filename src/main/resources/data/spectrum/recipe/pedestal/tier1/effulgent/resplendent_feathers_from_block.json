@@ -10,9 +10,7 @@
 	"black": 0,
 	"experience": 0.0,
 	"ingredients": [
-		{
-			"item": "spectrum:resplendent_block"
-		}
+      "spectrum:resplendent_block"
 	],
 	"result": {
 		"item": "spectrum:resplendent_feather",

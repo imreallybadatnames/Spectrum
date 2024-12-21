@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:magenta_pigment"
-    }
+    "G": "spectrum:magenta_pigment"
   },
   "result": {
-    "item": "spectrum:magenta_block",
+    "id": "spectrum:magenta_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/magenta",

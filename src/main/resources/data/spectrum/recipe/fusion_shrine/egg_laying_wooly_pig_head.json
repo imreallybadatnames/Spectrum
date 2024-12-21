@@ -6,26 +6,16 @@
     "fluid": "spectrum:midnight_solution"
   },
   "ingredients": [
-    {
-      "item": "spectrum:cow_head"
-    },
-    {
-      "item": "spectrum:sheep_head"
-    },
-    {
-      "item": "spectrum:pig_head"
-    },
-    {
-      "item": "spectrum:chicken_head"
-    },
+    "spectrum:cow_head",
+    "spectrum:sheep_head",
+    "spectrum:pig_head",
+    "spectrum:chicken_head",
     {
       "item": "spectrum:vegetal",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:egg_laying_wooly_pig_head"
-  },
+  "result": "spectrum:egg_laying_wooly_pig_head",
   "required_advancement": "spectrum:unlocks/blocks/egg_laying_wooly_pig_head",
   "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",

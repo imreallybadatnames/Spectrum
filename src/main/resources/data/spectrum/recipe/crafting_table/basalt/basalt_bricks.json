@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_basalt"
-    }
+    "W": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:basalt_bricks",
+    "id": "spectrum:basalt_bricks",
     "count": 4
   }
 }

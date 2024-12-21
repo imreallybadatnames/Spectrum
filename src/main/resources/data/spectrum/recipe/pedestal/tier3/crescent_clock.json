@@ -14,18 +14,12 @@
     " C "
   ],
   "key": {
-    "O": {
-      "item": "spectrum:onyx_shard"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "O": "spectrum:onyx_shard",
+    "C": "minecraft:copper_ingot",
+    "R": "minecraft:redstone"
   },
   "result": {
-    "item": "spectrum:crescent_clock",
+    "id": "spectrum:crescent_clock",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/crescent_clock"

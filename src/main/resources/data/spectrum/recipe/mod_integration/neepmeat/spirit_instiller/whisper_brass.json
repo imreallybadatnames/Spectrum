@@ -6,15 +6,13 @@
     "item": "spectrum:vegetal",
     "count": 4
   },
-  "ingredient2": {
-    "item": "neepmeat:whisper_flour"
-  },
+  "ingredient2": "neepmeat:whisper_flour",
   "center_ingredient": {
     "item": "minecraft:copper_ingot",
     "count": 2
   },
   "result": {
-    "item": "neepmeat:whisper_brass_ingot",
+    "id": "neepmeat:whisper_brass_ingot",
     "count": 2
   },
   "fabric:load_conditions": [

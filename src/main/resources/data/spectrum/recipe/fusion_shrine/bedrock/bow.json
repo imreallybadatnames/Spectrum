@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:bow"
-    },
+    "minecraft:bow",
     {
       "item": "spectrum:bedrock_dust",
       "count": 4
@@ -33,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_bow",
+    "id": "spectrum:bedrock_bow",
     "nbt": {
       "Enchantments": [
         {

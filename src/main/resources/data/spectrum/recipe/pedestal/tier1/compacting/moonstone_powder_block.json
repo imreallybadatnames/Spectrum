@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:moonstone_powder"
-    }
+    "A": "spectrum:moonstone_powder"
   },
   "result": {
-    "item": "spectrum:moonstone_powder_block",
+    "id": "spectrum:moonstone_powder_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_moonstone",

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:large_moonstone_bud"
-  },
+  "ingredient": "spectrum:large_moonstone_bud",
   "crushedItemsPerPointOfDamage": 0.6,
   "experience": 0.4,
   "result": {
-    "item": "spectrum:moonstone_powder",
+    "id": "spectrum:moonstone_powder",
     "count": 8
   },
   "particleEffectIdentifier": "explosion",

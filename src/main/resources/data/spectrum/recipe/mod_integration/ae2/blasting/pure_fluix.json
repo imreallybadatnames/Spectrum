@@ -1,8 +1,6 @@
 {
   "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "spectrum:pure_fluix"
-  },
+  "ingredient": "spectrum:pure_fluix",
   "result": "ae2:fluix_crystal",
   "experience": 0.5,
   "cookingtime": 100,

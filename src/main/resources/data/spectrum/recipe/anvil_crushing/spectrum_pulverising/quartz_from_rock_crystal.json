@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:rock_crystal"
-  },
+  "ingredient": "spectrum:rock_crystal",
   "crushedItemsPerPointOfDamage": 0.2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:quartz",
+    "id": "minecraft:quartz",
     "count": 7
   },
   "particleEffectIdentifier": "cloud",

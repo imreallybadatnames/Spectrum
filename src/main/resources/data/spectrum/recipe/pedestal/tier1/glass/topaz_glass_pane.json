@@ -14,12 +14,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:topaz_glass"
-    }
+    "G": "spectrum:topaz_glass"
   },
   "result": {
-    "item": "spectrum:topaz_glass_pane",
+    "id": "spectrum:topaz_glass_pane",
     "count": 16
   },
   "required_advancement": "spectrum:hidden/collect_shards/topaz"

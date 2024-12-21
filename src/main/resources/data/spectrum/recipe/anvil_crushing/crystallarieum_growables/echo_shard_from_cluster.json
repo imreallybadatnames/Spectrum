@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:echo_cluster"
-  },
+  "ingredient": "spectrum:echo_cluster",
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 3.0,
   "result": {
-    "item": "minecraft:echo_shard",
+    "id": "minecraft:echo_shard",
     "count": 6
   },
   "particleEffectIdentifier": "explosion",

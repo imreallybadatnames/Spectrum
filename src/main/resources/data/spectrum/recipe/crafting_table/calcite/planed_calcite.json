@@ -6,12 +6,10 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:polished_calcite"
-    }
+    "X": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:planed_calcite",
+    "id": "spectrum:planed_calcite",
     "count": 9
   }
 }

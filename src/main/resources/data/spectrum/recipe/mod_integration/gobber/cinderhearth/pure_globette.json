@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_globette"
-  },
+  "ingredient": "spectrum:pure_globette",
   "results": [
     {
-      "item": "gobber2:gobber2_globette",
+      "id": "gobber2:gobber2_globette",
       "count": 4
     },
     {

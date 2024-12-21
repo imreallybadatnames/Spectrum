@@ -15,24 +15,14 @@
     "PXP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:onyx_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    },
-    "G": {
-      "item": "minecraft:string"
-    },
-    "P": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:onyx_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite",
+    "G": "minecraft:string",
+    "P": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:onyx_chime",
+    "id": "spectrum:onyx_chime",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/gemstone_chimes/onyx_chime"

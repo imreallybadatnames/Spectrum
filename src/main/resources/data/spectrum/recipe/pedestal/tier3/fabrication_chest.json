@@ -14,24 +14,14 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "P": {
-      "item": "spectrum:polished_calcite"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "G": {
-      "item": "spectrum:stratine_fragments"
-    },
-    "T": {
-      "item": "spectrum:red_pigment"
-    }
+    "B": "spectrum:polished_basalt",
+    "P": "spectrum:polished_calcite",
+    "C": "minecraft:copper_ingot",
+    "G": "spectrum:stratine_fragments",
+    "T": "spectrum:red_pigment"
   },
   "result": {
-    "item": "spectrum:fabrication_chest",
+    "id": "spectrum:fabrication_chest",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/fabrication_chest"

@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_fluix"
-  },
+  "ingredient": "spectrum:pure_fluix",
   "results": [
     {
-      "item": "ae2:fluix_crystal",
+      "id": "ae2:fluix_crystal",
       "count": 4
     },
     {

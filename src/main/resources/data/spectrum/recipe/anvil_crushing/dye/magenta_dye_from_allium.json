@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:allium"
-  },
+  "ingredient": "minecraft:allium",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:magenta_dye",
+    "id": "minecraft:magenta_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

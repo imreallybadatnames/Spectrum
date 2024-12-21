@@ -13,12 +13,10 @@
     "XX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:jadeite_petal_block"
-    }
+    "X": "spectrum:jadeite_petal_block"
   },
   "result": {
-    "item": "spectrum:jadeite_petal_carpet",
+    "id": "spectrum:jadeite_petal_carpet",
     "count": 3
   },
   "required_advancement": "spectrum:hidden/collect_jadeite"

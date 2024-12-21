@@ -14,18 +14,12 @@
     "CGC"
   ],
   "key": {
-    "C": {
-      "item": "spectrum:midnight_chip"
-    },
-    "G": {
-      "item": "spectrum:doombloom_seed"
-    },
-    "M": {
-      "item": "spectrum:moonstone_core"
-    }
+    "C": "spectrum:midnight_chip",
+    "G": "spectrum:doombloom_seed",
+    "M": "spectrum:moonstone_core"
   },
   "result": {
-    "item": "spectrum:pipe_bomb",
+    "id": "spectrum:pipe_bomb",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/pipe_bomb"

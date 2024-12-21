@@ -106,7 +106,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "nbt": {
       "Variant": "sake",
       "Color": 13751514

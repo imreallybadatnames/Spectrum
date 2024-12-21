@@ -15,24 +15,14 @@
     "PXP"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "X": {
-      "item": "spectrum:polished_basalt"
-    },
-    "Y": {
-      "item": "spectrum:polished_calcite"
-    },
-    "G": {
-      "item": "minecraft:string"
-    },
-    "P": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "minecraft:amethyst_shard",
+    "X": "spectrum:polished_basalt",
+    "Y": "spectrum:polished_calcite",
+    "G": "minecraft:string",
+    "P": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:amethyst_chime",
+    "id": "spectrum:amethyst_chime",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/gemstone_chimes/amethyst_chime"

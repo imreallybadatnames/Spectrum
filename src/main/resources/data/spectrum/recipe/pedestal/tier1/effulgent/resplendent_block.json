@@ -14,9 +14,7 @@
 		"GG"
 	],
 	"key": {
-		"G": {
-			"item": "spectrum:resplendent_feather"
-		}
+      "G": "spectrum:resplendent_feather"
 	},
 	"result": {
 		"item": "spectrum:resplendent_block",

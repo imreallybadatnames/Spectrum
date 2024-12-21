@@ -14,18 +14,12 @@
     "SGS"
   ],
   "key": {
-    "P": {
-      "tag": "spectrum:pigments"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "#spectrum:pigments",
+    "G": "minecraft:glass",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:ink_flask",
+    "id": "spectrum:ink_flask",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/basic_ink_storage_items"

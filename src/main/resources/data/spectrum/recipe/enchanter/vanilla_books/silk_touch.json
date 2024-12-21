@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:cyan_pigment"
-    },
-    {
-      "item": "spectrum:cyan_pigment"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
-    {
-      "item": "spectrum:cyan_pigment"
-    },
-    {
-      "item": "spectrum:cyan_pigment"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    }
+    "minecraft:book",
+    "spectrum:cyan_pigment",
+    "spectrum:cyan_pigment",
+    "minecraft:diamond",
+    "spectrum:refined_azurite",
+    "spectrum:cyan_pigment",
+    "spectrum:cyan_pigment",
+    "minecraft:diamond",
+    "spectrum:refined_azurite"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

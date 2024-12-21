@@ -3,18 +3,14 @@
   "group": "memories",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:iron_golem_head"
-  },
-  "ingredient2": {
-    "item": "minecraft:iron_block"
-  },
+  "ingredient1": "spectrum:iron_golem_head",
+  "ingredient2": "minecraft:iron_block",
   "center_ingredient": {
     "tag": "spectrum:memory_bonding_agents",
     "count": 4
   },
   "result": {
-    "item": "spectrum:memory",
+    "id": "spectrum:memory",
     "nbt": {
       "EntityTag": {
         "id": "minecraft:iron_golem"

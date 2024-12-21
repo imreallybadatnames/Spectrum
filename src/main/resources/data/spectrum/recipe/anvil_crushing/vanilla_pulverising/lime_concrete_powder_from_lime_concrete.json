@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:lime_concrete"
-  },
+  "ingredient": "minecraft:lime_concrete",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0,
   "result": {
-    "item": "minecraft:lime_concrete_powder",
+    "id": "minecraft:lime_concrete_powder",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

@@ -2,11 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "wooden_button",
   "ingredients": [
-    {
-      "item": "spectrum:ivory_noxwood_planks"
-    }
+    "spectrum:ivory_noxwood_planks"
   ],
-  "result": {
-    "item": "spectrum:ivory_noxwood_button"
-  }
+  "result": "spectrum:ivory_noxwood_button"
 }

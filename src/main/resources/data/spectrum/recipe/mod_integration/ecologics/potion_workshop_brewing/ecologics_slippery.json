@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "ecologics:penguin_feather"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "ecologics:penguin_feather",
   "effect": "ecologics:slippery",
   "base_duration_ticks": 3600,
   "potency_modifier": 0,

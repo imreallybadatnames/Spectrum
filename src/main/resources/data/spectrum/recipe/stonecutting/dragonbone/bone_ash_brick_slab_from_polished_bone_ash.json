@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "spectrum:polished_bone_ash"
-  },
+  "ingredient": "spectrum:polished_bone_ash",
   "result": "spectrum:bone_ash_brick_slab",
   "count": 2
 }

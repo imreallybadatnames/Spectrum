@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_echo"
-  },
+  "ingredient": "spectrum:pure_echo",
   "results": [
     {
-      "item": "minecraft:echo_shard",
+      "id": "minecraft:echo_shard",
       "count": 2
     },
     {

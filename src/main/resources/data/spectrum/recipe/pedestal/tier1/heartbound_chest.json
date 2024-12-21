@@ -14,18 +14,12 @@
     "WWW"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    }
+    "P": "minecraft:paper",
+    "W": "#minecraft:planks",
+    "G": "minecraft:gold_ingot"
   },
   "result": {
-    "item": "spectrum:heartbound_chest",
+    "id": "spectrum:heartbound_chest",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/heartbound_chest"

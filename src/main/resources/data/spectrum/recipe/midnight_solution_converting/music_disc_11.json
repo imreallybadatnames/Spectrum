@@ -1,10 +1,8 @@
 {
   "type": "spectrum:midnight_solution_converting",
-  "ingredient": {
-    "tag": "minecraft:music_discs"
-  },
+  "ingredient": "#minecraft:music_discs",
   "result": {
-    "item": "minecraft:music_disc_11",
+    "id": "minecraft:music_disc_11",
     "count": 1
   }
 }

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:poppy"
-  },
+  "ingredient": "minecraft:poppy",
   "crushedItemsPerPointOfDamage": 2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:red_dye",
+    "id": "minecraft:red_dye",
     "count": 2
   },
   "particleEffectIdentifier": "cloud",

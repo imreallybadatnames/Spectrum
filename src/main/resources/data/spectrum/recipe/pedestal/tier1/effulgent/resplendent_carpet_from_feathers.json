@@ -13,9 +13,7 @@
 		"FF"
 	],
 	"key": {
-		"F": {
-			"item": "spectrum:resplendent_feather"
-		}
+      "F": "spectrum:resplendent_feather"
 	},
 	"result": {
 		"item": "spectrum:resplendent_carpet",

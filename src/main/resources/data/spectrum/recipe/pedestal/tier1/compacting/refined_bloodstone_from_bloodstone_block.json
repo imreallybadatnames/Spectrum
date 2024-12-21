@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:bloodstone_block"
-    }
+    "spectrum:bloodstone_block"
   ],
   "result": {
-    "item": "spectrum:refined_bloodstone",
+    "id": "spectrum:refined_bloodstone",
     "count": 9
   },
   "required_advancement": "spectrum:grow_bloodstone_in_crystallarieum",

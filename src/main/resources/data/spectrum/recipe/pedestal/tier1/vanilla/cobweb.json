@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:string"
-    },
-    "A": {
-      "item": "minecraft:spider_eye"
-    },
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    }
+    "S": "minecraft:string",
+    "A": "minecraft:spider_eye",
+    "Q": "spectrum:quitoxic_powder"
   },
   "result": {
-    "item": "minecraft:cobweb",
+    "id": "minecraft:cobweb",
     "count": 2
   },
   "required_advancement": "spectrum:collect_quitoxic_reeds"

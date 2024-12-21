@@ -86,7 +86,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "count": 12,
     "nbt": {
       "Variant": "verdigris_wine",

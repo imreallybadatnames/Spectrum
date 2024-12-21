@@ -6,12 +6,10 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:polished_basalt"
-    }
+    "X": "spectrum:polished_basalt"
   },
   "result": {
-    "item": "spectrum:planed_basalt",
+    "id": "spectrum:planed_basalt",
     "count": 9
   }
 }

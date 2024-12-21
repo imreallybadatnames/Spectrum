@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_emerald"
-  },
+  "ingredient": "spectrum:pure_emerald",
   "results": [
     {
-      "item": "minecraft:emerald",
+      "id": "minecraft:emerald",
       "count": 2
     }
   ],

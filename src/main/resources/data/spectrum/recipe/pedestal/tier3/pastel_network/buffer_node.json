@@ -15,15 +15,9 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:glow_ink_sac"
-    },
-    "G": {
-      "item": "spectrum:gather_node"
-    }
+    "S": "minecraft:glow_ink_sac",
+    "G": "spectrum:gather_node"
   },
-  "result": {
-    "item": "spectrum:buffer_node"
-  },
+  "result": "spectrum:buffer_node",
   "required_advancement": "spectrum:unlocks/blocks/pastel_network"
 }

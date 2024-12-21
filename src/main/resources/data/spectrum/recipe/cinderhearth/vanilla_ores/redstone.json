@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "tag": "minecraft:redstone_ores"
-  },
+  "ingredient": "#minecraft:redstone_ores",
   "results": [
     {
-      "item": "minecraft:redstone",
+      "id": "minecraft:redstone",
       "count": 4
     },
     {

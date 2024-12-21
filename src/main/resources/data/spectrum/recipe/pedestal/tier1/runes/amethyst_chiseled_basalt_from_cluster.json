@@ -15,15 +15,11 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_basalt"
-    },
-    "X": {
-      "item": "minecraft:amethyst_cluster"
-    }
+    "W": "spectrum:polished_basalt",
+    "X": "minecraft:amethyst_cluster"
   },
   "result": {
-    "item": "spectrum:amethyst_chiseled_basalt",
+    "id": "spectrum:amethyst_chiseled_basalt",
     "count": 8
   },
   "required_advancement": "spectrum:create_onyx_shard"

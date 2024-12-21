@@ -1,13 +1,11 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    {
-      "item": "spectrum:lime_leaves"
-    }
+    "spectrum:lime_leaves"
   ],
   "results": [
     {
-      "item": "spectrum:lime_pigment",
+      "id": "spectrum:lime_pigment",
       "count": 1,
       "chance": 1.0
     },

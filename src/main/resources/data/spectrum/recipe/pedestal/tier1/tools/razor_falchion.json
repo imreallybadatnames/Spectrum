@@ -14,15 +14,11 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:calcite"
-    },
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    }
+    "S": "minecraft:calcite",
+    "A": "minecraft:amethyst_shard"
   },
   "result": {
-    "item": "spectrum:razor_falchion",
+    "id": "spectrum:razor_falchion",
     "nbt": {
       "Enchantments": [
         {

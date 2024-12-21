@@ -14,24 +14,14 @@
     "BPB"
   ],
   "key": {
-    "I": {
-      "item": "spectrum:bismuth_crystal"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "P": {
-      "tag": "spectrum:pigment_blocks"
-    },
-    "L": {
-      "item": "spectrum:liquid_crystal_bucket"
-    }
+    "I": "spectrum:bismuth_crystal",
+    "C": "spectrum:polished_calcite",
+    "B": "spectrum:polished_basalt",
+    "P": "#spectrum:pigment_blocks",
+    "L": "spectrum:liquid_crystal_bucket"
   },
   "result": {
-    "item": "spectrum:crystallarieum",
+    "id": "spectrum:crystallarieum",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/crystallarieum"

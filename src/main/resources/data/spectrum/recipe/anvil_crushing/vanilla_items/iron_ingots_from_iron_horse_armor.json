@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:iron_horse_armor"
-  },
+  "ingredient": "minecraft:iron_horse_armor",
   "crushedItemsPerPointOfDamage": 0.2,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:iron_ingot",
+    "id": "minecraft:iron_ingot",
     "count": 3
   },
   "particleEffectIdentifier": "cloud",

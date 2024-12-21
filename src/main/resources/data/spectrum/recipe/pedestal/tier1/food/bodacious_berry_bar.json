@@ -30,21 +30,13 @@
 
       }
     },
-    "H": {
-      "item": "minecraft:honey_bottle"
-    },
-    "B": {
-      "item": "minecraft:sweet_berries"
-    },
-    "M": {
-      "item": "spectrum:clotted_cream"
-    },
-    "C": {
-      "item": "spectrum:fresh_chocolate"
-    }
+    "H": "minecraft:honey_bottle",
+    "B": "minecraft:sweet_berries",
+    "M": "spectrum:clotted_cream",
+    "C": "spectrum:fresh_chocolate"
   },
   "result": {
-    "item": "spectrum:bodacious_berry_bar",
+    "id": "spectrum:bodacious_berry_bar",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/food/bodacious_berry_bar"

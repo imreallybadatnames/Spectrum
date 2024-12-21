@@ -14,21 +14,13 @@
     "YYY"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:blue_pigment"
-    },
-    "Y": {
-      "item": "spectrum:polished_basalt"
-    },
-    "X": {
-      "item": "spectrum:polished_calcite"
-    },
-    "S": {
-      "item": "spectrum:stratine_gem"
-    }
+    "B": "spectrum:blue_pigment",
+    "Y": "spectrum:polished_basalt",
+    "X": "spectrum:polished_calcite",
+    "S": "spectrum:stratine_gem"
   },
   "result": {
-    "item": "spectrum:black_hole_chest",
+    "id": "spectrum:black_hole_chest",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/black_hole_chest"

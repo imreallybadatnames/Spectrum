@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:ash"
-    }
+    "W": "spectrum:ash"
   },
   "result": {
-    "item": "spectrum:ash_pile",
+    "id": "spectrum:ash_pile",
     "count": 6
   }
 }

@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:pure_gold"
-    }
+    "G": "spectrum:pure_gold"
   },
   "result": {
-    "item": "spectrum:pure_gold_block",
+    "id": "spectrum:pure_gold_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

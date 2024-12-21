@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:jade_jelly"
-  },
+  "ingredient": "spectrum:jade_jelly",
   "results": [
     {
-      "item": "spectrum:jaramel",
+      "id": "spectrum:jaramel",
       "count": 4
     }
   ],

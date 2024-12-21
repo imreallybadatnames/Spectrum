@@ -7,13 +7,11 @@
     "amount": 100
   },
   "ingredients": [
-    {
-      "item": "spectrum:stratine_ore"
-    }
+    "spectrum:stratine_ore"
   ],
   "results": [
     {
-      "item": "spectrum:stratine_fragments",
+      "id": "spectrum:stratine_fragments",
       "count": 6
     }
   ],

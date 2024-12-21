@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:crossbow"
-    },
+    "minecraft:crossbow",
     {
       "item": "spectrum:bedrock_dust",
       "count": 5
@@ -33,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_crossbow",
+    "id": "spectrum:bedrock_crossbow",
     "nbt": {
       "Enchantments": [
         {

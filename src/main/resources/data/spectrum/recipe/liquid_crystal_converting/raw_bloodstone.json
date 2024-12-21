@@ -1,11 +1,9 @@
 {
   "type": "spectrum:liquid_crystal_converting",
 	"required_advancement": "spectrum:pluck_resplendent_feather",
-  "ingredient": {
-		"tag": "spectrum:resplendent_feathers"
-  },
+  "ingredient": "#spectrum:resplendent_feathers",
   "result": {
-    "item": "spectrum:raw_bloodstone",
+    "id": "spectrum:raw_bloodstone",
     "count": 1
   }
 }

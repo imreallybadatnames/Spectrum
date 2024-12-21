@@ -6,20 +6,14 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_tuff_ring"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
+    "spectrum:fanciful_tuff_ring",
+    "spectrum:refined_azurite",
     {
       "item": "spectrum:blue_pigment",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:azure_dike_ring"
-  },
+  "result": "spectrum:azure_dike_ring",
   "required_advancement": "spectrum:unlocks/trinkets/azure_dike_ring",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

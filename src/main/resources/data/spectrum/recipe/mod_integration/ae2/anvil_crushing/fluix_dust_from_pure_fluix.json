@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:pure_fluix"
-  },
+  "ingredient": "spectrum:pure_fluix",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0.1,
   "result": {
-    "item": "ae2:fluix_dust",
+    "id": "ae2:fluix_dust",
     "count": 3
   },
   "particleEffectIdentifier": "enchanted_hit",

@@ -1,13 +1,9 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "malum:brilliant_stone"
-  },
+  "ingredient": "malum:brilliant_stone",
   "crushedItemsPerPointOfDamage": 0.75,
   "experience": 0.75,
-  "result": {
-    "item": "malum:crushed_brilliance"
-  },
+  "result": "malum:crushed_brilliance",
   "particleEffectIdentifier": "enchanted_hit",
   "soundEventIdentifier": "block.metal.break",
   "fabric:load_conditions": [

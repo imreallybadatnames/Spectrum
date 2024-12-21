@@ -14,21 +14,13 @@
     "BBB"
   ],
   "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:storm_stone"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    }
+    "R": "minecraft:redstone",
+    "S": "spectrum:storm_stone",
+    "B": "spectrum:polished_basalt",
+    "C": "minecraft:copper_ingot"
   },
   "result": {
-    "item": "spectrum:block_detector",
+    "id": "spectrum:block_detector",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/block_detector"

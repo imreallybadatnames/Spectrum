@@ -15,21 +15,13 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:weeping_gala_slab"
-    },
-    "P": {
-      "item": "spectrum:weeping_gala_planks"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "A": {
-      "item": "minecraft:paper"
-    }
+    "S": "spectrum:weeping_gala_slab",
+    "P": "spectrum:weeping_gala_planks",
+    "I": "minecraft:iron_ingot",
+    "A": "minecraft:paper"
   },
   "result": {
-    "item": "spectrum:weeping_gala_amphora",
+    "id": "spectrum:weeping_gala_amphora",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_weeping_gala"

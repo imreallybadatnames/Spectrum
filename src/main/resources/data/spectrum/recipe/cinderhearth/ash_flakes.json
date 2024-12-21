@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:slush"
-  },
+  "ingredient": "spectrum:slush",
   "results": [
     {
-      "item": "spectrum:ash_flakes",
+      "id": "spectrum:ash_flakes",
       "count": 2
     }
   ],

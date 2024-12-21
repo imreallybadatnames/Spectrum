@@ -14,15 +14,11 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
+    "S": "minecraft:stick",
+    "I": "minecraft:iron_ingot"
   },
   "result": {
-    "item": "spectrum:multitool",
+    "id": "spectrum:multitool",
     "nbt": {
       "Enchantments": [
         {

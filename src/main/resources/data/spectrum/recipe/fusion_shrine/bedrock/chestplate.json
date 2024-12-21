@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_chestplate"
-    },
+    "minecraft:golden_chestplate",
     {
       "item": "spectrum:bedrock_dust",
       "count": 8
@@ -33,7 +31,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_chestplate",
+    "id": "spectrum:bedrock_chestplate",
     "nbt": {
       "Enchantments": [
         {

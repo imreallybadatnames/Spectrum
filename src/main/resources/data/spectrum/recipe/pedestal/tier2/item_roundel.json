@@ -14,18 +14,12 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "B": "spectrum:polished_basalt",
+    "C": "spectrum:polished_calcite",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:item_roundel",
+    "id": "spectrum:item_roundel",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/item_roundel"

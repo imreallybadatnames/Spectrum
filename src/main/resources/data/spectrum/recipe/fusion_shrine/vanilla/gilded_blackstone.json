@@ -6,16 +6,10 @@
     "fluid": "minecraft:lava"
   },
   "ingredients": [
-    {
-      "item": "minecraft:blackstone"
-    },
-    {
-      "item": "minecraft:gold_ingot"
-    }
+    "minecraft:blackstone",
+    "minecraft:gold_ingot"
   ],
-  "result": {
-    "item": "minecraft:gilded_blackstone"
-  },
+  "result": "minecraft:gilded_blackstone",
   "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [

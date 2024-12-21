@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:nectardew_burgeon"
-    },
+    "spectrum:nectardew_burgeon",
     {
       "item": "minecraft:poppy",
       "count": 8
@@ -30,9 +28,7 @@
       "count": 3
     }
   ],
-  "result": {
-    "item": "spectrum:soothing_bouquet"
-  },
+  "result": "spectrum:soothing_bouquet",
   "required_advancement": "spectrum:unlocks/equipment/soothing_bouquet",
   "world_conditions": [
     {

@@ -109,7 +109,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "count": 4,
     "nbt": {
       "Variant": "mint_cream",

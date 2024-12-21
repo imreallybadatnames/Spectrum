@@ -14,21 +14,13 @@
     "PCP"
   ],
   "key": {
-    "T": {
-      "item": "spectrum:radiating_ender"
-    },
-    "C": {
-      "item": "malum:warp_flux"
-    },
-    "E": {
-      "item": "spectrum:neolith"
-    },
-    "P": {
-      "item": "spectrum:cyan_pigment"
-    }
+    "T": "spectrum:radiating_ender",
+    "C": "malum:warp_flux",
+    "E": "spectrum:neolith",
+    "P": "spectrum:cyan_pigment"
   },
   "result": {
-    "item": "spectrum:ender_splice",
+    "id": "spectrum:ender_splice",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/items/ender_splice",

@@ -2,17 +2,9 @@
   "type": "spectrum:spirit_instiller",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:midnight_aberration"
-  },
-  "ingredient2": {
-    "item": "spectrum:moonstruck_nectar"
-  },
-  "center_ingredient": {
-    "item": "spectrum:onyx_block"
-  },
-  "result": {
-    "item": "spectrum:budding_onyx"
-  },
+  "ingredient1": "spectrum:midnight_aberration",
+  "ingredient2": "spectrum:moonstruck_nectar",
+  "center_ingredient": "spectrum:onyx_block",
+  "result": "spectrum:budding_onyx",
   "required_advancement": "spectrum:unlocks/blocks/budding_onyx"
 }

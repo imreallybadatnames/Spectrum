@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_boots"
-    },
+    "minecraft:golden_boots",
     {
       "item": "spectrum:bedrock_dust",
       "count": 4
@@ -29,7 +27,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_boots",
+    "id": "spectrum:bedrock_boots",
     "nbt": {
       "Enchantments": [
         {

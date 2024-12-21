@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:lime_pigment"
-    }
+    "G": "spectrum:lime_pigment"
   },
   "result": {
-    "item": "spectrum:lime_block",
+    "id": "spectrum:lime_block",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/lime",

@@ -14,18 +14,12 @@
     "PPP"
   ],
   "key": {
-    "C": {
-      "item": "spectrum:four_leaf_clover"
-    },
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "S": {
-      "item": "spectrum:stardust"
-    }
+    "C": "spectrum:four_leaf_clover",
+    "P": "minecraft:paper",
+    "S": "spectrum:stardust"
   },
   "result": {
-    "item": "spectrum:artisans_atlas",
+    "id": "spectrum:artisans_atlas",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/artisans_atlas"

@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "minecraft:scute"
-    },
-    {
-      "item": "spectrum:bedrock_dust"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "minecraft:scute"
-    },
-    {
-      "item": "spectrum:bedrock_dust"
-    }
+    "minecraft:book",
+    "spectrum:pink_pigment",
+    "spectrum:pink_pigment",
+    "minecraft:scute",
+    "spectrum:bedrock_dust",
+    "spectrum:pink_pigment",
+    "spectrum:pink_pigment",
+    "minecraft:scute",
+    "spectrum:bedrock_dust"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

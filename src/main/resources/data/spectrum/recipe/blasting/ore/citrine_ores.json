@@ -1,8 +1,6 @@
 {
   "type": "minecraft:blasting",
-  "ingredient": {
-    "tag": "spectrum:citrine_ores"
-  },
+  "ingredient": "#spectrum:citrine_ores",
   "result": "spectrum:citrine_shard",
   "experience": 0.25,
   "cookingtime": 100

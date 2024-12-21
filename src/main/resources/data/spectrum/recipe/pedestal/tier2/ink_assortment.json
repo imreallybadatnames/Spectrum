@@ -14,21 +14,13 @@
     "GGG"
   ],
   "key": {
-    "P": {
-      "tag": "spectrum:pigments"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "C": {
-      "item": "spectrum:four_leaf_clover"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "#spectrum:pigments",
+    "G": "minecraft:glass",
+    "C": "spectrum:four_leaf_clover",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:ink_assortment",
+    "id": "spectrum:ink_assortment",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/ink_assortment"

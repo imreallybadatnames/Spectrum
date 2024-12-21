@@ -15,12 +15,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:paltaeria_fragments"
-    }
+    "#": "spectrum:paltaeria_fragments"
   },
   "result": {
-    "item": "spectrum:paltaeria_floatblock",
+    "id": "spectrum:paltaeria_floatblock",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/carry_too_many_low_gravity_blocks",

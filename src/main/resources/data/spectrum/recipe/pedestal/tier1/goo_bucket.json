@@ -14,18 +14,10 @@
 		"DCD"
 	],
 	"key": {
-		"D": {
-			"item": "minecraft:dirt"
-		},
-		"C": {
-			"item": "minecraft:mud"
-		},
-		"B": {
-			"item": "minecraft:bucket"
-		},
-		"M": {
-			"item": "spectrum:mermaids_gem"
-		}
+      "D": "minecraft:dirt",
+      "C": "minecraft:mud",
+      "B": "minecraft:bucket",
+      "M": "spectrum:mermaids_gem"
 	},
 	"result": {
 		"item": "spectrum:goo_bucket",

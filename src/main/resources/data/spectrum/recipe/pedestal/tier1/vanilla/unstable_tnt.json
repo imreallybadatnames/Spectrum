@@ -14,15 +14,11 @@
     "QSQ"
   ],
   "key": {
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    },
-    "S": {
-      "item": "minecraft:sand"
-    }
+    "Q": "spectrum:quitoxic_powder",
+    "S": "minecraft:sand"
   },
   "result": {
-    "item": "minecraft:tnt",
+    "id": "minecraft:tnt",
     "nbt": {
       "BlockStateTag": {
         "unstable": "true"

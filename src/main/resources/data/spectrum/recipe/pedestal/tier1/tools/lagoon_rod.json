@@ -14,18 +14,12 @@
     "B M"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "S": {
-      "item": "minecraft:string"
-    },
-    "M": {
-      "item": "spectrum:mermaids_gem"
-    }
+    "B": "minecraft:smooth_basalt",
+    "S": "minecraft:string",
+    "M": "spectrum:mermaids_gem"
   },
   "result": {
-    "item": "spectrum:lagoon_rod",
+    "id": "spectrum:lagoon_rod",
     "nbt": {
       "Enchantments": [
         {

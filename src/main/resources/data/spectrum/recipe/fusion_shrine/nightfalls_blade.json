@@ -6,9 +6,7 @@
     "fluid": "spectrum:midnight_solution"
   },
   "ingredients": [
-    {
-      "item": "minecraft:iron_sword"
-    },
+    "minecraft:iron_sword",
     {
       "item": "spectrum:pyrite_chunk",
       "count": 4
@@ -30,9 +28,7 @@
       "count": 4
     }
   ],
-  "result": {
-    "item": "spectrum:nightfalls_blade"
-  },
+  "result": "spectrum:nightfalls_blade",
   "required_advancement": "spectrum:unlocks/equipment/nightfalls_blade",
   "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",

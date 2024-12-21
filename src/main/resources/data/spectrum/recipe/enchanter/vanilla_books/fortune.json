@@ -4,36 +4,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:light_blue_pigment"
-    },
-    {
-      "item": "spectrum:light_blue_pigment"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "spectrum:four_leaf_clover"
-    },
-    {
-      "item": "spectrum:light_blue_pigment"
-    },
-    {
-      "item": "spectrum:light_blue_pigment"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "spectrum:four_leaf_clover"
-    }
+    "minecraft:book",
+    "spectrum:light_blue_pigment",
+    "spectrum:light_blue_pigment",
+    "minecraft:diamond",
+    "spectrum:four_leaf_clover",
+    "spectrum:light_blue_pigment",
+    "spectrum:light_blue_pigment",
+    "minecraft:diamond",
+    "spectrum:four_leaf_clover"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

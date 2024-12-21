@@ -14,15 +14,11 @@
     "QL "
   ],
   "key": {
-    "L": {
-      "item": "minecraft:tuff"
-    },
-    "Q": {
-      "item": "minecraft:quartz"
-    }
+    "L": "minecraft:tuff",
+    "Q": "minecraft:quartz"
   },
   "result": {
-    "item": "spectrum:fanciful_circlet",
+    "id": "spectrum:fanciful_circlet",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/trinkets/fanciful_circlet"

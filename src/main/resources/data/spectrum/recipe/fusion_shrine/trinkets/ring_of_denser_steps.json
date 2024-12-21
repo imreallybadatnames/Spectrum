@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_tuff_ring"
-    },
+    "spectrum:fanciful_tuff_ring",
     {
       "item": "minecraft:quartz",
       "count": 8
@@ -17,13 +15,9 @@
       "item": "spectrum:stratine_fragments",
       "count": 8
     },
-    {
-      "item": "spectrum:stratine_gem"
-    }
+    "spectrum:stratine_gem"
   ],
-  "result": {
-    "item": "spectrum:ring_of_denser_steps"
-  },
+  "result": "spectrum:ring_of_denser_steps",
   "required_advancement": "spectrum:unlocks/trinkets/ring_of_denser_steps",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

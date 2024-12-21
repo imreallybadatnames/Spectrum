@@ -7,26 +7,20 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "spectrum:malachite_ultra_greatsword"
-    },
-    {
-      "item": "spectrum:moonstone_core"
-    },
+    "spectrum:malachite_ultra_greatsword",
+    "spectrum:moonstone_core",
     {
       "item": "spectrum:pure_netherite_scrap",
       "count": 8
     },
-    {
-      "item": "minecraft:nether_star"
-    },
+    "minecraft:nether_star",
     {
       "item": "spectrum:white_pigment",
       "count": 16
     }
   ],
   "result": {
-    "item": "spectrum:glass_crest_ultra_greatsword",
+    "id": "spectrum:glass_crest_ultra_greatsword",
     "nbt": {
       "Enchantments": [
         {

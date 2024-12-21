@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:pure_globette_end_block"
-    }
+    "spectrum:pure_globette_end_block"
   ],
   "result": {
-    "item": "spectrum:pure_globette_end",
+    "id": "spectrum:pure_globette_end",
     "count": 9
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",

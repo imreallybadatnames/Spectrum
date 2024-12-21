@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:sugar"
-  },
-  "ingredient2": {
-    "item": "minecraft:coal_block"
-  },
+  "ingredient1": "minecraft:sugar",
+  "ingredient2": "minecraft:coal_block",
   "effect": "extraalchemy:combustion",
   "base_duration_ticks": 600,
   "potency_modifier": 1.0,

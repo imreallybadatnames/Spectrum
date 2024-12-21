@@ -14,7 +14,7 @@
     "item": "ae2:flawed_budding_quartz"
   },
   "result": {
-    "item": "ae2:flawless_budding_quartz"
+    "id": "ae2:flawless_budding_quartz"
   },
   "fabric:load_conditions": [
     {

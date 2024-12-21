@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_tuff_ring"
-    },
+    "spectrum:fanciful_tuff_ring",
     {
       "item": "spectrum:four_leaf_clover",
       "count": 2
@@ -18,9 +16,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:heartsingers_reward"
-  },
+  "result": "spectrum:heartsingers_reward",
   "required_advancement": "spectrum:unlocks/trinkets/heartsingers_reward",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

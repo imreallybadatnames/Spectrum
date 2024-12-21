@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "vanilla_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:blaze_powder"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:blaze_powder",
   "effect": "minecraft:strength",
   "base_duration_ticks": 3600,
   "potency_modifier": 1.0,

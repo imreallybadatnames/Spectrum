@@ -6,15 +6,11 @@
     "W#W"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "W": {
-      "item": "spectrum:weeping_gala_planks"
-    }
+    "#": "minecraft:stick",
+    "W": "spectrum:weeping_gala_planks"
   },
   "result": {
-    "item": "spectrum:weeping_gala_fence",
+    "id": "spectrum:weeping_gala_fence",
     "count": 3
   }
 }

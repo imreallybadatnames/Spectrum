@@ -14,18 +14,12 @@
     "S  "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "M": {
-      "item": "minecraft:moss_block"
-    },
-    "L": {
-      "item": "spectrum:lime_pigment"
-    }
+    "S": "minecraft:stick",
+    "M": "minecraft:moss_block",
+    "L": "spectrum:lime_pigment"
   },
   "result": {
-    "item": "spectrum:natures_staff",
+    "id": "spectrum:natures_staff",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/items/natures_staff"

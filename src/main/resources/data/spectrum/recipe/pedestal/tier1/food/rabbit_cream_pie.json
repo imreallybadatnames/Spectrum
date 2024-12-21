@@ -14,24 +14,14 @@
     "EEE"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:myceylon"
-    },
-    "E": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "C": {
-      "item": "spectrum:clotted_cream"
-    },
-    "X": {
-      "item": "spectrum:jadeite_petals"
-    },
-    "M": {
-      "item": "spectrum:jade_wine"
-      }
+    "S": "spectrum:myceylon",
+    "E": "spectrum:amaranth_grains",
+    "C": "spectrum:clotted_cream",
+    "X": "spectrum:jadeite_petals",
+    "M": "spectrum:jade_wine"
   },
   "result": {
-    "item": "spectrum:rabbit_cream_pie",
+    "id": "spectrum:rabbit_cream_pie",
     "count": 2
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/melochites_cookbook_vol_2"

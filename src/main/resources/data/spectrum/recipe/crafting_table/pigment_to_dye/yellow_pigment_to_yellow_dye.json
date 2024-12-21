@@ -2,11 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "pigment_to_dye",
   "ingredients": [
-    {
-      "item": "spectrum:yellow_pigment"
-    }
+    "spectrum:yellow_pigment"
   ],
-  "result": {
-    "item": "minecraft:yellow_dye"
-  }
+  "result": "minecraft:yellow_dye"
 }

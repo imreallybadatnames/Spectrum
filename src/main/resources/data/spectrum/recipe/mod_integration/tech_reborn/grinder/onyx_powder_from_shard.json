@@ -3,14 +3,10 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "item": "spectrum:onyx_shard"
-    }
+    "spectrum:onyx_shard"
   ],
   "results": [
-    {
-      "item": "spectrum:onyx_powder"
-    }
+    "spectrum:onyx_powder"
   ],
   "fabric:load_conditions": [
     {

@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "minecraft:clay_ball"
-  },
+  "ingredient": "minecraft:clay_ball",
   "results": [
     {
-      "item": "minecraft:brick",
+      "id": "minecraft:brick",
       "count": 2
     }
   ],

@@ -1,8 +1,6 @@
 {
   "type": "spectrum:ink_converting",
-  "ingredient": {
-    "item": "spectrum:lime_block"
-  },
+  "ingredient": "spectrum:lime_block",
   "ink_color": "spectrum:lime",
   "amount": 900,
   "required_advancement": "spectrum:hidden/collect_pigment/lime"

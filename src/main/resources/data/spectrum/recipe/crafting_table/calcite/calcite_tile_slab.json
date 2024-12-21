@@ -4,12 +4,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:calcite_tiles"
-    }
+    "W": "spectrum:calcite_tiles"
   },
   "result": {
-    "item": "spectrum:calcite_tile_slab",
+    "id": "spectrum:calcite_tile_slab",
     "count": 6
   }
 }

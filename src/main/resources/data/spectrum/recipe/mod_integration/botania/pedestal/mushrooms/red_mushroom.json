@@ -13,18 +13,12 @@
     "MPS"
   ],
   "key": {
-    "M": {
-      "tag": "c:mushrooms"
-    },
-    "P": {
-      "item": "spectrum:red_pigment"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "M": "#c:mushrooms",
+    "P": "spectrum:red_pigment",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "botania:red_mushroom",
+    "id": "botania:red_mushroom",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_pigment/red",

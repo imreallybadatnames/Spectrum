@@ -13,21 +13,13 @@
     "TET"
   ],
   "key": {
-    "T": {
-      "item": "spectrum:topaz_shard"
-    },
-    "A": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "C": {
-      "item": "spectrum:citrine_shard"
-    },
-    "E": {
-      "item": "minecraft:ender_eye"
-    }
+    "T": "spectrum:topaz_shard",
+    "A": "minecraft:amethyst_shard",
+    "C": "spectrum:citrine_shard",
+    "E": "minecraft:ender_eye"
   },
   "result": {
-    "item": "spectrum:fetchling_helmet",
+    "id": "spectrum:fetchling_helmet",
     "count": 1
   },
   "required_advancement": "spectrum:hidden/collect_vanilla/ender_eye"

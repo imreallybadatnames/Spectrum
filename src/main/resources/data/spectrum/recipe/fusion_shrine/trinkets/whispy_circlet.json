@@ -6,9 +6,7 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_circlet"
-    },
+    "spectrum:fanciful_circlet",
     {
       "item": "spectrum:nightdew_sprout",
       "count": 2
@@ -22,9 +20,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:whispy_circlet"
-  },
+  "result": "spectrum:whispy_circlet",
   "required_advancement": "spectrum:unlocks/trinkets/whispy_circlet",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

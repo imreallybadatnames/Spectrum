@@ -14,15 +14,11 @@
     " S "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:arrow"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "A": "minecraft:arrow",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "minecraft:spectral_arrow",
+    "id": "minecraft:spectral_arrow",
     "count": 2
   },
   "required_advancement": "spectrum:collect_shimmerstone"

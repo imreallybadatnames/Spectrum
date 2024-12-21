@@ -1,15 +1,9 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "sleep_potions",
-  "ingredient1": {
-    "item": "spectrum:nectardew_burgeon"
-  },
-  "ingredient2": {
-    "item": "spectrum:jadeite_petals"
-  },
-  "ingredient3": {
-		"item": "spectrum:resplendent_feather"
-  },
+  "ingredient1": "spectrum:nectardew_burgeon",
+  "ingredient2": "spectrum:jadeite_petals",
+  "ingredient3": "spectrum:resplendent_feather",
   "effect": "spectrum:eternal_slumber",
   "base_duration_ticks": 1200,
   "potency_modifier": 0.1,

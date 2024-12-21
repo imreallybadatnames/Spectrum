@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:saddle"
-  },
+  "ingredient": "minecraft:saddle",
   "crushedItemsPerPointOfDamage": 0.3,
   "experience": 0.0,
   "result": {
-    "item": "minecraft:leather",
+    "id": "minecraft:leather",
     "count": 3
   },
   "particleEffectIdentifier": "cloud",

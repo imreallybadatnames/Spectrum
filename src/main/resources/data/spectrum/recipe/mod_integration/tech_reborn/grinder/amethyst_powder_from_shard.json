@@ -3,14 +3,10 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "item": "minecraft:amethyst_shard"
-    }
+    "minecraft:amethyst_shard"
   ],
   "results": [
-    {
-      "item": "spectrum:amethyst_powder"
-    }
+    "spectrum:amethyst_powder"
   ],
   "fabric:load_conditions": [
     {

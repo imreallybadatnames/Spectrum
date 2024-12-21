@@ -14,21 +14,13 @@
     "BBB"
   ],
   "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "spectrum:topaz_shard"
-    },
-    "B": {
-      "item": "spectrum:polished_calcite"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    }
+    "R": "minecraft:redstone",
+    "T": "spectrum:topaz_shard",
+    "B": "spectrum:polished_calcite",
+    "C": "minecraft:copper_ingot"
   },
   "result": {
-    "item": "spectrum:block_placer",
+    "id": "spectrum:block_placer",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/block_placer"

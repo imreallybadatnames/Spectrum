@@ -1,17 +1,13 @@
 {
   "type": "spectrum:anvil_crushing",
   "ingredient": [
-    {
-      "item": "spectrum:small_quartz_bud"
-    },
-    {
-      "item": "spectrum:large_quartz_bud"
-    }
+    "spectrum:small_quartz_bud",
+    "spectrum:large_quartz_bud"
   ],
   "crushedItemsPerPointOfDamage": 1.0,
   "experience": 2.0,
   "result": {
-    "item": "minecraft:quartz",
+    "id": "minecraft:quartz",
     "count": 1
   },
   "particleEffectIdentifier": "explosion",

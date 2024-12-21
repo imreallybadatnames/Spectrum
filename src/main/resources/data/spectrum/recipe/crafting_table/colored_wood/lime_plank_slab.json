@@ -5,12 +5,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:lime_planks"
-    }
+    "#": "spectrum:lime_planks"
   },
   "result": {
-    "item": "spectrum:lime_slab",
+    "id": "spectrum:lime_slab",
     "count": 6
   }
 }

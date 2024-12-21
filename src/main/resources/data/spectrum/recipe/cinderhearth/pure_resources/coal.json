@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_coal"
-  },
+  "ingredient": "spectrum:pure_coal",
   "results": [
     {
-      "item": "minecraft:coal",
+      "id": "minecraft:coal",
       "count": 2
     }
   ],

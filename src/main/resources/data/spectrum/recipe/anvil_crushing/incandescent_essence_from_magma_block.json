@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "minecraft:magma_block"
-  },
+  "ingredient": "minecraft:magma_block",
   "crushedItemsPerPointOfDamage": 1.5,
   "experience": 0.25,
   "result": {
-    "item": "spectrum:incandescent_essence",
+    "id": "spectrum:incandescent_essence",
     "count": 1
   },
   "particleEffectIdentifier": "enchanted_hit",

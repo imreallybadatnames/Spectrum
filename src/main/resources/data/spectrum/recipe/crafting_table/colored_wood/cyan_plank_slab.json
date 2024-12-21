@@ -5,12 +5,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:cyan_planks"
-    }
+    "#": "spectrum:cyan_planks"
   },
   "result": {
-    "item": "spectrum:cyan_slab",
+    "id": "spectrum:cyan_slab",
     "count": 6
   }
 }

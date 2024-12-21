@@ -2,17 +2,9 @@
   "type": "spectrum:spirit_instiller",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "tag": "minecraft:saplings"
-  },
-  "ingredient2": {
-    "item": "spectrum:spectral_shard"
-  },
-  "center_ingredient": {
-    "item": "spectrum:vegetal"
-  },
-  "result": {
-    "item": "spectrum:ominous_sapling"
-  },
+  "ingredient1": "#minecraft:saplings",
+  "ingredient2": "spectrum:spectral_shard",
+  "center_ingredient": "spectrum:vegetal",
+  "result": "spectrum:ominous_sapling",
   "required_advancement": "spectrum:unlocks/blocks/ominous_sapling"
 }

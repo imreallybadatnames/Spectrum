@@ -121,7 +121,7 @@
   },
   "tapping_item": "minecraft:glass_bottle",
   "result": {
-    "item": "spectrum:morchella",
+    "id": "spectrum:morchella",
     "count": 4
   },
   "required_advancement": "spectrum:hidden/collect_cookbooks/brewers_handbook"

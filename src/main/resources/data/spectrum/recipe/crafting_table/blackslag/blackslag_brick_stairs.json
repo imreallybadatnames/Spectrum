@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:blackslag_bricks"
-    }
+    "W": "spectrum:blackslag_bricks"
   },
   "result": {
-    "item": "spectrum:blackslag_brick_stairs",
+    "id": "spectrum:blackslag_brick_stairs",
     "count": 6
   }
 }

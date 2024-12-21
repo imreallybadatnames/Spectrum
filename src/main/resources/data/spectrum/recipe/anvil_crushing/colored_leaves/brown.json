@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "spectrum:brown_leaves"
-  },
+  "ingredient": "spectrum:brown_leaves",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0.01,
   "result": {
-    "item": "spectrum:brown_pigment",
+    "id": "spectrum:brown_pigment",
     "count": 1
   },
   "particleEffectIdentifier": "enchanted_hit",

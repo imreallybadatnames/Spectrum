@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "tag": "c:certus_quartz"
-  },
+  "ingredient": "#c:certus_quartz",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0.1,
   "result": {
-    "item": "ae2:certus_quartz_dust"
+    "id": "ae2:certus_quartz_dust"
   },
   "particleEffectIdentifier": "enchanted_hit",
   "particleCount": 10,

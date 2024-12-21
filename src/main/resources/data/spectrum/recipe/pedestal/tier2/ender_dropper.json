@@ -14,21 +14,13 @@
     "BRB"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:blue_pigment"
-    },
-    "S": {
-      "item": "spectrum:radiating_ender"
-    },
-    "B": {
-      "item": "minecraft:polished_blackstone"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "P": "spectrum:blue_pigment",
+    "S": "spectrum:radiating_ender",
+    "B": "minecraft:polished_blackstone",
+    "R": "minecraft:redstone"
   },
   "result": {
-    "item": "spectrum:ender_dropper",
+    "id": "spectrum:ender_dropper",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/ender_blocks"

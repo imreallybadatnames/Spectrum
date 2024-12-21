@@ -5,12 +5,10 @@
     "WW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_blackslag"
-    }
+    "W": "spectrum:polished_blackslag"
   },
   "result": {
-    "item": "spectrum:blackslag_bricks",
+    "id": "spectrum:blackslag_bricks",
     "count": 4
   }
 }

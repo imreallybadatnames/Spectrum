@@ -3,36 +3,18 @@
   "time": 300,
   "required_experience": 100,
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "minecraft:flint"
-    },
-    {
-      "item": "minecraft:ghast_tear"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "spectrum:pink_pigment"
-    },
-    {
-      "item": "minecraft:flint"
-    },
-    {
-      "item": "minecraft:ghast_tear"
-    }
+    "minecraft:book",
+    "spectrum:pink_pigment",
+    "spectrum:pink_pigment",
+    "minecraft:flint",
+    "minecraft:ghast_tear",
+    "spectrum:pink_pigment",
+    "spectrum:pink_pigment",
+    "minecraft:flint",
+    "minecraft:ghast_tear"
   ],
   "result": {
-    "item": "minecraft:enchanted_book",
+    "id": "minecraft:enchanted_book",
     "nbt": {
       "StoredEnchantments": [
         {

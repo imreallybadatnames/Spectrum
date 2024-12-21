@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:firework_star"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:firework_star",
   "effect": "extraalchemy:fuse",
   "base_duration_ticks": 400,
   "potency_modifier": 1.0,

@@ -1,12 +1,10 @@
 {
   "type": "spectrum:anvil_crushing",
-  "ingredient": {
-    "item": "hexcasting:amethyst_edified_leaves"
-  },
+  "ingredient": "hexcasting:amethyst_edified_leaves",
   "crushedItemsPerPointOfDamage": 2.0,
   "experience": 0.1,
   "result": {
-    "item": "spectrum:amethyst_powder",
+    "id": "spectrum:amethyst_powder",
     "count": 1
   },
   "particleEffectIdentifier": "enchanted_hit",

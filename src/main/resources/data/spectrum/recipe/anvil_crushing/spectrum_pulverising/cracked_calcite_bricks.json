@@ -1,13 +1,11 @@
 {
   "type": "spectrum:anvil_crushing",
   "group": "block_cracking",
-  "ingredient": {
-    "item": "spectrum:calcite_bricks"
-  },
+  "ingredient": "spectrum:calcite_bricks",
   "crushedItemsPerPointOfDamage": 1,
   "experience": 0.0,
   "result": {
-    "item": "spectrum:cracked_calcite_bricks",
+    "id": "spectrum:cracked_calcite_bricks",
     "count": 1
   },
   "particleEffectIdentifier": "cloud",

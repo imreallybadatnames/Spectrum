@@ -15,12 +15,10 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "spectrum:refined_malachite"
-    }
+    "G": "spectrum:refined_malachite"
   },
   "result": {
-    "item": "spectrum:malachite_block",
+    "id": "spectrum:malachite_block",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/grow_malachite_in_crystallarieum",

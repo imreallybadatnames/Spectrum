@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_shale_clay"
-    }
+    "W": "spectrum:polished_shale_clay"
   },
   "result": {
-    "item": "spectrum:polished_shale_clay_stairs",
+    "id": "spectrum:polished_shale_clay_stairs",
     "count": 6
   }
 }

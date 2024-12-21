@@ -14,21 +14,13 @@
     "BFB"
   ],
   "key": {
-    "C": {
-      "item": "spectrum:polished_calcite"
-    },
-    "B": {
-      "item": "spectrum:polished_basalt"
-    },
-    "G": {
-      "item": "spectrum:stratine_gem"
-    },
-    "F": {
-      "item": "spectrum:stratine_fragments"
-    }
+    "C": "spectrum:polished_calcite",
+    "B": "spectrum:polished_basalt",
+    "G": "spectrum:stratine_gem",
+    "F": "spectrum:stratine_fragments"
   },
   "result": {
-    "item": "spectrum:cinderhearth",
+    "id": "spectrum:cinderhearth",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/cinderhearth"

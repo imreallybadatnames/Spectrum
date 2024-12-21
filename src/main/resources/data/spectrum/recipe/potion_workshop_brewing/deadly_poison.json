@@ -1,14 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "spectrum:bone_ash"
-  },
-  "ingredient3": {
-    "item": "minecraft:fermented_spider_eye"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "spectrum:bone_ash",
+  "ingredient3": "minecraft:fermented_spider_eye",
   "effect": "spectrum:deadly_poison",
   "base_duration_ticks": 600,
   "potency_modifier": 1.0,

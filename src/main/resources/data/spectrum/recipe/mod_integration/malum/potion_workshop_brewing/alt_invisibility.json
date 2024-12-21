@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "malum",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "malum:astral_weave"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "malum:astral_weave",
   "effect": "minecraft:invisibility",
   "base_duration_ticks": 3600,
   "potency_modifier": 0.0,

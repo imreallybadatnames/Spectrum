@@ -3,14 +3,10 @@
   "power": 4,
   "time": 270,
   "ingredients": [
-    {
-      "item": "spectrum:topaz_shard"
-    }
+    "spectrum:topaz_shard"
   ],
   "results": [
-    {
-      "item": "spectrum:topaz_powder"
-    }
+    "spectrum:topaz_powder"
   ],
   "fabric:load_conditions": [
     {

@@ -2,11 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "group": "pigment_to_dye",
   "ingredients": [
-    {
-      "item": "spectrum:lime_pigment"
-    }
+    "spectrum:lime_pigment"
   ],
-  "result": {
-    "item": "minecraft:lime_dye"
-  }
+  "result": "minecraft:lime_dye"
 }

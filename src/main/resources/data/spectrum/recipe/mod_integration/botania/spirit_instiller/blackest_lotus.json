@@ -10,12 +10,8 @@
     "item": "spectrum:blood_orchid_petal",
     "count": 16
   },
-  "center_ingredient": {
-    "item": "botania:blacker_lotus"
-  },
-  "result": {
-    "item": "spectrum:blackest_lotus"
-  },
+  "center_ingredient": "botania:blacker_lotus",
+  "result": "spectrum:blackest_lotus",
   "required_advancement": "spectrum:lategame/strike_up_hummingstone_hymn",
   "fabric:load_conditions": [
     {

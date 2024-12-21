@@ -14,24 +14,14 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "B": {
-      "item": "minecraft:bone_meal"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "O": {
-      "item": "spectrum:bloodboil_syrup"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "B": "minecraft:bone_meal",
+    "E": "#c:eggs",
+    "O": "spectrum:bloodboil_syrup"
   },
   "result": {
-    "item": "spectrum:demon_trifle",
+    "id": "spectrum:demon_trifle",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/demon_trifle"

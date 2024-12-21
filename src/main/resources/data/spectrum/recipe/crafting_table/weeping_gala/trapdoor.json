@@ -6,12 +6,10 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:weeping_gala_planks"
-    }
+    "#": "spectrum:weeping_gala_planks"
   },
   "result": {
-    "item": "spectrum:weeping_gala_trapdoor",
+    "id": "spectrum:weeping_gala_trapdoor",
     "count": 2
   }
 }

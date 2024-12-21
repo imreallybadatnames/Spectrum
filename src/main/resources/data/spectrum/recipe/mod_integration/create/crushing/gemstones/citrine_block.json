@@ -1,13 +1,11 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    {
-      "item": "spectrum:citrine_block"
-    }
+    "spectrum:citrine_block"
   ],
   "results": [
     {
-      "item": "spectrum:citrine_shard",
+      "id": "spectrum:citrine_shard",
       "count": 1
     },
     {

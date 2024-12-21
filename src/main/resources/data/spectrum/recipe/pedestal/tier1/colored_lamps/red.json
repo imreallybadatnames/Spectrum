@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:red_pigment"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "spectrum:red_pigment",
+    "R": "minecraft:redstone",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:red_lamp",
+    "id": "spectrum:red_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/colored_lamps/red_lamp"

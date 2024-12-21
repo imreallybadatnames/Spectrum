@@ -6,12 +6,8 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_tuff_ring"
-    },
-    {
-      "item": "spectrum:stratine_gem"
-    },
+    "spectrum:fanciful_tuff_ring",
+    "spectrum:stratine_gem",
     {
       "item": "minecraft:lapis_lazuli",
       "count": 6
@@ -21,9 +17,7 @@
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:jeopardant"
-  },
+  "result": "spectrum:jeopardant",
   "required_advancement": "spectrum:unlocks/trinkets/jeopardant",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

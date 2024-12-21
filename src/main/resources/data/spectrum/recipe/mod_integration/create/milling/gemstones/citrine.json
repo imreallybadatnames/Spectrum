@@ -1,13 +1,11 @@
 {
   "type": "create:milling",
   "ingredients": [
-    {
-      "item": "spectrum:citrine_shard"
-    }
+    "spectrum:citrine_shard"
   ],
   "results": [
     {
-      "item": "spectrum:citrine_powder",
+      "id": "spectrum:citrine_powder",
       "count": 2,
       "chance": 1.0
     }

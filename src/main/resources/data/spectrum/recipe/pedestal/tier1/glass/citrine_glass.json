@@ -15,15 +15,11 @@
     "GPG"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:citrine_shard"
-    },
-    "G": {
-      "item": "minecraft:glass"
-    }
+    "P": "spectrum:citrine_shard",
+    "G": "minecraft:glass"
   },
   "result": {
-    "item": "spectrum:citrine_glass",
+    "id": "spectrum:citrine_glass",
     "count": 8
   },
   "required_advancement": "spectrum:hidden/collect_shards/citrine"

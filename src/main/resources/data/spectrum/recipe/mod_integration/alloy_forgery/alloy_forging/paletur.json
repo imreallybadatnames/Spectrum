@@ -1,9 +1,7 @@
 {
   "type": "alloy_forgery:forging",
   "inputs": [
-    {
-      "item": "spectrum:paltaeria_ore"
-    }
+    "spectrum:paltaeria_ore"
   ],
   "output": {
     "id": "spectrum:paltaeria_fragments",

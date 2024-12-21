@@ -1,11 +1,9 @@
 {
   "type": "spectrum:cinderhearth",
-  "ingredient": {
-    "item": "spectrum:pure_gold"
-  },
+  "ingredient": "spectrum:pure_gold",
   "results": [
     {
-      "item": "minecraft:gold_ingot",
+      "id": "minecraft:gold_ingot",
       "count": 2
     }
   ],

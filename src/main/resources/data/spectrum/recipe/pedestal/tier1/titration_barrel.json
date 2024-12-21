@@ -14,18 +14,12 @@
     "CCC"
   ],
   "key": {
-    "C": {
-      "tag": "spectrum:colored_planks"
-    },
-    "P": {
-      "tag": "spectrum:pigments"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
+    "C": "#spectrum:colored_planks",
+    "P": "#spectrum:pigments",
+    "I": "minecraft:iron_ingot"
   },
   "result": {
-    "item": "spectrum:titration_barrel",
+    "id": "spectrum:titration_barrel",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/blocks/titration_barrel"

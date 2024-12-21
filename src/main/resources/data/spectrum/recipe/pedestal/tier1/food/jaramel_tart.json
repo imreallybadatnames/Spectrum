@@ -14,21 +14,13 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:amaranth_grains"
-    },
-    "J": {
-      "item": "spectrum:jaramel"
-    },
-    "E": {
-      "tag": "c:eggs"
-    },
-    "M": {
-      "tag": "c:milk"
-    }
+    "A": "spectrum:amaranth_grains",
+    "J": "spectrum:jaramel",
+    "E": "#c:eggs",
+    "M": "#c:milk"
   },
   "result": {
-    "item": "spectrum:jaramel_tart",
+    "id": "spectrum:jaramel_tart",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/food/tarts"

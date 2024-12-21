@@ -102,7 +102,7 @@
     ]
   },
   "result": {
-    "item": "spectrum:infused_beverage",
+    "id": "spectrum:infused_beverage",
     "count": 4,
     "nbt": {
       "Variant": "enchanted_apple_cider",

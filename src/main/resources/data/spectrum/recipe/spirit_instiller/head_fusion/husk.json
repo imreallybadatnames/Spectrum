@@ -3,9 +3,7 @@
   "group": "head_fusion",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "minecraft:zombie_head"
-  },
+  "ingredient1": "minecraft:zombie_head",
   "ingredient2": {
     "item": "spectrum:incandescent_essence",
     "count": 4
@@ -14,8 +12,6 @@
     "item": "spectrum:vegetal",
     "count": 4
   },
-  "result": {
-    "item": "spectrum:husk_head"
-  },
+  "result": "spectrum:husk_head",
   "required_advancement": "spectrum:unlocks/head_fusion/incandescent_recipes"
 }

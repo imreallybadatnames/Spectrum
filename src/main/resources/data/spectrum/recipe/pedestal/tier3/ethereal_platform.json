@@ -14,21 +14,13 @@
     "PSP"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:stardust"
-    },
-    "G": {
-      "item": "spectrum:shimmerstone_gem"
-    },
-    "Y": {
-      "item": "spectrum:yellow_pigment"
-    },
-    "P": {
-      "item": "spectrum:purple_pigment"
-    }
+    "S": "spectrum:stardust",
+    "G": "spectrum:shimmerstone_gem",
+    "Y": "spectrum:yellow_pigment",
+    "P": "spectrum:purple_pigment"
   },
   "result": {
-    "item": "spectrum:ethereal_platform",
+    "id": "spectrum:ethereal_platform",
     "count": 8
   },
   "required_advancement": "spectrum:unlocks/blocks/ethereal_platform"

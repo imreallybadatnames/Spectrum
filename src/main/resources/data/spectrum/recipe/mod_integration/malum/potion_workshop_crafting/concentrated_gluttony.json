@@ -1,18 +1,12 @@
 {
   "type": "spectrum:potion_workshop_crafting",
-  "base_ingredient": {
-    "item": "minecraft:honey_bottle"
-  },
+  "base_ingredient": "minecraft:honey_bottle",
   "use_up_base_ingredient": true,
   "color": 867887,
-  "ingredient1": {
-    "item": "malum:rotting_essence"
-  },
-  "ingredient2": {
-    "item": "malum:living_flesh"
-  },
+  "ingredient1": "malum:rotting_essence",
+  "ingredient2": "malum:living_flesh",
   "result": {
-    "item": "malum:concentrated_gluttony",
+    "id": "malum:concentrated_gluttony",
     "count": 3
   },
   "fabric:load_conditions": [

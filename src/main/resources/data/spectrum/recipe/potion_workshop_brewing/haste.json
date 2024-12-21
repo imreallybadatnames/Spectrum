@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:amethyst_shard"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:amethyst_shard",
   "effect": "minecraft:haste",
   "base_duration_ticks": 3600,
   "potency_modifier": 1.0,

@@ -14,21 +14,13 @@
     "SSS"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:glass"
-    },
-    "C": {
-      "item": "spectrum:topaz_shard"
-    },
-    "Q": {
-      "item": "minecraft:quartz"
-    },
-    "S": {
-      "tag": "minecraft:wooden_slabs"
-    }
+    "B": "minecraft:glass",
+    "C": "spectrum:topaz_shard",
+    "Q": "minecraft:quartz",
+    "S": "#minecraft:wooden_slabs"
   },
   "result": {
-    "item": "spectrum:item_detector",
+    "id": "spectrum:item_detector",
     "count": 1
   },
   "required_advancement": "spectrum:unlocks/redstone/item_detector"

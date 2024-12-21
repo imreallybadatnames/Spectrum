@@ -15,18 +15,12 @@
     "SPS"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:light_gray_pigment"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "S": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "P": "spectrum:light_gray_pigment",
+    "R": "minecraft:redstone",
+    "S": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:light_gray_lamp",
+    "id": "spectrum:light_gray_lamp",
     "count": 2
   },
   "required_advancement": "spectrum:unlocks/colored_lamps/light_gray_lamp"

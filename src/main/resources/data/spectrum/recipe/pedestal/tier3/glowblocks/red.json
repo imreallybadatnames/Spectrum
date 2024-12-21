@@ -15,15 +15,11 @@
     "PQP"
   ],
   "key": {
-    "P": {
-      "item": "spectrum:red_pigment"
-    },
-    "Q": {
-      "item": "spectrum:quitoxic_powder"
-    }
+    "P": "spectrum:red_pigment",
+    "Q": "spectrum:quitoxic_powder"
   },
   "result": {
-    "item": "spectrum:red_glowblock",
+    "id": "spectrum:red_glowblock",
     "count": 4
   },
   "required_advancement": "spectrum:unlocks/glowblocks/red_glowblock"

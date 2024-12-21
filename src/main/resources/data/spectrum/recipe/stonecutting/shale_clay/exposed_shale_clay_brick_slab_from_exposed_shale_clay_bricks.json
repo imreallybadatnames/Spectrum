@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "spectrum:exposed_shale_clay_bricks"
-  },
+  "ingredient": "spectrum:exposed_shale_clay_bricks",
   "result": "spectrum:exposed_shale_clay_brick_slab",
   "count": 2
 }

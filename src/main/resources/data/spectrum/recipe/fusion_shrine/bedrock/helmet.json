@@ -8,9 +8,7 @@
   },
   "copy_nbt": true,
   "ingredients": [
-    {
-      "item": "minecraft:golden_helmet"
-    },
+    "minecraft:golden_helmet",
     {
       "item": "spectrum:bedrock_dust",
       "count": 5
@@ -29,7 +27,7 @@
     }
   ],
   "result": {
-    "item": "spectrum:bedrock_helmet",
+    "id": "spectrum:bedrock_helmet",
     "nbt": {
       "Enchantments": [
         {

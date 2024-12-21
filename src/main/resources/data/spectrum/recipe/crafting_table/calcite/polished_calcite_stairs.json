@@ -6,12 +6,10 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "spectrum:polished_calcite"
-    }
+    "W": "spectrum:polished_calcite"
   },
   "result": {
-    "item": "spectrum:polished_calcite_stairs",
+    "id": "spectrum:polished_calcite_stairs",
     "count": 6
   }
 }

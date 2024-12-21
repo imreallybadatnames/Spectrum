@@ -10,12 +10,10 @@
   "black": 0,
   "experience": 0.0,
   "ingredients": [
-    {
-      "item": "spectrum:amethyst_powder_block"
-    }
+    "spectrum:amethyst_powder_block"
   ],
   "result": {
-    "item": "spectrum:amethyst_powder",
+    "id": "spectrum:amethyst_powder",
     "count": 9
   },
   "required_advancement": "spectrum:hidden/collect_shards/amethyst",

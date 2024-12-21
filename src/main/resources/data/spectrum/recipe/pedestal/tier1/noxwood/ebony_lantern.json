@@ -15,24 +15,14 @@
     "CIC"
   ],
   "key": {
-    "S": {
-      "item": "spectrum:ebony_noxwood_slab"
-    },
-    "G": {
-      "item": "spectrum:ebony_noxcap_gills"
-    },
-    "C": {
-      "item": "spectrum:ebony_noxcap_block"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "H": {
-      "item": "spectrum:shimmerstone_gem"
-    }
+    "S": "spectrum:ebony_noxwood_slab",
+    "G": "spectrum:ebony_noxcap_gills",
+    "C": "spectrum:ebony_noxcap_block",
+    "I": "minecraft:iron_ingot",
+    "H": "spectrum:shimmerstone_gem"
   },
   "result": {
-    "item": "spectrum:ebony_noxwood_lantern",
+    "id": "spectrum:ebony_noxwood_lantern",
     "count": 1
   },
   "required_advancement": "spectrum:lategame/collect_noxwood"

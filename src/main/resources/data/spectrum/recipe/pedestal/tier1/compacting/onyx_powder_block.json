@@ -15,12 +15,10 @@
     "AAA"
   ],
   "key": {
-    "A": {
-      "item": "spectrum:onyx_powder"
-    }
+    "A": "spectrum:onyx_powder"
   },
   "result": {
-    "item": "spectrum:onyx_powder_block",
+    "id": "spectrum:onyx_powder_block",
     "count": 1
   },
   "required_advancement": "spectrum:create_onyx_shard",

@@ -14,18 +14,12 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:smooth_basalt"
-    },
-    "M": {
-      "item": "spectrum:dragonbone_chunk"
-    },
-    "P": {
-			"tag": "spectrum:resplendent_feathers"
-    }
+    "S": "minecraft:smooth_basalt",
+    "M": "spectrum:dragonbone_chunk",
+    "P": "#spectrum:resplendent_feathers"
   },
   "result": {
-    "item": "spectrum:dragonrending_pickaxe",
+    "id": "spectrum:dragonrending_pickaxe",
     "nbt": {
       "Enchantments": [
         {

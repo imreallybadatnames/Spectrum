@@ -6,20 +6,14 @@
     "fluid": "spectrum:liquid_crystal"
   },
   "ingredients": [
-    {
-      "item": "spectrum:fanciful_pendant"
-    },
-    {
-      "item": "spectrum:refined_azurite"
-    },
+    "spectrum:fanciful_pendant",
+    "spectrum:refined_azurite",
     {
       "item": "spectrum:blue_pigment",
       "count": 16
     }
   ],
-  "result": {
-    "item": "spectrum:shieldgrasp_amulet"
-  },
+  "result": "spectrum:shieldgrasp_amulet",
   "required_advancement": "spectrum:unlocks/trinkets/shieldgrasp_amulet",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

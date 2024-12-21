@@ -1,10 +1,8 @@
 {
   "type": "spectrum:midnight_solution_converting",
-  "ingredient": {
-    "tag": "minecraft:dirt"
-  },
+  "ingredient": "#minecraft:dirt",
   "result": {
-    "item": "minecraft:soul_soil",
+    "id": "minecraft:soul_soil",
     "count": 1
   }
 }

@@ -1,12 +1,8 @@
 {
   "type": "spectrum:potion_workshop_brewing",
   "group": "extraalchemy_potions",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "minecraft:beetroot_seeds"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "minecraft:beetroot_seeds",
   "effect": "extraalchemy:photosynthesis",
   "base_duration_ticks": 1600,
   "potency_modifier": 1.0,

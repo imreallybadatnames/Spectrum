@@ -1,11 +1,7 @@
 {
   "type": "spectrum:potion_workshop_brewing",
-  "ingredient1": {
-    "item": "minecraft:nether_wart"
-  },
-  "ingredient2": {
-    "item": "biomemakeover:moth_scales"
-  },
+  "ingredient1": "minecraft:nether_wart",
+  "ingredient2": "biomemakeover:moth_scales",
   "effect": "biomemakeover:nocturnal",
   "base_duration_ticks": 72000,
   "potency_modifier": 0,

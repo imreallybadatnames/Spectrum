@@ -14,12 +14,10 @@
     "XX"
   ],
   "key": {
-    "X": {
-      "item": "spectrum:jade_vine_petals"
-    }
+    "X": "spectrum:jade_vine_petals"
   },
   "result": {
-    "item": "spectrum:jade_vine_petal_block",
+    "id": "spectrum:jade_vine_petal_block",
     "count": 1
   },
   "required_advancement": "spectrum:midgame/collect_jade_vine_petals",

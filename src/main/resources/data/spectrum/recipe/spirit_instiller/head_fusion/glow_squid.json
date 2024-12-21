@@ -3,9 +3,7 @@
   "group": "head_fusion",
   "time": 800,
   "experience": 4.0,
-  "ingredient1": {
-    "item": "spectrum:squid_head"
-  },
+  "ingredient1": "spectrum:squid_head",
   "ingredient2": {
     "item": "spectrum:shimmerstone_gem",
     "count": 4
@@ -14,8 +12,6 @@
     "item": "spectrum:vegetal",
     "count": 4
   },
-  "result": {
-    "item": "spectrum:glow_squid_head"
-  },
+  "result": "spectrum:glow_squid_head",
   "required_advancement": "spectrum:unlocks/head_fusion/basic_recipes"
 }

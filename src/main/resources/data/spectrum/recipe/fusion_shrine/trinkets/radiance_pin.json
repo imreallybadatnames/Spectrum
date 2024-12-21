@@ -10,9 +10,7 @@
       "item": "spectrum:polished_calcite",
       "count": 4
     },
-    {
-      "item": "spectrum:star_fragment"
-    },
+    "spectrum:star_fragment",
     {
       "item": "spectrum:shimmerstone_gem",
       "count": 16
@@ -22,9 +20,7 @@
       "count": 8
     }
   ],
-  "result": {
-    "item": "spectrum:radiance_pin"
-  },
+  "result": "spectrum:radiance_pin",
   "required_advancement": "spectrum:unlocks/trinkets/radiance_pin",
   "world_conditions": [],
   "start_crafting_effect": "nothing",

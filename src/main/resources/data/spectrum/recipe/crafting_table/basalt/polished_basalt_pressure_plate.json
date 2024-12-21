@@ -4,11 +4,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "spectrum:polished_basalt"
-    }
+    "#": "spectrum:polished_basalt"
   },
-  "result": {
-    "item": "spectrum:polished_basalt_pressure_plate"
-  }
+  "result": "spectrum:polished_basalt_pressure_plate"
 }
