@@ -17,9 +17,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:evernectar"
-            ]
+            "items": "spectrum:evernectar"
           }
         ]
       }

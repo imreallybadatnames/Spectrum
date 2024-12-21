@@ -17,9 +17,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": [
-            "spectrum:pure_glowstone"
-          ]
+          "items": "spectrum:pure_glowstone"
         }
       }
     },

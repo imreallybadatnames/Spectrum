@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:moonstone_core"
-            ]
+            "items": "spectrum:moonstone_core"
           }
         ]
       }

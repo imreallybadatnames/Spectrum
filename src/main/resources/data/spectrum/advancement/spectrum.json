@@ -40,9 +40,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:nightdew_sprout"
-            ]
+            "items": "spectrum:nightdew_sprout"
           }
         ]
       }
@@ -52,9 +50,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:mermaids_gem"
-            ]
+            "items": "spectrum:mermaids_gem"
           }
         ]
       }
@@ -64,9 +60,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:radiating_ender"
-            ]
+            "items": "spectrum:radiating_ender"
           }
         ]
       }

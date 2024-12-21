@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:myceylon"
-            ]
+            "items": "spectrum:myceylon"
           }
         ]
       }

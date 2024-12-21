@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:aloe_leaf"
-            ]
+            "items": "spectrum:aloe_leaf"
           }
         ]
       }

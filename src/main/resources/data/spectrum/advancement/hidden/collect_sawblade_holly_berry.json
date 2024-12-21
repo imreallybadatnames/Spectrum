@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:sawblade_holly_berry"
-            ]
+            "items": "spectrum:sawblade_holly_berry"
           }
         ]
       }

@@ -16,9 +16,7 @@
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
         "rod": {
-          "items": [
-            "spectrum:molten_rod"
-          ]
+          "items": "spectrum:molten_rod"
         },
         "hooked_entity": { }
       }

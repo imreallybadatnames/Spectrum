@@ -17,9 +17,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:bottomless_bundle"
-            ],
+            "items": "spectrum:bottomless_bundle",
             "nbt": {
               "StoredStack": {
                 "Count": 20000

@@ -22,9 +22,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:infused_beverage"
-            ],
+            "items": "spectrum:infused_beverage",
             "nbt": {
               "Variant": "poisonous_vodka"
             }

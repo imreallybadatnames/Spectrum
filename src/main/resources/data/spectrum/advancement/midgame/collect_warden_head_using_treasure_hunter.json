@@ -16,9 +16,7 @@
       "trigger": "spectrum:treasure_hunter_drop",
       "conditions": {
         "dropped_item": {
-          "items": [
-            "spectrum:warden_head"
-          ]
+          "items": "spectrum:warden_head"
         }
       }
     },

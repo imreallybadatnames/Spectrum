@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:ash_flakes"
-            ]
+            "items": "spectrum:ash_flakes"
           }
         ]
       }

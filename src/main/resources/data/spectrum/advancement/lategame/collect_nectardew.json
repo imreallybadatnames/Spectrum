@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:nectardew_burgeon"
-            ]
+            "items": "spectrum:nectardew_burgeon"
           }
         ]
       }

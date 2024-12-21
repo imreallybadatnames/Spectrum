@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:prickly_bayleaf"
-            ]
+            "items": "spectrum:prickly_bayleaf"
           }
         ]
       }

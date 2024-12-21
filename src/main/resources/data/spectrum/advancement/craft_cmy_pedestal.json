@@ -48,9 +48,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pedestal_all_basic"
-            ]
+            "items": "spectrum:pedestal_all_basic"
           }
         ]
       }

@@ -51,9 +51,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pedestal_onyx"
-            ]
+            "items": "spectrum:pedestal_onyx"
           }
         ]
       }

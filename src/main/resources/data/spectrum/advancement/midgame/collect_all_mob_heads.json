@@ -87,9 +87,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:tropical_fish_head"
-            ]
+            "items": "spectrum:tropical_fish_head"
           }
         ]
       }
@@ -247,9 +245,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:sheep_head"
-            ]
+            "items": "spectrum:sheep_head"
           }
         ]
       }
@@ -259,9 +255,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:shulker_head"
-            ]
+            "items": "spectrum:shulker_head"
           }
         ]
       }
@@ -271,9 +265,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:shulker_black_head"
-            ]
+            "items": "spectrum:shulker_black_head"
           }
         ]
       }
@@ -283,9 +275,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:shulker_blue_head"
-            ]
+            "items": "spectrum:shulker_blue_head"
           }
         ]
       }
@@ -411,9 +401,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:zoglin_head"
-            ]
+            "items": "spectrum:zoglin_head"
           }
         ]
       }

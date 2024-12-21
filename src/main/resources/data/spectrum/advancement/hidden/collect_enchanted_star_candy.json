@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:enchanted_star_candy"
-            ]
+            "items": "spectrum:enchanted_star_candy"
           }
         ]
       }

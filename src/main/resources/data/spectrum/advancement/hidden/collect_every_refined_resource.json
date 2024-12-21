@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:refined_azurite"
-            ]
+            "items": "spectrum:refined_azurite"
           }
         ]
       }
@@ -17,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:refined_bloodstone"
-            ]
+            "items": "spectrum:refined_bloodstone"
           }
         ]
       }
@@ -29,9 +25,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:refined_malachite"
-            ]
+            "items": "spectrum:refined_malachite"
           }
         ]
       }

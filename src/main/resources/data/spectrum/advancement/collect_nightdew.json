@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:nightdew_sprout"
-            ]
+            "items": "spectrum:nightdew_sprout"
           }
         ]
       }

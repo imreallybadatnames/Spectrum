@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:glistering_shooting_star"
-            ]
+            "items": "spectrum:glistering_shooting_star"
           }
         ]
       }
@@ -30,9 +28,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:fiery_shooting_star"
-            ]
+            "items": "spectrum:fiery_shooting_star"
           }
         ]
       }
@@ -42,9 +38,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:colorful_shooting_star"
-            ]
+            "items": "spectrum:colorful_shooting_star"
           }
         ]
       }
@@ -54,9 +48,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pristine_shooting_star"
-            ]
+            "items": "spectrum:pristine_shooting_star"
           }
         ]
       }
@@ -66,9 +58,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:gemstone_shooting_star"
-            ]
+            "items": "spectrum:gemstone_shooting_star"
           }
         ]
       }

@@ -17,9 +17,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:doombloom_seed"
-            ]
+            "items": "spectrum:doombloom_seed"
           }
         ]
       }

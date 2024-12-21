@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:glass_peach"
-            ]
+            "items": "spectrum:glass_peach"
           }
         ]
       }

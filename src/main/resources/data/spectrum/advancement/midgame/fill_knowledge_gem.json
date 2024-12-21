@@ -21,9 +21,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:knowledge_gem"
-            ],
+            "items": "spectrum:knowledge_gem",
             "nbt": {
               "stored_experience": 10000
             }

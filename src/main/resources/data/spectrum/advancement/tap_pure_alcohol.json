@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pure_alcohol"
-            ]
+            "items": "spectrum:pure_alcohol"
           }
         ]
       }

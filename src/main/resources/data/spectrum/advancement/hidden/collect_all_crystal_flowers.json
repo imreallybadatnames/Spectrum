@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:apricotti"
-            ]
+            "items": "spectrum:apricotti"
           }
         ]
       }
@@ -23,9 +21,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:sweet_pea"
-            ]
+            "items": "spectrum:sweet_pea"
           }
         ]
       }
@@ -35,9 +31,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:humming_bell"
-            ]
+            "items": "spectrum:humming_bell"
           }
         ]
       }

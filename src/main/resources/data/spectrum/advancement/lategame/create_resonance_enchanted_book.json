@@ -16,9 +16,7 @@
       "trigger": "spectrum:enchanter_crafting",
       "conditions": {
         "item": {
-          "items": [
-            "minecraft:enchanted_book"
-          ],
+          "items": "minecraft:enchanted_book",
           "stored_enchantments": [
             {
               "enchantment": "spectrum:cloaked/resonance"

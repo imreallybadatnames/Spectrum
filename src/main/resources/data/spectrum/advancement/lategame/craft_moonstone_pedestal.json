@@ -42,9 +42,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pedestal_moonstone"
-            ]
+            "items": "spectrum:pedestal_moonstone"
           }
         ]
       }

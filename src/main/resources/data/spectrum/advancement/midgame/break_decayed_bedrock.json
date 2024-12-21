@@ -30,9 +30,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:bedrock_dust"
-            ]
+            "items": "spectrum:bedrock_dust"
           }
         ]
       }

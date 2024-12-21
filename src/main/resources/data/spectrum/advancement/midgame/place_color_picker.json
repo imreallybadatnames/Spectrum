@@ -22,9 +22,7 @@
           }
         ],
         "item": {
-          "items": [
-            "spectrum:color_picker"
-          ]
+          "items": "spectrum:color_picker"
         }
       }
     },

@@ -19,9 +19,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:aether_graced_nectar_gloves"
-            ]
+            "items": "spectrum:aether_graced_nectar_gloves"
           }
         ]
       }

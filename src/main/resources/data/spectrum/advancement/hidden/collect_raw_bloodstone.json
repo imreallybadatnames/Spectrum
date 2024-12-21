@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:raw_bloodstone"
-            ]
+            "items": "spectrum:raw_bloodstone"
           }
         ]
       }

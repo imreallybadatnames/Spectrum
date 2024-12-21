@@ -17,9 +17,7 @@
       "trigger": "spectrum:trinket_change",
 	  "conditions": {
         "items": [{
-          "items": [
-            "spectrum:neat_ring"
-          ]
+          "items": "spectrum:neat_ring"
         }]
       }
     },

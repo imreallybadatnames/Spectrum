@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pigment_palette"
-            ]
+            "items": "spectrum:pigment_palette"
           }
         ]
       }

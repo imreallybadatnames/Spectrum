@@ -17,9 +17,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:downstone_fragments"
-            ]
+            "items": "spectrum:downstone_fragments"
           }
         ]
       }

@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:dragonrot_bucket"
-            ]
+            "items": "spectrum:dragonrot_bucket"
           }
         ]
       }

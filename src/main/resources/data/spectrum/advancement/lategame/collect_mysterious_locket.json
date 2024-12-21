@@ -17,9 +17,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:mysterious_locket"
-            ]
+            "items": "spectrum:mysterious_locket"
           }
         ]
       }

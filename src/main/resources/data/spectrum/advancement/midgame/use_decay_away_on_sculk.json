@@ -34,9 +34,7 @@
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "items": [
-                "spectrum:bottle_of_decay_away"
-              ]
+              "items": "spectrum:bottle_of_decay_away"
             }
           }
         ]

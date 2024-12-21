@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:germinated_jade_vine_bulb"
-            ]
+            "items": "spectrum:germinated_jade_vine_bulb"
           }
         ]
       }

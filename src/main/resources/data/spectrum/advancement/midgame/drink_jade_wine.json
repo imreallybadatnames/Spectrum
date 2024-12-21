@@ -16,9 +16,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:jade_wine"
-          ]
+          "items": "spectrum:jade_wine"
         }
       }
     },

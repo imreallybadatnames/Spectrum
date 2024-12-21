@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:jade_wine"
-            ],
+            "items": "spectrum:jade_wine",
             "nbt": {
               "Sweetened": true
             }

@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:fissure_plum"
-            ]
+            "items": "spectrum:fissure_plum"
           }
         ]
       }

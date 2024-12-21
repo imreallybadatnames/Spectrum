@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:primordial_torch"
-            ]
+            "items": "spectrum:primordial_torch"
           }
         ]
       }

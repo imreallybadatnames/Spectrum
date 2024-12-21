@@ -17,9 +17,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": [
-            "spectrum:resonance_shard"
-          ]
+          "items": "spectrum:resonance_shard"
         }
       }
     },
@@ -27,9 +25,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": [
-            "spectrum:refined_malachite"
-          ]
+          "items": "spectrum:refined_malachite"
         }
       }
     },
@@ -37,9 +33,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": [
-            "spectrum:refined_bloodstone"
-          ]
+          "items": "spectrum:refined_bloodstone"
         }
       }
     },

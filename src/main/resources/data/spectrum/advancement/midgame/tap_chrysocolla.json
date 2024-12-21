@@ -18,9 +18,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:chrysocolla"
-            ]
+            "items": "spectrum:chrysocolla"
           }
         ]
       }

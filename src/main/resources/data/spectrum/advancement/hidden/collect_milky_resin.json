@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:milky_resin"
-            ]
+            "items": "spectrum:milky_resin"
           }
         ]
       }

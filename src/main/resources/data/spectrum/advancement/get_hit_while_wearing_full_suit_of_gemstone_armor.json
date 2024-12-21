@@ -18,24 +18,16 @@
         "player": {
           "equipment": {
             "head": {
-              "items": [
-                "spectrum:fetchling_helmet"
-              ]
+              "items": "spectrum:fetchling_helmet"
             },
             "chest": {
-              "items": [
-                "spectrum:ferocious_chestplate"
-              ]
+              "items": "spectrum:ferocious_chestplate"
             },
             "legs": {
-              "items": [
-                "spectrum:sylph_leggings"
-              ]
+              "items": "spectrum:sylph_leggings"
             },
             "feet": {
-              "items": [
-                "spectrum:oread_boots"
-              ]
+              "items": "spectrum:oread_boots"
             }
           }
         }

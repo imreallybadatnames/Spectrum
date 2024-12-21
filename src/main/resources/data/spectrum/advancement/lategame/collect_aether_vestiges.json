@@ -19,9 +19,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:aether_vestiges"
-            ]
+            "items": "spectrum:aether_vestiges"
           }
         ]
       }
