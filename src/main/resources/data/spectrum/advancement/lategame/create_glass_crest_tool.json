@@ -1,14 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:glass_crest_workstaff",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "minecraft:silk_touch",
-            "lvl": "1s"
+      "id": "spectrum:glass_crest_workstaff",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:silk_touch": 1
           }
-        ]
+        }
       }
     },
     "title": {
@@ -22,13 +21,11 @@
   "criteria": {
     "created_glass_crest_tool": {
       "trigger": "spectrum:crafted_with_fusion_shrine",
-      "conditions": {
         "items": [
           {
-            "tag": "spectrum:glass_crest_equipment"
+            "items": "#spectrum:glass_crest_equipment"
           }
         ]
-      }
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",

@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:crystal_gardens"
+                "biomes": "spectrum:crystal_gardens"
               }
             }
           }

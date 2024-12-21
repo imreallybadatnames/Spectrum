@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_moonstone",
   "display": {
     "icon": {
-      "item": "spectrum:pedestal_moonstone"
+      "id": "spectrum:pedestal_moonstone"
     },
     "title": {
       "translate": "advancements.spectrum.craft_moonstone_pedestal.title"
@@ -15,20 +15,7 @@
     "interact_with_existing_pedestal": {
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type_specific": {
-                "type": "player",
-                "advancements": {
-                  "spectrum:lategame/collect_moonstone": true
-                }
-              }
-            }
-          }
-        ],
+        "player": {},
         "location": [
           {
             "condition": "minecraft:block_state_property",

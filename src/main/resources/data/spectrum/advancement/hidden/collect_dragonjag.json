@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:dragonjags"
+            "items": "#spectrum:dragonjags"
           }
         ]
       }

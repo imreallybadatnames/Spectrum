@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:slate_noxcap_stem"
+      "id": "spectrum:slate_noxcap_stem"
     },
     "hidden": true,
     "title": {
@@ -15,10 +15,16 @@
   "criteria": {
     "has_noxwood": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:noxwood" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:noxwood"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/spectrum_lategame"
       }

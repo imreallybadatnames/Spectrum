@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_noxwood",
   "display": {
     "icon": {
-      "item": "spectrum:myceylon"
+      "id": "spectrum:myceylon"
     },
     "hidden": true,
     "title": {

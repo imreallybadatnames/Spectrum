@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/reached_dd_floor",
   "display": {
     "icon": {
-      "item": "spectrum:preservation_stone"
+      "id": "spectrum:preservation_stone"
     },
     "hidden": true,
     "title": {
@@ -22,7 +22,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "spectrum:excavation_site"
+                "structures": "spectrum:excavation_site"
               }
             }
           }

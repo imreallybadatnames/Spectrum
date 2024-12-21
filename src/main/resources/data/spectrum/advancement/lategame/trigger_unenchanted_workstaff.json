@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:malachite_workstaff"
+      "id": "spectrum:malachite_workstaff"
     },
     "hidden": true,
     "title": {

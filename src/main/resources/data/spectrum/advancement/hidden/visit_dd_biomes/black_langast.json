@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:black_langast"
+                "biomes": "spectrum:black_langast"
               }
             }
           }

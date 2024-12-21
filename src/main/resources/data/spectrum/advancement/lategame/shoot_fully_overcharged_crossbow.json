@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/create_glass_crest_tool",
   "display": {
     "icon": {
-      "item": "spectrum:glass_crest_crossbow"
+      "id": "spectrum:glass_crest_crossbow"
     },
     "hidden": true,
     "frame": "challenge",

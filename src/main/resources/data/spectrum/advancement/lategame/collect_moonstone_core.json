@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/find_forgotten_city",
   "display": {
     "icon": {
-      "item": "spectrum:moonstone_core"
+      "id": "spectrum:moonstone_core"
     },
     "hidden": true,
     "title": {

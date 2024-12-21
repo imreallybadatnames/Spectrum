@@ -1,14 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:malachite_ultra_greatsword",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "minecraft:sweeping_edge",
-            "lvl": "4s"
+      "id": "spectrum:malachite_ultra_greatsword",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:sweeping_edge": 4
           }
-        ]
+        }
       }
     },
     "title": {
@@ -22,13 +21,11 @@
   "criteria": {
     "created_malachite_tool": {
       "trigger": "spectrum:crafted_with_fusion_shrine",
-      "conditions": {
         "items": [
           {
-            "tag": "spectrum:malachite_equipment"
+            "items": "#spectrum:malachite_equipment"
           }
         ]
-      }
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",

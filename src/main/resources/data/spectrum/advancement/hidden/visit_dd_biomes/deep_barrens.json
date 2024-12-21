@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:deep_barrens"
+                "biomes": "spectrum:deep_barrens"
               }
             }
           }

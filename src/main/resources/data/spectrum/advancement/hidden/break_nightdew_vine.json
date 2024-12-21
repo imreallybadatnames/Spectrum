@@ -4,9 +4,7 @@
       "trigger": "spectrum:block_broken",
       "conditions": {
         "broken_block": {
-          "blocks": [
-            "spectrum:nightdew"
-          ]
+          "blocks": "spectrum:nightdew"
         }
       }
     },

@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_paltaeria",
   "display": {
     "icon": {
-      "item": "spectrum:paltaeria_floatblock"
+      "id": "spectrum:paltaeria_floatblock"
     },
     "hidden": true,
     "frame": "challenge",
@@ -18,8 +18,10 @@
       "trigger": "minecraft:impossible"
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:lategame/collect_paltaeria" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:lategame/collect_paltaeria"
+      }
     }
   },
   "rewards": {

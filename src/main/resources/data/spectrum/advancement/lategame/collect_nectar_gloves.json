@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/find_undergrowth_manor",
   "display": {
     "icon": {
-      "item": "spectrum:aether_graced_nectar_gloves"
+      "id": "spectrum:aether_graced_nectar_gloves"
     },
     "hidden": true,
     "frame": "challenge",

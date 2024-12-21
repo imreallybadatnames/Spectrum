@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/craft_resonant_pickaxe",
   "display": {
     "icon": {
-      "item": "minecraft:infested_cracked_stone_bricks"
+      "id": "minecraft:infested_cracked_stone_bricks"
     },
     "title": {
       "translate": "advancements.spectrum.break_infested_block_with_resonance_tool.title"
@@ -15,35 +15,36 @@
     "broken_infested_block_with_resonance": {
       "trigger": "spectrum:block_broken",
       "conditions": {
-        "player": [{
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "equipment": {
-              "mainhand": {
-                "enchantments": [{
-                  "enchantment": "spectrum:resonance",
-                  "levels": {
-                    "min": 1
+        "player": {
+          "type_specific": {
+            "type": "minecraft:player",
+            "advancements": {
+              "spectrum:unlocks/enchantments/resonance_usage": true
+            }
+          },
+          "equipment": {
+            "mainhand": {
+              "predicates": {
+                "minecraft:enchantments": [
+                  {
+                    "enchantments": "spectrum:resonance",
+                    "levels": {
+                      "min": 1
+                    }
                   }
-                }]
-              }
-            },
-            "player": {
-              "advancements": {
-                "spectrum:unlocks/enchantments/resonance_usage": true
+                ]
               }
             }
           }
-        }],
-        "broken_block": {
-          "tag": "spectrum:infested_blocks"
-        }
+        },
+        "broken_block": "#spectrum:infested_blocks"
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:lategame/craft_resonant_pickaxe" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:lategame/craft_resonant_pickaxe"
+      }
     }
   }
 }

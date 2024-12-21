@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:hummingstone"
+      "id": "spectrum:hummingstone"
     },
     "hidden": true,
     "title": {
@@ -18,10 +18,9 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:hummingstones"
+            "items": "#spectrum:hummingstones"
           }
         ]
-      }
     },
     "struck_up_hummingstone_hymn": {
       "trigger": "spectrum:hummingstone_hymn",

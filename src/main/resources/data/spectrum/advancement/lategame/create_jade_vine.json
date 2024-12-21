@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:germinated_jade_vine_bulb"
+      "id": "spectrum:germinated_jade_vine_bulb"
     },
     "hidden": true,
     "title": {

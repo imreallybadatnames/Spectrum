@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:blackslags"
+            "items": "#spectrum:blackslags"
           }
         ]
       }

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:perturbed_eye"
+      "id": "spectrum:perturbed_eye"
     },
     "title": {
       "translate": "advancements.spectrum.use_perturbed_eye.title"
@@ -30,9 +30,7 @@
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "items": [
-                "spectrum:perturbed_eye"
-              ]
+              "items": "spectrum:perturbed_eye"
             }
           }
         ]

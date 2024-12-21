@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:pedestal_moonstone"
+      "id": "spectrum:pedestal_moonstone"
     },
     "frame": "challenge",
     "title": {
@@ -20,9 +20,9 @@
           "min": 5
         },
         "advancement_identifiers": [
+          "spectrum:break_cracked_dragonbone",
           "spectrum:lategame/visit_all_deeper_down_biomes",
           "spectrum:lategame/revive_black_sludge_plant",
-          "spectrum:break_cracked_dragonbone",
           "spectrum:lategame/find_excavation_site",
           "spectrum:lategame/find_forgotten_city",
           "spectrum:lategame/reached_dd_floor",

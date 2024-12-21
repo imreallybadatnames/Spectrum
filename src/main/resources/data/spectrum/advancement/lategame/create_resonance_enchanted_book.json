@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/craft_resonant_pickaxe",
   "display": {
     "icon": {
-      "item": "minecraft:enchanted_book"
+      "id": "minecraft:enchanted_book"
     },
     "title": {
       "translate": "advancements.spectrum.create_resonance_enchanted_book.title"
@@ -17,11 +17,16 @@
       "conditions": {
         "item": {
           "items": "minecraft:enchanted_book",
-          "stored_enchantments": [
-            {
-              "enchantment": "spectrum:cloaked/resonance"
-            }
-          ]
+          "predicates": {
+            "minecraft:stored_enchantments": [
+              {
+                "enchantments": "spectrum:cloaked/resonance",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
         }
       }
     },
@@ -29,14 +34,17 @@
       "trigger": "minecraft:enchanted_item",
       "conditions": {
         "item": {
-          "items": [
-            "minecraft:enchanted_book"
-          ],
-          "stored_enchantments": [
-            {
-              "enchantment": "spectrum:cloaked/resonance"
-            }
-          ]
+          "items": "minecraft:enchanted_book",
+          "predicates": {
+            "minecraft:stored_enchantments": [
+              {
+                "enchantments": "spectrum:cloaked/resonance",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
         }
       }
     },

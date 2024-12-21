@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/craft_resonant_pickaxe",
   "display": {
     "icon": {
-      "item": "minecraft:budding_amethyst"
+      "id": "minecraft:budding_amethyst"
     },
     "title": {
       "translate": "advancements.spectrum.break_budding_block_with_resonance_tool.title"
@@ -15,35 +15,36 @@
     "broken_budding_block_with_resonance": {
       "trigger": "spectrum:block_broken",
       "conditions": {
-        "player": [{
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "equipment": {
-              "mainhand": {
-                "enchantments": [{
-                  "enchantment": "spectrum:resonance",
-                  "levels": {
-                    "min": 1
+        "player": {
+          "type_specific": {
+            "type": "minecraft:player",
+            "advancements": {
+              "spectrum:unlocks/enchantments/resonance_usage": true
+            }
+          },
+          "equipment": {
+            "mainhand": {
+              "predicates": {
+                "minecraft:enchantments": [
+                  {
+                    "enchantments": "spectrum:resonance",
+                    "levels": {
+                      "min": 1
+                    }
                   }
-                }]
-              }
-            },
-            "player": {
-              "advancements": {
-                "spectrum:unlocks/enchantments/resonance_usage": true
+                ]
               }
             }
           }
-        }],
-        "broken_block": {
-          "tag": "spectrum:budding_blocks"
-        }
+        },
+        "broken_block": "#spectrum:budding_blocks"
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:lategame/craft_resonant_pickaxe" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:lategame/craft_resonant_pickaxe"
+      }
     }
   }
 }

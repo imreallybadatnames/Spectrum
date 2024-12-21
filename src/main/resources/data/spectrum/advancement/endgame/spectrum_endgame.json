@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:mysterious_locket"
+      "id": "spectrum:mysterious_locket"
     },
     "title": {
       "translate": "advancements.spectrum.spectrum_endgame.title"

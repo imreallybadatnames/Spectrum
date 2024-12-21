@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_all_cookbooks",
   "display": {
     "icon": {
-      "item": "spectrum:berliner"
+      "id": "spectrum:berliner"
     },
     "frame": "goal",
     "title": {
@@ -25,9 +25,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:bagnun"
-          ]
+          "items": "spectrum:bagnun"
         }
       }
     },
@@ -35,9 +33,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:banyash"
-          ]
+          "items": "spectrum:banyash"
         }
       }
     },
@@ -45,9 +41,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:berliner"
-          ]
+          "items": "spectrum:berliner"
         }
       }
     },
@@ -55,9 +49,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:bristle_mead"
-          ]
+          "items": "spectrum:bristle_mead"
         }
       }
     },
@@ -65,9 +57,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:chauve_souris_au_vin"
-          ]
+          "items": "spectrum:chauve_souris_au_vin"
         }
       }
     },
@@ -75,9 +65,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:crawfish_cocktail"
-          ]
+          "items": "spectrum:crawfish_cocktail"
         }
       }
     },
@@ -85,9 +73,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:cream_pastry"
-          ]
+          "items": "spectrum:cream_pastry"
         }
       }
     },
@@ -95,9 +81,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:faded_koi"
-          ]
+          "items": "spectrum:faded_koi"
         }
       }
     },
@@ -105,9 +89,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:fishcake"
-          ]
+          "items": "spectrum:fishcake"
         }
       }
     },
@@ -115,9 +97,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:golden_bristle_tea"
-          ]
+          "items": "spectrum:golden_bristle_tea"
         }
       }
     },
@@ -125,9 +105,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:hare_roast"
-          ]
+          "items": "spectrum:hare_roast"
         }
       }
     },
@@ -135,9 +113,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:junket"
-          ]
+          "items": "spectrum:junket"
         }
       }
     },
@@ -145,9 +121,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:meatloaf"
-          ]
+          "items": "spectrum:meatloaf"
         }
       }
     },
@@ -155,9 +129,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:meatloaf_sandwich"
-          ]
+          "items": "spectrum:meatloaf_sandwich"
         }
       }
     },
@@ -165,9 +137,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:mellow_shallot_soup"
-          ]
+          "items": "spectrum:mellow_shallot_soup"
         }
       }
     },
@@ -175,9 +145,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:morchella"
-          ]
+          "items": "spectrum:morchella"
         }
       }
     },
@@ -185,9 +153,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:nectered_viognier"
-          ]
+          "items": "spectrum:nectered_viognier"
         }
       }
     },
@@ -195,9 +161,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:peaches_flambe"
-          ]
+          "items": "spectrum:peaches_flambe"
         }
       }
     },
@@ -205,9 +169,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:peach_cream"
-          ]
+          "items": "spectrum:peach_cream"
         }
       }
     },
@@ -215,9 +177,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:peach_jam"
-          ]
+          "items": "spectrum:peach_jam"
         }
       }
     },
@@ -225,9 +185,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:rabbit_cream_pie"
-          ]
+          "items": "spectrum:rabbit_cream_pie"
         }
       }
     },
@@ -235,9 +193,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:sedatives"
-          ]
+          "items": "spectrum:sedatives"
         }
       }
     },
@@ -245,9 +201,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:slushslide"
-          ]
+          "items": "spectrum:slushslide"
         }
       }
     },
@@ -255,9 +209,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:surstromming"
-          ]
+          "items": "spectrum:surstromming"
         }
       }
     },

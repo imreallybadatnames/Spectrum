@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "spectrum:moonstone_shard"
+      "id": "spectrum:moonstone_shard"
     },
     "frame": "challenge",
     "title": {
@@ -18,13 +18,12 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:moonstone_crystals"
+            "items": "#spectrum:moonstone_crystals"
           }
         ]
-      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/spectrum_lategame"
       }

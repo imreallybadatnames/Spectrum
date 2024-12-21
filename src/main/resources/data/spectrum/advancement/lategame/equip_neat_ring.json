@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/build_complex_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:neat_ring"
+      "id": "spectrum:neat_ring"
     },
     "hidden": true,
     "title": {
@@ -15,14 +15,16 @@
   "criteria": {
     "equipped_neat_ring": {
       "trigger": "spectrum:trinket_change",
-	  "conditions": {
-        "items": [{
-          "items": "spectrum:neat_ring"
-        }]
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:neat_ring"
+          }
+        ]
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/build_complex_pedestal_structure"
       }

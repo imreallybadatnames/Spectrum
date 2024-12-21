@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:doombloom_seed"
+      "id": "spectrum:doombloom_seed"
     },
     "title": {
       "translate": "advancements.spectrum.collect_doombloom_seed.title"

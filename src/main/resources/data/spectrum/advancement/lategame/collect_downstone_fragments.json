@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/find_excavation_site",
   "display": {
     "icon": {
-      "item": "spectrum:downstone_fragments"
+      "id": "spectrum:downstone_fragments"
     },
     "title": {
       "translate": "advancements.spectrum.collect_downstone_fragments.title"

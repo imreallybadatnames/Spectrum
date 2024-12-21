@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_bismuth_crystal",
   "display": {
     "icon": {
-      "item": "spectrum:crystallarieum"
+      "id": "spectrum:crystallarieum"
     },
     "title": {
       "translate": "advancements.spectrum.grow_bismuth_in_crystallarieum.title"
@@ -16,9 +16,7 @@
       "trigger": "spectrum:crystallarieum_growing",
       "conditions": {
         "grown_block": {
-          "blocks": [
-            "spectrum:bismuth_cluster"
-          ]
+          "blocks": "spectrum:bismuth_cluster"
         }
       }
     },

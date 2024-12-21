@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:howling_spires"
+                "biomes": "spectrum:howling_spires"
               }
             }
           }

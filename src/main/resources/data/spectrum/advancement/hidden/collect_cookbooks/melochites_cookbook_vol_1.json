@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:melochites_cookbook_vol_1"
-            ]
+            "items": "spectrum:melochites_cookbook_vol_1"
           }
         ]
       }

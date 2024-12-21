@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/build_complex_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:deepslate_malachite_ore"
+      "id": "spectrum:deepslate_malachite_ore"
     },
     "hidden": true,
     "title": {

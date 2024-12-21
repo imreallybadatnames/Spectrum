@@ -2,7 +2,13 @@
   "criteria": {
     "has_clover": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:clovers" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:clovers"
+          }
+        ]
+      }
     }
   }
 }

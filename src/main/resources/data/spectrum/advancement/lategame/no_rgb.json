@@ -1,14 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:raw_copper",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "minecraft:silk_touch",
-            "lvl": "1s"
+      "id": "minecraft:raw_copper",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:silk_touch": 1
           }
-        ]
+        }
       }
     },
     "hidden": true,
@@ -26,9 +25,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:raw_copper"
-            ]
+            "items": "minecraft:raw_copper"
           }
         ]
       }

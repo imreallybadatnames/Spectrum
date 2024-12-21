@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/build_complex_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:aether_vestiges"
+      "id": "spectrum:aether_vestiges"
     },
     "hidden": true,
     "frame": "goal",

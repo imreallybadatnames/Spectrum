@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_bismuth_crystal",
   "display": {
     "icon": {
-      "item": "spectrum:pure_iron"
+      "id": "spectrum:pure_iron"
     },
     "title": {
       "translate": "advancements.spectrum.collect_pure_resource.title"
@@ -14,10 +14,16 @@
   "criteria": {
     "has_pure_resource": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:pure_resources" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:pure_resources"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/collect_bismuth_crystal"
       }

@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/find_undergrowth_manor",
   "display": {
     "icon": {
-      "item": "minecraft:purple_banner"
+      "id": "minecraft:purple_banner"
     },
     "title": {
       "translate": "advancements.spectrum.enter_strange_preservation_ruin.title"

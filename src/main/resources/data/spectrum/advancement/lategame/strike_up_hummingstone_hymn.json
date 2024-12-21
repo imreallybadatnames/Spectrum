@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:hummingstone"
+      "id": "spectrum:hummingstone"
     },
     "title": {
       "translate": "advancements.spectrum.strike_up_hummingstone_hymn.title"

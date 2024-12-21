@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/craft_moonstone_pedestal",
   "display": {
     "icon": {
-      "item": "spectrum:chiseled_polished_basalt"
+      "id": "spectrum:chiseled_polished_basalt"
     },
     "frame": "challenge",
     "title": {
@@ -15,10 +15,12 @@
   "criteria": {
     "built_structure": {
       "trigger": "spectrum:completed_multiblock",
-      "conditions": { "multiblock_identifier": "spectrum:pedestal_complex" }
+      "conditions": {
+        "multiblock_identifier": "spectrum:pedestal_complex"
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/craft_moonstone_pedestal"
       }

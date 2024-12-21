@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/enter_strange_preservation_ruin",
   "display": {
     "icon": {
-      "item": "spectrum:poisoners_handbook"
+      "id": "spectrum:poisoners_handbook"
     },
     "hidden": true,
     "title": {

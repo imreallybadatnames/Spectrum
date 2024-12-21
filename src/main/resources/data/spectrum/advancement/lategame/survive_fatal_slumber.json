@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_nectardew",
   "display": {
     "icon": {
-      "item": "spectrum:evernectar"
+      "id": "spectrum:evernectar"
     },
     "frame": "challenge",
     "title": {

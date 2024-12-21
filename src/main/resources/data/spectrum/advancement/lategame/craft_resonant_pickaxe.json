@@ -2,14 +2,13 @@
   "parent": "spectrum:lategame/collect_paltaeria",
   "display": {
     "icon": {
-      "item": "spectrum:resonant_pickaxe",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "spectrum:cloaked/resonance",
-            "lvl": "1s"
+      "id": "spectrum:resonant_pickaxe",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "spectrum:cloaked/resonance": 1
           }
-        ]
+        }
       }
     },
     "title": {
@@ -22,7 +21,13 @@
   "criteria": {
     "craft_pedestal": {
       "trigger": "spectrum:crafted_with_pedestal",
-      "conditions": { "items": [{ "items": [ "spectrum:resonant_pickaxe" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:resonant_pickaxe"
+          }
+        ]
+      }
     },
     "gotten_previous": {
       "trigger":"revelationary:advancement_gotten",

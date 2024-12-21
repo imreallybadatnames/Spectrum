@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "spectrum:preservation_stone"
+      "id": "spectrum:preservation_stone"
     },
     "hidden": true,
     "title": {
@@ -22,7 +22,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "spectrum:city_below"
+                "structures": "spectrum:city_below"
               }
             }
           }

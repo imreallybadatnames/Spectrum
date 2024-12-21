@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/find_forgotten_city",
   "display": {
     "icon": {
-      "item": "spectrum:brewers_handbook"
+      "id": "spectrum:brewers_handbook"
     },
     "hidden": true,
     "title": {
@@ -15,7 +15,13 @@
   "criteria": {
     "collect_one_cookbook": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:cookbooks" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:cookbooks"
+          }
+        ]
+      }
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",

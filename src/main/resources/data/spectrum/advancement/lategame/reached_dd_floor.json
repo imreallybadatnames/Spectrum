@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "spectrum:downstone"
+      "id": "spectrum:downstone"
     },
     "title": {
       "translate": "advancements.spectrum.reached_dd_floor.title"

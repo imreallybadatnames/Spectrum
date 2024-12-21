@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:imperial_cookbook"
-            ]
+            "items": "spectrum:imperial_cookbook"
           }
         ]
       }

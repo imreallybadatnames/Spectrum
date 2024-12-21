@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:rock_candy"
+            "items": "#spectrum:rock_candy"
           }
         ]
       }

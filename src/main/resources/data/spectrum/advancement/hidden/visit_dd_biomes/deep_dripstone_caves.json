@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:deep_dripstone_caves"
+                "biomes": "spectrum:deep_dripstone_caves"
               }
             }
           }

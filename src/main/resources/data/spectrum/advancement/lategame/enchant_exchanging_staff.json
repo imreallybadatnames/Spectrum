@@ -2,14 +2,13 @@
   "parent": "spectrum:lategame/collect_paltaeria",
   "display": {
     "icon": {
-      "item": "spectrum:exchanging_staff",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "minecraft:silk_touch",
-            "lvl": "1s"
+      "id": "spectrum:exchanging_staff",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:silk_touch": 1
           }
-        ]
+        }
       }
     },
     "title": {
@@ -24,9 +23,7 @@
       "trigger": "minecraft:enchanted_item",
       "conditions": {
         "item": {
-          "items": [
-            "spectrum:exchanging_staff"
-          ]
+          "items": "spectrum:exchanging_staff"
         }
       }
     },

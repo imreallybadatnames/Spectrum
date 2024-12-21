@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "spectrum:polished_blackslag"
+      "id": "spectrum:polished_blackslag"
     },
     "frame": "goal",
     "title": {

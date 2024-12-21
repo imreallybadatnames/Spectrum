@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/enter_strange_preservation_ruin",
   "display": {
     "icon": {
-      "item": "spectrum:deep_light_chiseled_preservation_stone"
+      "id": "spectrum:deep_light_chiseled_preservation_stone"
     },
     "title": {
       "translate": "advancements.spectrum.solve_strange_preservation_ruin.title"

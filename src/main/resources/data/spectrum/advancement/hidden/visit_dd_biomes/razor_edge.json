@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "spectrum:razor_edge"
+                "biomes": "spectrum:razor_edge"
               }
             }
           }

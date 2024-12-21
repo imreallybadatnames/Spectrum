@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:light_gray_pigment"
-            ]
+            "items": "spectrum:light_gray_pigment"
           }
         ]
       }

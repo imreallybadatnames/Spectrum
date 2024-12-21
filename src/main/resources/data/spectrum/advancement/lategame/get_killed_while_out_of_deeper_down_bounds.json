@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "minecraft:bedrock"
+      "id": "minecraft:bedrock"
     },
     "hidden": true,
     "title": {

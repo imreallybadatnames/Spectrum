@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:nectardew_burgeon"
+      "id": "spectrum:nectardew_burgeon"
     },
     "title": {
       "translate": "advancements.spectrum.collect_nectardew.title"

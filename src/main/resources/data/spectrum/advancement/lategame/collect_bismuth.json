@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:small_bismuth_bud"
+      "id": "spectrum:small_bismuth_bud"
     },
     "hidden": true,
     "title": {
@@ -30,7 +30,7 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:lategame/spectrum_lategame"
       }

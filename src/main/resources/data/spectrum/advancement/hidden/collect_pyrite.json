@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:pyrite"
+            "items": "#spectrum:pyrite"
           }
         ]
       }

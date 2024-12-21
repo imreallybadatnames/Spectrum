@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_nectardew",
   "display": {
     "icon": {
-      "item": "spectrum:evernectar"
+      "id": "spectrum:evernectar"
     },
     "title": {
       "translate": "advancements.spectrum.create_evernectar.title"

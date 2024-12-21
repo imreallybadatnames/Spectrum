@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "spectrum:citrine_crystals"
+            "items": "#spectrum:citrine_crystals"
           }
         ]
       }

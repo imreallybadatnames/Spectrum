@@ -8,7 +8,13 @@
     },
     "has_stardust": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": ["spectrum:stardust"] }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:stardust"
+          }
+        ]
+      }
     }
   }
 }

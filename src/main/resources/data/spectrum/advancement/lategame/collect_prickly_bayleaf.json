@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/collect_dd_resources",
   "display": {
     "icon": {
-      "item": "spectrum:prickly_bayleaf"
+      "id": "spectrum:prickly_bayleaf"
     },
     "hidden": true,
     "title": {

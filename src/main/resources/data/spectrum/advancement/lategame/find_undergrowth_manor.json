@@ -2,7 +2,7 @@
   "parent": "spectrum:lategame/spectrum_lategame",
   "display": {
     "icon": {
-      "item": "spectrum:longing_chimera"
+      "id": "spectrum:longing_chimera"
     },
     "hidden": true,
     "title": {
@@ -22,7 +22,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "spectrum:undergrowth_manor"
+                "structures": "spectrum:undergrowth_manor"
               }
             }
           }

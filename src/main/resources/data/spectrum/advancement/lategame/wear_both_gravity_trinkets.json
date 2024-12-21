@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:ring_of_aerial_grace"
+      "id": "spectrum:ring_of_aerial_grace"
     },
     "hidden": true,
     "title": {
