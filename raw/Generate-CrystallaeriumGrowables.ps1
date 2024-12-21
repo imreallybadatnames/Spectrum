@@ -239,7 +239,7 @@ foreach($entry in $entries.GetEnumerator()) {
   },
   "results": [
     {
-      "item": "$res",
+      "id": "$res",
       "count": 2.0
     }
   ],
