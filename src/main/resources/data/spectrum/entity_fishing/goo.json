@@ -1,8 +1,6 @@
 {
 	"location": {
-		"fluid": {
-			"tag": "spectrum:goo"
-		}
+      "fluid": "#spectrum:goo"
 	},
 	"chance": 0.05,
 	"entities": [

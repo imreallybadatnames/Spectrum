@@ -1,8 +1,6 @@
 {
   "location": {
-    "fluid": {
-      "tag": "spectrum:dragonrot"
-    }
+    "fluid": "#spectrum:dragonrot"
   },
   "chance": 0.5,
   "entities": [

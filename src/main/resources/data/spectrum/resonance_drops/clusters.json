@@ -1,6 +1,4 @@
 {
   "type": "spectrum:drop_self",
-  "block": {
-    "tag": "c:clusters"
-  }
+  "block": "#c:clusters"
 }

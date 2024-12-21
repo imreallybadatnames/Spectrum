@@ -1,6 +1,4 @@
 {
   "type": "spectrum:drop_self",
-  "block": {
-    "tag": "c:budding_blocks"
-  }
+  "block": "#c:budding_blocks"
 }

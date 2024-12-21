@@ -1,8 +1,6 @@
 {
   "type": "spectrum:drop_self",
-  "block": {
-    "tag": "minecraft:all_signs"
-  },
+  "block": "#minecraft:all_signs",
   "nbt_to_copy": [
     "front_text",
     "back_text",
