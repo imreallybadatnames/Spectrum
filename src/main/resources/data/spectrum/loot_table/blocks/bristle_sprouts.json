@@ -11,9 +11,7 @@
           "conditions": [
             {
               "condition": "minecraft:match_tool",
-              "predicate": {
-                "tag": "c:shears"
-              }
+              "predicate": "#c:shears"
             }
           ]
         }

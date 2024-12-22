@@ -18,11 +18,16 @@
                     {
                       "condition": "minecraft:match_tool",
                       "predicate": {
-                        "enchantments": [
-                          {
-                            "enchantment": "minecraft:silk_touch"
-                          }
-                        ]
+                        "predicates": {
+                          "minecraft:enchantments": [
+                            {
+                              "enchantments": "minecraft:silk_touch",
+                              "levels": {
+                                "min": 1
+                              }
+                            }
+                          ]
+                        }
                       }
                     }
                   ]
@@ -47,9 +52,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "tag": "minecraft:cluster_max_harvestables"
-                  }
+                  "predicate": "#minecraft:cluster_max_harvestables"
                 }
               ]
             },

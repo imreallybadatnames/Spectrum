@@ -14,9 +14,7 @@
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-                    "tag": "minecraft:lava"
-                  }
+                  "fluid": "#minecraft:lava"
                 }
               }
             }
@@ -24,16 +22,14 @@
         },
         {
           "type": "minecraft:loot_table",
-					"name": "spectrum:gameplay/fishing/goo/fishing",
+          "name": "spectrum:gameplay/fishing/goo/fishing",
           "conditions": [
             {
               "condition": "minecraft:entity_properties",
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-										"tag": "spectrum:goo"
-                  }
+                  "fluid": "#spectrum:goo"
                 }
               }
             }
@@ -48,9 +44,7 @@
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-                    "tag": "spectrum:liquid_crystal"
-                  }
+                  "fluid": "#spectrum:liquid_crystal"
                 }
               }
             }
@@ -65,9 +59,7 @@
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-                    "tag": "spectrum:midnight_solution"
-                  }
+                  "fluid": "#spectrum:midnight_solution"
                 }
               }
             }
@@ -82,9 +74,7 @@
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-                    "tag": "spectrum:dragonrot"
-                  }
+                  "fluid": "#spectrum:dragonrot"
                 }
               }
             }
@@ -128,9 +118,7 @@
               "entity": "this",
               "predicate": {
                 "location": {
-                  "fluid": {
-                    "tag": "minecraft:water"
-                  }
+                  "fluid": "#minecraft:water"
                 }
               }
             }
