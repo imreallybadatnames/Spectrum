@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.crystallarieum",
-  "icon": "spectrum:crystallarieum",
+  "icon": {
+    "item": "spectrum:crystallarieum"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/crystallarieum"

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.gather_node.name",
-  "icon": "spectrum:gather_node",
+  "icon": {
+    "item": "spectrum:gather_node"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/pastel_network"

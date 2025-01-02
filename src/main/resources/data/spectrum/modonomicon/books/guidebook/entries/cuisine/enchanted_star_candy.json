@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_enchanted_star_candy"
   },
-  "icon": "spectrum:enchanted_star_candy",
+  "icon": {
+    "item": "spectrum:enchanted_star_candy"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [
@@ -20,9 +22,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.enchanted_star_candy",
-      "item": {
-        "item": "spectrum:enchanted_star_candy"
-      },
+      "item": "spectrum:enchanted_star_candy",
       "text": "book.spectrum.guidebook.star_candy.page2.text"
     }
   ]

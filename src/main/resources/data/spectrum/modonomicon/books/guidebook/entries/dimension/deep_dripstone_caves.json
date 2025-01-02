@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/visit_dd_biomes/deep_dripstone_caves"
   },
-  "icon": "minecraft:dripstone_block",
+  "icon": {
+    "item": "minecraft:dripstone_block"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

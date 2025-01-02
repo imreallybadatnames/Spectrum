@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.moonstone_geodes.name",
-  "icon": "spectrum:moonstone_cluster",
+  "icon": {
+    "item": "spectrum:moonstone_cluster"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/collect_moonstone"

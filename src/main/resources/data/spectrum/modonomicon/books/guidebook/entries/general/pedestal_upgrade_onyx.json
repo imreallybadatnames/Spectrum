@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pedestal_upgrade_onyx.name",
-  "icon": "spectrum:pedestal_onyx",
+  "icon": {
+    "item": "spectrum:pedestal_onyx"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:create_onyx_shard"

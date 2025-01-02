@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/nightfalls_blade"
   },
-  "icon": "spectrum:nightfalls_blade",
+  "icon": {
+    "item": "spectrum:nightfalls_blade"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

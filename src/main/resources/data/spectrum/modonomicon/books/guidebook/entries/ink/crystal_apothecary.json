@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/crystal_apothecary"
   },
-  "icon": "spectrum:crystal_apothecary",
+  "icon": {
+    "item": "spectrum:crystal_apothecary"
+  },
   "category": "spectrum:ink",
   "hide_while_locked": true,
   "parents": [],

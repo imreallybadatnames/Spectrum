@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bag_of_holding"
   },
-  "icon": "spectrum:bag_of_holding",
+  "icon": {
+    "item": "spectrum:bag_of_holding"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],
@@ -16,9 +18,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.bag_of_holding",
-      "item": {
-        "item": "spectrum:bag_of_holding"
-      },
+      "item": "spectrum:bag_of_holding",
       "text": "book.spectrum.guidebook.bag_of_holding.page0.text"
     },
     {

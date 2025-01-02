@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/find_excavation_site"
   },
-  "icon": "minecraft:end_rod",
+  "icon": {
+    "item": "minecraft:end_rod"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.sender_node.name",
-  "icon": "spectrum:sender_node",
+  "icon": {
+    "item": "spectrum:sender_node"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/pastel_network"

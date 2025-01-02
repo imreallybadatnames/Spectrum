@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.chalk.name",
-  "icon": "chalk:chalk",
+  "icon": {
+    "item": "chalk:chalk"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

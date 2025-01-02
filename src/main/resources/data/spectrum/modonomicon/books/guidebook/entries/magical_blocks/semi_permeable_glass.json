@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/build_advanced_pedestal_structure"
   },
-  "icon": "spectrum:amethyst_semi_permeable_glass",
+  "icon": {
+    "item": "spectrum:amethyst_semi_permeable_glass"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -16,9 +18,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "block.spectrum.semi_permeable_glass",
-      "item": {
-        "item": "spectrum:amethyst_semi_permeable_glass"
-      },
+      "item": "spectrum:amethyst_semi_permeable_glass",
       "text": "book.spectrum.guidebook.semi_permeable_glass.page0.text"
     },
     {

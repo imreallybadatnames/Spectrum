@@ -1,6 +1,8 @@
 {
   "name": "container.spectrum.rei.anvil_crushing.title",
-  "icon": "minecraft:anvil",
+  "icon": {
+    "item": "minecraft:anvil"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:place_pedestal"

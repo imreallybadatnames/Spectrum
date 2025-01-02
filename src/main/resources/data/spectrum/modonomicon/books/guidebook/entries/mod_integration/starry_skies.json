@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.starry_skies.name",
-  "icon": "minecraft:packed_ice",
+  "icon": {
+    "item": "minecraft:packed_ice"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

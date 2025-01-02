@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.upgrading_enchanted_books.name",
-  "icon": "minecraft:enchanted_book",
+  "icon": {
+    "item": "minecraft:enchanted_book"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/enchanter"

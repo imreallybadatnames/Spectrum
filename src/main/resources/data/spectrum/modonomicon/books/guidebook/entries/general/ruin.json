@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.ruin.name",
-  "icon": "spectrum:bottle_of_ruin",
+  "icon": {
+    "item": "spectrum:bottle_of_ruin"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bottle_of_ruin"
@@ -20,9 +22,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:bottle_of_ruin"
-      },
+      "item": "spectrum:bottle_of_ruin",
       "text": "book.spectrum.guidebook.ruin.page0.text",
       "title": "book.spectrum.guidebook.ruin.name"
     },

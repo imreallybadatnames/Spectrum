@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/heartsingers_reward"
   },
-  "icon": "spectrum:heartsingers_reward",
+  "icon": {
+    "item": "spectrum:heartsingers_reward"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

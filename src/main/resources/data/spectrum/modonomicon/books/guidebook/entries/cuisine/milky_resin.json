@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_milky_resin"
   },
-  "icon": "spectrum:milky_resin",
+  "icon": {
+    "item": "spectrum:milky_resin"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:milky_resin"
-      },
+      "item": "spectrum:milky_resin",
       "text": "book.spectrum.guidebook.milky_resin.page0.text"
     },
     {

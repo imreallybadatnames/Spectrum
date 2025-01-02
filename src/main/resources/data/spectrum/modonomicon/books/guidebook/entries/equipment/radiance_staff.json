@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/radiance_staff"
   },
-  "icon": "spectrum:radiance_staff",
+  "icon": {
+    "item": "spectrum:radiance_staff"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

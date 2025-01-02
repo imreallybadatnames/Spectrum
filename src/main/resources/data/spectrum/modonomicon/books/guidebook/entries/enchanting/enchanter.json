@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.enchanter.name",
-  "icon": "spectrum:enchanter",
+  "icon": {
+    "item": "spectrum:enchanter"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/enchanter"

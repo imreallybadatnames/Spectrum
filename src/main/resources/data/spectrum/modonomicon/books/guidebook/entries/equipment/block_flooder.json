@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/block_flooder"
   },
-  "icon": "spectrum:block_flooder",
+  "icon": {
+    "item": "spectrum:block_flooder"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

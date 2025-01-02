@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.koi",
-  "icon": "spectrum:koi",
+  "icon": {
+    "item": "spectrum:koi"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_koi"
@@ -20,9 +22,7 @@
         "advancement_id": "spectrum:hidden/collect_koi"
       },
       "anchor": "koi",
-      "item": {
-        "item": "spectrum:koi"
-      },
+      "item": "spectrum:koi",
       "title": "item.spectrum.koi",
       "text": "book.spectrum.guidebook.koi.page0.text"
     }

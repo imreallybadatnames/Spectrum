@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.mythicmetals.name",
-  "icon": "mythicmetals:stormyx_ingot",
+  "icon": {
+    "item": "mythicmetals:stormyx_ingot"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

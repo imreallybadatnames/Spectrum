@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.the_art_of_brewing.name",
-  "icon": "spectrum:titration_barrel",
+  "icon": {
+    "item": "spectrum:titration_barrel"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/titration_barrel"

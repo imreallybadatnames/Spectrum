@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/redstone/block_placer"
   },
-  "icon": "spectrum:block_placer",
+  "icon": {
+    "item": "spectrum:block_placer"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:block_placer"
-      },
+      "item": "spectrum:block_placer",
       "text": "book.spectrum.guidebook.block_placer.page0.text",
       "title": "block.spectrum.block_placer"
     },

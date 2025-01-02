@@ -3,7 +3,9 @@
   "entry_to_open": "spectrum:general/shards",
 
   "name": "book.spectrum.guidebook.shards.name",
-  "icon": "minecraft:amethyst_shard",
+  "icon": {
+    "item": "minecraft:amethyst_shard"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_any_basic_shard"

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/status_effects/any_sleep"
   },
-  "icon": "spectrum:nectardew_burgeon",
+  "icon": {
+    "item": "spectrum:nectardew_burgeon"
+  },
   "category": "spectrum:brewing",
   "hide_while_locked": true,
   "parents": [],

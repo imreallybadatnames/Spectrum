@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.cinderhearth",
-  "icon": "spectrum:cinderhearth",
+  "icon": {
+    "item": "spectrum:cinderhearth"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/cinderhearth"

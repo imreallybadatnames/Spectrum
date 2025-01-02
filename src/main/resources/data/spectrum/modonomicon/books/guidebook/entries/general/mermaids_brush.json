@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mermaids_brush.name",
-  "icon": "spectrum:mermaids_gem",
+  "icon": {
+    "item": "spectrum:mermaids_gem"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_mermaids_gem"
@@ -21,9 +23,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.mermaids_brush.page1.title",
-      "item": {
-        "item": "spectrum:mermaids_gem"
-      },
+      "item": "spectrum:mermaids_gem",
       "text": "book.spectrum.guidebook.mermaids_brush.page1.text"
     }
   ]

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/pipe_bomb"
   },
-  "icon": "spectrum:pipe_bomb",
+  "icon": {
+    "item": "spectrum:pipe_bomb"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

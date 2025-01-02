@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.voiding",
-  "icon": "minecraft:wooden_pickaxe",
+  "icon": {
+    "item": "minecraft:wooden_pickaxe"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/enchantments/voiding_usage"

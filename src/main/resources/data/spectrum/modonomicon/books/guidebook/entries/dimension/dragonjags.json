@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_dragonjag"
   },
-  "icon": "spectrum:small_purple_dragonjag",
+  "icon": {
+    "item": "spectrum:small_purple_dragonjag"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

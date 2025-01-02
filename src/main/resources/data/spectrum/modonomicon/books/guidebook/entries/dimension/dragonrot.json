@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.dragonrot",
-  "icon": "spectrum:dragonrot_bucket",
+  "icon": {
+    "item": "spectrum:dragonrot_bucket"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/interact_with_dragonrot"

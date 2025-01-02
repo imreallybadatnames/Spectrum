@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/ender_blocks"
   },
-  "icon": "spectrum:ender_hopper",
+  "icon": {
+    "item": "spectrum:ender_hopper"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -16,9 +18,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "block.spectrum.ender_hopper",
-      "item": {
-        "item": "spectrum:ender_hopper"
-      },
+      "item": "spectrum:ender_hopper",
       "text": "book.spectrum.guidebook.ender_hopper.page0.text"
     },
     {

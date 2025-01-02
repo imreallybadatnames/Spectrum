@@ -1,7 +1,8 @@
-
 {
   "name": "book.spectrum.guidebook.redstone_interaction.name",
-  "icon": "minecraft:redstone",
+  "icon": {
+    "item": "minecraft:redstone"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/pastel_network"

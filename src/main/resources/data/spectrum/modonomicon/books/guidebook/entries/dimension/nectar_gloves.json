@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/collect_nectar_gloves"
   },
-  "icon": "spectrum:aether_graced_nectar_gloves",
+  "icon": {
+    "item": "spectrum:aether_graced_nectar_gloves"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -24,9 +26,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:aether_graced_nectar_gloves"
-      },
+      "item": "spectrum:aether_graced_nectar_gloves",
       "text": "book.spectrum.guidebook.nectar_gloves.page1.text"
     }
   ]

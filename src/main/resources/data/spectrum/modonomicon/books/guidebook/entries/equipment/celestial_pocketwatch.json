@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/celestial_pocketwatch"
   },
-  "icon": "spectrum:celestial_pocketwatch",
+  "icon": {
+    "item": "spectrum:celestial_pocketwatch"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

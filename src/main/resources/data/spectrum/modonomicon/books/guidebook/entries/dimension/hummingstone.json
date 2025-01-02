@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/collect_hummingstone"
   },
-  "icon": "spectrum:hummingstone",
+  "icon": {
+    "item": "spectrum:hummingstone"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -19,16 +21,12 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:hummingstone"
-      },
+      "item": "spectrum:hummingstone",
       "text": "book.spectrum.guidebook.hummingstone.page0.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:hummingstone_glass"
-      },
+      "item": "spectrum:hummingstone_glass",
       "text": "book.spectrum.guidebook.hummingstone.page1.text"
     },
     {

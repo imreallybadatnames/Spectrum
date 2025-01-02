@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.decostones.name",
-  "icon": "spectrum:amethyst_decostone",
+  "icon": {
+    "item": "spectrum:amethyst_decostone"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/decostones/any_decostone"

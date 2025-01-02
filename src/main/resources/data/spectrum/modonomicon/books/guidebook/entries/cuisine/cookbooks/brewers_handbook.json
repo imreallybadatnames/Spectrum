@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.brewers_handbook",
-  "icon": "spectrum:brewers_handbook",
+  "icon": {
+    "item": "spectrum:brewers_handbook"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_cookbooks/brewers_handbook"

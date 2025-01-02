@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.victus.name",
-  "icon": "victus:draconic_heart_aspect",
+  "icon": {
+    "item": "victus:draconic_heart_aspect"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

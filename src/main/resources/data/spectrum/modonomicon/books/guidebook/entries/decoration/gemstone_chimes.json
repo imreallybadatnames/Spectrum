@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.gemstone_chimes.name",
-  "icon": "spectrum:amethyst_chime",
+  "icon": {
+    "item": "spectrum:amethyst_chime"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/gemstone_chimes/any_chime"

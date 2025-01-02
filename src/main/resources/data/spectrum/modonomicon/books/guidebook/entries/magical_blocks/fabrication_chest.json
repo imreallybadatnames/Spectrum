@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/fabrication_chest"
   },
-  "icon": "spectrum:fabrication_chest",
+  "icon": {
+    "item": "spectrum:fabrication_chest"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:fabrication_chest"
-      },
+      "item": "spectrum:fabrication_chest",
       "text": "book.spectrum.guidebook.fabrication_chest.page0.text",
       "title": "block.spectrum.fabrication_chest"
     },

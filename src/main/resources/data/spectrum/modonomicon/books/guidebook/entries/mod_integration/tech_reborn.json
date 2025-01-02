@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.tech_reborn.name",
-  "icon": "techreborn:grinder",
+  "icon": {
+    "item": "techreborn:grinder"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -42,9 +44,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.mod_integration.tech_reborn.page2.title",
-      "item": {
-        "item": "spectrum:amethyst_ore"
-      },
+      "item": "spectrum:amethyst_ore",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:break_gemstone_ore"
@@ -54,9 +54,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.mod_integration.tech_reborn.page3.title",
-      "item": {
-        "item": "minecraft:amethyst_shard"
-      },
+      "item": "minecraft:amethyst_shard",
       "text": "book.spectrum.guidebook.mod_integration.tech_reborn.page3.text"
     }
   ]

@@ -137,9 +137,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_iron"
-      },
+      "item": "spectrum:pure_iron",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:lategame/collect_pure_resource"
@@ -152,16 +150,12 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:midgame/collect_stratine"
       },
-      "item": {
-        "item": "spectrum:stratine_ore"
-      },
+      "item": "spectrum:stratine_ore",
       "text": "book.spectrum.guidebook.mod_integration.alloy_forgery.page15.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:paltaeria_ore"
-      },
+      "item": "spectrum:paltaeria_ore",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:lategame/collect_paltaeria"
@@ -174,9 +168,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/blocks/lava_sponge"
       },
-      "item": {
-        "item": "spectrum:wet_lava_sponge"
-      },
+      "item": "spectrum:wet_lava_sponge",
       "text": "book.spectrum.guidebook.mod_integration.alloy_forgery.page17.text"
     },
     {
@@ -185,9 +177,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:hidden/collect_blazing_crystal"
       },
-      "item": {
-        "item": "spectrum:incandescent_essence"
-      },
+      "item": "spectrum:incandescent_essence",
       "text": "book.spectrum.guidebook.mod_integration.alloy_forgery.page18.text"
     }
   ]

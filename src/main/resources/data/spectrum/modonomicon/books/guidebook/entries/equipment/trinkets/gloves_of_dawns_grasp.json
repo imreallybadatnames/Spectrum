@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/gloves_of_dawns_grasp"
   },
-  "icon": "spectrum:gloves_of_dawns_grasp",
+  "icon": {
+    "item": "spectrum:gloves_of_dawns_grasp"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

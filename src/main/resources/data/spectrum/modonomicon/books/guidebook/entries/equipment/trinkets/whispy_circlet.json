@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.whispy_circlet",
-  "icon": "spectrum:whispy_circlet",
+  "icon": {
+    "item": "spectrum:whispy_circlet"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/whispy_circlet"

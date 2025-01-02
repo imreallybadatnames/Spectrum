@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.vein_mining.name",
-  "icon": "spectrum:multitool",
+  "icon": {
+    "item": "spectrum:multitool"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

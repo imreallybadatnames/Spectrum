@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.lizards.name",
-  "icon": "spectrum:lizard_cyan_head",
+  "icon": {
+    "item": "spectrum:lizard_cyan_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/entity_interact/lizard"

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.supplementaries.name",
-  "icon": "supplementaries:globe",
+  "icon": {
+    "item": "supplementaries:globe"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -54,9 +56,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:hidden/collect_ash"
       },
-      "item": {
-        "item": "spectrum:ash_flakes"
-      },
+      "item": "spectrum:ash_flakes",
       "text": "book.spectrum.guidebook.mod_integration.supplementaries.page3.text"
     }
 

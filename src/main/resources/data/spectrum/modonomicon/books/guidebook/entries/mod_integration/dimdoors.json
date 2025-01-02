@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.dimdoors.name",
-  "icon": "dimdoors:item_ag_dim_minecraft_oak_door",
+  "icon": {
+    "item": "dimdoors:item_ag_dim_minecraft_oak_door"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -34,9 +36,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/resonance_usage"
       },
-      "item": {
-        "item": "dimdoors:black_fabric"
-      },
+      "item": "dimdoors:black_fabric",
       "text": "book.spectrum.guidebook.mod_integration.dimdoors.altered_fabric_resonance.text"
     }
 

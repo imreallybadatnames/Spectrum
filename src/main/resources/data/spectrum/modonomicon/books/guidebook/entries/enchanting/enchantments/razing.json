@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.razing",
-  "icon": "minecraft:iron_pickaxe",
+  "icon": {
+    "item": "minecraft:iron_pickaxe"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/enchantments/razing_usage"

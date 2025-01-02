@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/mob_heads"
   },
-  "icon": "minecraft:wither_skeleton_skull",
+  "icon": {
+    "item": "minecraft:wither_skeleton_skull"
+  },
   "category": "spectrum:creating_life",
   "hide_while_locked": true,
   "parents": [],

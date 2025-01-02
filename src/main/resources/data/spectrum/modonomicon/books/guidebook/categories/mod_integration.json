@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.mod_integration.name",
-  "icon": "minecraft:knowledge_book",
+  "icon": {
+    "item": "minecraft:knowledge_book"
+  },
   "sort_number": 16,
   "show_category_button": true,
 

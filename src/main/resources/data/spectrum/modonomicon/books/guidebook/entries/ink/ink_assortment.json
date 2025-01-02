@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/ink_assortment"
   },
-  "icon": "spectrum:ink_assortment",
+  "icon": {
+    "item": "spectrum:ink_assortment"
+  },
   "category": "spectrum:ink",
   "hide_while_locked": true,
   "parents": [

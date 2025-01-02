@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.ecologics.name",
-  "icon": "ecologics:penguin_feather",
+  "icon": {
+    "item": "ecologics:penguin_feather"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

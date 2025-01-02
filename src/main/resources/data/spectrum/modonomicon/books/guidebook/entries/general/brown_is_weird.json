@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.brown_is_weird.name",
-  "icon": "spectrum:brown_pigment",
+  "icon": {
+    "item": "spectrum:brown_pigment"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_all_basic_pigments_besides_brown"

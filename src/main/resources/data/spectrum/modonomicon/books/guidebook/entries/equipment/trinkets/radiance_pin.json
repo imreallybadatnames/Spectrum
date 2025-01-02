@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/radiance_pin"
   },
-  "icon": "spectrum:radiance_pin",
+  "icon": {
+    "item": "spectrum:radiance_pin"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

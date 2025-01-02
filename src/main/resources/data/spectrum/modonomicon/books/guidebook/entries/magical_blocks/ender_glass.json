@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/ender_glass"
   },
-  "icon": "spectrum:ender_glass",
+  "icon": {
+    "item": "spectrum:ender_glass"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:ender_glass"
-      },
+      "item": "spectrum:ender_glass",
       "text": "book.spectrum.guidebook.ender_glass.page0.text",
       "title": "block.spectrum.ender_glass"
     },

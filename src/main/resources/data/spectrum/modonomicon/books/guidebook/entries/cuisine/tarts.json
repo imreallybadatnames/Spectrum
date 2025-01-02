@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.tarts.name",
-  "icon": "spectrum:ashen_tart",
+  "icon": {
+    "item": "spectrum:ashen_tart"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/food/tarts"

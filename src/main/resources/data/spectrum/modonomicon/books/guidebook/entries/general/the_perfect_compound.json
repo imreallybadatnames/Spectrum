@@ -1,7 +1,9 @@
 {
   "name": "book.spectrum.guidebook.the_perfect_compound.name",
   "description": "book.spectrum.guidebook.the_perfect_compound.description",
-  "icon": "spectrum:midnight_aberration",
+  "icon": {
+    "item": "spectrum:midnight_aberration"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/midnight_aberration"

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/collect_azurite"
   },
-  "icon": "spectrum:raw_azurite",
+  "icon": {
+    "item": "spectrum:raw_azurite"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "parents": [],
@@ -17,9 +19,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.azurite.name",
-      "item": {
-        "item": "spectrum:raw_azurite"
-      },
+      "item": "spectrum:raw_azurite",
       "text": "book.spectrum.guidebook.azurite.page0.text"
     },
     {

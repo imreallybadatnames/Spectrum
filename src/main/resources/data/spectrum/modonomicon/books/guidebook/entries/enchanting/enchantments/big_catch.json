@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.big_catch",
-  "icon": "spectrum:lagoon_rod",
+  "icon": {
+    "item": "spectrum:lagoon_rod"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.midnight_solution",
-  "icon": "spectrum:midnight_solution_bucket",
+  "icon": {
+    "item": "spectrum:midnight_solution_bucket"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/create_midnight_aberration"
@@ -36,9 +38,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:black_materia"
-      },
+      "item": "spectrum:black_materia",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:hidden/break_black_materia"

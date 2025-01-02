@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.hexcasting.name",
-  "icon": "hexcasting:charged_amethyst",
+  "icon": {
+    "item": "hexcasting:charged_amethyst"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -60,9 +62,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/blocks/potion_workshop"
       },
-      "item": {
-        "item": "hexcasting:charged_amethyst"
-      },
+      "item": "hexcasting:charged_amethyst",
       "text": "book.spectrum.guidebook.mod_integration.hexcasting.page4.text"
     }
   ]

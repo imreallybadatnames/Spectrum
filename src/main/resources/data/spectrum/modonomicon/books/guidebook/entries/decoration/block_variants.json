@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_any_basic_shard"
   },
-  "icon": "spectrum:chiseled_polished_basalt",
+  "icon": {
+    "item": "spectrum:chiseled_polished_basalt"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [],

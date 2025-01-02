@@ -63,9 +63,7 @@
         "advancement_id": "spectrum:milestones/unlock_remembering_boss_memories"
       },
       "title": "book.spectrum.guidebook.memories.page3.title",
-      "item": {
-        "item": "minecraft:dragon_head"
-      },
+      "item": "minecraft:dragon_head",
       "text": "book.spectrum.guidebook.memories.page3.text"
     }
   ]

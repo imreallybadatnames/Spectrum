@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/colored_spore_blossoms"
   },
-  "icon": "spectrum:orange_spore_blossom",
+  "icon": {
+    "item": "spectrum:orange_spore_blossom"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [

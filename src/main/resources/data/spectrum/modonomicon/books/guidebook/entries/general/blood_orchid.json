@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.blood_orchid",
-  "icon": "spectrum:blood_orchid",
+  "icon": {
+    "item": "spectrum:blood_orchid"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/blood_orchid"
@@ -23,9 +25,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "block.spectrum.blood_orchid",
-      "item": {
-        "item": "spectrum:blood_orchid"
-      },
+      "item": "spectrum:blood_orchid",
       "text": "book.spectrum.guidebook.blood_orchids.page0.text"
     },
     {

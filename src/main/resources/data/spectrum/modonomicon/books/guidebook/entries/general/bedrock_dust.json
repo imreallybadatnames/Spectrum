@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.bedrock_dust",
-  "icon": "spectrum:bedrock_dust",
+  "icon": {
+    "item": "spectrum:bedrock_dust"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/break_decayed_bedrock"
@@ -20,9 +22,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.bedrock_dust",
-      "item": {
-        "item": "spectrum:bedrock_dust"
-      },
+      "item": "spectrum:bedrock_dust",
       "text": "book.spectrum.guidebook.bedrock_dust.page0.text"
     },
     {

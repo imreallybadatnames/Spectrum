@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.potion_workshop",
-  "icon": "spectrum:potion_workshop",
+  "icon": {
+    "item": "spectrum:potion_workshop"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/potion_workshop"

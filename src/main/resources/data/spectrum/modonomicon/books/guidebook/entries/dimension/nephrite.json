@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_glass_peach"
   },
-  "icon": "spectrum:nephrite_blossom_bulb",
+  "icon": {
+    "item": "spectrum:nephrite_blossom_bulb"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -24,9 +26,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:glass_peach"
-      },
+      "item": "spectrum:glass_peach",
       "text": "book.spectrum.guidebook.nephrite.page1.text"
     }
   ]

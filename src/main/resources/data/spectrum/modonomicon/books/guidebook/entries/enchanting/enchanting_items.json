@@ -1,6 +1,8 @@
 {
   "name": "container.spectrum.rei.enchanting.title",
-  "icon": "spectrum:enchanter",
+  "icon": {
+    "item": "spectrum:enchanter"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/enchanter"
@@ -33,9 +35,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "minecraft:enchanted_book"
-      },
+      "item": "minecraft:enchanted_book",
       "title": "book.spectrum.guidebook.enchanting_items.page2.title",
       "text": "book.spectrum.guidebook.enchanting_items.page2.text"
     },

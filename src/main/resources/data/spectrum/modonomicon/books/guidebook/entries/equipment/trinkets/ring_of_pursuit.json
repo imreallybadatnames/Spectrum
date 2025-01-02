@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/ring_of_pursuit"
   },
-  "icon": "spectrum:ring_of_pursuit",
+  "icon": {
+    "item": "spectrum:ring_of_pursuit"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

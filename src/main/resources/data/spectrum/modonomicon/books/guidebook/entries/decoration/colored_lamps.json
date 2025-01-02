@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.colored_lamps.name",
-  "icon": "spectrum:cyan_lamp",
+  "icon": {
+    "item": "spectrum:cyan_lamp"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/colored_lamps/any_colored_lamp"

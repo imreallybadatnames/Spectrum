@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_jadeite"
   },
-  "icon": "spectrum:jadeite_lotus_bulb",
+  "icon": {
+    "item": "spectrum:jadeite_lotus_bulb"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -21,9 +23,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.jadeite.name",
-      "item": {
-        "item": "spectrum:jadeite_petals"
-      },
+      "item": "spectrum:jadeite_petals",
       "text": "book.spectrum.guidebook.jadeite.page0.text"
     },
     {

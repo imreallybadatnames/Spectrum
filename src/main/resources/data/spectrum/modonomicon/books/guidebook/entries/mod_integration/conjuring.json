@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.conjuring.name",
-  "icon": "conjuring:conjurer",
+  "icon": {
+    "item": "conjuring:conjurer"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

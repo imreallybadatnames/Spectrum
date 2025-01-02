@@ -6,7 +6,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_star_fragment"
   },
-  "icon": "spectrum:colorful_shooting_star",
+  "icon": {
+    "item": "spectrum:colorful_shooting_star"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [],

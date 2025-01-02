@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.gemstone_glass.name",
-  "icon": "spectrum:topaz_glass",
+  "icon": {
+    "item": "spectrum:topaz_glass"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:place_pedestal"

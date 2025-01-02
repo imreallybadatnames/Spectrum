@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.budding_onyx",
-  "icon": "spectrum:onyx_cluster",
+  "icon": {
+    "item": "spectrum:onyx_cluster"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/budding_onyx"

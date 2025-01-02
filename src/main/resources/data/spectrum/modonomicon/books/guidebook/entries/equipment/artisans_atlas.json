@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.artisans_atlas",
-  "icon": "spectrum:artisans_atlas",
+  "icon": {
+    "item": "spectrum:artisans_atlas"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/artisans_atlas"

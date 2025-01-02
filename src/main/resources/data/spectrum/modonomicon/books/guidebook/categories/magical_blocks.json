@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.magical_blocks.name",
-  "icon": "spectrum:heartbound_chest",
+  "icon": {
+    "item": "spectrum:heartbound_chest"
+  },
   "sort_number": 4,
   "show_category_button": true,
 

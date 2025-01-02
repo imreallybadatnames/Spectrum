@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/basic_ink_storage_items"
   },
-  "icon": "spectrum:ink_flask",
+  "icon": {
+    "item": "spectrum:ink_flask"
+  },
   "category": "spectrum:ink",
   "hide_while_locked": true,
   "parents": [],

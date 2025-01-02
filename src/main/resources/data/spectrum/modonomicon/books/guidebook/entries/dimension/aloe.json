@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_aloe"
   },
-  "icon": "spectrum:aloe_leaf",
+  "icon": {
+    "item": "spectrum:aloe_leaf"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -24,9 +26,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:aloe_leaf"
-      },
+      "item": "spectrum:aloe_leaf",
       "text": "book.spectrum.guidebook.aloe.page1.text"
     }
   ]

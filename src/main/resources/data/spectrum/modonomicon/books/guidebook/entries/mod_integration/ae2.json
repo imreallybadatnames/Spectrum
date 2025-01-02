@@ -54,9 +54,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:unlocks/enchantments/resonance_usage"
       },
-      "item": {
-        "item": "spectrum:resonant_pickaxe"
-      },
+      "item": "spectrum:resonant_pickaxe",
       "text": "book.spectrum.guidebook.mod_integration.ae2.page3.text"
     },
     {

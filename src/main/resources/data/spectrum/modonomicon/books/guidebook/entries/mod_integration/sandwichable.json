@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.sandwichable.name",
-  "icon": "minecraft:bread",
+  "icon": {
+    "item": "minecraft:bread"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

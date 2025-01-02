@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.freigeist",
-  "icon": "spectrum:freigeist",
+  "icon": {
+    "item": "spectrum:freigeist"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/food/freigeist"

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/build_advanced_pedestal_structure"
   },
-  "icon": "spectrum:upgrade_speed",
+  "icon": {
+    "item": "spectrum:upgrade_speed"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],

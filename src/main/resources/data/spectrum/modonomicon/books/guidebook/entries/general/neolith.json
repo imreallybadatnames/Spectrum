@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.neolith",
-  "icon": "spectrum:neolith",
+  "icon": {
+    "item": "spectrum:neolith"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/collect_neolith"
@@ -20,9 +22,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.neolith",
-      "item": {
-        "item": "spectrum:neolith"
-      },
+      "item": "spectrum:neolith",
       "text": "book.spectrum.guidebook.neolith.page0.text"
     },
     {

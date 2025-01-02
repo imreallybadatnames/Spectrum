@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/visit_dd_biomes/howling_spires"
   },
-  "icon": "spectrum:ashen_blackslag",
+  "icon": {
+    "item": "spectrum:ashen_blackslag"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -29,16 +31,12 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:ashen_blackslag"
-      },
+      "item": "spectrum:ashen_blackslag",
       "text": "book.spectrum.guidebook.howling_spires.ashen_blackslag.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:varia_sprout"
-      },
+      "item": "spectrum:varia_sprout",
       "text": "book.spectrum.guidebook.howling_spires.varia_sprout.text"
     }
   ]

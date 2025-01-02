@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:create_onyx_shard"
   },
-  "icon": "spectrum:redstone_transceiver",
+  "icon": {
+    "item": "spectrum:redstone_transceiver"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:redstone_transceiver"
-      },
+      "item": "spectrum:redstone_transceiver",
       "text": "book.spectrum.guidebook.redstone_transceiver.page0.text",
       "title": "block.spectrum.redstone_transceiver"
     },

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.tuning_stamp.name",
-  "icon": "spectrum:tuning_stamp",
+  "icon": {
+    "item": "spectrum:tuning_stamp"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/pastel_network"

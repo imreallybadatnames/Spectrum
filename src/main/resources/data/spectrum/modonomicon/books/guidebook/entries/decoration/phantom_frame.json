@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.phantom_frame",
-  "icon": "spectrum:phantom_frame",
+  "icon": {
+    "item": "spectrum:phantom_frame"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/phantom_frames"

@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.imperial_cookbook",
-  "icon": "spectrum:imperial_cookbook",
+  "icon": {
+    "item": "spectrum:imperial_cookbook"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_cookbooks/imperial_cookbook"

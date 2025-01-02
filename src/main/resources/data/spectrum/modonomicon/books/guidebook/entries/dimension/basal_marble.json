@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_basal_marble"
   },
-  "icon": "spectrum:basal_marble",
+  "icon": {
+    "item": "spectrum:basal_marble"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -19,9 +21,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:basal_marble"
-      },
+      "item": "spectrum:basal_marble",
       "title": "block.spectrum.basal_marble",
       "text": "book.spectrum.guidebook.basal_marble.page0.text"
     },

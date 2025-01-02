@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.spirit_instiller",
-  "icon": "spectrum:spirit_instiller",
+  "icon": {
+    "item": "spectrum:spirit_instiller"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/spirit_instiller"

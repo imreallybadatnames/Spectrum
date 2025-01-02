@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bottomless_bundle"
   },
-  "icon": "spectrum:bottomless_bundle",
+  "icon": {
+    "item": "spectrum:bottomless_bundle"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:bottomless_bundle"
-      },
+      "item": "spectrum:bottomless_bundle",
       "text": "book.spectrum.guidebook.bottomless_bundle.page0.text",
       "title": "item.spectrum.bottomless_bundle"
     },

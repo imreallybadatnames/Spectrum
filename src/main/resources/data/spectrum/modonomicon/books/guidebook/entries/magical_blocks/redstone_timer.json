@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/redstone/redstone_timer"
   },
-  "icon": "spectrum:redstone_timer",
+  "icon": {
+    "item": "spectrum:redstone_timer"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:redstone_timer"
-      },
+      "item": "spectrum:redstone_timer",
       "text": "book.spectrum.guidebook.redstone_timer.page0.text",
       "title": "block.spectrum.redstone_timer"
     },

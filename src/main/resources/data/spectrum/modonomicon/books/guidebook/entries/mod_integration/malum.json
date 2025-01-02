@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.malum.name",
-  "icon": "malum:soul_stained_steel_scythe",
+  "icon": {
+    "item": "malum:soul_stained_steel_scythe"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -149,9 +151,7 @@
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:mod_integration/malum/visited_well"
       },
-      "item": {
-        "item": "malum:void_salts"
-      },
+      "item": "malum:void_salts",
       "text": "book.spectrum.guidebook.mod_integration.malum.void_salts_reagent.text"
     },
     {

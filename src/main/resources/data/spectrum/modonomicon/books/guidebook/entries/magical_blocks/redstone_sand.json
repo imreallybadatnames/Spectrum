@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/redstone/redstone_sand"
   },
-  "icon": "spectrum:redstone_sand",
+  "icon": {
+    "item": "spectrum:redstone_sand"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:redstone_sand"
-      },
+      "item": "spectrum:redstone_sand",
       "text": "book.spectrum.guidebook.redstone_sand.page0.text",
       "title": "block.spectrum.redstone_sand"
     },

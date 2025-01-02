@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.creating_life.name",
-  "icon": "spectrum:spirit_instiller",
+  "icon": {
+    "item": "spectrum:spirit_instiller"
+  },
   "sort_number": 10,
   "show_category_button": true,
 

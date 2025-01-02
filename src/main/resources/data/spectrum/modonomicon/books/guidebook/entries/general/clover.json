@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_clover"
   },
-  "icon": "spectrum:four_leaf_clover",
+  "icon": {
+    "item": "spectrum:four_leaf_clover"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "parents": [],
@@ -16,16 +18,12 @@
     {
       "type": "modonomicon:spotlight",
       "title": "block.spectrum.clover",
-      "item": {
-        "item": "spectrum:clover"
-      },
+      "item": "spectrum:clover",
       "text": "book.spectrum.guidebook.clover.clover.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:four_leaf_clover"
-      },
+      "item": "spectrum:four_leaf_clover",
       "condition": {
         "type": "modonomicon:advancement",
         "advancement_id": "spectrum:collect_four_leaf_clover"

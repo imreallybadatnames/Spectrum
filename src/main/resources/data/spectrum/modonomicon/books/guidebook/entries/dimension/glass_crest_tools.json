@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/malachite/glass_crest_tools"
   },
-  "icon": "spectrum:glass_crest_workstaff",
+  "icon": {
+    "item": "spectrum:glass_crest_workstaff"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

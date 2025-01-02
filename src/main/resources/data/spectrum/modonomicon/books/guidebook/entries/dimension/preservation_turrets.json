@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.preservation_turrets.name",
-  "icon": "spectrum:preservation_turret_head",
+  "icon": {
+    "item": "spectrum:preservation_turret_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/entity_interact/preservation_turret"

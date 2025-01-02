@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.memory_to_head.name",
-  "icon": "minecraft:zombie_head",
+  "icon": {
+    "item": "minecraft:zombie_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/memory_to_head"

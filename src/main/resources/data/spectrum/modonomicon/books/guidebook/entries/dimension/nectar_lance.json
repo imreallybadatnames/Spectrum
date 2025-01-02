@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.nectar_lance",
-  "icon": "spectrum:nectar_lance",
+  "icon": {
+    "item": "spectrum:nectar_lance"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/nectar_lance"

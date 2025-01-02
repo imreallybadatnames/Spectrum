@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mysterious_locket.name",
-  "icon": "spectrum:mysterious_locket",
+  "icon": {
+    "item": "spectrum:mysterious_locket"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/collect_mysterious_locket"
@@ -26,9 +28,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.mysterious_locket.name",
-      "item": {
-        "item": "spectrum:mysterious_locket"
-      },
+      "item": "spectrum:mysterious_locket",
       "text": "book.spectrum.guidebook.mysterious_locket.page0.text"
     },
     {

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pastel_upgrades.redstone.name",
-  "icon": "spectrum:pure_redstone",
+  "icon": {
+    "item": "spectrum:pure_redstone"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:milestones/unlock_pastel_node_upgrading"
@@ -20,9 +22,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_redstone"
-      },
+      "item": "spectrum:pure_redstone",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_redstone.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -31,9 +31,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_coal"
-      },
+      "item": "spectrum:pure_coal",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_coal.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -42,9 +40,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_echo"
-      },
+      "item": "spectrum:pure_echo",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_echo.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -53,9 +49,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_lapis"
-      },
+      "item": "spectrum:pure_lapis",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_lapis.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -64,9 +58,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_quartz"
-      },
+      "item": "spectrum:pure_quartz",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_quartz.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -75,9 +67,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pure_glowstone"
-      },
+      "item": "spectrum:pure_glowstone",
       "text": "book.spectrum.guidebook.pastel_upgrades.redstone.pure_glowstone.text",
       "condition": {
         "type": "modonomicon:advancement",

@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.fusion_shrine",
-  "icon": "spectrum:fusion_shrine_basalt",
+  "icon": {
+    "item": "spectrum:fusion_shrine_basalt"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/fusion_shrine"

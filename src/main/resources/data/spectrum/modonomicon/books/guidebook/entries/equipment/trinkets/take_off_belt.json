@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/take_off_belt"
   },
-  "icon": "spectrum:take_off_belt",
+  "icon": {
+    "item": "spectrum:take_off_belt"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

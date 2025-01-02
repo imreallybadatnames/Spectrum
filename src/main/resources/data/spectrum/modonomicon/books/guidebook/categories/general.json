@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.general.name",
-  "icon": "spectrum:pedestal_basic_amethyst",
+  "icon": {
+    "item": "spectrum:pedestal_basic_amethyst"
+  },
   "sort_number": 0,
   "show_category_button": true,
 

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.onyx_shards.name",
-  "icon": "spectrum:onyx_shard",
+  "icon": {
+    "item": "spectrum:onyx_shard"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/fusion_shrine"

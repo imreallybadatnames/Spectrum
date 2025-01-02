@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/ender_splice"
   },
-  "icon": "spectrum:ender_splice",
+  "icon": {
+    "item": "spectrum:ender_splice"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:ender_splice"
-      },
+      "item": "spectrum:ender_splice",
       "text": "book.spectrum.guidebook.ender_splice.page0.text",
       "title": "item.spectrum.ender_splice"
     },

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/food/cheong"
   },
-  "icon": "spectrum:cheong",
+  "icon": {
+    "item": "spectrum:cheong"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [

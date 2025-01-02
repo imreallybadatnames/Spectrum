@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/ethereal_platform"
   },
-  "icon": "spectrum:ethereal_platform",
+  "icon": {
+    "item": "spectrum:ethereal_platform"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [
@@ -26,9 +28,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:ethereal_platform"
-      },
+      "item": "spectrum:ethereal_platform",
       "title": "block.spectrum.ethereal_platform",
       "text": "book.spectrum.guidebook.ethereal_platform.page0.text"
     },

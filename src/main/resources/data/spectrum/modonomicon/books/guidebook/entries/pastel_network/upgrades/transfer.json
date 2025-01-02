@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pastel_upgrades.transfer.name",
-  "icon": "spectrum:raw_azurite",
+  "icon": {
+    "item": "spectrum:raw_azurite"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:milestones/unlock_pastel_node_upgrading"
@@ -15,16 +17,12 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:raw_azurite"
-      },
+      "item": "spectrum:raw_azurite",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.raw_azurite.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:refined_azurite"
-      },
+      "item": "spectrum:refined_azurite",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.refined_azurite.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -33,9 +31,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:raw_malachite"
-      },
+      "item": "spectrum:raw_malachite",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.raw_malachite.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -44,9 +40,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:refined_malachite"
-      },
+      "item": "spectrum:refined_malachite",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.refined_malachite.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -55,20 +49,16 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:raw_bloodstone"
-      },
+      "item": "spectrum:raw_bloodstone",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.raw_bloodstone.text",
       "condition": {
         "type": "modonomicon:advancement",
-				"advancement_id": "spectrum:pluck_resplendent_feather"
+        "advancement_id": "spectrum:pluck_resplendent_feather"
       }
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:refined_bloodstone"
-      },
+      "item": "spectrum:refined_bloodstone",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.refined_bloodstone.text",
       "condition": {
         "type": "modonomicon:advancement",
@@ -77,9 +67,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:resonance_shard"
-      },
+      "item": "spectrum:resonance_shard",
       "text": "book.spectrum.guidebook.pastel_upgrades.transfer.resonance_shard.text",
       "condition": {
         "type": "modonomicon:advancement",

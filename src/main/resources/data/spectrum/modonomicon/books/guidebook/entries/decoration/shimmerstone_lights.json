@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.shimmerstone_lights.name",
-  "icon": "spectrum:basalt_shimmerstone_light",
+  "icon": {
+    "item": "spectrum:basalt_shimmerstone_light"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/shimmerstone_lights"

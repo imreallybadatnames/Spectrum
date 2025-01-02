@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.gofish.name",
-  "icon": "gofish:starry_salmon",
+  "icon": {
+    "item": "gofish:starry_salmon"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [
@@ -34,9 +36,7 @@
         "advancement_id": "spectrum:unlocks/equipment/molten_rod"
       },
       "title": "book.spectrum.guidebook.mod_integration.gofish.page1.title",
-      "item": {
-        "item": "spectrum:molten_rod"
-      },
+      "item": "spectrum:molten_rod",
       "text": "book.spectrum.guidebook.mod_integration.gofish.page1.text"
     },
     {

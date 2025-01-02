@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.imbrifer_cookbook",
-  "icon": "spectrum:imbrifer_cookbook",
+  "icon": {
+    "item": "spectrum:imbrifer_cookbook"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_cookbooks/imbrifer_cookbook"

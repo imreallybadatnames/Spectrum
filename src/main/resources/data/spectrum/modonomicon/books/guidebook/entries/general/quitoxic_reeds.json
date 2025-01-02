@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.quitoxic_reeds",
-  "icon": "spectrum:quitoxic_reeds",
+  "icon": {
+    "item": "spectrum:quitoxic_reeds"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_quitoxic_reeds"

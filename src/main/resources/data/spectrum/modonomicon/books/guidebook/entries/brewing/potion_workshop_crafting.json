@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.potion_workshop_crafting",
-  "icon": "minecraft:crafting_table",
+  "icon": {
+    "item": "minecraft:crafting_table"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/potion_workshop"
@@ -36,8 +38,8 @@
     },
     {
       "type": "spectrum:potion_workshop_crafting",
-			"title": "block.spectrum.goo",
-			"recipe_id": "spectrum:potion_workshop_crafting/goo_bucket"
+      "title": "block.spectrum.goo",
+      "recipe_id": "spectrum:potion_workshop_crafting/goo_bucket"
     },
     {
       "type": "spectrum:potion_workshop_crafting",

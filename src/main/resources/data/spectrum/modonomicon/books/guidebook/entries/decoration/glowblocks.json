@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/glowblocks/any_glowblock"
   },
-  "icon": "spectrum:orange_glowblock",
+  "icon": {
+    "item": "spectrum:orange_glowblock"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [
@@ -19,9 +21,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:orange_glowblock"
-      },
+      "item": "spectrum:orange_glowblock",
       "title": "book.spectrum.guidebook.glowblocks.name",
       "text": "book.spectrum.guidebook.glowblocks.page0.text"
     },

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/visit_dd_biomes/deep_barrens"
   },
-  "icon": "spectrum:blackslag",
+  "icon": {
+    "item": "spectrum:blackslag"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

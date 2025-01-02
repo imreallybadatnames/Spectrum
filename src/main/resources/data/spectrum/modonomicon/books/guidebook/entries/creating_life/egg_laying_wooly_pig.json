@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.egg_laying_wooly_pig.name",
-  "icon": "spectrum:egg_laying_wooly_pig_head",
+  "icon": {
+    "item": "spectrum:egg_laying_wooly_pig_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/egg_laying_wooly_pig_head"

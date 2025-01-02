@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.fading.name",
-  "icon": "spectrum:bottle_of_fading",
+  "icon": {
+    "item": "spectrum:bottle_of_fading"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bottle_of_fading"

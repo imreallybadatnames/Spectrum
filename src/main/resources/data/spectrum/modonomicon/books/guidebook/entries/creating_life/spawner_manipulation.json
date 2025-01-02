@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:milestones/unlock_spawner_manipulation"
   },
-  "icon": "minecraft:spawner",
+  "icon": {
+    "item": "minecraft:spawner"
+  },
   "category": "spectrum:creating_life",
   "hide_while_locked": true,
   "parents": [
@@ -23,9 +25,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.harvesting_spawners",
-      "item": {
-        "item": "spectrum:resonant_pickaxe"
-      },
+      "item": "spectrum:resonant_pickaxe",
       "text": "book.spectrum.guidebook.spawner_manipulation.page0.text"
     },
     {

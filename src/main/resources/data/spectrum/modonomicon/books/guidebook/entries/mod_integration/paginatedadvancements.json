@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.paginatedadvancements.name",
-  "icon": "minecraft:grass_block",
+  "icon": {
+    "item": "minecraft:grass_block"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/collect_storm_stone"
   },
-  "icon": "spectrum:storm_stone",
+  "icon": {
+    "item": "spectrum:storm_stone"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "parents": [],
@@ -21,9 +23,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.storm_stones.name",
-      "item": {
-        "item": "spectrum:storm_stone"
-      },
+      "item": "spectrum:storm_stone",
       "text": "book.spectrum.guidebook.storm_stones.page1.text"
     }
   ]

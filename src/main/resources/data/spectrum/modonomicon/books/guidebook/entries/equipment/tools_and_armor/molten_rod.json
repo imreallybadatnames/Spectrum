@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/molten_rod"
   },
-  "icon": "spectrum:molten_rod",
+  "icon": {
+    "item": "spectrum:molten_rod"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

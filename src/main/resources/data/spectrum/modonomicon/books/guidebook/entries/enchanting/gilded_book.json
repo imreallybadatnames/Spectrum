@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.gilded_book",
-  "icon": "spectrum:gilded_book",
+  "icon": {
+    "item": "spectrum:gilded_book"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_gilded_book"
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:gilded_book"
-      },
+      "item": "spectrum:gilded_book",
       "title": "item.spectrum.gilded_book",
       "text": "book.spectrum.guidebook.gilded_book.page0.text"
     },

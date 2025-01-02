@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/lava_sponge"
   },
-  "icon": "spectrum:lava_sponge",
+  "icon": {
+    "item": "spectrum:lava_sponge"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],

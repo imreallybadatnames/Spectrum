@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.dragonbone",
-  "icon": "spectrum:dragonbone",
+  "icon": {
+    "item": "spectrum:dragonbone"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:break_cracked_dragonbone"
@@ -25,9 +27,7 @@
         "advancement_id": "spectrum:break_cracked_dragonbone"
       },
       "anchor": "dragonbone_chunks",
-      "item": {
-        "item": "spectrum:dragonbone_chunk"
-      },
+      "item": "spectrum:dragonbone_chunk",
       "text": "book.spectrum.guidebook.dragonbone.page1.text"
     },
     {

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/ring_of_aerial_grace"
   },
-  "icon": "spectrum:ring_of_aerial_grace",
+  "icon": {
+    "item": "spectrum:ring_of_aerial_grace"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

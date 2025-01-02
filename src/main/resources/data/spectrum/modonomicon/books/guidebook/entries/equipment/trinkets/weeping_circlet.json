@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/weeping_circlet"
   },
-  "icon": "spectrum:weeping_circlet",
+  "icon": {
+    "item": "spectrum:weeping_circlet"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [

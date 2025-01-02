@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/greater_potion_pendant"
   },
-  "icon": "spectrum:greater_potion_pendant",
+  "icon": {
+    "item": "spectrum:greater_potion_pendant"
+  },
   "category": "spectrum:brewing",
   "hide_while_locked": true,
   "parents": [

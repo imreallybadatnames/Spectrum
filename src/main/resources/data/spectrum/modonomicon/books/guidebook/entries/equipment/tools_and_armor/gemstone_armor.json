@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/gemstone_armor_category"
   },
-  "icon": "spectrum:ferocious_chestplate",
+  "icon": {
+    "item": "spectrum:ferocious_chestplate"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

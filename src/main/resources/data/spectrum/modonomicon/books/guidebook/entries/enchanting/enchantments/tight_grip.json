@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.tight_grip",
-  "icon": "minecraft:iron_sword",
+  "icon": {
+    "item": "minecraft:iron_sword"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/enchantments/tight_grip"

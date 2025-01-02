@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.vegetal",
-  "icon": "spectrum:vegetal",
+  "icon": {
+    "item": "spectrum:vegetal"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_vegetal"
@@ -20,9 +22,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.vegetal",
-      "item": {
-        "item": "spectrum:vegetal"
-      },
+      "item": "spectrum:vegetal",
       "text": "book.spectrum.guidebook.vegetal.page0.text"
     },
     {

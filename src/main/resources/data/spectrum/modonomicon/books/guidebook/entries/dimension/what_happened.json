@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.what_happened.name",
-  "icon": "spectrum:black_materia",
+  "icon": {
+    "item": "spectrum:black_materia"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/find_forgotten_city"

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:tap_mermaids_jam"
   },
-  "icon": "spectrum:mermaids_jam",
+  "icon": {
+    "item": "spectrum:mermaids_jam"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [

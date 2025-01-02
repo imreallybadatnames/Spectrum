@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.infused_beverages.name",
-  "icon": "spectrum:infused_beverage",
+  "icon": {
+    "item": "spectrum:infused_beverage"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/titration_barrel"

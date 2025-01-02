@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/particle_spawner"
   },
-  "icon": "spectrum:particle_spawner",
+  "icon": {
+    "item": "spectrum:particle_spawner"
+  },
   "category": "spectrum:decoration",
   "hide_while_locked": true,
   "parents": [

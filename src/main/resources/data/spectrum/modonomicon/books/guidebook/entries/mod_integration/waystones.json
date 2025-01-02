@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.waystones.name",
-  "icon": "waystones:waystone",
+  "icon": {
+    "item": "waystones:waystone"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

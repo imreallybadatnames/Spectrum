@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/redstone/redstone_calculator"
   },
-  "icon": "spectrum:redstone_calculator",
+  "icon": {
+    "item": "spectrum:redstone_calculator"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:redstone_calculator"
-      },
+      "item": "spectrum:redstone_calculator",
       "text": "book.spectrum.guidebook.redstone_calculator.page0.text",
       "title": "block.spectrum.redstone_calculator"
     },

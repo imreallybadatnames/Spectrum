@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pedestal_upgrade_moonstone_2.name",
-  "icon": "spectrum:pedestal_moonstone",
+  "icon": {
+    "item": "spectrum:pedestal_moonstone"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/build_complex_pedestal_structure_without_moonstone"

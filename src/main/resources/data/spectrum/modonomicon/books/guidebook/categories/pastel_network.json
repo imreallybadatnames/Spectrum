@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.pastel_network.name",
-  "icon": "spectrum:provider_node",
+  "icon": {
+    "item": "spectrum:provider_node"
+  },
   "sort_number": 13,
   "show_category_button": true,
 

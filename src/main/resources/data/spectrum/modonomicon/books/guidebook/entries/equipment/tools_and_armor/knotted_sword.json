@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.knotted_sword",
-  "icon": "spectrum:knotted_sword",
+  "icon": {
+    "item": "spectrum:knotted_sword"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/knotted_sword"

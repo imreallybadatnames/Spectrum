@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/liquid_crystal"
   },
-  "icon": "spectrum:liquid_crystal_bucket",
+  "icon": {
+    "item": "spectrum:liquid_crystal_bucket"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "parents": [
@@ -24,9 +26,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "block.spectrum.liquid_crystal",
-      "item": {
-        "item": "spectrum:liquid_crystal_bucket"
-      },
+      "item": "spectrum:liquid_crystal_bucket",
       "text": "book.spectrum.guidebook.liquid_crystal.page0.text"
     },
     {
@@ -37,9 +37,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "minecraft:clay"
-      },
+      "item": "minecraft:clay",
       "text": "book.spectrum.guidebook.liquid_crystal.page2.text"
     }
   ]

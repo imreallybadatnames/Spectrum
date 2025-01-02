@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_slush"
   },
-  "icon": "spectrum:slush",
+  "icon": {
+    "item": "spectrum:slush"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -19,17 +21,13 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:slush"
-      },
+      "item": "spectrum:slush",
       "text": "book.spectrum.guidebook.slush.page0.text",
       "title": "block.spectrum.slush"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:tilled_slush"
-      },
+      "item": "spectrum:tilled_slush",
       "text": "book.spectrum.guidebook.slush.page1.text"
     }
   ]

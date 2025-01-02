@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.mod_integration.the_bumblezone.name",
-  "icon": "minecraft:honeycomb",
+  "icon": {
+    "item": "minecraft:honeycomb"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

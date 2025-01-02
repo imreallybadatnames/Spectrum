@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:milestones/unlock_shooting_stars"
   },
-  "icon": "minecraft:spyglass",
+  "icon": {
+    "item": "minecraft:spyglass"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "parents": [
@@ -33,9 +35,7 @@
         "advancement_id": "spectrum:collect_star_fragment"
       },
       "title": "book.spectrum.guidebook.stargazing.page1.title",
-      "item": {
-        "item": "spectrum:glistering_shooting_star"
-      },
+      "item": "spectrum:glistering_shooting_star",
       "text": "book.spectrum.guidebook.stargazing.page1.text"
     },
     {
@@ -55,9 +55,7 @@
         "advancement_id": "spectrum:collect_star_fragment"
       },
       "title": "book.spectrum.guidebook.stargazing.page3.title",
-      "item": {
-        "item": "spectrum:star_fragment"
-      },
+      "item": "spectrum:star_fragment",
       "text": "book.spectrum.guidebook.stargazing.page3.text"
     },
     {
@@ -68,9 +66,7 @@
       },
       "anchor": "stardust",
       "title": "item.spectrum.stardust",
-      "item": {
-        "item": "spectrum:stardust"
-      },
+      "item": "spectrum:stardust",
       "text": "book.spectrum.guidebook.stargazing.page4.text"
     },
     {

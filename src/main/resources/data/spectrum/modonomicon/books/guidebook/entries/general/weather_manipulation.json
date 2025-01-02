@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.weather_manipulation.name",
-  "icon": "minecraft:sunflower",
+  "icon": {
+    "item": "minecraft:sunflower"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:build_fusion_shrine"

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.serendipity_reel.name",
-  "icon": "spectrum:lagoon_rod",
+  "icon": {
+    "item": "spectrum:lagoon_rod"
+  },
   "condition": {
     "type": "modonomicon:and",
     "children": [

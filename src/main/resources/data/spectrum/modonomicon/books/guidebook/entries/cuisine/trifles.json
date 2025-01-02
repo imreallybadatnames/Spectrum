@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.trifles.name",
-  "icon": "spectrum:jaramel_trifle",
+  "icon": {
+    "item": "spectrum:jaramel_trifle"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/food/trifles"

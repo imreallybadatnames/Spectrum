@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.disarming",
-  "icon": "minecraft:iron_sword",
+  "icon": {
+    "item": "minecraft:iron_sword"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/enchantments/disarming"

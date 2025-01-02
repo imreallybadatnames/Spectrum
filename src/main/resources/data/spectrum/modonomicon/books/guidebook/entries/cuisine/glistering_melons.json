@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:collect_vegetal"
   },
-  "icon": "spectrum:glistering_melon",
+  "icon": {
+    "item": "spectrum:glistering_melon"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [],
@@ -16,9 +18,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.glistering_melons.page0.title",
-      "item": {
-        "item": "minecraft:glistering_melon_slice"
-      },
+      "item": "minecraft:glistering_melon_slice",
       "text": "book.spectrum.guidebook.glistering_melons.page0.text"
     },
     {

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_cookbooks/poisoners_handbook"
   },
-  "icon": "spectrum:concealing_oils",
+  "icon": {
+    "item": "spectrum:concealing_oils"
+  },
   "category": "spectrum:brewing",
   "hide_while_locked": true,
   "parents": [],
@@ -15,9 +17,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:concealing_oils"
-      },
+      "item": "spectrum:concealing_oils",
       "text": "book.spectrum.guidebook.concealing_oils.page0.text"
     },
     {

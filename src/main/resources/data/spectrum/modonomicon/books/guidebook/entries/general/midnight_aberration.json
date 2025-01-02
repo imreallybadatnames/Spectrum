@@ -1,7 +1,9 @@
 {
   "name": "item.spectrum.midnight_aberration",
   "description": "book.spectrum.guidebook.midnight_aberration.description",
-  "icon": "spectrum:midnight_aberration",
+  "icon": {
+    "item": "spectrum:midnight_aberration"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/create_midnight_aberration"
@@ -21,9 +23,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.midnight_aberration",
-      "item": {
-        "item": "spectrum:midnight_aberration"
-      },
+      "item": "spectrum:midnight_aberration",
       "text": "book.spectrum.guidebook.midnight_aberration.page0.text"
     },
     {

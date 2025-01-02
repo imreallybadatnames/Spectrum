@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.poisoners_handbook",
-  "icon": "spectrum:poisoners_handbook",
+  "icon": {
+    "item": "spectrum:poisoners_handbook"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_cookbooks/poisoners_handbook"
@@ -72,9 +74,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:nectardew_burgeon"
-      },
+      "item": "spectrum:nectardew_burgeon",
       "title": "book.spectrum.guidebook.poisoners_handbook.page11.title",
       "text": "book.spectrum.guidebook.poisoners_handbook.page11.text"
     },
@@ -146,7 +146,8 @@
       "title": "item.spectrum.evernectar",
       "recipe_id": "spectrum:titration_barrel/evernectar",
       "text": "book.spectrum.guidebook.poisoners_handbook.page19.text"
-    },{
+    },
+    {
 
       "type": "modonomicon:text",
       "text": "book.spectrum.guidebook.poisoners_handbook.page20.text"

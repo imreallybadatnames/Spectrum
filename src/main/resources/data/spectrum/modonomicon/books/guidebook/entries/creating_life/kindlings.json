@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.kindlings.name",
-  "icon": "spectrum:kindling_head",
+  "icon": {
+    "item": "spectrum:kindling_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/kindling_memory"

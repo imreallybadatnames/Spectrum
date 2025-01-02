@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_shale_clay"
   },
-  "icon": "spectrum:shale_clay",
+  "icon": {
+    "item": "spectrum:shale_clay"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -69,9 +71,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:tilled_shale_clay"
-      },
+      "item": "spectrum:tilled_shale_clay",
       "text": "book.spectrum.guidebook.shale_clay.page4.text"
     }
   ]

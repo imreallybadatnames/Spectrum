@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/black_hole_chest"
   },
-  "icon": "spectrum:black_hole_chest",
+  "icon": {
+    "item": "spectrum:black_hole_chest"
+  },
   "category": "spectrum:magical_blocks",
   "hide_while_locked": true,
   "parents": [],

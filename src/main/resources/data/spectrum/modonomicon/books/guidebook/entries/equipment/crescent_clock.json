@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/crescent_clock"
   },
-  "icon": "spectrum:crescent_clock",
+  "icon": {
+    "item": "spectrum:crescent_clock"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

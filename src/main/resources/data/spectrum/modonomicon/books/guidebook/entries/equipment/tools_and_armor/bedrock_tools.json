@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/equipment/bedrock_tools"
   },
-  "icon": "spectrum:bedrock_pickaxe",
+  "icon": {
+    "item": "spectrum:bedrock_pickaxe"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

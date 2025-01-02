@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/food/rock_candy"
   },
-  "icon": "spectrum:rock_candy",
+  "icon": {
+    "item": "spectrum:rock_candy"
+  },
   "category": "spectrum:cuisine",
   "hide_while_locked": true,
   "parents": [],
@@ -34,9 +36,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:topaz_rock_candy"
-      },
+      "item": "spectrum:topaz_rock_candy",
       "title": "book.spectrum.guidebook.rock_candy.page3.title",
       "condition": {
         "type": "modonomicon:advancement",

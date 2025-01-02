@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pedestal_upgrade_cmy.name",
-  "icon": "spectrum:pedestal_all_basic",
+  "icon": {
+    "item": "spectrum:pedestal_all_basic"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/blocks/cmy_pedestal"

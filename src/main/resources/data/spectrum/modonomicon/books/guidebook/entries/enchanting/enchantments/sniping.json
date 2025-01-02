@@ -1,6 +1,8 @@
 {
   "name": "enchantment.spectrum.sniping",
-  "icon": "minecraft:crossbow",
+  "icon": {
+    "item": "minecraft:crossbow"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/enchantments/sniping"

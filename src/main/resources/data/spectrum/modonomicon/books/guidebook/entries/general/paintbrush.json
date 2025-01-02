@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.paintbrush",
-  "icon": "spectrum:paintbrush",
+  "icon": {
+    "item": "spectrum:paintbrush"
+  },
   "category": "spectrum:general",
   "hide_while_locked": true,
   "condition": {

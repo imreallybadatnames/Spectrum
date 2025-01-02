@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:lategame/collect_noxwood"
   },
-  "icon": "spectrum:slate_noxshroom",
+  "icon": {
+    "item": "spectrum:slate_noxshroom"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [

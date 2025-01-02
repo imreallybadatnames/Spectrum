@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.category.decoration.name",
-  "icon": "spectrum:chiseled_polished_calcite",
+  "icon": {
+    "item": "spectrum:chiseled_polished_calcite"
+  },
   "sort_number": 5,
   "show_category_button": true,
 

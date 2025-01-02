@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.failing.name",
-  "icon": "spectrum:bottle_of_failing",
+  "icon": {
+    "item": "spectrum:bottle_of_failing"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bottle_of_failing"
@@ -23,9 +25,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:bottle_of_failing"
-      },
+      "item": "spectrum:bottle_of_failing",
       "text": "book.spectrum.guidebook.failing.page0.text",
       "title": "book.spectrum.guidebook.failing.name"
     },

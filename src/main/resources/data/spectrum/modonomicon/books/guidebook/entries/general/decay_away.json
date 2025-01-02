@@ -1,6 +1,8 @@
 {
   "name": "block.spectrum.decay_away",
-  "icon": "spectrum:bottle_of_decay_away",
+  "icon": {
+    "item": "spectrum:bottle_of_decay_away"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/bottle_of_decay_away"
@@ -23,9 +25,7 @@
     {
       "title": "block.spectrum.decay_away",
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:bottle_of_decay_away"
-      },
+      "item": "spectrum:bottle_of_decay_away",
       "text": "book.spectrum.guidebook.decay_away.page0.text"
     },
     {

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.pastel_upgrades.name",
-  "icon": "spectrum:connection_node",
+  "icon": {
+    "item": "spectrum:connection_node"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:milestones/unlock_pastel_node_upgrading"
@@ -20,9 +22,7 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:connection_node"
-      },
+      "item": "spectrum:connection_node",
       "title": "book.spectrum.guidebook.pastel_upgrades.enhancing.title",
 
       "text": "book.spectrum.guidebook.pastel_upgrades.enhancing.text"

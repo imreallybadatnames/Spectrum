@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/discover_weeping_gala"
   },
-  "icon": "spectrum:weeping_gala_sprig",
+  "icon": {
+    "item": "spectrum:weeping_gala_sprig"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -20,9 +22,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:weeping_gala_sprig"
-      },
+      "item": "spectrum:weeping_gala_sprig",
       "text": "book.spectrum.guidebook.weeping_gala.page0.text"
     },
     {

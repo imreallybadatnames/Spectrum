@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/visit_dd_biomes/dragonrot_swamp"
   },
-  "icon": "spectrum:rotten_ground",
+  "icon": {
+    "item": "spectrum:rotten_ground"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -29,16 +31,12 @@
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:snapping_ivy"
-      },
+      "item": "spectrum:snapping_ivy",
       "text": "book.spectrum.guidebook.dragonrot_swamp.page2.text"
     },
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:rotten_ground"
-      },
+      "item": "spectrum:rotten_ground",
       "text": "book.spectrum.guidebook.dragonrot_swamp.page3.text"
     }
   ]

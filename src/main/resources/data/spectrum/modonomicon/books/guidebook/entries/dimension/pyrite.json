@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/collect_pyrite"
   },
-  "icon": "spectrum:pyrite",
+  "icon": {
+    "item": "spectrum:pyrite"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -19,9 +21,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:pyrite"
-      },
+      "item": "spectrum:pyrite",
       "text": "book.spectrum.guidebook.pyrite.page0.text",
       "title": "block.spectrum.pyrite"
     },
@@ -55,9 +55,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "book.spectrum.guidebook.pyrite.page3.title",
-      "item": {
-        "item": "spectrum:pyrite_ripper"
-      },
+      "item": "spectrum:pyrite_ripper",
       "text": "book.spectrum.guidebook.pyrite.page3.text"
     }
   ]

@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/discover_rock_crystal"
   },
-  "icon": "spectrum:rock_crystal",
+  "icon": {
+    "item": "spectrum:rock_crystal"
+  },
   "category": "spectrum:dimension",
   "hide_while_locked": true,
   "parents": [
@@ -19,9 +21,7 @@
   "pages": [
     {
       "type": "modonomicon:spotlight",
-      "item": {
-        "item": "spectrum:rock_crystal"
-      },
+      "item": "spectrum:rock_crystal",
       "title": "block.spectrum.rock_crystal",
       "text": "book.spectrum.guidebook.rock_crystal.page0.text"
     },

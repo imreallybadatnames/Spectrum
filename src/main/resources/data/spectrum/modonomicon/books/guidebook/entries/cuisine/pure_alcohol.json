@@ -1,6 +1,8 @@
 {
   "name": "item.spectrum.pure_alcohol",
-  "icon": "spectrum:pure_alcohol",
+  "icon": {
+    "item": "spectrum:pure_alcohol"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:tap_pure_alcohol"
@@ -20,9 +22,7 @@
     {
       "type": "modonomicon:spotlight",
       "title": "item.spectrum.pure_alcohol",
-      "item": {
-        "item": "spectrum:pure_alcohol"
-      },
+      "item": "spectrum:pure_alcohol",
       "text": "book.spectrum.guidebook.pure_alcohol.page0.text"
     },
     {

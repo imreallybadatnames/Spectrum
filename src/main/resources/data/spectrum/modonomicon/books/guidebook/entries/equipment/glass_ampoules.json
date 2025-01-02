@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/items/glass_ampoules"
   },
-  "icon": "spectrum:azurite_glass_ampoule",
+  "icon": {
+    "item": "spectrum:azurite_glass_ampoule"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [],

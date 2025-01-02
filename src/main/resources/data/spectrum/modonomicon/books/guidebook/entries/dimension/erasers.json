@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.erasers.name",
-  "icon": "spectrum:eraser_head",
+  "icon": {
+    "item": "spectrum:eraser_head"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:hidden/entity_interact/eraser"

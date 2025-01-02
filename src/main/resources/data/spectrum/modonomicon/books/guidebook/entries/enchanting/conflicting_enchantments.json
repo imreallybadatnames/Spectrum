@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.conflicting_enchantments.name",
-  "icon": "minecraft:enchanted_book",
+  "icon": {
+    "item": "minecraft:enchanted_book"
+  },
   "hide_while_locked": true,
   "condition": {
     "type": "modonomicon:advancement",

@@ -1,6 +1,8 @@
 {
   "name": "book.spectrum.guidebook.hardcore_revival.name",
-  "icon": "spectrum:divination_heart",
+  "icon": {
+    "item": "spectrum:divination_heart"
+  },
   "condition": {
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:midgame/build_spirit_instiller_structure"

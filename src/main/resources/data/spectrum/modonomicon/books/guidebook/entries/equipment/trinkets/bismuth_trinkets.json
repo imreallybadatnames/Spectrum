@@ -4,7 +4,9 @@
     "type": "modonomicon:advancement",
     "advancement_id": "spectrum:unlocks/trinkets/fanciful_bismuth_ring"
   },
-  "icon": "spectrum:fanciful_bismuth_ring",
+  "icon": {
+    "item": "spectrum:fanciful_bismuth_ring"
+  },
   "category": "spectrum:equipment",
   "hide_while_locked": true,
   "parents": [
