@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.items;
 
+import com.klikli_dev.modonomicon.client.gui.book.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -14,16 +15,16 @@ import java.util.*;
 
 public class CookbookItem extends Item {
 	
-	public String guidebookPageToOpen;
+	public BookAddress bookAddress;
 	private final int toolTipColor;
 	
-	public CookbookItem(Settings settings, String guidebookPageToOpen) {
-		this(settings, guidebookPageToOpen, -1);
+	public CookbookItem(Settings settings, BookAddress bookAddress) {
+		this(settings, bookAddress, -1);
 	}
-
-	public CookbookItem(Settings settings, String guidebookPageToOpen, int toolTipColor) {
+	
+	public CookbookItem(Settings settings, BookAddress bookAddress, int toolTipColor) {
 		super(settings);
-		this.guidebookPageToOpen = guidebookPageToOpen;
+		this.bookAddress = bookAddress;
 		this.toolTipColor = toolTipColor;
 	}
 	
@@ -35,18 +36,18 @@ public class CookbookItem extends Item {
 			return TypedActionResult.success(user.getStackInHand(hand));
 		} else {
 			try {
-				openGuidebookPage(SpectrumCommon.locate(guidebookPageToOpen), 0);
+				openGuidebookPage(this.bookAddress);
 			} catch (NullPointerException e) {
-				SpectrumCommon.logError(user.getName().getString() + " used a CookbookItem to open the guidebook page " + this.guidebookPageToOpen + " but it does not exist");
+				SpectrumCommon.logError(user.getName().getString() + " used a CookbookItem to open the guidebook page " + this.bookAddress + " but it does not exist");
 			}
 		}
 		
 		return TypedActionResult.consume(user.getStackInHand(hand));
 	}
 	
-	private void openGuidebookPage(Identifier entry, int page) {
+	private void openGuidebookPage(BookAddress address) {
 		if (SpectrumItems.GUIDEBOOK instanceof GuidebookItem guidebook) {
-			guidebook.openGuidebook(entry, page);
+			guidebook.openGuidebook(address);
 		}
 	}
 

@@ -6,6 +6,9 @@
   },
   "sort_number": 0,
 
+  "entry_to_open": "spectrum:general/intro",
+  "open_entry_to_open_only_once": true,
+
   "show_category_button": true,
   "max_scroll_x": 512,
   "max_scroll_y": 512,

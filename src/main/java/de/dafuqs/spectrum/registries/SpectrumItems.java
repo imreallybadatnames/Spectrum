@@ -4,7 +4,6 @@ import de.dafuqs.revelationary.api.revelations.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
 import de.dafuqs.spectrum.blocks.conditional.*;
 import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.blocks.gravity.*;
@@ -374,13 +373,13 @@ public class SpectrumItems {
 			.value();
 	public static final Item AMARANTH_GRAINS = new AliasedBlockItem(SpectrumBlocks.AMARANTH, IS.of());
 	
-	public static final Item MELOCHITES_COOKBOOK_VOL_1 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/melochites_cookbook_vol_1");
-	public static final Item MELOCHITES_COOKBOOK_VOL_2 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/melochites_cookbook_vol_2");
-	public static final Item IMBRIFER_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/imbrifer_cookbook");
-	public static final Item IMPERIAL_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/imperial_cookbook");
-	public static final Item BREWERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/brewers_handbook");
-	//public static final Item VARIA_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), "cuisine/cookbooks/varia_cookbook");
-	public static final Item POISONERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.EPIC), "dimension/lore/poisoners_handbook", SpectrumStatusEffects.ETERNAL_SLUMBER_COLOR);
+	public static final Item MELOCHITES_COOKBOOK_VOL_1 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/melochites_cookbook_vol_1")));
+	public static final Item MELOCHITES_COOKBOOK_VOL_2 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/melochites_cookbook_vol_2")));
+	public static final Item IMBRIFER_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/imbrifer_cookbook")));
+	public static final Item IMPERIAL_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/imperial_cookbook")));
+	public static final Item BREWERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/brewers_handbook")));
+	//public static final Item VARIA_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/varia_cookbook")));
+	public static final Item POISONERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.EPIC), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("dimension/lore/poisoners_handbook")), SpectrumStatusEffects.ETERNAL_SLUMBER_COLOR);
 
 	public static final Item AQUA_REGIA = new JadeWineItem(IS.of(16).food(SpectrumFoodComponents.AQUA_REGIA));
 	public static final Item BAGNUN = new Item(IS.of().food(SpectrumFoodComponents.BAGNUN));
