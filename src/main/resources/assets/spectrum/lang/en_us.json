@@ -4240,6 +4240,13 @@
   "entity.spectrum.phantom_frame": "Phantom Frame",
   "entity.spectrum.preservation_turret": "Preservation Turret",
   "entity.spectrum.shooting_star": "Shooting Star",
+	"entity.spectrum.item_projectile": "Item Projectile",
+	"entity.spectrum.fireproof_item": "Item",
+	"entity.spectrum.glass_arrow": "Glass Arrow",
+	"entity.spectrum.light_mine": "Light Mine",
+	"entity.spectrum.parametric_mining_device": "Parametric Mining Device",
+	"entity.spectrum.light_spear": "Light Spear",
+	"entity.spectrum.seat": "Seat",
 
   "explosion_archetype.spectrum.all": "Block and Entity Damaging Explosion",
   "explosion_archetype.spectrum.cosmetic": "Cosmetic Explosion",
