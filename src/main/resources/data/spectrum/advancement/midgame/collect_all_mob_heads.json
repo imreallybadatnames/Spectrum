@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_ender_dragon_head_using_treasure_hunter",
   "display": {
     "icon": {
-      "item": "spectrum:squid_head"
+      "id": "spectrum:squid_head"
     },
     "frame": "goal",
     "hidden": true,
@@ -16,71 +16,173 @@
   "criteria": {
     "has_skeleton_skull": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:skeleton_skull" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:skeleton_skull"
+          }
+        ]
+      }
     },
     "has_wither_skeleton_skull": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:wither_skeleton_skull" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:wither_skeleton_skull"
+          }
+        ]
+      }
     },
     "has_zombie_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:zombie_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:zombie_head"
+          }
+        ]
+      }
     },
     "has_creeper_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:creeper_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:creeper_head"
+          }
+        ]
+      }
     },
     "has_piglin_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:piglin_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:piglin_head"
+          }
+        ]
+      }
     },
     "has_dragon_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "minecraft:dragon_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:dragon_head"
+          }
+        ]
+      }
     },
     "has_axolotl_blue_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:axolotl_blue_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:axolotl_blue_head"
+          }
+        ]
+      }
     },
     "has_axolotl_wild_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:axolotl_wild_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:axolotl_wild_head"
+          }
+        ]
+      }
     },
     "has_axolotl_cyan_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:axolotl_cyan_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:axolotl_cyan_head"
+          }
+        ]
+      }
     },
     "has_axolotl_gold_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:axolotl_gold_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:axolotl_gold_head"
+          }
+        ]
+      }
     },
     "has_axolotl_leucistic_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:axolotl_leucistic_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:axolotl_leucistic_head"
+          }
+        ]
+      }
     },
     "has_bat_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:bat_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:bat_head"
+          }
+        ]
+      }
     },
     "has_bee_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:bee_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:bee_head"
+          }
+        ]
+      }
     },
     "has_blaze_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:blaze_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:blaze_head"
+          }
+        ]
+      }
     },
     "has_cat_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:cat_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:cat_head"
+          }
+        ]
+      }
     },
     "has_cave_spider_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:cave_spider_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:cave_spider_head"
+          }
+        ]
+      }
     },
     "has_chicken_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:chicken_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:chicken_head"
+          }
+        ]
+      }
     },
     "has_tropical_fish_head": {
       "trigger": "minecraft:inventory_changed",
@@ -94,151 +196,373 @@
     },
     "has_cow_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:cow_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:cow_head"
+          }
+        ]
+      }
     },
     "has_donkey_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:donkey_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:donkey_head"
+          }
+        ]
+      }
     },
     "has_drowned_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:drowned_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:drowned_head"
+          }
+        ]
+      }
     },
     "has_elder_guardian_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:elder_guardian_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:elder_guardian_head"
+          }
+        ]
+      }
     },
     "has_enderman_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:enderman_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:enderman_head"
+          }
+        ]
+      }
     },
     "has_endermite_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:endermite_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:endermite_head"
+          }
+        ]
+      }
     },
     "has_evoker_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:evoker_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:evoker_head"
+          }
+        ]
+      }
     },
     "has_fox_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:fox_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:fox_head"
+          }
+        ]
+      }
     },
     "has_fox_arctic_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:fox_arctic_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:fox_arctic_head"
+          }
+        ]
+      }
     },
     "has_ghast_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:ghast_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:ghast_head"
+          }
+        ]
+      }
     },
     "has_glow_squid_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:glow_squid_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:glow_squid_head"
+          }
+        ]
+      }
     },
     "has_goat_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:goat_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:goat_head"
+          }
+        ]
+      }
     },
     "has_guardian_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:guardian_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:guardian_head"
+          }
+        ]
+      }
     },
     "has_hoglin_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:hoglin_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:hoglin_head"
+          }
+        ]
+      }
     },
     "has_horse_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:horse_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:horse_head"
+          }
+        ]
+      }
     },
     "has_husk_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:husk_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:husk_head"
+          }
+        ]
+      }
     },
     "has_illusioner_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:illusioner_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:illusioner_head"
+          }
+        ]
+      }
     },
     "has_iron_golem_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:iron_golem_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:iron_golem_head"
+          }
+        ]
+      }
     },
     "has_llama_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:llama_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:llama_head"
+          }
+        ]
+      }
     },
     "has_magma_cube_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:magma_cube_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:magma_cube_head"
+          }
+        ]
+      }
     },
     "has_mooshroom_brown_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:mooshroom_brown_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:mooshroom_brown_head"
+          }
+        ]
+      }
     },
     "has_mooshroom_red_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:mooshroom_red_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:mooshroom_red_head"
+          }
+        ]
+      }
     },
     "has_mule_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:mule_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:mule_head"
+          }
+        ]
+      }
     },
     "has_ocelot_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:ocelot_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:ocelot_head"
+          }
+        ]
+      }
     },
     "has_panda_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:panda_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:panda_head"
+          }
+        ]
+      }
     },
     "has_parrot_blue_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:parrot_blue_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:parrot_blue_head"
+          }
+        ]
+      }
     },
     "has_parrot_cyan_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:parrot_cyan_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:parrot_cyan_head"
+          }
+        ]
+      }
     },
     "has_parrot_gray_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:parrot_gray_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:parrot_gray_head"
+          }
+        ]
+      }
     },
     "has_parrot_green_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:parrot_green_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:parrot_green_head"
+          }
+        ]
+      }
     },
     "has_parrot_red_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:parrot_red_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:parrot_red_head"
+          }
+        ]
+      }
     },
     "has_phantom_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:phantom_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:phantom_head"
+          }
+        ]
+      }
     },
     "has_pig_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:pig_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:pig_head"
+          }
+        ]
+      }
     },
     "has_polar_bear_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:polar_bear_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:polar_bear_head"
+          }
+        ]
+      }
     },
     "has_pufferfish_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:pufferfish_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:pufferfish_head"
+          }
+        ]
+      }
     },
     "has_rabbit_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:rabbit_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:rabbit_head"
+          }
+        ]
+      }
     },
     "has_ravager_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:ravager_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:ravager_head"
+          }
+        ]
+      }
     },
     "has_salmon_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:salmon_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:salmon_head"
+          }
+        ]
+      }
     },
     "has_sheep_head": {
       "trigger": "minecraft:inventory_changed",
@@ -282,119 +606,293 @@
     },
     "has_shulker_brown_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_brown_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_brown_head"
+          }
+        ]
+      }
     },
     "has_shulker_cyan_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_cyan_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_cyan_head"
+          }
+        ]
+      }
     },
     "has_shulker_gray_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_gray_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_gray_head"
+          }
+        ]
+      }
     },
     "has_shulker_green_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_green_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_green_head"
+          }
+        ]
+      }
     },
     "has_shulker_light_blue_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_light_blue_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_light_blue_head"
+          }
+        ]
+      }
     },
     "has_shulker_light_gray_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_light_gray_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_light_gray_head"
+          }
+        ]
+      }
     },
     "has_shulker_lime_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_lime_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_lime_head"
+          }
+        ]
+      }
     },
     "has_shulker_magenta_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_magenta_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_magenta_head"
+          }
+        ]
+      }
     },
     "has_shulker_orange_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_orange_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_orange_head"
+          }
+        ]
+      }
     },
     "has_shulker_pink_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_pink_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_pink_head"
+          }
+        ]
+      }
     },
     "has_shulker_purple_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_purple_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_purple_head"
+          }
+        ]
+      }
     },
     "has_shulker_red_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_red_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_red_head"
+          }
+        ]
+      }
     },
     "has_shulker_white_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_white_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_white_head"
+          }
+        ]
+      }
     },
     "has_shulker_yellow_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:shulker_yellow_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:shulker_yellow_head"
+          }
+        ]
+      }
     },
     "has_silverfish_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:silverfish_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:silverfish_head"
+          }
+        ]
+      }
     },
     "has_slime_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:slime_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:slime_head"
+          }
+        ]
+      }
     },
     "has_snow_golem_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:snow_golem_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:snow_golem_head"
+          }
+        ]
+      }
     },
     "has_spider_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:spider_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:spider_head"
+          }
+        ]
+      }
     },
     "has_squid_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:squid_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:squid_head"
+          }
+        ]
+      }
     },
     "has_stray_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:stray_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:stray_head"
+          }
+        ]
+      }
     },
     "has_strider_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:strider_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:strider_head"
+          }
+        ]
+      }
     },
     "has_turtle_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:turtle_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:turtle_head"
+          }
+        ]
+      }
     },
     "has_vex_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:vex_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:vex_head"
+          }
+        ]
+      }
     },
     "has_villager_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:villager_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:villager_head"
+          }
+        ]
+      }
     },
     "has_vindicator_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:vindicator_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:vindicator_head"
+          }
+        ]
+      }
     },
     "has_wandering_trader_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:wandering_trader_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:wandering_trader_head"
+          }
+        ]
+      }
     },
     "has_witch_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:witch_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:witch_head"
+          }
+        ]
+      }
     },
     "has_wither_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:wither_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:wither_head"
+          }
+        ]
+      }
     },
     "has_wolf_head": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:wolf_head" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:wolf_head"
+          }
+        ]
+      }
     },
     "has_zoglin_head": {
       "trigger": "minecraft:inventory_changed",
@@ -411,9 +909,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:zombie_villager_head"
-            ]
+            "items": "spectrum:zombie_villager_head"
           }
         ]
       }
@@ -423,9 +919,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:zombified_piglin_head"
-            ]
+            "items": "spectrum:zombified_piglin_head"
           }
         ]
       }
@@ -435,9 +929,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:tadpole_head"
-            ]
+            "items": "spectrum:tadpole_head"
           }
         ]
       }
@@ -447,9 +939,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:allay_head"
-            ]
+            "items": "spectrum:allay_head"
           }
         ]
       }
@@ -459,9 +949,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:warden_head"
-            ]
+            "items": "spectrum:warden_head"
           }
         ]
       }
@@ -471,9 +959,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:frog_temperate_head"
-            ]
+            "items": "spectrum:frog_temperate_head"
           }
         ]
       }
@@ -483,9 +969,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:frog_warm_head"
-            ]
+            "items": "spectrum:frog_warm_head"
           }
         ]
       }
@@ -495,9 +979,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:frog_cold_head"
-            ]
+            "items": "spectrum:frog_cold_head"
           }
         ]
       }
@@ -507,9 +989,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:kindling_head"
-            ]
+            "items": "spectrum:kindling_head"
           }
         ]
       }
@@ -519,9 +999,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:egg_laying_wooly_pig_head"
-            ]
+            "items": "spectrum:egg_laying_wooly_pig_head"
           }
         ]
       }
@@ -531,9 +1009,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:preservation_turret_head"
-            ]
+            "items": "spectrum:preservation_turret_head"
           }
         ]
       }
@@ -543,9 +1019,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_black_head"
-            ]
+            "items": "spectrum:lizard_black_head"
           }
         ]
       }
@@ -555,9 +1029,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_blue_head"
-            ]
+            "items": "spectrum:lizard_blue_head"
           }
         ]
       }
@@ -567,9 +1039,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_brown_head"
-            ]
+            "items": "spectrum:lizard_brown_head"
           }
         ]
       }
@@ -579,9 +1049,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_cyan_head"
-            ]
+            "items": "spectrum:lizard_cyan_head"
           }
         ]
       }
@@ -591,9 +1059,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_gray_head"
-            ]
+            "items": "spectrum:lizard_gray_head"
           }
         ]
       }
@@ -603,9 +1069,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_green_head"
-            ]
+            "items": "spectrum:lizard_green_head"
           }
         ]
       }
@@ -615,9 +1079,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_light_blue_head"
-            ]
+            "items": "spectrum:lizard_light_blue_head"
           }
         ]
       }
@@ -627,9 +1089,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_light_gray_head"
-            ]
+            "items": "spectrum:lizard_light_gray_head"
           }
         ]
       }
@@ -639,9 +1099,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_lime_head"
-            ]
+            "items": "spectrum:lizard_lime_head"
           }
         ]
       }
@@ -651,9 +1109,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_magenta_head"
-            ]
+            "items": "spectrum:lizard_magenta_head"
           }
         ]
       }
@@ -663,9 +1119,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_orange_head"
-            ]
+            "items": "spectrum:lizard_orange_head"
           }
         ]
       }
@@ -675,9 +1129,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_pink_head"
-            ]
+            "items": "spectrum:lizard_pink_head"
           }
         ]
       }
@@ -687,9 +1139,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_purple_head"
-            ]
+            "items": "spectrum:lizard_purple_head"
           }
         ]
       }
@@ -699,9 +1149,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_red_head"
-            ]
+            "items": "spectrum:lizard_red_head"
           }
         ]
       }
@@ -711,9 +1159,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_white_head"
-            ]
+            "items": "spectrum:lizard_white_head"
           }
         ]
       }
@@ -723,9 +1169,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:lizard_yellow_head"
-            ]
+            "items": "spectrum:lizard_yellow_head"
           }
         ]
       }
@@ -735,9 +1179,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:camel_head"
-            ]
+            "items": "spectrum:camel_head"
           }
         ]
       }
@@ -747,9 +1189,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:sniffer_head"
-            ]
+            "items": "spectrum:sniffer_head"
           }
         ]
       }
@@ -759,9 +1199,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:skeleton_horse_head"
-            ]
+            "items": "spectrum:skeleton_horse_head"
           }
         ]
       }
@@ -771,9 +1209,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:zombie_horse_head"
-            ]
+            "items": "spectrum:zombie_horse_head"
           }
         ]
       }
@@ -783,9 +1219,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:dolphin_head"
-            ]
+            "items": "spectrum:dolphin_head"
           }
         ]
       }
@@ -795,9 +1229,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:pillager_head"
-            ]
+            "items": "spectrum:pillager_head"
           }
         ]
       }

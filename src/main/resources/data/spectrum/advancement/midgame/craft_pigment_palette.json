@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/create_refined_azurite",
   "display": {
     "icon": {
-      "item": "spectrum:pigment_palette"
+      "id": "spectrum:pigment_palette"
     },
     "hidden": true,
     "title": {

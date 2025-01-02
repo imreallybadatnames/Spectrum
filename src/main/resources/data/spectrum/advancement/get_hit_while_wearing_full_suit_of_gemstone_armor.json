@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:ferocious_chestplate"
+      "id": "spectrum:ferocious_chestplate"
     },
     "title": {
       "translate": "advancements.spectrum.get_hit_while_wearing_full_suit_of_gemstone_armor.title"
@@ -18,24 +18,26 @@
         "player": {
           "equipment": {
             "head": {
-              "items": "spectrum:fetchling_helmet"
+              "spectrum:fetchling_helmet"
             },
             "chest": {
-              "items": "spectrum:ferocious_chestplate"
+              "spectrum:ferocious_chestplate"
             },
             "legs": {
-              "items": "spectrum:sylph_leggings"
+              "spectrum:sylph_leggings"
             },
             "feet": {
-              "items": "spectrum:oread_boots"
+              "spectrum:oread_boots"
             }
           }
         }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:build_basic_pedestal_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:build_basic_pedestal_structure"
+      }
     }
   }
 }

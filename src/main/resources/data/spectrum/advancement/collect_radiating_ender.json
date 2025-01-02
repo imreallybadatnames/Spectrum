@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:radiating_ender"
+      "id": "spectrum:radiating_ender"
     },
     "title": {
       "translate": "advancements.spectrum.collect_radiating_ender.title"
@@ -24,7 +24,7 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:spectrum"
       }

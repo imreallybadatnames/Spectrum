@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/enter_liquid_crystal",
   "display": {
     "icon": {
-      "item": "spectrum:liquid_crystal_bucket"
+      "id": "spectrum:liquid_crystal_bucket"
     },
     "title": {
       "translate": "advancements.spectrum.dip_something_into_liquid_crystal.title"
@@ -16,9 +16,7 @@
     "dipped_something_into_liquid_crystal": {
       "trigger": "spectrum:fluid_dipping",
       "conditions": {
-        "fluid": {
-          "tag": "spectrum:liquid_crystal"
-        }
+        "fluid": "#spectrum:liquid_crystal"
       }
     },
     "gotten_previous": {

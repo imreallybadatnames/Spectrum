@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/enchant_book",
   "display": {
     "icon": {
-      "item": "minecraft:experience_bottle"
+      "id": "minecraft:experience_bottle"
     },
     "title": {
       "translate": "advancements.spectrum.enchant_item_worth_2500_xp.title"
@@ -21,8 +21,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/enchant_book" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/enchant_book"
+      }
     }
   }
 }

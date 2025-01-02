@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:stratine_floatblock"
+      "id": "spectrum:stratine_floatblock"
     },
     "frame": "challenge",
     "title": {
@@ -18,8 +18,10 @@
       "trigger": "minecraft:impossible"
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_stratine" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_stratine"
+      }
     }
   },
   "rewards": {

@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:jeopardant"
+      "id": "spectrum:jeopardant"
     },
     "title": {
       "translate": "advancements.spectrum.kill_entity_with_jeopardant_and_half_a_heart.title"
@@ -21,8 +21,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_stratine" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_stratine"
+      }
     }
   }
 }

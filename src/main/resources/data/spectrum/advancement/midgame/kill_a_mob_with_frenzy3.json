@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:bloodboil_syrup"
+      "id": "spectrum:bloodboil_syrup"
     },
     "title": {
       "translate": "advancements.spectrum.kill_a_mob_with_frenzy3.title"
@@ -33,8 +33,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_blood_orchid_petal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_blood_orchid_petal"
+      }
     }
   }
 }

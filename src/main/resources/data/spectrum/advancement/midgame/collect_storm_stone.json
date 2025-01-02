@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_neolith",
   "display": {
     "icon": {
-      "item": "spectrum:storm_stone"
+      "id": "spectrum:storm_stone"
     },
     "hidden": true,
     "title": {
@@ -15,11 +15,19 @@
   "criteria": {
     "has_storm_stone": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:storm_stone" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:storm_stone"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_neolith" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_neolith"
+      }
     }
   }
 }

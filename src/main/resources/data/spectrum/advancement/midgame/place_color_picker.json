@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/spectrum_midgame",
   "display": {
     "icon": {
-      "item": "spectrum:color_picker"
+      "id": "spectrum:color_picker"
     },
     "title": {
       "translate": "advancements.spectrum.place_color_picker.title"
@@ -22,7 +22,7 @@
           }
         ],
         "item": {
-          "items": "spectrum:color_picker"
+          "spectrum:color_picker"
         }
       }
     },

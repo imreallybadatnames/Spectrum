@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_mob_head_using_treasure_hunter",
   "display": {
     "icon": {
-      "item": "minecraft:slime_block"
+      "id": "minecraft:slime_block"
     },
     "title": {
       "translate": "advancements.spectrum.create_huge_slime.title"
@@ -13,7 +13,7 @@
   },
   "criteria": {
     "create_huge_slime": {
-      "trigger":"spectrum:slime_sizing",
+      "trigger": "spectrum:slime_sizing",
       "conditions": {
         "size": {
           "min": 8
@@ -21,8 +21,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_mob_head_using_treasure_hunter" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_mob_head_using_treasure_hunter"
+      }
     }
   }
 }

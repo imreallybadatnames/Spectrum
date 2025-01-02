@@ -27,16 +27,14 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "spectrum:city_below"
+                "structures": "spectrum:city_below"
               }
             }
           }
         ],
         "items": [
           {
-            "items": [
-              "spectrum:everpromise_ribbon"
-            ]
+            "items": "spectrum:everpromise_ribbon"
           }
         ]
       }

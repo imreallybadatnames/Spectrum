@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_salted_jaramel_trifle_or_tart",
   "display": {
     "icon": {
-      "item": "spectrum:triple_meat_pot_pie"
+      "id": "spectrum:triple_meat_pot_pie"
     },
     "frame": "goal",
     "title": {
@@ -15,65 +15,149 @@
   "criteria": {
     "jaramel_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:jaramel_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:jaramel_tart"
+          ]
+        }
+      }
     },
     "salted_jaramel_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:salted_jaramel_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:salted_jaramel_tart"
+          ]
+        }
+      }
     },
     "ashen_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:ashen_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:ashen_tart"
+          ]
+        }
+      }
     },
     "weeping_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:weeping_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:weeping_tart"
+          ]
+        }
+      }
     },
     "whispy_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:whispy_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:whispy_tart"
+          ]
+        }
+      }
     },
     "puff_tart": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:puff_tart" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:puff_tart"
+          ]
+        }
+      }
     },
     "jaramel_trifle": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:jaramel_trifle" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:jaramel_trifle"
+          ]
+        }
+      }
     },
     "salted_jaramel_trifle": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:salted_jaramel_trifle" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:salted_jaramel_trifle"
+          ]
+        }
+      }
     },
     "monster_trifle": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:monster_trifle" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:monster_trifle"
+          ]
+        }
+      }
     },
     "demon_trifle": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:demon_trifle" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:demon_trifle"
+          ]
+        }
+      }
     },
     "honey_pastry": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:honey_pastry" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:honey_pastry"
+          ]
+        }
+      }
     },
     "lucky_roll": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:lucky_roll" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:lucky_roll"
+          ]
+        }
+      }
     },
     "scone": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:scone" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:scone"
+          ]
+        }
+      }
     },
     "star_candy": {
       "trigger": "minecraft:consume_item",
-      "conditions": { "item": { "items": [ "spectrum:star_candy" ] } }
+      "conditions": {
+        "item": {
+          "items": [
+            "spectrum:star_candy"
+          ]
+        }
+      }
     },
     "enchanted_star_candy": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": "spectrum:enchanted_star_candy"
+          "spectrum:enchanted_star_candy"
         }
       }
     },

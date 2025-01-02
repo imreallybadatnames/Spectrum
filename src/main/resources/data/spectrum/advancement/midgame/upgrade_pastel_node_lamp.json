@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:sender_node"
+      "id": "spectrum:sender_node"
     },
     "hidden": true,
     "title": {
@@ -17,7 +17,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": "spectrum:pure_glowstone"
+          "spectrum:pure_glowstone"
         }
       }
     },

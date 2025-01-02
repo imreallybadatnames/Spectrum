@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-        "item": "spectrum:bottle_of_fading"
+      "id": "spectrum:bottle_of_fading"
     },
     "title": {
       "translate": "advancements.spectrum.craft_bottle_of_fading.title"
@@ -13,12 +13,20 @@
   "parent": "spectrum:collect_shimmerstone",
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
-      "conditions": { "items": [{ "items": [ "spectrum:bottle_of_fading" ]}] }
+      "trigger": "spectrum:crafted_with_pedestal",
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:bottle_of_fading"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_shimmerstone" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_shimmerstone"
+      }
     }
   }
 }

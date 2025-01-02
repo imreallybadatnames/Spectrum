@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:buffer_node"
+      "id": "spectrum:buffer_node"
     },
     "hidden": true,
     "title": {
@@ -17,7 +17,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": "spectrum:resonance_shard"
+          "spectrum:resonance_shard"
         }
       }
     },
@@ -25,7 +25,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": "spectrum:refined_malachite"
+          "spectrum:refined_malachite"
         }
       }
     },
@@ -33,7 +33,7 @@
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
         "input": {
-          "items": "spectrum:refined_bloodstone"
+          "spectrum:refined_bloodstone"
         }
       }
     },

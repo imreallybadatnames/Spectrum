@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/create_refined_azurite",
   "display": {
     "icon": {
-      "item": "spectrum:azure_dike_ring"
+      "id": "spectrum:azure_dike_ring"
     },
     "title": {
       "translate": "advancements.spectrum.get_azure_dike_charge.title"
@@ -19,8 +19,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/create_refined_azurite" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/create_refined_azurite"
+      }
     }
   }
 }

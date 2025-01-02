@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/create_midnight_aberration",
   "display": {
     "icon": {
-      "item": "spectrum:midnight_aberration"
+      "id": "spectrum:midnight_aberration"
     },
     "hidden": true,
     "title": {

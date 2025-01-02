@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "spectrum:upgrade_yield"
-            ]
+            "items": "spectrum:upgrade_yield"
           }
         ]
       }

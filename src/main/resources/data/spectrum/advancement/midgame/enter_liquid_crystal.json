@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/build_advanced_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:liquid_crystal_bucket"
+      "id": "spectrum:liquid_crystal_bucket"
     },
     "title": {
       "translate": "advancements.spectrum.enter_liquid_crystal.title"
@@ -19,8 +19,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure"
+      }
     }
   }
 }

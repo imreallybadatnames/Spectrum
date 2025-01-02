@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/brew_powerful_potion_in_potion_workshop",
   "display": {
     "icon": {
-      "item": "spectrum:potion_workshop"
+      "id": "spectrum:potion_workshop"
     },
     "hidden": true,
     "frame": "challenge",

@@ -2,12 +2,12 @@
   "parent": "spectrum:midgame/build_enchanting_structure",
   "display": {
     "icon": {
-      "item": "spectrum:cow_head"
+      "id": "spectrum:cow_head"
     },
     "title": {
       "translate": "advancements.spectrum.collect_mob_head_using_treasure_hunter.title"
-    },                                          
-    "description": {                            
+    },
+    "description": {
       "translate": "advancements.spectrum.collect_mob_head_using_treasure_hunter.description"
     }
   },
@@ -15,12 +15,14 @@
     "dropped_any_head": {
       "trigger": "spectrum:treasure_hunter_drop",
       "conditions": {
-        "dropped_item": { }
+        "dropped_item": {}
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/build_enchanting_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/build_enchanting_structure"
+      }
     }
   }
 }

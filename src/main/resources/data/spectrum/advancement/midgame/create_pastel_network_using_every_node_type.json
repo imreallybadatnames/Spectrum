@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/create_pastel_network",
   "display": {
     "icon": {
-      "item": "spectrum:gather_node"
+      "id": "spectrum:gather_node"
     },
     "hidden": true,
     "title": {

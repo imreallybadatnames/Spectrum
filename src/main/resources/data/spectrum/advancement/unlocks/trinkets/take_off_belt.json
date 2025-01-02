@@ -17,10 +17,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:rabbits_foot"
+            "items": "minecraft:rabbits_foot"
           }
         ]
-      }
     }
   }
 }

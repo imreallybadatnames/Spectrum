@@ -2,7 +2,7 @@
   "parent": "spectrum:fill_bottomless_bundle",
   "display": {
     "icon": {
-        "item": "spectrum:bottomless_bundle"
+      "id": "spectrum:bottomless_bundle"
     },
     "frame": "challenge",
     "hidden": true,
@@ -36,8 +36,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:fill_bottomless_bundle" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:fill_bottomless_bundle"
+      }
     }
   },
   "rewards": {

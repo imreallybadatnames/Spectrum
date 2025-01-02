@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/fill_ink_container",
   "display": {
     "icon": {
-      "item": "spectrum:ink_assortment"
+      "id": "spectrum:ink_assortment"
     },
     "hidden": true,
     "title": {
@@ -15,14 +15,14 @@
   "criteria": {
     "high_ink_use": {
       "trigger": "spectrum:ink_container_interaction",
-	  "conditions": {
-		"change_amount": {
-		  "max": -100
-		}
+      "conditions": {
+        "change_amount": {
+          "max": -100
+        }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:midgame/fill_ink_container"
       }

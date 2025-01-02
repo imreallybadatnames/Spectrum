@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/build_cinderhearth_structure",
   "display": {
     "icon": {
-      "item": "spectrum:pure_iron"
+      "id": "spectrum:pure_iron"
     },
     "hidden": true,
     "title": {
@@ -16,9 +16,7 @@
     "smelted_pure_resource_in_cinderhearth": {
       "trigger": "spectrum:cinderhearth_smelting",
       "conditions": {
-        "input": {
-          "tag": "spectrum:pure_resources"
-        }
+        "input": "#spectrum:pure_resources"
       }
     },
     "gotten_previous": {

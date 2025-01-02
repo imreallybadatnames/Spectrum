@@ -2,7 +2,7 @@
   "parent": "spectrum:tap_titration_barrel",
   "display": {
     "icon": {
-      "item": "spectrum:mermaids_jam"
+      "id": "spectrum:mermaids_jam"
     },
     "hidden": true,
     "title": {

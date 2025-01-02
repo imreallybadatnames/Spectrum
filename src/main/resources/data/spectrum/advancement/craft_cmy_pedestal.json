@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_using_pedestal",
   "display": {
     "icon": {
-      "item": "spectrum:pedestal_all_basic"
+      "id": "spectrum:pedestal_all_basic"
     },
     "title": {
       "translate": "advancements.spectrum.craft_cmy_pedestal.title"

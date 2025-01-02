@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_cmy_pedestal",
   "display": {
     "icon": {
-      "item": "spectrum:quitoxic_reeds"
+      "id": "spectrum:quitoxic_reeds"
     },
     "hidden": true,
     "title": {
@@ -27,7 +27,7 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:craft_cmy_pedestal"
       }

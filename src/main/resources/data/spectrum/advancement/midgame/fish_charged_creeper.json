@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/fish_in_many_liquids",
   "display": {
     "icon": {
-      "item": "spectrum:bedrock_fishing_rod"
+      "id": "spectrum:bedrock_fishing_rod"
     },
     "hidden": true,
     "title": {
@@ -18,8 +18,9 @@
       "conditions": {
         "fished_entity": {
           "type": "minecraft:creeper",
-          "nbt": {
-            "powered": true
+          "type_specific": {
+            "type": "spectrum:creeper",
+            "primed": true
           }
         }
       }

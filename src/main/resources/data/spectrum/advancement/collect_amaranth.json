@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_vegetal",
   "display": {
     "icon": {
-      "item": "spectrum:amaranth_grains"
+      "id": "spectrum:amaranth_grains"
     },
     "hidden": true,
     "title": {
@@ -15,11 +15,19 @@
   "criteria": {
     "has_amaranth_grains": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:amaranth_grains" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:amaranth_grains"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_vegetal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_vegetal"
+      }
     }
   }
 }

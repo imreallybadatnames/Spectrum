@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/spectrum_midgame",
   "display": {
     "icon": {
-      "item": "spectrum:chiseled_polished_basalt"
+      "id": "spectrum:chiseled_polished_basalt"
     },
     "frame": "challenge",
     "title": {
@@ -15,11 +15,15 @@
   "criteria": {
     "built_structure": {
       "trigger": "spectrum:completed_multiblock",
-      "conditions": { "multiblock_identifier": "spectrum:pedestal_advanced" }
+      "conditions": {
+        "multiblock_identifier": "spectrum:pedestal_advanced"
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/spectrum_midgame" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/spectrum_midgame"
+      }
     }
   },
   "rewards": {

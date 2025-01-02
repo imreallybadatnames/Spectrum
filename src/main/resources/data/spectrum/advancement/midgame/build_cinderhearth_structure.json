@@ -2,19 +2,21 @@
   "parent": "spectrum:midgame/fill_ink_container",
   "display": {
     "icon": {
-      "item": "spectrum:cinderhearth"
+      "id": "spectrum:cinderhearth"
     },
     "title": {
       "translate": "advancements.spectrum.build_cinderhearth_structure.title"
-    },                                          
-    "description": {                            
+    },
+    "description": {
       "translate": "advancements.spectrum.build_cinderhearth_structure.description"
     }
   },
   "criteria": {
     "built_cinderhearth_structure": {
       "trigger": "spectrum:completed_multiblock",
-      "conditions": { "multiblock_identifier": "spectrum:cinderhearth" }
+      "conditions": {
+        "multiblock_identifier": "spectrum:cinderhearth"
+      }
     },
     "built_cinderhearth_structure_without_lava": {
       "trigger": "spectrum:completed_multiblock",
@@ -23,8 +25,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/fill_ink_container" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/fill_ink_container"
+      }
     }
   },
   "requirements": [

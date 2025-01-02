@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:bedrock_chestplate"
+      "id": "spectrum:bedrock_chestplate"
     },
     "title": {
       "translate": "advancements.spectrum.wear_complete_set_of_bedrock_armor.title"
@@ -22,16 +22,16 @@
             "predicate": {
               "equipment": {
                 "head": {
-                  "items": "spectrum:bedrock_helmet"
+                  "spectrum:bedrock_helmet"
                 },
                 "chest": {
-                  "items": "spectrum:bedrock_chestplate"
+                  "spectrum:bedrock_chestplate"
                 },
                 "legs": {
-                  "items": "spectrum:bedrock_leggings"
+                  "spectrum:bedrock_leggings"
                 },
                 "feet": {
-                  "items": "spectrum:bedrock_boots"
+                  "spectrum:bedrock_boots"
                 }
               }
             }
@@ -40,8 +40,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/break_decayed_bedrock" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/break_decayed_bedrock"
+      }
     }
   }
 }

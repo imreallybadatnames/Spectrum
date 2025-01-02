@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:provider_node"
+      "id": "spectrum:provider_node"
     },
     "hidden": true,
     "title": {

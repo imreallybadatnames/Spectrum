@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:orange_sapling"
+      "id": "spectrum:orange_sapling"
     },
     "title": {
       "translate": "advancements.spectrum.craft_colored_sapling.title"
@@ -13,12 +13,20 @@
   "parent": "spectrum:collect_vegetal",
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
-      "conditions": { "items": [{ "tag": "spectrum:colored_saplings" }] }
+      "trigger": "spectrum:crafted_with_pedestal",
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:colored_saplings"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_vegetal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_vegetal"
+      }
     }
   }
 }

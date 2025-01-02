@@ -2,7 +2,7 @@
   "parent": "spectrum:break_cracked_dragonbone",
   "display": {
     "icon": {
-      "item": "spectrum:kindling_head"
+      "id": "spectrum:kindling_head"
     },
     "hidden": true,
     "title": {

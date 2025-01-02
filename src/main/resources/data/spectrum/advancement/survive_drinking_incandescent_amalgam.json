@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:incandescent_amalgam"
+      "id": "spectrum:incandescent_amalgam"
     },
     "frame": "challenge",
     "title": {

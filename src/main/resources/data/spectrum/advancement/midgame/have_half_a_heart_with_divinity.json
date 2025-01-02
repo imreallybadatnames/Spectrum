@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/apply_divinity",
   "display": {
     "icon": {
-      "item": "spectrum:divination_heart"
+      "id": "spectrum:divination_heart"
     },
     "frame": "challenge",
     "title": {

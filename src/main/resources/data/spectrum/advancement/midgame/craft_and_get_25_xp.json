@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_storm_stone",
   "display": {
     "icon": {
-        "item": "spectrum:upgrade_experience"
+      "id": "spectrum:upgrade_experience"
     },
     "title": {
       "translate": "advancements.spectrum.craft_and_get_25_xp.title"
@@ -13,7 +13,7 @@
   },
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
+      "trigger": "spectrum:crafted_with_pedestal",
       "conditions": {
         "gained_experience": {
           "min": 25
@@ -21,8 +21,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_storm_stone" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_storm_stone"
+      }
     }
   }
 }

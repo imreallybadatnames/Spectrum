@@ -2,7 +2,7 @@
   "parent": "spectrum:spectrum",
   "display": {
     "icon": {
-      "item": "spectrum:dragonbone_chunk"
+      "id": "spectrum:dragonbone_chunk"
     },
     "hidden": true,
     "title": {

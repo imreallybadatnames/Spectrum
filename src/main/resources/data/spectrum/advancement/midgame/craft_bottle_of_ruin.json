@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_midnight_chip",
   "display": {
     "icon": {
-        "item": "spectrum:bottle_of_ruin"
+      "id": "spectrum:bottle_of_ruin"
     },
     "title": {
       "translate": "advancements.spectrum.craft_bottle_of_ruin.title"
@@ -13,12 +13,20 @@
   },
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
-      "conditions": { "items": [{ "items": [ "spectrum:bottle_of_ruin" ]}] }
+      "trigger": "spectrum:crafted_with_pedestal",
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:bottle_of_ruin"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_midnight_chip" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_midnight_chip"
+      }
     }
   }
 }

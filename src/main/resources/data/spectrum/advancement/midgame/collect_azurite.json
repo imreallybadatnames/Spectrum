@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_neolith",
   "display": {
     "icon": {
-      "item": "spectrum:raw_azurite"
+      "id": "spectrum:raw_azurite"
     },
     "title": {
       "translate": "advancements.spectrum.collect_azurite.title"
@@ -29,8 +29,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_neolith" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_neolith"
+      }
     }
   }
 }

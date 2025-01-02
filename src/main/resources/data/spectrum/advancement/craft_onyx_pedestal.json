@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:pedestal_onyx"
+      "id": "spectrum:pedestal_onyx"
     },
     "title": {
       "translate": "advancements.spectrum.craft_onyx_pedestal.title"

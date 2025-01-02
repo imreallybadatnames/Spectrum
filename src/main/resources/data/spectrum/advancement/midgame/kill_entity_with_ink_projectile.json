@@ -2,9 +2,11 @@
   "parent": "spectrum:midgame/fill_ink_container",
   "display": {
     "icon": {
-      "item": "spectrum:paintbrush",
-      "nbt": {
-        "Color": "spectrum:red"
+      "id": "spectrum:paintbrush",
+      "components": {
+        "spectrum:ink_colored": {
+          "ink_color": "spectrum:red"
+        }
       }
     },
     "title": {
@@ -19,8 +21,10 @@
       "trigger": "spectrum:ink_projectile_killing"
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/fill_ink_container" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/fill_ink_container"
+      }
     }
   }
 }

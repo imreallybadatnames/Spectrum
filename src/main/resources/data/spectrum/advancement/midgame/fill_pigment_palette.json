@@ -2,9 +2,9 @@
   "parent": "spectrum:midgame/craft_pigment_palette",
   "display": {
     "icon": {
-      "item": "spectrum:pigment_palette"
+      "id": "spectrum:pigment_palette"
     },
-	"hidden": true,
+    "hidden": true,
     "title": {
       "translate": "advancements.spectrum.fill_pigment_palette.title"
     },
@@ -19,59 +19,63 @@
         "black": {
           "min": 1
         },
-		"blue": {
+        "blue": {
           "min": 1
         },
-		"brown": {
+        "brown": {
           "min": 1
         },
-		"cyan": {
+        "cyan": {
           "min": 1
         },
-		"gray": {
+        "gray": {
           "min": 1
         },
-		"green": {
+        "green": {
           "min": 1
         },
-		"light_blue": {
+        "light_blue": {
           "min": 1
         },
-		"light_gray": {
+        "light_gray": {
           "min": 1
         },
-		"lime": {
+        "lime": {
           "min": 1
         },
-		"magenta": {
+        "magenta": {
           "min": 1
         },
-		"orange": {
+        "orange": {
           "min": 1
         },
-		"pink": {
+        "pink": {
           "min": 1
         },
-		"purple": {
+        "purple": {
           "min": 1
         },
-		"red": {
+        "red": {
           "min": 1
         },
-		"white": {
+        "white": {
           "min": 1
         },
-		"yellow": {
+        "yellow": {
           "min": 1
         },
-		"item": {
-			"items": [ "spectrum:pigment_palette" ]
-		}
+        "item": {
+          "items": [
+            "spectrum:pigment_palette"
+          ]
+        }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/craft_pigment_palette" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/craft_pigment_palette"
+      }
     }
   }
 }

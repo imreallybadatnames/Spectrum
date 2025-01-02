@@ -2,7 +2,7 @@
   "parent": "spectrum:remember_kindling",
   "display": {
     "icon": {
-      "item": "spectrum:raw_bloodstone"
+      "id": "spectrum:raw_bloodstone"
     },
     "hidden": true,
     "frame": "challenge",

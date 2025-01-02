@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-        "item": "spectrum:pedestal_basic_citrine"
+      "id": "spectrum:pedestal_basic_citrine"
     },
     "title": {
       "translate": "advancements.spectrum.craft_using_pedestal.title"
@@ -13,12 +13,16 @@
   "parent": "spectrum:place_pedestal",
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
-      "conditions": { "items": [] }
+      "trigger": "spectrum:crafted_with_pedestal",
+      "conditions": {
+        "items": []
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:place_pedestal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:place_pedestal"
+      }
     }
   }
 }

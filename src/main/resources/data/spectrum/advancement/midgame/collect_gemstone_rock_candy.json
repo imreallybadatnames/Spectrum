@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/enter_liquid_crystal",
   "display": {
     "icon": {
-      "item": "spectrum:amethyst_rock_candy"
+      "id": "spectrum:amethyst_rock_candy"
     },
     "hidden": true,
     "title": {

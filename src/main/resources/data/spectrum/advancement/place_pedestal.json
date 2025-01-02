@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:pedestal_basic_topaz"
+      "id": "spectrum:pedestal_basic_topaz"
     },
     "title": {
       "translate": "advancements.spectrum.place_pedestal.title"
@@ -33,9 +33,7 @@
           {
             "condition": "minecraft:location_check",
             "predicate": {
-              "block": {
-                "tag": "spectrum:pedestals"
-              }
+              "block": "#spectrum:pedestals"
             }
           }
         ]

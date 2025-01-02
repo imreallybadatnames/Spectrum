@@ -2,9 +2,11 @@
   "parent": "spectrum:midgame/brew_potion_in_potion_workshop",
   "display": {
     "icon": {
-      "item": "minecraft:potion",
-      "nbt": {
-        "CustomPotionColor": 16711935
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "custom_color": 16711935
+        }
       }
     },
     "title": {
@@ -16,7 +18,7 @@
   },
   "criteria": {
     "brewed_potion_with_four_effects_in_potion_workshop": {
-      "trigger":"spectrum:potion_workshop_brewing",
+      "trigger": "spectrum:potion_workshop_brewing",
       "conditions": {
         "item": {
           "items": [
@@ -25,14 +27,16 @@
             "minecraft:lingering_potion"
           ]
         },
-		"unique_effect_count": {
-		  "min": 4
-		}
-	  }
+        "unique_effect_count": {
+          "min": 4
+        }
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/brew_potion_in_potion_workshop" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/brew_potion_in_potion_workshop"
+      }
     }
   }
 }

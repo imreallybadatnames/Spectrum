@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:enchanted_star_candy"
+      "id": "spectrum:enchanted_star_candy"
     },
     "hidden": true,
     "title": {
@@ -17,7 +17,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": "spectrum:enchanted_star_candy"
+          "spectrum:enchanted_star_candy"
         }
       }
     },

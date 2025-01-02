@@ -2,20 +2,19 @@
   "parent": "spectrum:midgame/build_enchanting_structure",
   "display": {
     "icon": {
-      "item": "minecraft:diamond_pickaxe",
-      "nbt": {
-        "Enchantments": [
-          {
-            "id": "spectrum:cloaked/inertia",
-            "lvl": "1s"
+      "id": "minecraft:diamond_pickaxe",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "spectrum:cloaked/inertia": 4
           }
-        ]
+        }
       }
     },
     "title": {
       "translate": "advancements.spectrum.get_tool_with_inertia_500_blocks_broken.title"
-    },                                          
-    "description": {                            
+    },
+    "description": {
       "translate": "advancements.spectrum.get_tool_with_inertia_500_blocks_broken.description"
     }
   },
@@ -29,8 +28,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/build_enchanting_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/build_enchanting_structure"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_neolith",
   "display": {
     "icon": {
-        "item": "spectrum:midnight_aberration"
+      "id": "spectrum:midnight_aberration"
     },
     "title": {
       "translate": "advancements.spectrum.create_midnight_aberration.title"
@@ -13,12 +13,20 @@
   },
   "criteria": {
     "created_midnight_aberration": {
-      "trigger":"spectrum:crafted_with_fusion_shrine",
-      "conditions": { "items": [{ "items": [ "spectrum:midnight_aberration" ]}] }
+      "trigger": "spectrum:crafted_with_fusion_shrine",
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:midnight_aberration"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_neolith" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_neolith"
+      }
     }
   }
 }

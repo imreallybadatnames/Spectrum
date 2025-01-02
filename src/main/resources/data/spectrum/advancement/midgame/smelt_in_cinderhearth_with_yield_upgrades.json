@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/build_cinderhearth_structure",
   "display": {
     "icon": {
-      "item": "minecraft:diamond"
+      "id": "minecraft:diamond"
     },
     "hidden": true,
     "title": {

@@ -2,7 +2,7 @@
   "parent": "spectrum:find_preservation_ruins",
   "display": {
     "icon": {
-      "item": "spectrum:powder_chiseled_preservation_stone"
+      "id": "spectrum:powder_chiseled_preservation_stone"
     },
     "hidden": true,
     "title": {

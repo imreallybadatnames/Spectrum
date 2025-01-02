@@ -8,7 +8,13 @@
     },
     "obtain_center_ingredient": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:unlocks_bag_of_holding" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:unlocks_bag_of_holding"
+          }
+        ]
+      }
     },
     "gotten_radiating_ender": {
       "trigger": "revelationary:advancement_gotten",

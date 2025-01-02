@@ -1,10 +1,12 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:infused_beverage",
-      "nbt": {
-        "Variant": "poisonous_vodka",
-        "Color": 14938088
+      "id": "spectrum:infused_beverage",
+      "components": {
+        "spectrum:infused_beverage": {
+          "variant": "poisonous_vodka",
+          "color": 14938088
+        }
       }
     },
     "hidden": true,

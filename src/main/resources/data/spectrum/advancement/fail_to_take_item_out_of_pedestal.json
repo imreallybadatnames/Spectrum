@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:paintbrush"
+      "id": "spectrum:paintbrush"
     },
     "hidden": true,
     "title": {

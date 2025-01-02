@@ -2,7 +2,7 @@
   "parent": "spectrum:find_preservation_ruins",
   "display": {
     "icon": {
-      "item": "minecraft:bedrock"
+      "id": "minecraft:bedrock"
     },
     "hidden": true,
     "title": {

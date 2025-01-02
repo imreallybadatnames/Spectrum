@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_any_basic_shard",
   "display": {
     "icon": {
-      "item": "spectrum:amethyst_ore"
+      "id": "spectrum:amethyst_ore"
     },
     "hidden": true,
     "title": {

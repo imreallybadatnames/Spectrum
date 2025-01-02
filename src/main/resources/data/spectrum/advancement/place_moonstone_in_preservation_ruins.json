@@ -2,7 +2,7 @@
   "parent": "spectrum:solve_dike_gate_preservation_ruin",
   "display": {
     "icon": {
-      "item": "spectrum:moonstone_block"
+      "id": "spectrum:moonstone_block"
     },
     "frame": "challenge",
     "hidden": true,

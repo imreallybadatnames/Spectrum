@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_using_pedestal",
   "display": {
     "icon": {
-      "item": "spectrum:upgrade_speed"
+      "id": "spectrum:upgrade_speed"
     },
     "hidden": true,
     "title": {

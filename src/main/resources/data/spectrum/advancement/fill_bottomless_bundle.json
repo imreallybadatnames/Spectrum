@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_quitoxic_reeds",
   "display": {
     "icon": {
-        "item": "spectrum:bottomless_bundle"
+      "id": "spectrum:bottomless_bundle"
     },
     "title": {
       "translate": "advancements.spectrum.fill_bottomless_bundle.title"
@@ -34,8 +34,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_quitoxic_reeds" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_quitoxic_reeds"
+      }
     }
   },
   "rewards": {

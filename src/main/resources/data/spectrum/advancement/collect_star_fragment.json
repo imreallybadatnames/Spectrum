@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_all_basic_pigments",
   "display": {
     "icon": {
-      "item": "spectrum:star_fragment"
+      "id": "spectrum:star_fragment"
     },
     "title": {
       "translate": "advancements.spectrum.collect_star_fragment.title"
@@ -14,11 +14,19 @@
   "criteria": {
     "has_star_fragment": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:star_fragment" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:star_fragment"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_all_basic_pigments" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_all_basic_pigments"
+      }
     }
   }
 }

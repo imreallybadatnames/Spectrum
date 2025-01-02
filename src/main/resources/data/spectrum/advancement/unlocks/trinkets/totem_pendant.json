@@ -23,10 +23,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:totem_of_undying"
+            "items": "minecraft:totem_of_undying"
           }
         ]
-      }
     }
   }
 }

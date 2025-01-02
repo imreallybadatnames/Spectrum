@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:chiseled_polished_basalt"
+      "id": "spectrum:chiseled_polished_basalt"
     },
     "frame": "challenge",
     "title": {

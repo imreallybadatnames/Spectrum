@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:gemstone_shooting_star"
+      "id": "spectrum:gemstone_shooting_star"
     },
     "frame": "goal",
     "title": {
@@ -14,7 +14,7 @@
   "parent": "spectrum:collect_star_fragment",
   "criteria": {
     "has_glistering_shooting_star": {
-      "trigger":"minecraft:inventory_changed",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -24,7 +24,7 @@
       }
     },
     "has_fiery_shooting_star": {
-      "trigger":"minecraft:inventory_changed",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -34,7 +34,7 @@
       }
     },
     "has_colorful_shooting_star": {
-      "trigger":"minecraft:inventory_changed",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -44,7 +44,7 @@
       }
     },
     "has_pristine_shooting_star": {
-      "trigger":"minecraft:inventory_changed",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -54,7 +54,7 @@
       }
     },
     "has_gemstone_shooting_star": {
-      "trigger":"minecraft:inventory_changed",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -64,8 +64,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_star_fragment" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_star_fragment"
+      }
     }
   }
 }

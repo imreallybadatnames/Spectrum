@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/build_advanced_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:upgrade_speed"
+      "id": "spectrum:upgrade_speed"
     },
     "title": {
       "translate": "advancements.spectrum.use_all_pedestal_upgrades.title"
@@ -13,17 +13,17 @@
   },
   "criteria": {
     "used_all": {
-      "trigger":"spectrum:upgrade_place",
+      "trigger": "spectrum:upgrade_place",
       "conditions": {
         "count": 4,
-        "block": {
-          "tag": "spectrum:pedestals"
-        }
+        "block": "#spectrum:pedestals"
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/plant_jade_vines",
   "display": {
     "icon": {
-      "item": "spectrum:jade_jelly"
+      "id": "spectrum:jade_jelly"
     },
     "title": {
       "translate": "advancements.spectrum.collect_jade_jelly.title"
@@ -23,8 +23,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/plant_jade_vines" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/plant_jade_vines"
+      }
     }
   }
 }

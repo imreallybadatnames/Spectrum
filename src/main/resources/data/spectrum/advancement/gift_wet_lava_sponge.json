@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_using_pedestal",
   "display": {
     "icon": {
-      "item": "spectrum:wet_lava_sponge"
+      "id": "spectrum:wet_lava_sponge"
     },
     "title": {
       "translate": "advancements.spectrum.gift_wet_lava_sponge.title"
@@ -27,13 +27,15 @@
           }
         ],
         "item": {
-          "items": "spectrum:wet_lava_sponge"
+          "spectrum:wet_lava_sponge"
         }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:craft_using_pedestal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:craft_using_pedestal"
+      }
     }
   }
 }

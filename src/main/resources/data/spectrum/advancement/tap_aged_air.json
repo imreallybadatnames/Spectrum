@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:titration_barrel"
+      "id": "spectrum:titration_barrel"
     },
     "hidden": true,
     "title": {

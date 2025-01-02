@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/craft_bottle_of_ruin",
   "display": {
     "icon": {
-      "item": "spectrum:bedrock_dust"
+      "id": "spectrum:bedrock_dust"
     },
     "title": {
       "translate": "advancements.spectrum.break_decayed_bedrock.title"
@@ -36,8 +36,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/craft_bottle_of_ruin" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/craft_bottle_of_ruin"
+      }
     }
   },
   "requirements": [

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:suspicious_brew"
+      "id": "spectrum:suspicious_brew"
     },
     "title": {
       "translate": "advancements.spectrum.tap_suspicious_brew.title"
@@ -24,7 +24,9 @@
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:tap_titration_barrel" }
+      "conditions": {
+        "advancement_identifier": "spectrum:tap_titration_barrel"
+      }
     }
   }
 }

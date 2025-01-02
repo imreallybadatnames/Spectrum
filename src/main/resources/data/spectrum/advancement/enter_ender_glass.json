@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_radiating_ender",
   "display": {
     "icon": {
-      "item": "spectrum:ender_glass"
+      "id": "spectrum:ender_glass"
     },
     "title": {
       "translate": "advancements.spectrum.enter_ender_glass.title"
@@ -19,7 +19,7 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
+      "trigger": "revelationary:advancement_gotten",
       "conditions": {
         "advancement_identifier": "spectrum:collect_radiating_ender"
       }

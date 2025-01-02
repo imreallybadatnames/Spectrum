@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/build_advanced_pedestal_structure",
   "display": {
     "icon": {
-      "item": "spectrum:stratine_fragments"
+      "id": "spectrum:stratine_fragments"
     },
     "title": {
       "translate": "advancements.spectrum.collect_stratine.title"
@@ -28,8 +28,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/build_advanced_pedestal_structure"
+      }
     }
   }
 }

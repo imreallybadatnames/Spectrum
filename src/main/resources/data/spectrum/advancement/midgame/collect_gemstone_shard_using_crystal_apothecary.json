@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_storm_stone",
   "display": {
     "icon": {
-      "item": "spectrum:crystal_apothecary"
+      "id": "spectrum:crystal_apothecary"
     },
     "title": {
       "translate": "advancements.spectrum.collect_gemstone_shard_using_crystal_apothecary.title"
@@ -13,16 +13,16 @@
   },
   "criteria": {
     "collected_using_crystal_apothecary": {
-      "trigger":"spectrum:collect_using_crystal_apothecary",
+      "trigger": "spectrum:collect_using_crystal_apothecary",
       "conditions": {
-        "item": {
-          "tag": "spectrum:gemstone_shards"
-        }
+        "item": "#spectrum:gemstone_shards"
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_storm_stone" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_storm_stone"
+      }
     }
   }
 }

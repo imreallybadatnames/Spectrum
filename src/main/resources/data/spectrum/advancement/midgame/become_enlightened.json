@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:cat_head"
+      "id": "spectrum:cat_head"
     },
     "title": {
       "translate": "advancements.spectrum.become_enlightened.title"

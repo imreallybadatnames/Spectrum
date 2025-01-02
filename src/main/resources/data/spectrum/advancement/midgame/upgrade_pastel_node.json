@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:storage_node"
+      "id": "spectrum:storage_node"
     },
     "title": {
       "translate": "advancements.spectrum.upgrade_pastel_node.title"
@@ -15,9 +15,7 @@
     "applied_any_upgrade": {
       "trigger": "spectrum:pastel_node_upgrade",
       "conditions": {
-        "input": {
-          "tag": "spectrum:pastel_node_upgrades"
-        }
+        "input": "#spectrum:pastel_node_upgrades"
       }
     },
     "gotten_previous": {

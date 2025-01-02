@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:chrysocolla"
+      "id": "spectrum:chrysocolla"
     },
     "hidden": true,
     "title": {
@@ -25,7 +25,9 @@
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/plant_jade_vines" }
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/plant_jade_vines"
+      }
     }
   }
 }

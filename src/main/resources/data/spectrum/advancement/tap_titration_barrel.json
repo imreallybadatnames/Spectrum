@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:titration_barrel"
+      "id": "spectrum:titration_barrel"
     },
     "title": {
       "translate": "advancements.spectrum.tap_titration_barrel.title"
@@ -19,8 +19,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_pigment" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_pigment"
+      }
     }
   }
 }

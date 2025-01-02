@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:vegetal"
+      "id": "spectrum:vegetal"
     },
     "title": {
       "translate": "advancements.spectrum.collect_vegetal.title"
@@ -14,11 +14,19 @@
   "criteria": {
     "has_vegetal": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "items": [ "spectrum:vegetal" ]}] }
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:vegetal"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:craft_bottle_of_fading" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:craft_bottle_of_fading"
+      }
     }
   }
 }

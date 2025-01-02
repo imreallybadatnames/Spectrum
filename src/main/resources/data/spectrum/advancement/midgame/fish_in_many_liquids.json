@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/break_decayed_bedrock",
   "display": {
     "icon": {
-        "item": "spectrum:bedrock_fishing_rod"
+      "id": "spectrum:bedrock_fishing_rod"
     },
     "frame": "goal",
     "title": {
@@ -16,46 +16,38 @@
     "fished_in_water": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
-        "fluid": {
-          "tag": "minecraft:water"
-        }
+        "fluid": "#minecraft:water"
       }
     },
     "fished_in_lava": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
-        "fluid": {
-          "tag": "minecraft:lava"
-        }
+        "fluid": "#minecraft:lava"
       }
     },
-		"fished_in_goo": {
+    "fished_in_goo": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
-        "fluid": {
-					"tag": "spectrum:goo"
-        }
+        "fluid": "#spectrum:goo"
       }
     },
     "fished_in_liquid_crystal": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
-        "fluid": {
-          "tag": "spectrum:liquid_crystal"
-        }
+        "fluid": "#spectrum:liquid_crystal"
       }
     },
     "fished_in_midnight_solution": {
       "trigger": "spectrum:fishing_rod_hooked",
       "conditions": {
-        "fluid": {
-          "tag": "spectrum:midnight_solution"
-        }
+        "fluid": "#spectrum:midnight_solution"
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/break_decayed_bedrock" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/break_decayed_bedrock"
+      }
     }
   }
 }

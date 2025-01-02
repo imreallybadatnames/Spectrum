@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_blood_orchid_petal",
   "display": {
     "icon": {
-      "item": "spectrum:freigeist"
+      "id": "spectrum:freigeist"
     },
     "title": {
       "translate": "advancements.spectrum.apply_divinity.title"

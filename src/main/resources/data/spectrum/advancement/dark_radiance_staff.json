@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:radiance_staff"
+      "id": "spectrum:radiance_staff"
     },
     "title": {
       "translate": "advancements.spectrum.dark_radiance_staff.title"
@@ -16,7 +16,7 @@
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
         "item": {
-          "items": "spectrum:radiance_staff"
+          "spectrum:radiance_staff"
         },
         "location": [
           {

@@ -2,16 +2,18 @@
   "parent": "spectrum:midgame/enter_liquid_crystal",
   "display": {
     "icon": {
-      "item": "spectrum:knowledge_gem",
-      "nbt": {
-        "stored_experience": 10000
+      "id": "spectrum:knowledge_gem",
+      "components": {
+        "spectrum:experience_store": {
+          "experience": 10000
+        }
       }
     },
     "frame": "challenge",
     "title": {
       "translate": "advancements.spectrum.fill_knowledge_gem.title"
-    },                                          
-    "description": {                            
+    },
+    "description": {
       "translate": "advancements.spectrum.fill_knowledge_gem.description"
     }
   },
@@ -36,8 +38,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/enter_liquid_crystal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/enter_liquid_crystal"
+      }
     }
   },
   "rewards": {

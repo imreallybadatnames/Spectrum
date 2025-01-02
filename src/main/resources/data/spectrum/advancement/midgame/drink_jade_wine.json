@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/plant_jade_vines",
   "display": {
     "icon": {
-      "item": "spectrum:jade_wine"
+      "id": "spectrum:jade_wine"
     },
     "title": {
       "translate": "advancements.spectrum.drink_jade_wine.title"
@@ -16,13 +16,15 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": "spectrum:jade_wine"
+          "spectrum:jade_wine"
         }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/plant_jade_vines" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/plant_jade_vines"
+      }
     }
   }
 }

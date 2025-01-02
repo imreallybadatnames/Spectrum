@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/plant_jade_vines",
   "display": {
     "icon": {
-      "item": "spectrum:moonstruck_nectar"
+      "id": "spectrum:moonstruck_nectar"
     },
     "title": {
       "translate": "advancements.spectrum.harvest_moonstruck_nectar.title"
@@ -16,7 +16,7 @@
       "trigger": "minecraft:item_used_on_block",
       "conditions": {
         "item": {
-          "items": "minecraft:glass_bottle"
+          "minecraft:glass_bottle"
         },
         "location": [
           {

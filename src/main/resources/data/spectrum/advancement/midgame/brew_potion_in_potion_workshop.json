@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:potion_workshop"
+      "id": "spectrum:potion_workshop"
     },
     "title": {
       "translate": "advancements.spectrum.brew_potion_in_potion_workshop.title"
@@ -25,8 +25,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_stratine" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_stratine"
+      }
     }
   }
 }

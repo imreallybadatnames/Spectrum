@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-        "item": "spectrum:bottle_of_failing"
+      "id": "spectrum:bottle_of_failing"
     },
     "title": {
       "translate": "advancements.spectrum.craft_bottle_of_failing.title"
@@ -13,12 +13,20 @@
   },
   "criteria": {
     "craft": {
-      "trigger":"spectrum:crafted_with_pedestal",
-      "conditions": { "items": [{ "items": [ "spectrum:bottle_of_failing" ]}] }
+      "trigger": "spectrum:crafted_with_pedestal",
+      "conditions": {
+        "items": [
+          {
+            "items": "spectrum:bottle_of_failing"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_stratine" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_stratine"
+      }
     }
   }
 }

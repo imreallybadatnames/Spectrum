@@ -2,7 +2,7 @@
   "parent": "spectrum:craft_colored_sapling",
   "display": {
     "icon": {
-      "item": "spectrum:orange_pigment"
+      "id": "spectrum:orange_pigment"
     },
     "title": {
       "translate": "advancements.spectrum.collect_pigment.title"
@@ -14,11 +14,19 @@
   "criteria": {
     "has_any_pigment": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": { "items": [{ "tag": "spectrum:pigments" }] }
+      "conditions": {
+        "items": [
+          {
+            "items": "#spectrum:pigments"
+          }
+        ]
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:craft_colored_sapling" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:craft_colored_sapling"
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-        "item": "minecraft:glistering_melon_slice"
+      "id": "minecraft:glistering_melon_slice"
     },
     "title": {
       "translate": "advancements.spectrum.use_glistering_melon_seeds.title"
@@ -24,8 +24,10 @@
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_vegetal" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_vegetal"
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spectrum:fusion_shrine_basalt"
+      "id": "spectrum:fusion_shrine_basalt"
     },
     "title": {
       "translate": "advancements.spectrum.build_fusion_shrine.title"
@@ -14,11 +14,15 @@
   "criteria": {
     "built_structure": {
       "trigger": "spectrum:completed_multiblock",
-      "conditions": { "multiblock_identifier": "spectrum:fusion_shrine" }
+      "conditions": {
+        "multiblock_identifier": "spectrum:fusion_shrine"
+      }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_all_basic_pigments_besides_brown" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_all_basic_pigments_besides_brown"
+      }
     }
   },
   "rewards": {

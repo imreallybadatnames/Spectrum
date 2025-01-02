@@ -2,7 +2,7 @@
   "parent": "spectrum:midgame/craft_bottle_of_decay_away",
   "display": {
     "icon": {
-      "item": "minecraft:sculk_sensor"
+      "id": "minecraft:sculk_sensor"
     },
     "hidden": true,
     "title": {
@@ -34,7 +34,7 @@
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "items": "spectrum:bottle_of_decay_away"
+              "spectrum:bottle_of_decay_away"
             }
           }
         ]

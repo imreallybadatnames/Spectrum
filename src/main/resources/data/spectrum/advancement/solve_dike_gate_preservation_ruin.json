@@ -2,7 +2,7 @@
   "parent": "spectrum:enter_dike_gate_preservation_ruin",
   "display": {
     "icon": {
-      "item": "spectrum:preservation_chest"
+      "id": "spectrum:preservation_chest"
     },
     "title": {
       "translate": "advancements.spectrum.solve_dike_gate_preservation_ruin.title"

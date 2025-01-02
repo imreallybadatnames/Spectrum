@@ -2,13 +2,13 @@
   "parent": "spectrum:midgame/collect_stratine",
   "display": {
     "icon": {
-      "item": "spectrum:restoration_tea"
+      "id": "spectrum:restoration_tea"
     },
-	"hidden": true,
+    "hidden": true,
     "title": {
       "translate": "advancements.spectrum.drink_tea_with_milk.title"
-    },                                          
-    "description": {                            
+    },
+    "description": {
       "translate": "advancements.spectrum.drink_tea_with_milk.description"
     }
   },
@@ -23,15 +23,19 @@
             "spectrum:demon_tea",
             "spectrum:golden_bristle_tea"
           ],
-          "nbt": {
-            "Milk": true
+          "components": {
+            "spectrum:tea": {
+              "milk": true
+            }
           }
         }
       }
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:midgame/collect_stratine" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:midgame/collect_stratine"
+      }
     }
   }
 }

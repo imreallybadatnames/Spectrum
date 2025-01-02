@@ -2,7 +2,7 @@
   "parent": "spectrum:collect_shimmerstone",
   "display": {
     "icon": {
-        "item": "spectrum:present"
+      "id": "spectrum:present"
     },
     "title": {
       "translate": "advancements.spectrum.gift_or_open_present.title"
@@ -16,8 +16,10 @@
       "trigger": "minecraft:impossible"
     },
     "gotten_previous": {
-      "trigger":"revelationary:advancement_gotten",
-      "conditions": { "advancement_identifier": "spectrum:collect_shimmerstone" }
+      "trigger": "revelationary:advancement_gotten",
+      "conditions": {
+        "advancement_identifier": "spectrum:collect_shimmerstone"
+      }
     }
   },
   "rewards": {
