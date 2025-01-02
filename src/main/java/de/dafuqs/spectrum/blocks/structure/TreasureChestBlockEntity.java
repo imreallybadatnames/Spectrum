@@ -12,7 +12,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -120,7 +120,7 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	}
 	
 	public void supplyInventory(@NotNull PlayerEntity player) {
-		LootTable lootTable = this.getWorld().getServer().getLootManager().getLootTable(this.lootTableId);
+		LootTable lootTable = this.getWorld().getServer().getReloadableRegistries().getLootTable(this.lootTableId);
 		var builder = (new LootContextParameterSet.Builder((ServerWorld) this.getWorld())).add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos));
 		builder.luck(player.getLuck()).add(LootContextParameters.THIS_ENTITY, player);
 		lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), lootTableSeed);

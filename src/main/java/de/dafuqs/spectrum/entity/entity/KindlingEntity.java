@@ -81,7 +81,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.6D)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 25F)
 				.add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.5F)
-				.add(EntityAttributes.HORSE_JUMP_STRENGTH, 12.0D);
+				.add(EntityAttributes.GENERIC_JUMP_STRENGTH, 12.0D);
 	}
 	
 	@Nullable
@@ -233,7 +233,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		if (!this.getWorld().isClient) {
 			this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).removeModifier(HORSE_ARMOR_BONUS_ID);
 			if (this.isHorseArmor(stack)) {
-				int armorBonus = ((HorseArmorItem) stack.getItem()).getBonus();
+				int armorBonus = ((AnimalArmorItem) stack.getItem()).getBonus();
 				if (armorBonus != 0) {
 					this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).addTemporaryModifier(new EntityAttributeModifier(HORSE_ARMOR_BONUS_ID, "Horse armor bonus", armorBonus, EntityAttributeModifier.Operation.ADD_VALUE));
 				}
@@ -255,7 +255,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	public boolean isHorseArmor(ItemStack item) {
-		return item.getItem() instanceof HorseArmorItem;
+		return item.getItem() instanceof AnimalArmorItem animalArmorItem && animalArmorItem.getType() == AnimalArmorItem.Type.EQUESTRIAN;
 	}
 	
 	@Override
@@ -605,7 +605,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	public List<ItemStack> getClippedStacks(ServerWorld world) {
-		LootTable lootTable = world.getServer().getLootManager().getLootTable(this.getKindlingVariant().clippingLootTable());
+		LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(this.getKindlingVariant().getClippingLootTable());
 		return lootTable.generateLoot(
 				new LootContextParameterSet.Builder(world)
 						.add(LootContextParameters.THIS_ENTITY, KindlingEntity.this)

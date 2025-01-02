@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.cca.azure_dike;
 
 import de.dafuqs.spectrum.*;
-import dev.onyxstudios.cca.api.v3.component.tick.*;
 import net.minecraft.util.*;
+import org.ladysnake.cca.api.v3.component.tick.*;
 
 public interface AzureDikeComponent extends ServerTickingComponent {
 	

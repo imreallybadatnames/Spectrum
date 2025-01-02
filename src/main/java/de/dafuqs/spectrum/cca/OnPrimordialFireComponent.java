@@ -13,12 +13,16 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
+import org.ladysnake.cca.api.v3.component.*;
+import org.ladysnake.cca.api.v3.component.sync.*;
+import org.ladysnake.cca.api.v3.component.tick.*;
 
 import java.util.*;
 
@@ -48,14 +52,14 @@ public class OnPrimordialFireComponent implements AutoSyncedComponent, ServerTic
 	}
 
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag) {
+	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		if (this.primordialFireTicks > 0) {
 			tag.putLong("ticks", this.primordialFireTicks);
 		}
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		if (tag.contains("ticks", NbtElement.LONG_TYPE)) {
 			this.primordialFireTicks = tag.getLong("ticks");
 		} else {

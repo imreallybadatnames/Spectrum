@@ -3,11 +3,12 @@ package de.dafuqs.spectrum.cca;
 import com.mojang.authlib.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
-import dev.onyxstudios.cca.api.v3.component.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
+import org.ladysnake.cca.api.v3.component.*;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class HardcoreDeathComponent implements Component {
 	private final static List<UUID> playersThatDiedInHardcore = new ArrayList<>();
 	
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag) {
+	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		NbtList uuidList = new NbtList();
 		for (UUID playerThatDiedInHardcore : playersThatDiedInHardcore) {
 			uuidList.add(NbtHelper.fromUuid(playerThatDiedInHardcore));
@@ -27,7 +28,7 @@ public class HardcoreDeathComponent implements Component {
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		playersThatDiedInHardcore.clear();
 		NbtList uuidList = tag.getList("HardcoreDeaths", NbtElement.INT_ARRAY_TYPE);
 		for (NbtElement listEntry : uuidList) {

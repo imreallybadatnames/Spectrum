@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.cca;
 
 import de.dafuqs.spectrum.cca.azure_dike.*;
-import dev.onyxstudios.cca.api.v3.entity.*;
-import dev.onyxstudios.cca.api.v3.level.*;
 import net.minecraft.entity.*;
+import org.ladysnake.cca.api.v3.entity.*;
+import org.ladysnake.cca.api.v3.level.*;
 
 public class SpectrumComponentInitializers implements EntityComponentInitializer, LevelComponentInitializer {
 

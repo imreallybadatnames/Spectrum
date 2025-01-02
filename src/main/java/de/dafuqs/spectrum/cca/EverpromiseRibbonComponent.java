@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.cca;
 
 import de.dafuqs.spectrum.*;
-import dev.onyxstudios.cca.api.v3.component.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
 import org.jetbrains.annotations.*;
+import org.ladysnake.cca.api.v3.component.*;
 
 public class EverpromiseRibbonComponent implements Component {
 	
@@ -23,14 +24,14 @@ public class EverpromiseRibbonComponent implements Component {
 	}
 	
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag) {
+	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		if (this.hasRibbon) {
 			tag.putBoolean("has_everpromise_ribbon", true);
 		}
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		this.hasRibbon = tag.getBoolean("has_everpromise_ribbon");
 	}
 	

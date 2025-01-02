@@ -34,15 +34,15 @@ public class KindlingEntityRenderer extends MobEntityRenderer<KindlingEntity, Ki
 		KindlingVariant variant = entity.getKindlingVariant();
 		boolean isClipped = entity.isClipped();
 		if (entity.getAngerTime() > 0) {
-			return isClipped ? variant.angryClippedTexture() : variant.angryTexture();
+			return isClipped ? variant.getAngryClippedTexture() : variant.getAngryTexture();
 		}
 
 		boolean isBlinking = (entity.getId() - entity.getWorld().getTime()) % 120 == 0; // based on the entities' id, so not all blink at the same time
 		if (isClipped) {
-			return isBlinking ? variant.blinkingClippedTexture() : variant.clippedTexture();
+			return isBlinking ? variant.getBlinkingClippedTexture() : variant.getClippedTexture();
 		}
 		
-		return isBlinking ? variant.blinkingTexture() : variant.defaultTexture();
+		return isBlinking ? variant.getBlinkingTexture() : variant.getDefaultTexture();
 	}
 
 	@Override

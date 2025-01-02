@@ -326,7 +326,7 @@ public class ShootingStarEntity extends Entity {
 	}
 	
 	public List<ItemStack> getLoot(ServerWorld serverWorld, ServerPlayerEntity serverPlayerEntity, Identifier lootTableId) {
-		LootTable lootTable = serverWorld.getServer().getLootManager().getLootTable(lootTableId);
+		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableId);
 		return lootTable.generateLoot(new LootContextParameterSet.Builder(serverWorld)
 				.add(LootContextParameters.THIS_ENTITY, this)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.getBlockPos()))
@@ -336,7 +336,7 @@ public class ShootingStarEntity extends Entity {
 	}
 	
 	public List<ItemStack> getLoot(ServerWorld serverWorld, Identifier lootTableId) {
-		LootTable lootTable = serverWorld.getServer().getLootManager().getLootTable(lootTableId);
+		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableId);
 		return lootTable.generateLoot(new LootContextParameterSet.Builder(serverWorld)
 				.add(LootContextParameters.THIS_ENTITY, this)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.getBlockPos()))

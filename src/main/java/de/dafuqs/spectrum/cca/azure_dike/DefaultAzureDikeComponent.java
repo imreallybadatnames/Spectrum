@@ -1,12 +1,12 @@
 package de.dafuqs.spectrum.cca.azure_dike;
 
 import de.dafuqs.spectrum.progression.*;
-import dev.onyxstudios.cca.api.v3.component.sync.*;
-import dev.onyxstudios.cca.api.v3.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import org.jetbrains.annotations.*;
+import org.ladysnake.cca.api.v3.component.sync.*;
 
 public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSyncedComponent, PlayerCopyCallback {
 	
@@ -87,7 +87,7 @@ public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSynced
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		this.currentProtection = tag.getInt("protection");
 		this.currentRechargeDelay = tag.getInt("current_recharge_delay");
 		
@@ -97,7 +97,7 @@ public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSynced
 	}
 	
 	@Override
-	public void writeToNbt(NbtCompound tag) {
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
 		tag.putFloat("protection", this.currentProtection);
 		tag.putInt("current_recharge_delay", this.currentRechargeDelay);
 		

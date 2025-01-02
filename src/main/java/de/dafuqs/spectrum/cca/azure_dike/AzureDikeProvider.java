@@ -3,8 +3,8 @@ package de.dafuqs.spectrum.cca.azure_dike;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
-import dev.onyxstudios.cca.api.v3.component.*;
 import net.minecraft.entity.*;
+import org.ladysnake.cca.api.v3.component.*;
 
 public class AzureDikeProvider {
 	

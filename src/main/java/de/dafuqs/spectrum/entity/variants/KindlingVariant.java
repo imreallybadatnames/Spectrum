@@ -1,12 +1,11 @@
 package de.dafuqs.spectrum.entity.variants;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
-import de.dafuqs.spectrum.worldgen.features.BlockStateFeatureConfig;
+import net.minecraft.loot.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 
 public enum KindlingVariant implements StringIdentifiable {
@@ -23,9 +22,9 @@ public enum KindlingVariant implements StringIdentifiable {
 	private final Identifier clippedTexture;
 	private final Identifier blinkingClippedTexture;
 	private final Identifier angryClippedTexture;
-	private final Identifier clippingLootTable;
-
-	KindlingVariant(String name, String defaultTexture, String blinkingTexture, String angryTexture, String clippedTexture, String blinkingClippedTexture, String angryClippedTexture, Identifier clippingLootTable) {
+	private final RegistryKey<LootTable> clippingLootTable;
+	
+	KindlingVariant(String name, String defaultTexture, String blinkingTexture, String angryTexture, String clippedTexture, String blinkingClippedTexture, String angryClippedTexture, RegistryKey<LootTable> clippingLootTable) {
 		this.name = name;
 		this.id = SpectrumCommon.locate(name);
 		this.defaultTexture = SpectrumCommon.locate(defaultTexture);
@@ -65,8 +64,8 @@ public enum KindlingVariant implements StringIdentifiable {
 	public Identifier getAngryClippedTexture() {
 		return angryClippedTexture;
 	}
-
-	public Identifier getClippingLootTable() {
+	
+	public RegistryKey<LootTable> getClippingLootTable() {
 		return clippingLootTable;
 	}
 

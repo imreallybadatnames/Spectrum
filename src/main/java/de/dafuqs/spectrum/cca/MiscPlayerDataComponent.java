@@ -1,39 +1,32 @@
 package de.dafuqs.spectrum.cca;
 
-import de.dafuqs.additionalentityattributes.*;
-import de.dafuqs.spectrum.SpectrumCommon;
-import de.dafuqs.spectrum.api.entity.PlayerEntityAccessor;
-import de.dafuqs.spectrum.api.item.SleepAlteringItem;
+import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.api.entity.*;
+import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.entity.player.*;
+import net.minecraft.item.*;
+import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.world.*;
 import net.minecraft.text.*;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 /**
  * Because not every niche thing can have its own component
  */
-public class MiscPlayerDataComponent implements AutoSyncedComponent, CommonTickingComponent {
-
-    public static final ComponentKey<MiscPlayerDataComponent> MISC_PLAYER_DATA_COMPONENT = ComponentRegistry.getOrCreate(SpectrumCommon.locate("misc_player_data"), MiscPlayerDataComponent.class);
+public class MiscPlayerDataComponent implements org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent, org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent {
+    
+    public static final org.ladysnake.cca.api.v3.component.ComponentKey<MiscPlayerDataComponent> MISC_PLAYER_DATA_COMPONENT = org.ladysnake.cca.api.v3.component.ComponentRegistry.getOrCreate(SpectrumCommon.locate("misc_player_data"), MiscPlayerDataComponent.class);
     public static final int MAX_DRAGONROT_TICKS = 10 * 60 * 20;
     private final PlayerEntity player;
 
@@ -63,7 +56,7 @@ public class MiscPlayerDataComponent implements AutoSyncedComponent, CommonTicki
 
     @Override
     public void serverTick() {
-        CommonTickingComponent.super.serverTick();
+        org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent.super.serverTick();
         //tickDragonrotSwampEnvironment();
 
         var fortitude = player.getAttributeValue(SpectrumEntityAttributes.MENTAL_PRESENCE);
@@ -276,7 +269,7 @@ public class MiscPlayerDataComponent implements AutoSyncedComponent, CommonTicki
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag) {
+    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
         ticksBeforeSleep = tag.getInt("ticksBeforeSleep");
         sleepingWindow = tag.getInt("sleepingWindow");
         sleepInvincibility = tag.getInt("sleepInvincibility");
@@ -288,7 +281,7 @@ public class MiscPlayerDataComponent implements AutoSyncedComponent, CommonTicki
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag) {
+    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
         tag.putInt("ticksBeforeSleep", ticksBeforeSleep);
         tag.putInt("sleepingWindow", sleepingWindow);
         tag.putInt("sleepInvincibility", sleepInvincibility);
