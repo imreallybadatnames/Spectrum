@@ -28,6 +28,7 @@ public class SpectrumItemGroups {
 	public static final ItemGroup MAIN = FabricItemGroup.builder()
 			.icon(() -> new ItemStack(SpectrumBlocks.PEDESTAL_ALL_BASIC))
 			.entries((displayContext, entries) -> {
+				entries.add(SpectrumBlocks.PEDESTAL_ALL_BASIC, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
 				ItemGroupParent parent = (ItemGroupParent) SpectrumItemGroups.MAIN;
 				for (ItemSubGroup subGroup : parent.fractal$getChildren()) {
 					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
