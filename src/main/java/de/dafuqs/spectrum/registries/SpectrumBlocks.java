@@ -1666,7 +1666,7 @@ public class SpectrumBlocks {
 		registerBlock("wand_light", WAND_LIGHT_BLOCK);
 		registerBlock("decaying_light", DECAYING_LIGHT_BLOCK);
 		registerBlock("block_flooder", BLOCK_FLOODER);
-		registerBlock("bottomless_bundle", BOTTOMLESS_BUNDLE);
+		registerBlockWithItem("bottomless_bundle", BOTTOMLESS_BUNDLE, new BottomlessBundleItem(BOTTOMLESS_BUNDLE, IS.of(1)), DyeColor.LIGHT_GRAY);
 
 		registerMobHeads(IS.of());
 

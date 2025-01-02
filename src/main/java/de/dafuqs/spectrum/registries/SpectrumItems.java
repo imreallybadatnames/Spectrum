@@ -462,7 +462,6 @@ public class SpectrumItems {
 	public static final Item PHANTOM_FRAME = new PhantomFrameItem(SpectrumEntityTypes.PHANTOM_FRAME, IS.of());
 	public static final Item GLOW_PHANTOM_FRAME = new PhantomGlowFrameItem(SpectrumEntityTypes.GLOW_PHANTOM_FRAME, IS.of());
 	
-	public static final BottomlessBundleItem BOTTOMLESS_BUNDLE = new BottomlessBundleItem(IS.of(1));
 	public static final KnowledgeGemItem KNOWLEDGE_GEM = new KnowledgeGemItem(IS.of(1, Rarity.UNCOMMON), 10000);
 	public static final Item CELESTIAL_POCKETWATCH = new CelestialPocketWatchItem(IS.of(1, Rarity.UNCOMMON));
 	public static final Item ARTISANS_ATLAS = new ArtisansAtlasItem(IS.of(1, Rarity.UNCOMMON));
@@ -791,7 +790,6 @@ public class SpectrumItems {
 	
 	public static void registerMagicalTools() {
 		register("crafting_tablet", CRAFTING_TABLET, DyeColor.LIGHT_GRAY);
-		register("bottomless_bundle", BOTTOMLESS_BUNDLE, DyeColor.LIGHT_GRAY);
 		register("phantom_frame", PHANTOM_FRAME, DyeColor.YELLOW);
 		register("glow_phantom_frame", GLOW_PHANTOM_FRAME, DyeColor.YELLOW);
 		register("knowledge_gem", KNOWLEDGE_GEM, DyeColor.PURPLE);
