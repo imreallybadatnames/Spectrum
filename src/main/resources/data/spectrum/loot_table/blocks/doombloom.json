@@ -14,7 +14,9 @@
               "terms": [
                 {
                   "condition": "minecraft:match_tool",
-                  "predicate": "#c:shears"
+                  "predicate": {
+                    "items": "#c:tools/shear"
+                  }
                 },
                 {
                   "condition": "minecraft:match_tool",
