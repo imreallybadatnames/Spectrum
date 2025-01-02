@@ -1,10 +1,15 @@
 {
   "name": "book.spectrum.guidebook.category.general.name",
+  "description": "book.spectrum.guidebook.category.general.description",
   "icon": {
     "item": "spectrum:pedestal_basic_amethyst"
   },
   "sort_number": 0,
+
   "show_category_button": true,
+  "max_scroll_x": 512,
+  "max_scroll_y": 512,
+  "display_mode": "node",
 
   "entry_textures": "spectrum:textures/gui/modonomicon/entry_textures.png",
   "background": "spectrum:textures/gui/modonomicon/category_background.png",

@@ -110,7 +110,7 @@
     },
     "Q": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:polished_basalt_pillar[axis=y]",
+      "display": "spectrum:polished_basalt_pillar[axis=y]",
       "tag": "#spectrum:structure/pillars"
     },
     "L": {
@@ -125,22 +125,22 @@
     },
     "C": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:chiseled_polished_basalt",
+      "display": "spectrum:chiseled_polished_basalt",
       "tag": "#spectrum:structure/chiseled"
     },
     "K": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:notched_polished_basalt",
+      "display": "spectrum:notched_polished_basalt",
       "tag": "#spectrum:structure/notched"
     },
     "r": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:amethyst_chiseled_basalt",
+      "display": "spectrum:amethyst_chiseled_basalt",
       "tag": "#spectrum:structure/earlygame_runes"
     },
     "O": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:onyx_chiseled_basalt",
+      "display": "spectrum:onyx_chiseled_basalt",
       "tag": "#spectrum:structure/midgame_runes"
     },
     "P": {

@@ -125,7 +125,7 @@
     },
     "Q": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:polished_basalt_pillar[axis=y]",
+      "display": "spectrum:polished_basalt_pillar[axis=y]",
       "tag": "#spectrum:structure/pillars"
     },
     "L": {
@@ -140,42 +140,42 @@
     },
     "C": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:chiseled_polished_basalt",
+      "display": "spectrum:chiseled_polished_basalt",
       "tag": "#spectrum:structure/chiseled"
     },
     "K": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:notched_polished_basalt",
+      "display": "spectrum:notched_polished_basalt",
       "tag": "#spectrum:structure/notched"
     },
     "r": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:amethyst_chiseled_basalt",
+      "display": "spectrum:amethyst_chiseled_basalt",
       "tag": "#spectrum:structure/earlygame_runes"
     },
     "O": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:onyx_chiseled_basalt",
+      "display": "spectrum:onyx_chiseled_basalt",
       "tag": "#spectrum:structure/midgame_runes"
     },
     "m": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:moonstone_chiseled_basalt[facing=east]",
+      "display": "spectrum:moonstone_chiseled_basalt[facing=east]",
       "tag": "#spectrum:structure/lategame_runes"
     },
     "n": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:moonstone_chiseled_basalt[facing=north]",
+      "display": "spectrum:moonstone_chiseled_basalt[facing=north]",
       "tag": "#spectrum:structure/lategame_runes"
     },
     "M": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:moonstone_chiseled_basalt[facing=west]",
+      "display": "spectrum:moonstone_chiseled_basalt[facing=west]",
       "tag": "#spectrum:structure/lategame_runes"
     },
     "N": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:moonstone_chiseled_basalt[facing=south]",
+      "display": "spectrum:moonstone_chiseled_basalt[facing=south]",
       "tag": "#spectrum:structure/lategame_runes"
     },
     "P": {

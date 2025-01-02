@@ -62,7 +62,7 @@
     },
     "Q": {
       "type": "modonomicon:tag",
-      "display" : "spectrum:polished_basalt_pillar[axis=y]",
+      "display": "spectrum:polished_basalt_pillar[axis=y]",
       "tag": "#spectrum:structure/pillars"
     },
     "S": {
