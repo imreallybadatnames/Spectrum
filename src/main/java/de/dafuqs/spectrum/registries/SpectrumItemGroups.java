@@ -28,10 +28,9 @@ public class SpectrumItemGroups {
 	public static final ItemGroup MAIN = FabricItemGroup.builder()
 			.icon(() -> new ItemStack(SpectrumBlocks.PEDESTAL_ALL_BASIC))
 			.entries((displayContext, entries) -> {
-				entries.add(SpectrumBlocks.PEDESTAL_ALL_BASIC, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
 				ItemGroupParent parent = (ItemGroupParent) SpectrumItemGroups.MAIN;
 				for (ItemSubGroup subGroup : parent.fractal$getChildren()) {
-					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
 				}
 			})
 			.noRenderedName()
@@ -1055,7 +1054,6 @@ public class SpectrumItemGroups {
 		entries.add(SpectrumBlocks.SMALL_PURPLE_DRAGONJAG);
 		entries.add(SpectrumBlocks.SMALL_BLACK_DRAGONJAG);
 		entries.add(SpectrumBlocks.BRISTLE_SPROUTS);
-		entries.add(SpectrumBlocks.DOOMBLOOM);
 		entries.add(SpectrumBlocks.SNAPPING_IVY);
 		entries.add(SpectrumBlocks.SWEET_PEA);
 		entries.add(SpectrumBlocks.APRICOTTI);
