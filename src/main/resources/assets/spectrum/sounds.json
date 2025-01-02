@@ -291,7 +291,13 @@
       "spectrum:deeper_down_portal_open"
     ]
   },
-  "enchanter_ding": {
+	"enchanter_finish": {
+		"subtitle": "spectrum.subtitles.enchanter_finish",
+		"sounds": [
+			"minecraft:random/levelup"
+		]
+	},
+	"crafting_ding": {
     "sounds": [
       "spectrum:enchanter_ding"
     ]

@@ -5262,6 +5262,7 @@
   "spectrum.subtitles.dreamflayer_activates": "Dreamflayer activates",
   "spectrum.subtitles.dreamflayer_deactivates": "Dreamflayer deactivates",
   "spectrum.subtitles.enchanter_working": "Enchanter dings",
+	"spectrum.subtitles.enchanter_finish": "Enchanter finishes",
   "spectrum.subtitles.ender_splice_binds": "Ender Splice binds",
   "spectrum.subtitles.ender_splice_charges": "Ender Splice charges",
   "spectrum.subtitles.entity.block_flooder.throw": "Block Flooder flies",
