@@ -30,7 +30,7 @@ public class SpectrumItemGroups {
 			.entries((displayContext, entries) -> {
 				ItemGroupParent parent = (ItemGroupParent) SpectrumItemGroups.MAIN;
 				for (ItemSubGroup subGroup : parent.fractal$getChildren()) {
-					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
 				}
 			})
 			.noRenderedName()
