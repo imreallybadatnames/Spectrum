@@ -42,6 +42,8 @@ public class SpectrumSoundEvents {
 	public static final SoundEvent MOONSTONE_STRIKE = register("moonstone_strike");
 	public static final SoundEvent ENTITY_BLOCK_FLOODER_THROW = register("entity.block_flooder.throw");
 	public static final SoundEvent OMNI_ACCELERATOR_SHOOT = register("item.omni_accelerator.shoot");
+	public static final SoundEvent REDSTONE_MECHANISM_TRIGGER = register("block.redstone_mechanism.trigger");
+	public static final SoundEvent REDSTONE_MECHANISM_BREAK_BLOCK = register("block.redstone_mechanism.break_block");
 
 	public static final SoundEvent GUIDEBOOK_PAGES = register("item.guidebook.pages");
 

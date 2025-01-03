@@ -5346,6 +5346,8 @@
   "spectrum.subtitles.text_revealed": "Colorful World Guidebook chimes",
   "spectrum.subtitles.unlock": "Something unlocks",
   "spectrum.subtitles.use_fail": "Use fails",
+	"spectrum.subtitles.block.redstone_mechanism.trigger": "Mechanism triggers",
+	"spectrum.subtitles.block.redstone_mechanism.break_block": "Block gets broken",
 
   "spectrum.toast.anvil_crushing_recipe_unlocked.title": "New Crushing recipe:",
   "spectrum.toast.anvil_crushing_recipes_unlocked.title": "New Crushing recipes:",
