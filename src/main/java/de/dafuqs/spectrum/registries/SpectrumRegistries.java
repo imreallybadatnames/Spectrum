@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.pastel.*;
+import de.dafuqs.spectrum.api.predicate.world.*;
 import de.dafuqs.spectrum.entity.variants.*;
 import de.dafuqs.spectrum.explosion.*;
 import de.dafuqs.spectrum.items.tools.*;
@@ -53,6 +54,10 @@ public class SpectrumRegistries {
 	private static final Identifier STAMP_DATA_CATEGORY_ID = SpectrumCommon.locate("stamp_data_category");
 	public static final RegistryKey<Registry<StampDataCategory>> STAMP_DATA_CATEGORY_KEY = RegistryKey.ofRegistry(STAMP_DATA_CATEGORY_ID);
 	public static final Registry<StampDataCategory> STAMP_DATA_CATEGORY = FabricRegistryBuilder.createSimple(STAMP_DATA_CATEGORY_KEY).attribute(RegistryAttribute.SYNCED).buildAndRegister();
+	
+	private static final Identifier WORLD_CONDITION_TYPE_ID = SpectrumCommon.locate("world_condition_type");
+	public static final RegistryKey<Registry<WorldConditionType<?>>> WORLD_CONDITION_TYPE_KEY = RegistryKey.ofRegistry(WORLD_CONDITION_TYPE_ID);
+	public static final Registry<WorldConditionType<?>> WORLD_CONDITION_TYPE = FabricRegistryBuilder.createSimple(WORLD_CONDITION_TYPE_KEY).buildAndRegister();
 
 	public static <T> T getRandomTagEntry(Registry<T> registry, TagKey<T> tag, Random random, T fallback) {
 		Optional<RegistryEntryList.Named<T>> tagEntries = registry.getEntryList(tag);

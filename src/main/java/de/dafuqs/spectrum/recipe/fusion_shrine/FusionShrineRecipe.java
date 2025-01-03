@@ -41,7 +41,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final boolean yieldUpgradesDisabled;
 	protected final boolean playCraftingFinishedEffects;
 	
-	protected final List<WorldConditionPredicate> worldConditions;
+	protected final List<WorldCondition<?, ?>> worldConditions;
 	@NotNull
 	protected final FusionShrineRecipeWorldEffect startWorldEffect;
 	@NotNull
@@ -55,7 +55,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	
 	public FusionShrineRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 							  List<IngredientStack> craftingInputs, FluidIngredient fluid, ItemStack output, float experience, int craftingTime, boolean yieldUpgradesDisabled, boolean playCraftingFinishedEffects, boolean copyNbt,
-							  List<WorldConditionPredicate> worldConditions, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
+							  List<WorldCondition<?, ?>> worldConditions, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.craftingInputs = craftingInputs;
@@ -138,7 +138,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	 * This can always be true, a specific day or moon phase, or weather.
 	 */
 	public boolean areConditionMetCurrently(ServerWorld world, BlockPos pos) {
-		for (WorldConditionPredicate worldCondition : this.worldConditions) {
+		for (WorldCondition<?, ?> worldCondition : this.worldConditions) {
 			if (!worldCondition.test(world, pos)) {
 				return false;
 			}

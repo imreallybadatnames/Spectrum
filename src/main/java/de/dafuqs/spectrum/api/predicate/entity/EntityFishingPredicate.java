@@ -13,21 +13,21 @@ public class EntityFishingPredicate {
 	private final FluidPredicate fluidPredicate;
 	private final BiomePredicate biomePredicate;
 	private final LightPredicate lightPredicate;
-	private final DimensionPredicate dimensionPredicate;
-	private final MoonPhasePredicate moonPhasePredicate;
-	private final TimeOfDayPredicate timeOfDayPredicate;
-	private final WeatherPredicate weatherPredicate;
-	private final CommandPredicate commandPredicate;
+	private final DimensionType dimensionPredicate;
+	private final MoonPhaseType moonPhasePredicate;
+	private final TimeOfDayType timeOfDayPredicate;
+	private final WeatherType weatherPredicate;
+	private final CommandType commandPredicate;
 	
 	public EntityFishingPredicate(
 		FluidPredicate fluidPredicate,
 		BiomePredicate biomePredicate,
 		LightPredicate lightPredicate,
-		DimensionPredicate dimensionPredicate,
-		MoonPhasePredicate moonPhasePredicate,
-		TimeOfDayPredicate timeOfDayPredicate,
-		WeatherPredicate weatherPredicate,
-		CommandPredicate commandPredicate)
+		DimensionType dimensionPredicate,
+		MoonPhaseType moonPhasePredicate,
+		TimeOfDayType timeOfDayPredicate,
+		WeatherType weatherPredicate,
+		CommandType commandPredicate)
 	{
 		this.fluidPredicate = fluidPredicate;
 		this.biomePredicate = biomePredicate;
@@ -44,11 +44,11 @@ public class EntityFishingPredicate {
 				FluidPredicate.fromJson(JsonHelper.getObject(jsonObject, "fluid", null)),
 				BiomePredicate.fromJson(JsonHelper.getObject(jsonObject, "biome", null)),
 				LightPredicate.fromJson(JsonHelper.getObject(jsonObject, "light", null)),
-				DimensionPredicate.fromJson(JsonHelper.getObject(jsonObject, "dimension", null)),
-				MoonPhasePredicate.fromJson(JsonHelper.getObject(jsonObject, "moon_phase", null)),
-				TimeOfDayPredicate.fromJson(JsonHelper.getObject(jsonObject, "time_of_day", null)),
-				WeatherPredicate.fromJson(JsonHelper.getObject(jsonObject, "weather", null)),
-				CommandPredicate.fromJson(JsonHelper.getObject(jsonObject, "command", null))
+				DimensionType.fromJson(JsonHelper.getObject(jsonObject, "dimension", null)),
+				MoonPhaseType.fromJson(JsonHelper.getObject(jsonObject, "moon_phase", null)),
+				TimeOfDayType.fromJson(JsonHelper.getObject(jsonObject, "time_of_day", null)),
+				WeatherType.fromJson(JsonHelper.getObject(jsonObject, "weather", null)),
+				CommandType.fromJson(JsonHelper.getObject(jsonObject, "command", null))
 		);
 	}
 	

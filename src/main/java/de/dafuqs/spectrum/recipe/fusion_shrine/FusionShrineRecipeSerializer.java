@@ -12,7 +12,6 @@ import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -73,10 +72,10 @@ public class FusionShrineRecipeSerializer implements GatedRecipeSerializer<Fusio
 		boolean yieldUpgradesDisabled = JsonHelper.getBoolean(jsonObject, "disable_yield_upgrades", false);
 		boolean playCraftingFinishedEffects = JsonHelper.getBoolean(jsonObject, "play_crafting_finished_effects", true);
 		
-		List<WorldConditionPredicate> worldConditions = new ArrayList<>();
+		List<WorldConditionType<?>> worldConditions = new ArrayList<>();
 		if (JsonHelper.hasArray(jsonObject, "world_conditions")) {
 			for (JsonElement element : JsonHelper.getArray(jsonObject, "world_conditions")) {
-				worldConditions.add(WorldConditionPredicate.fromJson(element));
+				worldConditions.add(WorldConditionType.fromJson(element));
 			}
 		}
 		
