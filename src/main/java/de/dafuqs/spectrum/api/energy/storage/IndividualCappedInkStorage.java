@@ -140,7 +140,7 @@ public class IndividualCappedInkStorage extends SnapshotParticipant<IndividualCa
 	
 	public static IndividualCappedInkStorage fromNbt(@NotNull NbtCompound compound) {
 		long maxEnergyPerColor = compound.getLong("MaxEnergyPerColor");
-		Map<InkColor, Long> colors = InkStorage.readEnergy(compound.getCompound("Energy"));
+		Map<InkColor, Long> colors = InkStorage.readEnergy(compound.contains("Energy") ? compound.getCompound("Energy") : compound);
 		return new IndividualCappedInkStorage(maxEnergyPerColor, colors);
 	}
 	

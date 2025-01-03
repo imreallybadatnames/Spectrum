@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
 import de.dafuqs.revelationary.api.revelations.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -46,7 +45,7 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {
-		return SpectrumCommon.locate("milestones/reveal_quitoxic_reeds");
+		return SpectrumAdvancements.REVEAL_QUITOXIC_REEDS;
 	}
 	
 	@Override
@@ -138,7 +137,7 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 	
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (world.getBlockState(pos.up()).isOf(this) || !isValidBlock(world, pos.up())) {
+		if (world.getBlockState(pos.up()).isOf(this) || !canGrow(world, pos.up())) {
 			return;
 		}
 		
@@ -243,7 +242,6 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 		if (!downState.isIn(SpectrumBlockTags.QUITOXIC_REEDS_PLANTABLE)) {
 			return false;
 		}
-		
 		BlockState upState = world.getBlockState(pos.up());
 		BlockState upState2 = world.getBlockState(pos.up(2));
 		if (!upState.isOf(this)) {
@@ -257,6 +255,15 @@ public class QuitoxicReedsBlock extends Block implements RevelationAware, FluidL
 			return true;
 		}
 		
+		FluidState fluidState = world.getFluidState(pos);
+		return fluidState.getLevel() == 8 && (fluidState.isIn(FluidTags.WATER) || state.isOf(SpectrumBlocks.LIQUID_CRYSTAL));
+	}
+	
+	private boolean canGrow(WorldView world, BlockPos pos) {
+		BlockState state = world.getBlockState(pos);
+		if (state.isAir()) {
+			return true;
+		}
 		FluidState fluidState = world.getFluidState(pos);
 		return fluidState.getLevel() == 8 && (fluidState.isIn(FluidTags.WATER) || state.isOf(SpectrumBlocks.LIQUID_CRYSTAL));
 	}

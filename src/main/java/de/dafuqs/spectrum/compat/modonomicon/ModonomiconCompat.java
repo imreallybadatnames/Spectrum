@@ -59,6 +59,7 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
     // Unlock Conditions
     public static final Identifier ENCHANTMENT_REGISTERED = SpectrumCommon.locate("enchantment_registered");
     public static final Identifier RECIPE_LOADED_AND_UNLOCKED = SpectrumCommon.locate("recipe_loaded_and_unlocked");
+    public static final Identifier NOT = SpectrumCommon.locate("not");
     
     @Override
     public void register() {
@@ -67,8 +68,8 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
         registerPages();
         registerUnlockConditions();
     }
-    
-    public void registerPages() {
+	
+	private void registerPages() {
         registerGatedRecipePage(ANVIL_CRUSHING_PAGE, SpectrumRecipeTypes.ANVIL_CRUSHING, false);
         registerGatedRecipePage(PEDESTAL_CRAFTING_PAGE, SpectrumRecipeTypes.PEDESTAL, false);
         registerGatedRecipePage(FUSION_SHRINE_CRAFTING_PAGE, SpectrumRecipeTypes.FUSION_SHRINE, false);
@@ -76,7 +77,7 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
         registerGatedRecipePage(ENCHANTER_UPGRADING_PAGE, SpectrumRecipeTypes.ENCHANTMENT_UPGRADE, false);
         registerGatedRecipePage(POTION_WORKSHOP_BREWING_PAGE, SpectrumRecipeTypes.POTION_WORKSHOP_BREWING, false);
         registerGatedRecipePage(POTION_WORKSHOP_CRAFTING_PAGE, SpectrumRecipeTypes.POTION_WORKSHOP_CRAFTING, false);
-        registerGatedRecipePage(SPIRIT_INSTILLER_CRAFTING_PAGE, SpectrumRecipeTypes.SPIRIT_INSTILLING, false);
+        registerGatedRecipePage(SPIRIT_INSTILLER_CRAFTING_PAGE, SpectrumRecipeTypes.SPIRIT_INSTILLING, true);
         registerGatedRecipePage(LIQUID_CRYSTAL_CONVERTING_PAGE, SpectrumRecipeTypes.LIQUID_CRYSTAL_CONVERTING, false);
         registerGatedRecipePage(MIDNIGHT_SOLUTION_CONVERTING_PAGE, SpectrumRecipeTypes.MIDNIGHT_SOLUTION_CONVERTING, false);
         registerGatedRecipePage(DRAGONROT_CONVERTING_PAGE, SpectrumRecipeTypes.DRAGONROT_CONVERTING, false);
@@ -101,10 +102,11 @@ public class ModonomiconCompat extends SpectrumIntegrationPacks.ModIntegrationPa
                 json -> BookGatedRecipePage.fromJson(id, recipeType, json, supportsTwoRecipesOnOnePage),
                 buffer -> BookGatedRecipePage.fromNetwork(id, recipeType, buffer));
     }
-    
-    public void registerUnlockConditions() {
+	
+	private void registerUnlockConditions() {
         LoaderRegistry.registerConditionLoader(ENCHANTMENT_REGISTERED, EnchantmentRegisteredCondition::fromJson, EnchantmentRegisteredCondition::fromNetwork);
         LoaderRegistry.registerConditionLoader(RECIPE_LOADED_AND_UNLOCKED, RecipesLoadedAndUnlockedCondition::fromJson, RecipesLoadedAndUnlockedCondition::fromNetwork);
+        LoaderRegistry.registerConditionLoader(NOT, NotCondition::fromJson, NotCondition::fromNetwork);
     }
     
     @Override

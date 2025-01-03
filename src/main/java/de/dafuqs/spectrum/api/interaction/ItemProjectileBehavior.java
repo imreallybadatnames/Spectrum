@@ -93,6 +93,11 @@ public interface ItemProjectileBehavior {
 		@Override
 		public ItemStack onEntityHit(ItemProjectileEntity projectile, ItemStack stack, Entity owner, EntityHitResult hitResult) {
 			Entity target = hitResult.getEntity();
+			
+			if (target instanceof PlayerEntity player && (player.isCreative() || player.isSpectator())) {
+				return stack;
+			}
+			
 			// Lots of fun(tm) is to be had
 			if (stack.isIn(ItemTags.CREEPER_IGNITERS) && target instanceof CreeperEntity creeperEntity) {
 				World world = projectile.getWorld();
@@ -112,18 +117,18 @@ public interface ItemProjectileBehavior {
 			}
 			
 			if (target instanceof LivingEntity livingTarget) {
-				// attaching name tags, saddle horses, memorize entities...
-				if (owner instanceof PlayerEntity playerOwner) {
-					stack.useOnEntity(playerOwner, livingTarget, Hand.MAIN_HAND);
-				}
-				
-				// Force-feeds food, applies potions, ...
 				if (target instanceof PlayerEntity && !SpectrumCommon.CONFIG.OmniAcceleratorPvP) {
 					if (stack.isIn(SpectrumItemTags.REQUIRES_OMNI_ACCELERATOR_PVP_ENABLED)) {
 						return stack;
 					}
 				}
 				
+				// attaching name tags, saddle horses, memorize entities...
+				if (owner instanceof PlayerEntity playerOwner && stack.useOnEntity(playerOwner, livingTarget, Hand.MAIN_HAND).isAccepted()) {
+					return stack;
+				}
+				
+				// Force-feeds food, applies potions, ...
 				stack.getItem().finishUsing(stack, livingTarget.getWorld(), livingTarget);
 			}
 			return stack;

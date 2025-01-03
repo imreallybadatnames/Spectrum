@@ -1,14 +1,15 @@
 package de.dafuqs.spectrum.api.energy;
 
-import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.transfer.v1.storage.*;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.nbt.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
+
+import de.dafuqs.spectrum.registries.*;
+import de.dafuqs.spectrum.api.energy.color.*;
+import net.fabricmc.fabric.api.transfer.v1.storage.*;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 import java.util.*;
 
@@ -184,9 +185,11 @@ public interface InkStorage extends Clearable, Storage<InkColor> {
 		Map<InkColor, Long> energy = new HashMap<>();
 		if (compound != null) {
 			for (String key : compound.getKeys()) {
-				InkColor inkColor = SpectrumRegistries.INK_COLORS.get(new Identifier(key));
-				long amount = compound.getLong(key);
-				energy.put(inkColor, amount);
+				Optional<InkColor> color = InkColor.ofIdString(key);
+				if (color.isPresent()) {
+					long amount = compound.getLong(key);
+					energy.put(color.get(), amount);
+				}
 			}
 		}
 		return energy;
@@ -201,7 +204,7 @@ public interface InkStorage extends Clearable, Storage<InkColor> {
 	}
 	
 	static void addInkStoreBulletTooltip(List<Text> tooltip, InkColor color, long amount) {
-		MutableText inkName = color.getInkName();
+		MutableText inkName = color.getColoredInkName();
 		tooltip.add(Text.translatable("spectrum.tooltip.ink_powered.bullet_amount", Text.literal(getShortenedNumberString(amount)).formatted(Formatting.WHITE), inkName).setStyle(inkName.getStyle()));
 	}
 

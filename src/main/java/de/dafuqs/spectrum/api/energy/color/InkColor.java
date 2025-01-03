@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.api.energy.color;
 
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
@@ -50,7 +51,12 @@ public class InkColor implements TransferVariant<InkColor> {
 	}
 	
 	public static Optional<InkColor> ofIdString(String idString) {
-		return SpectrumRegistries.INK_COLORS.getOrEmpty(new Identifier(idString));
+		try {
+			Identifier id = new Identifier(idString);
+			return SpectrumRegistries.INK_COLORS.getOrEmpty(id).or(() -> SpectrumRegistries.INK_COLORS.getOrEmpty(SpectrumCommon.locate(idString)));
+		} catch (InvalidIdentifierException ignored) {
+			return Optional.empty();
+		}
 	}
 	
 	public DyeColor getDyeColor() {
@@ -70,19 +76,22 @@ public class InkColor implements TransferVariant<InkColor> {
 		return this.dyeColor.equals(that.dyeColor);
 	}
 	
-	// hash table lookup go wheeeeee!
+	// hash lookup go wheeeeee!
 	@Override
 	public int hashCode() {
 		return dyeColor.getId();
 	}
 	
-	public Text getName() {
-		Identifier id = this.getID();
-		return Text.translatable("spectrum.ink.color." + id.getNamespace() + "." + id.getPath());
+	public MutableText getName() {
+		return Text.translatable(this.getID().toTranslationKey("ink", "name"));
 	}
 	
-	public MutableText getInkName() {
-		return Text.translatable("spectrum.ink.color", getName()).setStyle(Style.EMPTY.withColor(textColor));
+	public MutableText getColoredName() {
+		return getName().setStyle(Style.EMPTY.withColor(textColor));
+	}
+	
+	public MutableText getColoredInkName() {
+		return Text.translatable("ink.suffix", getName()).setStyle(Style.EMPTY.withColor(textColor));
 	}
 	
 	public Vector3f getColorVec() {
@@ -112,7 +121,7 @@ public class InkColor implements TransferVariant<InkColor> {
 	public boolean isIn(TagKey<InkColor> tag) {
 		return SpectrumRegistries.INK_COLORS.getEntry(this).isIn(tag);
 	}
-
+  
 	@Override
 	public boolean isBlank() {
 		return false;
@@ -155,6 +164,7 @@ public class InkColor implements TransferVariant<InkColor> {
 	public static InkColor fromPacket(PacketByteBuf buf) {
 		return buf.readBoolean() ? SpectrumRegistries.INK_COLORS.get(buf.readIdentifier()) : blank();
 	}
+	
 }
 
 

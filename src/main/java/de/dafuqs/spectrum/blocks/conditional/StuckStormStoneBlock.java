@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
 import de.dafuqs.revelationary.api.revelations.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -38,12 +37,6 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	@SuppressWarnings("deprecation")
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		return world.getBlockState(pos.down()).isSolidBlock(world, pos);
-	}
-	
-	@Override
-	@SuppressWarnings("deprecation")
-	public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return VoxelShapes.empty();
 	}
 	
 	@Override
@@ -86,7 +79,7 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	
 	@Override
 	public Identifier getCloakAdvancementIdentifier() {
-		return SpectrumCommon.locate("milestones/reveal_storm_stones");
+		return SpectrumAdvancements.REVEAL_STORM_STONES;
 	}
 
 	@Override
@@ -95,7 +88,7 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 		if (this.isVisibleTo(context)) {
 			return SHAPE;
 		}
-		return VoxelShapes.fullCube();
+		return VoxelShapes.empty();
 	}
 
 	@Override
@@ -107,7 +100,7 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 				return this.isVisibleTo(player) ? SHAPE : VoxelShapes.empty();
 			}
 		}
-		return VoxelShapes.fullCube();
+		return VoxelShapes.empty();
 	}
 	
 	@Override

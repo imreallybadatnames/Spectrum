@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
 import de.dafuqs.matchbooks.recipe.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
@@ -26,7 +25,7 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	}
 
 	public SpawnerChangeRecipe(Identifier identifier, IngredientStack ingredient) {
-		super(identifier, "spawner_manipulation", false, SpectrumCommon.locate("milestones/unlock_spawner_manipulation"),
+		super(identifier, "spawner_manipulation", false, SpectrumAdvancements.SPAWNER_MANIPULATION,
 				IngredientStack.ofItems(Items.SPAWNER), ingredient, IngredientStack.ofItems(4, SpectrumItems.VEGETAL),
 				Items.SPAWNER.getDefaultStack(), 200, 0, true);
 	}
@@ -70,9 +69,6 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	@Override
 	public boolean canCraftWithStacks(Inventory inventory) {
 		NbtCompound blockEntityTag = inventory.getStack(0).getSubNbt("BlockEntityTag");
-		if (blockEntityTag == null) {
-			return true;
-		}
 		return canCraftWithBlockEntityTag(blockEntityTag, inventory.getStack(1), inventory.getStack(2));
 	}
 	

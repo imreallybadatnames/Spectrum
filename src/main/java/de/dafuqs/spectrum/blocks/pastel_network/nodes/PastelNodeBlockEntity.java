@@ -40,8 +40,8 @@ import net.minecraft.world.*;
 import org.apache.commons.lang3.*;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
 import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.*;
 
@@ -73,14 +73,14 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected BlockApiCache<Storage<ItemVariant>, Direction> connectedStorageCache = null;
 	protected Direction cachedDirection = null;
 
-	private final List<ItemStack> filterItems;
+	private final List<ItemVariant> filterItems;
 	float rotationTarget, crystalRotation, lastRotationTarget, heightTarget, crystalHeight, lastHeightTarget, alphaTarget, ringAlpha, lastAlphaTarget;
 	long creationStamp = -1, interpTicks, interpLength = -1, spinTicks;
 	private State state;
 
 	public PastelNodeBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(SpectrumBlockEntities.PASTEL_NODE, blockPos, blockState);
-		this.filterItems = DefaultedList.ofSize(MAX_FILTER_SLOTS, ItemStack.EMPTY);
+		this.filterItems = DefaultedList.ofSize(MAX_FILTER_SLOTS, ItemVariant.blank());
 		this.outerRing = Optional.empty();
 		this.innerRing = Optional.empty();
 		this.redstoneRing = Optional.empty();
@@ -245,7 +245,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 		if (filterSlotRows < oldFilterSlotCount) {
 			for (int i = getDrawnSlots(); i < filterItems.size(); i++) {
-				filterItems.set(i, ItemStack.EMPTY);
+				filterItems.set(i, ItemVariant.blank());
 			}
 		}
 
@@ -302,7 +302,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 		if (!world.isClient) {
 			if (this.parentID.isPresent() && parentNetwork == null) {
-				this.parentNetwork = Pastel.getServerInstance().JoinOrCreateNetwork(this, this.parentID.get());
+				this.parentNetwork = Pastel.getServerInstance().joinOrCreateNetwork(this, this.parentID.get());
 				this.parentID = Optional.empty();
 			}
 		}
@@ -361,10 +361,9 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		super.readNbt(nbt);
 		if (nbt.contains("Network")) {
 			UUID networkUUID = nbt.getUuid("Network");
-			if (this.getWorld() == null) {
-				this.parentID = Optional.of(networkUUID);
-			} else {
-				this.parentNetwork = Pastel.getInstance(world.isClient).JoinOrCreateNetwork(this, networkUUID);
+			this.parentID = Optional.of(networkUUID);
+			if (this.getWorld() != null) {
+				this.parentNetwork = Pastel.getInstance(world.isClient).joinOrCreateNetwork(this, networkUUID);
 			}
 		}
 		if (nbt.contains("Triggered")) {
@@ -486,12 +485,12 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	@Override
-	public List<ItemStack> getItemFilters() {
+	public List<ItemVariant> getItemFilters() {
 		return this.filterItems;
 	}
 
 	@Override
-	public void setFilterItem(int slot, ItemStack item) {
+	public void setFilterItem(int slot, ItemVariant item) {
 		this.filterItems.set(slot, item);
 	}
 
@@ -513,21 +512,22 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	private boolean filter(ItemVariant variant) {
 		return filterItems
 				.stream()
-				.anyMatch(stack -> {
-					if (LoreHelper.hasLore(stack)) {
+				.anyMatch(filterItem -> {
+					ItemStack filterStack = filterItem.toStack();
+					if (LoreHelper.hasLore(filterStack)) {
 						if (variant.getNbt() == null)
 							return false;
 
-						for (Text text : LoreHelper.getLoreList(stack)) {
-							if (!testNBTPredicates(text.getString(), stack, variant))
+						for (Text text : LoreHelper.getLoreList(filterStack)) {
+							if (!testNBTPredicates(text.getString(), filterStack, variant))
 								return false;
 						}
 					}
 
-					if (!stack.hasCustomName() || !stack.isIn(SpectrumItemTags.TAG_FILTERING_ITEMS))
-						return stack.getItem() == variant.getItem();
+					if (!filterStack.hasCustomName() || !filterStack.isIn(SpectrumItemTags.TAG_FILTERING_ITEMS))
+						return filterStack.getItem() == variant.getItem();
 
-					var name = StringUtils.trim(stack.getName().getString());
+					var name = StringUtils.trim(filterStack.getName().getString());
 
 					// This is to allow nbt filtering without item / tag filtering.
 					if (StringUtils.equalsAnyIgnoreCase(name, "*", "any", "all", "everything", "c:*", "c:any", "c:all", "c:everything"))
@@ -560,7 +560,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 	public boolean testNBTPredicates(String description, ItemStack stack, ItemVariant variant) {
 		var tested = variant.getNbt();
-		var cleanString = StringUtils.trim(description);
+		var cleanString = StringUtils.trim(description).toLowerCase();
 		var pieces = StringUtils.splitByWholeSeparator(cleanString, null);
 		var target = pieces[0];
 		var predicateString = StringUtils.remove(cleanString, target); // We don't want ambiguity when checking for keywords
@@ -569,10 +569,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 		// A few corrections for ease of use
 		if (StringUtils.equalsAnyIgnoreCase(target, "durability", "uses"))
-			target = "Damage";
+			target = ItemStack.DAMAGE_KEY;
 
 		if (StringUtils.equalsAnyIgnoreCase(target, "enchs", "enchants", "enchantment")) {
-			target = "Enchantments";
+			target = ItemStack.ENCHANTMENTS_KEY;
 		}
 
 		// Exit early if it just is not there
@@ -600,7 +600,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		boolean moreThan = StringUtils.containsIgnoreCase(predicateString, GREATER_THAN_KEYWORD);
 
 		// Enchantments are so fucking cursed
-		if (target.equals("Enchantments") || target.equals("StoredEnchantments")) {
+		if (target.equals(ItemStack.ENCHANTMENTS_KEY) || target.equals(EnchantedBookItem.STORED_ENCHANTMENTS_KEY)) {
 			if (testedData.getType() != NbtElement.LIST_TYPE)
 				return false;
 
@@ -649,7 +649,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 				var testedNum = ((AbstractNbtNumber) testedData).doubleValue();
 
 				// Special damage keywords - durability is weird and counts up as it decreases
-				if (target.equals("Damage")) {
+				if (target.equals(ItemStack.DAMAGE_KEY)) {
 					if (StringUtils.containsIgnoreCase(predicateString, DAMAGED_KEYWORD)) {
 						return testedNum > 0;
 					}
@@ -697,8 +697,8 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 			default: {
 				if (nullSourceFilter)
 					return true;
-
-				// Last resort that will work 50% of the time maybe not realy
+				
+				// Last resort that will work 50% of the time maybe not really
 				return sourceData.asString().equals(testedData.asString());
 			}
 		}
