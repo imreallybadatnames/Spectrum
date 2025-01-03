@@ -2583,7 +2583,7 @@
   "book.spectrum.guidebook.excavation_sites.name": "Excavation Sites",
   "book.spectrum.guidebook.excavation_sites.page0.text": "*A work site?*",
   "book.spectrum.guidebook.excavation_sites.page1.text": "Deep underground - deepest underground between layers of [Downstone](entry://dimension/downstone), to be exact, I found a weird, mechanical looking structure.",
-  "book.spectrum.guidebook.exchanging_staff.page0.text": "For those of you who don't live in a simple [#](bb00bb)Cobblestone[#]() house, or live without walls entirely - I'm not writing about me, of course - I've come up with the Exchanging Staff, which can swap a whole bunch of connected blocks in the blink of an eye. Perfect for redecorating!",
+	"book.spectrum.guidebook.exchanging_staff.page0.text": "For those of you who don't live in a plain [#](bb00bb)Cobblestone[#]() house, or one without walls at all (not me, of course):\\\nThe Exchanging Staff can swap a whole bunch of connected blocks in the blink of an eye. Perfect for redecorating!",
   "book.spectrum.guidebook.exchanging_staff.page1.text": "*Mining also just got a lot more fun*",
   "book.spectrum.guidebook.exchanging_staff.page2.text": "Multiplies ore drops when exchanging similar to using Fortune on a mining tool.",
   "book.spectrum.guidebook.exchanging_staff.page3.text": "Gives me the block exactly as it appeared in the world, without breaking the more fragile blocks such as glass or ore.",
