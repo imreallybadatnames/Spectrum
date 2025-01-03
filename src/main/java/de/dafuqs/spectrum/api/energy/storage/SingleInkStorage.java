@@ -60,21 +60,13 @@ public class SingleInkStorage implements InkStorage {
 	}
 	
 	@Override
-	public long addEnergy(InkColor color, long amount) {
-		if (color == storedColor) {
-			long resultingAmount = this.storedEnergy + amount;
-			this.storedEnergy = resultingAmount;
-			if (resultingAmount > this.maxEnergy) {
-				long overflow = this.storedEnergy - this.maxEnergy;
-				this.storedEnergy = this.maxEnergy;
-				return overflow;
-			}
-			return 0;
-		} else if (this.storedEnergy == 0) {
-			this.storedColor = color;
-			this.storedEnergy = amount;
+	public long addEnergy(InkColor color, long amount, boolean simulate) {
+		long overflow = color == storedColor ? Math.max(0, storedEnergy + amount - maxEnergy) : amount;
+		if (!simulate) {
+			if (storedEnergy == 0) this.storedColor = color;
+			this.storedEnergy += amount - overflow;
 		}
-		return amount;
+		return overflow;
 	}
 	
 	@Override
@@ -88,14 +80,10 @@ public class SingleInkStorage implements InkStorage {
 	}
 	
 	@Override
-	public long drainEnergy(InkColor color, long amount) {
-		if (color == this.storedColor) {
-			long drainedAmount = Math.min(this.storedEnergy, amount);
-			this.storedEnergy -= drainedAmount;
-			return drainedAmount;
-		} else {
-			return 0;
-		}
+	public long drainEnergy(InkColor color, long amount, boolean simulate) {
+		long drainedAmount = color == storedColor ? Math.min(storedEnergy, amount) : 0;
+		if (!simulate) this.storedEnergy -= drainedAmount;
+		return drainedAmount;
 	}
 	
 	@Override

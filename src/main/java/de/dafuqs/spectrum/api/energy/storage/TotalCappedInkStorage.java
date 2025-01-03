@@ -35,11 +35,13 @@ public class TotalCappedInkStorage implements InkStorage {
 	}
 	
 	@Override
-	public long addEnergy(InkColor color, long amount) {
+	public long addEnergy(InkColor color, long amount, boolean simulate) {
 		long overflow = Math.max(0, amount + this.currentTotal - this.maxEnergyTotal);
 		long amountToAdd = amount - overflow;
-		this.currentTotal += amountToAdd;
-		this.storedEnergy.put(color, this.storedEnergy.getOrDefault(color, 0L) + amountToAdd);
+		if (!simulate) {
+			this.currentTotal += amountToAdd;
+			this.storedEnergy.put(color, this.storedEnergy.getOrDefault(color, 0L) + amountToAdd);
+		}
 		return overflow;
 	}
 	
@@ -56,11 +58,13 @@ public class TotalCappedInkStorage implements InkStorage {
 	}
 	
 	@Override
-	public long drainEnergy(InkColor color, long amount) {
+	public long drainEnergy(InkColor color, long amount, boolean simulate) {
 		long storedAmount = this.storedEnergy.getOrDefault(color, 0L);
 		long drainedAmount = Math.min(storedAmount, amount);
-		this.storedEnergy.put(color, storedAmount - drainedAmount);
-		this.currentTotal -= drainedAmount;
+		if (!simulate) {
+			this.storedEnergy.put(color, storedAmount - drainedAmount);
+			this.currentTotal -= drainedAmount;
+		}
 		return drainedAmount;
 	}
 	

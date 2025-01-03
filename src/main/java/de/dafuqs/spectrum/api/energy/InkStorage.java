@@ -102,14 +102,24 @@ public interface InkStorage extends Clearable {
 	boolean accepts(InkColor color);
 	
 	// returns the amount of energy that could not be added
-	long addEnergy(InkColor color, long amount);
+	long addEnergy(InkColor color, long amount, boolean simulate);
+	
+	default long addEnergy(InkColor color, long amount) {
+		return addEnergy(color, amount, false);
+	}
 	
 	// Drains energy from the storage. Returns the amount of energy that could be drained
 	// In contrast to requestEnergy this drains the energy up until 0, even if not requestedAmount of energy is stored
-	long drainEnergy(InkColor color, long requestedAmount);
+	// ... unless simulate is true, in which case it doesn't drain either way.
+	long drainEnergy(InkColor color, long requestedAmount, boolean simulate);
+	
+	default long drainEnergy(InkColor color, long requestedAmount) {
+		return drainEnergy(color, requestedAmount, false);
+	}
 	
 	// returns true if the energy could be drained successfully
 	// if not enough energy is stored, the amount of stored energy remains unchanged
+	// NOTE: nobody uses this??????
 	boolean requestEnergy(InkColor color, long requestedAmount);
 	
 	// gets the amount of stored energy of that type

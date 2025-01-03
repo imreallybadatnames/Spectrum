@@ -20,7 +20,7 @@ public class CreativeInkStorage implements InkStorage {
 		super();
 	}
 	
-	public static CreativeInkStorage fromNbt(@NotNull NbtCompound compound) {
+	public static CreativeInkStorage fromNbt(@NotNull NbtCompound ignored) {
 		return new CreativeInkStorage();
 	}
 	
@@ -30,12 +30,12 @@ public class CreativeInkStorage implements InkStorage {
 	}
 	
 	@Override
-	public long addEnergy(InkColor color, long amount) {
+	public long addEnergy(InkColor color, long amount, boolean simulate) {
 		return 0;
 	}
 	
 	@Override
-	public long drainEnergy(InkColor color, long requestedAmount) {
+	public long drainEnergy(InkColor color, long requestedAmount, boolean simulate) {
 		return requestedAmount;
 	}
 	

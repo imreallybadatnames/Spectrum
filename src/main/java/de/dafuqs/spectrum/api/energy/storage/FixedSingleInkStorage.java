@@ -41,4 +41,11 @@ public class FixedSingleInkStorage extends SingleInkStorage {
 		}
 	}
 	
+	@Override
+	public long addEnergy(InkColor color, long amount, boolean simulate) {
+		long overflow = color == storedColor ? Math.max(0, storedEnergy + amount - maxEnergy) : amount;
+		if (!simulate) this.storedEnergy += amount - overflow;
+		return overflow;
+	}
+	
 }
