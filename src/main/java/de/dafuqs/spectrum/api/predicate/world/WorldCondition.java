@@ -5,7 +5,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 
-public abstract class WorldCondition<S extends WorldConditionType<SC>, SC extends WorldConditionType.Config> {
+public class WorldCondition<S extends WorldConditionType<SC>, SC extends WorldConditionType.Config> {
 	
 	public static final Codec<WorldCondition<?, ?>> CODEC = SpectrumRegistries.WORLD_CONDITION_TYPE.getCodec().dispatch((condition) -> condition.type, WorldConditionType::getCodec);
 	

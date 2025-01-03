@@ -20,7 +20,7 @@ public class CommandType extends WorldConditionType<CommandType.Config> implemen
 	public boolean test(Config config, ServerWorld world, BlockPos pos) {
 		AtomicBoolean passed = new AtomicBoolean(false);
 		MinecraftServer minecraftServer = world.getServer();
-		ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(pos), Vec2f.ZERO, world, 2, "FusionShrine", world.getBlockState(pos).getBlock().getName(), minecraftServer, null)
+		ServerCommandSource serverCommandSource = new ServerCommandSource(this, Vec3d.ofCenter(pos), Vec2f.ZERO, world, 2, "SpectrumCommandWorldCondition", world.getBlockState(pos).getBlock().getName(), minecraftServer, null)
 				.withReturnValueConsumer((successful, returnValue) -> {
 					passed.set(returnValue > 0);
 				});

@@ -1,15 +1,12 @@
-package de.dafuqs.spectrum.api.predicate.block;
+package de.dafuqs.spectrum.api.predicate.world;
 
-import org.jetbrains.annotations.Nullable;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.LightType;
+import com.google.gson.*;
+import net.minecraft.predicate.*;
+import net.minecraft.server.world.*;
+import net.minecraft.util.*;
+import net.minecraft.util.math.*;
+import net.minecraft.world.*;
+import org.jetbrains.annotations.*;
 
 public class LightPredicate {
     public static final LightPredicate ANY = new LightPredicate(null, null);

@@ -12,14 +12,10 @@ public class MoonPhaseType extends WorldConditionType<MoonPhaseType.Config> {
 		super(codec);
 	}
 	
-	Override
-	
+	@Override
 	public boolean test(Config config, ServerWorld world, BlockPos pos) {
 		return config.moonPhase == world.getMoonPhase();
 	}
-	
-	
-	@
 	
 	public static class Config extends WorldConditionType.Config {
 		
