@@ -1,16 +1,9 @@
 {
   "values": [
-    {
-      "id": "spectrum:improved_critical",
-      "required": false
-    },
-    {
-      "id": "spectrum:first_strike",
-      "required": false
-    },
-    {
-      "id": "spectrum:sniping",
-      "required": false
-    }
+    "spectrum:first_strike",
+    "spectrum:improved_critical",
+    "spectrum:sniping",
+    "spectrum:steadfast",
+    "spectrum:tight_grip"
   ]
 }
