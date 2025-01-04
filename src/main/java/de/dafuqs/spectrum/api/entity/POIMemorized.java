@@ -30,7 +30,7 @@ public interface POIMemorized {
 	
 	default void readPOIPosFromNbt(NbtCompound nbt) {
 		if (nbt.contains(POI_POS_KEY)) {
-			setPOIPos(NbtHelper.toBlockPos(nbt.getCompound(POI_POS_KEY)));
+			setPOIPos(NbtHelper.toBlockPos(nbt, POI_POS_KEY).orElse(null));
 		}
 	}
 	

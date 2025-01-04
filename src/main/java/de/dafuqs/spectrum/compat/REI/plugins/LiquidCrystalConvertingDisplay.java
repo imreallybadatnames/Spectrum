@@ -3,11 +3,12 @@ package de.dafuqs.spectrum.compat.REI.plugins;
 import de.dafuqs.spectrum.compat.REI.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.*;
 import me.shedaniel.rei.api.common.category.*;
+import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 
 public class LiquidCrystalConvertingDisplay extends FluidConvertingDisplay {
 	
-	public LiquidCrystalConvertingDisplay(LiquidCrystalConvertingRecipe recipe) {
+	public LiquidCrystalConvertingDisplay(RecipeEntry<LiquidCrystalConvertingRecipe> recipe) {
 		super(recipe);
 	}
 	

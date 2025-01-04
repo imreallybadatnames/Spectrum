@@ -5,7 +5,6 @@ import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.server.network.*;
 import net.minecraft.world.*;
@@ -42,8 +41,8 @@ public class AscensionStatusEffect extends SpectrumStatusEffect {
 	}
 	
 	@Override
-	public void onRemoved(AttributeContainer attributes) {
-		super.onRemoved(attributes);
+	public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+		super.onEntityRemoval(entity, amplifier, reason);
 		
 		// only apply divinity if ascension ran out
 		// does not apply when curing the effect by other means, such as drinking milk

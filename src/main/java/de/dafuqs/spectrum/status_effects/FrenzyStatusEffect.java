@@ -1,16 +1,12 @@
 package de.dafuqs.spectrum.status_effects;
 
-import de.dafuqs.spectrum.SpectrumCommon;
 import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.*;
-
-import java.util.*;
 
 public class FrenzyStatusEffect extends SpectrumStatusEffect implements StackableStatusEffect {
 	
@@ -21,9 +17,9 @@ public class FrenzyStatusEffect extends SpectrumStatusEffect implements Stackabl
 	}
 	
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+	public void onApplied(LivingEntity entity, int amplifier) {
 		if (!SpectrumStatusEffects.effectsAreGettingStacked && !entity.hasStatusEffect(this)) {
-			super.onApplied(entity, attributes, amplifier);
+			super.onApplied(entity, amplifier);
 		}
 	}
 	

@@ -1,12 +1,10 @@
 package de.dafuqs.spectrum.registries;
 
-import com.mojang.serialization.*;
 import net.fabricmc.fabric.api.client.item.v1.*;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
-import net.minecraft.entity.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -16,42 +14,43 @@ import java.util.*;
 public class SpectrumTooltips {
 	
 	public static void register() {
-		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-			NbtCompound nbt = stack.getNbt();
-			if (nbt != null) {
-				
+		ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipType, lines) -> {
+			ComponentMap components = stack.getComponents();
+			if (!components.isEmpty()) {
 				if (stack.isOf(Blocks.SCULK_SHRIEKER.asItem())) {
-					addSculkShriekerTooltips(lines, nbt);
+					addSculkShriekerTooltips(lines, components);
 				} else if (stack.isIn(ItemTags.SIGNS)) {
-					addSignTooltips(lines, nbt);
+					//addSignTooltips(lines, components);
 				} else if (stack.isOf(Items.SPAWNER)) {
-					addSpawnerTooltips(lines, nbt);
+					//addSpawnerTooltips(lines, components);
 				}
 			}
 		});
 	}
 	
-	private static void addSculkShriekerTooltips(List<Text> lines, NbtCompound nbt) {
-		if (!nbt.contains("BlockStateTag", NbtElement.COMPOUND_TYPE)) {
-			return;
-		}
-		NbtCompound blockStateTag = nbt.getCompound("BlockStateTag");
-		if (Boolean.parseBoolean(blockStateTag.getString("can_summon"))) {
-			lines.add(Text.translatable("spectrum.tooltip.able_to_summon_warden").formatted(Formatting.GRAY));
+	private static void addSculkShriekerTooltips(List<Text> lines, ComponentMap components) {
+		BlockStateComponent stateComponent = components.get(DataComponentTypes.BLOCK_STATE);
+		if (stateComponent != null && !stateComponent.isEmpty()) {
+			if (Boolean.TRUE.equals(stateComponent.getValue(SculkShriekerBlock.CAN_SUMMON))) {
+				lines.add(Text.translatable("spectrum.tooltip.able_to_summon_warden").formatted(Formatting.GRAY));
+			}
 		}
 	}
 	
-	private static void addSignTooltips(List<Text> lines, NbtCompound nbt) {
-		if (!nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE)) {
+	/* TODO
+	
+	private static void addSignTooltips(List<Text> lines, ComponentMap components) {
+		NbtComponent dataComponent = components.get(DataComponentTypes.BLOCK_ENTITY_DATA);
+		if (dataComponent == null) {
 			return;
 		}
-		NbtCompound blockEntityTag = nbt.getCompound("BlockEntityTag");
+		NbtCompound blockEntityTag = dataComponent.getNbt().getCompound("BlockEntityTag");
 		addSignText(lines, SignText.CODEC.parse(NbtOps.INSTANCE, blockEntityTag.getCompound("front_text")));
 		addSignText(lines, SignText.CODEC.parse(NbtOps.INSTANCE, blockEntityTag.getCompound("back_text")));
 	}
-
+	
 	private static void addSignText(List<Text> lines, DataResult<SignText> signText) {
-		if(signText.result().isPresent()) {
+		if (signText.result().isPresent()) {
 			SignText st = signText.result().get();
 			Style style = Style.EMPTY.withColor(st.getColor().getSignColor());
 			for (Text text : st.getMessages(false)) {
@@ -59,8 +58,8 @@ public class SpectrumTooltips {
 			}
 		}
 	}
-
-	public static void addSpawnerTooltips(List<Text> lines, NbtCompound nbt) {
+	
+	public static void addSpawnerTooltips(List<Text> lines, ComponentMap components) {
 		if (!nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE)) {
 			return;
 		}
@@ -109,7 +108,7 @@ public class SpectrumTooltips {
 		} catch (Exception e) {
 			lines.add(Text.translatable("item.spectrum.spawner.tooltip.unknown_mob"));
 		}
-	}
+	}*/
 	
 	
 }
