@@ -63,7 +63,7 @@ public class InkProjectileEntity extends MagicProjectileEntity {
 
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		this.dataTracker.startTracking(COLOR, -1);
+		builder.add(COLOR, -1);
 	}
 
 	public int getColor() {

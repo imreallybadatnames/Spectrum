@@ -50,8 +50,8 @@ public class SpectrumBossEntity extends PathAwareEntity {
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		super.initDataTracker();
-		this.dataTracker.startTracking(INVINCIBILITY_TICKS, 0);
+		super.initDataTracker(builder);
+		builder.add(INVINCIBILITY_TICKS, 0);
 	}
 	
 	@Override

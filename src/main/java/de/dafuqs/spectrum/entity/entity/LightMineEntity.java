@@ -104,7 +104,7 @@ public class LightMineEntity extends LightShardBaseEntity {
     
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker();
+        super.initDataTracker(builder);
         builder.add(COLOR, NO_POTION_COLOR);
     }
     

@@ -105,8 +105,8 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		super.initDataTracker();
-		this.dataTracker.startTracking(FROM_BUCKET, false);
+		super.initDataTracker(builder);
+		builder.add(FROM_BUCKET, false);
 	}
 	
 	@Override

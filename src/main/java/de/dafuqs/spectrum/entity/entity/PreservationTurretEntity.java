@@ -99,9 +99,9 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		super.initDataTracker();
-		this.dataTracker.startTracking(ATTACHED_FACE, Direction.DOWN);
-		this.dataTracker.startTracking(PEEK_AMOUNT, (byte) 0);
+		super.initDataTracker(builder);
+		builder.add(ATTACHED_FACE, Direction.DOWN);
+		builder.add(PEEK_AMOUNT, (byte) 0);
 	}
 	
 	public static DefaultAttributeContainer.Builder createGuardianTurretAttributes() {

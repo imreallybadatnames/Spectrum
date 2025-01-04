@@ -100,10 +100,10 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		super.initDataTracker();
-		this.dataTracker.startTracking(COLOR, InkColors.MAGENTA);
-		this.dataTracker.startTracking(FRILL_VARIANT, LizardFrillVariant.SIMPLE);
-		this.dataTracker.startTracking(HORN_VARIANT, LizardHornVariant.HORNY);
+		super.initDataTracker(builder);
+		builder.add(COLOR, InkColors.MAGENTA);
+		builder.add(FRILL_VARIANT, LizardFrillVariant.SIMPLE);
+		builder.add(HORN_VARIANT, LizardHornVariant.HORNY);
 	}
 
 	@Override

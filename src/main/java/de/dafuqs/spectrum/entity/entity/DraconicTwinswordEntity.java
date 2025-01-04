@@ -395,11 +395,11 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		super.initDataTracker();
-		this.dataTracker.startTracking(HIT, false);
-		this.dataTracker.startTracking(PROPELLED, false);
-		this.dataTracker.startTracking(REBOUND, false);
-		this.dataTracker.startTracking(MAX_PIERCE, 0);
+		super.initDataTracker(builder);
+		builder.add(HIT, false);
+		builder.add(PROPELLED, false);
+		builder.add(REBOUND, false);
+		builder.add(MAX_PIERCE, 0);
 	}
 	
 	@Override
