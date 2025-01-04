@@ -1,7 +1,8 @@
 {
   "values": [
-    "spectrum:multitool",
     "#spectrum:workstaffs",
+
+    "spectrum:multitool",
     "spectrum:dragon_talon"
   ]
 }
