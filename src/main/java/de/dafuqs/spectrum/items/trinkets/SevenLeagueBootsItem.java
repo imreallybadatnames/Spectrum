@@ -13,9 +13,8 @@ import net.minecraft.util.*;
 
 public class SevenLeagueBootsItem extends SpectrumTrinketItem implements ExtendedEnchantable {
 	
-	public static final Identifier MOVEMENT_SPEED_ID = SpectrumCommon.locate("seven_league_boots_movement_speed");
-	public static final Identifier STEP_UP_ID = SpectrumCommon.locate("seven_league_boots_step_up");
-	private static final EntityAttributeModifier STEP_BOOST_MODIFIER = new EntityAttributeModifier(STEP_UP_ID, 0.75, EntityAttributeModifier.Operation.ADD_VALUE);
+	public static final Identifier MOVEMENT_SPEED_ATTRIBUTE_ID = SpectrumCommon.locate("seven_league_boots_movement_speed");
+	public static final Identifier STEP_UP_ATTRIBUTE_ID = SpectrumCommon.locate("seven_league_boots_step_up");
 	
 	public SevenLeagueBootsItem(Settings settings) {
 		super(settings, SpectrumCommon.locate("unlocks/trinkets/seven_league_boots"));
@@ -27,8 +26,8 @@ public class SevenLeagueBootsItem extends SpectrumTrinketItem implements Extende
 		
 		int powerLevel = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
 		double speedBoost = 0.05 * (powerLevel + 1);
-		modifiers.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(MOVEMENT_SPEED_ID, speedBoost, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-		modifiers.put(EntityAttributes.GENERIC_STEP_HEIGHT, STEP_BOOST_MODIFIER);
+		modifiers.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(MOVEMENT_SPEED_ATTRIBUTE_ID, speedBoost, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+		modifiers.put(EntityAttributes.GENERIC_STEP_HEIGHT, new EntityAttributeModifier(STEP_UP_ATTRIBUTE_ID, 0.75, EntityAttributeModifier.Operation.ADD_VALUE));
 		
 		return modifiers;
 	}

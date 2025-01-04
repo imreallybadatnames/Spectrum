@@ -4,7 +4,7 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -23,9 +23,11 @@ public class RingOfDenserStepsItem extends GravityRingItem implements Gravitable
 		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
+	public static Identifier ATTRIBUTE_ID = SpectrumCommon.locate("ring_of_denser_steps_gravity");
+	
 	@Override
-	protected String getAttributeName() {
-		return "spectrum:ring_of_denser_steps";
+	protected Identifier getAttributeID() {
+		return ATTRIBUTE_ID;
 	}
 	
 	@Override

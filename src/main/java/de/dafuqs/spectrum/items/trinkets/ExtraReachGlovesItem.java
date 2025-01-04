@@ -27,6 +27,9 @@ public class ExtraReachGlovesItem extends InkDrainTrinketItem {
 		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
+	public static Identifier BLOCK_INTERACTION_ATTRIBUTE_ID = SpectrumCommon.locate("gloves_of_dawns_grasp_block_interaction");
+	public static Identifier ENTITY_INTERACTION_ATTRIBUTE_ID = SpectrumCommon.locate("gloves_of_dawns_grasp_entity_interaction");
+	
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
@@ -35,8 +38,8 @@ public class ExtraReachGlovesItem extends InkDrainTrinketItem {
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		double extraReach = getExtraReach(storedInk);
 		if (extraReach != 0) {
-			modifiers.put(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, new EntityAttributeModifier(uuid, "spectrum:gloves_of_dawns_grasp", extraReach, EntityAttributeModifier.Operation.ADD_VALUE));
-			modifiers.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(uuid, "spectrum:gloves_of_dawns_grasp", extraReach / 6, EntityAttributeModifier.Operation.ADD_VALUE));
+			modifiers.put(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, new EntityAttributeModifier(BLOCK_INTERACTION_ATTRIBUTE_ID, extraReach, EntityAttributeModifier.Operation.ADD_VALUE));
+			modifiers.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(ENTITY_INTERACTION_ATTRIBUTE_ID, extraReach / 6, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

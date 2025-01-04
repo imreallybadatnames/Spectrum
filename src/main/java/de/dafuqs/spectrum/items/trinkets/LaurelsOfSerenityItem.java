@@ -29,6 +29,9 @@ public class LaurelsOfSerenityItem extends InkDrainTrinketItem {
         super.appendTooltip(stack, context, tooltip, type);
     }
     
+    public static Identifier DETECTION_RANGE_ATTRIBUTE_ID = SpectrumCommon.locate("laurels_of_serenity_detection_range");
+    public static Identifier MENTAL_PRESENCE_ATTRIBUTE_ID = SpectrumCommon.locate("laurels_of_serenity_mental_presence");
+    
     @Override
     public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
         Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
@@ -40,11 +43,11 @@ public class LaurelsOfSerenityItem extends InkDrainTrinketItem {
             // For some weird reason, Pug, who PRd the attribute to Additional Entity Attributes
             // made negative values be the 'good' variant (aka reducing the distance mobs need to be in to detect an entity)
             // so it shows up red in tooltips. Hmmmm
-            modifiers.put(AdditionalEntityAttributes.MOB_DETECTION_RANGE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_detection_range", -detectionRangeMod, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            modifiers.put(AdditionalEntityAttributes.MOB_DETECTION_RANGE, new EntityAttributeModifier(DETECTION_RANGE_ATTRIBUTE_ID, -detectionRangeMod, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         }
         double sleepResistanceMod = getInducedSleepResistanceMod(storedInk);
         if (sleepResistanceMod != 0) {
-            modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:laurels_of_serenity_sleep", sleepResistanceMod, EntityAttributeModifier.Operation.ADD_VALUE));
+            modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(MENTAL_PRESENCE_ATTRIBUTE_ID, sleepResistanceMod, EntityAttributeModifier.Operation.ADD_VALUE));
         }
         
         return modifiers;

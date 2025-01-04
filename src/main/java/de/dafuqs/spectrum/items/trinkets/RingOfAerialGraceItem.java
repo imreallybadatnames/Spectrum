@@ -4,7 +4,7 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -23,10 +23,11 @@ public class RingOfAerialGraceItem extends GravityRingItem implements Gravitable
 		tooltip.add(Text.translatable("item.spectrum.ring_of_aerial_grace.tooltip2").formatted(Formatting.GRAY));
 	}
 	
+	public static Identifier ATTRIBUTE_ID = SpectrumCommon.locate("ring_of_aerial_grace_gravity");
 	
 	@Override
-	protected String getAttributeName() {
-		return "spectrum:ring_of_aerial_grace";
+	protected Identifier getAttributeID() {
+		return ATTRIBUTE_ID;
 	}
 	
 	@Override

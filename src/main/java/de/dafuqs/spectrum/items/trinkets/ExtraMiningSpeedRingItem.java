@@ -27,6 +27,8 @@ public class ExtraMiningSpeedRingItem extends InkDrainTrinketItem {
 		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
+	public static Identifier MINING_SPEED_ATTRIBUTE_ID = SpectrumCommon.locate("ring_of_pursuit_mining_speed");
+	
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
@@ -35,7 +37,7 @@ public class ExtraMiningSpeedRingItem extends InkDrainTrinketItem {
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		double miningSpeedMod = getExtraMiningSpeed(storedInk);
 		if (miningSpeedMod != 0) {
-			modifiers.put(EntityAttributes.PLAYER_MINING_EFFICIENCY, new EntityAttributeModifier(uuid, "spectrum:ring_of_pursuit", miningSpeedMod, EntityAttributeModifier.Operation.ADD_VALUE));
+			modifiers.put(EntityAttributes.PLAYER_MINING_EFFICIENCY, new EntityAttributeModifier(MINING_SPEED_ATTRIBUTE_ID, miningSpeedMod, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

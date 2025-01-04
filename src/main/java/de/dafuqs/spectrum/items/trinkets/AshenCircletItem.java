@@ -73,7 +73,7 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip2").formatted(Formatting.GRAY));
-
+		
 		if (world != null) {
 			long cooldownTicks = getCooldownTicks(stack, world);
 			if (cooldownTicks == 0) {
@@ -84,12 +84,15 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 		}
 	}
 	
+	public static Identifier LAVA_SPEED_ATTRIBUTE_ID = SpectrumCommon.locate("ashen_circlet_lava_speed");
+	public static Identifier LAVA_VISIBILITY_ATTRIBUTE_ID = SpectrumCommon.locate("ashen_circlet_lava_visibility");
+	
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
 		
-		modifiers.put(AdditionalEntityAttributes.LAVA_SPEED, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_MOVEMENT_SPEED_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
-		modifiers.put(AdditionalEntityAttributes.LAVA_VISIBILITY, new EntityAttributeModifier(uuid, "spectrum:ashen_circlet", LAVA_VIEW_DISTANCE_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
+		modifiers.put(AdditionalEntityAttributes.LAVA_SPEED, new EntityAttributeModifier(LAVA_SPEED_ATTRIBUTE_ID, LAVA_MOVEMENT_SPEED_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
+		modifiers.put(AdditionalEntityAttributes.LAVA_VISIBILITY, new EntityAttributeModifier(LAVA_VISIBILITY_ATTRIBUTE_ID, LAVA_VIEW_DISTANCE_MOD, EntityAttributeModifier.Operation.ADD_VALUE));
 		
 		return modifiers;
 	}

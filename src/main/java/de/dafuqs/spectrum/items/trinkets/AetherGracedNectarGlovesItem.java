@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.items.trinkets;
 
 import com.google.common.collect.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.cca.azure_dike.*;
 import de.dafuqs.spectrum.registries.*;
@@ -21,6 +22,7 @@ import java.util.*;
 public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implements SlotBackgroundEffectProvider {
 
 	public static final int HARMFUL_EFFECT_COST = 7;
+	public static Identifier MENTAL_PRESENCE_ATTRIBUTE_ID = SpectrumCommon.locate("nectar_gloves_sleep");
 
 	public AetherGracedNectarGlovesItem(Settings settings) {
 		super(settings);
@@ -41,7 +43,7 @@ public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implement
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
-		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:nectar_gloves_sleep", -1, EntityAttributeModifier.Operation.ADD_VALUE));
+		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(MENTAL_PRESENCE_ATTRIBUTE_ID, -1F, EntityAttributeModifier.Operation.ADD_VALUE));
 		return modifiers;
 	}
 

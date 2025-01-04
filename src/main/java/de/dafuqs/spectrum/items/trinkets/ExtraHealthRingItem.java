@@ -27,6 +27,8 @@ public class ExtraHealthRingItem extends InkDrainTrinketItem {
 		super.appendTooltip(stack, context, tooltip, type);
 	}
 	
+	public static Identifier HEALTH_ATTRIBUTE_ID = SpectrumCommon.locate("heartsingers_reward_health");
+	
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
@@ -35,7 +37,7 @@ public class ExtraHealthRingItem extends InkDrainTrinketItem {
 		long storedInk = inkStorage.getEnergy(inkStorage.getStoredColor());
 		int extraHearts = getExtraHearts(storedInk);
 		if (extraHearts != 0) {
-			modifiers.put(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(uuid, "spectrum:heartsingers_reward_ring", extraHearts, EntityAttributeModifier.Operation.ADD_VALUE));
+			modifiers.put(EntityAttributes.GENERIC_MAX_HEALTH, new EntityAttributeModifier(HEALTH_ATTRIBUTE_ID, extraHearts, EntityAttributeModifier.Operation.ADD_VALUE));
 		}
 		
 		return modifiers;

@@ -121,10 +121,12 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 		}
 	}
 	
+	public static final Identifier ATTRIBUTE_ID = SpectrumCommon.locate("whispy_circlet_mental_presence");
+	
 	@Override
 	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
 		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
-		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:neat_ring", 0.3, EntityAttributeModifier.Operation.ADD_VALUE));
+		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(ATTRIBUTE_ID, 0.3, EntityAttributeModifier.Operation.ADD_VALUE));
 		return modifiers;
 	}
 
