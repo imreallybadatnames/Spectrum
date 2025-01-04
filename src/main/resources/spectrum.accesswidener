@@ -9,6 +9,7 @@ accessible class net/minecraft/loot/function/ApplyBonusLootFunction$Formula
 accessible class net/minecraft/structure/pool/StructurePoolBasedGenerator$StructurePoolGenerator
 accessible class net/minecraft/world/biome/Biome$Weather
 accessible class net/minecraft/world/SpawnDensityCapper$DensityCap
+accessible field net/minecraft/loot/LootTable pools Ljava/util/List;
 
 extendable method net/minecraft/component/type/BundleContentsComponent$Builder addInternal (Lnet/minecraft/item/ItemStack;)I
 extendable method net/minecraft/component/type/BundleContentsComponent$Builder getMaxAllowed (Lnet/minecraft/item/ItemStack;)I
