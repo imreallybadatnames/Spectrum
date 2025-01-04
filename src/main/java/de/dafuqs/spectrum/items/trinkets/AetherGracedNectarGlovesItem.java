@@ -10,8 +10,10 @@ import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
+import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -37,8 +39,8 @@ public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implement
 	}
 
 	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
-		Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);
+	public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
+		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
 		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(uuid, "spectrum:nectar_gloves_sleep", -1, EntityAttributeModifier.Operation.ADD_VALUE));
 		return modifiers;
 	}

@@ -26,10 +26,10 @@ public class InexorableEnchantment {
 
 				var badMods = attributeInstance.getModifiers()
                         .stream()
-                        .filter(modifier -> modifier.getValue() < 0)
+						.filter(modifier -> modifier.value() < 0)
                         .toList();
-                
-                badMods.forEach(modifier -> attributeInstance.removeModifier(modifier.getId()));
+				
+				badMods.forEach(modifier -> attributeInstance.removeModifier(modifier.id()));
             }
         }
         
@@ -43,10 +43,10 @@ public class InexorableEnchantment {
                 
                 var badMods = attributeInstance.getModifiers()
                         .stream()
-                        .filter(modifier -> modifier.getValue() < 0)
+						.filter(modifier -> modifier.value() < 0)
                         .toList();
-                
-                badMods.forEach(modifier -> attributeInstance.removeModifier(modifier.getId()));
+				
+				badMods.forEach(modifier -> attributeInstance.removeModifier(modifier.id()));
             }
         }
     }
