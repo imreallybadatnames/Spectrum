@@ -1,8 +1,7 @@
 {
   "values": [
-    "spectrum:bedrock_bow",
-    "spectrum:bedrock_crossbow",
-    "spectrum:malachite_crossbow",
-    "spectrum:glass_crest_crossbow"
+    "#spectrum:crossbows",
+
+    "spectrum:bedrock_bow"
   ]
 }

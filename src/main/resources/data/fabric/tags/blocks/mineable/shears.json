@@ -1,9 +1,10 @@
 {
+  "todo": "find a replacement",
   "values": [
     "#spectrum:jadeite",
 
-		"spectrum:resplendent_cushion",
-		"spectrum:resplendent_carpet",
-		"spectrum:resplendent_block"
+    "spectrum:resplendent_cushion",
+    "spectrum:resplendent_carpet",
+    "spectrum:resplendent_block"
   ]
 }
