@@ -19,29 +19,27 @@ public class SpectrumDamageTypes {
 	
 	public static boolean recursiveDamageFlag = false;
 	
-	public static final RegistryKey<DamageType> DECAY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("decay"));
-	public static final RegistryKey<DamageType> FLOATBLOCK = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("floatblock"));
-	public static final RegistryKey<DamageType> SHOOTING_STAR = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("shooting_star"));
-	public static final RegistryKey<DamageType> MIDNIGHT_SOLUTION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("midnight_solution"));
-	public static final RegistryKey<DamageType> DRAGONROT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("dragonrot"));
-	public static final RegistryKey<DamageType> DIKE_GATE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("dike_gate"));
-	public static final RegistryKey<DamageType> INK_PROJECTILE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("ink_projectile"));
-	public static final RegistryKey<DamageType> DEADLY_POISON = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("deadly_poison"));
-	public static final RegistryKey<DamageType> INCANDESCENCE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("incandescence")); // explosions with that type cause Primordial Fire
-	public static final RegistryKey<DamageType> MOONSTONE_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("moonstone_strike"));
 	public static final RegistryKey<DamageType> BRISTLE_SPROUTS = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("bristle_sprouts"));
-	public static final RegistryKey<DamageType> RIPPING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("ripping"));
-	public static final RegistryKey<DamageType> SET_HEALTH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("set_health"));
+	public static final RegistryKey<DamageType> DEADLY_POISON = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("deadly_poison"));
+	public static final RegistryKey<DamageType> DECAY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("decay"));
+	public static final RegistryKey<DamageType> DIKE_GATE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("dike_gate"));
+	public static final RegistryKey<DamageType> DRAGONROT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("dragonrot"));
+	public static final RegistryKey<DamageType> EVISCERATION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("evisceration"));
+	public static final RegistryKey<DamageType> FLOATBLOCK = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("floatblock"));
+	public static final RegistryKey<DamageType> IMPALING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("impaling"));
+	public static final RegistryKey<DamageType> INCANDESCENCE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("incandescence")); // explosions with that type cause Primordial Fire
+	public static final RegistryKey<DamageType> INK_PROJECTILE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("ink_projectile"));
 	public static final RegistryKey<DamageType> IRRADIANCE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("irradiance"));
 	public static final RegistryKey<DamageType> KINDLING_COUGH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("kindling_cough"));
-	public static final RegistryKey<DamageType> SNAPPING_IVY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("snapping_ivy"));
-	public static final RegistryKey<DamageType> PRIMORDIAL_FIRE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("primordial_fire"));
-	public static final RegistryKey<DamageType> IMPALING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("impaling"));
-	public static final RegistryKey<DamageType> EVISCERATION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("evisceration"));
-
-	public static final RegistryKey<DamageType> SLEEP = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("sleep"));
-
+	public static final RegistryKey<DamageType> MIDNIGHT_SOLUTION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("midnight_solution"));
 	public static final RegistryKey<DamageType> MOB_HEAD_DROP = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("mob_head_drop"));
+	public static final RegistryKey<DamageType> MOONSTONE_STRIKE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("moonstone_strike"));
+	public static final RegistryKey<DamageType> PRIMORDIAL_FIRE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("primordial_fire"));
+	public static final RegistryKey<DamageType> RIPPING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("ripping"));
+	public static final RegistryKey<DamageType> SET_HEALTH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("set_health"));
+	public static final RegistryKey<DamageType> SHOOTING_STAR = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("shooting_star"));
+	public static final RegistryKey<DamageType> SLEEP = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("sleep"));
+	public static final RegistryKey<DamageType> SNAPPING_IVY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, locate("snapping_ivy"));
 	
 	public static DamageSource mobHeadDrop(World world) {
 		return new DamageSource(world.getDamageSources().registry.entryOf(MOB_HEAD_DROP));
