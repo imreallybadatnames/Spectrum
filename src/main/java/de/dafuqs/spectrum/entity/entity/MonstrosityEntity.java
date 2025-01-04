@@ -300,7 +300,6 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 		}
 	}
 	
-	ZombieEntity
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
