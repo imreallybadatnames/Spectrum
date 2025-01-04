@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.api.recipe;
 
 import com.google.gson.*;
-import de.dafuqs.matchbooks.recipe.*;
 import io.wispforest.endec.*;
 import io.wispforest.endec.impl.*;
 import io.wispforest.owo.serialization.endec.*;

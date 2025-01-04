@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.items.tools;
 
 import com.google.common.collect.*;
-import com.jamieswhiteshirt.reachentityattributes.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.*;

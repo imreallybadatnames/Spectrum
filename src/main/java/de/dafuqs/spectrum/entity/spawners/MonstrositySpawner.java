@@ -8,7 +8,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import net.minecraft.world.spawner.*;
 
-public class MonstrositySpawner implements Spawner {
+public class MonstrositySpawner implements SpecialSpawner {
 	
 	public static final MonstrositySpawner INSTANCE = new MonstrositySpawner();
 	public static final float SPAWN_CHANCE = 0.001F;

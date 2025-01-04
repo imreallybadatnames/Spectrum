@@ -13,7 +13,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.world.spawner.*;
 import org.jetbrains.annotations.*;
 
-public class ShootingStarSpawner implements Spawner {
+public class ShootingStarSpawner implements SpecialSpawner {
 	
 	public static final ShootingStarSpawner INSTANCE = new ShootingStarSpawner();
 	

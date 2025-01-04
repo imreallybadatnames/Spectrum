@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.items.tools;
 
 import com.google.common.collect.*;
-import com.jamieswhiteshirt.reachentityattributes.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
