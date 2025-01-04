@@ -3,9 +3,9 @@ package de.dafuqs.spectrum.recipe.potion_workshop;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -16,15 +16,15 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<Inventory> implements DescriptiveGatedRecipe<Inventory> {
+public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInput> implements DescriptiveGatedRecipe<RecipeInput> {
 	
 	protected static final HashMap<Item, List<PotionMod>> reagents = new HashMap<>();
 	
 	protected final Item item;
 	protected final List<PotionMod> modifiers;
 	
-	public PotionWorkshopReactingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Item item, List<PotionMod> modifiers) {
-		super(id, group, secret, requiredAdvancementIdentifier);
+	public PotionWorkshopReactingRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Item item, List<PotionMod> modifiers) {
+		super(group, secret, requiredAdvancementIdentifier);
 		this.item = item;
 		this.modifiers = modifiers;
 		
@@ -34,12 +34,12 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<Inventory>
 	}
 	
 	@Override
-	public boolean matches(@NotNull Inventory inv, World world) {
+	public boolean matches(@NotNull RecipeInput inv, World world) {
 		return false;
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
 		return ItemStack.EMPTY;
 	}
 	

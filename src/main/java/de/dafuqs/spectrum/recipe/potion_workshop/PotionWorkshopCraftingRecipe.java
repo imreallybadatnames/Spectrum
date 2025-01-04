@@ -1,13 +1,12 @@
 package de.dafuqs.spectrum.recipe.potion_workshop;
 
-
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.potion_workshop.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -64,7 +63,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(Inventory inventory, DynamicRegistryManager drm) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
 		return output.copy();
 	}
 	
@@ -76,14 +75,14 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	@Override
 	public List<IngredientStack> getIngredientStacks() {
 		DefaultedList<IngredientStack> defaultedList = DefaultedList.of();
-		defaultedList.add(IngredientStack.ofStacks(SpectrumItems.MERMAIDS_GEM.getDefaultStack()));
+		defaultedList.add(IngredientStack.ofItems(1, SpectrumItems.MERMAIDS_GEM));
 		defaultedList.add(this.baseIngredient);
 		addIngredientStacks(defaultedList);
 		return defaultedList;
 	}
 	
 	@Override
-	public boolean matches(@NotNull Inventory inv, World world) {
+	public boolean matches(@NotNull RecipeInput inv, World world) {
 		if (enoughExperienceSupplied(inv)) {
 			return super.matches(inv, world);
 		}
@@ -94,13 +93,13 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	// of iterating over every item. The specification mentions that
 	// Only one is supported and just a single ExperienceStorageItem
 	// should be used per recipe, tough
-	private boolean enoughExperienceSupplied(Inventory inv) {
+	private boolean enoughExperienceSupplied(RecipeInput inv) {
 		if (this.requiredExperience > 0) {
 			for (int i : new int[]{PotionWorkshopBlockEntity.BASE_INPUT_SLOT_ID, PotionWorkshopBlockEntity.FIRST_INGREDIENT_SLOT,
 					PotionWorkshopBlockEntity.FIRST_INGREDIENT_SLOT + 1, PotionWorkshopBlockEntity.FIRST_INGREDIENT_SLOT + 2}) {
 				
-				if ((inv.getStack(i).getItem() instanceof ExperienceStorageItem)) {
-					return ExperienceStorageItem.getStoredExperience(inv.getStack(i)) >= requiredExperience;
+				if ((inv.getStackInSlot(i).getItem() instanceof ExperienceStorageItem)) {
+					return ExperienceStorageItem.getStoredExperience(inv.getStackInSlot(i)) >= requiredExperience;
 				}
 			}
 		}

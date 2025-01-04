@@ -7,6 +7,7 @@ import net.minecraft.util.math.random.Random;
 
 import java.util.*;
 
+// TODO - Serializing you is full time job now
 public class PotionMod {
 	
 	public int flatDurationBonusTicks = 0;
