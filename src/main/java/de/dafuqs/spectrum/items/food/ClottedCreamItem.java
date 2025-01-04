@@ -20,8 +20,4 @@ public class ClottedCreamItem extends ItemWithTooltip {
 		return super.finishUsing(stack, world, user);
 	}
 	
-	@Override
-	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-		return 52;
-	}
 }

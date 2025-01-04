@@ -33,6 +33,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent NIGHTDEW_SPROUT = new FoodComponent.Builder()
+			.setEatSeconds(4.8F)
 			.nutrition(-1)
 			.saturationModifier(0)
 			.alwaysEdible()
@@ -41,6 +42,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent NECTARDEW_BURGEON = new FoodComponent.Builder()
+			.setEatSeconds(4.8F)
 			.nutrition(-1)
 			.saturationModifier(0)
 			.alwaysEdible()
@@ -122,7 +124,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent PURE_ALCOHOL = new FoodComponent.Builder()
-			.nutrition(2).saturationModifier(0.2F).alwaysEdible()
+			.nutrition(2).saturationModifier(0.2F).alwaysEdible().setEatSeconds(2.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.POISON, 20 * 15, 4), 1.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 30, 2), 1.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 60, 2), 1.0F)
@@ -139,6 +141,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent CLOTTED_CREAM = new FoodComponent.Builder()
+			.setEatSeconds(2.6F)
 			.alwaysEdible()
 			.build();
 	
@@ -315,6 +318,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent TRIPLE_MEAT_POT_STEW = new FoodComponent.Builder()
+			.setEatSeconds(4.8F)
 			.nutrition(20).saturationModifier(1.2F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100), 1.0F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 12000, 1), 1.0F)
@@ -462,6 +466,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent SEDATIVES = new FoodComponent.Builder()
+			.setEatSeconds(2.4F)
 			.nutrition(2).saturationModifier(0.5F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.STIFFNESS, 300, 4), 1.0F)
 			.build();

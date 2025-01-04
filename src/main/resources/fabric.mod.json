@@ -57,6 +57,11 @@
     "spectrum.mixins.json"
   ],
   "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_4174$class_4175": [
+        "de/dafuqs/spectrum/mixin/accessors/FoodComponentAccessor"
+      ]
+    },
     "cardinal-components": [
       "spectrum:azure_dike",
       "spectrum:hardcore_deaths",

@@ -1,21 +1,17 @@
 package de.dafuqs.spectrum.items.food;
 
-import de.dafuqs.spectrum.items.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
 
-public class StackableStewItem extends CustomEatTimeItem {
+public class StackableStewItem extends Item {
 	
 	public StackableStewItem(Item.Settings settings) {
-		super(settings, 32);
+		super(settings);
 	}
 	
-	public StackableStewItem(Item.Settings settings, int useTime) {
-		super(settings, useTime);
-	}
-	
+	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		ItemStack returnStack = super.finishUsing(stack, world, user);
 		

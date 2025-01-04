@@ -1,20 +1,16 @@
 package de.dafuqs.spectrum.items.food;
 
-import de.dafuqs.spectrum.api.render.SlotBackgroundEffectProvider;
-import de.dafuqs.spectrum.items.conditional.CloakedItem;
-import de.dafuqs.spectrum.registries.SpectrumStatusEffects;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.items.conditional.*;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.item.*;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.text.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
-import java.util.List;
+import java.util.*;
 
 public class NectardewBurgeonItem extends CloakedItem implements SlotBackgroundEffectProvider {
 
@@ -23,11 +19,6 @@ public class NectardewBurgeonItem extends CloakedItem implements SlotBackgroundE
     public NectardewBurgeonItem(Settings settings, String lore, Identifier cloakAdvancementIdentifier, Item cloakItem) {
         super(settings, cloakAdvancementIdentifier, cloakItem);
         this.lore = Text.translatable(lore).formatted(Formatting.GRAY);
-    }
-
-    @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return 96;
     }
 
     @Override

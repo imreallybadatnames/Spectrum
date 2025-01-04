@@ -93,6 +93,7 @@
     "accessors.ExperienceDroppingBlockAccessor",
     "accessors.ExplosionAccessor",
     "accessors.FluidBlockAccessor",
+    "accessors.FoodComponentAccessor",
     "accessors.FoxEntityAccessor",
     "accessors.GoatHornItemAccessor",
     "accessors.LivingEntityAccessor",
