@@ -309,7 +309,7 @@ public class SpectrumItems {
 	public static final Item RESTORATION_TEA = new RestorationTeaItem(IS.of(16).food(SpectrumFoodComponents.RESTORATION_TEA).recipeRemainder(Items.GLASS_BOTTLE), SpectrumFoodComponents.RESTORATION_TEA_SCONE_BONUS);
 	public static final Item KIMCHI = new KimchiItem(IS.of().food(SpectrumFoodComponents.KIMCHI));
 	public static final Item CLOTTED_CREAM = new ClottedCreamItem(IS.of().food(SpectrumFoodComponents.CLOTTED_CREAM), new String[]{"item.spectrum.clotted_cream.tooltip", "item.spectrum.clotted_cream.tooltip2"});
-	public static final Item FRESH_CHOCOLATE = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.FRESH_CHOCOLATE), 10);
+	public static final Item FRESH_CHOCOLATE = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.FRESH_CHOCOLATE), 10);
 	public static final Item HOT_CHOCOLATE = new TeaItem(IS.of(16).food(SpectrumFoodComponents.HOT_CHOCOLATE), SpectrumFoodComponents.HOT_CHOCOLATE_SCONE_BONUS);
 	public static final Item KARAK_CHAI = new TeaItem(IS.of(16).food(SpectrumFoodComponents.KARAK_CHAI), SpectrumFoodComponents.KARAK_CHAI_SCONE_BONUS);
 	public static final Item AZALEA_TEA = new AzaleaTeaItem(IS.of(16).food(SpectrumFoodComponents.AZALEA_TEA), SpectrumFoodComponents.AZALEA_TEA_SCONE_BONUS);
@@ -334,7 +334,7 @@ public class SpectrumItems {
 
 	public static final Item HONEY_PASTRY = new Item(IS.of().food(SpectrumFoodComponents.HONEY_PASTRY));
 	public static final Item LUCKY_ROLL = new Item(IS.of(16).food(SpectrumFoodComponents.LUCKY_ROLL));
-	public static final Item TRIPLE_MEAT_POT_PIE = new CustomUseTimeItem(IS.of(8).food(SpectrumFoodComponents.TRIPLE_MEAT_POT_PIE), 96);
+	public static final Item TRIPLE_MEAT_POT_PIE = new CustomEatTimeItem(IS.of(8).food(SpectrumFoodComponents.TRIPLE_MEAT_POT_PIE), 96);
 	public static final Item GLISTERING_JELLY_TEA = new TeaItem(IS.of(16).food(SpectrumFoodComponents.GLISTERING_JELLY_TEA).recipeRemainder(Items.GLASS_BOTTLE), SpectrumFoodComponents.GLISTERING_JELLY_TEA_SCONE_BONUS);
 	public static final Item FREIGEIST = new FreigeistItem(IS.of(16).food(SpectrumFoodComponents.FREIGEIST).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item DIVINATION_HEART = new Item(IS.of().food(SpectrumFoodComponents.DIVINATION_HEART));
@@ -384,18 +384,18 @@ public class SpectrumItems {
 	public static final Item AQUA_REGIA = new JadeWineItem(IS.of(16).food(SpectrumFoodComponents.AQUA_REGIA));
 	public static final Item BAGNUN = new Item(IS.of().food(SpectrumFoodComponents.BAGNUN));
 	public static final Item BANYASH = new Item(IS.of().food(SpectrumFoodComponents.BANYASH));
-	public static final Item BERLINER = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.BERLINER), 48);
+	public static final Item BERLINER = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.BERLINER), 48);
 	public static final Item BRISTLE_MEAD = new SimpleBeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE));
-	public static final Item CHAUVE_SOURIS_AU_VIN = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.CHAUVE_SOURIS_AU_VIN), 96);
+	public static final Item CHAUVE_SOURIS_AU_VIN = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.CHAUVE_SOURIS_AU_VIN), 96);
 	public static final Item CRAWFISH = new Item(IS.of().food(SpectrumFoodComponents.CRAWFISH));
 	public static final Item CRAWFISH_COCKTAIL = new Item(IS.of().food(SpectrumFoodComponents.CRAWFISH_COCKTAIL));
-	public static final Item CREAM_PASTRY = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.CREAM_PASTRY), 24);
+	public static final Item CREAM_PASTRY = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.CREAM_PASTRY), 24);
 	public static final Item FADED_KOI = new Item(IS.of().food(SpectrumFoodComponents.FADED_KOI));
 	public static final Item FISHCAKE = new Item(IS.of().food(SpectrumFoodComponents.FISHCAKE));
 	public static final Item LIZARD_MEAT = new Item(IS.of().food(SpectrumFoodComponents.LIZARD_MEAT));
 	public static final Item COOKED_LIZARD_MEAT = new Item(IS.of().food(SpectrumFoodComponents.COOKED_LIZARD_MEAT));
 	public static final Item GOLDEN_BRISTLE_TEA = new TeaItem(IS.of(16).food(SpectrumFoodComponents.GOLDEN_BRISTLE_TEA), SpectrumFoodComponents.GOLDEN_BRISTLE_TEA_SCONE_BONUS);
-	public static final Item HARE_ROAST = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.HARE_ROAST), 64);
+	public static final Item HARE_ROAST = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.HARE_ROAST), 64);
 	public static final Item JUNKET = new Item(IS.of().food(SpectrumFoodComponents.JUNKET));
 	public static final Item KOI = new Item(IS.of().food(SpectrumFoodComponents.KOI));
 	public static final Item MEATLOAF = new Item(IS.of().food(SpectrumFoodComponents.MEATLOAF));
@@ -403,7 +403,7 @@ public class SpectrumItems {
 	public static final Item MELLOW_SHALLOT_SOUP = new Item(IS.of().food(SpectrumFoodComponents.MELLOW_SHALLOT_SOUP));
 	public static final Item MORCHELLA = new SimpleBeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE));
 	public static final Item NECTERED_VIOGNIER = new JadeWineItem(IS.of(16).food(SpectrumFoodComponents.NECTERED_VIOGNIER));
-	public static final Item PEACHES_FLAMBE = new CustomUseTimeItem(IS.of().food(SpectrumFoodComponents.PEACHES_FLAMBE), 64);
+	public static final Item PEACHES_FLAMBE = new CustomEatTimeItem(IS.of().food(SpectrumFoodComponents.PEACHES_FLAMBE), 64);
 	public static final Item PEACH_CREAM = new TeaItem(IS.of(16).food(SpectrumFoodComponents.PEACH_CREAM), SpectrumFoodComponents.PEACH_CREAM_SCONE_BONUS);
 	public static final Item PEACH_JAM = new Item(IS.of().food(SpectrumFoodComponents.PEACH_JAM));
 	public static final Item RABBIT_CREAM_PIE = new ItemWithTooltip(IS.of().food(SpectrumFoodComponents.RABBIT_CREAM_PIE), "item.spectrum.rabbit_cream_pie.tooltip");

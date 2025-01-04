@@ -3,15 +3,13 @@ package de.dafuqs.spectrum.items.magic_items;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -67,7 +65,7 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 	}
 	
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return Integer.MAX_VALUE;
 	}
 	

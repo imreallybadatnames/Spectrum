@@ -13,12 +13,11 @@ import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -88,7 +87,7 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 	}
 
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return 20000;
 	}
 

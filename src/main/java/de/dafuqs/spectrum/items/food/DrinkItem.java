@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.items.food;
 
+import de.dafuqs.spectrum.items.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -7,10 +8,10 @@ import net.minecraft.sound.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-public class DrinkItem extends Item {
+public class DrinkItem extends CustomEatTimeItem {
 	
 	public DrinkItem(Settings settings) {
-		super(settings);
+		super(settings, 40);
 	}
 	
 	@Override
@@ -27,11 +28,6 @@ public class DrinkItem extends Item {
 		}
 		
 		return itemStack;
-	}
-	
-	@Override
-	public int getMaxUseTime(ItemStack stack) {
-		return 40;
 	}
 	
 	@Override

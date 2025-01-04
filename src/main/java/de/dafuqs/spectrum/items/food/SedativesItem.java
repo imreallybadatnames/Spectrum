@@ -15,7 +15,7 @@ public class SedativesItem extends ItemWithTooltip {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient) { // TODO: do we need this? Frenzy is self-stacking; this also removed all hidden status effects that are not max potency!
+		if (!world.isClient) { // TODO: do we need this? Frenzy is self-stacking; this also removed all hidden status effects that are not max potency! // Dafuqs: Mildly concerning indeed
 			var frenzy = user.getStatusEffect(SpectrumStatusEffects.FRENZY);
 			
 			if (frenzy != null) {
@@ -40,7 +40,7 @@ public class SedativesItem extends ItemWithTooltip {
 	}
 	
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return 48;
 	}
 }

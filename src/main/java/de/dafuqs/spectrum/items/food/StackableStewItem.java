@@ -6,7 +6,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
 
-public class StackableStewItem extends CustomUseTimeItem {
+public class StackableStewItem extends CustomEatTimeItem {
 	
 	public StackableStewItem(Item.Settings settings) {
 		super(settings, 32);

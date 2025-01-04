@@ -99,7 +99,7 @@ public abstract class ParryingSwordItem extends SwordItem implements ExtendedIte
 	}
 
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return DEFAULT_MAX_BLOCK_TIME;
 	}
 
