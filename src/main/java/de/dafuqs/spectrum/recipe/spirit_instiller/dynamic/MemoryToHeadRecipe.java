@@ -8,8 +8,9 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
@@ -17,7 +18,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -39,7 +39,7 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			ServerWorld world = (ServerWorld) spiritInstillerBlockEntity.getWorld();
 			BlockPos pos = spiritInstillerBlockEntity.getPos();
 			
-			/**
+			/*
 			 * This is moderately cursed
 			 * we spawn the entity from the memory, process its loot table with a custom damage type that guarantees a head drop,
 			 * search for a head drop in that loot and then discard that entity.
@@ -89,13 +89,9 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			return Optional.empty();
 		}
 		
-		// FIXME - Migrate to component
-		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack.getNbt());
-		if (optionalMemoryEntity.isEmpty()) {
-			return Optional.empty();
-		}
+		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT).copyNbt());
+		return optionalMemoryEntity.flatMap(SpectrumSkullBlock::getSkullType);
 		
-		return SpectrumSkullBlock.getSkullType(optionalMemoryEntity.get());
 	}
 	
 }

@@ -114,7 +114,7 @@ public class SpectrumRecipeTypes {
 		ANVIL_CRUSHING_RECIPE_SERIALIZER = registerSerializer(ANVIL_CRUSHING_ID, new AnvilCrushingRecipeSerializer());
 		ANVIL_CRUSHING = registerRecipeType(ANVIL_CRUSHING_ID);
 		
-		FUSION_SHRINE_RECIPE_SERIALIZER = registerSerializer(FUSION_SHRINE_ID, new FusionShrineRecipeSerializer(FusionShrineRecipe::new));
+		FUSION_SHRINE_RECIPE_SERIALIZER = registerSerializer(FUSION_SHRINE_ID, new FusionShrineRecipeSerializer());
 		FUSION_SHRINE = registerRecipeType(FUSION_SHRINE_ID);
 		
 		ENCHANTER_RECIPE_SERIALIZER = registerSerializer(ENCHANTER_ID, new EnchanterRecipeSerializer());
@@ -144,7 +144,7 @@ public class SpectrumRecipeTypes {
 		DRAGONROT_CONVERTING_SERIALIZER = registerSerializer(DRAGONROT_CONVERTING_ID, new FluidConvertingRecipeSerializer());
 		DRAGONROT_CONVERTING = registerRecipeType(DRAGONROT_CONVERTING_ID);
 
-		SPIRIT_INSTILLING_SERIALIZER = registerSerializer(SPIRIT_INSTILLING_ID, new SpiritInstillerRecipeSerializer((id, group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades) -> new SpiritInstillerRecipe(group, secret, requiredAdvancementIdentifier, centerIngredient, bowlIngredient1, bowlIngredient2, output, craftingTime, experience, noBenefitsFromYieldAndEfficiencyUpgrades)));
+		SPIRIT_INSTILLING_SERIALIZER = registerSerializer(SPIRIT_INSTILLING_ID, new SpiritInstillerRecipeSerializer());
 		SPIRIT_INSTILLING = registerRecipeType(SPIRIT_INSTILLING_ID);
 
 		INK_CONVERTING_RECIPE_SERIALIZER = registerSerializer(INK_CONVERTING_ID, new InkConvertingRecipeSerializer());

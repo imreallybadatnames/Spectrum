@@ -5,32 +5,32 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
 	
 	public static final RecipeSerializer<MemoryDementiaRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MemoryDementiaRecipe::new);
 	
-	public MemoryDementiaRecipe(Identifier identifier) {
+	public MemoryDementiaRecipe() {
 		super("", false, UNLOCK_IDENTIFIER,
 				Ingredient.ofStacks(MemoryItem.getForEntityType(EntityType.BEE, 1), MemoryItem.getForEntityType(EntityType.FOX, 10), MemoryItem.getForEntityType(EntityType.SKELETON, 5), MemoryItem.getForEntityType(EntityType.HUSK, 50), MemoryItem.getForEntityType(EntityType.BLAZE, -1)),
 				SpectrumBlocks.MEMORY.asItem().getDefaultStack());
 	}
 	
 	@Override
-	public boolean matches(Inventory inv, World world) {
-		return MemoryItem.getEntityType(inv.getStack(0).getNbt()).isPresent();
+	public boolean matches(RecipeInput inv, World world) {
+		// FIXME - Component
+		return MemoryItem.getEntityType(inv.getStackInSlot(0).contains());
 	}
 	
 	@Override
 	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
-		ItemStack stack = inv.getStack(0);
-		stack.setNbt(null);
+		ItemStack stack = inv.getStackInSlot(0);
+		// FIXME - Set Component
 		return stack;
 	}
 	

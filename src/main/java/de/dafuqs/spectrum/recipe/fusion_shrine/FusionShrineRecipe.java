@@ -53,9 +53,24 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	// copy all nbt data from the first stack in the ingredients to the output stack
 	protected final boolean copyNbt;
 	
-	public FusionShrineRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
-							  List<IngredientStack> craftingInputs, FluidIngredient fluid, ItemStack output, float experience, int craftingTime, boolean yieldUpgradesDisabled, boolean playCraftingFinishedEffects, boolean copyNbt,
-							  List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
+	public FusionShrineRecipe(
+		String group,
+		boolean secret,
+		Identifier requiredAdvancementIdentifier,
+		List<IngredientStack> craftingInputs,
+		FluidIngredient fluid,
+		ItemStack output,
+		float experience,
+		int craftingTime,
+		boolean yieldUpgradesDisabled,
+		boolean playCraftingFinishedEffects,
+		boolean copyNbt,
+		List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates,
+		@NotNull FusionShrineRecipeWorldEffect startWorldEffect,
+		@NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects,
+		@NotNull FusionShrineRecipeWorldEffect finishWorldEffect,
+		@Nullable Text description
+	) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.craftingInputs = craftingInputs;

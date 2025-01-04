@@ -2,6 +2,9 @@ package de.dafuqs.spectrum.recipe.titration_barrel;
 
 import com.google.gson.*;
 import de.dafuqs.spectrum.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.network.*;
 import net.minecraft.registry.*;
@@ -9,14 +12,30 @@ import net.minecraft.util.*;
 
 import java.util.*;
 
-public record FermentationStatusEffectEntry(StatusEffect statusEffect, int baseDuration,
-											List<StatusEffectPotencyEntry> potencyEntries) {
+public record FermentationStatusEffectEntry(
+	StatusEffect statusEffect,
+	int baseDuration,
+	List<StatusEffectPotencyEntry> potencyEntries) {
+	
+	public static final StructEndec<FermentationStatusEffectEntry> FERMENTATION_ENTRY_ENDEC = StructEndecBuilder.of(
+		MinecraftEndecs.ofRegistry(Registries.STATUS_EFFECT).fieldOf("status_effect", FermentationStatusEffectEntry::statusEffect),
+		Endec.INT.fieldOf("base_duration", FermentationStatusEffectEntry::baseDuration),
+		StatusEffectPotencyEntry.POTENCY_ENDEC.listOf().fieldOf("potency_entries", FermentationStatusEffectEntry::potencyEntries),
+		FermentationStatusEffectEntry::new
+	);
 	
 	public record StatusEffectPotencyEntry(int minAlcPercent, int minThickness, int potency) {
 		
 		private static final String MIN_ALC_STRING = "min_alc";
 		private static final String MIN_THICKNESS_STRING = "min_thickness";
 		private static final String MIN_POTENCY_STRING = "potency";
+		
+		public static final StructEndec<StatusEffectPotencyEntry> POTENCY_ENDEC = StructEndecBuilder.of(
+			Endec.INT.fieldOf(MIN_ALC_STRING, StatusEffectPotencyEntry::minAlcPercent),
+			Endec.INT.fieldOf(MIN_THICKNESS_STRING, StatusEffectPotencyEntry::minThickness),
+			Endec.INT.fieldOf(MIN_POTENCY_STRING, StatusEffectPotencyEntry::potency),
+			StatusEffectPotencyEntry::new
+		);
 		
 		public static StatusEffectPotencyEntry fromJson(JsonObject jsonObject) {
 			int minAlcPercent = JsonHelper.getInt(jsonObject, MIN_ALC_STRING, 0);
@@ -53,7 +72,7 @@ public record FermentationStatusEffectEntry(StatusEffect statusEffect, int baseD
 		StatusEffect statusEffect = Registries.STATUS_EFFECT.get(statusEffectIdentifier);
 		if (statusEffect == null) {
 			SpectrumCommon.logError("Status effect " + statusEffectIdentifier + " does not exist in the status effect registry. Falling back to WEAKNESS");
-			statusEffect = StatusEffects.WEAKNESS;
+			statusEffect = StatusEffects.WEAKNESS.value();
 		}
 		int baseDuration = JsonHelper.getInt(jsonObject, BASE_DURATION_STRING, 1200);
 		

@@ -1,13 +1,12 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
-
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 
 public class SpawnerSpawnDelayChangeRecipe extends SpawnerChangeRecipe {
 	
@@ -15,15 +14,15 @@ public class SpawnerSpawnDelayChangeRecipe extends SpawnerChangeRecipe {
 	protected static final int DEFAULT_MIN_DELAY = 200;
 	protected static final int DEFAULT_MAX_DELAY = 800;
 	protected static final int MIN_DELAY = 20;
-	public SpawnerSpawnDelayChangeRecipe(Identifier identifier) {
+	public SpawnerSpawnDelayChangeRecipe() {
 		super(IngredientStack.ofItems(4, SpectrumItems.MIDNIGHT_CHIP));
 	}
 	
 	@Override
-	public boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
+	public boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
 		if (spawnerBlockEntityNbt.contains("MinSpawnDelay") && spawnerBlockEntityNbt.contains("MaxSpawnDelay")) {
-			return spawnerBlockEntityNbt.getShort("MinSpawnDelay") > MIN_DELAY
-					&& spawnerBlockEntityNbt.getShort("MaxSpawnDelay") > MIN_DELAY;
+			return spawnerBlockEntityNbt.copyNbt().getShort("MinSpawnDelay") > MIN_DELAY
+					&& spawnerBlockEntityNbt.copyNbt().getShort("MaxSpawnDelay") > MIN_DELAY;
 		}
 		return true;
 	}

@@ -3,25 +3,26 @@ package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 
 public class SpawnerRequiredPlayerRangeChangeRecipe extends SpawnerChangeRecipe {
 	
 	public static final RecipeSerializer<SpawnerRequiredPlayerRangeChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerRequiredPlayerRangeChangeRecipe::new);
 	protected static final int DEFAULT_DETECTION_RANGE = 16;
 	protected static final int MAX_DETECTION_RANGE = 64;
-	public SpawnerRequiredPlayerRangeChangeRecipe(Identifier identifier) {
+	
+	public SpawnerRequiredPlayerRangeChangeRecipe() {
 		super(IngredientStack.ofItems(4, SpectrumItems.STRATINE_GEM));
 	}
 	
 	@Override
-	public boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
+	public boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
 		if (spawnerBlockEntityNbt.contains("RequiredPlayerRange")) {
-			return spawnerBlockEntityNbt.getShort("RequiredPlayerRange") < MAX_DETECTION_RANGE;
+			return spawnerBlockEntityNbt.copyNbt().getShort("RequiredPlayerRange") < MAX_DETECTION_RANGE;
 		}
 		return true;
 	}
