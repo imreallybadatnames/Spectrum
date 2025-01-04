@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.entity.entity;
 
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.entity.ai.*;
 import de.dafuqs.spectrum.registries.*;
@@ -18,6 +19,7 @@ import net.minecraft.entity.projectile.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.predicate.entity.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -33,14 +35,14 @@ import java.util.*;
 import java.util.function.*;
 
 public class PreservationTurretEntity extends GolemEntity implements Monster, Vibrations {
-
+	
 	protected static final int DETECTION_RANGE = 16;
 	protected static final float DAMAGE = 4.0F;
-
-	protected static final UUID COVERED_ARMOR_BONUS_ID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
-	protected static final UUID COVERED_TOUGHNESS_BONUS_ID = UUID.fromString("8ED24DFF-221F-4ADB-9DD2-7EA92574628C");
-	protected static final EntityAttributeModifier COVERED_ARMOR_BONUS = new EntityAttributeModifier(COVERED_ARMOR_BONUS_ID, "Covered armor bonus", 20.0, EntityAttributeModifier.Operation.ADD_VALUE);
-	protected static final EntityAttributeModifier COVERED_TOUGHNESS_BONUS = new EntityAttributeModifier(COVERED_TOUGHNESS_BONUS_ID, "Covered toughness bonus", 6.0, EntityAttributeModifier.Operation.ADD_VALUE);
+	
+	private static final Identifier COVERED_ARMOR_BONUS_ID = SpectrumCommon.locate("covered_armor");
+	private static final Identifier COVERED_TOUGHNESS_BONUS_ID = SpectrumCommon.locate("covered_toughness");
+	protected static final EntityAttributeModifier COVERED_ARMOR_BONUS = new EntityAttributeModifier(COVERED_ARMOR_BONUS_ID, 20.0, EntityAttributeModifier.Operation.ADD_VALUE);
+	protected static final EntityAttributeModifier COVERED_TOUGHNESS_BONUS = new EntityAttributeModifier(COVERED_TOUGHNESS_BONUS_ID, 6.0, EntityAttributeModifier.Operation.ADD_VALUE);
 	
 	protected static final TrackedData<Direction> ATTACHED_FACE = DataTracker.registerData(PreservationTurretEntity.class, TrackedDataHandlerRegistry.FACING);
 	protected static final TrackedData<Byte> PEEK_AMOUNT = DataTracker.registerData(PreservationTurretEntity.class, TrackedDataHandlerRegistry.BYTE);
@@ -218,13 +220,12 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 		this.bodyYaw = 0.0F;
 	}
 	
-	@Nullable
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+	public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
 		this.setYaw(0.0F);
 		this.headYaw = this.getYaw();
 		this.resetPosition();
-		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+		return super.initialize(world, difficulty, spawnReason, entityData);
 	}
 
 	@Override
@@ -286,7 +287,7 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 	}
 	
 	@Override
-	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
+	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps) {
 		this.bodyTrackingIncrements = 0;
 		this.setPosition(x, y, z);
 		this.setRotation(yaw, pitch);
@@ -517,7 +518,7 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 		}
 
 		@Override
-		public boolean accepts(ServerWorld world, BlockPos pos, GameEvent event, GameEvent.Emitter emitter) {
+		public boolean accepts(ServerWorld world, BlockPos pos, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter) {
 			return !PreservationTurretEntity.this.isRemoved()
 				&& !PreservationTurretEntity.this.isDead()
 				&& !PreservationTurretEntity.this.isAiDisabled()
@@ -528,7 +529,7 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 		}
 
 		@Override
-		public void accept(ServerWorld world, BlockPos pos, GameEvent event, @Nullable Entity sourceEntity, @Nullable Entity target, float distance) {
+		public void accept(ServerWorld world, BlockPos pos, RegistryEntry<GameEvent> event, @Nullable Entity sourceEntity, @Nullable Entity target, float distance) {
 			if (!PreservationTurretEntity.this.isDead()
 				&& sourceEntity instanceof LivingEntity livingEntity
 				&& TARGET_PREDICATE.test(PreservationTurretEntity.this, livingEntity)) {

@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.entity.entity;
 import com.google.common.collect.*;
 import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.revelationary.api.advancements.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.entity.ai.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -21,8 +22,10 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.*;
 import net.minecraft.world.*;
@@ -31,9 +34,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.function.*;
 
-public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttackMob {
-	
-	public static final UUID BONUS_DAMAGE_UUID = UUID.fromString("4425979b-f987-4937-875a-1e26d727c67f");
+public class MonstrosityEntity extends SpectrumBossEntity {
 
 	public static @Nullable MonstrosityEntity theOneAndOnly = null;
 	public static final Predicate<LivingEntity> ENTITY_TARGETS = (entity) -> {
@@ -188,13 +189,12 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 	}
 
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+	public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
 		if (spawnReason == SpawnReason.NATURAL && theOneAndOnly != null && theOneAndOnly != this) {
 			discard();
 		}
-
 		this.targetPosition = getPos();
-		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+		return super.initialize(world, difficulty, spawnReason, entityData);
 	}
 	
 	@Override
@@ -206,16 +206,17 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 		return birdNavigation;
 	}
 	
+	private static final Identifier STONKS_BONUS_ID = SpectrumCommon.locate("monstrosity_stonks");
+	
 	public void growStronger(int amount) {
 		this.timesGottenStronger += amount;
-
-		Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
-		EntityAttributeModifier jeopardantModifier = new EntityAttributeModifier(BONUS_DAMAGE_UUID, "spectrum:monstrosity_bonus", 1.0 + timesGottenStronger * 0.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, jeopardantModifier);
+		
+		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
+		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(STONKS_BONUS_ID, 1.0 + timesGottenStronger * 0.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 		this.getAttributes().addTemporaryModifiers(map);
 
 		playSound(SpectrumSoundEvents.ENTITY_MONSTROSITY_GROWL, 1.0F, 1.0F);
-		for (float i = 0; i <= 1.0; i += 0.2) {
+		for (float i = 0; i <= 1.0; i += 0.2F) {
 			SpectrumS2CPacketSender.playParticleWithPatternAndVelocity(null, (ServerWorld) this.getWorld(), new Vec3d(getX(), getBodyY(i), getZ()), SpectrumParticleTypes.WHITE_SPARKLE_RISING, VectorPattern.SIXTEEN, 0.05F);
 		}
 	}

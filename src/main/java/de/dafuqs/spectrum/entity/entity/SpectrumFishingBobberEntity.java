@@ -120,7 +120,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	}
 	
 	@Override
-	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
+	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps) {
 	}
 	
 	public boolean isAblaze() {
@@ -134,9 +134,9 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		this.getDataTracker().startTracking(HOOK_ENTITY_ID, 0);
-		this.getDataTracker().startTracking(CAUGHT_FISH, false);
-		this.getDataTracker().startTracking(ABLAZE, false);
+		builder.add(HOOK_ENTITY_ID, 0);
+		builder.add(CAUGHT_FISH, false);
+		builder.add(ABLAZE, false);
 	}
 	
 	@Override
@@ -273,7 +273,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	}
 	
 	@Override
-	public boolean canUsePortals() {
+	public boolean canUsePortals(boolean allowVehicles) {
 		return false;
 	}
 	

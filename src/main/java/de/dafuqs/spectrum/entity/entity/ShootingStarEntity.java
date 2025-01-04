@@ -121,9 +121,9 @@ public class ShootingStarEntity extends Entity {
 	
 	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
-		this.getDataTracker().startTracking(SHOOTING_STAR_TYPE, ShootingStar.Type.COLORFUL.ordinal());
-		this.getDataTracker().startTracking(PLAYER_PLACED, false);
-		this.getDataTracker().startTracking(HARDENED, false);
+		builder.add(SHOOTING_STAR_TYPE, ShootingStar.Type.COLORFUL.ordinal());
+		builder.add(PLAYER_PLACED, false);
+		builder.add(HARDENED, false);
 	}
 	
 	@Override
@@ -312,7 +312,7 @@ public class ShootingStarEntity extends Entity {
 	
 	public void doPlayerHitEffectsAndLoot(ServerWorld serverWorld, ServerPlayerEntity serverPlayerEntity) {
 		// Spawn loot
-		Identifier lootTableId = ShootingStar.Type.getLootTableIdentifier(dataTracker.get(SHOOTING_STAR_TYPE));
+		Identifier lootTableId = ShootingStar.Type.getLootTable(dataTracker.get(SHOOTING_STAR_TYPE));
 		List<ItemStack> loot = getLoot(serverWorld, serverPlayerEntity, lootTableId);
 		
 		for (ItemStack itemStack : loot) {

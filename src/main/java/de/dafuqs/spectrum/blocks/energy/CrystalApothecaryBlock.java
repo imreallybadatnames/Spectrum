@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.energy;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -8,7 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -83,15 +83,8 @@ public class CrystalApothecaryBlock extends BlockWithEntity {
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof CrystalApothecaryBlockEntity crystalApothecaryBlockEntity) {
-				ItemScatterer.spawn(world, pos, crystalApothecaryBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

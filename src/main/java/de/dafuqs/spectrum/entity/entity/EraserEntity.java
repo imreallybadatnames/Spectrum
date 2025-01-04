@@ -83,7 +83,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 	}
 	
 	@Override
-	public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+	public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
 		Random random = world.getRandom();
 		
 		this.effectOnHit = getRandomOnHitEffect();

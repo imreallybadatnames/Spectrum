@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.titration_barrel;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
 import de.dafuqs.spectrum.registries.*;
@@ -12,6 +12,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.recipe.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
 import net.minecraft.state.property.*;
@@ -171,7 +172,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 						// player is able to extract content until it is empty
 						// reverting it to the empty state again
 						if (player.isSneaking()) {
-							Optional<ITitrationBarrelRecipe> recipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.TITRATION_BARREL, barrelEntity, world);
+							Optional<RecipeEntry<ITitrationBarrelRecipe>> recipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.TITRATION_BARREL, barrelEntity, world);
 							if (recipe.isPresent()) {
 								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.days_of_sealing_after_opened_with_extractable_amount", recipe.get().craft(barrelEntity, world.getRegistryManager()).getName().getString(), barrelEntity.getSealMinecraftDays(), barrelEntity.getSealRealDays()), true);
 							} else {
@@ -278,11 +279,11 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 				}
 				case TAPPED -> {
 					Biome biome = world.getBiome(pos).value();
-					Optional<ITitrationBarrelRecipe> recipe = blockEntity.getRecipeForInventory(world);
+					Optional<RecipeEntry<ITitrationBarrelRecipe>> recipe = blockEntity.getRecipeForInventory(world);
 					if (recipe.isEmpty()) return 0;
 					
 					float curr = blockEntity.extractedBottles;
-					float max = recipe.get().getOutputCountAfterAngelsShare(world, biome.getTemperature(), blockEntity.getSealSeconds());
+					float max = recipe.get().value().getOutputCountAfterAngelsShare(world, biome.getTemperature(), blockEntity.getSealSeconds());
 					
 					return MathHelper.floor((1.0f - curr / max) * 15.0f);
 				}

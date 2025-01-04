@@ -38,7 +38,7 @@ public class MonstrositySpawner implements SpecialSpawner {
 			if (MonstrosityEntity.theOneAndOnly == null) {
 				MonstrosityEntity monstrosity = SpectrumEntityTypes.MONSTROSITY.create(world);
 				LocalDifficulty localDifficulty = world.getLocalDifficulty(playerEntity.getBlockPos());
-				monstrosity.initialize(world, localDifficulty, SpawnReason.NATURAL, null, null);
+				monstrosity.initialize(world, localDifficulty, SpawnReason.NATURAL, null);
 				world.spawnEntityAndPassengers(monstrosity);
 			}
 			

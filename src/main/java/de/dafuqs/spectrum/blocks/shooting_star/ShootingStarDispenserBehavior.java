@@ -12,14 +12,12 @@ public class ShootingStarDispenserBehavior extends ItemDispenserBehavior {
 
 	@Override
 	public ItemStack dispenseSilently(@NotNull BlockPointer pointer, @NotNull ItemStack stack) {
-		Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
-
-		World world = pointer.getWorld();
+		Direction direction = pointer.state().get(DispenserBlock.FACING);
+		
+		World world = pointer.world();
 		ShootingStarItem shootingStarItem = ((ShootingStarItem) stack.getItem());
-		ShootingStarEntity shootingStarEntity = shootingStarItem.getEntityForStack(world,
-				new Vec3d(pointer.getX() + direction.getOffsetX() * 1.125F,
-						pointer.getY() + direction.getOffsetY() * 1.13F,
-						pointer.getZ() + direction.getOffsetZ() * 1.125F), stack);
+		Vec3d spawnPos = new Vec3d(pointer.pos().getX() + direction.getOffsetX() * 1.125D, pointer.pos().getY() + direction.getOffsetY() * 1.13D, pointer.pos().getZ() + direction.getOffsetZ() * 1.125D);
+		ShootingStarEntity shootingStarEntity = shootingStarItem.getEntityForStack(world, spawnPos, stack);
 		shootingStarEntity.setYaw(direction.asRotation());
 		shootingStarEntity.addVelocity(direction.getOffsetX() * 0.4, direction.getOffsetY() * 0.4, direction.getOffsetZ() * 0.4);
 		world.spawnEntity(shootingStarEntity);

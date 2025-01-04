@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.blocks.potion_workshop;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.helpers.Support;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -79,14 +79,8 @@ public class PotionWorkshopBlock extends HorizontalFacingBlock implements BlockE
 
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!(newState.getBlock() instanceof PotionWorkshopBlock)) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof PotionWorkshopBlockEntity potionWorkshopBlockEntity) {
-				ItemScatterer.spawn(world, pos, potionWorkshopBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

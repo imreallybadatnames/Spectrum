@@ -3,6 +3,8 @@ package de.dafuqs.spectrum.blocks.shooting_star;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.loot.*;
+import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.*;
@@ -18,9 +20,9 @@ public interface ShootingStar {
 		GEMSTONE("gemstone", SpectrumLootTables.GEMSTONE_SHOOTING_STAR);
 
 		private final String name;
-		private final Identifier lootTable;
+		private final RegistryKey<LootTable> lootTable;
 		
-		Type(String name, Identifier lootTable) {
+		Type(String name, RegistryKey<LootTable> lootTable) {
 			this.name = name;
 			this.lootTable = lootTable;
 		}
@@ -62,11 +64,11 @@ public interface ShootingStar {
 		}
 
 		@Contract("_ -> new")
-		public static @NotNull Identifier getLootTableIdentifier(int index) {
-			return values()[index].getLootTableIdentifier();
+		public static @NotNull RegistryKey<LootTable> getLootTable(int index) {
+			return values()[index].getLootTable();
 		}
 		
-		public @NotNull Identifier getLootTableIdentifier() {
+		public @NotNull RegistryKey<LootTable> getLootTable() {
 			return this.lootTable;
 		}
 

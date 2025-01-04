@@ -131,8 +131,8 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	private float getVolumeDif(LivingEntity target, float pullMod) {
 		var ownerBox = getOwner().getBoundingBox();
 		var targetBox = target.getBoundingBox();
-		float ownerVolume = (float) (ownerBox.getXLength() * ownerBox.getYLength() * ownerBox.getZLength());
-		float targetVolume = (float) (targetBox.getXLength() * targetBox.getYLength() * targetBox.getZLength());
+		float ownerVolume = (float) (ownerBox.getLengthX() * ownerBox.getLengthY() * ownerBox.getLengthZ());
+		float targetVolume = (float) (targetBox.getLengthX() * targetBox.getLengthY() * targetBox.getLengthZ());
 		
 		return Math.max(Math.min(ownerVolume / (targetVolume / pullMod), 0.8F), 0.5F);
 	}

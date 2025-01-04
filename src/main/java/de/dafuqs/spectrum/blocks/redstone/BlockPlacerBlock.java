@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.claims.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.*;
@@ -49,27 +49,30 @@ public class BlockPlacerBlock extends RedstoneInteractionBlock implements BlockE
 		}
 	}
 	
-	protected void dispense(ServerWorld world, BlockPos pos) {
-		BlockPointerImpl pointer = new BlockPointerImpl(world, pos);
-		BlockPlacerBlockEntity blockEntity = pointer.getBlockEntity();
-		
-		int slot = blockEntity.chooseNonEmptySlot(world.random);
-		if (slot < 0) {
-			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
-			world.emitGameEvent(null, GameEvent.BLOCK_ACTIVATE, pos);
+	protected void dispense(ServerWorld world, BlockState state, BlockPos pos) {
+		BlockPlacerBlockEntity blockEntity = world.getBlockEntity(pos, SpectrumBlockEntities.BLOCK_PLACER).orElse(null);
+		if (blockEntity == null) {
+			SpectrumCommon.LOGGER.warn("Ignoring block place attempt for Block Player without matching block entity at {}", pos);
 		} else {
-			ItemStack stack = blockEntity.getStack(slot);
-			tryPlace(stack, pointer);
+			BlockPointer pointer = new BlockPointer(world, pos, state, blockEntity);
+			int slot = blockEntity.chooseNonEmptySlot(world.random);
+			if (slot < 0) {
+				world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
+				world.emitGameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Emitter.of(blockEntity.getCachedState()));
+			} else {
+				ItemStack stack = blockEntity.getStack(slot);
+				tryPlace(stack, pointer);
+			}
 		}
 	}
 	
 	// We can't reuse the vanilla BlockPlacementDispenserBehavior, since we are using a different orientation for our block:
 	// BlockPlacerBlock.ORIENTATION instead of DispenserBlock.FACING
 	protected void tryPlace(@NotNull ItemStack stack, BlockPointer pointer) {
-        World world = pointer.getWorld();
+		World world = pointer.world();
         if (stack.getItem() instanceof BlockItem blockItem) {
-			Direction facing = pointer.getBlockState().get(BlockPlacerBlock.ORIENTATION).getFacing();
-			BlockPos placementPos = pointer.getPos().offset(facing);
+			Direction facing = pointer.state().get(BlockPlacerBlock.ORIENTATION).getFacing();
+			BlockPos placementPos = pointer.pos().offset(facing);
             Direction placementDirection = world.isAir(placementPos.down()) ? facing : Direction.UP;
 			
 			if (!GenericClaimModsCompat.canPlaceBlock(world, placementPos, null)) {
@@ -78,16 +81,16 @@ public class BlockPlacerBlock extends RedstoneInteractionBlock implements BlockE
 			
 			try {
 				blockItem.place(new BlockPlacerPlacementContext(world, placementPos, facing, stack, placementDirection));
-				world.syncWorldEvent(WorldEvents.DISPENSER_DISPENSES, pointer.getPos(), 0);
-				world.syncWorldEvent(WorldEvents.DISPENSER_ACTIVATED, pointer.getPos(), pointer.getBlockState().get(BlockPlacerBlock.ORIENTATION).getFacing().getId());
+				world.syncWorldEvent(WorldEvents.DISPENSER_DISPENSES, pointer.pos(), 0);
+				world.syncWorldEvent(WorldEvents.DISPENSER_ACTIVATED, pointer.pos(), pointer.state().get(BlockPlacerBlock.ORIENTATION).getFacing().getId());
                 world.emitGameEvent(null, GameEvent.BLOCK_PLACE, placementPos);
 			} catch (Exception e) {
 				SpectrumCommon.logError("Block Placer encountered an error placing a block at " + placementPos + " when placing " + Registries.ITEM.getId(blockItem));
 				e.printStackTrace();
 			}
 		} else {
-			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pointer.getPos(), 0);
-            world.emitGameEvent(null, GameEvent.BLOCK_ACTIVATE, pointer.getPos());
+			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pointer.pos(), 0);
+			world.emitGameEvent(null, GameEvent.BLOCK_ACTIVATE, pointer.pos());
 		}
 	}
 	
@@ -105,29 +108,13 @@ public class BlockPlacerBlock extends RedstoneInteractionBlock implements BlockE
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		this.dispense(world, pos);
-	}
-	
-	@Override
-	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-		if (itemStack.hasCustomName()) {
-			if (world.getBlockEntity(pos) instanceof BlockPlacerBlockEntity blockPlacerBlockEntity) {
-				blockPlacerBlockEntity.setCustomName(itemStack.getName());
-			}
-		}
-		
+		this.dispense(world, state, pos);
 	}
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) {
-			if (world.getBlockEntity(pos) instanceof BlockPlacerBlockEntity blockPlacerBlockEntity) {
-				ItemScatterer.spawn(world, pos, blockPlacerBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

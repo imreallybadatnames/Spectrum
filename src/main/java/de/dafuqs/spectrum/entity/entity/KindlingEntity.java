@@ -84,11 +84,10 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 				.add(EntityAttributes.GENERIC_JUMP_STRENGTH, 12.0D);
 	}
 	
-	@Nullable
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+	public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
 		this.setPose(EntityPose.STANDING);
-		return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+		return super.initialize(world, difficulty, spawnReason, entityData);
 	}
 	
 	@Override

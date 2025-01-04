@@ -1,14 +1,14 @@
 package de.dafuqs.spectrum.blocks.energy;
 
-import com.mojang.serialization.MapCodec;
-import de.dafuqs.spectrum.helpers.Support;
+import com.mojang.serialization.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.state.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -119,15 +119,8 @@ public class ColorPickerBlock extends HorizontalFacingBlock implements BlockEnti
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof ColorPickerBlockEntity colorPickerBlockEntity) {
-				ItemScatterer.spawn(world, pos, colorPickerBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 }

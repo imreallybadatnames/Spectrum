@@ -75,24 +75,17 @@
     }
   },
   "depends": {
+    "minecraft": "=${minecraft_version}",
     "fabricloader": "*",
     "fabric-api": "*",
-    "minecraft": ">=1.21.1",
-    "java": ">=21",
     "revelationary": "*",
     "cloth-config": "*",
     "modonomicon": "*",
     "trinkets": "*",
-    "matchbooks": "*",
-    "exclusions_lib": "*"
+    "matchbooks": "*"
   },
   "suggests": {
-    "chalk": "*",
-    "chalk-colorful-addon": "*",
-    "paginatedadvancements": "*",
-    "ants": "*",
-    "bettercombat": "*",
-    "continuity": "*"
+    "paginatedadvancements": "*"
   },
   "breaks": {}
 }

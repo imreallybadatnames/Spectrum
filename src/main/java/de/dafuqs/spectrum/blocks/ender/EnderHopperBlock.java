@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.ender;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -93,15 +93,8 @@ public class EnderHopperBlock extends BlockWithEntity {
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!state.isOf(newState.getBlock())) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof HopperBlockEntity hopperBlockEntity) {
-				ItemScatterer.spawn(world, pos, hopperBlockEntity);
-				world.updateComparators(pos, this);
-			}
-			
-			super.onStateReplaced(state, world, pos, newState, moved);
-		}
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

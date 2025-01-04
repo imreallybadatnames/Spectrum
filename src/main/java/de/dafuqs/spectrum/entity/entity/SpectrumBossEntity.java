@@ -13,6 +13,7 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.server.network.*;
+import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
@@ -128,10 +129,10 @@ public class SpectrumBossEntity extends PathAwareEntity {
 	}
 	
 	@Override
-	protected void drop(DamageSource source) {
+	protected void drop(ServerWorld world, DamageSource source) {
 		Entity entity = source.getAttacker();
 		if (EntityHelper.isRealPlayerProjectileOrPet(entity)) {
-			super.drop(source);
+			super.drop(world, source);
 		}
 	}
 	
@@ -204,7 +205,7 @@ public class SpectrumBossEntity extends PathAwareEntity {
 	}
 	
 	@Override
-	public boolean canUsePortals() {
+	public boolean canUsePortals(boolean allowVehicles) {
 		return false;
 	}
 	

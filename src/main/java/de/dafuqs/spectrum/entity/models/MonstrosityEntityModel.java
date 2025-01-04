@@ -31,8 +31,8 @@ public class MonstrosityEntityModel extends EntityModel<MonstrosityEntity> {
 	}
 	
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		torso.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		torso.render(matrices, vertices, light, overlay, color);
 	}
 	
 }

@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.item_bowl;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.enchanter.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
@@ -71,6 +71,7 @@ public class ItemBowlBlock extends InWorldInteractionBlock {
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		ItemScatterer.onStateReplaced(state, newState, world, pos);
 		super.onStateReplaced(state, world, pos, newState, moved);
 		updateConnectedMultiBlocks(world, pos);
 	}
