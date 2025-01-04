@@ -1,5 +1,5 @@
 {
-  "todo": "find a replacement",
+  "todo": "does this work as intended? Those should only be able to be mined by a netherite tier tool",
   "values": [
     "#spectrum:malachite_ores",
     "#spectrum:dragonbone_blocks",
