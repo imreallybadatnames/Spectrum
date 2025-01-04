@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.items.tools;
 
 import com.google.common.collect.*;
-import com.jamieswhiteshirt.reachentityattributes.*;
 import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.spectrum.api.render.*;
 import net.minecraft.entity.*;
@@ -35,7 +34,7 @@ public abstract class ParryingSwordItem extends SwordItem implements ExtendedIte
 		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADD_VALUE));
 		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE));
 		builder.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, new EntityAttributeModifier(CRIT_MODIFIER_ID, "Weapon modifier", crit, EntityAttributeModifier.Operation.ADD_VALUE));
-		builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", reach, EntityAttributeModifier.Operation.ADD_VALUE));
+		builder.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", reach, EntityAttributeModifier.Operation.ADD_VALUE));
 		this.attributeModifiers = builder.build();
 	}
 
