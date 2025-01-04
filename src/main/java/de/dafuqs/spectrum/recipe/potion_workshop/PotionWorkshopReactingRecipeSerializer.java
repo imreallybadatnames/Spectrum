@@ -20,7 +20,13 @@ public class PotionWorkshopReactingRecipeSerializer implements GatedRecipeSerial
 	}
 	
 	public interface RecipeFactory {
-		PotionWorkshopReactingRecipe create(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, Item item, List<PotionMod> mods);
+		PotionWorkshopReactingRecipe create(
+			String group,
+			boolean secret,
+			Identifier requiredAdvancementIdentifier,
+			Item item,
+			List<PotionMod> mods
+		);
 	}
 	
 	@Override

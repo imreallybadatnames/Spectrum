@@ -129,7 +129,7 @@ public class SpectrumRecipeTypes {
 		POTION_WORKSHOP_CRAFTING_RECIPE_SERIALIZER = registerSerializer(POTION_WORKSHOP_CRAFTING_ID, new PotionWorkshopCraftingRecipeSerializer(PotionWorkshopCraftingRecipe::new));
 		POTION_WORKSHOP_CRAFTING = registerRecipeType(POTION_WORKSHOP_CRAFTING_ID);
 		
-		POTION_WORKSHOP_REACTING_SERIALIZER = registerSerializer(POTION_WORKSHOP_REACTING_ID, new PotionWorkshopReactingRecipeSerializer(PotionWorkshopReactingRecipe::new));
+		POTION_WORKSHOP_REACTING_SERIALIZER = registerSerializer(POTION_WORKSHOP_REACTING_ID, new PotionWorkshopReactingRecipeSerializer());
 		POTION_WORKSHOP_REACTING = registerRecipeType(POTION_WORKSHOP_REACTING_ID);
 		
 		GOO_CONVERTING_SERIALIZER = registerSerializer(GOO_CONVERTING_ID, new FluidConvertingRecipeSerializer());
