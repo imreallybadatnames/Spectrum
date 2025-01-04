@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.recipe.fusion_shrine;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.api.predicate.world.*;
+import de.dafuqs.spectrum.api.predicate.location.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.fusion_shrine.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
@@ -41,7 +41,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final boolean yieldUpgradesDisabled;
 	protected final boolean playCraftingFinishedEffects;
 	
-	protected final List<WorldCondition<?, ?>> worldConditions;
+	protected final List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates;
 	@NotNull
 	protected final FusionShrineRecipeWorldEffect startWorldEffect;
 	@NotNull
@@ -55,7 +55,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	
 	public FusionShrineRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
 							  List<IngredientStack> craftingInputs, FluidIngredient fluid, ItemStack output, float experience, int craftingTime, boolean yieldUpgradesDisabled, boolean playCraftingFinishedEffects, boolean copyNbt,
-							  List<WorldCondition<?, ?>> worldConditions, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
+							  List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates, @NotNull FusionShrineRecipeWorldEffect startWorldEffect, @NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects, @NotNull FusionShrineRecipeWorldEffect finishWorldEffect, @Nullable Text description) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.craftingInputs = craftingInputs;
@@ -66,7 +66,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		this.yieldUpgradesDisabled = yieldUpgradesDisabled;
 		this.playCraftingFinishedEffects = playCraftingFinishedEffects;
 		
-		this.worldConditions = worldConditions;
+		this.spectrumLocationPredicates = spectrumLocationPredicates;
 		this.startWorldEffect = startWorldEffect;
 		this.duringWorldEffects = duringWorldEffects;
 		this.finishWorldEffect = finishWorldEffect;
@@ -138,8 +138,8 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	 * This can always be true, a specific day or moon phase, or weather.
 	 */
 	public boolean areConditionMetCurrently(ServerWorld world, BlockPos pos) {
-		for (WorldCondition<?, ?> worldCondition : this.worldConditions) {
-			if (!worldCondition.test(world, pos)) {
+		for (SpectrumLocationPredicate<?, ?> spectrumLocationPredicate : this.spectrumLocationPredicates) {
+			if (!spectrumLocationPredicate.test(world, pos)) {
 				return false;
 			}
 		}

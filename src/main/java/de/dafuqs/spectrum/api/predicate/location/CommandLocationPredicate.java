@@ -1,7 +1,8 @@
-package de.dafuqs.spectrum.api.predicate.world;
+package de.dafuqs.spectrum.api.predicate.location;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.api.predicate.*;
 import net.minecraft.server.*;
 import net.minecraft.server.command.*;
 import net.minecraft.server.world.*;
@@ -10,9 +11,9 @@ import net.minecraft.util.math.*;
 
 import java.util.concurrent.atomic.*;
 
-public class CommandType extends WorldConditionType<CommandType.Config> implements CommandOutput {
+public class CommandLocationPredicate extends SpectrumLocationPredicateType<CommandLocationPredicate.Config> implements CommandOutput {
 	
-	public CommandType(Codec<CommandType.Config> codec) {
+	public CommandLocationPredicate(Codec<CommandLocationPredicate.Config> codec) {
 		super(codec);
 	}
 	
@@ -48,7 +49,7 @@ public class CommandType extends WorldConditionType<CommandType.Config> implemen
 		return false;
 	}
 	
-	public static class Config extends WorldConditionType.Config {
+	public static class Config extends SpectrumLocationPredicateType.Config {
 		
 		public static final Codec<Config> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
 				Codec.STRING.fieldOf("command").forGetter((config) -> config.command)

@@ -1,17 +1,18 @@
-package de.dafuqs.spectrum.api.predicate.world;
+package de.dafuqs.spectrum.api.predicate.location;
 
 import com.google.gson.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.api.predicate.*;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 
 import java.util.*;
 
-public class TimeOfDayType extends WorldConditionType<TimeOfDayType.Config> {
+public class TimeOfDayLocationPredicate extends SpectrumLocationPredicateType<TimeOfDayLocationPredicate.Config> {
 	
-	public TimeOfDayType(Codec<Config> codec) {
+	public TimeOfDayLocationPredicate(Codec<Config> codec) {
 		super(codec);
 	}
 	
@@ -31,11 +32,10 @@ public class TimeOfDayType extends WorldConditionType<TimeOfDayType.Config> {
 		}
 	}
 	
-	public static class Config extends WorldConditionType.Config {
+	public static class Config extends SpectrumLocationPredicateType.Config {
 		
-		public static TimeOfDayType fromJson(JsonObject json) {
-			if (json == null || json.isJsonNull()) return ANY;
-			return new TimeOfDayType(TimeHelper.TimeOfDay.valueOf(json.get("time").getAsString().toUpperCase(Locale.ROOT)));
+		public static TimeOfDayLocationPredicate fromJson(JsonObject json) {
+			return new TimeOfDayLocationPredicate(TimeHelper.TimeOfDay.valueOf(json.get("time").getAsString().toUpperCase(Locale.ROOT)));
 		}
 		
 		public static final Codec<Config> CODEC = RecordCodecBuilder.create((instance) -> instance.group(

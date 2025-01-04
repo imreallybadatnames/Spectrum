@@ -1,16 +1,17 @@
-package de.dafuqs.spectrum.api.predicate.world;
+package de.dafuqs.spectrum.api.predicate.location;
 
 import com.google.gson.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.api.predicate.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 
 import java.util.*;
 
-public class WeatherType extends WorldConditionType<WeatherType.Config> {
+public class WeatherLocationPredicate extends SpectrumLocationPredicateType<WeatherLocationPredicate.Config> {
 	
-	public WeatherType(Codec<Config> codec) {
+	public WeatherLocationPredicate(Codec<Config> codec) {
 		super(codec);
 	}
 	
@@ -44,10 +45,10 @@ public class WeatherType extends WorldConditionType<WeatherType.Config> {
 		return true;
 	}
 	
-	public static class Config extends WorldConditionType.Config {
+	public static class Config extends SpectrumLocationPredicateType.Config {
 		
-		public static WeatherType fromJson(JsonObject json) {
-			return new WeatherType(WeatherCondition.valueOf(json.get("weather_condition").getAsString().toUpperCase(Locale.ROOT)));
+		public static WeatherLocationPredicate fromJson(JsonObject json) {
+			return new WeatherLocationPredicate(WeatherCondition.valueOf(json.get("weather_condition").getAsString().toUpperCase(Locale.ROOT)));
 		}
 		
 		public static final Codec<Config> CODEC = RecordCodecBuilder.create((instance) -> instance.group(

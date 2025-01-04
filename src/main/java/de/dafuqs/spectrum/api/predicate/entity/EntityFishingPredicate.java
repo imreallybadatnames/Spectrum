@@ -1,35 +1,36 @@
 package de.dafuqs.spectrum.api.predicate.entity;
 
-import com.google.gson.*;
-import de.dafuqs.spectrum.api.predicate.world.LightPredicate;
-import de.dafuqs.spectrum.api.predicate.world.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.api.predicate.location.*;
 import net.minecraft.predicate.*;
 import net.minecraft.server.world.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
+import java.util.*;
+
 public class EntityFishingPredicate {
-	private final FluidPredicate fluidPredicate;
-	private final BiomePredicate biomePredicate;
-	private final LightPredicate lightPredicate;
-	private final DimensionType dimensionPredicate;
-	private final MoonPhaseType moonPhasePredicate;
-	private final TimeOfDayType timeOfDayPredicate;
-	private final WeatherType weatherPredicate;
-	private final CommandType commandPredicate;
+	private final Optional<FluidPredicate> fluidPredicate;
+	private final Optional<BiomeLocationPredicate> biomeLocationPredicate;
+	private final Optional<net.minecraft.predicate.LightPredicate> lightPredicate;
+	private final Optional<DimensionLocationPredicate> dimensionPredicate;
+	private final Optional<MoonPhaseLocationPredicate> moonPhasePredicate;
+	private final Optional<TimeOfDayLocationPredicate> timeOfDayPredicate;
+	private final Optional<WeatherLocationPredicate> weatherPredicate;
+	private final Optional<CommandLocationPredicate> commandPredicate;
 	
 	public EntityFishingPredicate(
-		FluidPredicate fluidPredicate,
-		BiomePredicate biomePredicate,
-		LightPredicate lightPredicate,
-		DimensionType dimensionPredicate,
-		MoonPhaseType moonPhasePredicate,
-		TimeOfDayType timeOfDayPredicate,
-		WeatherType weatherPredicate,
-		CommandType commandPredicate)
+			Optional<FluidPredicate> fluidPredicate,
+			Optional<BiomeLocationPredicate> biomeLocationPredicate,
+			Optional<net.minecraft.predicate.LightPredicate> lightPredicate,
+			Optional<DimensionLocationPredicate> dimensionPredicate,
+			Optional<MoonPhaseLocationPredicate> moonPhasePredicate,
+			Optional<TimeOfDayLocationPredicate> timeOfDayPredicate,
+			Optional<WeatherLocationPredicate> weatherPredicate,
+			Optional<CommandLocationPredicate> commandPredicate)
 	{
 		this.fluidPredicate = fluidPredicate;
-		this.biomePredicate = biomePredicate;
+		this.biomeLocationPredicate = biomeLocationPredicate;
 		this.lightPredicate = lightPredicate;
 		this.dimensionPredicate = dimensionPredicate;
 		this.moonPhasePredicate = moonPhasePredicate;
@@ -38,27 +39,25 @@ public class EntityFishingPredicate {
 		this.commandPredicate = commandPredicate;
 	}
 	
-	public static EntityFishingPredicate fromJson(JsonObject jsonObject) {
-		return new EntityFishingPredicate(
-				FluidPredicate.fromJson(JsonHelper.getObject(jsonObject, "fluid", null)),
-				BiomePredicate.fromJson(JsonHelper.getObject(jsonObject, "biome", null)),
-				LightPredicate.fromJson(JsonHelper.getObject(jsonObject, "light", null)),
-				DimensionType.fromJson(JsonHelper.getObject(jsonObject, "dimension", null)),
-				MoonPhaseType.fromJson(JsonHelper.getObject(jsonObject, "moon_phase", null)),
-				TimeOfDayType.fromJson(JsonHelper.getObject(jsonObject, "time_of_day", null)),
-				WeatherType.fromJson(JsonHelper.getObject(jsonObject, "weather", null)),
-				CommandType.fromJson(JsonHelper.getObject(jsonObject, "command", null))
-		);
-	}
+	public static final Codec<EntityFishingPredicate> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+			FluidPredicate.CODEC.optionalFieldOf("fluid").forGetter(entityFishingPredicate -> entityFishingPredicate.fluidPredicate),
+			BiomeLocationPredicate.CODEC.optionalFieldOf("biome").forGetter(entityFishingPredicate -> entityFishingPredicate.biomeLocationPredicate),
+			net.minecraft.predicate.LightPredicate.CODEC.optionalFieldOf("light").forGetter(entityFishingPredicate -> entityFishingPredicate.lightPredicate),
+			DimensionLocationPredicate.CODEC.optionalFieldOf("dimension").forGetter(entityFishingPredicate -> entityFishingPredicate.dimensionPredicate),
+			MoonPhaseLocationPredicate.CODEC.optionalFieldOf("moon_phase").forGetter(entityFishingPredicate -> entityFishingPredicate.moonPhasePredicate),
+			TimeOfDayLocationPredicate.CODEC.optionalFieldOf("time_of_day").forGetter(entityFishingPredicate -> entityFishingPredicate.timeOfDayPredicate),
+			WeatherLocationPredicate.CODEC.optionalFieldOf("weather").forGetter(entityFishingPredicate -> entityFishingPredicate.weatherPredicate),
+			CommandLocationPredicate.CODEC.optionalFieldOf("command").forGetter(entityFishingPredicate -> entityFishingPredicate.commandPredicate)
+	).apply(instance, EntityFishingPredicate::new));
 	
 	public boolean test(ServerWorld world, BlockPos pos) {
-		return (this.fluidPredicate.test(world, pos) &&
-				this.biomePredicate.test(world, pos) &&
-				this.lightPredicate.test(world, pos) &&
-				this.dimensionPredicate.test(world, pos) &&
-				this.moonPhasePredicate.test(world, pos) &&
-				this.timeOfDayPredicate.test(world, pos) &&
-				this.weatherPredicate.test(world, pos) &&
-				this.commandPredicate.test(world, pos));
+		return (this.fluidPredicate.isEmpty() || this.fluidPredicate.get().test(world, pos))
+				&& (this.biomeLocationPredicate.isEmpty() || this.biomeLocationPredicate.get().test(world, pos))
+				&& (this.lightPredicate.isEmpty() || this.lightPredicate.get().test(world, pos))
+				&& (this.dimensionPredicate.isEmpty() || this.dimensionPredicate.get().test(world, pos))
+				&& (this.moonPhasePredicate.isEmpty() || this.moonPhasePredicate.get().test(world, pos))
+				&& (this.timeOfDayPredicate.isEmpty() || this.timeOfDayPredicate.get().test(world, pos))
+				&& (this.weatherPredicate.isEmpty() || this.weatherPredicate.get().test(world, pos))
+				&& (this.commandPredicate.isEmpty() || this.commandPredicate.get().test(world, pos)));
 	}
 }

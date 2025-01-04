@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.recipe.fusion_shrine;
 
 import com.google.gson.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.predicate.world.*;
+import de.dafuqs.spectrum.api.predicate.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.recipe.*;
 import io.wispforest.endec.*;
@@ -72,10 +72,10 @@ public class FusionShrineRecipeSerializer implements GatedRecipeSerializer<Fusio
 		boolean yieldUpgradesDisabled = JsonHelper.getBoolean(jsonObject, "disable_yield_upgrades", false);
 		boolean playCraftingFinishedEffects = JsonHelper.getBoolean(jsonObject, "play_crafting_finished_effects", true);
 		
-		List<WorldConditionType<?>> worldConditions = new ArrayList<>();
+		List<SpectrumLocationPredicateType<?>> worldConditions = new ArrayList<>();
 		if (JsonHelper.hasArray(jsonObject, "world_conditions")) {
 			for (JsonElement element : JsonHelper.getArray(jsonObject, "world_conditions")) {
-				worldConditions.add(WorldConditionType.fromJson(element));
+				worldConditions.add(SpectrumLocationPredicateType.fromJson(element));
 			}
 		}
 		
