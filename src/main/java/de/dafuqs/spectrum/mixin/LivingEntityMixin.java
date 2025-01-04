@@ -37,6 +37,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -77,9 +78,6 @@ public abstract class LivingEntityMixin {
 	public abstract boolean damage(DamageSource source, float amount);
 	
 	@Shadow
-	public abstract boolean removeStatusEffect(StatusEffect type);
-	
-	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
 	@Shadow
@@ -87,9 +85,6 @@ public abstract class LivingEntityMixin {
 	
 	@Shadow
 	public abstract int getArmor();
-	
-	@Shadow
-	public abstract double getAttributeValue(EntityAttribute attribute);
 
 	@Shadow public abstract void remove(Entity.RemovalReason reason);
 	
@@ -97,7 +92,13 @@ public abstract class LivingEntityMixin {
 	public abstract void travel(Vec3d movementInput);
 
 	@Shadow protected ItemStack activeItemStack;
-
+	
+	@Shadow
+	public abstract double getAttributeValue(RegistryEntry<EntityAttribute> attribute);
+	
+	@Shadow
+	public abstract boolean removeStatusEffect(RegistryEntry<StatusEffect> effect);
+	
 	// FabricDefaultAttributeRegistry seems to only allow adding full containers and only single entity types?
 	@Inject(method = "createLivingAttributes()Lnet/minecraft/entity/attribute/DefaultAttributeContainer$Builder;", require = 1, allow = 1, at = @At("RETURN"))
 	private static void spectrum$addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
@@ -228,8 +229,8 @@ public abstract class LivingEntityMixin {
 	@ModifyReturnValue(method = "canHaveStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", at = @At("RETURN"))
 	private boolean spectrum$canHaveStatusEffect(boolean original, @Local(argsOnly = true) StatusEffectInstance statusEffectInstance) {
 		var instance = (LivingEntity) (Object) this;
-
-		if (original && this.hasStatusEffect(SpectrumStatusEffects.IMMUNITY) && statusEffectInstance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL && !SpectrumStatusEffectTags.isIncurable(statusEffectInstance.getEffectType())) {
+		
+		if (original && this.hasStatusEffect(SpectrumStatusEffects.IMMUNITY) && statusEffectInstance.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL && !SpectrumStatusEffectTags.isIncurable(statusEffectInstance.getEffectType())) {
 			if (Incurable.isIncurable(statusEffectInstance)) {
 				var immunity = getStatusEffect(SpectrumStatusEffects.IMMUNITY);
 				var cost = 600 * (statusEffectInstance.getAmplifier() + 1);
@@ -618,7 +619,7 @@ public abstract class LivingEntityMixin {
 
 	@Inject(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"), cancellable = true)
 	private void spectrum$addStatusEffect(StatusEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> cir) {
-		StatusEffect effectType = effect.getEffectType();
+		RegistryEntry<StatusEffect> effectType = effect.getEffectType();
 		if (effectType instanceof StackableStatusEffect) {
 			if (!SpectrumStatusEffects.effectsAreGettingStacked) {
 				if (this.canHaveStatusEffect(effect)) {
@@ -638,7 +639,7 @@ public abstract class LivingEntityMixin {
 			} else {
 				SpectrumStatusEffects.effectsAreGettingStacked = false;
 			}
-		} else if (EffectProlongingStatusEffect.canBeExtended(effectType)) {
+		} else if (EffectProlongingStatusEffect.canBeExtended(effect.getEffectType())) {
 			StatusEffectInstance effectProlongingInstance = this.getStatusEffect(SpectrumStatusEffects.EFFECT_PROLONGING);
 			if (effectProlongingInstance != null) {
 				((StatusEffectInstanceAccessor) effect).setDuration(EffectProlongingStatusEffect.getExtendedDuration(effect.getDuration(), effectProlongingInstance.getAmplifier()));

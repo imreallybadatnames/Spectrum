@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.status_effects;
 import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.effect.*;
+import net.minecraft.registry.entry.*;
 
 public class EffectProlongingStatusEffect extends SpectrumStatusEffect implements StackableStatusEffect {
 	
@@ -11,9 +12,9 @@ public class EffectProlongingStatusEffect extends SpectrumStatusEffect implement
 	public EffectProlongingStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);
 	}
-
-	public static boolean canBeExtended(StatusEffect statusEffect) {
-		return !SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.NO_DURATION_EXTENSION, statusEffect);
+	
+	public static boolean canBeExtended(RegistryEntry<StatusEffect> statusEffect) {
+		return !statusEffect.isIn(SpectrumStatusEffectTags.NO_DURATION_EXTENSION);
 	}
 	
 	public static int getExtendedDuration(int originalDuration, int prolongingAmplifier) {

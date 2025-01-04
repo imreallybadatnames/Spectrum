@@ -36,8 +36,8 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 
 		List<StatusEffectInstance> negativeEffects = new ArrayList<>();
 		for (StatusEffectInstance statusEffectInstance : currentEffects) {
-			var effect = statusEffectInstance.getEffectType().value();
-			if (effect.getCategory() == category && !SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.SOPORIFIC, effect) && !SpectrumStatusEffectTags.isIncurable(effect)) {
+			var effect = statusEffectInstance.getEffectType();
+			if (effect.value().getCategory() == category && !effect.isIn(SpectrumStatusEffectTags.SOPORIFIC) && !SpectrumStatusEffectTags.isIncurable(effect)) {
 				negativeEffects.add(statusEffectInstance);
 			}
 		}
@@ -89,8 +89,8 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 		}
 	}
 	
-	public static boolean affects(StatusEffect statusEffect) {
-		return statusEffect.getCategory() == StatusEffectCategory.HARMFUL && !SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.SOPORIFIC, statusEffect) && !SpectrumStatusEffectTags.isIncurable(statusEffect);
+	public static boolean affects(RegistryEntry<StatusEffect> effect) {
+		return effect.value().getCategory() == StatusEffectCategory.HARMFUL && !effect.isIn(SpectrumStatusEffectTags.SOPORIFIC) && !SpectrumStatusEffectTags.isIncurable(effect);
 	}
 	
 	public static void preventPhantomSpawns(@NotNull ServerPlayerEntity serverPlayerEntity) {

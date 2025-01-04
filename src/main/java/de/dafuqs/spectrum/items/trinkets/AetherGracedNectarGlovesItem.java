@@ -46,12 +46,12 @@ public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implement
 		modifiers.put(SpectrumEntityAttributes.MENTAL_PRESENCE, new EntityAttributeModifier(MENTAL_PRESENCE_ATTRIBUTE_ID, -1F, EntityAttributeModifier.Operation.ADD_VALUE));
 		return modifiers;
 	}
-
-	public static boolean testEffectFor(LivingEntity entity, StatusEffect effect) {
-		if (effect.isBeneficial())
+	
+	public static boolean testEffectFor(LivingEntity entity, RegistryEntry<StatusEffect> effect) {
+		if (effect.value().isBeneficial())
 			return false;
-
-		if (SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.SOPORIFIC, effect))
+		
+		if (effect.isIn(SpectrumStatusEffectTags.SOPORIFIC))
 			return false;
 
 		var trinkets = TrinketsApi.getTrinketComponent(entity);
@@ -60,7 +60,7 @@ public class AetherGracedNectarGlovesItem extends AzureDikeTrinketItem implement
 			return false;
 
 		var component = trinkets.get();
-		return component.isEquipped(SpectrumItems.AETHER_GRACED_NECTAR_GLOVES) && (effect.getCategory() == StatusEffectCategory.HARMFUL || effect == SpectrumStatusEffects.FRENZY);
+		return component.isEquipped(SpectrumItems.AETHER_GRACED_NECTAR_GLOVES) && (effect.value().getCategory() == StatusEffectCategory.HARMFUL || effect == SpectrumStatusEffects.FRENZY);
 	}
 
 	public static boolean tryBlockEffect(LivingEntity entity, int cost) {

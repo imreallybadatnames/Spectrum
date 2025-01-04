@@ -3,8 +3,7 @@ package de.dafuqs.spectrum.mixin.client;
 import com.llamalad7.mixinextras.injector.*;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.*;
-import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.status_effect.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.render.*;
 import de.dafuqs.spectrum.status_effects.*;
@@ -21,12 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 
-    @Unique
-    private static final Identifier INCURABLE_EFFECT_BACKGROUNDS = SpectrumCommon.locate("textures/gui/incurable_effect_backgrounds.png");
-    @Unique
-    private static final Identifier NIGHT_EFFECT_BACKGROUNDS = SpectrumCommon.locate("textures/gui/night_alchemy_effect_backgrounds.png");
-    @Unique
-    private static final Identifier DIVINITY_EFFECT_BACKGROUNDS = SpectrumCommon.locate("textures/gui/divinity_effect_backgrounds.png");
 
     @Shadow protected abstract PlayerEntity getCameraPlayer();
 
@@ -86,30 +79,14 @@ public abstract class InGameHudMixin {
         MinecraftClient client = MinecraftClient.getInstance();
         return SpectrumDimensions.DIMENSION_KEY.equals(client.player.getWorld().getRegistryKey());
     }
-
-    @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V", ordinal = 0))
+    
+    @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
     private Identifier modifyAmbientEffectBackgrounds(Identifier texture, @Local StatusEffectInstance effect) {
-        return getTexture(texture, effect);
+        return StatusEffectHelper.getTexture(texture, effect);
     }
-
-    @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V", ordinal = 1))
+    
+    @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 1))
     private Identifier modifyEffectBackgrounds(Identifier texture, @Local StatusEffectInstance effect) {
-        return getTexture(texture, effect);
-    }
-
-    private static Identifier getTexture(Identifier texture, StatusEffectInstance effect) {
-        var type = effect.getEffectType();
-
-        if (type == SpectrumStatusEffects.DIVINITY)
-            return DIVINITY_EFFECT_BACKGROUNDS;
-
-        if (Incurable.isIncurable(effect) && type != SpectrumStatusEffects.ETERNAL_SLUMBER && type != SpectrumStatusEffects.FATAL_SLUMBER) {
-            return INCURABLE_EFFECT_BACKGROUNDS;
-        }
-
-        if (SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.NIGHT_ALCHEMY, type))
-            return NIGHT_EFFECT_BACKGROUNDS;
-
-        return texture;
+        return StatusEffectHelper.getTexture(texture, effect);
     }
 }

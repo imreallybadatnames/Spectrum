@@ -1,13 +1,14 @@
 package de.dafuqs.spectrum.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.*;
+import com.llamalad7.mixinextras.sugar.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.*;
 import net.minecraft.entity.damage.*;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.*;
+import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -21,11 +22,10 @@ public abstract class WitherEntityMixin extends LivingEntity {
 	}
 
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ItemEntity;setCovetedItem()V"),
-			method = "dropEquipment(Lnet/minecraft/entity/damage/DamageSource;IZ)V", locals = LocalCapture.CAPTURE_FAILSOFT)
-	private void spawnEntity(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci, ItemEntity itemEntity) {
+			method = "dropEquipment(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;Z)V", locals = LocalCapture.CAPTURE_FAILSOFT)
+	private void spawnEntity(ServerWorld world, DamageSource source, boolean causedByPlayer, CallbackInfo ci, ItemEntity itemEntity) {
 		Entity attackerEntity = source.getAttacker();
 		if (attackerEntity instanceof LivingEntity livingAttacker) {
-			World world = attackerEntity.getWorld();
 			int cloversFavorLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), SpectrumEnchantments.CLOVERS_FAVOR, livingAttacker.getMainHandStack());
 			if (cloversFavorLevel > 0) {
 				int additionalCount = (int) (cloversFavorLevel / 2.0F + world.random.nextFloat() * cloversFavorLevel);
@@ -36,10 +36,9 @@ public abstract class WitherEntityMixin extends LivingEntity {
 
 	@ModifyReturnValue(method = "addStatusEffect", at = @At("TAIL"))
 	private boolean spectrum$allowWitherNaps(boolean original, @Local(argsOnly = true) StatusEffectInstance effect, @Local(argsOnly = true) Entity source) {
-		if (SpectrumStatusEffectTags.isIn(SpectrumStatusEffectTags.SOPORIFIC, effect.getEffectType())) {
+		if (effect.getEffectType().isIn(SpectrumStatusEffectTags.SOPORIFIC)) {
 			return super.addStatusEffect(effect, source);
 		}
-
 		return original;
 	}
 }

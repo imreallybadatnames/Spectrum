@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 
 public class SpectrumStatusEffectTags {
@@ -23,13 +24,9 @@ public class SpectrumStatusEffectTags {
 	private static TagKey<StatusEffect> of(String id) {
 		return TagKey.of(RegistryKeys.STATUS_EFFECT, SpectrumCommon.locate(id));
 	}
-
-	public static boolean isIn(TagKey<StatusEffect> tag, StatusEffect effect) {
-		return Registries.STATUS_EFFECT.getEntry(effect).isIn(tag);
-	}
 	
-	public static boolean isIncurable(StatusEffect statusEffect) {
-		return isIn(SpectrumStatusEffectTags.INCURABLE, statusEffect);
+	public static boolean isIncurable(RegistryEntry<StatusEffect> effect) {
+		return effect.isIn(SpectrumStatusEffectTags.INCURABLE);
 	}
 	
 	public static boolean hasEffectWithTag(LivingEntity livingEntity, TagKey<StatusEffect> tag) {
