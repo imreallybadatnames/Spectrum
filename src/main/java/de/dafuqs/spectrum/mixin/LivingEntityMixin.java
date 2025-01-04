@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.*;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.*;
 import com.llamalad7.mixinextras.sugar.ref.*;
-import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.damage_type.*;
 import de.dafuqs.spectrum.api.entity.*;
@@ -26,8 +25,8 @@ import de.dafuqs.spectrum.status_effects.*;
 import dev.emi.trinkets.api.*;
 import net.fabricmc.fabric.api.tag.convention.v1.*;
 import net.minecraft.block.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -36,14 +35,8 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -197,8 +190,8 @@ public abstract class LivingEntityMixin {
 
 		return original;
 	}
-
-	@ModifyExpressionValue(method = "isBlocking", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getMaxUseTime(Lnet/minecraft/item/ItemStack;)I"))
+	
+	@ModifyExpressionValue(method = "isBlocking", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getMaxUseTime(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/LivingEntity;)I"))
 	private int spectrum$allowInstantBlockForParryingSwords(int original) {
 		if (activeItemStack.getItem() instanceof ParryingSwordItem)
 			return Integer.MAX_VALUE;

@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.nbt.*;
 import net.minecraft.text.*;
 import org.spongepowered.asm.mixin.*;
@@ -13,8 +13,8 @@ import java.util.*;
 
 @Mixin(PotionItem.class)
 public abstract class PotionItemMixin {
-
-	@ModifyReturnValue(method = "getMaxUseTime(Lnet/minecraft/item/ItemStack;)I", at = @At("RETURN"))
+	
+	@ModifyReturnValue(method = "getMaxUseTime(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/LivingEntity;)I", at = @At("RETURN"))
 	private int spectrum$modifyDrinkTime(int drinkTime, ItemStack stack) {
 		NbtCompound compound = stack.getNbt();
 		if (compound != null && compound.contains("SpectrumAdditionalDrinkDuration", NbtElement.NUMBER_TYPE)) {
