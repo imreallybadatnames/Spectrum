@@ -27,6 +27,7 @@ public abstract class GeodesGenerateWithGemstoneOresMixin {
 	 *
 	 * @param context The GeodeFeatures feature config
 	 */
+	@Unique
 	private void generateGemstoneOres(FeatureContext<GeodeFeatureConfig> context) {
 		BlockState gemBlock = context.getConfig().layerConfig.innerLayerProvider.get(context.getRandom(), context.getOrigin());
 		if (gemBlock != null) {
@@ -66,6 +67,7 @@ public abstract class GeodesGenerateWithGemstoneOresMixin {
 	 * @param blockState The blockstate the geode generates with
 	 * @return the matching ore for that block state. Does return null if no matching ore exists. For example if another mod adds additional geodes
 	 */
+	@Unique
 	private BlockState getGemstoneOreForGeodeBlock(BlockState blockState) {
 		Block block = blockState.getBlock();
 		if (block.equals(Blocks.AMETHYST_BLOCK)) {
@@ -89,6 +91,7 @@ public abstract class GeodesGenerateWithGemstoneOresMixin {
 	 * @param blockState The blockstate the geode generates with
 	 * @return the matching ore for that block state. Does return null if no matching ore exists. For example if another mod adds additional geodes
 	 */
+	@Unique
 	private BlockState getGemstoneDeepslateOreForGeodeBlock(BlockState blockState) {
 		Block block = blockState.getBlock();
 		if (block.equals(Blocks.AMETHYST_BLOCK)) {
@@ -112,6 +115,7 @@ public abstract class GeodesGenerateWithGemstoneOresMixin {
 	 * @param blockState The blockstate the geode generates with
 	 * @return the matching ore for that block state. Does return null if no matching ore exists. For example if another mod adds additional geodes
 	 */
+	@Unique
 	private BlockState getGemstoneBlackslagOreForGeodeBlock(BlockState blockState) {
 		Block block = blockState.getBlock();
 		if (block.equals(Blocks.AMETHYST_BLOCK)) {
