@@ -1,26 +1,41 @@
 package de.dafuqs.spectrum.mixin;
 
+import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.spectrum.enchantments.*;
+import net.minecraft.enchantment.*;
+import net.minecraft.entity.*;
 import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.*;
+import net.minecraft.registry.entry.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
 
-@Mixin(RandomChanceWithLootingLootCondition.class)
+@Mixin(RandomChanceWithEnchantedBonusLootCondition.class)
 public abstract class RandomChanceWithLootingLootConditionMixin {
 	
 	@Shadow
 	@Final
-	float chance;
+	private EnchantmentLevelBasedValue enchantedChance;
 	
-	@Inject(at = @At("RETURN"), method = "test(Lnet/minecraft/loot/context/LootContext;)Z", cancellable = true)
-	public void spectrum$applyRareLootEnchantment(LootContext lootContext, CallbackInfoReturnable<Boolean> cir) {
+	@Shadow
+	@Final
+	private RegistryEntry<Enchantment> enchantment;
+	
+	@ModifyReturnValue(at = @At("RETURN"), method = "test(Lnet/minecraft/loot/context/LootContext;)Z")
+	public boolean spectrum$applyRareLootEnchantment(boolean original, LootContext context) {
 		// if the result was to not drop a drop before reroll
 		// gets more probable with each additional level of Clovers Favor
-		if (!cir.getReturnValue() && this.chance < 1.0F) {
-			cir.setReturnValue(lootContext.getRandom().nextFloat() < CloversFavorEnchantment.rollChance(this.chance, lootContext.get(LootContextParameters.KILLER_ENTITY)));
+		if (!original) {
+			// TODO: can we use localcapture here to avoid recalculating these values?
+			if (context.get(LootContextParameters.ATTACKING_ENTITY) instanceof LivingEntity livingEntity) {
+				int level = EnchantmentHelper.getEquipmentLevel(this.enchantment, livingEntity);
+				if (level > 0) {
+					float enchantedChanceValue = this.enchantedChance.getValue(level);
+					original = context.getRandom().nextFloat() < CloversFavorEnchantment.rollChance(enchantedChanceValue, context.get(LootContextParameters.ATTACKING_ENTITY));
+				}
+			}
 		}
+		return original;
 	}
 	
 }

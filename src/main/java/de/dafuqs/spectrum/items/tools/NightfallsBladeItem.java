@@ -24,7 +24,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class NightfallsBladeItem extends ToolItem implements Vanishable, InkPoweredPotionFillable, SlotBackgroundEffectProvider {
+public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFillable, SlotBackgroundEffectProvider {
 	
 	private static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/equipment/nightfalls_blade");
 	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("8e2e05ef-a48a-4e2d-9633-388edcb21ea3");

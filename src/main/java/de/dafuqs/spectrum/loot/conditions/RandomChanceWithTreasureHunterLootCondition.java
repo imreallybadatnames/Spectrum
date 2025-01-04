@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.loot.conditions;
 
 import com.google.common.collect.*;
 import com.google.gson.*;
-import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.loot.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
@@ -14,7 +14,6 @@ import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
-import net.minecraft.util.JsonSerializer;
 import net.minecraft.util.*;
 
 import java.util.*;
