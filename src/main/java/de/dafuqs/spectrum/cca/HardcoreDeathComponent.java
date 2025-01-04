@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 import org.ladysnake.cca.api.v3.component.*;
@@ -19,7 +20,7 @@ public class HardcoreDeathComponent implements Component {
 	private final static List<UUID> playersThatDiedInHardcore = new ArrayList<>();
 	
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		NbtList uuidList = new NbtList();
 		for (UUID playerThatDiedInHardcore : playersThatDiedInHardcore) {
 			uuidList.add(NbtHelper.fromUuid(playerThatDiedInHardcore));
@@ -28,7 +29,7 @@ public class HardcoreDeathComponent implements Component {
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		playersThatDiedInHardcore.clear();
 		NbtList uuidList = tag.getList("HardcoreDeaths", NbtElement.INT_ARRAY_TYPE);
 		for (NbtElement listEntry : uuidList) {
@@ -40,8 +41,8 @@ public class HardcoreDeathComponent implements Component {
 		return player.hasStatusEffect(SpectrumStatusEffects.DIVINITY);
 	}
 	
-	public static void addHardcoreDeath(GameProfile profile) {
-		addHardcoreDeath(profile.getId());
+	public static void addHardcoreDeath(ServerWorld world, GameProfile profile) {
+		addHardcoreDeath(world, profile.getId());
 	}
 	
 	public static void removeHardcoreDeath(GameProfile profile) {
@@ -52,11 +53,11 @@ public class HardcoreDeathComponent implements Component {
 		return hasHardcoreDeath(profile.getId());
 	}
 	
-	protected static void addHardcoreDeath(UUID uuid) {
+	protected static void addHardcoreDeath(ServerWorld world, UUID uuid) {
 		if (!playersThatDiedInHardcore.contains(uuid)) {
 			playersThatDiedInHardcore.add(uuid);
 		}
-		SpectrumCommon.minecraftServer.getPlayerManager().getPlayer(uuid).changeGameMode(GameMode.SPECTATOR);
+		world.getServer().getPlayerManager().getPlayer(uuid).changeGameMode(GameMode.SPECTATOR);
 	}
 	
 	protected static boolean hasHardcoreDeath(UUID uuid) {

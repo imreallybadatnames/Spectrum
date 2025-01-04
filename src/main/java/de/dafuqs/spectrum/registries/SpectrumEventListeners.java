@@ -337,9 +337,9 @@ public class SpectrumEventListeners {
 		});
 		
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
-			if (entity instanceof PlayerEntity player) {
+			if (entity instanceof ServerPlayerEntity player) {
 				if (entity.getWorld().getLevelProperties().isHardcore() || HardcoreDeathComponent.isInHardcore(player)) {
-					HardcoreDeathComponent.addHardcoreDeath(player.getGameProfile());
+					HardcoreDeathComponent.addHardcoreDeath(player.getServerWorld(), player.getGameProfile());
 				}
 			}
 		});

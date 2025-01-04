@@ -10,7 +10,7 @@ public class SpectrumComponentInitializers implements EntityComponentInitializer
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
 		registry.registerFor(LivingEntity.class, AzureDikeProvider.AZURE_DIKE_COMPONENT, DefaultAzureDikeComponent::new);
-		registry.registerForPlayers(AzureDikeProvider.AZURE_DIKE_COMPONENT, DefaultAzureDikeComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+		registry.registerForPlayers(AzureDikeProvider.AZURE_DIKE_COMPONENT, DefaultAzureDikeComponent::new, (original, clone, wrapperLookup, lossless, keepInventory, sameCharacter) -> clone.set(original.getMaxProtection(), original.getTicksPerPointOfRecharge(), original.getRechargeDelayTicksAfterGettingHit(), lossless));
 		
 		registry.beginRegistration(LivingEntity.class, EverpromiseRibbonComponent.EVERPROMISE_RIBBON_COMPONENT).respawnStrategy(RespawnCopyStrategy.ALWAYS_COPY).end(EverpromiseRibbonComponent::new);
 

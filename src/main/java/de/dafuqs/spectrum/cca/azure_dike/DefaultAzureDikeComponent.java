@@ -8,7 +8,7 @@ import net.minecraft.server.network.*;
 import org.jetbrains.annotations.*;
 import org.ladysnake.cca.api.v3.component.sync.*;
 
-public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSyncedComponent, PlayerCopyCallback {
+public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSyncedComponent {
 	
 	public final static int BASE_RECHARGE_DELAY_TICKS = 40;
 	public final static int BASE_RECHARGE_DELAY_TICKS_AFTER_DAMAGE = 200;
@@ -87,7 +87,7 @@ public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSynced
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		this.currentProtection = tag.getInt("protection");
 		this.currentRechargeDelay = tag.getInt("current_recharge_delay");
 		
@@ -97,7 +97,7 @@ public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSynced
 	}
 	
 	@Override
-	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		tag.putFloat("protection", this.currentProtection);
 		tag.putInt("current_recharge_delay", this.currentRechargeDelay);
 		
@@ -118,13 +118,6 @@ public class DefaultAzureDikeComponent implements AzureDikeComponent, AutoSynced
 				SpectrumAdvancementCriteria.AZURE_DIKE_CHARGE.trigger(serverPlayerEntity, this.currentProtection, this.ticksPerPointOfRecharge, 1);
 			}
 		}
-	}
-	
-	@Override
-	public void copyData(@NotNull ServerPlayerEntity original, @NotNull ServerPlayerEntity clone, boolean lossless) {
-		AzureDikeComponent o = AzureDikeProvider.AZURE_DIKE_COMPONENT.get(original);
-		AzureDikeComponent c = AzureDikeProvider.AZURE_DIKE_COMPONENT.get(clone);
-		c.set(o.getMaxProtection(), o.getTicksPerPointOfRecharge(), o.getRechargeDelayTicksAfterGettingHit(), lossless);
 	}
 	
 }

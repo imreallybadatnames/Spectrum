@@ -24,14 +24,14 @@ public class EverpromiseRibbonComponent implements Component {
 	}
 	
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		if (this.hasRibbon) {
 			tag.putBoolean("has_everpromise_ribbon", true);
 		}
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.@NotNull WrapperLookup wrapperLookup) {
 		this.hasRibbon = tag.getBoolean("has_everpromise_ribbon");
 	}
 	

@@ -58,6 +58,6 @@ public class EntityFishingPredicate {
 				&& (this.moonPhasePredicate.isEmpty() || this.moonPhasePredicate.get().test(world, pos))
 				&& (this.timeOfDayPredicate.isEmpty() || this.timeOfDayPredicate.get().test(world, pos))
 				&& (this.weatherPredicate.isEmpty() || this.weatherPredicate.get().test(world, pos))
-				&& (this.commandPredicate.isEmpty() || this.commandPredicate.get().test(world, pos)));
+				&& (this.commandPredicate.isEmpty() || this.commandPredicate.get().test(world, pos));
 	}
 }
