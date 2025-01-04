@@ -79,7 +79,7 @@ public class KindlingCoughEntity extends ProjectileEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 	}
 	
 	@Override

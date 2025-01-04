@@ -39,7 +39,7 @@ public class RandomChanceWithTreasureHunterLootCondition implements LootConditio
 	
 	@Override
 	public Set<LootContextParameter<?>> getRequiredParameters() {
-		return ImmutableSet.of(LootContextParameters.KILLER_ENTITY);
+		return ImmutableSet.of(LootContextParameters.ATTACKING_ENTITY);
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class RandomChanceWithTreasureHunterLootCondition implements LootConditio
 			return true;
 		}
 		
-		Entity entity = lootContext.get(LootContextParameters.KILLER_ENTITY);
+		Entity entity = lootContext.get(LootContextParameters.ATTACKING_ENTITY);
 		int treasureHunterLevel = 0;
 		if (entity instanceof PlayerEntity playerEntity) {
 			treasureHunterLevel = SpectrumEnchantmentHelper.getEquipmentLevel(
@@ -64,7 +64,7 @@ public class RandomChanceWithTreasureHunterLootCondition implements LootConditio
 		} else {
 			boolean success = lootContext.getRandom().nextFloat() < this.chance * treasureHunterLevel;
 			if (success) {
-				Entity killerEntity = lootContext.get(LootContextParameters.KILLER_ENTITY);
+				Entity killerEntity = lootContext.get(LootContextParameters.ATTACKING_ENTITY);
 				if (killerEntity instanceof ServerPlayerEntity serverPlayerEntity) {
 					SpectrumAdvancementCriteria.TREASURE_HUNTER_DROP.trigger(serverPlayerEntity, advancementTriggerItemStack);
 				}

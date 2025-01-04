@@ -148,7 +148,7 @@ public class Support {
 		ServerAdvancementLoader sal = serverPlayerEntity.getServer().getAdvancementLoader();
 		PlayerAdvancementTracker tracker = serverPlayerEntity.getAdvancementTracker();
 		
-		Advancement advancement = sal.get(advancementIdentifier);
+		AdvancementEntry advancement = sal.get(advancementIdentifier);
 		if (advancement == null) {
 			SpectrumCommon.logError("Trying to grant a criterion \"" + criterion + "\" for an advancement that does not exist: " + advancementIdentifier);
 		} else {

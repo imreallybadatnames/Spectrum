@@ -9,8 +9,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
@@ -66,14 +65,14 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 
 	public BottomlessBundleBlockEntity(BlockPos pos, BlockState state) {
 		super(SpectrumBlockEntities.BOTTOMLESS_BUNDLE, pos, state);
-		this.bottomlessBundleStack = SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack();
+		this.bottomlessBundleStack = SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem().getDefaultStack();
 	}
 
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
 		this.setBundleUnsynced(ItemStack.fromNbt(registryLookup, nbt.getCompound("Bundle"))
-				.orElse(SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack()), registryLookup);
+				.orElse(SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem().getDefaultStack()), registryLookup);
 		syncStorageWithBundle();
 	}
 
@@ -113,7 +112,7 @@ public class BottomlessBundleBlockEntity extends BlockEntity {
 
 	public ItemStack retrieveBundle() {
 		if (this.bottomlessBundleStack.isEmpty()) {
-			return SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack();
+			return SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem().getDefaultStack();
 		} else {
 			syncBundleWithStorage();
 			return this.bottomlessBundleStack;

@@ -120,7 +120,7 @@ public class ShootingStarEntity extends Entity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		this.getDataTracker().startTracking(SHOOTING_STAR_TYPE, ShootingStar.Type.COLORFUL.ordinal());
 		this.getDataTracker().startTracking(PLAYER_PLACED, false);
 		this.getDataTracker().startTracking(HARDENED, false);

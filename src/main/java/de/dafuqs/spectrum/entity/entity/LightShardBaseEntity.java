@@ -58,7 +58,7 @@ public abstract class LightShardBaseEntity extends ProjectileEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		this.dataTracker.startTracking(MAX_AGE, 20);
 	}
 	

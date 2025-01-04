@@ -114,7 +114,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(VARIANT, KindlingVariant.DEFAULT);
 		this.dataTracker.startTracking(ANGER, 0);

@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.events.listeners;
 
 import de.dafuqs.spectrum.events.*;
 import net.minecraft.entity.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -34,17 +35,15 @@ public class ItemAndExperienceEventQueue implements GameEventListener {
 	}
 	
 	@Override
-	public boolean listen(ServerWorld world, GameEvent event, GameEvent.Emitter emitter, Vec3d emitterPos) {
+	public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
 		if (event != SpectrumGameEvents.ENTITY_SPAWNED) {
 			return false;
 		}
 
 		Entity entity = emitter.sourceEntity();
-
-		return (
-				entity instanceof ItemEntity && itemListener.eventQueue.listen(world, event, emitter, emitterPos) ||
-						entity instanceof ExperienceOrbEntity && experienceListener.eventQueue.listen(world, event, emitter, emitterPos)
-		);
+		
+		return (entity instanceof ItemEntity && itemListener.eventQueue.listen(world, event, emitter, emitterPos)
+				|| entity instanceof ExperienceOrbEntity && experienceListener.eventQueue.listen(world, event, emitter, emitterPos));
 	}
 	
 	public void tick(World world) {

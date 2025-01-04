@@ -5,8 +5,6 @@ import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.entity.variants.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.ai.goal.*;
@@ -101,7 +99,7 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(COLOR, InkColors.MAGENTA);
 		this.dataTracker.startTracking(FRILL_VARIANT, LizardFrillVariant.SIMPLE);

@@ -163,7 +163,7 @@ public class GlassArrowEntity extends PersistentProjectileEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(VARIANT, GlassArrowVariant.MALACHITE);
 	}

@@ -94,11 +94,11 @@ public class SeatEntity extends Entity {
     public void incrementEmptyTicks() {
         setEmptyTicks(getEmptyTicks() + 1);
     }
-
+    
     @Override
-    protected void initDataTracker() {
-        dataTracker.startTracking(EMPTY_TICKS, 0);
-        dataTracker.startTracking(CUSHION, Optional.empty());
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(EMPTY_TICKS, 0);
+        builder.add(CUSHION, Optional.empty());
     }
 
     @Override

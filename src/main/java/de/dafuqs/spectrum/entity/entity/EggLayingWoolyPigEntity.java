@@ -137,7 +137,7 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(COLOR_AND_SHEARED, (byte) 0);
 		this.dataTracker.startTracking(HATLESS, false);

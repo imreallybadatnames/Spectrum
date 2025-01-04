@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.entity.entity;
 
 import de.dafuqs.spectrum.api.entity.*;
-import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.tools.*;
@@ -395,7 +394,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(HIT, false);
 		this.dataTracker.startTracking(PROPELLED, false);

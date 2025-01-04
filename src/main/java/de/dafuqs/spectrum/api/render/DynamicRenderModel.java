@@ -1,25 +1,19 @@
 package de.dafuqs.spectrum.api.render;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.Baker;
-import net.minecraft.client.render.model.ModelBakeSettings;
-import net.minecraft.client.render.model.UnbakedModel;
-import net.minecraft.client.render.model.json.ModelOverrideList;
-import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
+import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.renderer.v1.model.*;
+import net.minecraft.client.render.model.*;
+import net.minecraft.client.render.model.json.*;
+import net.minecraft.client.texture.*;
+import net.minecraft.client.util.*;
+import net.minecraft.client.world.*;
+import net.minecraft.entity.*;
+import net.minecraft.item.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Function;
+import java.util.*;
+import java.util.function.*;
 
 @Environment(EnvType.CLIENT)
 public class DynamicRenderModel extends ForwardingBakedModel implements UnbakedModel {
@@ -83,10 +77,10 @@ public class DynamicRenderModel extends ForwardingBakedModel implements UnbakedM
     public void setParents(Function<Identifier, UnbakedModel> modelLoader) {
         this.baseUnbaked.setParents(modelLoader);
     }
-
-    @Nullable
+    
     @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        return this.wrap(this.baseUnbaked.bake(baker, textureGetter, rotationContainer, modelId));
+    public @Nullable BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
+        return this.wrap(this.baseUnbaked.bake(baker, textureGetter, rotationContainer));
     }
+    
 }

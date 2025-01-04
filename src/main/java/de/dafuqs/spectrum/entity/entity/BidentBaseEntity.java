@@ -21,7 +21,7 @@ public abstract class BidentBaseEntity extends TridentEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(STACK, Items.AIR.getDefaultStack());
 	}

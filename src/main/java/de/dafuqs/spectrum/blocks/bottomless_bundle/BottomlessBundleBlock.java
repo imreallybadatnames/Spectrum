@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
@@ -105,7 +105,7 @@ public class BottomlessBundleBlock extends BlockWithEntity {
 	
 	@Override
 	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
-		return SpectrumItems.BOTTOMLESS_BUNDLE.getDefaultStack();
+		return SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem().getDefaultStack();
 	}
 	
 	@Override

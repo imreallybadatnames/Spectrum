@@ -222,7 +222,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker();
 		this.dataTracker.startTracking(HIT, false);
 	}

@@ -133,7 +133,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 		this.getDataTracker().startTracking(HOOK_ENTITY_ID, 0);
 		this.getDataTracker().startTracking(CAUGHT_FISH, false);
 		this.getDataTracker().startTracking(ABLAZE, false);

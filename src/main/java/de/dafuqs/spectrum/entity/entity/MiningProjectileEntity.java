@@ -44,7 +44,7 @@ public class MiningProjectileEntity extends MagicProjectileEntity {
 	}
 
 	@Override
-	protected void initDataTracker() {
+	protected void initDataTracker(DataTracker.Builder builder) {
 
 	}
 

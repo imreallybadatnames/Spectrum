@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
-import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.*;
@@ -104,9 +103,9 @@ public class LightMineEntity extends LightShardBaseEntity {
     }
     
     @Override
-    protected void initDataTracker() {
+    protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker();
-        this.dataTracker.startTracking(COLOR, NO_POTION_COLOR);
+        builder.add(COLOR, NO_POTION_COLOR);
     }
     
     @Override
