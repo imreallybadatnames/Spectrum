@@ -34,7 +34,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.function.*;
 
-public class MonstrosityEntity extends SpectrumBossEntity {
+public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttackMob {
 
 	public static @Nullable MonstrosityEntity theOneAndOnly = null;
 	public static final Predicate<LivingEntity> ENTITY_TARGETS = (entity) -> {
@@ -252,11 +252,6 @@ public class MonstrosityEntity extends SpectrumBossEntity {
 		}
 		return entity.getPos().distanceTo(this.getPos()) < 128;
 	}
-
-	@Override
-	public EntityGroup getGroup() {
-		return EntityGroup.UNDEAD;
-	}
 	
 	@Override
 	protected Text getDefaultName() {
@@ -264,7 +259,7 @@ public class MonstrosityEntity extends SpectrumBossEntity {
 	}
 	
 	@Override
-	public void attack(LivingEntity target, float pullProgress) {
+	public void shootAt(LivingEntity target, float pullProgress) {
 		var world = target.getWorld();
 		if (world.random.nextBoolean()) {
 			LightShardBaseEntity.summonBarrageInternal(world, this, () -> {
@@ -305,6 +300,7 @@ public class MonstrosityEntity extends SpectrumBossEntity {
 		}
 	}
 	
+	ZombieEntity
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
