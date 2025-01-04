@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "spectrum:irradiance",
     "spectrum:set_health",

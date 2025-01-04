@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "#minecraft:bypasses_invulnerability",
     "#minecraft:is_drowning",
