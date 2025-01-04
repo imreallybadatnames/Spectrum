@@ -3,6 +3,8 @@
   "values": [
     "spectrum:ink_projectile",
     "spectrum:mining_projectile",
-    "spectrum:bident"
+    "spectrum:bident",
+    "spectrum:dragon_talon",
+    "spectrum:draconic_twinsword"
   ]
 }
