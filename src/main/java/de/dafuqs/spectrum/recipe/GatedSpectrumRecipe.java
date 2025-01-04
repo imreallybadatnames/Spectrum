@@ -9,7 +9,7 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
-public class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C> {
+public abstract class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C> {
 	
 	public final String group;
 	public final boolean secret;
@@ -43,8 +43,10 @@ public class GatedSpectrumRecipe<C extends RecipeInput> implements GatedRecipe<C
 	}
 	
 	@Override
-	public abstract Identifier getRecipeTypeUnlockIdentifier();
-
+	public Identifier getRecipeTypeUnlockIdentifier() {
+		return null;
+	}
+	
 	//TODO: Should this be false when the recipe is unlocked?
 	@Override
 	public boolean isIgnoredInRecipeBook() {

@@ -1,18 +1,32 @@
 package de.dafuqs.spectrum.recipe.titration_barrel;
 
 import com.google.gson.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
 import net.minecraft.network.*;
 import net.minecraft.util.*;
 
 import java.util.*;
 
-public record FermentationData(float fermentationSpeedMod, float angelsSharePercentPerMcDay,
-							   List<FermentationStatusEffectEntry> statusEffectEntries) {
+public record FermentationData(
+	float fermentationSpeedMod,
+	float angelsSharePercentPerMcDay,
+	List<FermentationStatusEffectEntry> statusEffectEntries
+) {
 	
 	private static final String FERMENTATION_SPEED_MOD_STRING = "fermentation_speed_mod";
 	private static final String ANGELS_SHARE_STRING = "angels_share_percent_per_mc_day";
 	private static final String EFFECTS_STRING = "effects";
 	
+	public static final StructEndec<FermentationData> ENDEC = StructEndecBuilder.of(
+		Endec.FLOAT.fieldOf(FERMENTATION_SPEED_MOD_STRING, FermentationData::fermentationSpeedMod),
+		Endec.FLOAT.fieldOf(ANGELS_SHARE_STRING, FermentationData::angelsSharePercentPerMcDay),
+		FermentationStatusEffectEntry.FERMENTATION_ENTRY_ENDEC.listOf().fieldOf(EFFECTS_STRING, FermentationData::statusEffectEntries),
+		FermentationData::new
+	);
+	
+	// TODO - Once the loot functions that use this, E.G. FermentRandomlyLootFunction
+	// TODO - then all of these, including the nested data structures, should fall away
 	public static FermentationData fromJson(JsonObject jsonObject) {
 		float fermentationSpeedMod = JsonHelper.getFloat(jsonObject, FERMENTATION_SPEED_MOD_STRING, 1.0F);
 		float angelsSharePerMcDay = JsonHelper.getFloat(jsonObject, ANGELS_SHARE_STRING, 0.01F);

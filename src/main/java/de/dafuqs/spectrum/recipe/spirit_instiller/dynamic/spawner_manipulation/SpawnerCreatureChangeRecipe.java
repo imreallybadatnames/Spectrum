@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
-
 import de.dafuqs.spectrum.blocks.mob_head.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
@@ -18,12 +18,12 @@ public class SpawnerCreatureChangeRecipe extends SpawnerChangeRecipe {
 	
 	public static final RecipeSerializer<SpawnerCreatureChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerCreatureChangeRecipe::new);
 	
-	public SpawnerCreatureChangeRecipe(Identifier identifier) {
-		super(IngredientStack.of(Ingredient.fromTag(SpectrumItemTags.SKULLS)), IngredientStack.ofItems(4, SpectrumItems.DOWNSTONE_FRAGMENTS), SpectrumAdvancements.SPAWNER_CREATURE_CHANGE);
+	public SpawnerCreatureChangeRecipe() {
+		super(IngredientStack.ofTag(SpectrumItemTags.SKULLS, 1), IngredientStack.ofItems(4, SpectrumItems.DOWNSTONE_FRAGMENTS), SpectrumAdvancements.SPAWNER_CREATURE_CHANGE);
 	}
 	
 	@Override
-	public boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack firstBowlStack, ItemStack secondBowlStack) {
+	public boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack firstBowlStack, ItemStack secondBowlStack) {
 		Optional<EntityType<?>> entityType = SpectrumSkullBlock.getEntityTypeOfSkullStack(firstBowlStack);
 		entityType = entityType.isEmpty() ? SpectrumSkullBlock.getEntityTypeOfSkullStack(secondBowlStack) : entityType;
 
@@ -35,7 +35,7 @@ public class SpawnerCreatureChangeRecipe extends SpawnerChangeRecipe {
 		}
 		
 		if (spawnerBlockEntityNbt.contains("SpawnData")) {
-			NbtCompound spawnData = spawnerBlockEntityNbt.getCompound("SpawnData");
+			NbtCompound spawnData = spawnerBlockEntityNbt.copyNbt().getCompound("SpawnData");
 			if (spawnData.contains("entity")) {
 				NbtCompound entity = spawnData.getCompound("entity");
 				if (entity.contains("id")) {

@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.api.recipe;
 
 import com.google.gson.*;
 import de.dafuqs.spectrum.*;
+import io.wispforest.endec.*;
 import net.minecraft.server.*;
 import net.minecraft.server.command.*;
 import net.minecraft.server.world.*;
@@ -16,6 +17,8 @@ import java.util.*;
 public interface FusionShrineRecipeWorldEffect {
 	
 	Map<String, FusionShrineRecipeWorldEffect> TYPES = new HashMap<>();
+	
+	Endec<FusionShrineRecipeWorldEffect> ENDEC = Endec.STRING.xmap(FusionShrineRecipeWorldEffect::fromString, Objects::toString);
 
 	FusionShrineRecipeWorldEffect NOTHING = register("nothing", new FusionShrineRecipeWorldEffect.SingleTimeRecipeWorldEffect() {
 		@Override

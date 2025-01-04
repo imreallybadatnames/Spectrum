@@ -3,25 +3,25 @@ package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 
 public class SpawnerSpawnCountChangeRecipe extends SpawnerChangeRecipe {
 	
 	public static final RecipeSerializer<SpawnerSpawnCountChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerSpawnCountChangeRecipe::new);
 	protected static final int DEFAULT_SPAWN_COUNT = 4;
 	protected static final int MAX_SPAWN_COUNT = 16;
-	public SpawnerSpawnCountChangeRecipe(Identifier identifier) {
+	public SpawnerSpawnCountChangeRecipe() {
 		super(IngredientStack.ofItems(4, SpectrumItems.NEOLITH));
 	}
 	
 	@Override
-	public boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
+	public boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
 		if (spawnerBlockEntityNbt.contains("SpawnCount")) {
-			return spawnerBlockEntityNbt.getShort("SpawnCount") < MAX_SPAWN_COUNT;
+			return spawnerBlockEntityNbt.copyNbt().getShort("SpawnCount") < MAX_SPAWN_COUNT;
 		}
 		return true;
 	}

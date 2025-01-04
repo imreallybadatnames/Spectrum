@@ -3,25 +3,26 @@ package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 
 public class SpawnerMaxNearbyEntitiesChangeRecipe extends SpawnerChangeRecipe {
 	
 	public static final RecipeSerializer<SpawnerMaxNearbyEntitiesChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerMaxNearbyEntitiesChangeRecipe::new);
 	protected static final int DEFAULT_MAX_ENTITIES = 6;
 	protected static final int MAX_MAX_ENTITIES = 40;
-	public SpawnerMaxNearbyEntitiesChangeRecipe(Identifier identifier) {
+	
+	public SpawnerMaxNearbyEntitiesChangeRecipe() {
 		super(IngredientStack.ofItems(4, SpectrumItems.MERMAIDS_GEM));
 	}
 	
 	@Override
-	public boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
+	public boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack) {
 		if (spawnerBlockEntityNbt.contains("MaxNearbyEntities")) {
-			return spawnerBlockEntityNbt.getShort("MaxNearbyEntities") < MAX_MAX_ENTITIES;
+			return spawnerBlockEntityNbt.copyNbt().getShort("MaxNearbyEntities") < MAX_MAX_ENTITIES;
 		}
 		return true;
 	}

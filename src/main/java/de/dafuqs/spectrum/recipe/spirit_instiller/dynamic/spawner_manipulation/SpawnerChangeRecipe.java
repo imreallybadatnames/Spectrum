@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller.dynamic.spawner_manipulation;
 
-
 import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.inventory.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
@@ -47,10 +47,12 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 				ItemStack secondBowlStack = rightBowl.getStack(0);
 				ItemStack spawnerStack = spiritInstillerBlockEntity.getStack(0);
 				
-				NbtCompound spawnerNbt = spawnerStack.getOrCreateNbt();
+				// TODO - Review
+				NbtComponent spawnerNbt = spawnerStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+				
 				NbtCompound blockEntityTag;
 				if (spawnerNbt.contains("BlockEntityTag")) {
-					blockEntityTag = spawnerNbt.getCompound("BlockEntityTag").copy();
+					blockEntityTag = spawnerNbt.copyNbt().getCompound("BlockEntityTag");
 				} else {
 					blockEntityTag = new NbtCompound();
 				}
@@ -59,7 +61,8 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 				
 				resultStack = spawnerStack.copy();
 				resultStack.setCount(1);
-				resultStack.setSubNbt("BlockEntityTag", blockEntityTag);
+				
+				resultStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(blockEntityTag));
 				
 				spawnXPAndGrantAdvancements(resultStack, spiritInstillerBlockEntity, spiritInstillerBlockEntity.getUpgradeHolder(), world, pos);
 			}
@@ -70,18 +73,18 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	
 	@Override
 	public boolean canCraftWithStacks(RecipeInput inventory) {
-		NbtCompound blockEntityTag = inventory.getStackInSlot(0).getSubNbt("BlockEntityTag");
-		if (blockEntityTag == null) {
+		NbtComponent blockEntityComponent = inventory.getStackInSlot(0).getOrDefault(DataComponentTypes.BLOCK_ENTITY_DATA, NbtComponent.DEFAULT);
+		if (blockEntityComponent == null) {
 			return true;
 		}
-		return canCraftWithBlockEntityTag(blockEntityTag, inventory.getStackInSlot(1), inventory.getStackInSlot(2));
+		return canCraftWithBlockEntityTag(blockEntityComponent, inventory.getStackInSlot(1), inventory.getStackInSlot(2));
 	}
 	
 	// Overwrite these
 	@Override
 	public abstract RecipeSerializer<?> getSerializer();
 	
-	public abstract boolean canCraftWithBlockEntityTag(NbtCompound spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack);
+	public abstract boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack);
 	
 	public abstract NbtCompound getSpawnerResultNbt(NbtCompound spawnerBlockEntityNbt, ItemStack secondBowlStack, ItemStack centerStack);
 	
