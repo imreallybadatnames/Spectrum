@@ -80,6 +80,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent TRIPLE_MEAT_POT_PIE = new FoodComponent.Builder()
+			.setEatSeconds(4.8F)
 			.nutrition(20).saturationModifier(1.2F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100), 1.0F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 12000, 1), 1.0F)
@@ -344,11 +345,13 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent BERLINER = new FoodComponent.Builder()
+			.setEatSeconds(2.4F)
 			.nutrition(9).saturationModifier(1.5F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 2400), 1.0F)
 			.build();
 
 	public static final FoodComponent CHAUVE_SOURIS_AU_VIN = new FoodComponent.Builder()
+			.setEatSeconds(4.8F)
 			.nutrition(20).saturationModifier(1F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.EFFECT_PROLONGING, 6000, 0), 1.0F)
 			.build();
@@ -362,6 +365,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent CREAM_PASTRY = new FoodComponent.Builder()
+			.setEatSeconds(1.2F)
 			.nutrition(4).saturationModifier(1.5F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 3600, 1), 1.0F)
 			.build();
@@ -398,6 +402,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent HARE_ROAST = new FoodComponent.Builder()
+			.setEatSeconds(3.2F)
 			.nutrition(12).saturationModifier(1F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 1200, 1), 1.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1200), 1)
@@ -439,6 +444,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent PEACHES_FLAMBE = new FoodComponent.Builder()
+			.setEatSeconds(3.2F)
 			.nutrition(14).saturationModifier(1.5F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.TOUGHNESS, 3000, 5), 1.0F)
 			.build();
