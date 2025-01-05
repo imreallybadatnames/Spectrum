@@ -255,7 +255,7 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.TITRATION_BARREL_ID;
+		return "titration_barrel";
 	}
 	
 }

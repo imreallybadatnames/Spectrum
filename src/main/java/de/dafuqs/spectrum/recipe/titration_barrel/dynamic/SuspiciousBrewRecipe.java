@@ -25,7 +25,6 @@ import java.util.*;
 
 public class SuspiciousBrewRecipe extends TitrationBarrelRecipe {
 	
-	public static final RecipeSerializer<SuspiciousBrewRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SuspiciousBrewRecipe::new);
 	public static final Item TAPPING_ITEM = Items.GLASS_BOTTLE;
 	public static final int MIN_FERMENTATION_TIME_HOURS = 4;
 	public static final ItemStack OUTPUT_STACK = getDefaultStackWithCount(SpectrumItems.SUSPICIOUS_BREW, 4);
@@ -124,6 +123,7 @@ public class SuspiciousBrewRecipe extends TitrationBarrelRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.TITRATION_BARREL_SUSPICIOUS_BREW;
 	}
+	
 }

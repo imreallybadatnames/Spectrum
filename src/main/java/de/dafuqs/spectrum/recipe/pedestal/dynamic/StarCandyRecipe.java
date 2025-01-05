@@ -15,8 +15,6 @@ import java.util.*;
 
 public class StarCandyRecipe extends ShapedPedestalRecipe {
 	
-	public static final RecipeSerializer<StarCandyRecipe> SERIALIZER = new EmptyRecipeSerializer<>(StarCandyRecipe::new);
-	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/food/star_candy");
 	public static final float ENCHANTED_STAR_CANDY_CHANCE = 0.02F;
 	
@@ -45,6 +43,11 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS),
 				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS),
 				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS));
+	}
+	
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return SpectrumRecipeSerializers.PEDESTAL_STAR_CANDY;
 	}
 	
 	

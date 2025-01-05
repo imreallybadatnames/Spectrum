@@ -133,7 +133,7 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.ENCHANTMENT_UPGRADE_ID;
+		return "enchantment_upgrade";
 	}
 	
 	@Override

@@ -37,6 +37,10 @@ public class IngredientStack implements CustomIngredient {
 		return ingredient;
 	}
 	
+	public static IngredientStack ofItems(Item item) {
+		return new IngredientStack(Ingredient.ofItems(item), null, 1);
+	}
+	
 	public static IngredientStack ofItems(int count, Item item) {
 		return new IngredientStack(Ingredient.ofItems(item), null, count);
 	}

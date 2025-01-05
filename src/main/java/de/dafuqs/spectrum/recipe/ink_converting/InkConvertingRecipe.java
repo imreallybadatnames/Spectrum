@@ -76,7 +76,7 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.INK_CONVERTING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.INK_CONVERTING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.INK_CONVERTING_ID;
+		return "ink_converting";
 	}
 	
 	public InkColor getInkColor() {

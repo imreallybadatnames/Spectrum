@@ -6,7 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
@@ -69,7 +69,7 @@ public class AnvilCrushingRecipe extends GatedSpectrumRecipe<SingleStackRecipeIn
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.ANVIL_CRUSHING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.ANVIL_CRUSHING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -79,7 +79,7 @@ public class AnvilCrushingRecipe extends GatedSpectrumRecipe<SingleStackRecipeIn
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.ANVIL_CRUSHING_ID;
+		return "anvil_crushing";
 	}
 	
 	@Override

@@ -62,7 +62,7 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackReci
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.CINDERHEARTH_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.CINDERHEARTH_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackReci
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.CINDERHEARTH_ID;
+		return "cinderhearth";
 	}
 
 	@Override

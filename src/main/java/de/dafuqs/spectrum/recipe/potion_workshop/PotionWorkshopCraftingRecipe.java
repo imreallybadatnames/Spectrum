@@ -44,7 +44,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_CRAFTING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.POTION_WORKSHOP_CRAFTING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -118,7 +118,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_CRAFTING_ID;
+		return "potion_workshop_crafting";
 	}
 	
 }

@@ -78,7 +78,7 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.SPIRIT_INSTILLING_SERIALIZER;
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLING_SERIALIZER;
 	}
 	
 	@Override
@@ -164,7 +164,7 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.SPIRIT_INSTILLING_ID;
+		return "spirit_instiller";
 	}
 	
 	public boolean canCraftWithStacks(RecipeInput inventory) {

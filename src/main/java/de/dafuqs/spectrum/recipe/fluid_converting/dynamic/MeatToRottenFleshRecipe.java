@@ -1,19 +1,16 @@
 package de.dafuqs.spectrum.recipe.fluid_converting.dynamic;
 
-import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.*;
+import net.minecraft.registry.tag.*;
 
 public class MeatToRottenFleshRecipe extends DragonrotConvertingRecipe {
 	
-	public static final RecipeSerializer<MeatToRottenFleshRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MeatToRottenFleshRecipe::new);
-	
-	public MeatToRottenFleshRecipe(Identifier identifier) {
-		super(identifier, "", false, UNLOCK_IDENTIFIER, getMeatsIngredient(), Items.ROTTEN_FLESH.getDefaultStack());
+	public MeatToRottenFleshRecipe() {
+		super("", false, UNLOCK_IDENTIFIER, getMeatsIngredient(), Items.ROTTEN_FLESH.getDefaultStack());
 	}
 	
 	private static Ingredient getMeatsIngredient() {
@@ -25,7 +22,7 @@ public class MeatToRottenFleshRecipe extends DragonrotConvertingRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeTypes.DRAGONROT_MEAT_TO_ROTTEN_FLESH;
 	}
 	
 }

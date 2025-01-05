@@ -45,7 +45,7 @@ public class GooConvertingRecipe extends FluidConvertingRecipe {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.GOO_CONVERTING_ID;
+		return "goo_converting";
 	}
 	
 }

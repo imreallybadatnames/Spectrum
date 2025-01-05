@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.explosion.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
-import net.minecraft.inventory.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
@@ -21,10 +21,9 @@ import java.util.*;
 // this hurt to write
 public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	
-	public static final RecipeSerializer<ExplosionModificationRecipe> SERIALIZER = new EmptyRecipeSerializer<>(ExplosionModificationRecipe::new);
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/modular_explosives");
 	
-	public ExplosionModificationRecipe(Identifier id) {
+	public ExplosionModificationRecipe() {
 		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), Map.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
 	}
 	
@@ -174,6 +173,11 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 			}
 		}
 		return new Pair<>(archetypes, modifiers);
+	}
+	
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return SpectrumRecipeSerializers.MODULAR_EXPLOSIVE_MODIFICATION;
 	}
 	
 }

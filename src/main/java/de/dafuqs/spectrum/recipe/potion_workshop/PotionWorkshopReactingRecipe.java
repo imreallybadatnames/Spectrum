@@ -60,7 +60,7 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInpu
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_REACTING_SERIALIZER;
+		return SpectrumRecipeSerializers.POTION_WORKSHOP_REACTING_SERIALIZER;
 	}
 	
 	@Override
@@ -82,7 +82,7 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInpu
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_REACTING_ID;
+		return "potion_workshop_reacting";
 	}
 	
 	@Override

@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
@@ -101,7 +101,7 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.CRYSTALLARIEUM_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.CRYSTALLARIEUM_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -116,7 +116,7 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.CRYSTALLARIEUM_ID;
+		return "crystallarieum_growing";
 	}
 	
 	@Override

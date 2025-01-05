@@ -3,21 +3,20 @@ package de.dafuqs.spectrum.recipe.crafting.dynamic;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.items.magic_items.*;
-import net.minecraft.component.DataComponentTypes;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.world.*;
 
 public class ColorEverpromiseRibbonRecipe extends SpecialCraftingRecipe {
 	
-	public static final RecipeSerializer<ColorEverpromiseRibbonRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ColorEverpromiseRibbonRecipe::new);
-	
-	public ColorEverpromiseRibbonRecipe(CraftingRecipeCategory category) {
-		super(category);
+	public ColorEverpromiseRibbonRecipe() {
+		super(CraftingRecipeCategory.MISC);
 	}
 	
 	@Override
@@ -92,7 +91,7 @@ public class ColorEverpromiseRibbonRecipe extends SpecialCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.COLOR_EVERPROMISE_RIBBON_SERIALIZER;
 	}
 	
 }

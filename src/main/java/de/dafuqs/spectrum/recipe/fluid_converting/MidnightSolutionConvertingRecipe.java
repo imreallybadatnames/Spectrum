@@ -45,7 +45,7 @@ public class MidnightSolutionConvertingRecipe extends FluidConvertingRecipe {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.MIDNIGHT_SOLUTION_CONVERTING_ID;
+		return "midnight_solution_converting";
 	}
 	
 }

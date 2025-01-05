@@ -1,14 +1,12 @@
 package de.dafuqs.spectrum.recipe.crafting.dynamic;
 
 import de.dafuqs.spectrum.items.magic_items.*;
-import de.dafuqs.spectrum.recipe.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.world.*;
 
 public class ClearCraftingTabletRecipe extends SingleItemCraftingRecipe {
-	
-	public static final RecipeSerializer<ClearCraftingTabletRecipe> SERIALIZER = new EmptyRecipeSerializer<>(ClearCraftingTabletRecipe::new);
 	
 	@Override
 	public boolean matches(World world, ItemStack stack) {
@@ -23,7 +21,7 @@ public class ClearCraftingTabletRecipe extends SingleItemCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.CLEAR_CRAFTING_TABLET_SERIALIZER;
 	}
 	
 }

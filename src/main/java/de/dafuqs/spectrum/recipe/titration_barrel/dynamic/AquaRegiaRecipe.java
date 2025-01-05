@@ -20,7 +20,6 @@ import java.util.*;
 
 public class AquaRegiaRecipe extends SweetenableTitrationBarrelRecipe {
 
-	public static final RecipeSerializer<AquaRegiaRecipe> SERIALIZER = new EmptyRecipeSerializer<>(AquaRegiaRecipe::new);
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("hidden/collect_cookbooks/imbrifer_cookbook");
 	public static final int MIN_FERMENTATION_TIME_HOURS = 24;
 	public static final ItemStack OUTPUT_STACK = getDefaultStackWithCount(SpectrumItems.AQUA_REGIA, 4);
@@ -116,7 +115,7 @@ public class AquaRegiaRecipe extends SweetenableTitrationBarrelRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.TITRATION_BARREL_AQUA_REGIA;
 	}
 	
 }

@@ -7,7 +7,6 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
@@ -88,7 +87,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING_ID;
+		return "primordial_fire_burning";
 	}
 	
 	public static PrimordialFireBurningRecipe getRecipeFor(@NotNull World world, ItemStack stack) {

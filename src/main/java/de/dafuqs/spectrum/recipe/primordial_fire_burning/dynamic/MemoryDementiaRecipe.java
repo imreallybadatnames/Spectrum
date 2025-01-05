@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe.primordial_fire_burning.dynamic;
 
 import de.dafuqs.spectrum.blocks.memory.*;
-import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
@@ -12,8 +11,6 @@ import net.minecraft.registry.*;
 import net.minecraft.world.*;
 
 public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
-	
-	public static final RecipeSerializer<MemoryDementiaRecipe> SERIALIZER = new EmptyRecipeSerializer<>(MemoryDementiaRecipe::new);
 	
 	public MemoryDementiaRecipe() {
 		super("", false, UNLOCK_IDENTIFIER,
@@ -36,7 +33,7 @@ public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.MEMORY_DEMENTIA;
 	}
 	
 }

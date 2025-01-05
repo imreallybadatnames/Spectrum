@@ -16,7 +16,7 @@ import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.random.Random;
@@ -109,7 +109,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_BREWING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.POTION_WORKSHOP_BREWING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -384,7 +384,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.POTION_WORKSHOP_BREWING_ID;
+		return "potion_workshop_brewing";
 	}
 	
 }

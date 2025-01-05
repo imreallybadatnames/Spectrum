@@ -21,7 +21,6 @@ public class ShootingStarHardeningRecipe extends FusionShrineRecipe {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("collect_all_shooting_star_variants");
 	public static final Text DESCRIPTION = Text.translatable("spectrum.recipe.fusion_shrine.explanation.shooting_star_hardening");
-	public static final RecipeSerializer<ShootingStarHardeningRecipe> SERIALIZER = new EmptyRecipeSerializer<>(ShootingStarHardeningRecipe::new);
 	
 	public ShootingStarHardeningRecipe() {
 		super("", false, UNLOCK_IDENTIFIER, List.of(IngredientStack.of(Ingredient.fromTag(SpectrumItemTags.SHOOTING_STARS)), IngredientStack.of(Ingredient.ofItems(Items.DIAMOND))), FluidIngredient.of(Fluids.WATER), getHardenedShootingStar(),
@@ -36,7 +35,7 @@ public class ShootingStarHardeningRecipe extends FusionShrineRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.SHOOTING_STAR_HARDENING;
 	}
 	
 	@Override

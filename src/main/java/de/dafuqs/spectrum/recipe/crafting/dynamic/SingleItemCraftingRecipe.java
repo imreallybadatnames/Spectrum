@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.recipe.crafting.dynamic;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.world.*;
 
@@ -11,10 +11,6 @@ public abstract class SingleItemCraftingRecipe extends SpecialCraftingRecipe {
 	
 	public SingleItemCraftingRecipe() {
 		super(CraftingRecipeCategory.MISC);
-	}
-
-	public SingleItemCraftingRecipe(CraftingRecipeCategory category) {
-		super(category);
 	}
 	
 	@Override

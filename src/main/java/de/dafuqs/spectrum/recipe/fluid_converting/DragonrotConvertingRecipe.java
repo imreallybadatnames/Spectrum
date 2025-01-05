@@ -13,8 +13,8 @@ public class DragonrotConvertingRecipe extends FluidConvertingRecipe {
 
     public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("hidden/interact_with_dragonrot");
     private static final Set<Item> outputItems = new HashSet<>();
-
-    public DragonrotConvertingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier, @NotNull Ingredient inputIngredient, ItemStack outputItemStack) {
+    
+    public DragonrotConvertingRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, @NotNull Ingredient inputIngredient, ItemStack outputItemStack) {
         super(group, secret, requiredAdvancementIdentifier, inputIngredient, outputItemStack);
         outputItems.add(outputItemStack.getItem());
     }
@@ -45,7 +45,7 @@ public class DragonrotConvertingRecipe extends FluidConvertingRecipe {
 
     @Override
     public String getRecipeTypeShortID() {
-        return SpectrumRecipeTypes.DRAGONROT_CONVERTING_ID;
+        return "dragonrot_converting";
     }
 
 }

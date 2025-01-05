@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.recipe.primordial_fire_burning.dynamic;
 
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -12,8 +12,6 @@ import net.minecraft.registry.entry.*;
 import net.minecraft.world.*;
 
 public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
-	
-	public static final RecipeSerializer<EnchantedBookUnsoulingRecipe> SERIALIZER = new EmptyRecipeSerializer<>(EnchantedBookUnsoulingRecipe::new);
 	
 	public EnchantedBookUnsoulingRecipe() {
 		// FIXME - What to do about enchantments here?
@@ -44,7 +42,7 @@ public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.ENCHANTED_BOOK_UNSOULING;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
 
-import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
@@ -29,7 +28,7 @@ public class ShapelessPedestalRecipe extends PedestalRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.SHAPELESS_PEDESTAL_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.SHAPELESS_PEDESTAL_RECIPE_SERIALIZER;
 	}
 	
 	@Override

@@ -96,7 +96,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.ENCHANTER_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.ENCHANTER_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -125,7 +125,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.ENCHANTER_ID;
+		return "enchanter";
 	}
 	
 }

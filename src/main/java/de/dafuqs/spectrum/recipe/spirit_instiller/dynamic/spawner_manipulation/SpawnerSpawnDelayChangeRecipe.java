@@ -10,10 +10,10 @@ import net.minecraft.text.*;
 
 public class SpawnerSpawnDelayChangeRecipe extends SpawnerChangeRecipe {
 	
-	public static final RecipeSerializer<SpawnerSpawnDelayChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerSpawnDelayChangeRecipe::new);
 	protected static final int DEFAULT_MIN_DELAY = 200;
 	protected static final int DEFAULT_MAX_DELAY = 800;
 	protected static final int MIN_DELAY = 20;
+	
 	public SpawnerSpawnDelayChangeRecipe() {
 		super(IngredientStack.ofItems(4, SpectrumItems.MIDNIGHT_CHIP));
 	}
@@ -29,7 +29,7 @@ public class SpawnerSpawnDelayChangeRecipe extends SpawnerChangeRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_SPAWNER_SPAWN_DELAY_CHANGE;
 	}
 	
 	@Override

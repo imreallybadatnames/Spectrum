@@ -131,7 +131,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.FUSION_SHRINE_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.FUSION_SHRINE_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -212,7 +212,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.FUSION_SHRINE_ID;
+		return "fusion_shrine";
 	}
 	
 	// calculate the max number of items that will be crafted.

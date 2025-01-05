@@ -45,7 +45,7 @@ public class LiquidCrystalConvertingRecipe extends FluidConvertingRecipe {
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.LIQUID_CRYSTAL_CONVERTING_ID;
+		return "liquid_crystal_converting";
 	}
 	
 }

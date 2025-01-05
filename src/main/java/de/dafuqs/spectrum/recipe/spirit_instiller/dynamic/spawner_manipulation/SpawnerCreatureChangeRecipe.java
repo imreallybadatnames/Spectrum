@@ -16,10 +16,13 @@ import java.util.*;
 
 public class SpawnerCreatureChangeRecipe extends SpawnerChangeRecipe {
 	
-	public static final RecipeSerializer<SpawnerCreatureChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerCreatureChangeRecipe::new);
-	
 	public SpawnerCreatureChangeRecipe() {
 		super(IngredientStack.ofTag(SpectrumItemTags.SKULLS, 1), IngredientStack.ofItems(4, SpectrumItems.DOWNSTONE_FRAGMENTS), SpectrumAdvancements.SPAWNER_CREATURE_CHANGE);
+	}
+	
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_SPAWNER_CREATURE_CHANGE;
 	}
 	
 	@Override
@@ -45,11 +48,6 @@ public class SpawnerCreatureChangeRecipe extends SpawnerChangeRecipe {
 			}
 		}
 		return true;
-	}
-	
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
 	}
 	
 	@Override

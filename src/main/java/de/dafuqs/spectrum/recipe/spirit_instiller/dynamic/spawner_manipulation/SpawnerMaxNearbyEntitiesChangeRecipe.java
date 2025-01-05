@@ -10,8 +10,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.text.*;
 
 public class SpawnerMaxNearbyEntitiesChangeRecipe extends SpawnerChangeRecipe {
-	
-	public static final RecipeSerializer<SpawnerMaxNearbyEntitiesChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerMaxNearbyEntitiesChangeRecipe::new);
 	protected static final int DEFAULT_MAX_ENTITIES = 6;
 	protected static final int MAX_MAX_ENTITIES = 40;
 	
@@ -29,7 +27,7 @@ public class SpawnerMaxNearbyEntitiesChangeRecipe extends SpawnerChangeRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_SPAWNER_MAX_NEARBY_ENTITIES_CHANGE;
 	}
 	
 	@Override

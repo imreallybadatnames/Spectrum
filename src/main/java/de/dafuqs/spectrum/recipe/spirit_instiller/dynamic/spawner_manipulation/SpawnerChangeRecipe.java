@@ -10,7 +10,6 @@ import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
@@ -79,10 +78,6 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 		}
 		return canCraftWithBlockEntityTag(blockEntityComponent, inventory.getStackInSlot(1), inventory.getStackInSlot(2));
 	}
-	
-	// Overwrite these
-	@Override
-	public abstract RecipeSerializer<?> getSerializer();
 	
 	public abstract boolean canCraftWithBlockEntityTag(NbtComponent spawnerBlockEntityNbt, ItemStack leftBowlStack, ItemStack rightBowlStack);
 	

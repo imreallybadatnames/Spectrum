@@ -20,7 +20,6 @@ import java.util.*;
 
 public class JadeWineRecipe extends SweetenableTitrationBarrelRecipe {
 	
-	public static final RecipeSerializer<JadeWineRecipe> SERIALIZER = new EmptyRecipeSerializer<>(JadeWineRecipe::new);
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/food/jade_wine");
 	public static final int MIN_FERMENTATION_TIME_HOURS = 24;
 	public static final ItemStack OUTPUT_STACK = getDefaultStackWithCount(SpectrumItems.JADE_WINE, 4);
@@ -115,7 +114,7 @@ public class JadeWineRecipe extends SweetenableTitrationBarrelRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.TITRATION_BARREL_JADE_WINE;
 	}
 	
 }

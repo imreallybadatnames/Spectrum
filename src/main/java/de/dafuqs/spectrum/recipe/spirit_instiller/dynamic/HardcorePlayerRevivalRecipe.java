@@ -6,13 +6,11 @@ import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.component.*;
-import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -21,18 +19,19 @@ import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
-import org.apache.commons.lang3.*;
 import org.jetbrains.annotations.*;
 
 public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
-	
-	public static final RecipeSerializer<HardcorePlayerRevivalRecipe> SERIALIZER = new EmptyRecipeSerializer<>(HardcorePlayerRevivalRecipe::new);
 	
 	public HardcorePlayerRevivalRecipe() {
 		super("", false, null,
 				IngredientStack.ofItems(1, Blocks.PLAYER_HEAD.asItem()), IngredientStack.ofItems(1, Items.TOTEM_OF_UNDYING), IngredientStack.ofItems(1, Items.ENCHANTED_GOLDEN_APPLE),
 				ItemStack.EMPTY, 1200, 100, true);
+	}
+	
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_HARDCORE_PLAYER_REVIVAL;
 	}
 	
 	@Override

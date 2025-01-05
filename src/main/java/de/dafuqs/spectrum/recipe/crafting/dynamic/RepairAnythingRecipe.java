@@ -4,18 +4,16 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.world.*;
 
 public class RepairAnythingRecipe extends SpecialCraftingRecipe {
 	
-	public static final RecipeSerializer<RepairAnythingRecipe> SERIALIZER = new SpecialRecipeSerializer<>(RepairAnythingRecipe::new);
-	
 	private static final Ingredient MOONSTRUCK_NECTAR = Ingredient.ofItems(SpectrumItems.MOONSTRUCK_NECTAR);
 	
-	public RepairAnythingRecipe(CraftingRecipeCategory category) {
-		super(category);
+	public RepairAnythingRecipe() {
+		super(CraftingRecipeCategory.MISC);
 	}
 	
 	@Override
@@ -73,7 +71,7 @@ public class RepairAnythingRecipe extends SpecialCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.REPAIR_ANYTHING_SERIALIZER;
 	}
 	
 }

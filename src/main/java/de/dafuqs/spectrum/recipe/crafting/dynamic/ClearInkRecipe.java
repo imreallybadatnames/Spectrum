@@ -1,18 +1,12 @@
 package de.dafuqs.spectrum.recipe.crafting.dynamic;
 
 import de.dafuqs.spectrum.api.energy.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.*;
 import net.minecraft.world.*;
 
 public class ClearInkRecipe extends SingleItemCraftingRecipe {
-	
-	public static final RecipeSerializer<ClearInkRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ClearInkRecipe::new);
-	
-	public ClearInkRecipe(CraftingRecipeCategory category) {
-		super(category);
-	}
 	
 	@Override
 	public boolean matches(World world, ItemStack stack) {
@@ -31,7 +25,7 @@ public class ClearInkRecipe extends SingleItemCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.CLEAR_INK_SERIALIZER;
 	}
 	
 }

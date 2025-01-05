@@ -232,7 +232,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	
 	@Override
 	public String getRecipeTypeShortID() {
-		return SpectrumRecipeTypes.SHAPED_PEDESTAL_RECIPE_ID;
+		return "pedestal";
 	}
 	
 	public boolean areYieldUpgradesDisabled() {

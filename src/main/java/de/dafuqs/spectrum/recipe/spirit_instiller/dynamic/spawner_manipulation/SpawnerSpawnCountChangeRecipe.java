@@ -10,8 +10,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.text.*;
 
 public class SpawnerSpawnCountChangeRecipe extends SpawnerChangeRecipe {
-	
-	public static final RecipeSerializer<SpawnerSpawnCountChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerSpawnCountChangeRecipe::new);
 	protected static final int DEFAULT_SPAWN_COUNT = 4;
 	protected static final int MAX_SPAWN_COUNT = 16;
 	public SpawnerSpawnCountChangeRecipe() {
@@ -28,7 +26,7 @@ public class SpawnerSpawnCountChangeRecipe extends SpawnerChangeRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_SPAWNER_SPAWN_COUNT_CHANGE;
 	}
 	
 	@Override

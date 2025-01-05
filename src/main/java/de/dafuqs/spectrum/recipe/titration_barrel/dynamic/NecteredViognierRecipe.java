@@ -20,7 +20,6 @@ import java.util.*;
 
 public class NecteredViognierRecipe extends SweetenableTitrationBarrelRecipe {
 
-	public static final RecipeSerializer<NecteredViognierRecipe> SERIALIZER = new EmptyRecipeSerializer<>(NecteredViognierRecipe::new);
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("hidden/collect_cookbooks/imperial_cookbook");
 
 	public static final int MIN_FERMENTATION_TIME_HOURS = 24;
@@ -115,7 +114,7 @@ public class NecteredViognierRecipe extends SweetenableTitrationBarrelRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.TITRATION_BARREL_NECTERED_VIOGNIER;
 	}
 	
 }

@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
-import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
@@ -17,9 +17,8 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class WrapPresentRecipe extends SpecialCraftingRecipe {
-	public static final RecipeSerializer<WrapPresentRecipe> SERIALIZER = new SpecialRecipeSerializer<>(WrapPresentRecipe::new);
 	
-	public WrapPresentRecipe(CraftingRecipeCategory category) {
+	public WrapPresentRecipe() {
 		super(CraftingRecipeCategory.MISC);
 	}
 	
@@ -124,7 +123,7 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.WRAP_PRESENT_SERIALIZER;
 	}
 	
 }

@@ -1,18 +1,12 @@
 package de.dafuqs.spectrum.recipe.crafting.dynamic;
 
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.*;
 import net.minecraft.world.*;
 
 public class ClearPotionFillableRecipe extends SingleItemCraftingRecipe {
-	
-	public static final RecipeSerializer<ClearPotionFillableRecipe> SERIALIZER = new SpecialRecipeSerializer<>(ClearPotionFillableRecipe::new);
-	
-	public ClearPotionFillableRecipe(CraftingRecipeCategory category) {
-		super(category);
-	}
 	
 	@Override
 	public boolean matches(World world, ItemStack stack) {
@@ -31,7 +25,7 @@ public class ClearPotionFillableRecipe extends SingleItemCraftingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.CLEAR_POTION_FILLABLE_SERIALIZER;
 	}
 	
 }

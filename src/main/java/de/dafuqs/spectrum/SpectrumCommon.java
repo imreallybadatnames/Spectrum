@@ -24,10 +24,10 @@ import net.fabricmc.fabric.api.resource.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.loader.api.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.resource.*;
 import net.minecraft.server.*;
@@ -141,7 +141,8 @@ public class SpectrumCommon implements ModInitializer {
 		// Recipes
 		logInfo("Registering Recipe Types...");
 		SpectrumFusionShrineWorldEffects.register();
-		SpectrumRecipeTypes.registerSerializer();
+		SpectrumRecipeTypes.register();
+		SpectrumRecipeSerializers.register();
 		
 		// Loot
 		logInfo("Registering Loot Conditions & Functions...");

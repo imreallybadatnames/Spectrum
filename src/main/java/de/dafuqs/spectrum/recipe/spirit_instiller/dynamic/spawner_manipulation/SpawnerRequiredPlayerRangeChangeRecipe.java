@@ -10,8 +10,6 @@ import net.minecraft.recipe.*;
 import net.minecraft.text.*;
 
 public class SpawnerRequiredPlayerRangeChangeRecipe extends SpawnerChangeRecipe {
-	
-	public static final RecipeSerializer<SpawnerRequiredPlayerRangeChangeRecipe> SERIALIZER = new EmptyRecipeSerializer<>(SpawnerRequiredPlayerRangeChangeRecipe::new);
 	protected static final int DEFAULT_DETECTION_RANGE = 16;
 	protected static final int MAX_DETECTION_RANGE = 64;
 	
@@ -29,7 +27,7 @@ public class SpawnerRequiredPlayerRangeChangeRecipe extends SpawnerChangeRecipe 
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return SpectrumRecipeSerializers.SPIRIT_INSTILLER_SPAWNER_SPAWNER_PLAYER_RANGE_CHANGE;
 	}
 	
 	@Override
