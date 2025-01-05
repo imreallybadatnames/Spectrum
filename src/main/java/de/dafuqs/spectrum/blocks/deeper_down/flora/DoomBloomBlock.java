@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
@@ -13,7 +13,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -151,7 +151,7 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	@Override
 	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
 		super.afterBreak(world, player, pos, state, blockEntity, stack);
-		if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0 && !stack.isIn(ConventionalItemTags.SHEARS)) {
+		if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0 && !stack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
 			explode(world, pos, state);
 		}
 	}

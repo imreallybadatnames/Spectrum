@@ -72,17 +72,17 @@ public class CrystallarieumCategory extends GatedDisplayCategory<CrystallarieumD
 		int offsetPerReagent = 18;
 		for (CrystallarieumCatalyst catalyst : display.catalysts) {
 			int offsetX = startPoint.x + startX + offsetPerReagent * i;
-			widgets.add(Widgets.createSlot(new Point(offsetX, startPoint.y + 1 + 38)).markInput().entries(EntryIngredients.ofIngredient(catalyst.ingredient)));
+			widgets.add(Widgets.createSlot(new Point(offsetX, startPoint.y + 1 + 38)).markInput().entries(EntryIngredients.ofIngredient(catalyst.ingredient())));
 			
-			float growthAcceleration = catalyst.growthAccelerationMod;
+			float growthAcceleration = catalyst.growthAccelerationMod();
 			int offsetU = growthAcceleration == 1 ? 97 : growthAcceleration >= 6 ? 85 : growthAcceleration > 1 ? 67 : growthAcceleration <= 0.25 ? 79 : 73;
 			widgets.add(Widgets.createTexturedWidget(BACKGROUND_TEXTURE, offsetX + 5, startPoint.y + 1 + 59, offsetU, 0, 6, 6, 128, 128));
 			
-			float inkConsumption = catalyst.inkConsumptionMod;
+			float inkConsumption = catalyst.inkConsumptionMod();
 			offsetU = inkConsumption == 1 ? 97 : inkConsumption >= 8 ? 85 : inkConsumption > 1 ? 67 : inkConsumption <= 0.25 ? 79 : 73;
 			widgets.add(Widgets.createTexturedWidget(BACKGROUND_TEXTURE, offsetX + 5, startPoint.y + 1 + 69, offsetU, 6, 6, 6, 128, 128));
 			
-			float consumeChance = catalyst.consumeChancePerSecond;
+			float consumeChance = catalyst.consumeChancePerSecond();
 			offsetU = consumeChance == 0 ? 97 : consumeChance >= 0.2 ? 85 : consumeChance >= 0.05 ? 67 : 91;
 			widgets.add(Widgets.createTexturedWidget(BACKGROUND_TEXTURE, offsetX + 5, startPoint.y + 1 + 79, offsetU, 6, 6, 6, 128, 128));
 			

@@ -58,17 +58,17 @@ public class CrystallarieumEmiRecipeGated extends GatedSpectrumEmiRecipe<Crystal
 		for (int i = 0; i < catalysts.size(); i++) {
 			CrystallarieumCatalyst catalyst = catalysts.get(i);
 			int xOff = 46 + 18 * i;
-			widgets.addSlot(EmiIngredient.of(catalyst.ingredient), xOff, 38);
+			widgets.addSlot(EmiIngredient.of(catalyst.ingredient()), xOff, 38);
 			
-			float growthAcceleration = catalyst.growthAccelerationMod;
+			float growthAcceleration = catalyst.growthAccelerationMod();
 			int uOff = growthAcceleration == 1 ? 97 : growthAcceleration >= 6 ? 85 : growthAcceleration > 1 ? 67 : growthAcceleration <= 0.25 ? 79 : 73;
 			widgets.addTexture(BACKGROUND_TEXTURE, xOff + 5, 59, 6, 6, uOff, 0, 6, 6, 128, 128);
 			
-			float inkConsumption = catalyst.inkConsumptionMod;
+			float inkConsumption = catalyst.inkConsumptionMod();
 			uOff = inkConsumption == 1 ? 97 : inkConsumption >= 8 ? 85 : inkConsumption > 1 ? 67 : inkConsumption <= 0.25 ? 79 : 73;
 			widgets.addTexture(BACKGROUND_TEXTURE, xOff + 5, 69, 6, 6, uOff, 6, 6, 6, 128, 128);
 			
-			float consumeChance = catalyst.consumeChancePerSecond;
+			float consumeChance = catalyst.consumeChancePerSecond();
 			uOff = consumeChance == 0 ? 97 : consumeChance >= 0.2 ? 85 : consumeChance >= 0.05 ? 67 : 91;
 			widgets.addTexture(BACKGROUND_TEXTURE, xOff + 5, 79, 6, 6, uOff, 6, 6, 6, 128, 128);
 		}

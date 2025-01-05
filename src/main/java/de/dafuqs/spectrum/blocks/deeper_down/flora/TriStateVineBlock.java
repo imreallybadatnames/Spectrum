@@ -2,9 +2,9 @@ package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -15,7 +15,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.*;
-import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
@@ -39,8 +39,8 @@ public abstract class TriStateVineBlock extends PlantBlock implements Fertilizab
     public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         var reference = BlockReference.of(state, pos);
         var creative = player.getAbilities().creativeMode;
-
-        if (handStack.isIn(ConventionalItemTags.SHEARS)) {
+        
+        if (handStack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
             if (reference.getProperty(LIFE_STAGE) != LifeStage.GROWING)
                 return ItemActionResult.FAIL;
 

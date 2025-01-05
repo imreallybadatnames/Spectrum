@@ -1,10 +1,10 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.server.world.*;
@@ -46,7 +46,7 @@ public class NephriteBlossomStemBlock extends PlantBlock {
 	
 	@Override
 	public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (handStack.isIn(ConventionalItemTags.SHEARS) && state.get(STEM_PART) == StemComponent.BASE) {
+		if (handStack.isIn(ConventionalItemTags.SHEAR_TOOLS) && state.get(STEM_PART) == StemComponent.BASE) {
 			BlockState newState = state.with(STEM_PART, StemComponent.STEM);
 			world.setBlockState(pos, newState);
 			player.playSoundToPlayer(SoundEvents.ENTITY_MOOSHROOM_SHEAR, SoundCategory.BLOCKS, 1, 0.9F + player.getRandom().nextFloat() * 0.2F);

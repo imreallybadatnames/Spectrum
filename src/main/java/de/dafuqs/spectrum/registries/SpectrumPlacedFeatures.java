@@ -2,9 +2,9 @@ package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.spectrum.*;
 import net.fabricmc.fabric.api.biome.v1.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.registry.*;
-import net.minecraft.world.dimension.DimensionOptions;
+import net.minecraft.world.dimension.*;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 

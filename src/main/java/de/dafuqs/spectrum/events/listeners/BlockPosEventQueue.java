@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.events.listeners;
 
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.effect.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -25,11 +26,11 @@ public class BlockPosEventQueue extends EventQueue<BlockPosEventQueue.EventEntry
 	}
 	
 	public static class EventEntry {
-		public final GameEvent gameEvent;
+		public final RegistryEntry<GameEvent> gameEvent;
 		public final BlockPos eventSourceBlockPos;
 		public final int distance;
 		
-		public EventEntry(GameEvent gameEvent, BlockPos eventSourceBlockPos, int distance) {
+		public EventEntry(RegistryEntry<GameEvent> gameEvent, BlockPos eventSourceBlockPos, int distance) {
 			this.gameEvent = gameEvent;
 			this.eventSourceBlockPos = eventSourceBlockPos;
 			this.distance = distance;

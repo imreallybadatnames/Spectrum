@@ -31,7 +31,7 @@ public class KindlingEntityArmorFeatureRenderer extends FeatureRenderer<Kindling
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, KindlingEntity kindlingEntity, float f, float g, float h, float j, float k, float l) {
 		ItemStack itemStack = kindlingEntity.getArmorType();
 		
-		if (itemStack.getItem() instanceof HorseArmorItem horseArmorItem) {
+		if (itemStack.getItem() instanceof AnimalArmorItem horseArmorItem) {
 			this.getContextModel().copyStateTo(this.model);
 			this.model.animateModel(kindlingEntity, f, g, h);
 			this.model.setAngles(kindlingEntity, f, g, j, k, l);
@@ -54,7 +54,7 @@ public class KindlingEntityArmorFeatureRenderer extends FeatureRenderer<Kindling
 		}
 	}
 	
-	public static Identifier getTextureForArmor(HorseArmorItem item) {
+	public static Identifier getTextureForArmor(AnimalArmorItem item) {
 		if (item == Items.DIAMOND_HORSE_ARMOR) {
 			return TEXTURE_DIAMOND;
 		}

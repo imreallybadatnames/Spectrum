@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.entity.variants.*;
 import de.dafuqs.spectrum.helpers.Support;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -324,11 +324,6 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	@Override
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-		return 0.6F * dimensions.height;
-	}
-	
-	@Override
 	protected void mobTick() {
 		super.mobTick();
 		
@@ -498,7 +493,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		
 		// clipping using shears
 		ItemStack handStack = player.getMainHandStack();
-		if (this.isShearable() && handStack.isIn(ConventionalItemTags.SHEARS)) {
+		if (this.isShearable() && handStack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
 			
 			if (!this.getWorld().isClient()) {
 				setTarget(player);

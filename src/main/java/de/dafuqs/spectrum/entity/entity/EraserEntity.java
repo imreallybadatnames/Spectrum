@@ -4,6 +4,8 @@ import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.*;
@@ -189,9 +191,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 	
 	private void putEffectOnHit(NbtCompound nbt) {
 		if (this.effectOnHit != null) {
-			NbtCompound effectNbt = new NbtCompound();
-			this.effectOnHit.writeNbt(effectNbt);
-			nbt.put("EffectOnHit", effectNbt);
+			nbt.put("EffectOnHit", this.effectOnHit.writeNbt());
 		}
 	}
 	
@@ -251,11 +251,6 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 		return new StatusEffectInstance(statusEffect, duration, amplifier);
 	}
 	
-	@Override
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-		return 0.2F;
-	}
-	
 	// Bucketable
 	@Override
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
@@ -308,8 +303,7 @@ public class EraserEntity extends SpiderEntity implements PackEntity<EraserEntit
 	@SuppressWarnings("deprecation")
 	public void copyDataToStack(ItemStack stack) {
 		Bucketable.copyDataToStack(this, stack);
-		NbtCompound nbtCompound = stack.getOrCreateNbt();
-		putEffectOnHit(nbtCompound);
+		NbtComponent.set(DataComponentTypes.BUCKET_ENTITY_DATA, stack, this::putEffectOnHit);
 	}
 	
 	@Override

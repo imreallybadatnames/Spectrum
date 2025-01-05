@@ -10,7 +10,6 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.narration.*;
 import net.minecraft.client.gui.widget.*;
-import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -71,7 +70,7 @@ public class ColorSelectionWidget extends ClickableWidget {
 		MinecraftClient client = MinecraftClient.getInstance();
 		
 		if (isUnselection(mouseX, mouseY)) {
-			client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+			client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, 1.0F, 1.0F);
 			onChanged(null);
 		}
 		
@@ -86,10 +85,10 @@ public class ColorSelectionWidget extends ClickableWidget {
 			
 			Pair<InkColor, Boolean> clickedColor = usableColors.get(newColorIndex);
 			if (clickedColor.getRight()) {
-				client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, 1.0F, 1.0F);
 				onChanged(clickedColor.getLeft());
 			} else {
-				client.player.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+				client.player.playSound(SpectrumSoundEvents.USE_FAIL, 1.0F, 1.0F);
 				onChanged(null);
 			}
 			

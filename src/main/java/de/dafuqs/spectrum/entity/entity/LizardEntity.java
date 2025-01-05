@@ -222,11 +222,6 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 	protected SoundEvent getDeathSound() {
 		return SpectrumSoundEvents.ENTITY_LIZARD_DEATH;
 	}
-	
-	@Override
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-		return 0.5F * dimensions.height;
-	}
 
 	// Breeding
 
@@ -389,11 +384,6 @@ public class LizardEntity extends TameableEntity implements PackEntity<LizardEnt
 			LizardEntity.this.poiPos = LizardEntity.this.findNearestPOI((ServerWorld) LizardEntity.this.getWorld(), LizardEntity.this.getBlockPos(), 40);
 		}
 
-	}
-
-	@Override
-	public EntityView method_48926() {
-		return this.getWorld();
 	}
 
 }

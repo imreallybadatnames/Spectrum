@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.items.magic_items.ampoules;
 
-import com.google.common.collect.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import net.minecraft.component.type.*;
@@ -18,22 +18,16 @@ import java.util.*;
 public class BloodstoneGlassAmpouleItem extends BaseGlassAmpouleItem implements PrioritizedEntityInteraction {
 	
 	protected static final float EXTRA_REACH = 12.0F;
-	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("c81a7152-313c-452f-b15e-fcf51322ccc0");
-	
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+	protected static final Identifier REACH_ENTITY_INTERACTION_MODIFIER_ID = SpectrumCommon.locate("bloodstone_glass_ampoule_reach");
 	
 	public BloodstoneGlassAmpouleItem(Settings settings) {
 		super(settings);
-		
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		this.attributeModifiers = builder.build();
 	}
-
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
+	
+	public static AttributeModifiersComponent createAttributeModifiers() {
+		return AttributeModifiersComponent.builder()
+				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_ENTITY_INTERACTION_MODIFIER_ID, EXTRA_REACH, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.build();
 	}
 	
 	@Override

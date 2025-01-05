@@ -2,11 +2,12 @@ package de.dafuqs.spectrum.entity.entity;
 
 import net.minecraft.block.piston.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
+import net.minecraft.entity.data.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
+import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -19,8 +20,42 @@ public class LivingMarkerEntity extends LivingEntity {
 	}
 	
 	@Override
-	public double getAttributeValue(EntityAttribute attribute) {
-		return 0;
+	public void tick() {
+	
+	}
+	
+	@Override
+	protected void initDataTracker(DataTracker.Builder builder) {
+	
+	}
+	
+	@Override
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+	
+	}
+	
+	@Override
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+	
+	}
+	
+	@Override
+	protected boolean canAddPassenger(Entity passenger) {
+		return false;
+	}
+	
+	@Override
+	protected boolean couldAcceptPassenger() {
+		return false;
+	}
+	
+	@Override
+	public PistonBehavior getPistonBehavior() {
+		return PistonBehavior.IGNORE;
+	}
+	
+	public boolean canAvoidTraps() {
+		return true;
 	}
 	
 	@Override
@@ -44,30 +79,13 @@ public class LivingMarkerEntity extends LivingEntity {
 	}
 	
 	@Override
-	public void tick() {
-	}
-	
-	@Override
-	public void readCustomDataFromNbt(NbtCompound nbt) {
-	}
-	
-	@Override
-	public void writeCustomDataToNbt(NbtCompound nbt) {
-	}
-	
-	@Override
-	public Packet<ClientPlayPacketListener> createSpawnPacket() {
+	public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
 		throw new IllegalStateException("Living Markers should never be sent");
 	}
 	
 	@Override
 	protected void addPassenger(Entity passenger) {
-		passenger.stopRiding();
-	}
-	
-	@Override
-	public PistonBehavior getPistonBehavior() {
-		return PistonBehavior.IGNORE;
+		throw new IllegalStateException("Living Marker: should never addPassenger without checking couldAcceptPassenger()");
 	}
 	
 }

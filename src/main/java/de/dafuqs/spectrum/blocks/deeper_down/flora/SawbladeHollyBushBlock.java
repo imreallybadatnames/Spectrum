@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.blocks.jade_vines.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -104,7 +104,7 @@ public class SawbladeHollyBushBlock extends PlantBlock implements Fertilizable {
     public ItemActionResult onUseWithItem(ItemStack handStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int age = state.get(AGE);
         
-        if (canBeSheared(age) && handStack.isIn(ConventionalItemTags.SHEARS)) {
+        if (canBeSheared(age) && handStack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
             if (!world.isClient) {
 				for (ItemStack stack : JadeVinePlantBlock.getHarvestedStacks(state, (ServerWorld) world, pos, world.getBlockEntity(pos), player, player.getMainHandStack(), SpectrumLootTables.SAWBLADE_HOLLY_SHEARING)) {
                     dropStack(world, pos, stack);

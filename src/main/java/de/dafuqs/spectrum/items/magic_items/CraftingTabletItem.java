@@ -9,16 +9,14 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.text.*;
@@ -36,9 +34,9 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 		super(settings);
 	}
 	
-	public static void setStoredRecipe(ItemStack craftingTabletItemStack, Recipe<?> recipe) {
+	public static void setStoredRecipe(ItemStack craftingTabletItemStack, RecipeEntry<?> recipe) {
 		craftingTabletItemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putString("recipe", recipe.getId().toString())));
+				comp -> comp.apply(nbt -> nbt.putString("recipe", recipe.id().toString())));
 	}
 	
 	public static void clearStoredRecipe(ItemStack craftingTabletItemStack) {

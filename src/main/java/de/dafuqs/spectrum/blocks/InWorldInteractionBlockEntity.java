@@ -13,7 +13,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
@@ -21,6 +21,7 @@ import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
+// TODO: this should prob. implement LootableInventory
 public abstract class InWorldInteractionBlockEntity extends BlockEntity implements ImplementedInventory {
 	
 	private final int inventorySize;

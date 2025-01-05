@@ -5,12 +5,12 @@ import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.particle.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -35,7 +35,7 @@ public class EverpromiseRibbonItem extends Item implements PrioritizedEntityInte
 			return ActionResult.FAIL;
 		}
 		
-		if (stack.hasCustomName() && !(entity instanceof PlayerEntity)) {
+		if (stack.get(DataComponentTypes.CUSTOM_NAME) != null && !(entity instanceof PlayerEntity)) {
 			if (entity.isAlive()) {
 				if (world.isClient) {
 					World entityWorld = entity.getWorld();

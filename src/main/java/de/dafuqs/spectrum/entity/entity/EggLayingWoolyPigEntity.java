@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.entity.entity;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.tag.convention.v1.*;
+import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -67,7 +67,7 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 			ItemStack itemStack2 = ItemUsage.exchangeStack(handStack, player, Items.MILK_BUCKET.getDefaultStack());
 			player.setStackInHand(hand, itemStack2);
 			return ActionResult.success(world.isClient());
-		} else if (handStack.isIn(ConventionalItemTags.SHEARS)) {
+		} else if (handStack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
 			if (!world.isClient() && this.isShearable()) {
 				this.sheared(SoundCategory.PLAYERS);
 				this.emitGameEvent(GameEvent.SHEAR, player);
