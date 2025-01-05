@@ -26,7 +26,7 @@ public class FermentRandomlyLootFunction extends ConditionalLootFunction {
 	final LootNumberProvider daysFermented;
 	final LootNumberProvider thickness;
 	
-	public FermentRandomlyLootFunction(LootCondition[] conditions, @NotNull Identifier fermentationRecipeIdentifier, LootNumberProvider daysFermented, LootNumberProvider thickness) {
+	public FermentRandomlyLootFunction(List<LootCondition> conditions, @NotNull Identifier fermentationRecipeIdentifier, LootNumberProvider daysFermented, LootNumberProvider thickness) {
 		super(conditions);
 		this.fermentationRecipeIdentifier = fermentationRecipeIdentifier;
 		this.fermentationData = null;
@@ -34,7 +34,7 @@ public class FermentRandomlyLootFunction extends ConditionalLootFunction {
 		this.thickness = thickness;
 	}
 	
-	public FermentRandomlyLootFunction(LootCondition[] conditions, @NotNull FermentationData fermentationData, LootNumberProvider daysFermented, LootNumberProvider thickness) {
+	public FermentRandomlyLootFunction(List<LootCondition> conditions, @NotNull FermentationData fermentationData, LootNumberProvider daysFermented, LootNumberProvider thickness) {
 		super(conditions);
 		this.fermentationRecipeIdentifier = null;
 		this.fermentationData = fermentationData;

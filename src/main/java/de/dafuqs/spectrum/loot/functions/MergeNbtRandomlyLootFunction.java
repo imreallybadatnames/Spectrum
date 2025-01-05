@@ -17,14 +17,14 @@ public class MergeNbtRandomlyLootFunction extends ConditionalLootFunction {
 	
 	final List<NbtCompound> nbts;
 	
-	MergeNbtRandomlyLootFunction(LootCondition[] conditions, Collection<NbtCompound> nbts) {
+	MergeNbtRandomlyLootFunction(List<LootCondition> conditions, Collection<NbtCompound> nbts) {
 		super(conditions);
 		this.nbts = ImmutableList.copyOf(nbts);
 	}
 	
 	@Override
 	public LootFunctionType getType() {
-		return SpectrumLootFunctionTypes.SET_NBT_RANDOMLY;
+		return SpectrumLootFunctionTypes.MERGE_NBT_RANDOMLY;
 	}
 	
 	@Override

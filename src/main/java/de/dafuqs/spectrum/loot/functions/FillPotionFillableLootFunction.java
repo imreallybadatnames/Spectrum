@@ -16,7 +16,7 @@ import net.minecraft.util.*;
 
 import java.util.*;
 
-public class FillPotionFillableLootCondition extends ConditionalLootFunction {
+public class FillPotionFillableLootFunction extends ConditionalLootFunction {
 	
 	record InkPoweredPotionTemplate(boolean ambient, boolean showParticles, LootNumberProvider duration,
 									List<StatusEffect> statusEffects, int color, LootNumberProvider amplifier,
@@ -91,7 +91,7 @@ public class FillPotionFillableLootCondition extends ConditionalLootFunction {
 	
 	final InkPoweredPotionTemplate template;
 	
-	FillPotionFillableLootCondition(LootCondition[] conditions, InkPoweredPotionTemplate template) {
+	FillPotionFillableLootFunction(List<LootCondition> conditions, InkPoweredPotionTemplate template) {
 		super(conditions);
 		this.template = template;
 	}
@@ -120,20 +120,20 @@ public class FillPotionFillableLootCondition extends ConditionalLootFunction {
 	}
 	
 	public static ConditionalLootFunction.Builder<?> builder(InkPoweredPotionTemplate template) {
-		return builder((conditions) -> new FillPotionFillableLootCondition(conditions, template));
+		return builder((conditions) -> new FillPotionFillableLootFunction(conditions, template));
 	}
 	
-	public static class Serializer extends ConditionalLootFunction.Serializer<FillPotionFillableLootCondition> {
+	public static class Serializer extends ConditionalLootFunction.Serializer<FillPotionFillableLootFunction> {
 		
 		@Override
-		public void toJson(JsonObject jsonObject, FillPotionFillableLootCondition lootFunction, JsonSerializationContext jsonSerializationContext) {
+		public void toJson(JsonObject jsonObject, FillPotionFillableLootFunction lootFunction, JsonSerializationContext jsonSerializationContext) {
 			super.toJson(jsonObject, lootFunction, jsonSerializationContext);
 			lootFunction.template.toJson(jsonObject, jsonSerializationContext);
 		}
 		
 		@Override
-		public FillPotionFillableLootCondition fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootCondition[] lootConditions) {
-			return new FillPotionFillableLootCondition(lootConditions, InkPoweredPotionTemplate.fromJson(jsonObject, jsonDeserializationContext));
+		public FillPotionFillableLootFunction fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootCondition[] lootConditions) {
+			return new FillPotionFillableLootFunction(lootConditions, InkPoweredPotionTemplate.fromJson(jsonObject, jsonDeserializationContext));
 		}
 	}
 	
