@@ -13,9 +13,11 @@
   },
   "criteria": {
     "dropped_any_head": {
-      "trigger": "spectrum:treasure_hunter_drop",
+      "trigger": "spectrum:loot_function_trigger",
       "conditions": {
-        "dropped_item": {}
+        "tags": [
+          "spectrum:mob_head"
+        ]
       }
     },
     "gotten_previous": {

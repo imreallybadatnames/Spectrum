@@ -10,7 +10,7 @@ public class SpectrumAdvancementCriteria {
 	public static FusionShrineCraftingCriterion FUSION_SHRINE_CRAFTING;
 	public static CompletedMultiblockCriterion COMPLETED_MULTIBLOCK;
 	public static BlockBrokenCriterion BLOCK_BROKEN;
-	public static TreasureHunterDropCriterion TREASURE_HUNTER_DROP;
+	public static LootFunctionTriggerCriterion LOOT_FUNCTION_TRIGGER;
 	public static NaturesStaffConversionCriterion NATURES_STAFF_USE;
 	public static EnchanterCraftingCriterion ENCHANTER_CRAFTING;
 	public static EnchanterEnchantingCriterion ENCHANTER_ENCHANTING;
@@ -49,7 +49,7 @@ public class SpectrumAdvancementCriteria {
 		FUSION_SHRINE_CRAFTING = Criteria.register(FusionShrineCraftingCriterion.ID.toString(), new FusionShrineCraftingCriterion());
 		COMPLETED_MULTIBLOCK = Criteria.register(CompletedMultiblockCriterion.ID.toString(), new CompletedMultiblockCriterion());
 		BLOCK_BROKEN = Criteria.register(BlockBrokenCriterion.ID.toString(), new BlockBrokenCriterion());
-		TREASURE_HUNTER_DROP = Criteria.register(TreasureHunterDropCriterion.ID.toString(), new TreasureHunterDropCriterion());
+		LOOT_FUNCTION_TRIGGER = Criteria.register(LootFunctionTriggerCriterion.ID.toString(), new LootFunctionTriggerCriterion());
 		NATURES_STAFF_USE = Criteria.register(NaturesStaffConversionCriterion.ID.toString(), new NaturesStaffConversionCriterion());
 		ENCHANTER_CRAFTING = Criteria.register(EnchanterCraftingCriterion.ID.toString(), new EnchanterCraftingCriterion());
 		ENCHANTER_ENCHANTING = Criteria.register(EnchanterEnchantingCriterion.ID.toString(), new EnchanterEnchantingCriterion());

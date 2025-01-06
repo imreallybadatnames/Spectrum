@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.entity.predicates;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.entity.variants.*;
 import net.minecraft.entity.*;
-import net.minecraft.predicate.entity.EntitySubPredicate;
+import net.minecraft.predicate.entity.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
