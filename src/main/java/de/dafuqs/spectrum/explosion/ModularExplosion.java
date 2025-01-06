@@ -152,7 +152,7 @@ public class ModularExplosion {
 
 		if (state.getBlock().getBlastResistance() <= 9) {
 			if (random.nextFloat() < 0.15F) {
-				world.playSound(null, center.getX(), center.getY(), center.getZ(), block.getSoundGroup(state).getBreakSound(), SoundCategory.BLOCKS, 2F, 0.8F + random.nextFloat() * 0.5F);
+				world.playSound(null, center.getX(), center.getY(), center.getZ(), state.getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 2F, 0.8F + random.nextFloat() * 0.5F);
 			}
 
 			if (block.shouldDropItemsOnExplosion(explosion)) {

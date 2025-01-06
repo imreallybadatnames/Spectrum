@@ -250,7 +250,7 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 
 			world.syncWorldEvent(null, WorldEvents.BLOCK_BROKEN, pos, Block.getRawIdFromState(targetState));
 			world.playSound(null, pos, targetState.getSoundGroup().getPlaceSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + world.getRandom().nextFloat() * 0.2F);
-			world.syncWorldEvent(WorldEvents.PLANT_FERTILIZED, pos, 0); // the particle here is jank
+			world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, pos, 0);
 			return true;
 		}
 		return false;
@@ -268,16 +268,16 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 		if (blockState.isIn(SpectrumBlockTags.NATURES_STAFF_STACKABLE)) {
 			int i = 0;
 			while (world.getBlockState(blockPos.up(i)).isOf(blockState.getBlock())) {
-				world.syncWorldEvent(WorldEvents.PLANT_FERTILIZED, blockPos.up(i), 0);
+				world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, blockPos.up(i), 0);
 				i++;
 			}
-			world.syncWorldEvent(WorldEvents.PLANT_FERTILIZED, blockPos, 0);
+			world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, blockPos, 0);
 			BoneMealItem.createParticles(world, blockPos.up(i + 1), 5);
 			for (int j = 1; world.getBlockState(blockPos.down(j)).isOf(blockState.getBlock()); j++) {
-				world.syncWorldEvent(WorldEvents.PLANT_FERTILIZED, blockPos.down(j), 0);
+				world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, blockPos.down(j), 0);
 			}
 		} else {
-			world.syncWorldEvent(WorldEvents.PLANT_FERTILIZED, blockPos, 0);
+			world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, blockPos, 0);
 		}
 	}
 	
