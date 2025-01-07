@@ -9,14 +9,11 @@ import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
-import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
-import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationC2SPacket;
-import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationS2CPacket;
+import de.dafuqs.spectrum.networking.packet.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
-import net.minecraft.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
@@ -33,25 +30,8 @@ import java.util.*;
 public class SpectrumC2SPacketReceiver {
 	
 	public static void registerC2SReceivers() {
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.RENAME_ITEM_IN_BEDROCK_ANVIL_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-			if (player.currentScreenHandler instanceof BedrockAnvilScreenHandler bedrockAnvilScreenHandler) {
-				String name = buf.readString();
-				String string = SharedConstants.stripInvalidChars(name);
-				if (string.length() <= 50) {
-					bedrockAnvilScreenHandler.setNewItemName(string);
-				}
-			}
-		});
-		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.ADD_LORE_IN_BEDROCK_ANVIL_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-			if (player.currentScreenHandler instanceof BedrockAnvilScreenHandler bedrockAnvilScreenHandler) {
-				String lore = buf.readString();
-				String string = SharedConstants.stripInvalidChars(lore);
-				if (string.length() <= 256) {
-					bedrockAnvilScreenHandler.setNewItemLore(string);
-				}
-			}
-		});
+		ServerPlayNetworking.registerGlobalReceiver(RenameItemInBedrockAnvilPayload.ID, RenameItemInBedrockAnvilPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(AddLoreBedrockAnvilPayload.ID, AddLoreBedrockAnvilPayload.getPayloadHandler());
 		
 		ServerPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationC2SPacket.ID, (packet, context) -> {
 			// receive the client packet...

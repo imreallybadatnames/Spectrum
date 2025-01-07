@@ -2,11 +2,10 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
-import net.minecraft.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.screen.*;
@@ -15,6 +14,7 @@ import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import org.apache.commons.lang3.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -71,25 +71,6 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 	
 	public static int getNextCost(int cost) {
 		return cost * 2 + 1;
-	}
-	
-	@Override
-	public void onContentChanged(Inventory inventory) {
-		super.onContentChanged(inventory);
-		if (inventory == this.input) {
-			this.updateResult();
-		}
-	}
-	
-	@Override
-	public void onClosed(PlayerEntity player) {
-		super.onClosed(player);
-		this.context.run((world, pos) -> this.dropInventory(player, this.input));
-	}
-	
-	@Override
-	public boolean canUse(PlayerEntity player) {
-		return this.context.get((world, pos) -> this.canUse(world.getBlockState(pos)) && player.squaredDistanceTo((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64.0D, true);
 	}
 	
 	protected boolean canTakeOutput(PlayerEntity player, boolean present) {
@@ -248,20 +229,20 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 				}
 			}
 			
-			if (this.newItemName != null && !Util.isBlank(this.newItemName)) {
+			if (this.newItemName != null && !StringHelper.isBlank(this.newItemName)) {
 				if (!this.newItemName.equals(inputStack.getName().getString())) {
-					outputStack.setCustomName(Text.literal(this.newItemName));
+					outputStack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(this.newItemName));
 				}
-			} else if (inputStack.hasCustomName()) {
-				outputStack.removeCustomName();
+			} else if (inputStack.contains(DataComponentTypes.CUSTOM_NAME)) {
+				outputStack.remove(DataComponentTypes.CUSTOM_NAME);
 			}
 			
-			if (this.newLoreString != null && !Util.isBlank(this.newLoreString)) {
+			if (this.newLoreString != null && !StringHelper.isBlank(this.newLoreString)) {
 				List<Text> lore = LoreHelper.getLoreTextArrayFromString(this.newLoreString);
 				if (!LoreHelper.equalsLore(lore, inputStack)) {
 					LoreHelper.setLore(outputStack, lore);
 				}
-			} else if (inputStack.hasCustomName()) {
+			} else if (LoreHelper.hasLore(inputStack)) {
 				LoreHelper.removeLore(outputStack);
 			}
 			
@@ -274,14 +255,15 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 				// renaming and lore is free
 				this.levelCost.set(0);
 			} else if (!outputStack.isEmpty()) {
-				int repairCost = outputStack.getRepairCost();
-				if (!repairSlotStack.isEmpty() && repairCost < repairSlotStack.getRepairCost()) {
-					repairCost = repairSlotStack.getRepairCost();
+				int repairCost = outputStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
+				if (!repairSlotStack.isEmpty() && repairCost < repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0)) {
+					repairCost = repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
 				}
 				if (k != enchantmentLevelCost) {
 					repairCost = getNextCost(repairCost);
-					outputStack.setRepairCost(repairCost);
+					outputStack.set(DataComponentTypes.REPAIR_COST, k);
 				}
+				
 				EnchantmentHelper.set(enchantmentLevelMap, outputStack);
 			}
 			
@@ -292,14 +274,14 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 	
 	public boolean setNewItemName(String newItemName) {
 		String string = sanitize(newItemName, AnvilScreenHandler.MAX_NAME_LENGTH);
-		if (!string.equals(this.newItemName)) {
+		if (string != null && !string.equals(this.newItemName)) {
 			this.newItemName = string;
-			if (this.getSlot(2).hasStack()) {
-				ItemStack itemStack = this.getSlot(2).getStack();
-				if (Util.isBlank(string)) {
-					itemStack.removeCustomName();
+			if (this.getSlot(OUTPUT_SLOT_INDEX).hasStack()) {
+				ItemStack itemStack = this.getSlot(OUTPUT_SLOT_INDEX).getStack();
+				if (StringHelper.isBlank(string)) {
+					itemStack.remove(DataComponentTypes.CUSTOM_NAME);
 				} else {
-					itemStack.setCustomName(Text.literal(string));
+					itemStack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(string));
 				}
 			}
 			
@@ -310,18 +292,19 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 		}
 	}
 	
+	@Nullable
 	private static String sanitize(String name, int maxLength) {
-		String s = SharedConstants.stripInvalidChars(name);
-		return s.length() > maxLength ? s.substring(0, maxLength) : s;
+		String string = StringHelper.stripInvalidChars(name);
+		return string.length() <= maxLength ? string : null;
 	}
 	
 	public boolean setNewItemLore(String newLoreString) {
 		String string = sanitize(newLoreString, MAX_LORE_LENGTH);
-		if (!string.equals(this.newLoreString)) {
+		if (string != null && !string.equals(this.newLoreString)) {
 			this.newLoreString = string;
 			
-			if (this.getSlot(2).hasStack()) {
-				ItemStack itemStack = this.getSlot(2).getStack();
+			if (this.getSlot(OUTPUT_SLOT_INDEX).hasStack()) {
+				ItemStack itemStack = this.getSlot(OUTPUT_SLOT_INDEX).getStack();
 				if (StringUtils.isBlank(newLoreString)) {
 					LoreHelper.removeLore(itemStack);
 				} else {

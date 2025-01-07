@@ -2,17 +2,16 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.packet.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
-import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.gui.widget.*;
+import net.minecraft.component.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.text.*;
@@ -38,17 +37,12 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 	}
 	
 	@Override
-	public void handledScreenTick() {
-		super.handledScreenTick();
-		this.nameField.tick();
-		this.loreField.tick();
-	}
-	
 	protected void setup() {
 		int i = (this.width - this.backgroundWidth) / 2;
 		int j = (this.height - this.backgroundHeight) / 2;
 		
 		this.nameField = new TextFieldWidget(this.textRenderer, i + 62, j + 24, 98, 12, Text.translatable("container.spectrum.bedrock_anvil"));
+		this.nameField.setFocusUnlocked(false);
 		this.nameField.setEditableColor(-1);
 		this.nameField.setUneditableColor(-1);
 		this.nameField.setDrawsBackground(false);
@@ -56,8 +50,10 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 		this.nameField.setChangedListener(this::onRenamed);
 		this.nameField.setText("");
 		this.addSelectableChild(this.nameField);
+		this.nameField.setEditable((this.handler).getSlot(0).hasStack());
 		
 		this.loreField = new TextFieldWidget(this.textRenderer, i + 45, j + 76, 116, 12, Text.translatable("container.spectrum.bedrock_anvil.lore"));
+		this.loreField.setFocusUnlocked(false);
 		this.loreField.setEditableColor(-1);
 		this.loreField.setUneditableColor(-1);
 		this.loreField.setDrawsBackground(false);
@@ -65,20 +61,24 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 		this.loreField.setChangedListener(this::onLoreChanged);
 		this.loreField.setText("");
 		this.addSelectableChild(this.loreField);
-		
-		this.setInitialFocus(this.nameField);
+		this.loreField.setEditable((this.handler).getSlot(0).hasStack());
 		
 		this.nameField.setEditable(false);
 		this.loreField.setEditable(false);
 	}
 	
 	@Override
+	protected void setInitialFocus() {
+		this.setInitialFocus(this.nameField);
+	}
+	
+	@Override
 	public void resize(MinecraftClient client, int width, int height) {
+		String name = this.nameField.getText();
+		String lore = this.loreField.getText();
 		this.init(client, width, height);
-		this.nameField.setText(this.nameField.getText());
-		
-		this.init(client, width, height);
-		this.loreField.setText(this.loreField.getText());
+		this.nameField.setText(name);
+		this.loreField.setText(lore);
 	}
 	
 	@Override
@@ -107,14 +107,12 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 		Slot slot = this.handler.getSlot(0);
 		if (slot.hasStack()) {
 			String string = name;
-			if (!slot.getStack().hasCustomName() && string.equals(slot.getStack().getName().getString())) {
+			if (!slot.getStack().contains(DataComponentTypes.CUSTOM_NAME) && string.equals(slot.getStack().getName().getString())) {
 				string = "";
 			}
 			
-			if (this.handler.setNewItemName(string)) {
-				PacketByteBuf packetByteBuf = PacketByteBufs.create();
-				packetByteBuf.writeString(name);
-				ClientPlayNetworking.send(SpectrumC2SPackets.RENAME_ITEM_IN_BEDROCK_ANVIL_PACKET_ID, packetByteBuf);
+			if ((this.handler).setNewItemName(string)) {
+				ClientPlayNetworking.send(new RenameItemInBedrockAnvilPayload(name));
 			}
 		}
 	}
@@ -128,9 +126,7 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 			}
 			
 			if (this.handler.setNewItemLore(string)) {
-				PacketByteBuf packetByteBuf = PacketByteBufs.create();
-				packetByteBuf.writeString(lore);
-				ClientPlayNetworking.send(SpectrumC2SPackets.ADD_LORE_IN_BEDROCK_ANVIL_PACKET_ID, packetByteBuf);
+				ClientPlayNetworking.send(new AddLoreBedrockAnvilPayload(lore));
 			}
 		}
 	}
@@ -167,10 +163,12 @@ public class BedrockAnvilScreen extends ForgingScreen<BedrockAnvilScreenHandler>
 		super.drawBackground(context, delta, mouseX, mouseY);
 		
 		// the text field backgrounds
-		context.drawTexture(TEXTURE, this.x + 59, this.y + 20, 0, this.backgroundHeight + (handler.getSlot(0).hasStack() ? 0 : 16), 110, 16);
-		context.drawTexture(TEXTURE, this.x + 42, this.y + 72, 0, this.backgroundHeight + (handler.getSlot(0).hasStack() ? 32 : 48), 127, 16);
+		boolean hasStack = handler.getSlot(0).hasStack();
+		context.drawTexture(TEXTURE, this.x + 59, this.y + 20, 0, this.backgroundHeight + (hasStack ? 0 : 16), 110, 16);
+		context.drawTexture(TEXTURE, this.x + 42, this.y + 72, 0, this.backgroundHeight + (hasStack ? 32 : 48), 127, 16);
 	}
 	
+	@Override
 	public void renderForeground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		this.nameField.render(drawContext, mouseX, mouseY, delta);
 		this.loreField.render(drawContext, mouseX, mouseY, delta);

@@ -17,7 +17,7 @@ import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.map.*;
-import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationS2CPacket;
+import de.dafuqs.spectrum.networking.packet.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
