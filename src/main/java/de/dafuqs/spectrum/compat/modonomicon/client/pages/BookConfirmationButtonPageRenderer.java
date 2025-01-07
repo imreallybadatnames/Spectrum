@@ -1,14 +1,15 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
-import com.klikli_dev.modonomicon.book.BookTextHolder;
-import com.klikli_dev.modonomicon.book.page.BookTextPage;
-import com.klikli_dev.modonomicon.client.gui.BookGuiManager;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
-import com.klikli_dev.modonomicon.client.render.page.BookTextPageRenderer;
-import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
-import de.dafuqs.spectrum.compat.modonomicon.pages.BookConfirmationButtonPage;
-import de.dafuqs.spectrum.networking.SpectrumC2SPacketSender;
-import net.minecraft.client.gui.widget.ButtonWidget;
+import com.klikli_dev.modonomicon.book.*;
+import com.klikli_dev.modonomicon.book.page.*;
+import com.klikli_dev.modonomicon.client.gui.*;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
+import com.klikli_dev.modonomicon.client.render.page.*;
+import de.dafuqs.revelationary.api.advancements.*;
+import de.dafuqs.spectrum.compat.modonomicon.pages.*;
+import de.dafuqs.spectrum.networking.packet.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
+import net.minecraft.client.gui.widget.*;
 
 public class BookConfirmationButtonPageRenderer extends BookTextPageRenderer {
 
@@ -43,7 +44,7 @@ public class BookConfirmationButtonPageRenderer extends BookTextPageRenderer {
 
     protected void confirmationButtonClicked(ButtonWidget button) {
         if (!(page instanceof BookConfirmationButtonPage confirmationPage)) return;
-        SpectrumC2SPacketSender.sendConfirmationButtonPressedPacket(confirmationPage.getConfirmationString());
+        ClientPlayNetworking.send(new GuidebookConfirmationButtonPressedPayload(confirmationPage.getConfirmationString()));
         button.setMessage(confirmationPage.getConfirmedButtonText().getComponent());
         BookGuiManager.get().openEntry(page.getBook().getId(), page.getParentEntry().getId(), page.getPageNumber());
     }

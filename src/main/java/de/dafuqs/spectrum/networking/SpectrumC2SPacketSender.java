@@ -9,25 +9,10 @@ import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
-import net.minecraft.recipe.*;
-import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 @Environment(EnvType.CLIENT)
 public class SpectrumC2SPacketSender {
-	
-	public static void sendGuidebookHintBoughtPacket(Identifier completionAdvancement, Ingredient ingredient) {
-		PacketByteBuf packetByteBuf = PacketByteBufs.create();
-		packetByteBuf.writeIdentifier(completionAdvancement);
-		ingredient.write(packetByteBuf);
-		ClientPlayNetworking.send(SpectrumC2SPackets.GUIDEBOOK_HINT_BOUGHT, packetByteBuf);
-	}
-	
-	public static void sendConfirmationButtonPressedPacket(String queryToTrigger) {
-		PacketByteBuf packetByteBuf = PacketByteBufs.create();
-		packetByteBuf.writeString(queryToTrigger);
-		ClientPlayNetworking.send(SpectrumC2SPackets.CONFIRMATION_BUTTON_PRESSED, packetByteBuf);
-	}
 	
 	public static void sendBindEnderSpliceToPlayer(PlayerEntity playerEntity) {
 		PacketByteBuf packetByteBuf = PacketByteBufs.create();

@@ -2,26 +2,19 @@ package de.dafuqs.spectrum.networking;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.blocks.chests.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.networking.packet.*;
-import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
-import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.recipe.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.network.*;
-import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 
@@ -32,54 +25,10 @@ public class SpectrumC2SPacketReceiver {
 	public static void registerC2SReceivers() {
 		ServerPlayNetworking.registerGlobalReceiver(RenameItemInBedrockAnvilPayload.ID, RenameItemInBedrockAnvilPayload.getPayloadHandler());
 		ServerPlayNetworking.registerGlobalReceiver(AddLoreBedrockAnvilPayload.ID, AddLoreBedrockAnvilPayload.getPayloadHandler());
-		
-		ServerPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationC2SPacket.ID, (packet, context) -> {
-			// receive the client packet...
-			if (context.player().currentScreenHandler instanceof ParticleSpawnerScreenHandler particleSpawnerScreenHandler) {
-				ParticleSpawnerBlockEntity blockEntity = particleSpawnerScreenHandler.getBlockEntity();
-				if (blockEntity != null) {
-					// ...apply the new settings...
-					blockEntity.applySettings(packet.configuration());
-					
-					// ...and distribute it to all clients again
-					// Iterate over all players tracking a position in the world and send the packet to each player
-					for (ServerPlayerEntity serverPlayerEntity : PlayerLookup.tracking((ServerWorld) blockEntity.getWorld(), blockEntity.getPos())) {
-						ServerPlayNetworking.send(serverPlayerEntity, new ParticleSpawnerConfigurationS2CPacket(blockEntity.getPos(), blockEntity.getConfiguration()));
-					}
-				}
-			}
-		});
-		
-		ServerPlayNetworking.registerGlobalReceiver(ChangeCompactingChestSettingsPacket.ID, (payload, context) -> {
-			// receive the client packet...
-			if (context.player().currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {
-				BlockEntity blockEntity = compactingChestScreenHandler.getBlockEntity();
-				if (blockEntity instanceof CompactingChestBlockEntity compactingChestBlockEntity) {
-					// apply the new settings
-					compactingChestBlockEntity.applySettings(payload);
-				}
-			}
-		});
-		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.GUIDEBOOK_HINT_BOUGHT, (server, player, handler, buf, responseSender) -> {
-			Identifier completionAdvancement = buf.readIdentifier();
-			Ingredient payment = Ingredient.fromPacket(buf);
-
-			for (ItemStack remainder : InventoryHelper.removeFromInventoryWithRemainders(List.of(payment), player.getInventory())) {
-				InventoryHelper.smartAddToInventory(remainder, player.getInventory(), null);
-			}
-			
-			// give the player the hidden "used_tip" advancement and play a sound
-			Support.grantAdvancementCriterion(player, "hidden/used_tip", "used_tip");
-			Support.grantAdvancementCriterion(player, completionAdvancement, "hint_purchased");
-			player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-		});
-		
-		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.CONFIRMATION_BUTTON_PRESSED, (server, player, handler, buf, responseSender) -> {
-			String confirmationString = buf.readString();
-			SpectrumAdvancementCriteria.CONFIRMATION_BUTTON_PRESSED.trigger(player, confirmationString);
-			player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.PLAYERS, 1.0F, 1.0F);
-		});
+		ServerPlayNetworking.registerGlobalReceiver(GuidebookConfirmationButtonPressedPayload.ID, GuidebookConfirmationButtonPressedPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(GuidebookHintBoughtPayload.ID, GuidebookHintBoughtPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(ChangeCompactingChestSettingsPacket.ID, ChangeCompactingChestSettingsPacket.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationC2SPacket.ID, ParticleSpawnerConfigurationC2SPacket.getPayloadHandler());
 		
 		ServerPlayNetworking.registerGlobalReceiver(SpectrumC2SPackets.BIND_ENDER_SPLICE_TO_PLAYER, (server, player, handler, buf, responseSender) -> {
 			int entityId = buf.readInt();

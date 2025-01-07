@@ -1,13 +1,14 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.packet.*;
 import de.dafuqs.spectrum.sound.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.widget.*;
@@ -189,8 +190,8 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
         if (mc.player.isCreative() || InventoryHelper.hasInInventory(List.of(page.getCost()), mc.player.getInventory())) {
             soundInstance = new HintRevelationSoundInstance(mc.player);
             MinecraftClient.getInstance().getSoundManager().play(soundInstance);
-
-            SpectrumC2SPacketSender.sendGuidebookHintBoughtPacket(page.getCompletionAdvancement(), page.getCost());
+            
+            ClientPlayNetworking.send(new GuidebookHintBoughtPayload(page.getCompletionAdvancement(), page.getCost()));
             revealProgress = 1;
             lastRevealTime = mc.world.getTime();
             mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
