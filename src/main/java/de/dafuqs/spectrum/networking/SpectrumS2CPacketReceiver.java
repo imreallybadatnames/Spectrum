@@ -17,7 +17,7 @@ import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.map.*;
-import de.dafuqs.spectrum.networking.packet.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
@@ -268,7 +268,7 @@ public class SpectrumS2CPacketReceiver {
 			});
 		});
 		
-		ClientPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationS2CPacket.ID, (packet, context) -> context.client().execute(() -> {
+		ClientPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationS2CPayload.ID, (packet, context) -> context.client().execute(() -> {
             // Everything in this lambda is running on the render thread
             if (context.client().world.getBlockEntity(packet.pos()) instanceof ParticleSpawnerBlockEntity particleSpawnerBlockEntity) {
                 particleSpawnerBlockEntity.applySettings(packet.configuration());

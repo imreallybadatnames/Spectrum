@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.networking;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.networking.packet.*;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
+import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.util.*;
 
 public class SpectrumS2CPackets {
@@ -52,7 +52,7 @@ public class SpectrumS2CPackets {
 	public static final Identifier PASTEL_NODE_STATUS_UPDATE = SpectrumCommon.locate("pastel_node_status");
 
 	public static void register() {
-		PayloadTypeRegistry.playC2S().register(ParticleSpawnerConfigurationS2CPacket.ID, ParticleSpawnerConfigurationS2CPacket.CODEC);
+		PayloadTypeRegistry.playC2S().register(ParticleSpawnerConfigurationS2CPayload.ID, ParticleSpawnerConfigurationS2CPayload.CODEC);
 	}
 
 }

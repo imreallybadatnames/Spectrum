@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.networking.packet;
+package de.dafuqs.spectrum.networking.c2s_payloads;
 
 import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -10,16 +10,17 @@ import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
 
-public record ChangeCompactingChestSettingsPacket(AutoCompactingInventory.AutoCraftingMode mode) implements CustomPayload {
-
-    public static final CustomPayload.Id<ChangeCompactingChestSettingsPacket> ID = SpectrumC2SPackets.makeId("change_compacting_chest_settings");
-    public static final PacketCodec<PacketByteBuf, ChangeCompactingChestSettingsPacket> CODEC = PacketCodec.tuple(
+public record ChangeCompactingChestSettingsPayload(
+        AutoCompactingInventory.AutoCraftingMode mode) implements CustomPayload {
+    
+    public static final CustomPayload.Id<ChangeCompactingChestSettingsPayload> ID = SpectrumC2SPackets.makeId("change_compacting_chest_settings");
+    public static final PacketCodec<PacketByteBuf, ChangeCompactingChestSettingsPayload> CODEC = PacketCodec.tuple(
             CodecHelper.ofPacketEnum(AutoCompactingInventory.AutoCraftingMode.class),
-            ChangeCompactingChestSettingsPacket::mode,
-            ChangeCompactingChestSettingsPacket::new
+            ChangeCompactingChestSettingsPayload::mode,
+            ChangeCompactingChestSettingsPayload::new
     );
     
-    public static ServerPlayNetworking.PlayPayloadHandler<ChangeCompactingChestSettingsPacket> getPayloadHandler() {
+    public static ServerPlayNetworking.PlayPayloadHandler<ChangeCompactingChestSettingsPayload> getPayloadHandler() {
         return (payload, context) -> {
             // receive the client packet...
             if (context.player().currentScreenHandler instanceof CompactingChestScreenHandler compactingChestScreenHandler) {

@@ -5,7 +5,8 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.energy.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.widgets.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.entity.player.*;
@@ -93,7 +94,7 @@ public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> i
 	public void accept(InkColor inkColor) {
 		ColorPickerBlockEntity colorPicker = this.handler.getBlockEntity();
 		colorPicker.setSelectedColor(inkColor);
-		SpectrumC2SPacketSender.sendInkColorSelectedInGUI(inkColor);
+		ClientPlayNetworking.send(new InkColorSelectedPayload(inkColor));
 	}
 	
 }

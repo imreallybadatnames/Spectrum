@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.blocks.chests.*;
-import de.dafuqs.spectrum.networking.packet.ChangeCompactingChestSettingsPacket;
-import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
+import de.dafuqs.spectrum.registries.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -106,7 +106,7 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 	@Override
 	public void sendContentUpdates() {
 		super.sendContentUpdates();
-		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPacket(getCraftingMode()));
+		ClientPlayNetworking.send(new ChangeCompactingChestSettingsPayload(getCraftingMode()));
 	}
 	
 	public Inventory getInventory() {

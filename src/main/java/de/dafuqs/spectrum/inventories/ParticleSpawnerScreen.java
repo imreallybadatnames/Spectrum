@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.data_loaders.*;
-import de.dafuqs.spectrum.networking.packet.ParticleSpawnerConfigurationC2SPacket;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.mixin.client.particle.*;
@@ -15,12 +15,10 @@ import net.minecraft.client.texture.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 import org.lwjgl.glfw.*;
 
-import java.lang.Math;
 import java.util.*;
 import java.util.function.*;
 
@@ -463,7 +461,7 @@ public class ParticleSpawnerScreen extends HandledScreen<ParticleSpawnerScreenHa
 					collisionsEnabled
 			);
 			
-			ClientPlayNetworking.send(new ParticleSpawnerConfigurationC2SPacket(configuration));
+			ClientPlayNetworking.send(new ParticleSpawnerConfigurationC2SPayload(configuration));
 		} catch (Exception e) {
 			// the text boxes currently are not able to be parsed yet.
 			// wait until everything is set up

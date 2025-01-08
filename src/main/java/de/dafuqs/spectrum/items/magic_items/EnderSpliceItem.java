@@ -3,10 +3,11 @@ package de.dafuqs.spectrum.items.magic_items;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.client.*;
 import net.minecraft.enchantment.*;
@@ -171,11 +172,8 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 		// If aiming at an entity: trigger entity interaction
 		MinecraftClient client = MinecraftClient.getInstance();
 		HitResult hitResult = client.crosshairTarget;
-		if (hitResult.getType() == HitResult.Type.ENTITY) {
-			EntityHitResult entityHitResult = (EntityHitResult) hitResult;
-			if (entityHitResult.getEntity() instanceof PlayerEntity playerEntity) {
-				SpectrumC2SPacketSender.sendBindEnderSpliceToPlayer(playerEntity);
-			}
+		if (hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof PlayerEntity playerEntity) {
+			ClientPlayNetworking.send(new BindEnderSpliceToPlayerPayload(playerEntity.getId()));
 		}
 	}
 	

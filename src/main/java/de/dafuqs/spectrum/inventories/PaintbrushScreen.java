@@ -1,9 +1,10 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.sound.*;
@@ -57,7 +58,7 @@ public class PaintbrushScreen extends QuickNavigationGridScreen<PaintbrushScreen
 	}
 	
 	protected static void chooseColor(@Nullable InkColor inkColor) {
-		SpectrumC2SPacketSender.sendInkColorSelectedInGUI(inkColor);
+		ClientPlayNetworking.send(new InkColorSelectedPayload(inkColor));
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.PAINTBRUSH_PAINT, SoundCategory.NEUTRAL, 0.6F, 1.0F);
 		client.player.closeHandledScreen();

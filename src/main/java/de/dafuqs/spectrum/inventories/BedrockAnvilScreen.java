@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.packet.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.*;

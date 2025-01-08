@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.networking.packet;
+package de.dafuqs.spectrum.networking.c2s_payloads;
 
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.*;

@@ -1,9 +1,10 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.items.tools.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
@@ -70,7 +71,7 @@ public class WorkstaffScreen extends QuickNavigationGridScreen<WorkstaffScreenHa
 	}
 
 	protected static void select(WorkstaffItem.GUIToggle toggle) {
-		SpectrumC2SPacketSender.sendWorkstaffToggle(toggle);
+		ClientPlayNetworking.send(new WorkstaffToggleSelectedPayload(toggle.ordinal()));
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.PAINTBRUSH_SELECT, SoundCategory.NEUTRAL, 0.6F, 1.0F);
 		client.player.closeHandledScreen();

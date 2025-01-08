@@ -8,13 +8,15 @@ import de.dafuqs.spectrum.networking.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.network.*;
-import net.minecraft.util.DyeColor;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
+
+import java.util.*;
 
 public class ColorPickerScreenHandler extends ScreenHandler implements InkColorSelectedPacketReceiver {
 	
@@ -128,8 +130,8 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 	}
 	
 	@Override
-	public void onInkColorSelectedPacket(@Nullable InkColor inkColor) {
-		this.blockEntity.setSelectedColor(inkColor);
+	public void onInkColorSelectedPacket(Optional<RegistryEntry<InkColor>> inkColor) {
+		this.blockEntity.setSelectedColor(inkColor.map(RegistryEntry::value).orElse(null));
 	}
 	
 }

@@ -7,7 +7,7 @@ import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
-import de.dafuqs.spectrum.networking.packet.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.gui.widget.*;
 

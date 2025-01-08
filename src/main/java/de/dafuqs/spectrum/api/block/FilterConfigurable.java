@@ -1,21 +1,19 @@
 package de.dafuqs.spectrum.api.block;
 
-import de.dafuqs.spectrum.inventories.slots.ShadowSlot;
-import de.dafuqs.spectrum.networking.SpectrumC2SPacketSender;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import de.dafuqs.spectrum.inventories.slots.*;
+import de.dafuqs.spectrum.networking.c2s_payloads.*;
+import net.fabricmc.fabric.api.client.networking.v1.*;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.network.codec.*;
+import net.minecraft.screen.*;
+import net.minecraft.screen.slot.*;
 import net.minecraft.util.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -129,7 +127,9 @@ public interface FilterConfigurable {
                 if (!shadowSlot.onClicked(shadowStack, ClickType.LEFT, player)) return;
 
                 // Sync with server
-                if (player.getWorld().isClient()) SpectrumC2SPacketSender.sendShadowSlot(syncId, slot.id, shadowStack);
+                if (player.getWorld().isClient()) {
+                    ClientPlayNetworking.send(new SetShadowSlotPayload(syncId, slot.id, shadowStack));
+                }
             }
 
             @Override
