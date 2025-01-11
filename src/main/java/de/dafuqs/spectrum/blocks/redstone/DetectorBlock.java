@@ -87,8 +87,9 @@ public abstract class DetectorBlock extends Block {
 	
 	abstract int getUpdateFrequencyTicks();
 	
-	protected Box getBoxWithRadius(BlockPos blockPos, int radius) {
-		return Box.of(Vec3d.ofCenter(blockPos), radius, radius, radius);
+	protected Box getBoxWithRadius(BlockPos blockPos, float radius) {
+		var r = Math.round(radius * 2);
+		return Box.of(Vec3d.ofCenter(blockPos), r, r, r);
 	}
 	
 }
