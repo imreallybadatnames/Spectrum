@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.events.listeners;
 
 import de.dafuqs.spectrum.events.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -21,7 +21,7 @@ public class WirelessRedstoneSignalEventQueue extends EventQueue<WirelessRedston
 			var eventEntry = new WirelessRedstoneSignalEventQueue.EventEntry(event, MathHelper.floor(pos.distanceTo(sourcePos)));
 			int delay = eventEntry.distance * 2;
 			this.schedule(eventEntry, delay);
-			SpectrumS2CPacketSender.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.REDSTONE));
+			TypedTransmissionPayload.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.REDSTONE));
 		}
 	}
 

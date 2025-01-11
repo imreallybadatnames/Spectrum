@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.recipe.anvil_crushing;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
@@ -65,7 +65,7 @@ public class AnvilCrusher {
 					world.playSound(null, position.x, position.y, position.z, soundEvent, SoundCategory.PLAYERS, randomVolume, randomPitch);
 				}
 				
-				SpectrumS2CPacketSender.playParticleWithExactVelocity((ServerWorld) world, position, recipe.getParticleEffect(), recipe.getParticleCount(), Vec3d.ZERO);
+				PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) world, position, recipe.getParticleEffect(), recipe.getParticleCount(), Vec3d.ZERO);
 			}
 		}
 	}

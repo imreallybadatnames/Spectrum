@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.entity.entity;
 
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
@@ -40,7 +40,7 @@ public class PhantomFrameEntity extends ItemFrameEntity {
 	public void setHeldItemStack(ItemStack value, boolean update) {
 		super.setHeldItemStack(value, update);
 		if (update && this.isAlive() && !this.getWorld().isClient()) {
-			SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.END_ROD, 10, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.1, 0.1));
+			PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.END_ROD, 10, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.1, 0.1));
 			this.getWorld().playSoundFromEntity(null, this, SpectrumSoundEvents.ENCHANTER_DING, SoundCategory.BLOCKS, 0.5F, 1.0F);
 		}
 	}
@@ -49,7 +49,7 @@ public class PhantomFrameEntity extends ItemFrameEntity {
 	public boolean damage(DamageSource source, float amount) {
 		boolean success = super.damage(source, amount);
 		if (success && this.isAlive() && !this.getWorld().isClient()) {
-			SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.END_ROD, 10, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.1, 0.1));
+			PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.END_ROD, 10, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.1, 0.1));
 			this.getWorld().playSoundFromEntity(null, this, SpectrumSoundEvents.ENCHANTER_DING, SoundCategory.BLOCKS, 0.5F, 1.0F);
 		}
 		return success;

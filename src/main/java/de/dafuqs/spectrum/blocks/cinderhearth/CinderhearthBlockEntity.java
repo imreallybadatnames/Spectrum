@@ -10,7 +10,7 @@ import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.cinderhearth.*;
 import de.dafuqs.spectrum.registries.*;
@@ -504,7 +504,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 				double h2 = 4D / 16D;
 				double i2 = axis == Direction.Axis.X ? (double) direction.getOffsetX() * g2 : h2;
 				double k2 = axis == Direction.Axis.Z ? (double) direction.getOffsetZ() * g2 : h2;
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) cinderhearthBlockEntity.getWorld(),
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) cinderhearthBlockEntity.getWorld(),
 						new Vec3d(d + i2, cinderhearthBlockEntity.pos.getY() + 1.1, f + k2),
 						ParticleTypes.CAMPFIRE_COSY_SMOKE,
 						3,

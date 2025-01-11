@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.spells;
 
 import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -58,7 +58,7 @@ public class MoonstoneStrike {
 			world.addParticle(SpectrumParticleTypes.MOONSTONE_STRIKE, x, y, z, 1.0, 0.0, 0.0);
         } else {
             moonstoneStrike.damageAndKnockbackEntities();
-            SpectrumS2CPacketSender.sendMoonstoneBlast((ServerWorld) world, moonstoneStrike);
+			MoonstoneBlastPayload.sendMoonstoneBlast((ServerWorld) world, moonstoneStrike);
             moonstoneStrike.affectWorld();
         }
     }

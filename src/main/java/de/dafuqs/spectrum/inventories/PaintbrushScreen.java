@@ -58,7 +58,7 @@ public class PaintbrushScreen extends QuickNavigationGridScreen<PaintbrushScreen
 	}
 	
 	protected static void chooseColor(@Nullable InkColor inkColor) {
-		ClientPlayNetworking.send(new InkColorSelectedPayload(inkColor));
+		ClientPlayNetworking.send(new InkColorSelectedC2SPayload(inkColor));
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.PAINTBRUSH_PAINT, SoundCategory.NEUTRAL, 0.6F, 1.0F);
 		client.player.closeHandledScreen();

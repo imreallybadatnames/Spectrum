@@ -4,7 +4,7 @@ import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.energy.*;
 import de.dafuqs.spectrum.inventories.slots.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -33,7 +33,7 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		super.sendContentUpdates();
 		
 		if (this.player != null && this.blockEntity.getInkDirty()) {
-			SpectrumS2CPacketSender.updateBlockEntityInk(blockEntity.getPos(), blockEntity.getEnergyStorage(), player);
+			UpdateBlockEntityInkPayload.updateBlockEntityInk(blockEntity.getPos(), blockEntity.getEnergyStorage(), player);
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		}
 		
 		if (this.player != null) {
-			SpectrumS2CPacketSender.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
+			UpdateBlockEntityInkPayload.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
 		}
 
 		addProperties(propertyDelegate);

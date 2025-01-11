@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.items.trinkets;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
 import net.minecraft.entity.*;
@@ -77,7 +77,7 @@ public class WeepingCircletItem extends SpectrumTrinketItem {
 			if (axolotlEntity.getHealth() < axolotlEntity.getMaxHealth() && axolotlEntity.getLovingPlayer() != null && axolotlEntity.getLovingPlayer().equals(entity)) {
 				axolotlEntity.heal(AXOLOTL_HEALING);
 				entity.playSound(SpectrumSoundEvents.BLOCK_CITRINE_BLOCK_CHIME, 1.0F, 0.9F + world.random.nextFloat() * 0.2F);
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) axolotlEntity.getWorld(), axolotlEntity.getPos(), ParticleTypes.WAX_OFF, 10, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) axolotlEntity.getWorld(), axolotlEntity.getPos(), ParticleTypes.WAX_OFF, 10, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0, 0, 0));
 			}
 		}
 	}

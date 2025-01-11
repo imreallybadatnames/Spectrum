@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.items.tools;
 import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.entity.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.gui.screen.*;
@@ -143,7 +143,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 		world.spawnEntity(bidentBaseEntity);
 		var soundEvent = SoundEvents.ITEM_TRIDENT_THROW.value();
 		if (mirrorImage) {
-			SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, bidentBaseEntity.getPos(), SpectrumParticleTypes.MIRROR_IMAGE, 8, Vec3d.ZERO, new Vec3d(0.2, 0.2, 0.2));
+			PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, bidentBaseEntity.getPos(), SpectrumParticleTypes.MIRROR_IMAGE, 8, Vec3d.ZERO, new Vec3d(0.2, 0.2, 0.2));
 			bidentBaseEntity.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 			soundEvent = SpectrumSoundEvents.BIDENT_MIRROR_IMAGE_THROWN;
 		} else if (playerEntity.getAbilities().creativeMode) {

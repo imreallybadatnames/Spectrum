@@ -3,8 +3,8 @@ package de.dafuqs.spectrum.blocks.chests;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.networking.c2s_payloads.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.minecraft.block.*;
@@ -70,7 +70,7 @@ public class CompactingChestBlockEntity extends SpectrumChestBlockEntity {
 	@SuppressWarnings("unused")
     public static void tick(World world, BlockPos pos, BlockState state, CompactingChestBlockEntity chest) {
 		if (!world.isClient()) {
-			SpectrumS2CPacketSender.sendCompactingChestStatusUpdate(chest);
+			CompactingChestStatusUpdatePayload.sendCompactingChestStatusUpdate(chest);
 		}
 
 		if (world.isClient()) {

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.status_effects;
 
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
@@ -36,7 +36,7 @@ public class AscensionStatusEffect extends SpectrumStatusEffect {
 	public void onApplied(LivingEntity entity, int amplifier) {
 		super.onApplied(entity, amplifier);
 		if (entity instanceof ServerPlayerEntity player) {
-			SpectrumS2CPacketSender.playAscensionAppliedEffects(player);
+			PlayAscensionAppliedEffectsPayload.playAscensionAppliedEffects(player);
 		}
 	}
 	

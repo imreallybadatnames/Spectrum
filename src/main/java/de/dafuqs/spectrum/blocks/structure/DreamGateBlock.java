@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.structure;
 
 import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.status_effects.*;
@@ -63,7 +63,7 @@ public class DreamGateBlock extends DikeGateBlock {
 			var sleep = SleepStatusEffect.getGeneralSleepResistanceIfEntityHasSoporificEffect(livingEntity);
 			if ( sleep == -1 && serverWorld.getTime() % 5 == 0) {
 				entity.damage(SpectrumDamageTypes.sleep(serverWorld, null), 2);
-				SpectrumS2CPacketSender.playParticles(serverWorld, pos, SpectrumParticleTypes.AZURE_DIKE_RUNES, 10);
+				PlayParticleWithExactVelocityPayload.playParticles(serverWorld, pos, SpectrumParticleTypes.AZURE_DIKE_RUNES, 10);
 				if (entity instanceof ServerPlayerEntity serverPlayerEntity && (!decreasedSounds || ((ServerWorld) world).getTime() % 10 == 0)) {
 					serverPlayerEntity.playSoundToPlayer(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
 				}

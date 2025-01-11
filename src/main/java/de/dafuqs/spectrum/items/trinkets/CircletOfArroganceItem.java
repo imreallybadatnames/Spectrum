@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.items.trinkets;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.status_effects.*;
 import dev.emi.trinkets.api.*;
@@ -30,7 +30,7 @@ public class CircletOfArroganceItem extends SpectrumTrinketItem {
         super.onEquip(stack, slot, entity);
         giveEffect(entity);
         if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
-            SpectrumS2CPacketSender.playDivinityAppliedEffects(serverPlayerEntity);
+			PlayDivinityAppliedEffectsPayload.playDivinityAppliedEffects(serverPlayerEntity);
         }
     }
 

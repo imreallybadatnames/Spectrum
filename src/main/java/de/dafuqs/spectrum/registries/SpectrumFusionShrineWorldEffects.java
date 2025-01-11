@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.registries;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import net.minecraft.entity.*;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
@@ -106,7 +106,7 @@ public class SpectrumFusionShrineWorldEffects {
 		public void trigger(ServerWorld world, BlockPos pos) {
 			if (world.getRandom().nextFloat() < 0.1) {
 				world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS, 0.5F, 0.8F + world.random.nextFloat() * 0.4F);
-				SpectrumS2CPacketSender.playParticles(world, pos.up(), ParticleTypes.EXPLOSION, 1);
+				PlayParticleWithExactVelocityPayload.playParticles(world, pos.up(), ParticleTypes.EXPLOSION, 1);
 			}
 		}
 	});
@@ -114,7 +114,7 @@ public class SpectrumFusionShrineWorldEffects {
 		@Override
 		public void trigger(ServerWorld world, BlockPos pos) {
 			world.playSound(null, pos.up(), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS, 0.8F, 0.8F + world.random.nextFloat() * 0.4F);
-			SpectrumS2CPacketSender.playParticles(world, pos, ParticleTypes.EXPLOSION, 1);
+			PlayParticleWithExactVelocityPayload.playParticles(world, pos, ParticleTypes.EXPLOSION, 1);
 		}
 	});
 	public static FusionShrineRecipeWorldEffect MAYBE_PLACE_MIDNIGHT_SOLUTION = FusionShrineRecipeWorldEffect.register("maybe_place_midnight_solution", new FusionShrineRecipeWorldEffect.EveryTickRecipeWorldEffect() {

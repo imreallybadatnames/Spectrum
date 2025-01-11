@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.deeper_down;
 
 import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.events.listeners.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
@@ -23,7 +23,7 @@ public class HummingstoneEventQueue extends EventQueue<HummingstoneEventQueue.Ev
 		this.schedule(eventEntry, delay);
 	
 		if (message.getEvent() == SpectrumGameEvents.HUMMINGSTONE_HUMMING) {
-			SpectrumS2CPacketSender.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.HUMMINGSTONE));
+			TypedTransmissionPayload.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.HUMMINGSTONE));
 			if (getQueuedEventCount() > 20) {
 				world.emitGameEvent(message.getEmitter().sourceEntity(), SpectrumGameEvents.HUMMINGSTONE_HYMN, pos);
 			}

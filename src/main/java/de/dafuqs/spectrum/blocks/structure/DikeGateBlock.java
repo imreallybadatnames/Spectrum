@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.structure;
 
 import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.cca.azure_dike.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -101,7 +101,7 @@ public class DikeGateBlock extends TransparentBlock {
 			int charges = (int) Math.ceil(AzureDikeProvider.getAzureDikeCharges(livingEntity));
 			if (charges == 0) {
 				entity.damage(SpectrumDamageTypes.dike(serverWorld), 1);
-				SpectrumS2CPacketSender.playParticles(serverWorld, pos, SpectrumParticleTypes.AZURE_DIKE_RUNES, 10);
+				PlayParticleWithExactVelocityPayload.playParticles(serverWorld, pos, SpectrumParticleTypes.AZURE_DIKE_RUNES, 10);
 				if (entity instanceof ServerPlayerEntity serverPlayerEntity && (!decreasedSounds || ((ServerWorld) world).getTime() % 10 == 0)) {
 					serverPlayerEntity.playSoundToPlayer(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 0.75F, 1.0F);
 				}

@@ -94,7 +94,7 @@ public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> i
 	public void accept(InkColor inkColor) {
 		ColorPickerBlockEntity colorPicker = this.handler.getBlockEntity();
 		colorPicker.setSelectedColor(inkColor);
-		ClientPlayNetworking.send(new InkColorSelectedPayload(inkColor));
+		ClientPlayNetworking.send(new InkColorSelectedC2SPayload(inkColor));
 	}
 	
 }

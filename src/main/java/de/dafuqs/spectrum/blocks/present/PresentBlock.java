@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.blocks.present;
 import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.block.*;
@@ -155,10 +155,10 @@ public class PresentBlock extends BlockWithEntity {
 					presentBlockEntity.triggerAdvancement();
 					if (presentBlockEntity.isEmpty()) {
 						world.playSound(null, posVec.x, posVec.y, posVec.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 0.8F);
-						SpectrumS2CPacketSender.playParticleWithExactVelocity(world, posVec, ParticleTypes.SMOKE, 5, Vec3d.ZERO);
+						PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity(world, posVec, ParticleTypes.SMOKE, 5, Vec3d.ZERO);
 					} else {
 						world.playSound(null, posVec.x, posVec.y, posVec.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.5F, 4.0F);
-						SpectrumS2CPacketSender.playParticleWithExactVelocity(world, posVec, ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
+						PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity(world, posVec, ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
 						processInteractions(presentBlockEntity.getStacks(), presentBlockEntity, world, pos, random);
 						ItemScatterer.spawn(world, pos, presentBlockEntity.getDefaultedStacks());
 					}
@@ -183,7 +183,7 @@ public class PresentBlock extends BlockWithEntity {
 	}
 
 	public static void spawnParticles(ServerWorld world, BlockPos pos, Map<DyeColor, Integer> colors) {
-		SpectrumS2CPacketSender.playPresentOpeningParticles(world, pos, colors);
+		PlayPresentOpeningParticlesPayload.playPresentOpeningParticles(world, pos, colors);
 	}
 	
 	public static void spawnParticles(ClientWorld world, BlockPos pos, Map<DyeColor, Integer> colors) {

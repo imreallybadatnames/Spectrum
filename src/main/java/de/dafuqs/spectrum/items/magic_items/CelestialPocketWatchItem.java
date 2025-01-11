@@ -2,9 +2,8 @@ package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -86,7 +85,7 @@ public class CelestialPocketWatchItem extends Item implements InkPowered {
 	}
 
 	private static void advanceTime(@NotNull ServerWorld world, int additionalTime) {
-		SpectrumS2CPacketSender.startSkyLerping(world, additionalTime);
+		StartSkyLerpingPayload.startSkyLerping(world, additionalTime);
 		long timeOfDay = world.getTimeOfDay();
 		world.setTimeOfDay(timeOfDay + additionalTime);
 	}

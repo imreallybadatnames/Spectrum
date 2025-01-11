@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.memory;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -106,7 +106,7 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 					Optional<EntityType<?>> entityTypeOptional = MemoryItem.getEntityType(this.memoryItemStack.getNbt());
 					if (entityTypeOptional.isPresent()) {
 						MemoryItem.setTicksToManifest(this.memoryItemStack, newTicksToManifest);
-						SpectrumS2CPacketSender.playMemoryManifestingParticles(world, blockPos, entityTypeOptional.get(), 3);
+						PlayMemoryManifestingParticlesPayload.playMemoryManifestingParticles(world, blockPos, entityTypeOptional.get(), 3);
 						world.playSound(null, this.pos, SpectrumSoundEvents.BLOCK_MEMORY_ADVANCE, SoundCategory.BLOCKS, 0.7F, 0.9F + world.random.nextFloat() * 0.2F);
 						this.markDirty();
 					}
@@ -132,7 +132,7 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 		if (hatchedEntityOptional.isPresent()) {
 			Entity hatchedEntity = hatchedEntityOptional.get();
 			
-			SpectrumS2CPacketSender.playMemoryManifestingParticles(world, blockPos, hatchedEntity.getType(), 10);
+			PlayMemoryManifestingParticlesPayload.playMemoryManifestingParticles(world, blockPos, hatchedEntity.getType(), 10);
 			
 			if (hatchedEntity instanceof MobEntity hatchedMobEntity) {
 				hatchedMobEntity.setPersistent();

@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.structure;
 
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -148,15 +148,15 @@ public class PreservationControllerBlockEntity extends BlockEntity {
                 if (checkBoxOffset != null) {
                     centerPos = Support.directionalOffset(pos, checkBoxOffset, world.getBlockState(pos).get(PreservationControllerBlock.FACING));
                 }
-                SpectrumS2CPacketSender.playParticles((ServerWorld) world, centerPos, ParticleTypes.FLAME, 1);
-
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(centerPos), ParticleTypes.SMOKE, 250,
+				PlayParticleWithExactVelocityPayload.playParticles((ServerWorld) world, centerPos, ParticleTypes.FLAME, 1);
+				
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(centerPos), ParticleTypes.SMOKE, 250,
 						new Vec3d(checkBox.getLengthX() / 2, checkBox.getLengthY() / 2, checkBox.getLengthZ() / 2),
 						Vec3d.ZERO);
 			}
 			
 			if (destinationPos != null) {
-				SpectrumS2CPacketSender.playParticles((ServerWorld) world, destinationPos, ParticleTypes.END_ROD, 1);
+				PlayParticleWithExactVelocityPayload.playParticles((ServerWorld) world, destinationPos, ParticleTypes.END_ROD, 1);
 			}
 		}
 	}

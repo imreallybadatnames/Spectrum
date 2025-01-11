@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.SpectrumS2CPacketSender;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -126,7 +126,7 @@ public class ServerPastelNetwork extends PastelNetwork {
 		}
 
 		if (!nodeSync.isEmpty())
-			SpectrumS2CPacketSender.sendPastelNodeStatusUpdate(nodeSync, false);
+			PastelNodeStatusUpdatePayload.sendPastelNodeStatusUpdate(nodeSync, false);
 	}
 	
 	@Override

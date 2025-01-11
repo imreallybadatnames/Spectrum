@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.events.listeners;
 
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.minecraft.entity.*;
 import net.minecraft.registry.entry.*;
@@ -22,7 +22,7 @@ public class ItemEntityEventQueue extends EventQueue<ItemEntityEventQueue.EventE
 			EventEntry eventEntry = new EventEntry(event.getEvent(), itemEntity, MathHelper.floor(pos.distanceTo(sourcePos)));
 			int delay = eventEntry.distance * 2;
 			this.schedule(eventEntry, delay);
-			SpectrumS2CPacketSender.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.ITEM));
+			TypedTransmissionPayload.playTransmissionParticle((ServerWorld) world, new TypedTransmission(pos, this.positionSource, delay, TypedTransmission.Variant.ITEM));
 		}
 	}
 	

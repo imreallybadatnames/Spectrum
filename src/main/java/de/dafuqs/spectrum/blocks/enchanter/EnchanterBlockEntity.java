@@ -9,7 +9,7 @@ import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.magic_items.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
@@ -147,12 +147,12 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 			if (enchanterBlockEntity.craftingTime % 60 == 1) {
 				if (!checkRecipeRequirements(world, blockPos, enchanterBlockEntity)) {
 					enchanterBlockEntity.craftingTime = 0;
-					SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
+					PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
 					return;
 				}
 			}
 			if (enchanterBlockEntity.craftingTime == 1) {
-				SpectrumS2CPacketSender.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.ENCHANTER_WORKING, (ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos, Integer.MAX_VALUE);
+				PlayBlockBoundSoundInstancePayload.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.ENCHANTER_WORKING, (ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos, Integer.MAX_VALUE);
 			}
 			
 			if (enchanterBlockEntity.currentRecipe instanceof EnchanterRecipe enchanterRecipe) {
@@ -180,7 +180,7 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 						if (enchanterBlockEntity.craftingTime >= enchanterBlockEntity.craftingTimeTotal) {
 							playCraftingFinishedEffects(enchanterBlockEntity);
 							craftEnchantmentUpgradeRecipe(enchanterBlockEntity, enchantmentUpgradeRecipe);
-							SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
+							PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
 
 							craftingSuccess = true;
 						}
@@ -196,7 +196,7 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 					if (!drained) {
 						enchanterBlockEntity.currentItemProcessingTime = -1;
 						enchanterBlockEntity.updateInClientWorld();
-						SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
+						PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
 
 					}
 				}
@@ -207,7 +207,7 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 					enchanterBlockEntity.currentItemProcessingTime = -1;
 					enchanterBlockEntity.craftingTime = 0;
 					enchanterBlockEntity.updateInClientWorld();
-					SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
+					PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) enchanterBlockEntity.getWorld(), enchanterBlockEntity.pos);
 
 					craftingSuccess = true;
 				}
@@ -277,7 +277,7 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 	public static void playCraftingFinishedEffects(@NotNull EnchanterBlockEntity enchanterBlockEntity) {
 		enchanterBlockEntity.getWorld().playSound(null, enchanterBlockEntity.pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		
-		SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) enchanterBlockEntity.getWorld(),
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) enchanterBlockEntity.getWorld(),
 				new Vec3d(enchanterBlockEntity.pos.getX() + 0.5D, enchanterBlockEntity.pos.getY() + 0.5, enchanterBlockEntity.pos.getZ() + 0.5D),
 				SpectrumParticleTypes.LIME_SPARKLE_RISING, 75, new Vec3d(0.5D, 0.5D, 0.5D),
 				new Vec3d(0.1D, -0.1D, 0.1D));
@@ -750,7 +750,7 @@ public class EnchanterBlockEntity extends InWorldInteractionBlockEntity implemen
 						// There was enough experience drained from the knowledge gem that the visual changed
 						// To display the updated knowledge gem size clientside the inventory has to be synched
 						// to the clients for rendering purposes
-						SpectrumS2CPacketSender.playParticleWithPatternAndVelocity(null, (ServerWorld) world, new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 2.5, this.pos.getZ() + 0.5), SpectrumParticleTypes.LIME_CRAFTING, VectorPattern.SIXTEEN, 0.05F);
+						PlayParticleWithPatternAndVelocityPayload.playParticleWithPatternAndVelocity(null, (ServerWorld) world, new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 2.5, this.pos.getZ() + 0.5), SpectrumParticleTypes.LIME_CRAFTING, VectorPattern.SIXTEEN, 0.05F);
 						this.updateInClientWorld();
 					}
 				}

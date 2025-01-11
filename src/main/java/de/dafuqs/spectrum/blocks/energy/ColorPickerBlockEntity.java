@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.ink_converting.*;
@@ -221,7 +221,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 				if (SpectrumCommon.CONFIG.BlockSoundVolume > 0) {
 					world.playSound(null, pos, SpectrumSoundEvents.COLOR_PICKER_PROCESSING, SoundCategory.BLOCKS, SpectrumCommon.CONFIG.BlockSoundVolume / 3, 1.0F);
 				}
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world,
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world,
 						new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5),
 						SpectrumParticleTypes.getFluidRisingParticle(color.getDyeColor()),
 						5,

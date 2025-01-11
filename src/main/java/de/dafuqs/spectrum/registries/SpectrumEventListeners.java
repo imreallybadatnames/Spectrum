@@ -13,7 +13,7 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.client.*;
 import dev.emi.trinkets.api.*;
@@ -268,16 +268,16 @@ public class SpectrumEventListeners {
 					Vec3d particleVelocity = projectileEntity.getVelocity().multiply(0.05);
 					
 					if (GlassCrestCrossbowItem.getOvercharge(crossbow) > 0.99F) {
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 								projectileEntity.getPos(), ParticleTypes.SCRAPE, 5,
 								Vec3d.ZERO, particleVelocity);
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 								projectileEntity.getPos(), ParticleTypes.WAX_OFF, 5,
 								Vec3d.ZERO, particleVelocity);
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 								projectileEntity.getPos(), ParticleTypes.WAX_ON, 5,
 								Vec3d.ZERO, particleVelocity);
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 								projectileEntity.getPos(), ParticleTypes.GLOW, 5,
 								Vec3d.ZERO, particleVelocity);
 						
@@ -291,7 +291,7 @@ public class SpectrumEventListeners {
 						}
 					}
 					
-					SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 							projectileEntity.getPos(), ParticleTypes.FIREWORK, 10,
 							Vec3d.ZERO, particleVelocity);
 					

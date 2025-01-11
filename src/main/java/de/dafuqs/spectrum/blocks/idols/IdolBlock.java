@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.idols;
 
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -91,7 +91,7 @@ public abstract class IdolBlock extends Block {
 	public abstract boolean trigger(ServerWorld world, BlockPos blockPos, BlockState state, @Nullable Entity entity, Direction side);
 	
 	public void playTriggerParticles(ServerWorld world, BlockPos blockPos) {
-		SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, new Vec3d(blockPos.getX() + 0.5, blockPos.getY() + 0.2, blockPos.getZ() + 0.5), particleEffect, 10, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0.2, 0.08, 0.2));
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, new Vec3d(blockPos.getX() + 0.5, blockPos.getY() + 0.2, blockPos.getZ() + 0.5), particleEffect, 10, new Vec3d(0.5, 0.5, 0.5), new Vec3d(0.2, 0.08, 0.2));
 	}
 	
 	public void playTriggerSound(World world, BlockPos blockPos) {

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.jade_vines;
 
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
 import net.minecraft.particle.*;
@@ -48,7 +48,7 @@ public interface JadeVine {
 	}
 	
 	static void spawnParticlesServer(ServerWorld world, BlockPos blockPos, int amount) {
-		SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos), SpectrumParticleTypes.JADE_VINES, amount, new Vec3d(0.6, 0.6, 0.6), new Vec3d(0.12, 0.12, 0.12));
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos), SpectrumParticleTypes.JADE_VINES, amount, new Vec3d(0.6, 0.6, 0.6), new Vec3d(0.12, 0.12, 0.12));
 	}
 	
 	static boolean isExposedToSunlight(@NotNull World world, @NotNull BlockPos blockPos) {

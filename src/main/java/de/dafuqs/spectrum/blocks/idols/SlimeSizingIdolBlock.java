@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.idols;
 
 import com.mojang.serialization.MapCodec;
 import de.dafuqs.spectrum.mixin.accessors.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.progression.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -52,10 +52,10 @@ public class SlimeSizingIdolBlock extends IdolBlock {
 				((SlimeEntityAccessor) slimeEntity).invokeSetSize(newSize, true);
 				
 				// play particles and sound
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), 16, new Vec3d(0.75, 0.75, 0.75), new Vec3d(0.1, 0.1, 0.1));
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), 16, new Vec3d(0.75, 0.75, 0.75), new Vec3d(0.1, 0.1, 0.1));
 				
 				Box boundingBox = slimeEntity.getBoundingBox();
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, slimeEntity.getPos().add(0, boundingBox.getLengthY() / 2, 0), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), newSize * 8, new Vec3d(boundingBox.getLengthX(), boundingBox.getLengthY(), boundingBox.getLengthZ()), new Vec3d(0.1, 0.1, 0.1));
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, slimeEntity.getPos().add(0, boundingBox.getLengthY() / 2, 0), ((SlimeEntityAccessor) slimeEntity).invokeGetParticles(), newSize * 8, new Vec3d(boundingBox.getLengthX(), boundingBox.getLengthY(), boundingBox.getLengthZ()), new Vec3d(0.1, 0.1, 0.1));
 				slimeEntity.playSound(((SlimeEntityAccessor) slimeEntity).invokeGetSquishSound(), ((SlimeEntityAccessor) slimeEntity).invokeGetSoundVolume(), ((world.random.nextFloat() - world.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
 				
 				// grant advancements

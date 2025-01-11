@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.networking.c2s_payloads;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.network.*;
@@ -14,12 +15,12 @@ import net.minecraft.server.network.*;
 
 import java.util.*;
 
-public record InkColorSelectedPayload(Optional<RegistryEntry<InkColor>> color) implements CustomPayload {
+public record InkColorSelectedC2SPayload(Optional<RegistryEntry<InkColor>> color) implements CustomPayload {
 	
-	public static final Id<InkColorSelectedPayload> ID = SpectrumC2SPackets.makeId("ink_color_select");
-	public static final PacketCodec<RegistryByteBuf, InkColorSelectedPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.optional(PacketCodecs.registryEntry(SpectrumRegistries.INK_COLORS_KEY)), InkColorSelectedPayload::color,
-			InkColorSelectedPayload::new
+	public static final Id<InkColorSelectedC2SPayload> ID = SpectrumC2SPackets.makeId("ink_color_select");
+	public static final PacketCodec<RegistryByteBuf, InkColorSelectedC2SPayload> CODEC = PacketCodec.tuple(
+			PacketCodecs.optional(PacketCodecs.registryEntry(SpectrumRegistries.INK_COLORS_KEY)), InkColorSelectedC2SPayload::color,
+			InkColorSelectedC2SPayload::new
 	);
 	
 	@Override
@@ -27,7 +28,7 @@ public record InkColorSelectedPayload(Optional<RegistryEntry<InkColor>> color) i
 		return ID;
 	}
 	
-	public static ServerPlayNetworking.PlayPayloadHandler<InkColorSelectedPayload> getPayloadHandler() {
+	public static ServerPlayNetworking.PlayPayloadHandler<InkColorSelectedC2SPayload> getPayloadHandler() {
 		return (payload, context) -> {
 			ServerPlayerEntity player = context.player();
 			ScreenHandler screenHandler = player.currentScreenHandler;
@@ -41,7 +42,7 @@ public record InkColorSelectedPayload(Optional<RegistryEntry<InkColor>> color) i
 				inkColorSelectedPacketReceiver.onInkColorSelectedPacket(color);
 				for (ServerPlayerEntity serverPlayer : context.server().getPlayerManager().getPlayerList()) {
 					if (serverPlayer.currentScreenHandler instanceof InkColorSelectedPacketReceiver receiver && receiver.getBlockEntity() != null && receiver.getBlockEntity() == inkColorSelectedPacketReceiver.getBlockEntity()) {
-						SpectrumS2CPacketSender.sendInkColorSelected(color, serverPlayer);
+						InkColorSelectedPayload.sendInkColorSelected(color, serverPlayer);
 					}
 				}
 			}

@@ -5,14 +5,13 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -200,7 +199,7 @@ public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnch
 				Vec3d sourcePos = new Vec3d(context.getHitPos().getX() + side.getOffsetX() * 0.1,
 						context.getHitPos().getY() + side.getOffsetY() * 0.1,
 						context.getHitPos().getZ() + side.getOffsetZ() * 0.1);
-				SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(serverWorld, sourcePos,
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(serverWorld, sourcePos,
 						SpectrumParticleTypes.SHIMMERSTONE_SPARKLE_SMALL, 15, Vec3d.ZERO, new Vec3d(0.25, 0.25, 0.25));
 				world.playSound(null, player.getBlockPos(), SpectrumSoundEvents.EXCHANGING_STAFF_SELECT,
 						SoundCategory.PLAYERS, 1.0F, 1.0F);

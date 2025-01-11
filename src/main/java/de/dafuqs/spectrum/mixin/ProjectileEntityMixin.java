@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.mixin;
 
 import de.dafuqs.spectrum.cca.azure_dike.*;
 import de.dafuqs.spectrum.items.trinkets.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
@@ -60,11 +60,11 @@ public abstract class ProjectileEntityMixin {
 					if (protect) {
 						this.setVelocity(0, 0, 0, 0, 0);
 						
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, thisEntity.getPos(),
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, thisEntity.getPos(),
 								SpectrumParticleTypes.WHITE_CRAFTING, 6,
 								new Vec3d(0, 0, 0),
 								new Vec3d(thisEntity.getX() - livingEntity.getPos().x, thisEntity.getY() - livingEntity.getPos().y, thisEntity.getZ() - livingEntity.getPos().z));
-						SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, thisEntity.getPos(),
+						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, thisEntity.getPos(),
 								SpectrumParticleTypes.BLUE_CRAFTING, 6,
 								new Vec3d(0, 0, 0),
 								new Vec3d(thisEntity.getX() - livingEntity.getPos().x, thisEntity.getY() - livingEntity.getPos().y, thisEntity.getZ() - livingEntity.getPos().z));

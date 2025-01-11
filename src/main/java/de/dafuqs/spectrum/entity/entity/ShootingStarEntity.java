@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.entity.entity;
 import de.dafuqs.spectrum.blocks.shooting_star.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -236,15 +236,15 @@ public class ShootingStarEntity extends Entity {
 					}
 					
 					// do effects
-					SpectrumS2CPacketSender.sendPlayShootingStarParticles(this);
+					PlayShootingStarParticlesPayload.sendPlayShootingStarParticles(this);
 					this.getWorld().playSound(null, this.getBlockPos(), SpectrumSoundEvents.SHOOTING_STAR_CRACKER, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				}
 			}
 			
 			if (!hardened && !wasOnGround && this.isOnGround() && previousYVelocity < -0.5) { // hitting the ground after a long fall
-				SpectrumS2CPacketSender.playParticleWithExactVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
+				PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) this.getWorld(), getPos(), ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
 				if (!spawnLoot) {
-					SpectrumS2CPacketSender.sendPlayShootingStarParticles(this);
+					PlayShootingStarParticlesPayload.sendPlayShootingStarParticles(this);
 					this.getWorld().playSound(null, this.getBlockPos(), SpectrumSoundEvents.SHOOTING_STAR_CRACKER, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				}
 			}
@@ -267,7 +267,7 @@ public class ShootingStarEntity extends Entity {
 		// give the player the star, some damage and grant an advancement
 		if (!this.getWorld().isClient() && !this.dataTracker.get(HARDENED) && !this.isOnGround() && this.getVelocity().getY() < -0.5) {
 			this.getWorld().playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SpectrumSoundEvents.SHOOTING_STAR_CRACKER, SoundCategory.PLAYERS, 1.5F + random.nextFloat() * 0.4F, 0.8F + random.nextFloat() * 0.4F);
-			SpectrumS2CPacketSender.sendPlayShootingStarParticles(this);
+			PlayShootingStarParticlesPayload.sendPlayShootingStarParticles(this);
 			player.damage(SpectrumDamageTypes.shootingStar(this.getWorld()), 18);
 			
 			ItemStack itemStack = this.getShootingStarType().getBlock().asItem().getDefaultStack();
@@ -321,7 +321,7 @@ public class ShootingStarEntity extends Entity {
 		}
 		
 		// spawn particles
-		SpectrumS2CPacketSender.sendPlayShootingStarParticles(this);
+		PlayShootingStarParticlesPayload.sendPlayShootingStarParticles(this);
 		this.getWorld().playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SpectrumSoundEvents.SHOOTING_STAR_CRACKER, SoundCategory.PLAYERS, 1.5F + random.nextFloat() * 0.4F, 0.8F + random.nextFloat() * 0.4F);
 	}
 	
@@ -364,7 +364,7 @@ public class ShootingStarEntity extends Entity {
 					}
 					
 					if (this.availableHits <= 0) {
-                        SpectrumS2CPacketSender.playParticleWithExactVelocity((ServerWorld) this.getWorld(), this.getPos(), ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
+						PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) this.getWorld(), this.getPos(), ParticleTypes.EXPLOSION, 1, Vec3d.ZERO);
 						
 						ItemEntity itemEntity = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), SpectrumItems.STAR_FRAGMENT.getDefaultStack());
 						itemEntity.addVelocity(0, 0.15, 0);

@@ -17,11 +17,22 @@ public class SpectrumC2SPackets {
 		PayloadTypeRegistry.playC2S().register(ChangeCompactingChestSettingsPayload.ID, ChangeCompactingChestSettingsPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(GuidebookConfirmationButtonPressedPayload.ID, GuidebookConfirmationButtonPressedPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(GuidebookHintBoughtPayload.ID, GuidebookHintBoughtPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(InkColorSelectedPayload.ID, InkColorSelectedPayload.CODEC);
+		PayloadTypeRegistry.playC2S().register(InkColorSelectedC2SPayload.ID, InkColorSelectedC2SPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(ParticleSpawnerConfigurationC2SPayload.ID, ParticleSpawnerConfigurationC2SPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(RenameItemInBedrockAnvilPayload.ID, RenameItemInBedrockAnvilPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(SetShadowSlotPayload.ID, SetShadowSlotPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(WorkstaffToggleSelectedPayload.ID, WorkstaffToggleSelectedPayload.CODEC);
+		
+		ServerPlayNetworking.registerGlobalReceiver(AddLoreBedrockAnvilPayload.ID, AddLoreBedrockAnvilPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(BindEnderSpliceToPlayerPayload.ID, BindEnderSpliceToPlayerPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(ChangeCompactingChestSettingsPayload.ID, ChangeCompactingChestSettingsPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(GuidebookConfirmationButtonPressedPayload.ID, GuidebookConfirmationButtonPressedPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(GuidebookHintBoughtPayload.ID, GuidebookHintBoughtPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(InkColorSelectedC2SPayload.ID, InkColorSelectedC2SPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(ParticleSpawnerConfigurationC2SPayload.ID, ParticleSpawnerConfigurationC2SPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(RenameItemInBedrockAnvilPayload.ID, RenameItemInBedrockAnvilPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(SetShadowSlotPayload.ID, SetShadowSlotPayload.getPayloadHandler());
+		ServerPlayNetworking.registerGlobalReceiver(WorkstaffToggleSelectedPayload.ID, WorkstaffToggleSelectedPayload.getPayloadHandler());
 	}
-
+	
 }

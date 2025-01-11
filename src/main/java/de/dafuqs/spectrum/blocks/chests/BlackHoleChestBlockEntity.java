@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.events.listeners.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
@@ -116,7 +116,7 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	public void updateFullState() {
 		if (world != null && !world.isClient) {
 			isFull = isFull();
-			SpectrumS2CPacketSender.sendBlackHoleChestUpdate(this);
+			BlackHoleChestStatusUpdatePayload.sendBlackHoleChestUpdate(this);
 		}
 	}
 
@@ -286,13 +286,13 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 	}
 
 	public static void sendPlayItemEntityAbsorbedParticle(ServerWorld world, @NotNull ItemEntity itemEntity) {
-		SpectrumS2CPacketSender.playParticleWithExactVelocity(world, itemEntity.getPos(),
+		PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity(world, itemEntity.getPos(),
 				SpectrumParticleTypes.BLUE_BUBBLE_POP,
 				1, Vec3d.ZERO);
 	}
 
 	public static void sendPlayExperienceOrbEntityAbsorbedParticle(ServerWorld world, @NotNull ExperienceOrbEntity experienceOrbEntity) {
-		SpectrumS2CPacketSender.playParticleWithExactVelocity(world, experienceOrbEntity.getPos(),
+		PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity(world, experienceOrbEntity.getPos(),
 				SpectrumParticleTypes.GREEN_BUBBLE_POP,
 				1, Vec3d.ZERO);
 	}

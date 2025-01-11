@@ -5,7 +5,7 @@ import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.events.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.registries.*;
@@ -125,12 +125,12 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 				ParticleEffect sparkleRisingParticleEffect = SpectrumParticleTypes.getSparkleRisingParticle(optionalItemColor.get());
 				
 				if (this.getWorld() instanceof ServerWorld serverWorld) {
-					SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 							new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
 							sparkleRisingParticleEffect, 50,
 							new Vec3d(0.4, 0.2, 0.4), new Vec3d(0.06, 0.16, 0.06));
 					
-					SpectrumS2CPacketSender.playColorTransmissionParticle(serverWorld, new ColoredTransmission(new Vec3d(this.pos.getX() + 0.5D, this.pos.getY() + 1.0D, this.pos.getZ() + 0.5D), new ExactPositionSource(orbTargetPos), 20, optionalItemColor.get()));
+					ColorTransmissionPayload.playColorTransmissionParticle(serverWorld, new ColoredTransmission(new Vec3d(this.pos.getX() + 0.5D, this.pos.getY() + 1.0D, this.pos.getZ() + 0.5D), new ExactPositionSource(orbTargetPos), 20, optionalItemColor.get()));
 				} else if (this.getWorld() instanceof ClientWorld clientWorld) {
 					for (int i = 0; i < 50; i++) {
 						float randomOffsetX = pos.getX() + 0.3F + world.random.nextFloat() * 0.6F;

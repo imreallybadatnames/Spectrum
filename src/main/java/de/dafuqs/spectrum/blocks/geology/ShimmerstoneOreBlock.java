@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.dafuqs.spectrum.blocks.conditional.*;
 import de.dafuqs.spectrum.mixin.accessors.ExperienceDroppingBlockAccessor;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
@@ -38,9 +38,9 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         var random = world.getRandom();
         if (!world.isClient() && !entity.bypassesSteppingEffects() && random.nextInt(3) == 0) {
-            SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.05, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.UP);
+			PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.05, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.UP);
             if (random.nextInt(3) == 0) {
-                SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.025, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
+				PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.025, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
 
             }
         }
@@ -53,7 +53,7 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
             var random = world.getRandom();
             if (random.nextBoolean()) {
                 var amount = (int) Math.ceil(MathHelper.clamp(fallDistance / 2, 1, 10));
-                SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, amount, Vec3d.of(pos), new Vec3d(0, 0.05 + amount / 30.0, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.UP);
+				PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides((ServerWorld) world, amount, Vec3d.of(pos), new Vec3d(0, 0.05 + amount / 30.0, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.UP);
             }
         }
         super.onLandedUpon(world, state, pos, entity, fallDistance);
@@ -61,7 +61,7 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        SpectrumS2CPacketSender.playParticleAroundBlockSides(world, 1, Vec3d.of(pos), new Vec3d(0, 0.025, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, player -> {
+		PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides(world, 1, Vec3d.of(pos), new Vec3d(0, 0.025, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, player -> {
             if (!isVisibleTo(player))
                 return false;
 
@@ -73,7 +73,7 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient()) {
-            SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, 3, Vec3d.of(pos), new Vec3d(0, 0.05, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
+			PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides((ServerWorld) world, 3, Vec3d.of(pos), new Vec3d(0, 0.05, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
 
         }
         return super.onBreak(world, pos, state, player);
@@ -83,7 +83,7 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
     public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         super.onBlockBreakStart(state, world, pos, player);
         if (!world.isClient()) {
-            SpectrumS2CPacketSender.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.01, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
+			PlayParticleAroundBlockSidesPayload.playParticleAroundBlockSides((ServerWorld) world, 1, Vec3d.of(pos), new Vec3d(0, 0.01, 0), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, this::isVisibleTo, Direction.values());
         }
     }
 }

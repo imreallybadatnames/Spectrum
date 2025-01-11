@@ -5,7 +5,7 @@ import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.entity.ai.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
@@ -217,7 +217,7 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 
 		playSound(SpectrumSoundEvents.ENTITY_MONSTROSITY_GROWL, 1.0F, 1.0F);
 		for (float i = 0; i <= 1.0; i += 0.2F) {
-			SpectrumS2CPacketSender.playParticleWithPatternAndVelocity(null, (ServerWorld) this.getWorld(), new Vec3d(getX(), getBodyY(i), getZ()), SpectrumParticleTypes.WHITE_SPARKLE_RISING, VectorPattern.SIXTEEN, 0.05F);
+			PlayParticleWithPatternAndVelocityPayload.playParticleWithPatternAndVelocity(null, (ServerWorld) this.getWorld(), new Vec3d(getX(), getBodyY(i), getZ()), SpectrumParticleTypes.WHITE_SPARKLE_RISING, VectorPattern.SIXTEEN, 0.05F);
 		}
 	}
 	

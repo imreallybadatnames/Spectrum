@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.blocks.chests;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.items.magic_items.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -296,7 +296,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 		if (world != null && !world.isClient()) {
 			isFull = isFull();
 			hasValidRecipes = hasValidRecipes();
-			SpectrumS2CPacketSender.sendFabricationChestStatusUpdate(this);
+			FabricationChestStatusUpdatePayload.sendFabricationChestStatusUpdate(this);
 		}
 	}
 

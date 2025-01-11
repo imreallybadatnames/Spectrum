@@ -4,7 +4,7 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -67,7 +67,7 @@ public class RadianceStaffItem extends Item implements InkPowered {
         } else {
             pitch = Math.min(1.5F, 0.7F + 0.1F * useTimes);
         }
-		SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(targetPos), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, 20, Vec3d.ZERO, new Vec3d(0.3, 0.3, 0.3));
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(targetPos), SpectrumParticleTypes.SHIMMERSTONE_SPARKLE, 20, Vec3d.ZERO, new Vec3d(0.3, 0.3, 0.3));
         world.playSound(null, playerEntity.getX() + 0.5, playerEntity.getY() + 0.5, playerEntity.getZ() + 0.5, SpectrumSoundEvents.RADIANCE_STAFF_PLACE, SoundCategory.PLAYERS, (float) Math.max(0.25, 1.0F - (float) iteration * 0.1F), pitch);
     }
 	

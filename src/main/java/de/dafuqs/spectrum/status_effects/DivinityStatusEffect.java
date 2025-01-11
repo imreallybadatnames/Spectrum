@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.status_effects;
 
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
@@ -58,7 +58,7 @@ public class DivinityStatusEffect extends SpectrumStatusEffect {
 			if (entity instanceof ServerPlayerEntity player) {
 				StatusEffectInstance instance = entity.getStatusEffect(SpectrumStatusEffects.DIVINITY);
 				if (instance != null && !instance.isAmbient()) {
-					SpectrumS2CPacketSender.playDivinityAppliedEffects(player);
+					PlayDivinityAppliedEffectsPayload.playDivinityAppliedEffects(player);
 				}
 			}
 		}

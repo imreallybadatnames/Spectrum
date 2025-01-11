@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.blocks.item_bowl.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
@@ -79,7 +79,7 @@ public class SpiritInstillerBlockEntity extends InWorldInteractionBlockEntity im
 			if (spiritInstillerBlockEntity.currentRecipe != previousRecipe) {
 				spiritInstillerBlockEntity.craftingTime = 0;
 				if (spiritInstillerBlockEntity.currentRecipe == null) {
-					SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) world, spiritInstillerBlockEntity.pos);
+					PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) world, spiritInstillerBlockEntity.pos);
 				} else {
 					spiritInstillerBlockEntity.craftingTimeTotal = (int) Math.ceil(spiritInstillerBlockEntity.currentRecipe.getCraftingTime() / spiritInstillerBlockEntity.upgrades.getEffectiveValue(Upgradeable.UpgradeType.SPEED));
 				}
@@ -103,7 +103,7 @@ public class SpiritInstillerBlockEntity extends InWorldInteractionBlockEntity im
 			spiritInstillerBlockEntity.craftingTime++;
 			
 			if (spiritInstillerBlockEntity.craftingTime == 1) {
-				SpectrumS2CPacketSender.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.SPIRIT_INSTILLER_CRAFTING, (ServerWorld) world, spiritInstillerBlockEntity.pos, Integer.MAX_VALUE);
+				PlayBlockBoundSoundInstancePayload.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.SPIRIT_INSTILLER_CRAFTING, (ServerWorld) world, spiritInstillerBlockEntity.pos, Integer.MAX_VALUE);
 			} else if (spiritInstillerBlockEntity.craftingTime == spiritInstillerBlockEntity.craftingTimeTotal * 0.01
 					|| spiritInstillerBlockEntity.craftingTime == Math.floor(spiritInstillerBlockEntity.craftingTimeTotal * 0.25)
 					|| spiritInstillerBlockEntity.craftingTime == Math.floor(spiritInstillerBlockEntity.craftingTimeTotal * 0.5)
@@ -284,7 +284,7 @@ public class SpiritInstillerBlockEntity extends InWorldInteractionBlockEntity im
 	public static void playCraftingFinishedEffects(@NotNull SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 		World world = spiritInstillerBlockEntity.getWorld();
 		world.playSound(null, spiritInstillerBlockEntity.pos, SpectrumSoundEvents.SPIRIT_INSTILLER_CRAFTING_FINISHED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-		SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
 				new Vec3d(spiritInstillerBlockEntity.pos.getX() + 0.5D, spiritInstillerBlockEntity.pos.getY() + 0.5, spiritInstillerBlockEntity.pos.getZ() + 0.5D),
 				SpectrumParticleTypes.LIGHT_BLUE_CRAFTING, 75, new Vec3d(0.5D, 0.5D, 0.5D),
 				new Vec3d(0.1D, -0.1D, 0.1D));

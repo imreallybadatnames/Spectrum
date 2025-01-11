@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import de.dafuqs.spectrum.registries.*;
@@ -305,7 +305,7 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 			
 			if (!world.isClient) {
 				pedestalBlockEntity.shouldCraft = true;
-				SpectrumS2CPacketSender.spawnPedestalStartCraftingParticles(pedestalBlockEntity);
+				PlayPedestalStartCraftingParticlePayload.spawnPedestalStartCraftingParticles(pedestalBlockEntity);
 			}
 			
 			return ItemActionResult.success(world.isClient);

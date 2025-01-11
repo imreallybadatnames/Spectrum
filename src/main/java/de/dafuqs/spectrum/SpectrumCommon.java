@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum;
 
+import com.mojang.authlib.*;
 import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.pastel_network.*;

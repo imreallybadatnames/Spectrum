@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.items.trinkets;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.claims.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
@@ -76,7 +76,7 @@ public class RadiancePinItem extends SpectrumTrinketItem {
     }
 
     public static void sendSmallLightCreatedParticle(ServerWorld world, BlockPos blockPos) {
-        SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos),
+		PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world, Vec3d.ofCenter(blockPos),
                 SpectrumParticleTypes.SHIMMERSTONE_SPARKLE,
                 4,
                 Vec3d.ZERO,

@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.fusion_shrine.*;
@@ -106,7 +106,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 	}
 
 	public void scatterContents(@NotNull World world) {
-		SpectrumS2CPacketSender.playParticleWithExactVelocity((ServerWorld) world, Vec3d.ofCenter(this.getPos()), SpectrumParticleTypes.RED_CRAFTING, 1, new Vec3d(0, -0.5, 0));
+		PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) world, Vec3d.ofCenter(this.getPos()), SpectrumParticleTypes.RED_CRAFTING, 1, new Vec3d(0, -0.5, 0));
 		world.playSound(null, this.getPos(), SpectrumSoundEvents.CRAFTING_ABORTED, SoundCategory.BLOCKS, 0.9F + world.random.nextFloat() * 0.2F, 0.9F + world.random.nextFloat() * 0.2F);
 		world.playSound(null, this.getPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.9F + world.random.nextFloat() * 0.2F, 0.5F + world.random.nextFloat() * 0.2F);
 		FusionShrineBlock.scatterContents(world, this.getPos());
@@ -126,7 +126,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 			if (fusionShrineBlockEntity.currentRecipe != previousRecipe) {
 				fusionShrineBlockEntity.craftingTime = 0;
 				if (fusionShrineBlockEntity.currentRecipe == null) {
-					SpectrumS2CPacketSender.sendCancelBlockBoundSoundInstance((ServerWorld) world, fusionShrineBlockEntity.pos);
+					PlayBlockBoundSoundInstancePayload.sendCancelBlockBoundSoundInstance((ServerWorld) world, fusionShrineBlockEntity.pos);
 				} else {
 					fusionShrineBlockEntity.craftingTimeTotal = (int) Math.ceil(fusionShrineBlockEntity.currentRecipe.getCraftingTime() / fusionShrineBlockEntity.upgrades.getEffectiveValue(Upgradeable.UpgradeType.SPEED));
 				}
@@ -164,7 +164,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 		++fusionShrineBlockEntity.craftingTime;
 		
 		if (fusionShrineBlockEntity.craftingTime == 1 && fusionShrineBlockEntity.craftingTimeTotal > 1) {
-			SpectrumS2CPacketSender.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.FUSION_SHRINE_CRAFTING, (ServerWorld) world, fusionShrineBlockEntity.getPos(), fusionShrineBlockEntity.craftingTimeTotal - fusionShrineBlockEntity.craftingTime);
+			PlayBlockBoundSoundInstancePayload.sendPlayBlockBoundSoundInstance(SpectrumSoundEvents.FUSION_SHRINE_CRAFTING, (ServerWorld) world, fusionShrineBlockEntity.getPos(), fusionShrineBlockEntity.craftingTimeTotal - fusionShrineBlockEntity.craftingTime);
 		}
 		
 		// play the current crafting effect
@@ -178,7 +178,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 			craft(world, blockPos, fusionShrineBlockEntity, recipe);
 			fusionShrineBlockEntity.inventoryChanged();
 		} else {
-			SpectrumS2CPacketSender.sendPlayFusionCraftingInProgressParticles(world, blockPos);
+			PlayFusionCraftingInProgressParticlePayload.sendPlayFusionCraftingInProgressParticles(world, blockPos);
 		}
 		fusionShrineBlockEntity.markDirty();
 	}
@@ -197,7 +197,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 		recipe.craft(world, fusionShrineBlockEntity);
 		
 		if (recipe.shouldPlayCraftingFinishedEffects()) {
-			SpectrumS2CPacketSender.sendPlayFusionCraftingFinishedParticles(world, blockPos, recipe.craft(fusionShrineBlockEntity, world.getRegistryManager()));
+			PlayFusionCraftingFinishedParticlePayload.sendPlayFusionCraftingFinishedParticles(world, blockPos, recipe.craft(fusionShrineBlockEntity, world.getRegistryManager()));
 			fusionShrineBlockEntity.playSound(SpectrumSoundEvents.FUSION_SHRINE_CRAFTING_FINISHED, 1.4F);
 		}
 		

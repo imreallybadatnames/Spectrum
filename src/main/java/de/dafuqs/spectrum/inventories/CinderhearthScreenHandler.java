@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.blocks.cinderhearth.*;
 import de.dafuqs.spectrum.inventories.slots.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -28,7 +28,7 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		super.sendContentUpdates();
 		
 		if (this.player != null && this.blockEntity.getInkDirty()) {
-			SpectrumS2CPacketSender.updateBlockEntityInk(blockEntity.getPos(), blockEntity.getEnergyStorage(), player);
+			UpdateBlockEntityInkPayload.updateBlockEntityInk(blockEntity.getPos(), blockEntity.getEnergyStorage(), player);
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		}
 		
 		if (this.player != null) {
-			SpectrumS2CPacketSender.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
+			UpdateBlockEntityInkPayload.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
 		}
 		
 		this.addProperties(propertyDelegate);

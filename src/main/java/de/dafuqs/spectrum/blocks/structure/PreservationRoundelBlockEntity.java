@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.blocks.structure;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.blocks.item_roundel.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -143,7 +143,7 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 		}
 		
 		if (requirements.isEmpty()) {
-			SpectrumS2CPacketSender.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(pos), ParticleTypes.HAPPY_VILLAGER, 10, new Vec3d(0.25, 0.5, 0.25), new Vec3d(0.1, 0.1, 0.1));
+			PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(pos), ParticleTypes.HAPPY_VILLAGER, 10, new Vec3d(0.25, 0.5, 0.25), new Vec3d(0.1, 0.1, 0.1));
 			world.playSound(null, pos, SpectrumSoundEvents.NEW_RECIPE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			return true;
 		}
