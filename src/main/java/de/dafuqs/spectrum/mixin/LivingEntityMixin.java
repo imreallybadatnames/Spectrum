@@ -611,9 +611,9 @@ public abstract class LivingEntityMixin {
 				
 				boolean damaged = false;
 				for (Pair<DamageSource, Float> entry : composition.get()) {
-					int invincibilityFrameStore = target.timeUntilRegen;
+					int invincibilityFrameStore = target.hurtTime;
 					damaged |= damage(entry.getLeft(), entry.getRight());
-					target.timeUntilRegen = invincibilityFrameStore;
+					target.hurtTime = invincibilityFrameStore;
 				}
 				
 				SpectrumDamageTypes.recursiveDamageFlag = false;
