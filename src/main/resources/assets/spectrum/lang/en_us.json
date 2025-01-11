@@ -2565,7 +2565,7 @@
   "book.spectrum.guidebook.ender_glass.page2.text": "To make it even stranger, the material seems to respond to the last signal applied, not the strongest.\\\n\\\nTruly a curiosity from the End.",
   "book.spectrum.guidebook.ender_hopper.page0.text": "Designed to resemble an ordinary hopper in form and function, the Ender Hopper has the special ability to put items directly into my [#](bb00bb)Ender Inventory[#]().\\\nThe counterpart to the [Ender Dropper](entry://magical_blocks/ender_dropper).",
   "book.spectrum.guidebook.ender_splice.page0.text": "I was quite successful replicating the Endermen's teleport ability! However, in order to determine the destination, I first have to take a snapshot of the position. Endermen don't have to do that, it seems - why? Or *do* they?\\\nFirst use binds to my current position, second use teleports me back.",
-  "book.spectrum.guidebook.ender_splice.page1.text": "- Can be used on other players\n- Cannot teleport across dimensions",
+	"book.spectrum.guidebook.ender_splice.page1.text": "- Can also be bound to players\n- Cannot teleport across dimensions",
   "book.spectrum.guidebook.ender_splice.page2.text": "Reduces the chance of it breaking on use.",
   "book.spectrum.guidebook.ender_splice.page3.text": "Allows for inter-dimensional teleportation.",
   "book.spectrum.guidebook.enemy_tears": "The classic. The only thing that would make this one even more delicious would be the tears of my enemies.",
