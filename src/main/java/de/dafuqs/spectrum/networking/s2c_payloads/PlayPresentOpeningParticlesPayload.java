@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
-import de.dafuqs.spectrum.blocks.present.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -38,15 +37,14 @@ public record PlayPresentOpeningParticlesPayload(BlockPos pos,
 			packetByteBuf.writeByte(color.getValue());
 		}
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(serverWorld, pos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PRESENT_OPENING_PARTICLES, packetByteBuf);
+			ServerPlayNetworking.send(player, new PlayPresentOpeningParticlesPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPresentOpeningParticlesPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos pos = buf.readBlockPos();
 			int colorCount = buf.readInt();
 			
@@ -57,9 +55,9 @@ public record PlayPresentOpeningParticlesPayload(BlockPos pos,
 				colors.put(dyeColor, amount);
 			}
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				PresentBlock.spawnParticles(client.world, pos, colors);
+			context.client().execute(() -> {
+				context.client().world.
+						PresentBlock.spawnParticles(client.world, pos, colors);
 			});
 		};
 	}

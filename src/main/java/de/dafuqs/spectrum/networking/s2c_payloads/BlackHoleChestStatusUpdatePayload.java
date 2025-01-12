@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.chests.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -15,55 +14,47 @@ import net.minecraft.server.network.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record BlackHoleChestStatusUpdatePayload(BlockPos pos,
-												ParticleSpawnerConfiguration configuration) implements CustomPayload {
+import java.util.*;
+
+public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean canStoreExperience,
+												long storedExperience,
+												long maxStoredExperience) implements CustomPayload {
 	
 	public static final Id<BlackHoleChestStatusUpdatePayload> ID = SpectrumC2SPackets.makeId("black_hole_chest_status_update");
 	public static final PacketCodec<PacketByteBuf, BlackHoleChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			BlackHoleChestStatusUpdatePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			BlackHoleChestStatusUpdatePayload::configuration,
+			BlockPos.PACKET_CODEC, BlackHoleChestStatusUpdatePayload::pos,
+			PacketCodecs.BOOL, BlackHoleChestStatusUpdatePayload::isFull,
+			PacketCodecs.BOOL, BlackHoleChestStatusUpdatePayload::canStoreExperience,
+			PacketCodecs.VAR_LONG, BlackHoleChestStatusUpdatePayload::storedExperience,
+			PacketCodecs.VAR_LONG, BlackHoleChestStatusUpdatePayload::maxStoredExperience,
 			BlackHoleChestStatusUpdatePayload::new
 	);
 	
 	public static void sendBlackHoleChestUpdate(BlackHoleChestBlockEntity chest) {
 		var xpStack = chest.getStack(BlackHoleChestBlockEntity.EXPERIENCE_STORAGE_PROVIDER_ITEM_SLOT);
 		
+		long storedXP = 0;
+		long maxStoredXP = 0;
 		
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(chest.getPos());
-		buf.writeBoolean(chest.isFullServer());
-		buf.writeBoolean(chest.canStoreExperience());
 		if (xpStack.getItem() instanceof ExperienceStorageItem experienceStorageItem) {
-			buf.writeLong(ExperienceStorageItem.getStoredExperience(xpStack));
-			buf.writeLong(experienceStorageItem.getMaxStoredExperience(xpStack));
-		} else {
-			buf.writeLong(0);
-			buf.writeLong(0);
+			storedXP = ExperienceStorageItem.getStoredExperience(xpStack);
+			maxStoredXP = experienceStorageItem.getMaxStoredExperience(xpStack);
 		}
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.BLACK_HOLE_CHEST_STATUS_UPDATE, buf);
+			ServerPlayNetworking.send(player, new BlackHoleChestStatusUpdatePayload(chest.getPos(), chest.isFullServer(), chest.canStoreExperience(), storedXP, maxStoredXP));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<BlackHoleChestStatusUpdatePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			var pos = buf.readBlockPos();
-			var isFull = buf.readBoolean();
-			var canStoreXP = buf.readBoolean();
-			var xp = buf.readLong();
-			var max = buf.readLong();
-			
-			client.execute(() -> {
-				var entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
-				
+		return (payload, context) -> {
+			context.client().execute(() -> {
+				Optional<BlackHoleChestBlockEntity> entity = context.client().world.getBlockEntity(payload.pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
 				entity.ifPresent(chest -> {
-					chest.setFull(isFull);
-					chest.setHasXPStorage(canStoreXP);
-					chest.setXPData(xp, max);
+					chest.setFull(payload.isFull);
+					chest.setHasXPStorage(payload.canStoreExperience);
+					chest.setXPData(payload.storedExperience, payload.maxStoredExperience);
 				});
 			});
 		};

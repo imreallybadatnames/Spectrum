@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.chests.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -14,41 +13,30 @@ import net.minecraft.server.network.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record CompactingChestStatusUpdatePayload(BlockPos pos,
-												 ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record CompactingChestStatusUpdatePayload(BlockPos pos, boolean hasToCraft) implements CustomPayload {
 	
 	public static final Id<CompactingChestStatusUpdatePayload> ID = SpectrumC2SPackets.makeId("compacting_chest_status_update");
 	public static final PacketCodec<PacketByteBuf, CompactingChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			CompactingChestStatusUpdatePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			CompactingChestStatusUpdatePayload::configuration,
+			BlockPos.PACKET_CODEC, CompactingChestStatusUpdatePayload::pos,
+			PacketCodecs.BOOL, CompactingChestStatusUpdatePayload::hasToCraft,
 			CompactingChestStatusUpdatePayload::new
 	);
 	
 	public static void sendCompactingChestStatusUpdate(CompactingChestBlockEntity chest) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(chest.getPos());
-		buf.writeBoolean(chest.hasToCraft());
-		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.COMPACTING_CHEST_STATUS_UPDATE, buf);
+			ServerPlayNetworking.send(player, new CompactingChestStatusUpdatePayload(chest.getPos(), chest.hasToCraft()));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<CompactingChestStatusUpdatePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			var pos = buf.readBlockPos();
-			var hasToCraft = buf.readBoolean();
+		return (payload, context) -> {
+			var pos = payload.pos;
+			var hasToCraft = payload.hasToCraft;
 			
-			client.execute(() -> {
-				var entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.COMPACTING_CHEST);
-				
-				if (entity.isEmpty())
-					return;
-				
-				entity.get().shouldCraft(hasToCraft);
+			context.client().execute(() -> {
+				var entity = context.client().world.getBlockEntity(pos, SpectrumBlockEntities.COMPACTING_CHEST);
+				entity.ifPresent(compactingChestBlockEntity -> compactingChestBlockEntity.shouldCraft(hasToCraft));
 			});
 		};
 	}

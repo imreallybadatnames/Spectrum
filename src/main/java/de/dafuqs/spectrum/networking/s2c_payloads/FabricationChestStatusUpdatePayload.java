@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.chests.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -17,52 +16,43 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public record FabricationChestStatusUpdatePayload(BlockPos pos,
-												  ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record FabricationChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean hasValidRecipes,
+												  List<ItemStack> stacks) implements CustomPayload {
 	
 	public static final Id<FabricationChestStatusUpdatePayload> ID = SpectrumC2SPackets.makeId("fabrication_chest_status_update");
-	public static final PacketCodec<PacketByteBuf, FabricationChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			FabricationChestStatusUpdatePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			FabricationChestStatusUpdatePayload::configuration,
+	public static final PacketCodec<RegistryByteBuf, FabricationChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
+			BlockPos.PACKET_CODEC, FabricationChestStatusUpdatePayload::pos,
+			PacketCodecs.BOOL, FabricationChestStatusUpdatePayload::isFull,
+			PacketCodecs.BOOL, FabricationChestStatusUpdatePayload::hasValidRecipes,
+			ItemStack.LIST_PACKET_CODEC, FabricationChestStatusUpdatePayload::stacks,
 			FabricationChestStatusUpdatePayload::new
 	);
 	
 	public static void sendFabricationChestStatusUpdate(FabricationChestBlockEntity chest) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(chest.getPos());
-		buf.writeBoolean(chest.isFullServer());
-		buf.writeBoolean(chest.hasValidRecipes());
-		buf.writeInt(chest.getRecipeOutputs().size());
-		for (ItemStack recipeOutput : chest.getRecipeOutputs()) {
-			buf.writeItemStack(recipeOutput);
-		}
+		BlockPos pos = chest.getPos();
+		boolean isFull = chest.isFullServer();
+		boolean hasValidRecipes = chest.hasValidRecipes();
+		List<ItemStack> stacks = new ArrayList<>();
+		stacks.addAll(chest.getRecipeOutputs());
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.FABRICATION_CHEST_STATUS_UPDATE, buf);
+			ServerPlayNetworking.send(player, new FabricationChestStatusUpdatePayload(pos, isFull, hasValidRecipes, stacks));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<FabricationChestStatusUpdatePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			var pos = buf.readBlockPos();
-			var isFull = buf.readBoolean();
-			var hasValidRecipes = buf.readBoolean();
-			var outputCount = buf.readInt();
-			final var cachedOutputs = new ArrayList<ItemStack>(4);
-			for (int i = 0; i < outputCount; i++) {
-				cachedOutputs.add(buf.readItemStack());
-			}
+		return (payload, context) -> {
+			var pos = payload.pos;
+			var isFull = payload.isFull;
+			var hasValidRecipes = payload.hasValidRecipes;
+			List<ItemStack> outputs = payload.stacks;
 			
-			client.execute(() -> {
-				var entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.FABRICATION_CHEST);
-				
-				if (entity.isEmpty())
-					return;
-				
-				entity.get().updateState(isFull, hasValidRecipes, cachedOutputs);
+			context.client().execute(() -> {
+				Optional<FabricationChestBlockEntity> entity = context.client().world.getBlockEntity(pos, SpectrumBlockEntities.FABRICATION_CHEST);
+				if (entity.isPresent()) {
+					entity.get().updateState(isFull, hasValidRecipes, outputs);
+				}
 			});
 		};
 	}

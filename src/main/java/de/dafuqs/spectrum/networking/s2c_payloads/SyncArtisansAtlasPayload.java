@@ -27,31 +27,26 @@ public record SyncArtisansAtlasPayload(BlockPos pos,
 			SyncArtisansAtlasPayload::new
 	);
 	
-	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
-	}
-	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.PlayPayloadHandler<SyncArtisansAtlasPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			String targetIdStr = buf.readString();
 			Identifier targetId = targetIdStr.length() == 0 ? null : Identifier.of(targetIdStr);
 			
 			MapUpdateS2CPacket packet = new MapUpdateS2CPacket(buf);
 			
-			client.execute(() -> {
+			context.client().execute(() -> {
 				NetworkThreadUtils.forceMainThread(packet, handler, client);
 				MapRenderer mapRenderer = client.gameRenderer.getMapRenderer();
 				int i = packet.getId();
 				String string = FilledMapItem.getMapName(i);
 				
 				if (client.world != null) {
-					MapState mapState = client.world.getMapState(string);
+					MapState mapState = context.client().world.getMapState(string);
 					
 					if (mapState == null) {
-						mapState = new ArtisansAtlasState(packet.getScale(), packet.isLocked(), client.world.getRegistryKey());
-						client.world.putClientsideMapState(string, mapState);
+						mapState = new ArtisansAtlasState(packet.getScale(), packet.isLocked(), context.client().world.getRegistryKey());
+						context.client().world.putClientsideMapState(string, mapState);
 					}
 					
 					if (mapState instanceof ArtisansAtlasState artisansAtlasState) {
@@ -62,6 +57,11 @@ public record SyncArtisansAtlasPayload(BlockPos pos,
 				}
 			});
 		};
+	}
+	
+	@Override
+	public Id<? extends CustomPayload> getId() {
+		return ID;
 	}
 	
 }

@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.world.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -38,22 +39,22 @@ public record PlayPedestalCraftingFinishedParticlePayload(BlockPos pos,
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(blockPos);
 		buf.writeItemStack(itemStack);
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PEDESTAL_CRAFTING_FINISHED_PARTICLE_PACKET_ID, buf);
+			ServerPlayNetworking.send(player, new PlayPedestalCraftingFinishedParticlePayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalCraftingFinishedParticlePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
 			ItemStack itemStack = buf.readItemStack(); // the item stack that was crafted
-			client.execute(() -> {
-				Random random = client.world.random;
-				// Everything in this lambda is running on the render thread
+			context.client().execute(() -> {
+				ClientWorld world = context.client().world;
+				Random random = world.random;
+				
 				for (int i = 0; i < 10; i++) {
-					client.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5, 0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3);
+					context.client().world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5, 0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3);
 				}
 			});
 		};

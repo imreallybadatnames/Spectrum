@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
@@ -14,36 +13,32 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record ColorTransmissionPayload(BlockPos pos,
-									   ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record ColorTransmissionPayload(BlockPos pos, ColoredTransmission transmission) implements CustomPayload {
 	
 	public static final Id<ColorTransmissionPayload> ID = SpectrumC2SPackets.makeId("color_transmission");
 	public static final PacketCodec<PacketByteBuf, ColorTransmissionPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			ColorTransmissionPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			ColorTransmissionPayload::configuration,
+			BlockPos.PACKET_CODEC, ColorTransmissionPayload::pos,
+			ColoredTransmission.PACKET_CODEC, ColorTransmissionPayload::transmission,
 			ColorTransmissionPayload::new
 	);
 	
-	public static void playColorTransmissionParticle(ServerWorld world, @NotNull ColoredTransmission transfer) {
-		BlockPos blockPos = BlockPos.ofFloored(transfer.getOrigin());
+	public static void playColorTransmissionParticle(ServerWorld world, @NotNull ColoredTransmission transmission) {
+		BlockPos pos = BlockPos.ofFloored(transmission.getOrigin());
 		
 		PacketByteBuf buf = PacketByteBufs.create();
-		ColoredTransmission.writeToBuf(buf, transfer);
+		ColoredTransmission.writeToBuf(buf, transmission);
 		
-		for (ServerPlayerEntity player : PlayerLookup.tracking(world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.COLOR_TRANSMISSION, buf);
+		for (ServerPlayerEntity player : PlayerLookup.tracking(world, pos)) {
+			ServerPlayNetworking.send(player, new ColorTransmissionPayload(pos, transmission));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<ColorTransmissionPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			ColoredTransmission transmission = ColoredTransmission.readFromBuf(buf);
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				client.world.addImportantParticle(new ColoredTransmissionParticleEffect(transmission.getDestination(), transmission.getArrivalInTicks(), transmission.getDyeColor()), true, transmission.getOrigin().getX(), transmission.getOrigin().getY(), transmission.getOrigin().getZ(), 0.0D, 0.0D, 0.0D);
+		return (payload, context) -> {
+			context.client().execute(() -> {
+				ColoredTransmission transmission = payload.transmission;
+				context.client().world.addImportantParticle(new ColoredTransmissionParticleEffect(transmission.getDestination(), transmission.getArrivalInTicks(), transmission.getDyeColor()), true, transmission.getOrigin().getX(), transmission.getOrigin().getY(), transmission.getOrigin().getZ(), 0.0D, 0.0D, 0.0D);
 			});
 		};
 	}

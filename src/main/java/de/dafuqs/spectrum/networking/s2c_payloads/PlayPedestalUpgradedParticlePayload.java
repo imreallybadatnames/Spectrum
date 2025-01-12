@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
-import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.api.*;
@@ -33,20 +32,19 @@ public record PlayPedestalUpgradedParticlePayload(BlockPos pos,
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(blockPos);
 		buf.writeInt(newPedestalVariant.getRecipeTier().ordinal());
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PEDESTAL_UPGRADED_PARTICLE_PACKET_ID, buf);
+			ServerPlayNetworking.send(player, new PlayPedestalUpgradedParticlePayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalUpgradedParticlePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
 			PedestalRecipeTier tier = PedestalRecipeTier.values()[buf.readInt()]; // the item stack that was crafted
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				PedestalBlock.spawnUpgradeParticleEffectsForTier(position, tier);
+			context.client().execute(() -> {
+				context.client().world.
+						PedestalBlock.spawnUpgradeParticleEffectsForTier(position, tier);
 			});
 		};
 	}

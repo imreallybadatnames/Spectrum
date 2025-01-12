@@ -43,18 +43,13 @@ public record PastelNodeStatusUpdatePayload(BlockPos pos,
 		}
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(nodes.get(0))) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NODE_STATUS_UPDATE, buf);
+			ServerPlayNetworking.send(player, new PastelNodeStatusUpdatePayload());
 		}
-	}
-	
-	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PastelNodeStatusUpdatePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			var trigger = buf.readBoolean();
 			var nodeCount = buf.readInt();
 			var positions = new ArrayList<BlockPos>(nodeCount);
@@ -65,9 +60,9 @@ public record PastelNodeStatusUpdatePayload(BlockPos pos,
 				times.add(buf.readInt());
 			}
 			
-			client.execute(() -> {
+			context.client().execute(() -> {
 				for (int index = 0; index < positions.size(); index++) {
-					var entity = client.world.getBlockEntity(positions.get(index));
+					var entity = context.client().world.getBlockEntity(positions.get(index));
 					
 					if (!(entity instanceof PastelNodeBlockEntity node))
 						continue;
@@ -79,5 +74,10 @@ public record PastelNodeStatusUpdatePayload(BlockPos pos,
 				}
 			});
 		};
+	}
+	
+	@Override
+	public Id<? extends CustomPayload> getId() {
+		return ID;
 	}
 }

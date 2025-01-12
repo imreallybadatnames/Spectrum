@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.world.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -49,25 +50,23 @@ public record PlayParticleWithRandomOffsetAndVelocityPayload(BlockPos pos,
 		buf.writeDouble(randomVelocity.y);
 		buf.writeDouble(randomVelocity.z);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, BlockPos.ofFloored(position))) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PARTICLE_WITH_RANDOM_OFFSET_AND_VELOCITY, buf);
+			ServerPlayNetworking.send(player, new PlayParticleWithRandomOffsetAndVelocityPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayParticleWithRandomOffsetAndVelocityPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(buf.readIdentifier());
 			int amount = buf.readInt();
 			Vec3d randomOffset = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			Vec3d randomVelocity = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			if (particleType instanceof ParticleEffect particleEffect) {
-				client.execute(() -> {
-					// Everything in this lambda is running on the render thread
-					
-					Random random = client.world.random;
+				context.client().execute(() -> {
+					ClientWorld world = context.client().world;
+					Random random = world.getRandom();
 					
 					for (int i = 0; i < amount; i++) {
 						double randomOffsetX = randomOffset.x - random.nextDouble() * randomOffset.x * 2;
@@ -77,7 +76,7 @@ public record PlayParticleWithRandomOffsetAndVelocityPayload(BlockPos pos,
 						double randomVelocityY = randomVelocity.y - random.nextDouble() * randomVelocity.y * 2;
 						double randomVelocityZ = randomVelocity.z - random.nextDouble() * randomVelocity.z * 2;
 						
-						client.world.addParticle(particleEffect,
+						world.addParticle(particleEffect,
 								position.getX() + randomOffsetX, position.getY() + randomOffsetY, position.getZ() + randomOffsetZ,
 								randomVelocityX, randomVelocityY, randomVelocityZ);
 					}

@@ -23,7 +23,6 @@ public record ParticleSpawnerConfigurationS2CPayload(BlockPos pos,
     
     public static ClientPlayNetworking.@NotNull PlayPayloadHandler<ParticleSpawnerConfigurationS2CPayload> getPayloadHandler() {
         return (packet, context) -> context.client().execute(() -> {
-            // Everything in this lambda is running on the render thread
             if (context.client().world.getBlockEntity(packet.pos()) instanceof ParticleSpawnerBlockEntity particleSpawnerBlockEntity) {
                 particleSpawnerBlockEntity.applySettings(packet.configuration());
             }

@@ -8,6 +8,7 @@ import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.client.world.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -47,7 +48,7 @@ public record UpdateBlockEntityInkPayload(BlockPos pos,
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<UpdateBlockEntityInkPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos blockPos = buf.readBlockPos();
 			long colorTotal = buf.readLong();
 			
@@ -60,9 +61,10 @@ public record UpdateBlockEntityInkPayload(BlockPos pos,
 				}
 			}
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				BlockEntity blockEntity = client.world.getBlockEntity(blockPos);
+			context.client().execute(() -> {
+				ClientWorld world = context.client().world;
+				BlockEntity blockEntity = world.getBlockEntity(blockPos);
+				
 				if (blockEntity instanceof InkStorageBlockEntity<?> inkStorageBlockEntity) {
 					inkStorageBlockEntity.getEnergyStorage().setEnergy(colors, colorTotal);
 				}

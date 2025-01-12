@@ -32,18 +32,17 @@ public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos,
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(blockPos);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_FUSION_CRAFTING_IN_PROGRESS_PARTICLE_PACKET_ID, buf);
+			ServerPlayNetworking.send(player, new PlayFusionCraftingInProgressParticlePayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayFusionCraftingInProgressParticlePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos position = buf.readBlockPos();
-			client.execute(() -> {
-				BlockEntity blockEntity = client.world.getBlockEntity(position);
+			context.client().execute(() -> {
+				BlockEntity blockEntity = context.client().world.getBlockEntity(position);
 				if (blockEntity instanceof FusionShrineBlockEntity fusionShrineBlockEntity) {
 					fusionShrineBlockEntity.spawnCraftingParticles();
 				}

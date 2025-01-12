@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
 import net.fabricmc.api.*;
@@ -46,25 +45,24 @@ public record PlayParticleWithPatternAndVelocityPayload(BlockPos pos,
 		buf.writeInt(pattern.ordinal());
 		buf.writeDouble(velocity);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, BlockPos.ofFloored(position))) {
 			if (!player.equals(notThisPlayerEntity)) {
-				ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PARTICLE_PACKET_WITH_PATTERN_AND_VELOCITY_ID, buf);
+				ServerPlayNetworking.send(player, new PlayParticleWithPatternAndVelocityPayload());
 			}
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayParticleWithPatternAndVelocityPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(buf.readIdentifier());
 			VectorPattern pattern = VectorPattern.values()[buf.readInt()];
 			double velocity = buf.readDouble();
 			if (particleType instanceof ParticleEffect particleEffect) {
-				client.execute(() -> {
-					// Everything in this lambda is running on the render thread
-					ParticleHelper.playParticleWithPatternAndVelocityClient(client.world, position, particleEffect, pattern, velocity);
+				context.client().execute(() -> {
+					context.client().world.
+							ParticleHelper.playParticleWithPatternAndVelocityClient(client.world, position, particleEffect, pattern, velocity);
 				});
 			}
 		};

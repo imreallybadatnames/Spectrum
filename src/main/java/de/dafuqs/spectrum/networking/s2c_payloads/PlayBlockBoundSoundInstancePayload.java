@@ -38,9 +38,8 @@ public record PlayBlockBoundSoundInstancePayload(BlockPos pos,
 		buf.writeBlockPos(blockPos);
 		buf.writeInt(maxDurationTicks);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_BLOCK_BOUND_SOUND_INSTANCE, buf);
+			ServerPlayNetworking.send(player, new PlayBlockBoundSoundInstancePayload());
 		}
 	}
 	
@@ -51,22 +50,21 @@ public record PlayBlockBoundSoundInstancePayload(BlockPos pos,
 		buf.writeBlockPos(blockPos);
 		buf.writeInt(1);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, blockPos)) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_BLOCK_BOUND_SOUND_INSTANCE, buf);
+			ServerPlayNetworking.send(player, new PlayBlockBoundSoundInstancePayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayBlockBoundSoundInstancePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			if (SpectrumCommon.CONFIG.BlockSoundVolume > 0) {
 				Identifier soundEffectIdentifier = buf.readIdentifier();
 				Identifier blockIdentifier = buf.readIdentifier();
 				BlockPos blockPos = buf.readBlockPos();
 				int maxDurationTicks = buf.readInt();
 				
-				client.execute(() -> {
+				context.client().execute(() -> {
 					if (soundEffectIdentifier.getPath().equals("stop")) {
 						CraftingBlockSoundInstance.stopPlayingOnPos(blockPos);
 					} else {

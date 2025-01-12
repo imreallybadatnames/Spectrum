@@ -45,18 +45,17 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos,
 			buf.writeInt(side.ordinal());
 		}
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, BlockPos.ofFloored(position))) {
 			if (!sendCheck.test(player))
 				continue;
 			
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PARTICLE_AROUND_BLOCK_SIDES, buf);
+			ServerPlayNetworking.send(player, new PlayParticleAroundBlockSidesPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.PlayPayloadHandler<PlayParticleAroundBlockSidesPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			int quantity = buf.readInt();
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			Vec3d velocity = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
@@ -68,7 +67,7 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos,
 			}
 			
 			if (particleType instanceof ParticleEffect particleEffect && client.world != null) {
-				client.execute(() -> {
+				context.client().execute(() -> {
 					ParticleHelper.playParticleAroundBlockSides(client.world, particleEffect, position, sides, quantity, velocity);
 				});
 			}

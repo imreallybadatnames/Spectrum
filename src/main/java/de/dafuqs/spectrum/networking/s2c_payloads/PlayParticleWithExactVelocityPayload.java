@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.world.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -56,15 +57,14 @@ public record PlayParticleWithExactVelocityPayload(BlockPos pos,
 		buf.writeDouble(velocity.y);
 		buf.writeDouble(velocity.z);
 		
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, BlockPos.ofFloored(position))) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PARTICLE_WITH_EXACT_VELOCITY, buf);
+			ServerPlayNetworking.send(player, new PlayParticleWithExactVelocityPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayParticleWithExactVelocityPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			double posX = buf.readDouble();
 			double posY = buf.readDouble();
 			double posZ = buf.readDouble();
@@ -74,12 +74,11 @@ public record PlayParticleWithExactVelocityPayload(BlockPos pos,
 			double velocityY = buf.readDouble();
 			double velocityZ = buf.readDouble();
 			if (particleType instanceof ParticleEffect particleEffect) {
-				client.execute(() -> {
-					// Everything in this lambda is running on the render thread
+				context.client().execute(() -> {
+					ClientWorld world = context.client().world;
+					
 					for (int i = 0; i < amount; i++) {
-						client.world.addParticle(particleEffect,
-								posX, posY, posZ,
-								velocityX, velocityY, velocityZ);
+						world.addParticle(particleEffect, posX, posY, posZ, velocityX, velocityY, velocityZ);
 					}
 				});
 			}

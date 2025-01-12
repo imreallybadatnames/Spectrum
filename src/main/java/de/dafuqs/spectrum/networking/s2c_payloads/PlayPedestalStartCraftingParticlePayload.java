@@ -29,20 +29,19 @@ public record PlayPedestalStartCraftingParticlePayload(BlockPos pos,
 	public static void spawnPedestalStartCraftingParticles(PedestalBlockEntity pedestalBlockEntity) {
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBlockPos(pedestalBlockEntity.getPos());
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) pedestalBlockEntity.getWorld(), pedestalBlockEntity.getPos())) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_PEDESTAL_START_CRAFTING_PARTICLE_PACKET_ID, buf);
+			ServerPlayNetworking.send(player, new PlayPedestalStartCraftingParticlePayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalStartCraftingParticlePayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				PedestalBlockEntity.spawnCraftingStartParticles(client.world, position);
+			context.client().execute(() -> {
+				context.client().world.
+						PedestalBlockEntity.spawnCraftingStartParticles(client.world, position);
 			});
 		};
 	}

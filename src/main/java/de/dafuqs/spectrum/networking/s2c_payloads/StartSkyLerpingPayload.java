@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.registries.*;
@@ -36,22 +35,22 @@ public record StartSkyLerpingPayload(BlockPos pos,
 		buf.writeLong(timeOfDay + additionalTime);
 		
 		for (ServerPlayerEntity player : serverWorld.getPlayers()) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.START_SKY_LERPING, buf);
+			ServerPlayNetworking.send(player, new StartSkyLerpingPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<StartSkyLerpingPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			DimensionType dimensionType = client.world.getDimension();
+		return (payload, context) -> {
+			DimensionType dimensionType = context.client().world.getDimension();
 			long sourceTime = buf.readLong();
 			long targetTime = buf.readLong();
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				SpectrumClient.skyLerper.trigger(dimensionType, sourceTime, client.getRenderTickCounter().getTickDelta(false), targetTime);
-				if (client.world.isSkyVisible(client.player.getBlockPos())) {
-					client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.CELESTIAL_POCKET_WATCH_FLY_BY, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+			context.client().execute(() -> {
+				context.client().world.
+						SpectrumClient.skyLerper.trigger(dimensionType, sourceTime, client.getRenderTickCounter().getTickDelta(false), targetTime);
+				if (context.client().world.isSkyVisible(client.player.getBlockPos())) {
+					context.client().world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.CELESTIAL_POCKET_WATCH_FLY_BY, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 				}
 			});
 			

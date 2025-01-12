@@ -1,8 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.blocks.pastel_network.network.*;
-import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
@@ -16,43 +14,34 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
-
-public record PastelTransmissionPayload(BlockPos pos,
-										ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PastelTransmissionPayload(int networkColor, int travelTime,
+										PastelTransmission transmission) implements CustomPayload {
 	
 	public static final Id<PastelTransmissionPayload> ID = SpectrumC2SPackets.makeId("pastel_transmission");
-	public static final PacketCodec<PacketByteBuf, PastelTransmissionPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PastelTransmissionPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PastelTransmissionPayload::configuration,
+	public static final PacketCodec<RegistryByteBuf, PastelTransmissionPayload> CODEC = PacketCodec.tuple(
+			PacketCodecs.INTEGER, PastelTransmissionPayload::networkColor,
+			PacketCodecs.INTEGER, PastelTransmissionPayload::travelTime,
+			PastelTransmission.PACKET_CODEC, PastelTransmissionPayload::transmission,
 			PastelTransmissionPayload::new
 	);
 	
+	// TODO: we should probably also send the transmission to players that track the destination pos
 	public static void sendPastelTransmissionParticle(ServerPastelNetwork network, int travelTime, @NotNull PastelTransmission transmission) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeUuid(network.getUUID());
-		buf.writeInt(travelTime);
-		PastelTransmission.write(buf, transmission);
-		
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) network.getWorld(), transmission.getStartPos())) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_TRANSMISSION, buf);
+			ServerPlayNetworking.send(player, new PastelTransmissionPayload(travelTime, network.getColor(), transmission));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PastelTransmissionPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
-			UUID networkUUID = buf.readUuid();
-			int travelTime = buf.readInt();
-			PastelTransmission transmission = PastelTransmission.fromPacket(buf);
+		return (payload, context) -> {
+			int color = payload.networkColor();
+			int travelTime = payload.travelTime();
+			PastelTransmission transmission = payload.transmission;
 			BlockPos spawnPos = transmission.getStartPos();
-			int color = ColorHelper.getRandomColor(networkUUID.hashCode());
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				client.world.addParticle(new PastelTransmissionParticleEffect(transmission.getNodePositions(), transmission.getVariant().toStack(), travelTime, color), spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5, 0, 0, 0);
+			context.client().execute(() -> {
+				context.client().world.addParticle(new PastelTransmissionParticleEffect(transmission.getNodePositions(), transmission.getVariant().toStack(), travelTime, color), spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5, 0, 0, 0);
 			});
 		};
 	}

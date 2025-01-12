@@ -33,23 +33,22 @@ public record PlayShootingStarParticlesPayload(BlockPos pos,
 		buf.writeDouble(shootingStarEntity.getPos().getY());
 		buf.writeDouble(shootingStarEntity.getPos().getZ());
 		buf.writeInt(shootingStarEntity.getShootingStarType().ordinal());
-		// Iterate over all players tracking a position in the world and send the packet to each player
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) shootingStarEntity.getWorld(), shootingStarEntity.getBlockPos())) {
-			ServerPlayNetworking.send(player, SpectrumS2CPackets.PLAY_SHOOTING_STAR_PARTICLES, buf);
+			ServerPlayNetworking.send(player, new PlayShootingStarParticlesPayload());
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayShootingStarParticlesPayload> getPayloadHandler() {
-		return (client, handler, buf, responseSender) -> {
+		return (payload, context) -> {
 			double x = buf.readDouble();
 			double y = buf.readDouble();
 			double z = buf.readDouble();
 			ShootingStar.Type shootingStarType = ShootingStar.Type.getType(buf.readInt());
 			
-			client.execute(() -> {
-				// Everything in this lambda is running on the render thread
-				ShootingStarEntity.playHitParticles(client.world, x, y, z, shootingStarType, 25);
+			context.client().execute(() -> {
+				context.client().world.
+						ShootingStarEntity.playHitParticles(client.world, x, y, z, shootingStarType, 25);
 			});
 		};
 	}
