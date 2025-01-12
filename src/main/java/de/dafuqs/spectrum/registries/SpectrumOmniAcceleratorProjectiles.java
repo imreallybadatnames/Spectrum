@@ -117,7 +117,7 @@ public class SpectrumOmniAcceleratorProjectiles {
 		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
 			@Override
 			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
-				Vec3d pos = shooter.getPos();
+				Vec3d pos = shooter.getEyePos();
 				TntEntity tntEntity = new TntEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, shooter);
 				OmniAcceleratorProjectile.setVelocity(tntEntity, shooter, shooter.getPitch(), shooter.getYaw(), 0.0F, 2.5F, 1.0F);
 				if (world.spawnEntity(tntEntity)) {
@@ -201,6 +201,27 @@ public class SpectrumOmniAcceleratorProjectiles {
 			}
 		}, SpectrumBlocks.GLISTERING_SHOOTING_STAR, SpectrumBlocks.FIERY_SHOOTING_STAR, SpectrumBlocks.COLORFUL_SHOOTING_STAR, SpectrumBlocks.PRISTINE_SHOOTING_STAR, SpectrumBlocks.GEMSTONE_SHOOTING_STAR);
 		
+		OmniAcceleratorProjectile.register(new OmniAcceleratorProjectile() {
+			@Override
+			public Entity createProjectile(ItemStack stack, LivingEntity shooter, World world) {
+				Vec3d pos = shooter.getEyePos();
+				
+				if (stack.getItem() instanceof BlockItem blockItem) {
+					FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, blockItem.getBlock().getDefaultState());
+					OmniAcceleratorProjectile.setVelocity(fallingBlockEntity, shooter, shooter.getPitch(), shooter.getYaw(), 0, 2.5F, 0F);
+					world.spawnEntity(fallingBlockEntity);
+					world.spawnEntity(fallingBlockEntity);
+					return fallingBlockEntity;
+				}
+				
+				return null;
+			}
+			
+			@Override
+			public SoundEvent getSoundEffect() {
+				return SoundEvents.ENTITY_SPLASH_POTION_THROW;
+			}
+		}, ItemTags.ANVIL);
 	}
 	
 }
