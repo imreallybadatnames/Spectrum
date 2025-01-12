@@ -90,7 +90,6 @@
     "accessors.FluidBlockAccessor",
     "accessors.FoxEntityAccessor",
     "accessors.GoatHornItemAccessor",
-    "accessors.LivingEntityAccessor",
     "accessors.MapStateAccessor",
     "accessors.MobEntityAccessor",
     "accessors.MooshroomEntityAccessor",
