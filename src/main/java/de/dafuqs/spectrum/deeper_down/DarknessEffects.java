@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.status_effects.*;
 import net.minecraft.client.*;
 import net.minecraft.client.world.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.effect.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.util.math.*;
@@ -193,6 +192,7 @@ public class DarknessEffects {
 		return MathHelper.lerp(MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false), (float) DarknessEffects.darkenTicks, DarknessEffects.lastDarkenTicks) / INTERP_TICKS * getInterp();
 	}
 	
+	// this should really be a data loader
 	static {
 		var builder = ImmutableMap.<RegistryKey<Biome>, Float>builder();
 		builder.put(SpectrumBiomes.BLACK_LANGAST, 0.7F);
