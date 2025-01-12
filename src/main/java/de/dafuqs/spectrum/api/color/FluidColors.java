@@ -26,4 +26,8 @@ public class FluidColors extends ColorRegistry<Fluid> {
 		}
 	}
 	
+	public DyeColor getMapping(Fluid fluid, DyeColor defaultColor) {
+		return COLORS.getOrDefault(fluid, defaultColor);
+	}
+	
 }

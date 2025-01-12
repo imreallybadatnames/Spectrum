@@ -14,8 +14,10 @@ public abstract class ColorRegistry<T> {
 		FLUID_COLORS = new FluidColors();
 	}
 	
-	public abstract void registerColorMapping(T object, DyeColor dyeColor);
+	public abstract void registerColorMapping(T element, DyeColor dyeColor);
 	
 	public abstract Optional<DyeColor> getMapping(T element);
+	
+	public abstract DyeColor getMapping(T element, DyeColor defaultColor);
 	
 }

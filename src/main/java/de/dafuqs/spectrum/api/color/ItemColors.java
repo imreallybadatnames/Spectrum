@@ -277,8 +277,8 @@ public class ItemColors extends ColorRegistry<Item> {
 		}
 	}
 	
-	public Optional<DyeColor> getMapping(Item item, DyeColor defaultColor) {
-		return Optional.of(COLORS.getOrDefault(item, defaultColor));
+	public DyeColor getMapping(Item item, DyeColor defaultColor) {
+		return COLORS.getOrDefault(item, defaultColor);
 	}
 	
 }
