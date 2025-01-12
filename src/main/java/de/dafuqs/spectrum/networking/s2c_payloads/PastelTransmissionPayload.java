@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -14,8 +15,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PastelTransmissionPayload(int networkColor, int travelTime,
-										PastelTransmission transmission) implements CustomPayload {
+public record PastelTransmissionPayload(int networkColor, int travelTime, PastelTransmission transmission) implements CustomPayload {
 	
 	public static final Id<PastelTransmissionPayload> ID = SpectrumC2SPackets.makeId("pastel_transmission");
 	public static final PacketCodec<RegistryByteBuf, PastelTransmissionPayload> CODEC = PacketCodec.tuple(
@@ -35,13 +35,15 @@ public record PastelTransmissionPayload(int networkColor, int travelTime,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PastelTransmissionPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
+			
 			int color = payload.networkColor();
 			int travelTime = payload.travelTime();
 			PastelTransmission transmission = payload.transmission;
 			BlockPos spawnPos = transmission.getStartPos();
 			
-			context.client().execute(() -> {
-				context.client().world.addParticle(new PastelTransmissionParticleEffect(transmission.getNodePositions(), transmission.getVariant().toStack(), travelTime, color), spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5, 0, 0, 0);
+			client.execute(() -> {
+				client.world.addParticle(new PastelTransmissionParticleEffect(transmission.getNodePositions(), transmission.getVariant().toStack(), travelTime, color), spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5, 0, 0, 0);
 			});
 		};
 	}

@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -16,8 +17,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.dimension.*;
 import org.jetbrains.annotations.*;
 
-public record StartSkyLerpingPayload(BlockPos pos,
-									 ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record StartSkyLerpingPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<StartSkyLerpingPayload> ID = SpectrumC2SPackets.makeId("start_sky_lerping");
 	public static final PacketCodec<PacketByteBuf, StartSkyLerpingPayload> CODEC = PacketCodec.tuple(
@@ -42,15 +42,16 @@ public record StartSkyLerpingPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<StartSkyLerpingPayload> getPayloadHandler() {
 		return (payload, context) -> {
-			DimensionType dimensionType = context.client().world.getDimension();
+			MinecraftClient client = context.client();
+			DimensionType dimensionType = client.world.getDimension();
 			long sourceTime = buf.readLong();
 			long targetTime = buf.readLong();
 			
-			context.client().execute(() -> {
-				context.client().world.
+			client.execute(() -> {
+				client.world.
 						SpectrumClient.skyLerper.trigger(dimensionType, sourceTime, client.getRenderTickCounter().getTickDelta(false), targetTime);
-				if (context.client().world.isSkyVisible(client.player.getBlockPos())) {
-					context.client().world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.CELESTIAL_POCKET_WATCH_FLY_BY, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+				if (client.world.isSkyVisible(client.player.getBlockPos())) {
+					client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.CELESTIAL_POCKET_WATCH_FLY_BY, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 				}
 			});
 			

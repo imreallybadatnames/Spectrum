@@ -8,6 +8,7 @@ import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -19,8 +20,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PlayBlockBoundSoundInstancePayload(BlockPos pos,
-												 ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayBlockBoundSoundInstancePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayBlockBoundSoundInstancePayload> ID = SpectrumC2SPackets.makeId("play_block_bound_sound_instance");
 	public static final PacketCodec<PacketByteBuf, PlayBlockBoundSoundInstancePayload> CODEC = PacketCodec.tuple(
@@ -59,12 +59,14 @@ public record PlayBlockBoundSoundInstancePayload(BlockPos pos,
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayBlockBoundSoundInstancePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			if (SpectrumCommon.CONFIG.BlockSoundVolume > 0) {
+				MinecraftClient client = context.client();
+				
 				Identifier soundEffectIdentifier = buf.readIdentifier();
 				Identifier blockIdentifier = buf.readIdentifier();
 				BlockPos blockPos = buf.readBlockPos();
 				int maxDurationTicks = buf.readInt();
 				
-				context.client().execute(() -> {
+				client.execute(() -> {
 					if (soundEffectIdentifier.getPath().equals("stop")) {
 						CraftingBlockSoundInstance.stopPlayingOnPos(blockPos);
 					} else {

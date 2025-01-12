@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.client.world.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -33,10 +34,11 @@ public record TypedTransmissionPayload(TypedTransmission transmission) implement
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<TypedTransmissionPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			TypedTransmission transmission = payload.transmission();
 			
-			context.client().execute(() -> {
-				ClientWorld world = context.client().world;
+			client.execute(() -> {
+				ClientWorld world = client.world;
 				switch (transmission.getVariant()) {
 					case BLOCK_POS ->
 							world.addImportantParticle(new BlockPosEventTransmissionParticleEffect(transmission.getDestination(), transmission.getArrivalInTicks()), true, transmission.getOrigin().getX(), transmission.getOrigin().getY(), transmission.getOrigin().getZ(), 0.0D, 0.0D, 0.0D);

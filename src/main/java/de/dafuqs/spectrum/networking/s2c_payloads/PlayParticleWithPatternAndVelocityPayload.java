@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.particle.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -17,8 +18,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PlayParticleWithPatternAndVelocityPayload(BlockPos pos,
-														ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayParticleWithPatternAndVelocityPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayParticleWithPatternAndVelocityPayload> ID = SpectrumC2SPackets.makeId("play_particle_with_pattern_and_velocity");
 	public static final PacketCodec<PacketByteBuf, PlayParticleWithPatternAndVelocityPayload> CODEC = PacketCodec.tuple(
@@ -55,13 +55,14 @@ public record PlayParticleWithPatternAndVelocityPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayParticleWithPatternAndVelocityPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(buf.readIdentifier());
 			VectorPattern pattern = VectorPattern.values()[buf.readInt()];
 			double velocity = buf.readDouble();
 			if (particleType instanceof ParticleEffect particleEffect) {
-				context.client().execute(() -> {
-					context.client().world.
+				client.execute(() -> {
+					client.world.
 							ParticleHelper.playParticleWithPatternAndVelocityClient(client.world, position, particleEffect, pattern, velocity);
 				});
 			}

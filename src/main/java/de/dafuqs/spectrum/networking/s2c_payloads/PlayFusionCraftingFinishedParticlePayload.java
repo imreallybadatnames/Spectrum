@@ -9,6 +9,7 @@ import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -21,10 +22,7 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 import org.joml.*;
 
-import java.util.*;
-
-public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos,
-														ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos, DyeColor color) implements CustomPayload {
 	
 	public static final Id<PlayFusionCraftingFinishedParticlePayload> ID = SpectrumC2SPackets.makeId("play_fusion_crafting_finished_particle");
 	public static final PacketCodec<PacketByteBuf, PlayFusionCraftingFinishedParticlePayload> CODEC = PacketCodec.tuple(
@@ -35,35 +33,28 @@ public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos,
 			PlayFusionCraftingFinishedParticlePayload::new
 	);
 	
-	public static void sendPlayFusionCraftingFinishedParticles(World world, BlockPos blockPos, @NotNull ItemStack itemStack) {
-		Optional<DyeColor> optionalItemColor = ColorRegistry.ITEM_COLORS.getMapping(itemStack.getItem());
+	public static void sendPlayFusionCraftingFinishedParticles(World world, BlockPos pos, @NotNull ItemStack itemStack) {
+		DyeColor color = ColorRegistry.ITEM_COLORS.getMapping(itemStack.getItem(), DyeColor.LIGHT_GRAY));
 		
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(blockPos);
-		
-		if (optionalItemColor.isPresent()) {
-			buf.writeInt(optionalItemColor.get().ordinal());
-		} else {
-			buf.writeInt(DyeColor.LIGHT_GRAY.ordinal());
-		}
-		
-		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, new PlayFusionCraftingFinishedParticlePayload());
+		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, pos)) {
+			ServerPlayNetworking.send(player, new PlayFusionCraftingFinishedParticlePayload(pos, color));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayFusionCraftingFinishedParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
+			
 			BlockPos position = buf.readBlockPos();
 			DyeColor dyeColor = DyeColor.values()[buf.readInt()];
-			context.client().execute(() -> {
+			client.execute(() -> {
 				Vec3d sourcePos = new Vec3d(position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5);
 				
 				Vector3f color = ColorHelper.getRGBVec(dyeColor);
 				float velocityModifier = 0.25F;
 				for (Vec3d velocity : VectorPattern.SIXTEEN.getVectors()) {
-					context.client().world.addParticle(
+					client.world.addParticle(
 							new DynamicParticleEffect(SpectrumParticleTypes.WHITE_CRAFTING, 0.0F, color, 1.5F, 40, false, true),
 							sourcePos.x, sourcePos.y, sourcePos.z,
 							velocity.x * velocityModifier, 0.0F, velocity.z * velocityModifier

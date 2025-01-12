@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.client.world.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -17,8 +18,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.*;
 import org.jetbrains.annotations.*;
 
-public record PlayParticleWithRandomOffsetAndVelocityPayload(BlockPos pos,
-															 ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayParticleWithRandomOffsetAndVelocityPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayParticleWithRandomOffsetAndVelocityPayload> ID = SpectrumC2SPackets.makeId("play_particle_with_random_offset_and_velocity");
 	public static final PacketCodec<PacketByteBuf, PlayParticleWithRandomOffsetAndVelocityPayload> CODEC = PacketCodec.tuple(
@@ -58,14 +58,15 @@ public record PlayParticleWithRandomOffsetAndVelocityPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayParticleWithRandomOffsetAndVelocityPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(buf.readIdentifier());
 			int amount = buf.readInt();
 			Vec3d randomOffset = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			Vec3d randomVelocity = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			if (particleType instanceof ParticleEffect particleEffect) {
-				context.client().execute(() -> {
-					ClientWorld world = context.client().world;
+				client.execute(() -> {
+					ClientWorld world = client.world;
 					Random random = world.getRandom();
 					
 					for (int i = 0; i < amount; i++) {

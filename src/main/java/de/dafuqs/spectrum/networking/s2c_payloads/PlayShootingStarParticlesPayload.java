@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -15,8 +16,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PlayShootingStarParticlesPayload(BlockPos pos,
-											   ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayShootingStarParticlesPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayShootingStarParticlesPayload> ID = SpectrumC2SPackets.makeId("play_shooting_star_particles");
 	public static final PacketCodec<PacketByteBuf, PlayShootingStarParticlesPayload> CODEC = PacketCodec.tuple(
@@ -41,13 +41,14 @@ public record PlayShootingStarParticlesPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayShootingStarParticlesPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			double x = buf.readDouble();
 			double y = buf.readDouble();
 			double z = buf.readDouble();
 			ShootingStar.Type shootingStarType = ShootingStar.Type.getType(buf.readInt());
 			
-			context.client().execute(() -> {
-				context.client().world.
+			client.execute(() -> {
+				client.world.
 						ShootingStarEntity.playHitParticles(client.world, x, y, z, shootingStarType, 25);
 			});
 		};

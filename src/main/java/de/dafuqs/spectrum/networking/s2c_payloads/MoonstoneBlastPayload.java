@@ -5,6 +5,8 @@ import de.dafuqs.spectrum.spells.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
+import net.minecraft.client.world.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -14,8 +16,7 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record MoonstoneBlastPayload(double x, double y, double z, float power, float knockbackMod,
-									Vec3d playerVelocity) implements CustomPayload {
+public record MoonstoneBlastPayload(double x, double y, double z, float power, float knockbackMod, Vec3d playerVelocity) implements CustomPayload {
 	
 	public static final Id<MoonstoneBlastPayload> ID = SpectrumC2SPackets.makeId("moonstone_blast");
 	public static final PacketCodec<PacketByteBuf, MoonstoneBlastPayload> CODEC = PacketCodec.tuple(
@@ -24,7 +25,7 @@ public record MoonstoneBlastPayload(double x, double y, double z, float power, f
 			PacketCodecs.DOUBLE, MoonstoneBlastPayload::z,
 			PacketCodecs.FLOAT, MoonstoneBlastPayload::power,
 			PacketCodecs.FLOAT, MoonstoneBlastPayload::knockbackMod,
-			Vec3d.PACKET_CODEC, MoonstoneBlastPayload::playerVelocity,
+			SpectrumPacketCodecs.VEC_3D, MoonstoneBlastPayload::playerVelocity,
 			MoonstoneBlastPayload::new
 	);
 	
@@ -38,11 +39,13 @@ public record MoonstoneBlastPayload(double x, double y, double z, float power, f
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<MoonstoneBlastPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
+			ClientWorld world = client.world;
 			PlayerEntity player = context.player();
 			Vec3d playerVelocity = payload.playerVelocity();
 			
-			context.client().execute(() -> {
-				MoonstoneStrike.create(context.client().world, null, null, payload.x, payload.y, payload.z, payload.power, payload.knockbackMod);
+			client.execute(() -> {
+				MoonstoneStrike.create(world, null, null, payload.x, payload.y, payload.z, payload.power, payload.knockbackMod);
 				player.setVelocity(player.getVelocity().add(playerVelocity.x, playerVelocity.y, playerVelocity.z));
 			});
 		};

@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -16,9 +17,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean canStoreExperience,
-												long storedExperience,
-												long maxStoredExperience) implements CustomPayload {
+public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean canStoreExperience, long storedExperience, long maxStoredExperience) implements CustomPayload {
 	
 	public static final Id<BlackHoleChestStatusUpdatePayload> ID = SpectrumC2SPackets.makeId("black_hole_chest_status_update");
 	public static final PacketCodec<PacketByteBuf, BlackHoleChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
@@ -49,8 +48,9 @@ public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, bo
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<BlackHoleChestStatusUpdatePayload> getPayloadHandler() {
 		return (payload, context) -> {
-			context.client().execute(() -> {
-				Optional<BlackHoleChestBlockEntity> entity = context.client().world.getBlockEntity(payload.pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
+			MinecraftClient client = context.client();
+			client.execute(() -> {
+				Optional<BlackHoleChestBlockEntity> entity = client.world.getBlockEntity(payload.pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
 				entity.ifPresent(chest -> {
 					chest.setFull(payload.isFull);
 					chest.setHasXPStorage(payload.canStoreExperience);

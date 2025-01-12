@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -16,8 +17,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public record PlayPresentOpeningParticlesPayload(BlockPos pos,
-												 ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayPresentOpeningParticlesPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayPresentOpeningParticlesPayload> ID = SpectrumC2SPackets.makeId("play_present_opening_particles");
 	public static final PacketCodec<PacketByteBuf, PlayPresentOpeningParticlesPayload> CODEC = PacketCodec.tuple(
@@ -45,6 +45,7 @@ public record PlayPresentOpeningParticlesPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPresentOpeningParticlesPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			BlockPos pos = buf.readBlockPos();
 			int colorCount = buf.readInt();
 			
@@ -55,8 +56,8 @@ public record PlayPresentOpeningParticlesPayload(BlockPos pos,
 				colors.put(dyeColor, amount);
 			}
 			
-			context.client().execute(() -> {
-				context.client().world.
+			client.execute(() -> {
+				client.world.
 						PresentBlock.spawnParticles(client.world, pos, colors);
 			});
 		};

@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -16,8 +17,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public record FabricationChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean hasValidRecipes,
-												  List<ItemStack> stacks) implements CustomPayload {
+public record FabricationChestStatusUpdatePayload(BlockPos pos, boolean isFull, boolean hasValidRecipes, List<ItemStack> stacks) implements CustomPayload {
 	
 	public static final Id<FabricationChestStatusUpdatePayload> ID = SpectrumC2SPackets.makeId("fabrication_chest_status_update");
 	public static final PacketCodec<RegistryByteBuf, FabricationChestStatusUpdatePayload> CODEC = PacketCodec.tuple(
@@ -32,8 +32,7 @@ public record FabricationChestStatusUpdatePayload(BlockPos pos, boolean isFull, 
 		BlockPos pos = chest.getPos();
 		boolean isFull = chest.isFullServer();
 		boolean hasValidRecipes = chest.hasValidRecipes();
-		List<ItemStack> stacks = new ArrayList<>();
-		stacks.addAll(chest.getRecipeOutputs());
+		List<ItemStack> stacks = new ArrayList<>(chest.getRecipeOutputs());
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
 			ServerPlayNetworking.send(player, new FabricationChestStatusUpdatePayload(pos, isFull, hasValidRecipes, stacks));
@@ -43,13 +42,14 @@ public record FabricationChestStatusUpdatePayload(BlockPos pos, boolean isFull, 
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<FabricationChestStatusUpdatePayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			var pos = payload.pos;
 			var isFull = payload.isFull;
 			var hasValidRecipes = payload.hasValidRecipes;
 			List<ItemStack> outputs = payload.stacks;
 			
-			context.client().execute(() -> {
-				Optional<FabricationChestBlockEntity> entity = context.client().world.getBlockEntity(pos, SpectrumBlockEntities.FABRICATION_CHEST);
+			client.execute(() -> {
+				Optional<FabricationChestBlockEntity> entity = client.world.getBlockEntity(pos, SpectrumBlockEntities.FABRICATION_CHEST);
 				if (entity.isPresent()) {
 					entity.get().updateState(isFull, hasValidRecipes, outputs);
 				}

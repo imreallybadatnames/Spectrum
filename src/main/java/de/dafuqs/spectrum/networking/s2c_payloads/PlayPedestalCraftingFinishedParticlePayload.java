@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.client.world.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
@@ -18,8 +19,7 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public record PlayPedestalCraftingFinishedParticlePayload(BlockPos pos,
-														  ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayPedestalCraftingFinishedParticlePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayPedestalCraftingFinishedParticlePayload> ID = SpectrumC2SPackets.makeId("play_pedestal_crafting_finished_particle");
 	public static final PacketCodec<PacketByteBuf, PlayPedestalCraftingFinishedParticlePayload> CODEC = PacketCodec.tuple(
@@ -47,14 +47,15 @@ public record PlayPedestalCraftingFinishedParticlePayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalCraftingFinishedParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
 			ItemStack itemStack = buf.readItemStack(); // the item stack that was crafted
-			context.client().execute(() -> {
-				ClientWorld world = context.client().world;
+			client.execute(() -> {
+				ClientWorld world = client.world;
 				Random random = world.random;
 				
 				for (int i = 0; i < 10; i++) {
-					context.client().world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5, 0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3);
+					client.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5, 0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3);
 				}
 			});
 		};

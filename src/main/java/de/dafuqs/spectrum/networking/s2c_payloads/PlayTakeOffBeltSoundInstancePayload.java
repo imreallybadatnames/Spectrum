@@ -23,7 +23,7 @@ public record PlayTakeOffBeltSoundInstancePayload() implements CustomPayload {
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayTakeOffBeltSoundInstancePayload> getPayloadHandler() {
-		return (playTakeOffBeltSoundInstancePayload, context) -> context.client().execute(TakeOffBeltSoundInstance::startSoundInstance);
+		return (playTakeOffBeltSoundInstancePayload, context) -> client.execute(TakeOffBeltSoundInstance::startSoundInstance);
 	}
 	
 	@Override

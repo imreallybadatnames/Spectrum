@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -25,8 +26,10 @@ public record PlayAscensionAppliedEffectsPayload() implements CustomPayload {
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayAscensionAppliedEffectsPayload> getPayloadHandler() {
 		return (payload, context) -> {
-			context.client().world.playSound(null, context.client().player.getBlockPos(), SpectrumSoundEvents.FADING_PLACED, SoundCategory.PLAYERS, 1.0F, 1.0F);
-			context.client().getSoundManager().play(new DivinitySoundInstance());
+			MinecraftClient client = context.client();
+			
+			client.world.playSound(null, client.player.getBlockPos(), SpectrumSoundEvents.FADING_PLACED, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			client.getSoundManager().play(new DivinitySoundInstance());
 		};
 	}
 	

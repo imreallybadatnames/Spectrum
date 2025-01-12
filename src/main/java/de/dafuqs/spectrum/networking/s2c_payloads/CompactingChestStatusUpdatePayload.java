@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -31,12 +32,10 @@ public record CompactingChestStatusUpdatePayload(BlockPos pos, boolean hasToCraf
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<CompactingChestStatusUpdatePayload> getPayloadHandler() {
 		return (payload, context) -> {
-			var pos = payload.pos;
-			var hasToCraft = payload.hasToCraft;
-			
-			context.client().execute(() -> {
-				var entity = context.client().world.getBlockEntity(pos, SpectrumBlockEntities.COMPACTING_CHEST);
-				entity.ifPresent(compactingChestBlockEntity -> compactingChestBlockEntity.shouldCraft(hasToCraft));
+			MinecraftClient client = context.client();
+			client.execute(() -> {
+				var entity = client.world.getBlockEntity(payload.pos, SpectrumBlockEntities.COMPACTING_CHEST);
+				entity.ifPresent(compactingChestBlockEntity -> compactingChestBlockEntity.shouldCraft(payload.hasToCraft));
 			});
 		};
 	}

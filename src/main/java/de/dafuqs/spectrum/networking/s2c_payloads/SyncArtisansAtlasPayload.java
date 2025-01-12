@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.items.map.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.item.*;
 import net.minecraft.item.map.*;
@@ -15,8 +16,7 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
-public record SyncArtisansAtlasPayload(BlockPos pos,
-									   ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record SyncArtisansAtlasPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<SyncArtisansAtlasPayload> ID = SpectrumC2SPackets.makeId("sync_artisans_atlas");
 	public static final PacketCodec<PacketByteBuf, SyncArtisansAtlasPayload> CODEC = PacketCodec.tuple(
@@ -30,23 +30,24 @@ public record SyncArtisansAtlasPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.PlayPayloadHandler<SyncArtisansAtlasPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			String targetIdStr = buf.readString();
 			Identifier targetId = targetIdStr.length() == 0 ? null : Identifier.of(targetIdStr);
 			
 			MapUpdateS2CPacket packet = new MapUpdateS2CPacket(buf);
 			
-			context.client().execute(() -> {
+			client.execute(() -> {
 				NetworkThreadUtils.forceMainThread(packet, handler, client);
 				MapRenderer mapRenderer = client.gameRenderer.getMapRenderer();
 				int i = packet.getId();
 				String string = FilledMapItem.getMapName(i);
 				
 				if (client.world != null) {
-					MapState mapState = context.client().world.getMapState(string);
+					MapState mapState = client.world.getMapState(string);
 					
 					if (mapState == null) {
-						mapState = new ArtisansAtlasState(packet.getScale(), packet.isLocked(), context.client().world.getRegistryKey());
-						context.client().world.putClientsideMapState(string, mapState);
+						mapState = new ArtisansAtlasState(packet.getScale(), packet.isLocked(), client.world.getRegistryKey());
+						client.world.putClientsideMapState(string, mapState);
 					}
 					
 					if (mapState instanceof ArtisansAtlasState artisansAtlasState) {

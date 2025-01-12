@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -18,8 +19,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.function.*;
 
-public record PlayParticleAroundBlockSidesPayload(BlockPos pos,
-												  ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayParticleAroundBlockSidesPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayParticleAroundBlockSidesPayload> ID = SpectrumC2SPackets.makeId("play_particle_around_block_sides");
 	public static final PacketCodec<PacketByteBuf, PlayParticleAroundBlockSidesPayload> CODEC = PacketCodec.tuple(
@@ -56,6 +56,7 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.PlayPayloadHandler<PlayParticleAroundBlockSidesPayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			int quantity = buf.readInt();
 			Vec3d position = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 			Vec3d velocity = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
@@ -67,7 +68,7 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos,
 			}
 			
 			if (particleType instanceof ParticleEffect particleEffect && client.world != null) {
-				context.client().execute(() -> {
+				client.execute(() -> {
 					ParticleHelper.playParticleAroundBlockSides(client.world, particleEffect, position, sides, quantity, velocity);
 				});
 			}

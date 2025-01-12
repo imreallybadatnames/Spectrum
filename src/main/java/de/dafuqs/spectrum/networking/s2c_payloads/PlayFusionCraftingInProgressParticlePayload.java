@@ -7,6 +7,7 @@ import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -16,8 +17,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos,
-														  ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<PlayFusionCraftingInProgressParticlePayload> ID = SpectrumC2SPackets.makeId("play_fusion_crafting_in_progress_particle");
 	public static final PacketCodec<PacketByteBuf, PlayFusionCraftingInProgressParticlePayload> CODEC = PacketCodec.tuple(
@@ -40,9 +40,10 @@ public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos,
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayFusionCraftingInProgressParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
+			MinecraftClient client = context.client();
 			BlockPos position = buf.readBlockPos();
-			context.client().execute(() -> {
-				BlockEntity blockEntity = context.client().world.getBlockEntity(position);
+			client.execute(() -> {
+				BlockEntity blockEntity = client.world.getBlockEntity(position);
 				if (blockEntity instanceof FusionShrineBlockEntity fusionShrineBlockEntity) {
 					fusionShrineBlockEntity.spawnCraftingParticles();
 				}

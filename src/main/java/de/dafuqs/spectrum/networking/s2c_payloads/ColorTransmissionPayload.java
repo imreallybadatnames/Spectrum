@@ -5,6 +5,7 @@ import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.minecraft.client.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
@@ -36,9 +37,10 @@ public record ColorTransmissionPayload(BlockPos pos, ColoredTransmission transmi
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<ColorTransmissionPayload> getPayloadHandler() {
 		return (payload, context) -> {
-			context.client().execute(() -> {
+			MinecraftClient client = context.client();
+			client.execute(() -> {
 				ColoredTransmission transmission = payload.transmission;
-				context.client().world.addImportantParticle(new ColoredTransmissionParticleEffect(transmission.getDestination(), transmission.getArrivalInTicks(), transmission.getDyeColor()), true, transmission.getOrigin().getX(), transmission.getOrigin().getY(), transmission.getOrigin().getZ(), 0.0D, 0.0D, 0.0D);
+				client.world.addImportantParticle(new ColoredTransmissionParticleEffect(transmission.getDestination(), transmission.getArrivalInTicks(), transmission.getDyeColor()), true, transmission.getOrigin().getX(), transmission.getOrigin().getY(), transmission.getOrigin().getZ(), 0.0D, 0.0D, 0.0D);
 			});
 		};
 	}
