@@ -25,9 +25,6 @@ public class SpectrumConfig implements ConfigData {
 	@Comment("Affects how often the wind simulation updates - A lower number makes the simulation smoother, but increases the performance impact significantly")
 	public int WindSimInterval = 3;
 
-	@Comment("Story accurate dimension lighting. Deepens the dimension's darkness and prevents night vision from cutting through it. WARNING - This makes traversal significantly harder")
-	public boolean ExtraDarkDimension = false;
-
 	@Comment("Adjusts the general brightness of the dimension (an increase of 1 is a lot, for reference)")
 	public float DimensionBrightnessMod = 1.0F;
 

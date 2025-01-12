@@ -5320,7 +5320,6 @@
   "text.autoconfig.Spectrum.option.DecayIsStoppedByClaimMods": "Make Decay not spread in supported Claim's mod claims",
   "text.autoconfig.Spectrum.option.DimensionReverbDecayTime": "The reverb decay time for sound effects in Spectrum's dimension",
   "text.autoconfig.Spectrum.option.DimensionReverbDensity": "The reverb density for sound effects in Spectrum's dimension",
-  "text.autoconfig.Spectrum.option.ExtraDarkDimension": "Lore Accurate Dimension Lighting",
   "text.autoconfig.Spectrum.option.FadingCanDestroyBlockEntities": "Whether Fading can take over block entities",
   "text.autoconfig.Spectrum.option.FailingCanDestroyBlockEntities": "Whether Failing can take over block entities",
   "text.autoconfig.Spectrum.option.ForfeitureCanDestroyBlockEntities": "Whether Forfeiture can take over block entities",

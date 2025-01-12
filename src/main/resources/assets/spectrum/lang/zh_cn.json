@@ -680,7 +680,6 @@
   "text.autoconfig.Spectrum.option.WindSim": "启用风模拟",
   "text.autoconfig.Spectrum.option.ReducedParticles": "减少环境粒子",
   "text.autoconfig.Spectrum.option.WindSimInterval": "风模拟更新间隔",
-  "text.autoconfig.Spectrum.option.ExtraDarkDimension": "符合背景故事的维度光照",
   "text.autoconfig.Spectrum.option.DimensionBrightnessMod": "维度亮度",
   "text.autoconfig.Spectrum.option.IntegrationPacksToSkipLoading": "跳过加载的数据包",
   "text.autoconfig.Spectrum.option.AddItemTooltips": "为刷怪笼、告示牌、幽匿尖啸体等 添加高级工具提示",
