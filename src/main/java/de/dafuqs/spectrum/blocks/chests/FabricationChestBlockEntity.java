@@ -42,7 +42,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 	@SuppressWarnings("unused")
     public static void tick(World world, BlockPos pos, BlockState state, FabricationChestBlockEntity chest) {
 		chest.age++;
-
+		// TODO: that should run in `clientTick() instead` (same for other chests)
 		if (world.isClient) {
 
 			chest.lastYaw = chest.yaw;
