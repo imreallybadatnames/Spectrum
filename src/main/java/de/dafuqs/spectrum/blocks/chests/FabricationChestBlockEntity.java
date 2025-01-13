@@ -31,7 +31,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 	private final List<ItemStack> cachedOutputs = new ArrayList<>(4);
 	private int coolDownTicks = 0;
 	private boolean isOpen, isFull, hasValidRecipes;
-	private State state;
+	private State state = State.CLOSED;
 	float rimTarget, rimPos, lastRimTarget, tabletTarget, tabletPos, lastTabletTarget,assemblyTarget, assemblyPos, lastAssemblyTarget, ringTarget, ringPos, lastRingTarget, itemTarget, itemPos, lastItemTarget, alphaTarget, alphaValue, lastAlphaTarget, yawModTarget, yawMod, lastYawModTarget, yaw, lastYaw;
 	long interpTicks, interpLength = 1, age;
 	
