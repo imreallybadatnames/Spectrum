@@ -487,5 +487,14 @@ public class SpectrumS2CPacketSender {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NODE_STATUS_UPDATE, buf);
 		}
 	}
-
+	
+	public static void syncPastelNetworkEdges(ServerPastelNetwork serverPastelNetwork, BlockPos pos) {
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeUuid(serverPastelNetwork.getUUID());
+		buf.writeNbt(serverPastelNetwork.graphToNbt());
+		
+		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) serverPastelNetwork.getWorld(), pos)) {
+			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NETWORK_EDGE_SYNC, buf);
+		}
+	}
 }
