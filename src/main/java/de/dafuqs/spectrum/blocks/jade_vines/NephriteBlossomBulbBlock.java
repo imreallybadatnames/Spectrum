@@ -34,7 +34,7 @@ public class NephriteBlossomBulbBlock extends PlantBlock implements Fertilizable
 
     @Override
     public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return random.nextFloat() < 0.075;
+		return true;
     }
 
     @Override
