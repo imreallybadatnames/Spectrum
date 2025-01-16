@@ -4,9 +4,10 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -76,21 +77,17 @@ public class InkDrainTrinketItem extends SpectrumTrinketItem implements InkStora
 	
 	@Override
 	public FixedSingleInkStorage getEnergyStorage(ItemStack itemStack) {
-		var compound = itemStack.get(DataComponentTypes.CUSTOM_DATA);
-		if (compound != null && compound.contains("EnergyStore")) {
-			return FixedSingleInkStorage.fromNbt(compound.copyNbt().getCompound("EnergyStore"));
-		}
+		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
+		if (storage != null)
+			for (var entry : storage.storedEnergy().entrySet())
+				return new FixedSingleInkStorage(storage.maxEnergyTotal(), entry.getKey(), entry.getValue());
 		return new FixedSingleInkStorage(MAX_INK, inkColor);
 	}
 	
 	@Override
 	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		if (storage instanceof FixedSingleInkStorage fixedSingleInkStorage) {
-			itemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-					comp -> comp.apply(nbt -> nbt.put("EnergyStore", fixedSingleInkStorage.toNbt())));
-
-			itemStack.set(DataComponentTypes.RARITY, storage.isFull() ? Rarity.EPIC : super.getDefaultStack().get(DataComponentTypes.RARITY));
-		}
+		itemStack.set(SpectrumDataComponentTypes.INK_STORAGE, new InkStorageComponent(storage));
+		itemStack.set(DataComponentTypes.RARITY, storage.isFull() ? Rarity.EPIC : super.getDefaultStack().get(DataComponentTypes.RARITY));
 	}
 	
 	@Override

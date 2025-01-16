@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.blocks.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
@@ -172,9 +173,8 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
 		
-		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
-			this.inkStorage = IndividualCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
-		}
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"),storage ->
+				this.inkStorage = new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		if (nbt.contains("Looper", NbtElement.COMPOUND_TYPE)) {
 			this.tickLooper.readNbt(nbt.getCompound("Looper"));
 		}
@@ -193,7 +193,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
 		
-		nbt.put("InkStorage", this.inkStorage.toNbt());
+		CodecHelper.writeNbt(nbt, "InkStorage", InkStorageComponent.CODEC, new InkStorageComponent(this.inkStorage));
 		nbt.put("Looper", this.tickLooper.toNbt());
 		
 		nbt.putBoolean("CanWork", this.canWork);

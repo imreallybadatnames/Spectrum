@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
-import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
@@ -49,11 +48,6 @@ public class ArtistsPaletteItem extends SpectrumTrinketItem implements InkStorag
 	@Override
 	public ItemStack getDefaultStack() {
 		return super.getDefaultStack();
-	}
-	
-	@Override
-	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		itemStack.set(SpectrumDataComponentTypes.INK_STORAGE, new InkStorageComponent(storage));
 	}
 	
 	@Override

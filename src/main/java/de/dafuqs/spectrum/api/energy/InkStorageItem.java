@@ -1,5 +1,7 @@
 package de.dafuqs.spectrum.api.energy;
 
+import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 
 /**
@@ -38,7 +40,9 @@ public interface InkStorageItem<PStorage extends InkStorage> {
 	
 	PStorage getEnergyStorage(ItemStack itemStack);
 	
-	void setEnergyStorage(ItemStack itemStack, InkStorage storage);
+	default void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
+		itemStack.set(SpectrumDataComponentTypes.INK_STORAGE, new InkStorageComponent(storage));
+	}
 	
 	ItemStack getDefaultStack();
 	

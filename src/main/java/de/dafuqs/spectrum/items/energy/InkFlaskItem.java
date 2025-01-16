@@ -5,7 +5,6 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
-import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
@@ -36,11 +35,9 @@ public class InkFlaskItem extends Item implements InkStorageItem<SingleInkStorag
 	@Override
 	public SingleInkStorage getEnergyStorage(ItemStack itemStack) {
 		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
-		if (storage != null) {
-			for (var entry : storage.storedEnergy().entrySet()) {
+		if (storage != null)
+			for (var entry : storage.storedEnergy().entrySet())
 				return new SingleInkStorage(storage.maxEnergyTotal(), entry.getKey(), entry.getValue());
-			}
-		}
 		return new SingleInkStorage(this.maxEnergy);
 	}
 	
@@ -48,11 +45,6 @@ public class InkFlaskItem extends Item implements InkStorageItem<SingleInkStorag
 	@Override
 	public ItemStack getDefaultStack() {
 		return super.getDefaultStack();
-	}
-	
-	@Override
-	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		itemStack.set(SpectrumDataComponentTypes.INK_STORAGE, new InkStorageComponent(storage));
 	}
 	
 	@Override

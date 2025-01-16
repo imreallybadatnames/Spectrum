@@ -6,6 +6,8 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.blocks.BlockPosDelegate;
+import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
@@ -111,9 +113,8 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		if (!this.readLootTable(nbt)) {
 			Inventories.readNbt(nbt, this.inventory, registryLookup);
 		}
-		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
-			this.inkStorage = TotalCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
-		}
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"), storage ->
+				this.inkStorage = new TotalCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("SelectedColor", NbtElement.STRING_TYPE)) {
 			this.selectedColor = InkColor.ofIdString(nbt.getString("SelectedColor")).orElse(InkColors.CYAN);
@@ -126,7 +127,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		if (!this.writeLootTable(nbt)) {
 			Inventories.writeNbt(nbt, this.inventory, registryLookup);
 		}
-		nbt.put("InkStorage", this.inkStorage.toNbt());
+		CodecHelper.writeNbt(nbt, "InkStorage", InkStorageComponent.CODEC, new InkStorageComponent(this.inkStorage));
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		if (this.selectedColor != null) {
 			nbt.putString("SelectedColor", this.selectedColor.getID().toString());
