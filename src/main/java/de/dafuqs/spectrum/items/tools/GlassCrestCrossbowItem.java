@@ -36,7 +36,7 @@ public class GlassCrestCrossbowItem extends MalachiteCrossbowItem implements Ext
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(OVERCHARGE_COST.getColor());
+		return List.of(OVERCHARGE_COST.color());
 	}
 	
     @Override

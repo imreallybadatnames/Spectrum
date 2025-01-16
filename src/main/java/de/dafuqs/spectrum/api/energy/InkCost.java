@@ -5,23 +5,7 @@ import net.minecraft.nbt.*;
 
 import java.util.*;
 
-public class InkCost {
-	
-	private final InkColor color;
-	private final long cost;
-	
-	public InkCost(InkColor color, long cost) {
-		this.color = color;
-		this.cost = cost;
-	}
-	
-	public InkColor getColor() {
-		return color;
-	}
-	
-	public long getCost() {
-		return cost;
-	}
+public record InkCost(InkColor color, long cost) {
 	
 	public void writeNbt(NbtCompound nbt) {
 		nbt.putString("InkColor", color.getID().toString());

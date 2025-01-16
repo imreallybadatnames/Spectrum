@@ -2,9 +2,7 @@ package de.dafuqs.spectrum.api.energy.storage;
 
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -18,10 +16,6 @@ public class CreativeInkStorage implements InkStorage {
 	
 	public CreativeInkStorage() {
 		super();
-	}
-	
-	public static CreativeInkStorage fromNbt(@NotNull NbtCompound compound) {
-		return new CreativeInkStorage();
 	}
 	
 	@Override

@@ -162,7 +162,7 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(GROUND_SLAM_COST.getColor());
+		return List.of(GROUND_SLAM_COST.color());
 	}
 	
 }

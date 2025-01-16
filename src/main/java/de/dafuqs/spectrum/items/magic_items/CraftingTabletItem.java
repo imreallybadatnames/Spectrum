@@ -1,3 +1,4 @@
+
 package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.api.item.*;

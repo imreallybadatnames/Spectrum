@@ -131,7 +131,7 @@ public class InkPoweredStatusEffectInstance {
 					mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(effect, 1.0F, tickRate));
 				}
 				mutableText.formatted(effect.getEffectType().value().getCategory().getFormatting());
-				mutableText.append(Text.translatable("spectrum.tooltip.ink_cost", Support.getShortenedNumberString(cost.getCost()), cost.getColor().getColoredInkName()).formatted(Formatting.GRAY));
+				mutableText.append(Text.translatable("spectrum.tooltip.ink_cost", Support.getShortenedNumberString(cost.cost()), cost.color().getColoredInkName()).formatted(Formatting.GRAY));
 				if (entry.isIncurable()) {
 					mutableText.append(Text.translatable("item.spectrum.potion.tooltip.incurable"));
 				}

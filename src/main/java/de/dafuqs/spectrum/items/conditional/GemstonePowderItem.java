@@ -13,8 +13,4 @@ public class GemstonePowderItem extends CloakedItem {
 		this.gemstoneColor = gemstoneColor;
 	}
 	
-	public GemstoneColor getGemstoneColor() {
-		return gemstoneColor;
-	}
-	
 }

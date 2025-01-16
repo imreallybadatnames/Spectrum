@@ -36,7 +36,7 @@ public class CelestialPocketWatchItem extends Item implements InkPowered {
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(COST.getColor());
+		return List.of(COST.color());
 	}
 	
 	@Override

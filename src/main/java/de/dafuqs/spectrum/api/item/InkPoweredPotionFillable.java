@@ -17,7 +17,7 @@ public interface InkPoweredPotionFillable {
 	// calculated once and then stored in the items nbt for quick lookup and nicer modifiability
 	// via commands or special loot (so ones found in dungeon chests can be cheaper!)
 	default long adjustFinalCostFor(@NotNull InkPoweredStatusEffectInstance instance) {
-		return (long) Math.pow(instance.getInkCost().getCost(), 1 + instance.getStatusEffectInstance().getAmplifier());
+		return (long) Math.pow(instance.getInkCost().cost(), 1 + instance.getStatusEffectInstance().getAmplifier());
 	}
 	
 	// saving
@@ -36,7 +36,7 @@ public interface InkPoweredPotionFillable {
 				}
 				
 				// calculate the final cost of this effect and add it
-				InkCost adjustedCost = new InkCost(newEffect.getInkCost().getColor(), adjustFinalCostFor(newEffect));
+				InkCost adjustedCost = new InkCost(newEffect.getInkCost().color(), adjustFinalCostFor(newEffect));
 				InkPoweredStatusEffectInstance modifiedInstance = new InkPoweredStatusEffectInstance(statusEffectInstance, adjustedCost, newEffect.getColor(), newEffect.isUnidentifiable(), newEffect.isIncurable());
 				existingEffects.add(modifiedInstance);
 			}

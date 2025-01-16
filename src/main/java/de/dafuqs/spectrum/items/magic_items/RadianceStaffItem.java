@@ -79,7 +79,7 @@ public class RadianceStaffItem extends Item implements InkPowered {
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		if (InkPowered.canUseClient()) {
-			tooltip.add(Text.translatable("item.spectrum.radiance_staff.tooltip.ink", INK_COST.getColor().getColoredInkName()));
+			tooltip.add(Text.translatable("item.spectrum.radiance_staff.tooltip.ink", INK_COST.color().getColoredInkName()));
 		} else {
 			tooltip.add(Text.translatable("item.spectrum.radiance_staff.tooltip"));
 		}
@@ -185,6 +185,6 @@ public class RadianceStaffItem extends Item implements InkPowered {
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(INK_COST.getColor());
+		return List.of(INK_COST.color());
 	}
 }

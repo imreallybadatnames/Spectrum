@@ -14,8 +14,6 @@ public class StormStoneItem extends CloakedItem implements DamageAwareItem {
 	
 	public StormStoneItem(Settings settings, Identifier cloakAdvancementIdentifier, Item cloakItem) {
 		super(settings, cloakAdvancementIdentifier, cloakItem);
-		
-		
 	}
 	
 	@Override

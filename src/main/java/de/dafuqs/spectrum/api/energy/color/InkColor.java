@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -13,10 +15,16 @@ import java.util.*;
 
 public class InkColor {
 
-	public static Codec<InkColor> CODEC = Identifier.CODEC.comapFlatMap(
+	public static final Codec<InkColor> CODEC = Identifier.CODEC.comapFlatMap(
 			id -> ofId(id).map(DataResult::success).orElse(DataResult.error(() -> "Not a valid ink color: " + id)),
-			InkColor::getID);
+			InkColor::getID
+	);
 
+	public static final PacketCodec<ByteBuf, InkColor> PACKET_CODEC = Identifier.PACKET_CODEC.xmap(
+			id -> ofId(id).orElseThrow(),
+			InkColor::getID
+	);
+	
 	protected static final Map<DyeColor, InkColor> DYE_TO_COLOR = new HashMap<>();
 	
 	protected final DyeColor dyeColor;

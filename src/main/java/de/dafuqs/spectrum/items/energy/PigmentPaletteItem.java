@@ -6,22 +6,19 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -42,10 +39,9 @@ public class PigmentPaletteItem extends SpectrumTrinketItem implements InkStorag
 	
 	@Override
 	public IndividualCappedInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null && compound.contains("EnergyStore")) {
-			return IndividualCappedInkStorage.fromNbt(compound.getCompound("EnergyStore"));
-		}
+		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
+		if (storage != null)
+			return new IndividualCappedInkStorage(storage.maxPerColor(), storage.storedEnergy());
 		return new IndividualCappedInkStorage(this.maxEnergyPerColor);
 	}
 	
@@ -57,10 +53,7 @@ public class PigmentPaletteItem extends SpectrumTrinketItem implements InkStorag
 	
 	@Override
 	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		if (storage instanceof IndividualCappedInkStorage pigmentPaletteInkStorage) {
-			NbtCompound compound = itemStack.getOrCreateNbt();
-			compound.put("EnergyStore", pigmentPaletteInkStorage.toNbt());
-		}
+		itemStack.set(SpectrumDataComponentTypes.INK_STORAGE, new InkStorageComponent(storage));
 	}
 	
 	@Override
@@ -99,7 +92,7 @@ public class PigmentPaletteItem extends SpectrumTrinketItem implements InkStorag
 		
 		var progress = Support.getSensiblePercent(storage.getCurrentTotal(), storage.getMaxTotal(), 14);
 		if (colors.size() == 1) {
-			var color = colors.get(0);
+			var color = colors.getFirst();
 			return new ExtendedItemBarProvider.BarSignature(1, 13, 14, progress, 1, color.getColorInt() | 0xFF000000, 2, DEFAULT_BACKGROUND_COLOR);
 		}
 		
