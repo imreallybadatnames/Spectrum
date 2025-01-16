@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.blocks.jade_vines;
 import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.item.*;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.state.property.*;
@@ -12,7 +11,7 @@ import net.minecraft.util.math.random.*;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-public class JadeiteFlowerBlock extends SpectrumFacingBlock {
+public class JadeiteLotusFlowerBlock extends SpectrumFacingBlock {
 	
 	protected static final VoxelShape SHAPE_UP = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
 	protected static final VoxelShape SHAPE_DOWN = Block.createCuboidShape(0, 8, 0, 16, 16, 16);
@@ -21,7 +20,7 @@ public class JadeiteFlowerBlock extends SpectrumFacingBlock {
 	protected static final VoxelShape SHAPE_EAST = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D);
 	protected static final VoxelShape SHAPE_WEST = Block.createCuboidShape(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	
-	public JadeiteFlowerBlock(Settings settings) {
+	public JadeiteLotusFlowerBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState());
 	}
@@ -56,11 +55,6 @@ public class JadeiteFlowerBlock extends SpectrumFacingBlock {
 		var root = pos.offset(facing.getOpposite());
 		var supportBlock = world.getBlockState(root);
 		return (facing.getAxis().isVertical() && supportBlock.isOf(SpectrumBlocks.JADEITE_LOTUS_STEM)) || supportBlock.isSideSolid(world, root, facing, SideShapeType.CENTER);
-	}
-	
-	@Override
-	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-		return SpectrumBlocks.JADEITE_LOTUS_BULB.asItem().getDefaultStack();
 	}
 	
 	@Override
