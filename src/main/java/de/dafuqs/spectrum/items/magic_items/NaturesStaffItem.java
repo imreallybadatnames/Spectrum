@@ -49,14 +49,14 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 		int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
 		if (efficiencyLevel == 0) {
 			if (InkPowered.canUseClient()) {
-				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink", INK_COST.getColor().getColoredInkName()));
+				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink", INK_COST.color().getColoredInkName()));
 			} else {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip"));
 			}
 		} else {
 			int chancePercent = (int) (getInkCostMod(stack) * 100);
 			if (InkPowered.canUseClient()) {
-				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink_and_chance", INK_COST.getColor().getColoredInkName(), chancePercent));
+				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink_and_chance", INK_COST.color().getColoredInkName(), chancePercent));
 			} else {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_chance", chancePercent));
 			}
@@ -307,7 +307,7 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(INK_COST.getColor());
+		return List.of(INK_COST.color());
 	}
 	
 	@Override

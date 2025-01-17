@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.BlockPosDelegate;
 import de.dafuqs.spectrum.blocks.upgrade.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -209,9 +210,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		super.readNbt(nbt, registryLookup);
 		
 		Inventories.readNbt(nbt, this.inventory, registryLookup);
-		if (nbt.contains("InkStorage", NbtElement.COMPOUND_TYPE)) {
-			this.inkStorage = IndividualCappedInkStorage.fromNbt(nbt.getCompound("InkStorage"));
-		}
+		
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"), storage ->
+				this.inkStorage = new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.craftingTime = nbt.getShort("CraftingTime");
 		this.craftingTimeTotal = nbt.getShort("CraftingTimeTotal");
 		this.usesEfficiency = nbt.getBoolean("UsesEfficiency");
@@ -235,7 +236,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
 		Inventories.writeNbt(nbt, this.inventory, registryLookup);
-		nbt.put("InkStorage", this.inkStorage.toNbt());
+		CodecHelper.writeNbt(nbt, "InkStorage", InkStorageComponent.CODEC, new InkStorageComponent(this.inkStorage));
 		nbt.putShort("CraftingTime", (short) this.craftingTime);
 		nbt.putShort("CraftingTimeTotal", (short) this.craftingTimeTotal);
 		nbt.putBoolean("UsesEfficiency", this.usesEfficiency);

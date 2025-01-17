@@ -2,9 +2,7 @@ package de.dafuqs.spectrum.api.energy.storage;
 
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -30,24 +28,6 @@ public class SingleInkStorage implements InkStorage {
 		this.maxEnergy = maxEnergy;
 		this.storedColor = color;
 		this.storedEnergy = amount;
-	}
-	
-	public NbtCompound toNbt() {
-		NbtCompound compound = new NbtCompound();
-		compound.putLong("MaxEnergyTotal", this.maxEnergy);
-		compound.putString("Color", this.storedColor.getID().toString());
-		compound.putLong("Amount", this.storedEnergy);
-		return compound;
-	}
-	
-	public static SingleInkStorage fromNbt(@NotNull NbtCompound compound) {
-		long maxEnergyTotal = compound.getLong("MaxEnergyTotal");
-		Optional<InkColor> color = InkColor.ofIdString(compound.getString("Color"));
-		if (color.isPresent()) {
-			long amount = compound.getLong("Amount");
-			return new SingleInkStorage(maxEnergyTotal, color.get(), amount);
-		}
-		return new SingleInkStorage(maxEnergyTotal, InkColors.CYAN, 0);
 	}
 	
 	public InkColor getStoredColor() {

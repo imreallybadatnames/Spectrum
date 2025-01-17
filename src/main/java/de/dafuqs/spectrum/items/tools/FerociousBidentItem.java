@@ -27,7 +27,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(RIPTIDE_COST.getColor());
+		return List.of(RIPTIDE_COST.color());
 	}
 	
 	@Override

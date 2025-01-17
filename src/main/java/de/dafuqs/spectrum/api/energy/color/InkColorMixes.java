@@ -56,7 +56,7 @@ public class InkColorMixes {
 			
 			if (!possibleOutcomes.isEmpty()) {
 				Collections.shuffle(possibleOutcomes);
-				return possibleOutcomes.get(0);
+				return possibleOutcomes.getFirst();
 			}
 			return color1;
 		} else if (color1Elemental) {

@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.items.item_frame;
 
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -31,9 +32,9 @@ public abstract class SpectrumItemFrameItem extends ItemFrameItem {
 			World world = context.getWorld();
 			ItemFrameEntity invisibleItemFrameEntity = getItemFrameEntity(world, blockPos2, direction);
 			
-			NbtCompound nbtCompound = itemStack.getNbt();
-			if (nbtCompound != null) {
-				EntityType.loadFromEntityNbt(world, playerEntity, invisibleItemFrameEntity, nbtCompound);
+			var nbtComponent = itemStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT);
+			if (!nbtComponent.isEmpty()) {
+				EntityType.loadFromEntityNbt(world, playerEntity, invisibleItemFrameEntity, nbtComponent);
 			}
 			
 			if (invisibleItemFrameEntity.canStayAttached()) {

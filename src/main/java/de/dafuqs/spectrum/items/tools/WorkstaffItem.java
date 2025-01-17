@@ -111,8 +111,8 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 			return true;
 		}
 		
-		int costForRange = (int) Math.pow(BASE_COST_PER_AOE_MINING_RANGE_INCREMENT.getCost(), range);
-		return InkPowered.tryDrainEnergy(player, BASE_COST_PER_AOE_MINING_RANGE_INCREMENT.getColor(), costForRange);
+		int costForRange = (int) Math.pow(BASE_COST_PER_AOE_MINING_RANGE_INCREMENT.cost(), range);
+		return InkPowered.tryDrainEnergy(player, BASE_COST_PER_AOE_MINING_RANGE_INCREMENT.color(), costForRange);
 	}
 	
 	public static void applyToggle(PlayerEntity player, ItemStack stack, GUIToggle toggle) {

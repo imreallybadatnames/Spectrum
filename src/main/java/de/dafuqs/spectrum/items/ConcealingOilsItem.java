@@ -67,7 +67,7 @@ public class ConcealingOilsItem extends DrinkItem implements InkPoweredPotionFil
             return false;
 
         var effect = getEffects(oil).get(0);
-        if (!InkPowered.tryDrainEnergy(user, effect.getInkCost().getColor(), effect.getInkCost().getCost()))
+        if (!InkPowered.tryDrainEnergy(user, effect.getInkCost().color(), effect.getInkCost().cost()))
             return false;
 
         var foodComponent = food.get(DataComponentTypes.FOOD);

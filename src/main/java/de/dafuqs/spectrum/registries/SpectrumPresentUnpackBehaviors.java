@@ -4,15 +4,15 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.boom.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.present.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.entity.projectile.thrown.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.sound.*;
@@ -26,13 +26,8 @@ public class SpectrumPresentUnpackBehaviors {
 	
 	public static void register() {
 		PresentBlock.registerBehavior(SpectrumItems.PIPE_BOMB, (stack, presentBlockEntity, world, pos, random) -> {
-			NbtCompound nbt = stack.getOrCreateNbt();
-			nbt.putBoolean("armed", true);
-			nbt.putLong("timestamp", world.getTime() - 70);
-			UUID owner = presentBlockEntity.getOwnerUUID();
-			if (owner != null) {
-				nbt.putUuid("owner", presentBlockEntity.getOwnerUUID());
-			}
+			stack.set(SpectrumDataComponentTypes.PIPE_BOMB, new PipeBombComponent(world.getTime() - 70, true));
+			stack.set(DataComponentTypes.PROFILE, presentBlockEntity.getOwner());
 			world.playSound(null, pos, SpectrumSoundEvents.INCANDESCENT_ARM, SoundCategory.BLOCKS, 2.0F, 0.9F);
 			return stack;
 		});
@@ -85,9 +80,7 @@ public class SpectrumPresentUnpackBehaviors {
 					tntEntity = new TntEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, presentBlockEntity.getOwnerIfOnline());
 					world.spawnEntity(tntEntity);
 				}
-				if (tntEntity != null) {
-					world.playSound(null, tntEntity.getX(), tntEntity.getY(), tntEntity.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-				}
+				world.playSound(null, tntEntity.getX(), tntEntity.getY(), tntEntity.getZ(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				world.emitGameEvent(null, GameEvent.PRIME_FUSE, pos);
 			}
 			return ItemStack.EMPTY;
@@ -122,9 +115,11 @@ public class SpectrumPresentUnpackBehaviors {
 			int chickenCount = stack.getCount(); // every egg hatches, unlike via EggEntity. New chicken farm just dropped?
 			for (int i = 0; i < chickenCount; i++) {
 				ChickenEntity chickenEntity = EntityType.CHICKEN.create(world);
-				chickenEntity.setBreedingAge(-24000);
-				chickenEntity.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
-				world.spawnEntity(chickenEntity);
+				if (chickenEntity != null) {
+					chickenEntity.setBreedingAge(-24000);
+					chickenEntity.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
+					world.spawnEntity(chickenEntity);
+				}
 			}
 			
 			return ItemStack.EMPTY;

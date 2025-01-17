@@ -34,7 +34,7 @@ public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos, DyeColor c
 	);
 	
 	public static void sendPlayFusionCraftingFinishedParticles(World world, BlockPos pos, @NotNull ItemStack itemStack) {
-		DyeColor color = ColorRegistry.ITEM_COLORS.getMapping(itemStack.getItem(), DyeColor.LIGHT_GRAY));
+		DyeColor color = ColorRegistry.ITEM_COLORS.getMapping(itemStack.getItem(), DyeColor.LIGHT_GRAY);
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, pos)) {
 			ServerPlayNetworking.send(player, new PlayFusionCraftingFinishedParticlePayload(pos, color));

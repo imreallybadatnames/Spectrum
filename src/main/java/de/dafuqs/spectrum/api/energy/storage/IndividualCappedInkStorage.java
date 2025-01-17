@@ -5,9 +5,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.registries.*;
 import it.unimi.dsi.fastutil.objects.*;
 import net.fabricmc.api.*;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -126,19 +124,6 @@ public class IndividualCappedInkStorage implements InkStorage {
 	@Override
 	public boolean isFull() {
 		return this.currentTotal >= this.getMaxTotal();
-	}
-	
-	public static IndividualCappedInkStorage fromNbt(@NotNull NbtCompound compound) {
-		long maxEnergyPerColor = compound.getLong("MaxEnergyPerColor");
-		Map<InkColor, Long> colors = InkStorage.readEnergy(compound.getCompound("Energy"));
-		return new IndividualCappedInkStorage(maxEnergyPerColor, colors);
-	}
-	
-	public NbtCompound toNbt() {
-		NbtCompound compound = new NbtCompound();
-		compound.putLong("MaxEnergyPerColor", this.maxEnergyPerColor);
-		compound.put("Energy", InkStorage.writeEnergy(this.storedEnergy));
-		return compound;
 	}
 	
 	@Override

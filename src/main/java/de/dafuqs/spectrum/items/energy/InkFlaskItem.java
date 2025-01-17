@@ -9,15 +9,11 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -38,10 +34,10 @@ public class InkFlaskItem extends Item implements InkStorageItem<SingleInkStorag
 	
 	@Override
 	public SingleInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null && compound.contains("EnergyStore")) {
-			return SingleInkStorage.fromNbt(compound.getCompound("EnergyStore"));
-		}
+		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
+		if (storage != null)
+			for (var entry : storage.storedEnergy().entrySet())
+				return new SingleInkStorage(storage.maxEnergyTotal(), entry.getKey(), entry.getValue());
 		return new SingleInkStorage(this.maxEnergy);
 	}
 	
@@ -49,14 +45,6 @@ public class InkFlaskItem extends Item implements InkStorageItem<SingleInkStorag
 	@Override
 	public ItemStack getDefaultStack() {
 		return super.getDefaultStack();
-	}
-	
-	@Override
-	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		if (storage instanceof SingleInkStorage singleInkStorage) {
-			NbtCompound compound = itemStack.getOrCreateNbt();
-			compound.put("EnergyStore", singleInkStorage.toNbt());
-		}
 	}
 	
 	@Override

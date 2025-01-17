@@ -36,7 +36,7 @@ public class FractalBidentItem extends MalachiteBidentItem implements SlotBackgr
 	
 	@Override
 	public List<InkColor> getUsedColors() {
-		return List.of(MIRROR_IMAGE_COST.getColor());
+		return List.of(MIRROR_IMAGE_COST.color());
 	}
 
 	@Override

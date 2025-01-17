@@ -15,9 +15,7 @@ import net.minecraft.client.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
@@ -40,10 +38,9 @@ public class ArtistsPaletteItem extends SpectrumTrinketItem implements InkStorag
 	
 	@Override
 	public TotalCappedElementalMixingInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null && compound.contains("EnergyStore")) {
-			return TotalCappedElementalMixingInkStorage.fromNbt(compound.getCompound("EnergyStore"));
-		}
+		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
+		if (storage != null)
+			return new TotalCappedElementalMixingInkStorage(storage.maxEnergyTotal(), storage.storedEnergy());
 		return new TotalCappedElementalMixingInkStorage(this.maxEnergyTotal, Map.of());
 	}
 	
@@ -51,14 +48,6 @@ public class ArtistsPaletteItem extends SpectrumTrinketItem implements InkStorag
 	@Override
 	public ItemStack getDefaultStack() {
 		return super.getDefaultStack();
-	}
-	
-	@Override
-	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		if (storage instanceof TotalCappedElementalMixingInkStorage artistsPaletteInkStorage) {
-			NbtCompound compound = itemStack.getOrCreateNbt();
-			compound.put("EnergyStore", artistsPaletteInkStorage.toNbt());
-		}
 	}
 	
 	@Override
@@ -98,7 +87,7 @@ public class ArtistsPaletteItem extends SpectrumTrinketItem implements InkStorag
 		
 		var progress = Support.getSensiblePercent(storage.getCurrentTotal(), storage.getMaxTotal(), 14);
 		if (colors.size() == 1) {
-			var color = colors.get(0);
+			var color = colors.getFirst();
 			return new ExtendedItemBarProvider.BarSignature(1, 13, 14, progress, 1, color.getColorInt() | 0xFF000000, 2, DEFAULT_BACKGROUND_COLOR);
 		}
 

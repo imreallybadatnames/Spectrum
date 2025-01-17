@@ -65,7 +65,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 	@Override
 	public long adjustFinalCostFor(@NotNull InkPoweredStatusEffectInstance instance) {
 		var mod = SpectrumStatusEffects.isStrongSleepEffect(instance) ? 1 : 0;
-		return Math.round(Math.pow(instance.getInkCost().getCost(), 1.75 + instance.getStatusEffectInstance().getAmplifier() + mod));
+		return Math.round(Math.pow(instance.getInkCost().cost(), 1.75 + instance.getStatusEffectInstance().getAmplifier() + mod));
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 			if (AdvancementHelper.hasAdvancement(player, UNLOCK_IDENTIFIER)) {
 				List<InkPoweredStatusEffectInstance> effects = getEffects(stack);
 				for(InkPoweredStatusEffectInstance instance : effects) {
-					if(InkPowered.tryDrainEnergy(player, instance.getInkCost().getColor(), instance.getInkCost().getCost())) {
+					if(InkPowered.tryDrainEnergy(player, instance.getInkCost().color(), instance.getInkCost().cost())) {
 						World world = attacker.getWorld();
 						if (world.isClient) {
 							world.addParticle(new DynamicParticleEffect(ParticleTypes.EFFECT, 0.1F, ColorHelper.colorIntToVec(instance.getStatusEffectInstance().getEffectType().value().getColor()), 0.5F, 120, true, true),
@@ -109,7 +109,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 		}
 		
 		var effect = getEffects(stack).get(0);
-		var usable = InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().getColor(), adjustFinalCostFor(effect)));
+		var usable = InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().color(), adjustFinalCostFor(effect)));
 		return usable ? SlotBackgroundEffectProvider.SlotEffect.BORDER_FADE : SlotEffect.BORDER;
 	}
 	
@@ -127,7 +127,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 			return 0F;
 		
 		var effect = getEffects(stack).get(0);
-		if (InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().getColor(), adjustFinalCostFor(effect))))
+		if (InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().color(), adjustFinalCostFor(effect))))
 			return 1F;
 		
 		if (player == null)

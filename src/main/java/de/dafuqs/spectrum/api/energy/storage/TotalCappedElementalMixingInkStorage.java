@@ -1,11 +1,8 @@
 package de.dafuqs.spectrum.api.energy.storage;
 
-import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import net.fabricmc.api.*;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -122,12 +119,6 @@ public class TotalCappedElementalMixingInkStorage extends TotalCappedInkStorage 
 		return maxAmount;
 	}
 
-	public static TotalCappedElementalMixingInkStorage fromNbt(@NotNull NbtCompound compound) {
-		long maxEnergyTotal = compound.getLong("MaxEnergyTotal");
-		Map<InkColor, Long> energy = InkStorage.readEnergy(compound.getCompound("Energy"));
-		return new TotalCappedElementalMixingInkStorage(maxEnergyTotal, energy);
-	}
-	
 	@Override
 	public void fillCompletely() {
 		this.storedEnergy.clear();

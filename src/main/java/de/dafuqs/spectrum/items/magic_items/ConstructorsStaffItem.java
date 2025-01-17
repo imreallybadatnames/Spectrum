@@ -8,7 +8,6 @@ import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;

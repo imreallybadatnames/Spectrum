@@ -111,11 +111,11 @@ public interface InkPowered {
 	}
 	
 	static boolean tryDrainEnergy(@NotNull PlayerEntity player, @NotNull InkCost inkCost) {
-		return tryDrainEnergy(player, inkCost.getColor(), inkCost.getCost());
+		return tryDrainEnergy(player, inkCost.color(), inkCost.cost());
 	}
 	
 	static boolean tryDrainEnergy(@NotNull PlayerEntity player, @NotNull InkCost inkCost, float costModifier) {
-		return tryDrainEnergy(player, inkCost.getColor(), Support.getIntFromDecimalWithChance(inkCost.getCost() * costModifier, player.getRandom()));
+		return tryDrainEnergy(player, inkCost.color(), Support.getIntFromDecimalWithChance(inkCost.cost() * costModifier, player.getRandom()));
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public interface InkPowered {
 	}
 	
 	static boolean hasAvailableInk(PlayerEntity player, InkCost inkCost) {
-		return hasAvailableInk(player, inkCost.getColor(), inkCost.getCost());
+		return hasAvailableInk(player, inkCost.color(), inkCost.cost());
 	}
 	
 	static boolean hasAvailableInk(PlayerEntity player, InkColor color, long amount) {

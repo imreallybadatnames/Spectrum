@@ -9,11 +9,9 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -48,10 +46,6 @@ public class CreativeInkAssortmentItem extends Item implements InkStorageItem<Cr
 	
 	@Override
 	public CreativeInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null && compound.contains("EnergyStore")) {
-			return CreativeInkStorage.fromNbt(compound.getCompound("EnergyStore"));
-		}
 		return new CreativeInkStorage();
 	}
 	
@@ -92,7 +86,7 @@ public class CreativeInkAssortmentItem extends Item implements InkStorageItem<Cr
 		}
 		
 		if (colors.size() == 1) {
-			var color = colors.get(0);
+			var color = colors.getFirst();
 			return ColorHelper.colorVecToRGB(color.getColorVec());
 		}
 		

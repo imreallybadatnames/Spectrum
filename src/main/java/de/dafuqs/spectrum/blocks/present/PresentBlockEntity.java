@@ -81,6 +81,10 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	public UUID getOwnerUUID() {
 		return PresentItem.getOwner(this.presentStack).flatMap(ProfileComponent::id).orElse(null);
 	}
+	
+	public ProfileComponent getOwner() {
+		return PresentItem.getOwner(this.presentStack).orElse(null);
+	}
 
 	@Override
 	public String getOwnerName() {

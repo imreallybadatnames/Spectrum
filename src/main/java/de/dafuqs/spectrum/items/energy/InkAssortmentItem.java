@@ -8,13 +8,10 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.text.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -35,10 +32,9 @@ public class InkAssortmentItem extends Item implements InkStorageItem<Individual
 	
 	@Override
 	public IndividualCappedInkStorage getEnergyStorage(ItemStack itemStack) {
-		NbtCompound compound = itemStack.getNbt();
-		if (compound != null && compound.contains("EnergyStore")) {
-			return IndividualCappedInkStorage.fromNbt(compound.getCompound("EnergyStore"));
-		}
+		var storage = itemStack.get(SpectrumDataComponentTypes.INK_STORAGE);
+		if (storage != null)
+			return new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy());
 		return new IndividualCappedInkStorage(this.maxEnergy);
 	}
 	
@@ -46,14 +42,6 @@ public class InkAssortmentItem extends Item implements InkStorageItem<Individual
 	@Override
 	public ItemStack getDefaultStack() {
 		return super.getDefaultStack();
-	}
-	
-	@Override
-	public void setEnergyStorage(ItemStack itemStack, InkStorage storage) {
-		if (storage instanceof IndividualCappedInkStorage individualCappedInkStorage) {
-			NbtCompound compound = itemStack.getOrCreateNbt();
-			compound.put("EnergyStore", individualCappedInkStorage.toNbt());
-		}
 	}
 	
 	@Override
@@ -85,7 +73,7 @@ public class InkAssortmentItem extends Item implements InkStorageItem<Individual
 		
 		var progress = Support.getSensiblePercent(storage.getCurrentTotal(), storage.getMaxTotal(), 14);
 		if (colors.size() == 1) {
-			var color = colors.get(0);
+			var color = colors.getFirst();
 			return new ExtendedItemBarProvider.BarSignature(1, 13, 14, progress, 1, ColorHelper.colorVecToRGB(color.getColorVec()) | 0xFF000000, 2, DEFAULT_BACKGROUND_COLOR);
 		}
 		

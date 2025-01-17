@@ -1,9 +1,6 @@
 package de.dafuqs.spectrum.items.bundles;
 
-import de.dafuqs.spectrum.registries.SpectrumDataComponentTypes;
 import net.minecraft.block.Block;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
