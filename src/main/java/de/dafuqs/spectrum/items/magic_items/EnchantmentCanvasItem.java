@@ -1,20 +1,18 @@
 package de.dafuqs.spectrum.items.magic_items;
 
-import de.dafuqs.spectrum.helpers.*;
-import net.minecraft.client.item.*;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -64,8 +62,8 @@ public class EnchantmentCanvasItem extends Item {
 			return false;
 		}
 		
-		Map<Enchantment, Integer> canvasEnchantments = EnchantmentHelper.fromNbt(EnchantedBookItem.getEnchantmentNbt(canvasStack));
-		Map<Enchantment, Integer> targetEnchantments = EnchantmentHelper.fromNbt(targetStack.getEnchantments());
+		var canvasEnchantments = canvasStack.getEnchantments();
+		var targetEnchantments = targetStack.getEnchantments();
 		if (canvasEnchantments.isEmpty() && targetEnchantments.isEmpty()) {
 			return false;
 		}
@@ -80,8 +78,8 @@ public class EnchantmentCanvasItem extends Item {
 		if (itemLock.isEmpty() && !targetEnchantments.isEmpty()) {
 			bindTo(canvasStack, targetStack);
 		}
-		SpectrumEnchantmentHelper.setStoredEnchantments(targetEnchantments, canvasStack);
-		EnchantmentHelper.set(canvasEnchantments, targetStack);
+		canvasStack.set(DataComponentTypes.STORED_ENCHANTMENTS, targetEnchantments);
+		EnchantmentHelper.set(targetStack, canvasEnchantments);
 		
 		if (drop && receiver != null) {
 			if (receiver instanceof PlayerEntity player) {
@@ -107,27 +105,17 @@ public class EnchantmentCanvasItem extends Item {
 			tooltip.add(Text.translatable("item.spectrum.enchantment_canvas.tooltip.not_bound"));
 			tooltip.add(Text.translatable("item.spectrum.enchantment_canvas.tooltip.not_bound2"));
 		}
-		ItemStack.appendEnchantments(tooltip, EnchantedBookItem.getEnchantmentNbt(stack));
-	}
-	
-	@Override
-	public boolean hasGlint(ItemStack stack) {
-		return !EnchantedBookItem.getEnchantmentNbt(stack).isEmpty();
 	}
 	
 	private static void bindTo(ItemStack enchantmentExchangerStack, ItemStack targetStack) {
-		NbtCompound nbt = enchantmentExchangerStack.getOrCreateNbt();
-		nbt.putString("BoundItem", Registries.ITEM.getId(targetStack.getItem()).toString());
-		enchantmentExchangerStack.setNbt(nbt);
+		enchantmentExchangerStack.set(SpectrumDataComponentTypes.BOUND_ITEM, Registries.ITEM.getId(targetStack.getItem()));
 	}
 	
 	private static Optional<Item> getItemBoundTo(ItemStack enchantmentExchangerStack) {
-		NbtCompound nbt = enchantmentExchangerStack.getNbt();
-		if (nbt == null || !nbt.contains("BoundItem", NbtElement.STRING_TYPE)) {
+		var boundId = enchantmentExchangerStack.get(SpectrumDataComponentTypes.BOUND_ITEM);
+		if (boundId == null)
 			return Optional.empty();
-		}
-		String targetItemString = nbt.getString("BoundItem");
-		return Optional.of(Registries.ITEM.get(Identifier.tryParse(targetItemString)));
+		return Optional.of(Registries.ITEM.get(boundId));
 	}
 	
 }

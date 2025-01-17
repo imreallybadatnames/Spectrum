@@ -109,7 +109,7 @@ public class RadianceStaffItem extends Item implements InkPowered {
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
 		// trigger the items' usage action every x ticks
 		if (user instanceof ServerPlayerEntity serverPlayerEntity && user.getItemUseTime() > USE_DURATION && user.getItemUseTime() % USE_DURATION == 0) {
-			usage(world, stack, serverPlayerEntity);
+			usage(world, serverPlayerEntity);
 		}
 	}
 	
@@ -141,7 +141,7 @@ public class RadianceStaffItem extends Item implements InkPowered {
 		return ActionResult.PASS;
 	}
 	
-	public void usage(World world, ItemStack stack, ServerPlayerEntity user) {
+	public void usage(World world, ServerPlayerEntity user) {
 		int useTimes = (user.getItemUseTime() / USE_DURATION);
 		int maxCheckDistance = Math.min(MAX_REACH_STEPS, useTimes);
 		

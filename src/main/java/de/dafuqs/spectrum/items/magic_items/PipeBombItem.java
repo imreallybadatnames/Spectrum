@@ -1,16 +1,20 @@
 package de.dafuqs.spectrum.items.magic_items;
 
+import com.mojang.authlib.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -53,67 +57,51 @@ public class PipeBombItem extends Item implements DamageAwareItem, TickAwareItem
 	}
 	
 	public static void arm(ItemStack stack, World world, Vec3d pos, @Nullable Entity user) {
-		var nbt = stack.getOrCreateNbt();
-		nbt.putBoolean("armed", true);
-		nbt.putLong("timestamp", world.getTime());
-		if (user != null) {
-			nbt.putUuid("owner", user.getUuid());
-		}
+		stack.set(SpectrumDataComponentTypes.PIPE_BOMB, new PipeBombComponent(world.getTime(), true));
+		if (user != null)
+			stack.set(DataComponentTypes.PROFILE, new ProfileComponent(new GameProfile(user.getUuid(), user.getName().toString())));
 		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SpectrumSoundEvents.INCANDESCENT_ARM, SoundCategory.PLAYERS, 2F, 0.9F);
 	}
 	
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-		if (world.isClient())
-			return;
-		
-		NbtCompound nbt = stack.getNbt();
-		if (nbt == null || !isArmed(stack)) {
-            return;
+		if (world instanceof ServerWorld serverWorld) {
+			if (tryGetOwner(stack, serverWorld) != entity || timeIsUp(world, stack))
+				explode(stack, serverWorld, entity.getPos(), entity);
 		}
-		
-		if (tryGetOwner(stack, (ServerWorld) world) == entity && world.getTime() - nbt.getLong("timestamp") < 100)
-			return;
-		
-		explode(stack, (ServerWorld) world, entity.getPos(), Optional.of(entity));
 	}
 	
 	@Override
 	public void onItemEntityTicked(ItemEntity itemEntity) {
-		var world = itemEntity.getWorld();
 		var stack = itemEntity.getStack();
-		var nbt = stack.getOrCreateNbt();
-		
-		if (world.isClient() || !isArmed(stack))
-			return;
-		
-		if (world.getTime() - nbt.getLong("timestamp") > 100)
-			explode(stack, (ServerWorld) world, itemEntity.getEyePos(), Optional.empty());
+		if (itemEntity.getWorld() instanceof ServerWorld world) {
+			if (timeIsUp(world, stack))
+				explode(stack, world, itemEntity.getEyePos(), null);
+		}
 	}
 	
 	@Override
 	public void onItemEntityDamaged(DamageSource source, float amount, ItemEntity itemEntity) {
-		if ((source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_EXPLOSION)) && !itemEntity.getWorld().isClient()) {
-			explode(itemEntity.getStack(), (ServerWorld) itemEntity.getWorld(), itemEntity.getPos(), Optional.empty());
+		if (itemEntity.getWorld() instanceof ServerWorld world) {
+			if (source.isIn(DamageTypeTags.IS_FIRE) || source.isIn(DamageTypeTags.IS_EXPLOSION))
+				explode(itemEntity.getStack(), world, itemEntity.getPos(), null);
 		}
 	}
 	
-	private void explode(ItemStack stack, ServerWorld world, Vec3d pos, Optional<Entity> target) {
+	private void explode(ItemStack stack, ServerWorld world, Vec3d pos, @Nullable Entity target) {
 		stack.decrement(1);
 		Entity owner = tryGetOwner(stack, world);
 		
-		target.ifPresent(entity -> entity.damage(SpectrumDamageTypes.incandescence(world, owner instanceof LivingEntity living ? living : null), 200F));
+		if (target != null)
+			target.damage(SpectrumDamageTypes.incandescence(world, owner instanceof LivingEntity living ? living : null), 200F);
 		world.createExplosion(null, SpectrumDamageTypes.incandescence(world), new ExplosionBehavior(), pos.getX(), pos.getY(), pos.getZ(), 7.5F, true, World.ExplosionSourceType.NONE);
 	}
 	
 	public Entity tryGetOwner(ItemStack stack, ServerWorld world) {
-		NbtCompound nbt = stack.getNbt();
-		
-		if (nbt == null || !nbt.contains("owner")) {
+		var profile = stack.get(DataComponentTypes.PROFILE);
+		if (profile == null || profile.id().isEmpty())
 			return null;
-		}
-		
-		return world.getEntity(nbt.getUuid("owner"));
+		return world.getEntity(profile.id().get());
 	}
 	
 	@Override
@@ -122,8 +110,15 @@ public class PipeBombItem extends Item implements DamageAwareItem, TickAwareItem
 	}
 	
 	public static boolean isArmed(ItemStack stack) {
-		var nbt = stack.getNbt();
-		return nbt != null && nbt.getBoolean("armed");
+		return stack.getOrDefault(SpectrumDataComponentTypes.PIPE_BOMB, PipeBombComponent.DEFAULT).isArmed();
+	}
+	
+	public static boolean timeIsUp(World world, ItemStack stack) {
+		return world.getTime() - getTimestamp(stack) >= 100;
+	}
+	
+	private static long getTimestamp(ItemStack stack) {
+		return stack.getOrDefault(SpectrumDataComponentTypes.PIPE_BOMB, PipeBombComponent.DEFAULT).timestamp();
 	}
 	
 	@Override

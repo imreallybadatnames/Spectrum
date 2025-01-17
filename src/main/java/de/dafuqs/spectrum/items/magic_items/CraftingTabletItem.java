@@ -116,7 +116,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		var recipe = getStoredRecipe(world, stack);
+		var recipe = getStoredRecipe(MinecraftClient.getInstance().world, stack);
 		if (recipe == null) {
 			tooltip.add(Text.translatable("item.spectrum.crafting_tablet.tooltip.no_recipe").formatted(Formatting.GRAY));
 		} else {

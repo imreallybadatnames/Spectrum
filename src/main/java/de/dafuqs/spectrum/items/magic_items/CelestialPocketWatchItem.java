@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.client.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
@@ -94,6 +95,7 @@ public class CelestialPocketWatchItem extends Item implements InkPowered {
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 
+		var world = MinecraftClient.getInstance().world;
 		if (world != null) {
 			switch (canAdvanceTime(world)) {
 				case FAILED_GAME_RULE ->
