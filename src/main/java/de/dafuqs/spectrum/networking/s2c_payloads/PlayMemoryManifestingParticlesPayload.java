@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.memory.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -22,28 +21,21 @@ import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.*;
 import org.joml.*;
 
-public record PlayMemoryManifestingParticlesPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayMemoryManifestingParticlesPayload(BlockPos pos, int eggColor1, int eggColor2, int amount) implements CustomPayload {
 	
 	public static final Id<PlayMemoryManifestingParticlesPayload> ID = SpectrumC2SPackets.makeId("play_memory_manifesting_particles");
 	public static final PacketCodec<PacketByteBuf, PlayMemoryManifestingParticlesPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayMemoryManifestingParticlesPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayMemoryManifestingParticlesPayload::configuration,
+			BlockPos.PACKET_CODEC, PlayMemoryManifestingParticlesPayload::pos,
+			PacketCodecs.INTEGER, PlayMemoryManifestingParticlesPayload::eggColor1,
+			PacketCodecs.INTEGER, PlayMemoryManifestingParticlesPayload::eggColor2,
+			PacketCodecs.INTEGER, PlayMemoryManifestingParticlesPayload::amount,
 			PlayMemoryManifestingParticlesPayload::new
 	);
 	
-	public static void playMemoryManifestingParticles(ServerWorld serverWorld, @NotNull BlockPos blockPos, EntityType<?> entityType, int amount) {
+	public static void playMemoryManifestingParticles(ServerWorld serverWorld, @NotNull BlockPos pos, EntityType<?> entityType, int amount) {
 		Pair<Integer, Integer> eggColors = MemoryBlockEntity.getEggColorsForEntity(entityType);
-		
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(blockPos);
-		buf.writeInt(eggColors.getLeft());
-		buf.writeInt(eggColors.getRight());
-		buf.writeInt(amount);
-		
-		for (ServerPlayerEntity player : PlayerLookup.tracking(serverWorld, blockPos)) {
-			ServerPlayNetworking.send(player, new PlayMemoryManifestingParticlesPayload());
+		for (ServerPlayerEntity player : PlayerLookup.tracking(serverWorld, pos)) {
+			ServerPlayNetworking.send(player, new PlayMemoryManifestingParticlesPayload(pos, eggColors.getLeft(), eggColors.getRight(), amount));
 		}
 	}
 	
@@ -51,31 +43,27 @@ public record PlayMemoryManifestingParticlesPayload(BlockPos pos, ParticleSpawne
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayMemoryManifestingParticlesPayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			BlockPos position = buf.readBlockPos();
-			int color1 = buf.readInt();
-			int color2 = buf.readInt();
-			int amount = buf.readInt();
-			
 			client.execute(() -> {
 				Random random = client.world.random;
 				
-				Vector3f colorVec1 = de.dafuqs.spectrum.helpers.ColorHelper.colorIntToVec(color1);
-				Vector3f colorVec2 = ColorHelper.colorIntToVec(color2);
+				Vector3f colorVec1 = de.dafuqs.spectrum.helpers.ColorHelper.colorIntToVec(payload.eggColor1);
+				Vector3f colorVec2 = ColorHelper.colorIntToVec(payload.eggColor1);
 				
-				for (int i = 0; i < amount; i++) {
+				BlockPos pos = payload.pos;
+				for (int i = 0; i < payload.amount; i++) {
 					int randomLifetime = 30 + random.nextInt(20);
 					
 					// color1
 					client.world.addParticle(
 							new DynamicParticleEffect(SpectrumParticleTypes.WHITE_CRAFTING, 0.5F, colorVec1, 1.0F, randomLifetime, false, true),
-							position.getX() + 0.5, position.getY() + 0.5, position.getZ(),
+							pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ(),
 							0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3
 					);
 					
 					// color2
 					client.world.addParticle(
 							new DynamicParticleEffect(SpectrumParticleTypes.WHITE_CRAFTING, 0.5F, colorVec2, 1.0F, randomLifetime, false, true),
-							position.getX() + 0.5, position.getY(), position.getZ() + 0.5,
+							pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
 							0.15 - random.nextFloat() * 0.3, random.nextFloat() * 0.15 + 0.1, 0.15 - random.nextFloat() * 0.3
 					);
 				}

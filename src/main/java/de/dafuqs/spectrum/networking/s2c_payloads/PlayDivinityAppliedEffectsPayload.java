@@ -19,11 +19,10 @@ import org.jetbrains.annotations.*;
 public record PlayDivinityAppliedEffectsPayload() implements CustomPayload {
 	
 	public static final Id<PlayDivinityAppliedEffectsPayload> ID = SpectrumC2SPackets.makeId("play_divinity_applied_effects");
-	public static final PacketCodec<PacketByteBuf, PlayDivinityAppliedEffectsPayload> CODEC = PacketCodec.tuple(PlayDivinityAppliedEffectsPayload::new);
+	public static final PacketCodec<PacketByteBuf, PlayDivinityAppliedEffectsPayload> CODEC = PacketCodec.ofStatic((buf, value) -> {
+	}, buf -> new PlayDivinityAppliedEffectsPayload());
 	
 	public static void playDivinityAppliedEffects(ServerPlayerEntity player) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeInt(player.getId());
 		ServerPlayNetworking.send(player, new PlayDivinityAppliedEffectsPayload());
 	}
 	

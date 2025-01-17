@@ -17,7 +17,8 @@ import org.jetbrains.annotations.*;
 public record PlayAscensionAppliedEffectsPayload() implements CustomPayload {
 	
 	public static final Id<PlayAscensionAppliedEffectsPayload> ID = SpectrumC2SPackets.makeId("play_ascension_applied_effects");
-	public static final PacketCodec<PacketByteBuf, PlayAscensionAppliedEffectsPayload> CODEC = PacketCodec.tuple(PlayAscensionAppliedEffectsPayload::new);
+	public static final PacketCodec<PacketByteBuf, PlayAscensionAppliedEffectsPayload> CODEC = PacketCodec.ofStatic((buf, value) -> {
+	}, buf -> new PlayAscensionAppliedEffectsPayload());
 	
 	public static void playAscensionAppliedEffects(ServerPlayerEntity player) {
 		ServerPlayNetworking.send(player, new PlayAscensionAppliedEffectsPayload());

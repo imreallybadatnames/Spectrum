@@ -27,7 +27,7 @@ import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -230,7 +230,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		ItemStack outputItemStack = pedestalBlockEntity.inventory.get(OUTPUT_SLOT_ID);
 		if (outputItemStack != ItemStack.EMPTY) {
 			if (world.getBlockState(blockPos.up()).getCollisionShape(world, blockPos.up()).isEmpty()) {
-				spawnOutputAsItemEntity(world, blockPos, pedestalBlockEntity, outputItemStack);
+				spawnOutputAsItemEntity((ServerWorld) world, blockPos, pedestalBlockEntity, outputItemStack);
 			} else {
 				boolean couldOutput = false;
 				BlockEntity belowBlockEntity = world.getBlockEntity(blockPos.down());
@@ -264,7 +264,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		return pedestalBlockEntity.pedestalVariant;
 	}
 	
-	public static void spawnOutputAsItemEntity(World world, BlockPos blockPos, @NotNull PedestalBlockEntity pedestalBlockEntity, ItemStack outputItemStack) {
+	public static void spawnOutputAsItemEntity(ServerWorld world, BlockPos blockPos, @NotNull PedestalBlockEntity pedestalBlockEntity, ItemStack outputItemStack) {
 		// spawn crafting output
 		MultiblockCrafter.spawnItemStackAsEntitySplitViaMaxCount(world, pedestalBlockEntity.pos, outputItemStack, outputItemStack.getCount(), new Vec3d(0, 0.1, 0));
 		pedestalBlockEntity.inventory.set(OUTPUT_SLOT_ID, ItemStack.EMPTY);

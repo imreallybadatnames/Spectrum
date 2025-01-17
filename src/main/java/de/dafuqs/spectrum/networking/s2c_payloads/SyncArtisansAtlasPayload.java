@@ -16,14 +16,13 @@ import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
+// TODO: seems like a LOT around maps changed. ArtisansAtlas and this will need a bigger refactor
 public record SyncArtisansAtlasPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<SyncArtisansAtlasPayload> ID = SpectrumC2SPackets.makeId("sync_artisans_atlas");
 	public static final PacketCodec<PacketByteBuf, SyncArtisansAtlasPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			SyncArtisansAtlasPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			SyncArtisansAtlasPayload::configuration,
+			BlockPos.PACKET_CODEC, SyncArtisansAtlasPayload::pos,
+			ParticleSpawnerConfiguration.PACKET_CODEC, SyncArtisansAtlasPayload::configuration,
 			SyncArtisansAtlasPayload::new
 	);
 	

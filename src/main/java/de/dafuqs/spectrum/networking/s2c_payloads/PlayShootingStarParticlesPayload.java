@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.blocks.shooting_star.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.networking.*;
@@ -16,25 +15,18 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PlayShootingStarParticlesPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayShootingStarParticlesPayload(Vec3d shootingStarPos, ShootingStar.Type type) implements CustomPayload {
 	
 	public static final Id<PlayShootingStarParticlesPayload> ID = SpectrumC2SPackets.makeId("play_shooting_star_particles");
 	public static final PacketCodec<PacketByteBuf, PlayShootingStarParticlesPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayShootingStarParticlesPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayShootingStarParticlesPayload::configuration,
+			SpectrumPacketCodecs.VEC_3D, PlayShootingStarParticlesPayload::shootingStarPos,
+			ShootingStar.Type.PACKET_CODEC, PlayShootingStarParticlesPayload::type,
 			PlayShootingStarParticlesPayload::new
 	);
 	
 	public static void sendPlayShootingStarParticles(@NotNull ShootingStarEntity shootingStarEntity) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeDouble(shootingStarEntity.getPos().getX());
-		buf.writeDouble(shootingStarEntity.getPos().getY());
-		buf.writeDouble(shootingStarEntity.getPos().getZ());
-		buf.writeInt(shootingStarEntity.getShootingStarType().ordinal());
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) shootingStarEntity.getWorld(), shootingStarEntity.getBlockPos())) {
-			ServerPlayNetworking.send(player, new PlayShootingStarParticlesPayload());
+			ServerPlayNetworking.send(player, new PlayShootingStarParticlesPayload(shootingStarEntity.getPos(), shootingStarEntity.getShootingStarType()));
 		}
 	}
 	
@@ -42,14 +34,9 @@ public record PlayShootingStarParticlesPayload(BlockPos pos, ParticleSpawnerConf
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayShootingStarParticlesPayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			double x = buf.readDouble();
-			double y = buf.readDouble();
-			double z = buf.readDouble();
-			ShootingStar.Type shootingStarType = ShootingStar.Type.getType(buf.readInt());
 			
 			client.execute(() -> {
-				client.world.
-						ShootingStarEntity.playHitParticles(client.world, x, y, z, shootingStarType, 25);
+				ShootingStarEntity.playHitParticles(client.world, payload.shootingStarPos.x, payload.shootingStarPos.y, payload.shootingStarPos.z, payload.type, 25);
 			});
 		};
 	}

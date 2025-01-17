@@ -14,16 +14,16 @@ import org.jetbrains.annotations.*;
 public record PlayTakeOffBeltSoundInstancePayload() implements CustomPayload {
 	
 	public static final Id<PlayTakeOffBeltSoundInstancePayload> ID = SpectrumC2SPackets.makeId("play_take_off_belt_sound_instance");
-	public static final PacketCodec<PacketByteBuf, PlayTakeOffBeltSoundInstancePayload> CODEC = PacketCodec.tuple(PlayTakeOffBeltSoundInstancePayload::new);
+	public static final PacketCodec<PacketByteBuf, PlayTakeOffBeltSoundInstancePayload> CODEC = PacketCodec.ofStatic((buf, value) -> {
+	}, buf -> new PlayTakeOffBeltSoundInstancePayload());
 	
 	public static void sendPlayTakeOffBeltSoundInstance(ServerPlayerEntity playerEntity) {
-		PacketByteBuf buf = PacketByteBufs.create();
 		ServerPlayNetworking.send(playerEntity, new PlayTakeOffBeltSoundInstancePayload());
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayTakeOffBeltSoundInstancePayload> getPayloadHandler() {
-		return (playTakeOffBeltSoundInstancePayload, context) -> client.execute(TakeOffBeltSoundInstance::startSoundInstance);
+		return (payload, context) -> context.client().execute(TakeOffBeltSoundInstance::startSoundInstance);
 	}
 	
 	@Override

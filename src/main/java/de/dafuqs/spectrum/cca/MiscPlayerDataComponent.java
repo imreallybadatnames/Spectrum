@@ -14,13 +14,15 @@ import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
+import org.ladysnake.cca.api.v3.component.sync.*;
+import org.ladysnake.cca.api.v3.component.tick.*;
 
 import java.util.*;
 
 /**
  * Because not every niche thing can have its own component
  */
-public class MiscPlayerDataComponent implements org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent, org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent {
+public class MiscPlayerDataComponent implements AutoSyncedComponent, CommonTickingComponent {
     
     public static final org.ladysnake.cca.api.v3.component.ComponentKey<MiscPlayerDataComponent> MISC_PLAYER_DATA_COMPONENT = org.ladysnake.cca.api.v3.component.ComponentRegistry.getOrCreate(SpectrumCommon.locate("misc_player_data"), MiscPlayerDataComponent.class);
     private final PlayerEntity player;
@@ -48,7 +50,6 @@ public class MiscPlayerDataComponent implements org.ladysnake.cca.api.v3.compone
     @Override
     public void serverTick() {
         org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent.super.serverTick();
-        //tickDragonrotSwampEnvironment();
 
         var fortitude = player.getAttributeValue(SpectrumEntityAttributes.MENTAL_PRESENCE);
         if (lastSyncedSleepPotency != fortitude) {

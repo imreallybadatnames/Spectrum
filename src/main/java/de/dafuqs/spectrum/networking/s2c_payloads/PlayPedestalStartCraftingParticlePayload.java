@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
@@ -15,22 +14,17 @@ import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-public record PlayPedestalStartCraftingParticlePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayPedestalStartCraftingParticlePayload(BlockPos pedestalPos) implements CustomPayload {
 	
 	public static final Id<PlayPedestalStartCraftingParticlePayload> ID = SpectrumC2SPackets.makeId("play_pedestal_start_crafting_particle");
 	public static final PacketCodec<PacketByteBuf, PlayPedestalStartCraftingParticlePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayPedestalStartCraftingParticlePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayPedestalStartCraftingParticlePayload::configuration,
+			BlockPos.PACKET_CODEC, PlayPedestalStartCraftingParticlePayload::pedestalPos,
 			PlayPedestalStartCraftingParticlePayload::new
 	);
 	
 	public static void spawnPedestalStartCraftingParticles(PedestalBlockEntity pedestalBlockEntity) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(pedestalBlockEntity.getPos());
 		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) pedestalBlockEntity.getWorld(), pedestalBlockEntity.getPos())) {
-			ServerPlayNetworking.send(player, new PlayPedestalStartCraftingParticlePayload());
+			ServerPlayNetworking.send(player, new PlayPedestalStartCraftingParticlePayload(pedestalBlockEntity.getPos()));
 		}
 	}
 	
@@ -38,11 +32,8 @@ public record PlayPedestalStartCraftingParticlePayload(BlockPos pos, ParticleSpa
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalStartCraftingParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
-			
 			client.execute(() -> {
-				client.world.
-						PedestalBlockEntity.spawnCraftingStartParticles(client.world, position);
+				PedestalBlockEntity.spawnCraftingStartParticles(client.world, payload.pedestalPos);
 			});
 		};
 	}

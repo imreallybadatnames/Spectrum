@@ -19,8 +19,8 @@ import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.recipe.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -178,7 +178,7 @@ public class FusionShrineBlockEntity extends InWorldInteractionBlockEntity imple
 			craft(world, blockPos, fusionShrineBlockEntity, recipe);
 			fusionShrineBlockEntity.inventoryChanged();
 		} else {
-			PlayFusionCraftingInProgressParticlePayload.sendPlayFusionCraftingInProgressParticles(world, blockPos);
+			PlayFusionCraftingInProgressParticlePayload.sendPlayFusionCraftingInProgressParticles((ServerWorld) world, blockPos);
 		}
 		fusionShrineBlockEntity.markDirty();
 	}

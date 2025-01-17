@@ -15,11 +15,9 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.listener.*;
-import net.minecraft.network.packet.*;
-import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.particle.*;
 import net.minecraft.predicate.entity.*;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -34,7 +32,6 @@ import net.minecraft.world.event.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 public class ShootingStarEntity extends Entity {
 	
@@ -115,11 +112,6 @@ public class ShootingStarEntity extends Entity {
 	}
 	
 	@Override
-	protected Vec3d positionInPortal(Direction.Axis portalAxis, BlockLocating.Rectangle portalRect) {
-		return LivingEntity.positionInPortal(super.positionInPortal(portalAxis, portalRect));
-	}
-	
-	@Override
 	protected void initDataTracker(DataTracker.Builder builder) {
 		builder.add(SHOOTING_STAR_TYPE, ShootingStar.Type.COLORFUL.ordinal());
 		builder.add(PLAYER_PLACED, false);
@@ -129,7 +121,6 @@ public class ShootingStarEntity extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
-		this.tickPortal();
 		
 		boolean wasOnGround = this.isOnGround();
 		double previousXVelocity = this.getVelocity().getX();
@@ -157,7 +148,7 @@ public class ShootingStarEntity extends Entity {
 		this.move(MovementType.SELF, this.getVelocity());
 		
 		var collidingEntities = this.getWorld().getOtherEntities(this, getBoundingBox().expand(0.25, 0.334, 0.25));
-		collidingEntities = collidingEntities.stream().filter(entity -> !(entity instanceof ShootingStarEntity) && (entity.isPushable())).collect(Collectors.toList());
+		collidingEntities = collidingEntities.stream().filter(entity -> !(entity instanceof ShootingStarEntity) && (entity.isPushable())).toList();
 		
 		// make it bounce back
 		boolean spawnLoot = false;
@@ -312,8 +303,8 @@ public class ShootingStarEntity extends Entity {
 	
 	public void doPlayerHitEffectsAndLoot(ServerWorld serverWorld, ServerPlayerEntity serverPlayerEntity) {
 		// Spawn loot
-		Identifier lootTableId = ShootingStar.Type.getLootTable(dataTracker.get(SHOOTING_STAR_TYPE));
-		List<ItemStack> loot = getLoot(serverWorld, serverPlayerEntity, lootTableId);
+		@NotNull RegistryKey<LootTable> lootTableKey = ShootingStar.Type.getLootTable(dataTracker.get(SHOOTING_STAR_TYPE));
+		List<ItemStack> loot = getLoot(serverWorld, serverPlayerEntity, lootTableKey);
 		
 		for (ItemStack itemStack : loot) {
 			ItemEntity itemEntity = new ItemEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), itemStack);
@@ -325,8 +316,8 @@ public class ShootingStarEntity extends Entity {
 		this.getWorld().playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SpectrumSoundEvents.SHOOTING_STAR_CRACKER, SoundCategory.PLAYERS, 1.5F + random.nextFloat() * 0.4F, 0.8F + random.nextFloat() * 0.4F);
 	}
 	
-	public List<ItemStack> getLoot(ServerWorld serverWorld, ServerPlayerEntity serverPlayerEntity, Identifier lootTableId) {
-		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableId);
+	public List<ItemStack> getLoot(ServerWorld serverWorld, ServerPlayerEntity serverPlayerEntity, RegistryKey<LootTable> lootTableKey) {
+		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableKey);
 		return lootTable.generateLoot(new LootContextParameterSet.Builder(serverWorld)
 				.add(LootContextParameters.THIS_ENTITY, this)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.getBlockPos()))
@@ -335,8 +326,8 @@ public class ShootingStarEntity extends Entity {
 				.build(LootContextTypes.ENTITY));
 	}
 	
-	public List<ItemStack> getLoot(ServerWorld serverWorld, Identifier lootTableId) {
-		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableId);
+	public List<ItemStack> getLoot(ServerWorld serverWorld, RegistryKey<LootTable> lootTableKey) {
+		LootTable lootTable = serverWorld.getServer().getReloadableRegistries().getLootTable(lootTableKey);
 		return lootTable.generateLoot(new LootContextParameterSet.Builder(serverWorld)
 				.add(LootContextParameters.THIS_ENTITY, this)
 				.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.getBlockPos()))
@@ -383,7 +374,7 @@ public class ShootingStarEntity extends Entity {
 			this.addVelocity((attackerOffsetX / mod) * 0.75, 0.25, (attackerOffsetZ / mod) * 0.75);
 			
 			var collidingEntities = this.getWorld().getOtherEntities(this, getBoundingBox().expand(0.25, 0.334, 0.25));
-			collidingEntities = collidingEntities.stream().filter(entity -> !(entity instanceof ShootingStarEntity)).collect(Collectors.toList());
+			collidingEntities = collidingEntities.stream().filter(entity -> !(entity instanceof ShootingStarEntity)).toList();
 			collidingEntities.forEach(entity -> {
 				if (entity.getY() >= this.getBoundingBox().maxY) {
 					entity.fallDistance = 0F;
@@ -493,11 +484,6 @@ public class ShootingStarEntity extends Entity {
 	@Environment(EnvType.CLIENT)
 	public int getAge() {
 		return this.age;
-	}
-	
-	@Override
-	public Packet<ClientPlayPacketListener> createSpawnPacket() {
-		return new EntitySpawnS2CPacket(this);
 	}
 	
 	@Override

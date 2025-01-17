@@ -14,10 +14,8 @@ public record ParticleSpawnerConfigurationS2CPayload(BlockPos pos, ParticleSpawn
     
     public static final Id<ParticleSpawnerConfigurationS2CPayload> ID = SpectrumC2SPackets.makeId("change_particle_spawner_settings_client");
     public static final PacketCodec<PacketByteBuf, ParticleSpawnerConfigurationS2CPayload> CODEC = PacketCodec.tuple(
-            BlockPos.PACKET_CODEC,
-            ParticleSpawnerConfigurationS2CPayload::pos,
-            ParticleSpawnerConfiguration.PACKET_CODEC,
-            ParticleSpawnerConfigurationS2CPayload::configuration,
+			BlockPos.PACKET_CODEC, ParticleSpawnerConfigurationS2CPayload::pos,
+			ParticleSpawnerConfiguration.PACKET_CODEC, ParticleSpawnerConfigurationS2CPayload::configuration,
             ParticleSpawnerConfigurationS2CPayload::new
     );
     

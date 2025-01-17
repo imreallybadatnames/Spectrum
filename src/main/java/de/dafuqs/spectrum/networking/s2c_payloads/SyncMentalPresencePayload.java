@@ -13,7 +13,7 @@ import net.minecraft.network.packet.*;
 import net.minecraft.server.network.*;
 import org.jetbrains.annotations.*;
 
-// TODO: Why is that a packet and not handled in the synced component instead?
+// TODO: Why tf is that a packet and not handled in the synced component instead?
 public record SyncMentalPresencePayload(double value) implements CustomPayload {
 	
 	public static final Id<SyncMentalPresencePayload> ID = SpectrumC2SPackets.makeId("sync_mental_presence");

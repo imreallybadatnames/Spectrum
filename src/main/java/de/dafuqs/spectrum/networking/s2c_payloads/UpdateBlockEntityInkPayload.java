@@ -18,15 +18,12 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public record UpdateBlockEntityInkPayload(BlockPos pos,
-										  ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record UpdateBlockEntityInkPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
 	
 	public static final Id<UpdateBlockEntityInkPayload> ID = SpectrumC2SPackets.makeId("update_block_entity_ink");
 	public static final PacketCodec<PacketByteBuf, UpdateBlockEntityInkPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			UpdateBlockEntityInkPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			UpdateBlockEntityInkPayload::configuration,
+			BlockPos.PACKET_CODEC, UpdateBlockEntityInkPayload::pos,
+			ParticleSpawnerConfiguration.PACKET_CODEC, UpdateBlockEntityInkPayload::configuration,
 			UpdateBlockEntityInkPayload::new
 	);
 	

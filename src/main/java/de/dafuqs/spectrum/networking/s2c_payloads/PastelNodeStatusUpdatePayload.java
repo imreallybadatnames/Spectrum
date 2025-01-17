@@ -46,28 +46,17 @@ public record PastelNodeStatusUpdatePayload(boolean longSpin, Map<BlockPos, Inte
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PastelNodeStatusUpdatePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			
-			var trigger = buf.readBoolean();
-			var nodeCount = buf.readInt();
-			var positions = new ArrayList<BlockPos>(nodeCount);
-			var times = new ArrayList<Integer>(nodeCount);
-			
-			for (int n = 0; n < nodeCount; n++) {
-				positions.add(buf.readBlockPos());
-				times.add(buf.readInt());
-			}
-			
 			client.execute(() -> {
-				for (int index = 0; index < positions.size(); index++) {
-					var entity = client.world.getBlockEntity(positions.get(index));
-					
+				for (Map.Entry<BlockPos, Integer> e : payload.spinTimes.entrySet()) {
+					var entity = client.world.getBlockEntity(e.getKey());
 					if (!(entity instanceof PastelNodeBlockEntity node))
 						continue;
 					
-					node.setSpinTicks(times.get(index));
+					node.setSpinTicks(e.getValue());
 					
-					if (trigger && node.isTriggerTransfer())
+					if (payload.longSpin && node.isTriggerTransfer()) {
 						node.markTriggered();
+					}
 				}
 			});
 		};

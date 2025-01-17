@@ -2,8 +2,10 @@ package de.dafuqs.spectrum.blocks.shooting_star;
 
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
+import io.netty.buffer.*;
 import net.minecraft.block.*;
 import net.minecraft.loot.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.random.Random;
@@ -18,7 +20,9 @@ public interface ShootingStar {
 		COLORFUL("colorful", SpectrumLootTables.COLORFUL_SHOOTING_STAR),
 		PRISTINE("pristine", SpectrumLootTables.PRISTINE_SHOOTING_STAR),
 		GEMSTONE("gemstone", SpectrumLootTables.GEMSTONE_SHOOTING_STAR);
-
+		
+		public static final PacketCodec<ByteBuf, ShootingStar.Type> PACKET_CODEC = PacketCodecs.indexed(i -> ShootingStar.Type.values()[i], ShootingStar.Type::ordinal);
+		
 		private final String name;
 		private final RegistryKey<LootTable> lootTable;
 		

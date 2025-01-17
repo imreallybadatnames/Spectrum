@@ -18,15 +18,13 @@ import org.jetbrains.annotations.*;
 public record TypedTransmissionPayload(TypedTransmission transmission) implements CustomPayload {
 	
 	public static final Id<TypedTransmissionPayload> ID = SpectrumC2SPackets.makeId("typed_transmission");
-	public static final PacketCodec<PacketByteBuf, TypedTransmissionPayload> CODEC = PacketCodec.tuple(
+	public static final PacketCodec<RegistryByteBuf, TypedTransmissionPayload> CODEC = PacketCodec.tuple(
 			TypedTransmission.PACKET_CODEC, TypedTransmissionPayload::transmission,
 			TypedTransmissionPayload::new
 	);
 	
 	public static void playTransmissionParticle(ServerWorld world, @NotNull TypedTransmission transmission) {
-		BlockPos pos = BlockPos.ofFloored(transmission.getOrigin());
-		
-		for (ServerPlayerEntity player : PlayerLookup.tracking(world, pos)) {
+		for (ServerPlayerEntity player : PlayerLookup.tracking(world, BlockPos.ofFloored(transmission.getOrigin()))) {
 			ServerPlayNetworking.send(player, new TypedTransmissionPayload(transmission));
 		}
 	}

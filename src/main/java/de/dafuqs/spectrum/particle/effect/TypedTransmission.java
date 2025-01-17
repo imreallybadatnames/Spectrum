@@ -2,7 +2,10 @@ package de.dafuqs.spectrum.particle.effect;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.networking.*;
+import io.netty.buffer.*;
 import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.event.*;
 
@@ -13,10 +16,26 @@ public class TypedTransmission extends SimpleTransmission {
 		ITEM,
 		EXPERIENCE,
 		REDSTONE,
-		HUMMINGSTONE
+		HUMMINGSTONE;
+		
+		public static final PacketCodec<ByteBuf, Variant> PACKET_CODEC = PacketCodecs.indexed(i -> Variant.values()[i], Variant::ordinal);
 	}
 	
-	public static final Codec<TypedTransmission> CODEC = RecordCodecBuilder.create((instance) -> instance.group(Vec3d.CODEC.fieldOf("origin").forGetter((itemTransfer) -> itemTransfer.origin), PositionSource.CODEC.fieldOf("destination").forGetter((itemTransfer) -> itemTransfer.destination), Codec.INT.fieldOf("arrival_in_ticks").forGetter((itemTransfer) -> itemTransfer.arrivalInTicks), Codec.INT.fieldOf("variant").forGetter((itemTransfer) -> itemTransfer.variant.ordinal())).apply(instance, TypedTransmission::new));
+	public static final Codec<TypedTransmission> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+			Vec3d.CODEC.fieldOf("origin").forGetter((itemTransfer) -> itemTransfer.origin),
+			PositionSource.CODEC.fieldOf("destination").forGetter((itemTransfer) -> itemTransfer.destination),
+			Codec.INT.fieldOf("arrival_in_ticks").forGetter((itemTransfer) -> itemTransfer.arrivalInTicks),
+			Codec.INT.fieldOf("variant").forGetter((itemTransfer) -> itemTransfer.variant.ordinal())
+	).apply(instance, TypedTransmission::new));
+	
+	public static final PacketCodec<RegistryByteBuf, TypedTransmission> PACKET_CODEC = PacketCodec.tuple(
+			SpectrumPacketCodecs.VEC_3D, TypedTransmission::getOrigin,
+			PositionSource.PACKET_CODEC, TypedTransmission::getDestination,
+			PacketCodecs.INTEGER, TypedTransmission::getArrivalInTicks,
+			Variant.PACKET_CODEC, TypedTransmission::getVariant,
+			TypedTransmission::new
+	);
+	
 	
 	private final Variant variant;
 	
@@ -27,23 +46,6 @@ public class TypedTransmission extends SimpleTransmission {
 	
 	public TypedTransmission(Object origin, Object destination, Object arrivalInTicks, Object variant) {
 		this((Vec3d) origin, (PositionSource) destination, (int) arrivalInTicks, (Variant) variant);
-	}
-	
-	public static TypedTransmission readFromBuf(PacketByteBuf buf) {
-		Vec3d origin = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		PositionSource positionSource = PositionSourceType.read(buf);
-		int arrivalInTicks = buf.readInt();
-		Variant variant = Variant.values()[buf.readInt()];
-		return new TypedTransmission(origin, positionSource, arrivalInTicks, variant);
-	}
-	
-	public static void writeToBuf(PacketByteBuf buf, TypedTransmission transfer) {
-		buf.writeDouble(transfer.origin.x);
-		buf.writeDouble(transfer.origin.y);
-		buf.writeDouble(transfer.origin.z);
-		PositionSourceType.write(transfer.destination, buf);
-		buf.writeInt(transfer.arrivalInTicks);
-		buf.writeInt(transfer.variant.ordinal());
 	}
 	
 	public Variant getVariant() {

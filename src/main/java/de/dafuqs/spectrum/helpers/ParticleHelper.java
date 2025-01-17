@@ -52,12 +52,11 @@ public class ParticleHelper {
 		}
 	}
 	
-	public static void playParticleAroundBlockSides(World world, ParticleEffect particleEffect, Vec3d position, Direction[] sides, int quantity, Vec3d velocity) {
+	public static void playParticleAroundBlockSides(World world, ParticleEffect particleEffect, BlockPos position, Direction[] sides, int quantity, Vec3d velocity) {
 		var random = world.getRandom();
-		var basePos = BlockPos.ofFloored(position);
 		
 		for (Direction direction : sides) {
-			BlockPos blockPos = basePos.offset(direction);
+			BlockPos blockPos = position.offset(direction);
 			BlockState state = world.getBlockState(blockPos);
 			if (state.isOpaque() && state.isSideSolidFullSquare(world, blockPos, direction.getOpposite()))
 				continue;

@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.api.color.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.*;
@@ -26,10 +25,8 @@ public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos, DyeColor c
 	
 	public static final Id<PlayFusionCraftingFinishedParticlePayload> ID = SpectrumC2SPackets.makeId("play_fusion_crafting_finished_particle");
 	public static final PacketCodec<PacketByteBuf, PlayFusionCraftingFinishedParticlePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayFusionCraftingFinishedParticlePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayFusionCraftingFinishedParticlePayload::configuration,
+			BlockPos.PACKET_CODEC, PlayFusionCraftingFinishedParticlePayload::pos,
+			DyeColor.PACKET_CODEC, PlayFusionCraftingFinishedParticlePayload::color,
 			PlayFusionCraftingFinishedParticlePayload::new
 	);
 	
@@ -45,13 +42,11 @@ public record PlayFusionCraftingFinishedParticlePayload(BlockPos pos, DyeColor c
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayFusionCraftingFinishedParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			
-			BlockPos position = buf.readBlockPos();
-			DyeColor dyeColor = DyeColor.values()[buf.readInt()];
 			client.execute(() -> {
-				Vec3d sourcePos = new Vec3d(position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5);
+				BlockPos pos = payload.pos;
+				Vec3d sourcePos = new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 				
-				Vector3f color = ColorHelper.getRGBVec(dyeColor);
+				Vector3f color = ColorHelper.getRGBVec(payload.color);
 				float velocityModifier = 0.25F;
 				for (Vec3d velocity : VectorPattern.SIXTEEN.getVectors()) {
 					client.world.addParticle(

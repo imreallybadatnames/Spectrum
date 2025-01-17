@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
+import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import net.fabricmc.api.*;
@@ -17,23 +17,18 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public record PlayPedestalUpgradedParticlePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayPedestalUpgradedParticlePayload(BlockPos pedestalPos, PedestalRecipeTier newTier) implements CustomPayload {
 	
 	public static final Id<PlayPedestalUpgradedParticlePayload> ID = SpectrumC2SPackets.makeId("play_pedestal_upgraded_particle");
 	public static final PacketCodec<PacketByteBuf, PlayPedestalUpgradedParticlePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayPedestalUpgradedParticlePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayPedestalUpgradedParticlePayload::configuration,
+			BlockPos.PACKET_CODEC, PlayPedestalUpgradedParticlePayload::pedestalPos,
+			PedestalRecipeTier.PACKET_CODEC, PlayPedestalUpgradedParticlePayload::newTier,
 			PlayPedestalUpgradedParticlePayload::new
 	);
 	
-	public static void spawnPedestalUpgradeParticles(World world, BlockPos blockPos, @NotNull PedestalVariant newPedestalVariant) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(blockPos);
-		buf.writeInt(newPedestalVariant.getRecipeTier().ordinal());
-		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, new PlayPedestalUpgradedParticlePayload());
+	public static void spawnPedestalUpgradeParticles(World world, BlockPos pedestalPos, @NotNull PedestalVariant newPedestalVariant) {
+		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, pedestalPos)) {
+			ServerPlayNetworking.send(player, new PlayPedestalUpgradedParticlePayload(pedestalPos, newPedestalVariant.getRecipeTier()));
 		}
 	}
 	
@@ -41,11 +36,8 @@ public record PlayPedestalUpgradedParticlePayload(BlockPos pos, ParticleSpawnerC
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayPedestalUpgradedParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			BlockPos position = buf.readBlockPos(); // the block pos of the pedestal
-			PedestalRecipeTier tier = PedestalRecipeTier.values()[buf.readInt()]; // the item stack that was crafted
 			client.execute(() -> {
-				client.world.
-						PedestalBlock.spawnUpgradeParticleEffectsForTier(position, tier);
+				PedestalBlock.spawnUpgradeParticleEffectsForTier(payload.pedestalPos, payload.newTier);
 			});
 		};
 	}

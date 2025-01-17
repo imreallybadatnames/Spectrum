@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.fusion_shrine.*;
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -14,26 +13,19 @@ import net.minecraft.network.packet.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos) implements CustomPayload {
 	
 	public static final Id<PlayFusionCraftingInProgressParticlePayload> ID = SpectrumC2SPackets.makeId("play_fusion_crafting_in_progress_particle");
 	public static final PacketCodec<PacketByteBuf, PlayFusionCraftingInProgressParticlePayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC,
-			PlayFusionCraftingInProgressParticlePayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC,
-			PlayFusionCraftingInProgressParticlePayload::configuration,
+			BlockPos.PACKET_CODEC, PlayFusionCraftingInProgressParticlePayload::pos,
 			PlayFusionCraftingInProgressParticlePayload::new
 	);
 	
-	public static void sendPlayFusionCraftingInProgressParticles(World world, BlockPos blockPos) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeBlockPos(blockPos);
-		
-		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, blockPos)) {
-			ServerPlayNetworking.send(player, new PlayFusionCraftingInProgressParticlePayload());
+	public static void sendPlayFusionCraftingInProgressParticles(ServerWorld world, BlockPos pos) {
+		for (ServerPlayerEntity player : PlayerLookup.tracking(world, pos)) {
+			ServerPlayNetworking.send(player, new PlayFusionCraftingInProgressParticlePayload(pos));
 		}
 	}
 	
@@ -41,9 +33,8 @@ public record PlayFusionCraftingInProgressParticlePayload(BlockPos pos, Particle
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<PlayFusionCraftingInProgressParticlePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			BlockPos position = buf.readBlockPos();
 			client.execute(() -> {
-				BlockEntity blockEntity = client.world.getBlockEntity(position);
+				BlockEntity blockEntity = client.world.getBlockEntity(payload.pos);
 				if (blockEntity instanceof FusionShrineBlockEntity fusionShrineBlockEntity) {
 					fusionShrineBlockEntity.spawnCraftingParticles();
 				}
