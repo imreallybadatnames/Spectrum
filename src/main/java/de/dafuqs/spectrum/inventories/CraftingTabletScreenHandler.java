@@ -11,6 +11,7 @@ import net.minecraft.item.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.network.*;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
+public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<RecipeInput, Recipe<RecipeInput>> {
 	
 	private final CraftingTabletInventory craftingInventory;
 	private final CraftingResultInventory craftingResultInventory;
@@ -117,12 +118,12 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 			inventory.setStack(11, new ItemStack(SpectrumItems.CITRINE_POWDER, 64));
 			inventory.setStack(12, new ItemStack(SpectrumItems.ONYX_POWDER, 64));
 			inventory.setStack(13, new ItemStack(SpectrumItems.MOONSTONE_POWDER, 64));
-			// FIXME - Improve this lol
-			Optional<PedestalRecipe> optionalPedestalCraftingRecipe = Optional.ofNullable(world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PEDESTAL, inventory, world).get().value());
+			
+			Optional<RecipeEntry<PedestalRecipe>> optionalPedestalCraftingRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PEDESTAL, inventory.createPedestalRecipeInput(), world);
 			if (optionalPedestalCraftingRecipe.isPresent()) {
 				lockableCraftingResultSlot.lock();
 				
-				PedestalRecipe pedestalRecipe = optionalPedestalCraftingRecipe.get();
+				PedestalRecipe pedestalRecipe = optionalPedestalCraftingRecipe.get().value();
 				ItemStack itemStack = pedestalRecipe.getResult(world.getRegistryManager()).copy();
 				craftingResultInventory.setStack(0, itemStack);
 				
@@ -169,13 +170,13 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 				inventory.setStack(13, ItemStack.EMPTY);
 				
 				ItemStack itemStack = ItemStack.EMPTY;
-				Optional<CraftingRecipe> optionalCraftingRecipe = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, inventory, world);
+				CraftingRecipeInput craftingRecipeInput = craftingInventory.createRecipeInput();
+				Optional<RecipeEntry<CraftingRecipe>> optionalCraftingRecipe = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingRecipeInput, world);
 				if (optionalCraftingRecipe.isPresent()) {
 					lockableCraftingResultSlot.unlock();
 					
-					CraftingRecipe craftingRecipe = optionalCraftingRecipe.get();
-					if (craftingResultInventory.shouldCraftRecipe(world, serverPlayerEntity, craftingRecipe)) {
-						itemStack = craftingRecipe.craft(craftingInventory, world.getRegistryManager());
+					if (craftingResultInventory.shouldCraftRecipe(world, serverPlayerEntity, optionalCraftingRecipe.get())) {
+						itemStack = optionalCraftingRecipe.get().value().craft(craftingRecipeInput, world.getRegistryManager());
 					}
 					
 					CraftingTabletItem.setStoredRecipe(craftingTabletItemStack, optionalCraftingRecipe.get());
@@ -207,15 +208,17 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 		this.craftingInventory.clear();
 	}
 	
-	// TODO - proper type checking
 	@Override
 	public boolean matches(RecipeEntry recipe) {
-		return recipe.value().matches(this.craftingInventory, this.world);
+		if (recipe.value() instanceof PedestalRecipe pedestalRecipe) {
+			return pedestalRecipe.matches(this.craftingInventory.createPedestalRecipeInput(), this.world);
+		}
+		return recipe.value().matches(this.craftingInventory.createRecipeInput(), this.world);
 	}
 	
 	@Override
 	public void onClosed(PlayerEntity playerEntity) {
-		// put all items in the crafting grid back into the players inventory
+		// put all items in the crafting grid back into the player inventory
 		for (int i = 0; i < 9; i++) {
 			ItemStack itemStack = this.craftingInventory.getStack(i);
 			
@@ -266,7 +269,7 @@ public class CraftingTabletScreenHandler extends AbstractRecipeScreenHandler<Inv
 			transferStack = clickedSlotStack.copy();
 			if (index == 14) {
 				// crafting result slot
-				this.context.run((world, pos) -> clickedSlotStack.getItem().onCraft(clickedSlotStack, world, player));
+				this.context.run((world, pos) -> clickedSlotStack.getItem().onCraftByPlayer(clickedSlotStack, world, player));
 				
 				if (!this.insertItem(clickedSlotStack, 42, 51, false)) {
 					if (!this.insertItem(clickedSlotStack, 15, 42, false)) {

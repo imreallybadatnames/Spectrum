@@ -7,8 +7,9 @@ import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.screen.*;
 import net.minecraft.util.collection.*;
+import org.apache.commons.lang3.*;
 
-public class CraftingTabletInventory extends CraftingInventory implements RecipeInput {
+public class CraftingTabletInventory extends CraftingInventory {
 	
 	private final DefaultedList<ItemStack> gemAndOutputStacks;
 	private final ScreenHandler handler;
@@ -66,7 +67,7 @@ public class CraftingTabletInventory extends CraftingInventory implements Recipe
 	
 	@Override
 	public int size() {
-		return 9 + 5;
+		return super.size() + gemAndOutputStacks.size();
 	}
 	
 	@Override
@@ -86,12 +87,20 @@ public class CraftingTabletInventory extends CraftingInventory implements Recipe
 	}
 	
 	@Override
-	public ItemStack getStackInSlot(int slot) {
-		return getStack(slot);
+	public CraftingRecipeInput createRecipeInput() {
+		// TODO
+		throw new NotImplementedException("");
 	}
 	
 	@Override
-	public int getSize() {
-		return size();
+	public CraftingRecipeInput.Positioned createPositionedRecipeInput() {
+		// TODO
+		throw new NotImplementedException("");
 	}
+	
+	public RecipeInput createPedestalRecipeInput() {
+		// TODO
+		throw new NotImplementedException("");
+	}
+	
 }
