@@ -136,7 +136,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 			
 			switch (this.getPose()) {
 				case STANDING -> this.standingAnimationState.start(this.age);
-				case DIGGING -> this.walkingAnimationState.start(this.age);
+				case SNIFFING -> this.walkingAnimationState.start(this.age);
 				case ROARING -> this.standingAngryAnimationState.start(this.age);
 				case EMERGING -> this.walkingAngryAnimationState.start(this.age);
 				case FALL_FLYING -> this.glidingAnimationState.start(this.age);
