@@ -24,13 +24,13 @@ import net.fabricmc.fabric.api.client.model.loading.v1.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.resource.*;
-import net.fabricmc.loader.api.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.client.world.*;
+import net.minecraft.component.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -49,37 +49,32 @@ import oshi.util.tuples.*;
 import java.util.*;
 import java.util.function.*;
 
-import static de.dafuqs.spectrum.SpectrumCommon.*;
-
 @Environment(EnvType.CLIENT)
 public class SpectrumClientEventListeners {
 	
 	// TODO: Move to API package
 	public static final ObjectOpenHashSet<ModelIdentifier> CUSTOM_ITEM_MODELS = new ObjectOpenHashSet<>();
 	
-	public static final boolean foodEffectsTooltipsModLoaded = FabricLoader.getInstance().isModLoaded("foodeffecttooltips");
-	
-	
 	private static void registerCustomItemRenderer(String id, Item item, Supplier<DynamicItemRenderer> renderer) {
-		CUSTOM_ITEM_MODELS.add(new ModelIdentifier(MOD_ID, id, "inventory"));
+		CUSTOM_ITEM_MODELS.add(new ModelIdentifier(SpectrumCommon.locate(id), "inventory"));
 		DynamicItemRenderer.RENDERERS.put(item, renderer.get());
 	}
 	
 	public static void register() {
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ParticleSpawnerParticlesDataLoader.INSTANCE);
 		
-		registerCustomItemRenderer("bottomless_bundle", SpectrumItems.BOTTOMLESS_BUNDLE, BottomlessBundleItem.Renderer::new);
+		registerCustomItemRenderer("bottomless_bundle", SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), BottomlessBundleItem.Renderer::new);
 		registerCustomItemRenderer("omni_accelerator", SpectrumItems.OMNI_ACCELERATOR, OmniAcceleratorItem.Renderer::new);
 		
 		WorldRenderEvents.START.register(context -> HudRenderers.clearItemStackOverlay());
-		WorldRenderEvents.AFTER_ENTITIES.register(context -> ((ExtendedParticleManager) MinecraftClient.getInstance().particleManager).render(context.matrixStack(), context.consumers(), context.camera(), context.tickDelta()));
+		WorldRenderEvents.AFTER_ENTITIES.register(context -> ((ExtendedParticleManager) MinecraftClient.getInstance().particleManager).render(context.matrixStack(), context.consumers(), context.camera(), context.tickCounter().getTickDelta(true)));
 		WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> Pastel.getClientInstance().renderLines(context));
 		WorldRenderEvents.BLOCK_OUTLINE.register(SpectrumClientEventListeners::renderExtendedBlockOutline);
 		BiomeAttenuatingSoundInstance.clear();
 
 		ModelLoadingPlugin.register((ctx) -> {
 			ctx.modifyModelAfterBake().register((orig, c) -> {
-				Identifier id = c.id();
+				ModelIdentifier id = c.topLevelId();
 				if (id instanceof ModelIdentifier mid && CUSTOM_ITEM_MODELS.contains(mid)) {
 					return new DynamicRenderModel(orig);
 				}
@@ -90,8 +85,8 @@ public class SpectrumClientEventListeners {
 		ClientLifecycleEvents.CLIENT_STARTED.register(minecraftClient -> SpectrumColorProviders.registerClient());
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> Pastel.clearClientInstance());
 		
-		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-			if (!foodEffectsTooltipsModLoaded && stack.isFood()) {
+		ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipType, lines) -> {
+			if (stack.contains(DataComponentTypes.FOOD)) {
 				if (Registries.ITEM.getId(stack.getItem()).getNamespace().equals(SpectrumCommon.MOD_ID)) {
 					TooltipHelper.addFoodComponentEffectTooltip(stack, lines);
 				}
