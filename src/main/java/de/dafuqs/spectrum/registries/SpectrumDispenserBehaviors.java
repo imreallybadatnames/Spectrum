@@ -15,7 +15,7 @@ import net.minecraft.world.*;
 public class SpectrumDispenserBehaviors {
 	
 	public static void register() {
-		DispenserBlock.registerBehavior(SpectrumItems.BOTTOMLESS_BUNDLE, new BottomlessBundleItem.BottomlessBundlePlacementDispenserBehavior());
+		DispenserBlock.registerBehavior(SpectrumBlocks.BOTTOMLESS_BUNDLE, new BottomlessBundleItem.BottomlessBundlePlacementDispenserBehavior());
 		DispenserBlock.registerBehavior(SpectrumItems.BEDROCK_SHEARS, new ShearsDispenserBehavior());
 		
 		// Shooting Stars

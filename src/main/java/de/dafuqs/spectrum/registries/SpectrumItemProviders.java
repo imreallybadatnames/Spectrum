@@ -105,7 +105,7 @@ public class SpectrumItemProviders {
 			}
 		});
 		
-		ItemProviderRegistry.register(SpectrumItems.BOTTOMLESS_BUNDLE, new ItemProvider() {
+		ItemProviderRegistry.register(SpectrumBlocks.BOTTOMLESS_BUNDLE, new ItemProvider() {
 			@Override
 			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
 				var builder = BottomlessBundleItem.BottomlessStack.Builder.of(player.getWorld(), stack);

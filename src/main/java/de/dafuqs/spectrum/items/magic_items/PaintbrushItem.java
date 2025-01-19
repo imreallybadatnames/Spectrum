@@ -170,7 +170,7 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 			return true;
 		} else {
 			if (world.isClient) {
-				context.getPlayer().playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				context.getPlayer().playSound(SpectrumSoundEvents.USE_FAIL, 1.0F, 1.0F);
 			}
 		}
 		return false;
@@ -217,7 +217,7 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 					}
 				} else {
 					if (world.isClient) {
-						user.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 1.0F, 1.0F);
+						user.playSound(SpectrumSoundEvents.USE_FAIL, 1.0F, 1.0F);
 					}
 				}
 				
@@ -256,8 +256,8 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 	public boolean useOnSign(World world, SignBlockEntity signBlockEntity, boolean front, PlayerEntity player) {
 		if (tryUseOnSign(world, signBlockEntity, front, player, player.getStackInHand(Hand.MAIN_HAND))) return true;
 		if (tryUseOnSign(world, signBlockEntity, front, player, player.getStackInHand(Hand.OFF_HAND))) return true;
-
-		player.playSound(SpectrumSoundEvents.USE_FAIL, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		
+		player.playSound(SpectrumSoundEvents.USE_FAIL, 1.0F, 1.0F);
 		return false;
 	}
 

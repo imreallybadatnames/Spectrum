@@ -5,14 +5,12 @@ import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.present.*;
-import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.items.energy.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.item.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.world.*;
@@ -77,7 +75,7 @@ public class SpectrumModelPredicateProviders {
 		registerMalachiteCrossbowPredicates(SpectrumItems.MALACHITE_CROSSBOW);
 		registerMalachiteCrossbowPredicates(SpectrumItems.GLASS_CREST_CROSSBOW);
 		
-		registerBottomlessBundlePredicates(SpectrumItems.BOTTOMLESS_BUNDLE);
+		registerBottomlessBundlePredicates(SpectrumBlocks.BOTTOMLESS_BUNDLE);
 		registerEnchantmentCanvasPrediates(SpectrumItems.ENCHANTMENT_CANVAS);
 		registerPresentPredicates(SpectrumBlocks.PRESENT.asItem());
 		registerMysteriousLocketPredicates(SpectrumItems.MYSTERIOUS_LOCKET);
@@ -188,7 +186,7 @@ public class SpectrumModelPredicateProviders {
 				return 0.0F;
 			return compound.contains("Locked") ? 1.0F : 0.0F;
 		});
-		ModelPredicateProviderRegistry.register(SpectrumItems.BOTTOMLESS_BUNDLE, Identifier.of("filled"), (itemStack, clientWorld, livingEntity, i) -> {
+		ModelPredicateProviderRegistry.register(SpectrumBlocks.BOTTOMLESS_BUNDLE, Identifier.of("filled"), (itemStack, clientWorld, livingEntity, i) -> {
 			NbtCompound compound = itemStack.getNbt();
 			if (compound == null)
 				return 0.0F;

@@ -98,7 +98,7 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 	}
 	
 	public void performGroundSlam(World world, Vec3d pos, LivingEntity attacker, float strength) {
-		world.emitGameEvent(attacker, GameEvent.ENTITY_ROAR, BlockPos.ofFloored(pos.x, pos.y, pos.z));
+		world.emitGameEvent(attacker, GameEvent.HIT_GROUND, BlockPos.ofFloored(pos.x, pos.y, pos.z));
 		MoonstoneStrike.create(world, attacker, null, attacker.getX(), attacker.getY(), attacker.getZ(), strength, 1.75F);
 		world.playSound(null, attacker.getBlockPos(), SpectrumSoundEvents.GROUND_SLAM, SoundCategory.PLAYERS, 0.7F, 1.0F);
 		world.playSound(null, attacker.getBlockPos(), SpectrumSoundEvents.DEEP_CRYSTAL_RING, SoundCategory.PLAYERS, 0.7F, 1.0F);
