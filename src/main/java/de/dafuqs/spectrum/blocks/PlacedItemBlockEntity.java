@@ -7,7 +7,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
@@ -29,14 +29,14 @@ public class PlacedItemBlockEntity extends BlockEntity implements PlayerOwned {
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
-		this.stack = ItemStack.fromNbt(nbt.getCompound("stack"));
+		this.stack = ItemStack.fromNbt(registryLookup, nbt.getCompound("stack")).orElse(ItemStack.EMPTY);
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 	}
 	
 	@Override
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("stack", this.stack.writeNbt(new NbtCompound()));
+		nbt.put("stack", this.stack.encode(registryLookup));
 		
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 	}

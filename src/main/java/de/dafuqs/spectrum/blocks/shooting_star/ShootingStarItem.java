@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.blocks.shooting_star;
 
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.entity.entity.*;
-import net.minecraft.client.item.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -25,25 +25,13 @@ public class ShootingStarItem extends BlockItem implements ShootingStar {
 		this.shootingStarType = block.shootingStarType;
 	}
 	
-	public static int getRemainingHits(@NotNull ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound == null || !nbtCompound.contains("remaining_hits", NbtElement.NUMBER_TYPE)) {
-			return 5;
-		} else {
-			return nbtCompound.getInt("remaining_hits");
-		}
-	}
-	
 	public static @NotNull ItemStack getWithRemainingHits(@NotNull ShootingStarItem shootingStarItem, int remainingHits, boolean hardened) {
 		return getWithRemainingHits(shootingStarItem.getDefaultStack(), remainingHits, hardened);
 	}
 	
 	public static @NotNull ItemStack getWithRemainingHits(@NotNull ItemStack stack, int remainingHits, boolean hardened) {
-		NbtCompound nbt = stack.getOrCreateNbt();
-		nbt.putInt("remaining_hits", remainingHits);
-		if (hardened) {
-			nbt.putBoolean("Hardened", true);
-		}
+		ShootingStarComponent component = new ShootingStarComponent(remainingHits, hardened);
+		stack.set(SpectrumDataComponentTypes.SHOOTING_STAR, component);
 		return stack;
 	}
 	
@@ -82,10 +70,7 @@ public class ShootingStarItem extends BlockItem implements ShootingStar {
 
 	@NotNull
 	public ShootingStarEntity getEntityForStack(@NotNull World world, Vec3d pos, ItemStack stack) {
-		ShootingStarEntity shootingStarEntity = new ShootingStarEntity(world, pos.x, pos.y, pos.z);
-		shootingStarEntity.setShootingStarType(this.shootingStarType, true, isHardened(stack));
-		shootingStarEntity.setAvailableHits(getRemainingHits(stack));
-		return shootingStarEntity;
+		return new ShootingStarEntity(world, pos.x, pos.y, pos.z, this.shootingStarType, true, getRemainingHits(stack), isHardened(stack));
 	}
 
 	@Override
@@ -100,15 +85,23 @@ public class ShootingStarItem extends BlockItem implements ShootingStar {
 		return this.shootingStarType;
 	}
 	
-	public static boolean isHardened(ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		return nbtCompound != null && nbtCompound.getBoolean("Hardened");
+	public static boolean isHardened(ItemStack stack) {
+		return stack.getOrDefault(SpectrumDataComponentTypes.SHOOTING_STAR, ShootingStarComponent.DEFAULT).hardened();
 	}
 	
-	public static void setHardened(ItemStack itemStack) {
-		NbtCompound nbt = itemStack.getOrCreateNbt();
-		nbt.putBoolean("Hardened", true);
-		itemStack.setNbt(nbt);
+	public static int getRemainingHits(@NotNull ItemStack stack) {
+		return stack.getOrDefault(SpectrumDataComponentTypes.SHOOTING_STAR, ShootingStarComponent.DEFAULT).remainingHits();
+	}
+	
+	public static void setHardened(ItemStack stack) {
+		ShootingStarComponent component = stack.getOrDefault(SpectrumDataComponentTypes.SHOOTING_STAR, ShootingStarComponent.DEFAULT);
+		if (component == null) {
+			component = new ShootingStarComponent(ShootingStarComponent.DEFAULT.remainingHits(), true);
+		} else {
+			component = new ShootingStarComponent(component.remainingHits(), true);
+		}
+		
+		stack.set(SpectrumDataComponentTypes.SHOOTING_STAR, component);
 	}
 
 }

@@ -51,27 +51,12 @@ public class ShootingStarEntity extends Entity {
 		this.lastCollisionCount = 0;
 	}
 	
-	public ShootingStarEntity(World world, double x, double y, double z) {
+	public ShootingStarEntity(World world, double x, double y, double z, ShootingStar.Type type, boolean playerPlaced, int availableHits, boolean hardened) {
 		this(SpectrumEntityTypes.SHOOTING_STAR, world);
 		this.setPosition(x, y, z);
 		this.setYaw(this.random.nextFloat() * 360.0F);
-		this.setShootingStarType(ShootingStar.Type.COLORFUL, false, false);
+		this.setShootingStarType(type, playerPlaced, availableHits, hardened);
 		this.lastCollisionCount = 0;
-	}
-	
-	public ShootingStarEntity(World world) {
-		this(world, 0, 0, 0);
-	}
-	
-	@Environment(EnvType.CLIENT)
-	private ShootingStarEntity(@NotNull ShootingStarEntity entity) {
-		super(entity.getType(), entity.getWorld());
-		this.setShootingStarType(entity.getShootingStarType(), false, false);
-		this.copyPositionAndRotation(entity);
-		this.availableHits = entity.availableHits;
-		this.age = entity.age;
-		this.hoverHeight = entity.hoverHeight;
-		this.lastCollisionCount = entity.lastCollisionCount;
 	}
 	
 	public static boolean canCollide(Entity entity, @NotNull Entity other) {
@@ -392,10 +377,6 @@ public class ShootingStarEntity extends Entity {
 		return false;
 	}
 	
-	public void setAvailableHits(int availableHits) {
-		this.availableHits = availableHits;
-	}
-	
 	@Override
 	public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
 		if (damageSource.isOf(DamageTypes.FALLING_ANVIL) || damageSource.isOf(SpectrumDamageTypes.FLOATBLOCK)) {
@@ -425,10 +406,11 @@ public class ShootingStarEntity extends Entity {
 		return ShootingStar.Type.getType(this.getDataTracker().get(SHOOTING_STAR_TYPE));
 	}
 	
-	public void setShootingStarType(@NotNull ShootingStar.Type type, boolean playerPlaced, boolean hardened) {
+	private void setShootingStarType(@NotNull ShootingStar.Type type, boolean playerPlaced, int availableHits, boolean hardened) {
 		this.getDataTracker().set(SHOOTING_STAR_TYPE, type.ordinal());
 		this.getDataTracker().set(PLAYER_PLACED, playerPlaced);
 		this.getDataTracker().set(HARDENED, hardened);
+		this.availableHits = availableHits;
 	}
 	
 	@Override
@@ -438,6 +420,7 @@ public class ShootingStarEntity extends Entity {
 		tag.putInt("LastCollisionCount", this.lastCollisionCount);
 		tag.putBoolean("PlayerPlaced", this.dataTracker.get(PLAYER_PLACED));
 		tag.putBoolean("Hardened", this.dataTracker.get(HARDENED));
+		tag.putInt("AvailableHits", this.availableHits);
 	}
 	
 	@Override
@@ -447,20 +430,11 @@ public class ShootingStarEntity extends Entity {
 			this.lastCollisionCount = tag.getInt("LastCollisionCount");
 		}
 		
-		boolean playerPlaced = false;
-		if (tag.contains("PlayerPlaced")) {
-			playerPlaced = tag.getBoolean("PlayerPlaced");
-		}
-		
-		boolean hardened = false;
-		if (tag.contains("Hardened")) {
-			hardened = tag.getBoolean("Hardened");
-		}
-		
-		if (tag.contains("Type", 8)) {
-			this.setShootingStarType(ShootingStar.Type.getType(tag.getString("Type")), playerPlaced, hardened);
-		} else {
-			this.discard();
+		if (tag.contains("PlayerPlaced") && tag.contains("Hardened") && tag.contains("AvailableHits", NbtElement.NUMBER_TYPE) && tag.contains("Type", NbtElement.STRING_TYPE)) {
+			boolean playerPlaced = tag.getBoolean("PlayerPlaced");
+			int availableHits = tag.getInt("AvailableHits");
+			boolean hardened = tag.getBoolean("Hardened");
+			this.setShootingStarType(ShootingStar.Type.getType(tag.getString("Type")), playerPlaced, availableHits, hardened);
 		}
 	}
 	

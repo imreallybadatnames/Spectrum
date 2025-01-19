@@ -64,9 +64,8 @@ public class ShootingStarSpawner implements SpecialSpawner {
 	}
 	
 	public static void spawnShootingStar(ServerWorld serverWorld, @NotNull PlayerEntity playerEntity) {
-		ShootingStarEntity shootingStarEntity = new ShootingStarEntity(serverWorld, playerEntity.getPos().getX(), playerEntity.getPos().getY() + 200, playerEntity.getPos().getZ());
+		ShootingStarEntity shootingStarEntity = new ShootingStarEntity(serverWorld, playerEntity.getPos().getX(), playerEntity.getPos().getY() + 200, playerEntity.getPos().getZ(), ShootingStar.Type.getWeightedRandomType(serverWorld.getRandom()), false, 3 + serverWorld.random.nextInt(5), false);
 		shootingStarEntity.setVelocity(serverWorld.random.nextDouble() * 0.2D - 0.1D, 0.0D, serverWorld.random.nextDouble() * 0.2D - 0.1D);
-		shootingStarEntity.setShootingStarType(ShootingStar.Type.getWeightedRandomType(serverWorld.getRandom()), false, false);
 		shootingStarEntity.addVelocity(5 - serverWorld.random.nextFloat() * 10, 0, 5 - serverWorld.random.nextFloat() * 10);
 		serverWorld.spawnEntity(shootingStarEntity);
 	}

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.shooting_star;
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import io.netty.buffer.*;
@@ -13,14 +14,15 @@ import org.jetbrains.annotations.*;
 import org.joml.*;
 
 public interface ShootingStar {
-
-	enum Type {
+	
+	enum Type implements StringIdentifiable {
 		GLISTERING("glistering", SpectrumLootTables.GLISTERING_SHOOTING_STAR),
 		FIERY("fiery", SpectrumLootTables.FIERY_SHOOTING_STAR),
 		COLORFUL("colorful", SpectrumLootTables.COLORFUL_SHOOTING_STAR),
 		PRISTINE("pristine", SpectrumLootTables.PRISTINE_SHOOTING_STAR),
 		GEMSTONE("gemstone", SpectrumLootTables.GEMSTONE_SHOOTING_STAR);
 		
+		public static Codec<Type> CODEC = StringIdentifiable.createCodec(Type::values);
 		public static final PacketCodec<ByteBuf, ShootingStar.Type> PACKET_CODEC = PacketCodecs.indexed(i -> ShootingStar.Type.values()[i], ShootingStar.Type::ordinal);
 		
 		private final String name;
@@ -30,7 +32,7 @@ public interface ShootingStar {
 			this.name = name;
 			this.lootTable = lootTable;
 		}
-
+		
 		public static Type getWeightedRandomType(@NotNull Random random) {
 			int r = random.nextInt(8);
 			if (r == 0) {
@@ -45,28 +47,28 @@ public interface ShootingStar {
 				return GEMSTONE;
 			}
 		}
-
+		
 		public static Type getType(int type) {
 			Type[] types = values();
 			if (type < 0 || type >= types.length) {
 				type = 0;
 			}
-
+			
 			return types[type];
 		}
-
+		
 		public static Type getType(String name) {
 			Type[] types = values();
-
+			
 			for (Type type : types) {
 				if (type.getName().equals(name)) {
 					return type;
 				}
 			}
-
+			
 			return types[0];
 		}
-
+		
 		@Contract("_ -> new")
 		public static @NotNull RegistryKey<LootTable> getLootTable(int index) {
 			return values()[index].getLootTable();
@@ -75,11 +77,11 @@ public interface ShootingStar {
 		public @NotNull RegistryKey<LootTable> getLootTable() {
 			return this.lootTable;
 		}
-
+		
 		public String getName() {
 			return this.name;
 		}
-
+		
 		public Block getBlock() {
 			switch (this) {
 				case PRISTINE -> {
@@ -99,7 +101,7 @@ public interface ShootingStar {
 				}
 			}
 		}
-
+		
 		public @NotNull Vector3f getRandomParticleColor(Random random) {
 			switch (this) {
 				case GLISTERING -> {
@@ -151,5 +153,11 @@ public interface ShootingStar {
 				}
 			}
 		}
+		
+		@Override
+		public String asString() {
+			return this.name;
+		}
+		
 	}
 }
