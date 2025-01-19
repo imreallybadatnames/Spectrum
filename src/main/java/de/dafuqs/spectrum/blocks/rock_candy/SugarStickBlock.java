@@ -1,17 +1,18 @@
 package de.dafuqs.spectrum.blocks.rock_candy;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.particle.effect.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.state.*;
@@ -165,17 +166,19 @@ public class SugarStickBlock extends Block implements RockCandy {
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		NbtCompound nbt = stack.getNbt();
-		if (nbt != null && nbt.contains("BlockStateTag")) {
-			NbtCompound blockStateTag = nbt.getCompound("BlockStateTag");
-			if (blockStateTag.contains("age", NbtElement.STRING_TYPE)) {
-				String age = blockStateTag.getString("age");
-				if ("1".equals(age)) {
+		
+		BlockStateComponent stateComponent = stack.get(DataComponentTypes.BLOCK_STATE);
+		if (stateComponent != null) {
+			Integer age = stateComponent.getValue(SugarStickBlock.AGE);
+			switch (age) {
+				case 1 -> {
 					tooltip.add(Text.translatable("block.spectrum.sugar_stick.tooltip.medium"));
-				} else if ("2".equals(age)) {
+				}
+				case 2 -> {
 					tooltip.add(Text.translatable("block.spectrum.sugar_stick.tooltip.large"));
 				}
-				
+				case null, default -> {
+				}
 			}
 		}
 	}

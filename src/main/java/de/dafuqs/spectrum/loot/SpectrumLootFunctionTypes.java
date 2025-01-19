@@ -18,4 +18,8 @@ public class SpectrumLootFunctionTypes {
 		return Registry.register(Registries.LOOT_FUNCTION_TYPE, SpectrumCommon.locate(id), new LootFunctionType<>(codec));
 	}
 	
+	public static void register() {
+	
+	}
+	
 }
