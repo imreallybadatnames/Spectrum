@@ -1,17 +1,16 @@
 package de.dafuqs.spectrum.mixin;
 
+import com.llamalad7.mixinextras.injector.*;
 import com.llamalad7.mixinextras.sugar.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.gui.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.items.ConcealingOilsItem;
+import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.*;
 import net.minecraft.enchantment.*;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.tag.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.text.*;
@@ -40,7 +39,11 @@ public abstract class ItemStackMixin {
 	@Deprecated
 	@Nullable
 	private Item item;
-
+	
+	@Shadow
+	@Nullable
+	public abstract <T> T remove(ComponentType<? extends T> type);
+	
 	// Injecting into onStackClicked instead of onClicked because onStackClicked is called first
 	@Inject(at = @At("HEAD"), method = "onStackClicked", cancellable = true)
 	public void spectrum$onStackClicked(Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
@@ -50,12 +53,10 @@ public abstract class ItemStackMixin {
 			}
 		}
 	}
-
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getNbt()Lnet/minecraft/nbt/NbtCompound;"), method = "isDamageable()Z", cancellable = true)
-	public void spectrum$applyIndestructibleEnchantment(CallbackInfoReturnable<Boolean> cir) {
-		if (EnchantmentHelper.hasAnyEnchantmentsIn((ItemStack) (Object) this, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT)) {
-			cir.setReturnValue(false);
-		}
+	
+	@ModifyReturnValue(method = "isDamageable()Z", at = @At(value = "RETURN"))
+	public boolean spectrum$applyIndestructibleEnchantment(boolean original) {
+		return original || EnchantmentHelper.hasAnyEnchantmentsIn((ItemStack) (Object) this, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT);
 	}
 	
 	// thank you so, so much @williewillus / @Botania for this snippet of code

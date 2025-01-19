@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.data.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.hit.*;

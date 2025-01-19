@@ -51,8 +51,8 @@ public class FermentRandomlyLootFunction extends ConditionalLootFunction {
 	public ItemStack process(ItemStack stack, LootContext context) {
 		FermentationData fermentationData = null;
 		if (this.fermentationRecipeIdentifier != null) {
-			Optional<? extends Recipe<?>> recipe = SpectrumCommon.minecraftServer.getRecipeManager().get(this.fermentationRecipeIdentifier);
-			if (recipe.isPresent() && recipe.get() instanceof TitrationBarrelRecipe titrationBarrelRecipe) {
+			Optional<? extends RecipeEntry<?>> recipe = SpectrumCommon.minecraftServer.getRecipeManager().get(this.fermentationRecipeIdentifier);
+			if (recipe.isPresent() && recipe.get().value() instanceof TitrationBarrelRecipe titrationBarrelRecipe) {
 				fermentationData = titrationBarrelRecipe.getFermentationData();
 			} else {
 				SpectrumCommon.logError("A 'spectrum:ferment_randomly' loot function has set an invalid 'fermentation_recipe_id': " + this.fermentationRecipeIdentifier + " It has to match an existing Titration Barrel recipe.");

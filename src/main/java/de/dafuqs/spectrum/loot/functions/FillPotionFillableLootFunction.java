@@ -12,6 +12,7 @@ import net.minecraft.loot.context.*;
 import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -19,7 +20,7 @@ import java.util.*;
 public class FillPotionFillableLootFunction extends ConditionalLootFunction {
 	
 	record InkPoweredPotionTemplate(boolean ambient, boolean showParticles, LootNumberProvider duration,
-									List<StatusEffect> statusEffects, int color, LootNumberProvider amplifier,
+									List<RegistryEntry<StatusEffect>> statusEffects, int color, LootNumberProvider amplifier,
 									List<InkColor> inkColors, LootNumberProvider inkCost, boolean unidentifiable, boolean incurable) {
 		
 		public static InkPoweredPotionTemplate fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext) {
@@ -28,14 +29,14 @@ public class FillPotionFillableLootFunction extends ConditionalLootFunction {
 			boolean unidentifiable = JsonHelper.getBoolean(jsonObject, "unidentifiable", false);
 			boolean incurable = JsonHelper.getBoolean(jsonObject, "incurable", false);
 			LootNumberProvider duration = JsonHelper.deserialize(jsonObject, "duration", jsonDeserializationContext, LootNumberProvider.class);
-			Set<StatusEffect> statusEffects = new HashSet<>();
+			Set<RegistryEntry<StatusEffect>> statusEffects = new HashSet<>();
 			JsonElement statusEffectElement = jsonObject.get("status_effect");
 			if (statusEffectElement instanceof JsonArray jsonArray) {
 				for (JsonElement element : jsonArray) {
-					statusEffects.add(Registries.STATUS_EFFECT.get(Identifier.tryParse(element.getAsString())));
+					statusEffects.add(Registries.STATUS_EFFECT.getEntry(Identifier.tryParse(element.getAsString())));
 				}
 			} else {
-				statusEffects.add(Registries.STATUS_EFFECT.get(Identifier.tryParse(statusEffectElement.getAsString())));
+				statusEffects.add(Registries.STATUS_EFFECT.getEntry(Identifier.tryParse(statusEffectElement.getAsString())));
 			}
 			
 			int color = JsonHelper.getInt(jsonObject, "color", -1);
@@ -62,8 +63,8 @@ public class FillPotionFillableLootFunction extends ConditionalLootFunction {
 			jsonObject.addProperty("show_particles", this.showParticles);
 			jsonObject.add("duration", jsonSerializationContext.serialize(this.duration));
 			JsonArray statusEffectArray = new JsonArray();
-			for (StatusEffect statusEffect : this.statusEffects) {
-				statusEffectArray.add(Registries.STATUS_EFFECT.getId(statusEffect).toString());
+			for (RegistryEntry<StatusEffect> statusEffect : this.statusEffects) {
+				statusEffectArray.add(Registries.STATUS_EFFECT.getId(statusEffect.value()).toString());
 			}
 			jsonObject.add("status_effect", statusEffectArray);
 			jsonObject.addProperty("color", this.color);
@@ -80,7 +81,7 @@ public class FillPotionFillableLootFunction extends ConditionalLootFunction {
 		}
 		
 		public InkPoweredStatusEffectInstance get(LootContext context) {
-			StatusEffect statusEffect = this.statusEffects.get(context.getRandom().nextInt(this.statusEffects.size()));
+			RegistryEntry<StatusEffect> statusEffect = this.statusEffects.get(context.getRandom().nextInt(this.statusEffects.size()));
 			StatusEffectInstance statusEffectInstance = new StatusEffectInstance(statusEffect, this.duration.nextInt(context), this.amplifier.nextInt(context), ambient, showParticles, true);
 			InkColor inkColor = this.inkColors.get(context.getRandom().nextInt(this.inkColors.size()));
 			int cost = this.inkCost.nextInt(context);

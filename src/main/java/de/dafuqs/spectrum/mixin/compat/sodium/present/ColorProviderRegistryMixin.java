@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.mixin.compat.sodium.present;
 
 import de.dafuqs.spectrum.registries.*;
-import me.jellysquid.mods.sodium.client.model.color.*;
 import net.caffeinemc.mods.sodium.api.util.*;
+import net.caffeinemc.mods.sodium.client.model.color.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.render.fluid.v1.*;
 import net.minecraft.fluid.*;
@@ -15,6 +15,7 @@ import java.util.*;
 // Since the color distortion bug isn't yet fixed,
 // nor is there an API for adding render overrides,
 // this mixin is needed.
+// TODO: still needed?
 @Environment(EnvType.CLIENT)
 @Mixin(value = ColorProviderRegistry.class, remap = false)
 public abstract class ColorProviderRegistryMixin {

@@ -60,7 +60,8 @@ public class SpectrumClient implements ClientModInitializer, RevealingCallback, 
 		SpectrumEntityRenderers.registerClient();
 
 		logInfo("Registering Server to Client Package Receivers...");
-		SpectrumS2CPacketReceiver.registerS2CReceivers();
+		SpectrumS2CPackets.registerS2CReceivers();
+		
 		logInfo("Registering Particle Factories...");
 		SpectrumParticleFactories.register();
 

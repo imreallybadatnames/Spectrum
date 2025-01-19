@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum;
 
-import com.mojang.authlib.*;
 import de.dafuqs.spectrum.api.color.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.pastel_network.*;
@@ -147,7 +146,6 @@ public class SpectrumCommon implements ModInitializer {
 		
 		// Loot
 		logInfo("Registering Loot Conditions & Functions...");
-		SpectrumLootConditionTypes.register();
 		SpectrumLootFunctionTypes.register();
 		
 		logInfo("Setting up server side Mod Compat...");
@@ -180,12 +178,10 @@ public class SpectrumCommon implements ModInitializer {
 		
 		logInfo("Registering Commands...");
 		SpectrumCommands.register();
-
-		logInfo("Registering Custom Packets...");
+		
+		logInfo("Registering Networking Packets...");
 		SpectrumC2SPackets.register();
-
-		logInfo("Registering Client To ServerPackage Receivers...");
-		SpectrumC2SPacketReceiver.registerC2SReceivers();
+		SpectrumS2CPackets.register();
 		
 		logInfo("Registering Data Loaders...");
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(NaturesStaffConversionDataLoader.INSTANCE);
@@ -217,8 +213,6 @@ public class SpectrumCommon implements ModInitializer {
 		logInfo("Registering Explosion Effects & Providers...");
 		ExplosionModifiers.register();
 		ExplosionModifierProviders.register();
-		logInfo("Registering Special Recipes...");
-		SpectrumCustomRecipeSerializers.registerRecipeSerializers();
 		
 		logInfo("Registering Dispenser, Resonance & Present Unwrap Behaviors...");
 		SpectrumDispenserBehaviors.register();
