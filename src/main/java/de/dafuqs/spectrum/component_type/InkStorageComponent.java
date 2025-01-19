@@ -19,12 +19,9 @@ public record InkStorageComponent(long maxEnergyTotal, long maxPerColor, Map<Ink
 	).apply(instance, InkStorageComponent::new));
 	
 	public static final PacketCodec<ByteBuf, InkStorageComponent> PACKET_CODEC = PacketCodec.tuple(
-			PacketCodecs.VAR_LONG,
-			c -> c.maxEnergyTotal,
-			PacketCodecs.VAR_LONG,
-			c -> c.maxPerColor,
-			PacketCodecs.map(HashMap::new, InkColor.PACKET_CODEC, PacketCodecs.VAR_LONG),
-			c -> c.storedEnergy,
+			PacketCodecs.VAR_LONG, c -> c.maxEnergyTotal,
+			PacketCodecs.VAR_LONG, c -> c.maxPerColor,
+			PacketCodecs.map(HashMap::new, InkColor.PACKET_CODEC, PacketCodecs.VAR_LONG), c -> c.storedEnergy,
 			InkStorageComponent::new
 	);
 	

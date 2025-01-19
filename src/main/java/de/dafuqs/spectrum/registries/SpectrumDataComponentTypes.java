@@ -24,6 +24,7 @@ public class SpectrumDataComponentTypes {
     public static ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
     public static ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC));
 	public static ComponentType<ShootingStarComponent> SHOOTING_STAR = register("shooting_star", builder -> builder.codec(ShootingStarComponent.CODEC).packetCodec(ShootingStarComponent.PACKET_CODEC));
+	public static ComponentType<OptionalInkColorComponent> OPTIONAL_INK_COLOR = register("optional_ink_color", builder -> builder.codec(OptionalInkColorComponent.CODEC).packetCodec(OptionalInkColorComponent.PACKET_CODEC));
 
     public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return defer(builderOperator.apply(ComponentType.builder()).build())

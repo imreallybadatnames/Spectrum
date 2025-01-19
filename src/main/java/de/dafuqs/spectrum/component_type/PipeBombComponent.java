@@ -15,10 +15,8 @@ public record PipeBombComponent(long timestamp, boolean isArmed) {
 	).apply(i, PipeBombComponent::new));
 	
 	public static final PacketCodec<ByteBuf, PipeBombComponent> PACKET_CODEC = PacketCodec.tuple(
-			PacketCodecs.VAR_LONG,
-			c -> c.timestamp,
-			PacketCodecs.BOOL,
-			c -> c.isArmed,
+			PacketCodecs.VAR_LONG, c -> c.timestamp,
+			PacketCodecs.BOOL, c -> c.isArmed,
 			PipeBombComponent::new
 	);
 	

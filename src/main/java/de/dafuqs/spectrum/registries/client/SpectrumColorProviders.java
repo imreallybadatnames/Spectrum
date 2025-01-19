@@ -2,13 +2,12 @@ package de.dafuqs.spectrum.registries.client;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.*;
-import de.dafuqs.spectrum.api.energy.color.InkColor;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.blocks.conditional.colored_tree.*;
 import de.dafuqs.spectrum.blocks.memory.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.energy.*;
-import de.dafuqs.spectrum.items.magic_items.PaintbrushItem;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
@@ -46,8 +45,10 @@ public class SpectrumColorProviders {
 		registerPotionFillables(SpectrumItems.LESSER_POTION_PENDANT, SpectrumItems.GREATER_POTION_PENDANT, SpectrumItems.MALACHITE_GLASS_AMPOULE);
 		registerPickyPotionFillables(SpectrumItems.NIGHTFALLS_BLADE, SpectrumItems.CONCEALING_OILS);
 		registerSingleInkStorages(SpectrumItems.INK_FLASK);
-		registerPaintbrush(SpectrumItems.PAINTBRUSH);
 		registerBrewColors(SpectrumItems.INFUSED_BEVERAGE);
+		
+		registerOptionalInkColor(SpectrumItems.PAINTBRUSH);
+		registerOptionalInkColor(SpectrumBlocks.CRYSTALLARIEUM.asItem()); // TODO: update item model to use tint layer
 	}
 	
 	private static void registerColoredLeaves() {
@@ -107,16 +108,6 @@ public class SpectrumColorProviders {
 		}, items);
 	}
 
-	private static void registerPaintbrush(Item... items) {
-		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-			if (tintIndex == 1) {
-				var potentialColor = PaintbrushItem.getColor(stack);
-				return potentialColor.map(InkColor::getColorInt).orElse(-1);
-			}
-			return -1;
-		}, items);
-	}
-
 	private static void registerPickyPotionFillables(Item... items) {
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			if (tintIndex == 1) {
@@ -168,6 +159,20 @@ public class SpectrumColorProviders {
 			return -1;
 			
 		}, brew);
+	}
+	
+	public static void registerOptionalInkColor(Item item) {
+		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+			if (tintIndex == 0) {
+				OptionalInkColorComponent component = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
+				if (component == null || component.color().isEmpty()) {
+					return -1;
+				}
+				return component.color().get().getColorInt();
+			}
+			return -1;
+			
+		}, item);
 	}
 	
 	public static void resetToggleableProviders() {

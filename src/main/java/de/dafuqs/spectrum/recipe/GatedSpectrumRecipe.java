@@ -5,7 +5,7 @@ import de.dafuqs.spectrum.helpers.NbtHelper;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -47,7 +47,6 @@ public abstract class GatedSpectrumRecipe<C extends RecipeInput> implements Gate
 		return null;
 	}
 	
-	//TODO: Should this be false when the recipe is unlocked?
 	@Override
 	public boolean isIgnoredInRecipeBook() {
 		return true;

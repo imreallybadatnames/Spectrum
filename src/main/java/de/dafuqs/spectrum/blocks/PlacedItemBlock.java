@@ -45,9 +45,11 @@ public abstract class PlacedItemBlock extends BlockWithEntity {
 
 	@Override
 	public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
-		ItemStack itemStack = super.getPickStack(world, pos, state);
-		world.getBlockEntity(pos, SpectrumBlockEntities.PLACED_ITEM).ifPresent((blockEntity) -> blockEntity.setStackNbt(itemStack));
-		return itemStack;
+		Optional<PlacedItemBlockEntity> blockEntity = world.getBlockEntity(pos, SpectrumBlockEntities.PLACED_ITEM);
+		if (blockEntity.isPresent()) {
+			return blockEntity.get().getStack().copy();
+		}
+		return ItemStack.EMPTY;
 	}
 	
 	@Override

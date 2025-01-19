@@ -1,18 +1,17 @@
 package de.dafuqs.spectrum.blocks.crystallarieum;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.energy.*;
+import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.*;
-import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.state.*;
-import net.minecraft.state.property.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
@@ -26,22 +25,14 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 
 	public static final MapCodec<CrystallarieumBlock> CODEC = createCodec(CrystallarieumBlock::new);
 
-	public static final EnumProperty<NullableDyeColor> COLOR = EnumProperty.of("color", NullableDyeColor.class);
-
 	public CrystallarieumBlock(Settings settings) {
 		super(settings);
-		this.setDefaultState((this.stateManager.getDefaultState()).with(COLOR, NullableDyeColor.NONE));
+		this.setDefaultState((this.stateManager.getDefaultState()));
 	}
 
 	@Override
 	public MapCodec<? extends CrystallarieumBlock> getCodec() {
 		return CODEC;
-	}
-	
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder);
-		builder.add(COLOR);
 	}
 	
 	@Nullable
@@ -115,16 +106,17 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 		return ItemActionResult.SUCCESS;
 	}
 	
-	public ItemStack asStackWithColor(NullableDyeColor color) {
+	public ItemStack asStackWithColor(Optional<InkColor> color) {
 		ItemStack stack = asItem().getDefaultStack();
-		NullableDyeColor.set(stack, color);
+		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(color));
 		return stack;
 	}
 
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		NullableDyeColor.addTooltip(stack, tooltip);
+		OptionalInkColorComponent component = stack.getOrDefault(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, OptionalInkColorComponent.DEFAULT);
+		component.addTooltip(tooltip);
 	}
 	
 }

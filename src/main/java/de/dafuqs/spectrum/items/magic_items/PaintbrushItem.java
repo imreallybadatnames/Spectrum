@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.compat.claims.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
@@ -14,12 +15,10 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -36,8 +35,6 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 	public static final int COOLDOWN_DURATION_TICKS = 10;
 	public static final int BLOCK_COLOR_COST = 25;
 	public static final int INK_SLING_COST = 100;
-	
-	public static final String COLOR_NBT_STRING = "Color";
 	
 	public PaintbrushItem(Settings settings) {
 		super(settings);
@@ -102,21 +99,15 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 	}
 	
 	public static void setColor(ItemStack stack, @Nullable InkColor color) {
-		NbtCompound compound = stack.getOrCreateNbt();
-		if (color == null) {
-			compound.remove(COLOR_NBT_STRING);
-		} else {
-			compound.putString(COLOR_NBT_STRING, color.getID().toString());
-		}
-		stack.setNbt(compound);
+		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(Optional.ofNullable(color)));
 	}
 	
 	public static Optional<InkColor> getColor(ItemStack stack) {
-		NbtCompound compound = stack.getNbt();
-		if (compound != null && compound.contains(COLOR_NBT_STRING)) {
-			return InkColor.ofIdString(compound.getString(COLOR_NBT_STRING));
+		OptionalInkColorComponent compound = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
+		if (compound == null || compound.color().isEmpty()) {
+			return Optional.empty();
 		}
-		return Optional.empty();
+		return compound.color();
 	}
 	
 	@Override

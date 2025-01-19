@@ -16,7 +16,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -176,7 +176,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"),storage ->
 				this.inkStorage = new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		if (nbt.contains("Looper", NbtElement.COMPOUND_TYPE)) {
-			this.tickLooper.readNbt(nbt.getCompound("Looper"));
+			this.tickLooper = TickLooper.readNbt(nbt.getCompound("Looper"));
 		}
 
 		this.canWork = nbt.getBoolean("CanWork");
@@ -283,16 +283,9 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 			this.canWork = false;
 			markDirty();
 			updateInClientWorld();
-			
-			world.setBlockState(pos, world.getBlockState(pos).with(CrystallarieumBlock.COLOR, NullableDyeColor.NONE));
 		} else {
 			this.currentRecipe = recipe == null ? CrystallarieumRecipe.getRecipeForState(newState) : recipe;
-			
-			if (this.currentRecipe == null) {
-				world.setBlockState(pos, world.getBlockState(pos).with(CrystallarieumBlock.COLOR, NullableDyeColor.NONE));
-			} else {
-				world.setBlockState(pos, world.getBlockState(pos).with(CrystallarieumBlock.COLOR, NullableDyeColor.get(this.currentRecipe.getInkColor().getDyeColor())));
-				
+			if (this.currentRecipe != null) {
 				ItemStack catalystStack = getStack(CATALYST_SLOT_ID);
 				if (!catalystStack.isEmpty()) {
 					this.currentCatalyst = this.currentRecipe.getCatalyst(catalystStack);

@@ -33,6 +33,8 @@ public class CrystallarieumBlockEntityRenderer<T extends CrystallarieumBlockEnti
 			matrices.pop();
 		}
 		
+		// TODO: render colored ring if a recipe is currently running in block entity renderer
+		
 		ItemStack catalystStack = entity.getStack(CrystallarieumBlockEntity.CATALYST_SLOT_ID);
 		if (!catalystStack.isEmpty()) {
 			matrices.push();

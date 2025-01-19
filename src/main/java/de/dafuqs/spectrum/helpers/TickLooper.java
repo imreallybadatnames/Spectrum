@@ -1,7 +1,8 @@
 package de.dafuqs.spectrum.helpers;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import net.minecraft.nbt.*;
 
 // TODO: migrate to net.minecraft.world.tick ?
 public final class TickLooper {
@@ -51,5 +52,16 @@ public final class TickLooper {
     public String toString() {
         return "TickLooper (" + currentTick + "/" + maxTick + ")";
     }
+	
+	public static TickLooper readNbt(NbtCompound nbt) {
+		return new TickLooper(nbt.getInt("max"), nbt.getInt("current"));
+	}
+	
+	public NbtElement toNbt() {
+		NbtCompound nbt = new NbtCompound();
+		nbt.putInt("max", maxTick);
+		nbt.putInt("current", currentTick);
+		return nbt;
+	}
 
 }

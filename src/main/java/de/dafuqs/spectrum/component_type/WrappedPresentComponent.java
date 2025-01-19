@@ -1,18 +1,15 @@
 package de.dafuqs.spectrum.component_type;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.dafuqs.spectrum.blocks.present.PresentBlock;
-import de.dafuqs.spectrum.helpers.CodecHelper;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.dynamic.Codecs;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.blocks.present.*;
+import de.dafuqs.spectrum.helpers.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.util.*;
+import net.minecraft.util.dynamic.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public record WrappedPresentComponent(
         boolean wrapped,
@@ -29,12 +26,9 @@ public record WrappedPresentComponent(
     ).apply(instance, WrappedPresentComponent::new));
 
     public static final PacketCodec<RegistryByteBuf, WrappedPresentComponent> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOL,
-            WrappedPresentComponent::wrapped,
-            CodecHelper.ofPacketEnum(PresentBlock.WrappingPaper.class),
-            WrappedPresentComponent::variant,
-            PacketCodecs.map(HashMap::new, DyeColor.PACKET_CODEC, PacketCodecs.VAR_INT),
-            WrappedPresentComponent::colors,
+			PacketCodecs.BOOL, WrappedPresentComponent::wrapped,
+			CodecHelper.ofPacketEnum(PresentBlock.WrappingPaper.class), WrappedPresentComponent::variant,
+			PacketCodecs.map(HashMap::new, DyeColor.PACKET_CODEC, PacketCodecs.VAR_INT), WrappedPresentComponent::colors,
             WrappedPresentComponent::new
     );
 
