@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.blocks.idols;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -50,9 +50,7 @@ public abstract class ProjectileIdolBlock extends IdolBlock {
 		
 		BlockPos outputBlockPos = blockPos.offset(side);
 		if (world.getBlockState(outputBlockPos).getCollisionShape(world, outputBlockPos).isEmpty()) {
-			BlockPointer pointer = new BlockPointer(world, blockPos);
-			Position outputLocation = getOutputLocation(pointer, side);
-			
+			Vec3d outputLocation = getOutputLocation(blockPos, side);
 			ProjectileEntity projectileEntity = createProjectile(world, blockPos, outputLocation, side);
 			projectileEntity.setVelocity(side.getOffsetX(), side.getOffsetY(), side.getOffsetZ(), this.speed, this.divergence);
 			world.spawnEntity(projectileEntity);

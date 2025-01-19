@@ -5,7 +5,7 @@ import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
-import de.dafuqs.spectrum.blocks.BlockPosDelegate;
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
@@ -23,13 +23,15 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
-import net.minecraft.util.DyeColor;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
@@ -246,15 +248,15 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		
 		// does the cached recipe match?
 		if (this.cachedRecipe != null) {
-			if (this.cachedRecipe.getIngredients().get(0).test(inputStack)) {
+			if (this.cachedRecipe.getIngredients().get(INPUT_SLOT_ID).test(inputStack)) {
 				return this.cachedRecipe;
 			}
 		}
 		
 		// search matching recipe
-		Optional<InkConvertingRecipe> recipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.INK_CONVERTING, this, world);
+		Optional<RecipeEntry<InkConvertingRecipe>> recipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.INK_CONVERTING, new SingleStackRecipeInput(inventory.get(INPUT_SLOT_ID)), world);
 		if (recipe.isPresent()) {
-			this.cachedRecipe = recipe.get();
+			this.cachedRecipe = recipe.get().value();
 			return this.cachedRecipe;
 		} else {
 			this.cachedRecipe = null;

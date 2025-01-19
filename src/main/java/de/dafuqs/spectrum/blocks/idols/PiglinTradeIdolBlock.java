@@ -1,12 +1,12 @@
 package de.dafuqs.spectrum.blocks.idols;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.particle.*;
@@ -70,7 +70,7 @@ public class PiglinTradeIdolBlock extends IdolBlock {
 	}
 	
 	private void outputLoot(ServerWorld world, BlockPos blockPos, Direction side) {
-		Position outputLocation = getOutputLocation(new BlockPointer(world, blockPos), side);
+		Vec3d outputLocation = getOutputLocation(blockPos, side);
 		for (ItemStack barteredStack : getBarteredStacks(world, blockPos)) {
 			ItemEntity itemEntity = new ItemEntity(world, outputLocation.getX(), outputLocation.getY(), outputLocation.getZ(), barteredStack);
 			itemEntity.addVelocity(side.getOffsetX() * 0.25, side.getOffsetY() * 0.25 + 0.03, side.getOffsetZ() * 0.25);

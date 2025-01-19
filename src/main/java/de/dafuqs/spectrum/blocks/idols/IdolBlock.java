@@ -6,7 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.particle.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -111,10 +111,10 @@ public abstract class IdolBlock extends Block {
 		return 40;
 	}
 	
-	public Position getOutputLocation(BlockPointer pointer, Direction direction) {
-		double d = pointer.centerPos().getX() + 0.7D * (double) direction.getOffsetX();
-		double e = pointer.centerPos().getY() + 0.7D * (double) direction.getOffsetY();
-		double f = pointer.centerPos().getZ() + 0.7D * (double) direction.getOffsetZ();
+	public Vec3d getOutputLocation(BlockPos pos, Direction direction) {
+		double d = pos.getX() + 0.7D * (double) direction.getOffsetX();
+		double e = pos.getY() + 0.7D * (double) direction.getOffsetY();
+		double f = pos.getZ() + 0.7D * (double) direction.getOffsetZ();
 		return new Vec3d(d, e, f);
 	}
 	
