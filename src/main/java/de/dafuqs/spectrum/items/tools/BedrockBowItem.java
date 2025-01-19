@@ -4,6 +4,7 @@ import de.dafuqs.arrowhead.api.*;
 import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.*;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class BedrockBowItem extends BowItem implements Preenchanted, ArrowheadBo
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.POWER, 6);
 	}
 	

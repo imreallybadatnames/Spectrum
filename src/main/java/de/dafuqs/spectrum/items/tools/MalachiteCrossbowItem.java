@@ -25,7 +25,7 @@ public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted,
     }
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.PIERCING, 5);
 	}
 	

@@ -7,6 +7,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.*;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ public class GreatswordItem extends SwordItem implements Preenchanted {
 	}
 
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.SWEEPING, 4);
 	}
 

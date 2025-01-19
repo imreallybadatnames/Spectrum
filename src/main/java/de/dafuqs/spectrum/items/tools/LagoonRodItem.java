@@ -7,7 +7,8 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -21,7 +22,7 @@ public class LagoonRodItem extends SpectrumFishingRodItem implements Preenchante
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.LURE, 3);
 	}
 	

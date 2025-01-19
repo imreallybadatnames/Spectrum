@@ -16,6 +16,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -50,7 +51,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.IMPALING, 6);
 	}
 	

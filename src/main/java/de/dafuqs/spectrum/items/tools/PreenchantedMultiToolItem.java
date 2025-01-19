@@ -5,9 +5,8 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.*;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.text.*;
 
 import java.util.*;
@@ -19,7 +18,7 @@ public class PreenchantedMultiToolItem extends MultiToolItem implements Preencha
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.EFFICIENCY, 1);
 	}
 	

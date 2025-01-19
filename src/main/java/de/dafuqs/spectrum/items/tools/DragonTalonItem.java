@@ -16,6 +16,7 @@ import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
 import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -213,7 +214,7 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of();
 	}
 	

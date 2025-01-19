@@ -1,30 +1,30 @@
 package de.dafuqs.spectrum.api.item;
 
-import de.dafuqs.spectrum.SpectrumCommon;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
-import net.minecraft.enchantment.Enchantment;
+import de.dafuqs.spectrum.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
+import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import org.jetbrains.annotations.*;
 
+import java.util.*;
+
 public interface Preenchanted {
-
-	void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder);
-
-	default ItemEnchantmentsComponent getDefaultEnchantments() {
-		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-		SpectrumCommon.getRegistryLookup()
-				.flatMap(r -> r.getOptionalWrapper(RegistryKeys.ENCHANTMENT))
-				.ifPresent(impl -> addDefaultEnchantments(impl, builder));
+	
+	Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments();
+	
+	default ItemEnchantmentsComponent buildDefaultEnchantments(RegistryWrapper.WrapperLookup lookup) {
+		ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		for (Map.Entry<RegistryKey<Enchantment>, Integer> entry : getDefaultEnchantments().entrySet()) {
+			builder.set(lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(entry.getKey()), entry.getValue());
+		}
 		return builder.build();
 	}
 
 	default @NotNull ItemStack getDefaultEnchantedStack(Item item) {
-		var stack = new ItemStack(item);
-		SpectrumCommon.getRegistryLookup().ifPresent(
-				r -> stack.set(DataComponentTypes.ENCHANTMENTS, getDefaultEnchantments()));
+		ItemStack stack = item.getDefaultStack();
+		SpectrumCommon.getRegistryLookup().ifPresent(r -> stack.set(DataComponentTypes.ENCHANTMENTS, buildDefaultEnchantments()));
 		return stack;
 	}
 	

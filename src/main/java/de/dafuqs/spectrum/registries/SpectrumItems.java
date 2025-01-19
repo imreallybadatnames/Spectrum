@@ -292,7 +292,7 @@ public class SpectrumItems {
 	public static final Item ONYX_ROCK_CANDY = new RockCandyItem(IS.of().food(SpectrumFoodComponents.ONYX_ROCK_CANDY), RockCandy.RockCandyVariant.ONYX);
 	public static final Item MOONSTONE_ROCK_CANDY = new RockCandyItem(IS.of().food(SpectrumFoodComponents.MOONSTONE_ROCK_CANDY), RockCandy.RockCandyVariant.MOONSTONE);
 	
-	public static final Item BLOODBOIL_SYRUP = new StatusEffectDrinkItem(IS.of().food(SpectrumFoodComponents.BLOODBOIL_SYRUP).recipeRemainder(Items.GLASS_BOTTLE));
+	public static final Item BLOODBOIL_SYRUP = new DrinkItem(IS.of().food(SpectrumFoodComponents.BLOODBOIL_SYRUP).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item MILKY_RESIN = new Item(IS.of(Rarity.UNCOMMON));
 	
 	// Food & drinks

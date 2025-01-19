@@ -13,6 +13,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -200,8 +201,8 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
-		return Map.of(Enchantments.SWEEPING, 5);
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+		return Map.of(Enchantments.SWEEPING_EDGE, 5);
 	}
 	
 	@Override

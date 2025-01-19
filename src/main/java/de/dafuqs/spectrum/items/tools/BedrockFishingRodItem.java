@@ -3,16 +3,15 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -28,7 +27,7 @@ public class BedrockFishingRodItem extends SpectrumFishingRodItem implements Pre
 	}
 	
 	@Override
-	public Map<Enchantment, Integer> getDefaultEnchantments() {
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.LUCK_OF_THE_SEA, 4);
 	}
 	
