@@ -10,6 +10,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.*;
 import net.minecraft.client.gui.screen.narration.*;
 import net.minecraft.client.gui.widget.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -26,7 +27,7 @@ public class ColorSelectionWidget extends ClickableWidget {
 	protected final ColorPickerBlockEntity colorPicker;
 	
 	@Nullable
-	private Consumer<InkColor> changedListener;
+	private Consumer<Optional<InkColor>> changedListener;
 	protected final Screen screen;
 	
 	final List<Pair<InkColor, Boolean>> usableColors = new ArrayList<>(); // stores if a certain color should be displayed
@@ -50,28 +51,48 @@ public class ColorSelectionWidget extends ClickableWidget {
 		}
 	}
 	
-	public void setChangedListener(@Nullable Consumer<InkColor> changedListener) {
+	public void setChangedListener(@Nullable Consumer<Optional<InkColor>> changedListener) {
 		this.changedListener = changedListener;
 	}
 	
-	private void onChanged(InkColor newColor) {
+	private void onChanged(Optional<RegistryEntry<InkColor>> newColor) {
 		if (this.changedListener != null) {
 			this.changedListener.accept(newColor);
 		}
 	}
-
+	
 	@Override
-	protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-
+	protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+		// draw selection icons
+		int i = -1;
+		int currentX = this.getX() + 1;
+		int currentY = this.getY() + 1;
+		for (Pair<InkColor, Boolean> color : usableColors) {
+			if (color.getRight()) {
+				fillQuad(context.getMatrices(), currentX, currentY, 5, 5, color.getLeft().value().getColorVec());
+			}
+			i = i + 1;
+			currentX = currentX + 7;
+			if (i == 7) {
+				currentY = currentY + 7;
+				currentX = this.getX() + 1;
+			}
+		}
+		
+		// draw currently selected icon
+		Optional<RegistryEntry<InkColor>> selectedColor = this.colorPicker.getSelectedColor();
+		if (selectedColor.isPresent()) {
+			fillQuad(context.getMatrices(), selectedDotX, selectedDotY, 4, 4, selectedColor.get().value().getColorVec());
+		}
 	}
-
+	
 	@Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		
 		if (isUnselection(mouseX, mouseY)) {
 			client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, 1.0F, 1.0F);
-			onChanged(null);
+			onChanged(Optional.empty());
 		}
 		
 		boolean colorSelectionClicked = mouseX >= (double) this.getX() && mouseX < (double) (this.getX() + this.width) && mouseY >= (double) this.getY() && mouseY < (double) (this.getY() + this.height);
@@ -83,7 +104,7 @@ public class ColorSelectionWidget extends ClickableWidget {
 			int verticalColorOffset = yOffset / 7;
 			int newColorIndex = horizontalColorOffset + verticalColorOffset * 8;
 			
-			Pair<InkColor, Boolean> clickedColor = usableColors.get(newColorIndex);
+			Pair<RegistryEntry<InkColor>, Boolean> clickedColor = usableColors.get(newColorIndex);
 			if (clickedColor.getRight()) {
 				client.player.playSound(SpectrumSoundEvents.BUTTON_CLICK, 1.0F, 1.0F);
 				onChanged(clickedColor.getLeft());
@@ -102,30 +123,6 @@ public class ColorSelectionWidget extends ClickableWidget {
 	protected void appendClickableNarrations(NarrationMessageBuilder builder) {
 		builder.put(NarrationPart.TITLE, Text.translatable("spectrum.narration.color_selection", this.colorPicker.getSelectedColor()));
 	}
-
-	public void draw(DrawContext drawContext) {
-		// draw selection icons
-		int i = -1;
-		int currentX = this.getX() + 1;
-		int currentY = this.getY() + 1;
-		for (Pair<InkColor, Boolean> color : usableColors) {
-			if (color.getRight()) {
-				fillQuad(drawContext.getMatrices(), currentX, currentY, 5, 5, color.getLeft().getColorVec());
-			}
-			i = i + 1;
-			currentX = currentX + 7;
-			if (i == 7) {
-				currentY = currentY + 7;
-				currentX = this.getX() + 1;
-			}
-		}
-		
-		// draw currently selected icon
-		InkColor selectedColor = this.colorPicker.getSelectedColor();
-		if (selectedColor != null) {
-			fillQuad(drawContext.getMatrices(), selectedDotX, selectedDotY, 4, 4, selectedColor.getColorVec());
-		}
-	}
 	
 	private boolean isUnselection(double mouseX, double mouseY) {
 		return mouseX >= (double) selectedDotX && mouseX < (double) (selectedDotX + 4) && mouseY >= (double) selectedDotY && mouseY < (double) (selectedDotY + 4);
@@ -141,7 +138,6 @@ public class ColorSelectionWidget extends ClickableWidget {
 		if (overUnselection) {
 			drawContext.drawTooltip(client.textRenderer, List.of(Text.translatable("spectrum.tooltip.ink_powered.unselect_color")), Optional.empty(), getX(), getY());
 		} else {
-			
 			int xOffset = MathHelper.floor(mouseX) - this.getX();
 			int yOffset = MathHelper.floor(mouseY) - this.getY();
 			
@@ -149,9 +145,9 @@ public class ColorSelectionWidget extends ClickableWidget {
 			int verticalColorOffset = yOffset / 7;
 			int newColorIndex = horizontalColorOffset + verticalColorOffset * 8;
 			
-			Pair<InkColor, Boolean> hoveredColor = usableColors.get(newColorIndex);
+			Pair<RegistryEntry<InkColor>, Boolean> hoveredColor = usableColors.get(newColorIndex);
 			if (hoveredColor.getRight()) {
-				drawContext.drawTooltip(client.textRenderer, List.of(hoveredColor.getLeft().getName()), Optional.empty(), getX(), getY());
+				drawContext.drawTooltip(client.textRenderer, List.of(hoveredColor.getLeft().value().getName()), Optional.empty(), getX(), getY());
 			} else {
 				drawContext.drawTooltip(client.textRenderer, List.of(Text.translatable("spectrum.tooltip.ink_powered.unselect_color")), Optional.empty(), getX(), getY());
 			}

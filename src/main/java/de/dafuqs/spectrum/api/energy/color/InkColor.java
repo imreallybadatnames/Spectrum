@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.api.energy.color;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import io.netty.buffer.*;

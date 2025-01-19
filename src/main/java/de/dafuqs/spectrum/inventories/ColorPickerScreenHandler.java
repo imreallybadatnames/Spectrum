@@ -47,8 +47,8 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
-
-		var selectedColor = propertyDelegate.get(3) == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(propertyDelegate.get(3)));
+		
+		InkColor selectedColor = propertyDelegate.get(3) == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(propertyDelegate.get(3)));
 
 		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(getBlockPos());
 		if (blockEntity instanceof ColorPickerBlockEntity colorPickerBlockEntity) {

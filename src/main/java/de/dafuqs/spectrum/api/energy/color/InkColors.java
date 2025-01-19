@@ -57,7 +57,12 @@ public class InkColors {
 	
 	// in case an addon adds new colors
 	// for places where we have to use a fixed size list, like GUIs with limited space
-	public static final List<InkColor> BUILTIN_COLORS = List.of(InkColors.CYAN, InkColors.LIGHT_BLUE, InkColors.BLUE, InkColors.PURPLE, InkColors.MAGENTA, InkColors.PINK, InkColors.RED, InkColors.ORANGE, InkColors.YELLOW, InkColors.LIME, InkColors.GREEN, InkColors.BROWN, InkColors.BLACK, InkColors.GRAY, InkColors.LIGHT_GRAY, InkColors.WHITE);
+	public static final List<InkColor> BUILTIN_COLORS = List.of(
+			InkColors.CYAN, InkColors.LIGHT_BLUE, InkColors.BLUE, InkColors.PURPLE,
+			InkColors.MAGENTA, InkColors.PINK, InkColors.RED, InkColors.ORANGE,
+			InkColors.YELLOW, InkColors.LIME, InkColors.GREEN, InkColors.BROWN,
+			InkColors.BLACK, InkColors.GRAY, InkColors.LIGHT_GRAY, InkColors.WHITE
+	);
 	
 	protected static InkColor register(String name, InkColor inkColor) {
 		return Registry.register(SpectrumRegistries.INK_COLORS, SpectrumCommon.locate(name), inkColor);

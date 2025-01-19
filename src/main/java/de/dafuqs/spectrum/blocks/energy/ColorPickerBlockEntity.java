@@ -46,25 +46,26 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 	public static final int OUTPUT_SLOT_ID = 1;
 	public static final long TICKS_PER_CONVERSION = 5;
 	public static final long STORAGE_AMOUNT = 64 * 64 * 64 * 100;
+	
 	public DefaultedList<ItemStack> inventory;
 	protected TotalCappedInkStorage inkStorage;
 	protected boolean paused;
 	protected boolean inkDirty;
 	protected @Nullable InkConvertingRecipe cachedRecipe;
-	protected @Nullable InkColor selectedColor;
+	protected Optional<InkColor> selectedColor = Optional.empty();
 	private UUID ownerUUID;
-	private final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
+	private final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) { // TODO: sync using the ink sync packet instead? Currently it's hardcoded to InkColors that have a dyecolor representation
 		@Override
 		public int get(int index) {
 			if (index == 3)
-				return selectedColor == null ? -1 : selectedColor.getDyeColor().getId();
+				return selectedColor.isEmpty() ? -1 : selectedColor.get().getDyeColor().getId();
 			return super.get(index);
 		}
 
 		@Override
 		public void set(int index, int value) {
 			if (index == 3)
-				selectedColor = value == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(value));
+				selectedColor = value == -1 ? Optional.empty() : Optional.of(InkColor.ofDyeColor(DyeColor.byId(value)));
 			else
 				super.set(index, value);
 		}
@@ -80,7 +81,6 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		this.inkStorage = new TotalCappedInkStorage(STORAGE_AMOUNT, Map.of());
-		this.selectedColor = null;
 	}
 	
 	@SuppressWarnings("unused")
@@ -119,7 +119,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 				this.inkStorage = new TotalCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("SelectedColor", NbtElement.STRING_TYPE)) {
-			this.selectedColor = InkColor.ofIdString(nbt.getString("SelectedColor")).orElse(InkColors.CYAN);
+			this.selectedColor = InkColor.ofIdString(nbt.getString("SelectedColor"));
 		}
 	}
 	
@@ -131,8 +131,8 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		}
 		CodecHelper.writeNbt(nbt, "InkStorage", InkStorageComponent.CODEC, new InkStorageComponent(this.inkStorage));
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
-		if (this.selectedColor != null) {
-			nbt.putString("SelectedColor", this.selectedColor.getID().toString());
+		if (this.selectedColor.isPresent()) {
+			nbt.putString("SelectedColor", this.selectedColor.get().getID().toString());
 		}
 	}
 	
@@ -275,13 +275,13 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 			if (getOwnerIfOnline() instanceof ServerPlayerEntity serverPlayerEntity) {
 				owner = serverPlayerEntity;
 			}
-
-			if (this.selectedColor == null) {
+			
+			if (this.selectedColor.isEmpty()) {
 				for (InkColor color : InkColors.all()) {
 					transferredAmount += tryTransferInk(owner, stack, itemStorage, color);
 				}
 			} else {
-				transferredAmount = tryTransferInk(owner, stack, itemStorage, this.selectedColor);
+				transferredAmount = tryTransferInk(owner, stack, itemStorage, this.selectedColor.get());
 			}
 			
 			if (transferredAmount > 0) {
@@ -299,14 +299,14 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		}
 		return amount;
 	}
-
-	public void setSelectedColor(InkColor inkColor) {
+	
+	public void setSelectedColor(Optional<InkColor> inkColor) {
 		this.selectedColor = inkColor;
 		this.paused = false;
 		this.markDirty();
 	}
 	
-	public @Nullable InkColor getSelectedColor() {
+	public Optional<InkColor> getSelectedColor() {
 		return this.selectedColor;
 	}
 	

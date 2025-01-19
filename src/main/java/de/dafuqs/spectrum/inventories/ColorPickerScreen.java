@@ -10,12 +10,14 @@ import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
+import java.util.*;
 import java.util.function.*;
 
-public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> implements Consumer<InkColor> {
+public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> implements Consumer<Optional<RegistryEntry<InkColor>>> {
 	
 	protected final Identifier BACKGROUND = SpectrumCommon.locate("textures/gui/container/color_picker.png");
 	protected ColorSelectionWidget colorSelectionWidget;
@@ -64,7 +66,7 @@ public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> i
 
 		this.inkGaugeWidget.draw(drawContext);
 		this.inkMeterWidget.draw(drawContext);
-		this.colorSelectionWidget.draw(drawContext);
+		this.colorSelectionWidget.render(drawContext, mouseX, mouseY, delta);
 		
 		// gauge blanket
 		drawContext.drawTexture(BACKGROUND, startX + 52, startY + 18, 176, 0, 46, 46);
@@ -91,7 +93,7 @@ public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> i
 	}
 	
 	@Override
-	public void accept(InkColor inkColor) {
+	public void accept(Optional<RegistryEntry<InkColor>> inkColor) {
 		ColorPickerBlockEntity colorPicker = this.handler.getBlockEntity();
 		colorPicker.setSelectedColor(inkColor);
 		ClientPlayNetworking.send(new InkColorSelectedC2SPayload(inkColor));
