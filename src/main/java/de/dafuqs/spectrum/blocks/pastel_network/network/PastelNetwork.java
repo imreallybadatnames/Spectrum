@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.blocks.pastel_network.network;
 
+import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.helpers.*;
@@ -23,6 +24,7 @@ public class PastelNetwork {
 	protected final World world;
 	protected final UUID uuid;
 	protected final SchedulerMap<PastelTransmission> transmissions = new SchedulerMap<>();
+	protected final Optional<InkColor> color = Optional.empty(); // TODO: if set, only nodes of that color can connect to this network
 
     public enum Priority {
         GENERIC,
@@ -291,10 +293,8 @@ public class PastelNetwork {
     public void tick() {
         transmissions.tick();
     }
-
-
-
-    public UUID getUUID() {
+	
+	public UUID getUUID() {
         return this.uuid;
     }
 
@@ -304,10 +304,10 @@ public class PastelNetwork {
     }
 
     public int getColor() {
-        return getColor(this.uuid);
+		return this.color.isPresent() ? this.color.get().getColorInt() : getColor(this.uuid);
     }
-    
-    public static int getColor(UUID uuid) {
+	
+	private static int getColor(UUID uuid) {
         return ColorHelper.getRandomColor(uuid.hashCode());
     }
 

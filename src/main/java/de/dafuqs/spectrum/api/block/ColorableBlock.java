@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.api.block;
 
 import de.dafuqs.spectrum.helpers.ColorHelper;
-import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -22,11 +21,11 @@ public interface ColorableBlock {
      * @return True if coloring was successful, false if failed (like the block was this color already)
      */
     boolean color(World world, BlockPos pos, DyeColor color);
-
-    DyeColor getColor(BlockState state);
-
-    default boolean isColor(BlockState state, DyeColor color) {
-        return getColor(state) == color;
+	
+	DyeColor getColor(World world, BlockPos pos);
+	
+	default boolean isColor(World world, BlockPos pos, DyeColor color) {
+		return getColor(world, pos) == color;
     }
 
     default boolean tryColorUsingStackInHand(ItemStack handStack, World world, BlockPos pos, PlayerEntity player, Hand hand) {

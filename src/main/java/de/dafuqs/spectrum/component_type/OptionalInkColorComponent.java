@@ -28,4 +28,15 @@ public record OptionalInkColorComponent(Optional<InkColor> color) {
 		}
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		} else if (obj instanceof OptionalInkColorComponent otherComponent) {
+			return this.color.equals(otherComponent.color);
+		}
+		return false;
+	}
+	
+	
 }

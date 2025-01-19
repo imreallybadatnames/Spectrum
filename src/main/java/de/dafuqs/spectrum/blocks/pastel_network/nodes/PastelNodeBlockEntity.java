@@ -3,10 +3,11 @@ package de.dafuqs.spectrum.blocks.pastel_network.nodes;
 import com.google.common.base.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.pastel.*;
 import de.dafuqs.spectrum.blocks.pastel_network.*;
 import de.dafuqs.spectrum.blocks.pastel_network.network.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.progression.*;
@@ -18,7 +19,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
@@ -40,12 +40,12 @@ import net.minecraft.world.*;
 import org.apache.commons.lang3.*;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
 import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.*;
 
-public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory, Stampable, PastelUpgradeable {
+public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory, PastelUpgradeable {
 
 	public static final int MAX_FILTER_SLOTS = 25;
 	public static final int SLOTS_PER_ROW = 5;
@@ -62,6 +62,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected boolean cachedUnpowered = true;
 	protected PastelNetwork.Priority priority = PastelNetwork.Priority.GENERIC;
 	protected long itemCountUnderway = 0;
+	protected OptionalInkColorComponent color = OptionalInkColorComponent.DEFAULT;
 
 	// upgrade impl stuff
 	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor;
@@ -446,7 +447,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	public boolean canConnect(PastelNodeBlockEntity node) {
-		return this.pos.isWithinDistance(node.pos, RANGE);
+		return this.pos.isWithinDistance(node.pos, RANGE) && this.color.equals(node.color);
 	}
 
 	@Nullable
@@ -751,14 +752,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	public int hashCode() {
 		return this.pos.hashCode();
 	}
-
+	
+	// TODO: rewrite; we're searching for a matching network with the same color close by
 	@Override
-	public StampData recordStampData(Optional<PlayerEntity> user, BlockReference reference, World world) {
-		return new StampData(user.map(Entity::getUuid), reference, this);
-	}
-
-	@Override
-	public boolean handleImpression(Optional<UUID> stamper, Optional<PlayerEntity> user, BlockReference reference, World world) {
+	public boolean scanForMatchingNetworks(Optional<UUID> stamper, Optional<PlayerEntity> user, BlockReference reference, World world) {
 		var sourceNode = (PastelNodeBlockEntity) reference.tryGetBlockEntity().orElseThrow(() -> new IllegalStateException("Attempted to connect a non-existent node - what did you do?!"));
 		var manager = Pastel.getInstance(world.isClient());
 
@@ -786,34 +783,33 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 		return true;
 	}
-
-	@Override
-	public void clearImpression() {
+	
+	public State getState() {
+		return state;
+	}
+	
+	
+	public Optional<DyeColor> getColor() {
+		Optional<InkColor> optional = this.color.color();
+		return optional.map(InkColor::getDyeColor);
+	}
+	
+	public boolean setColor(DyeColor color) {
+		if (this.color.color().isPresent() && this.color.color().get().getDyeColor() == color) {
+			return false;
+		}
+		
+		this.color = new OptionalInkColorComponent(Optional.ofNullable(InkColor.ofDyeColor(color)));
+		
 		if (parentNetwork != null) {
 			Pastel.getInstance(world.isClient()).removeNode(this, NodeRemovalReason.DISCONNECT);
 			parentNetwork = null;
 			parentID = Optional.empty();
 		}
-	}
-
-	public State getState() {
-		return state;
-	}
-
-	@Override
-	public StampDataCategory getStampCategory() {
-		return SpectrumStampDataCategories.PASTEL;
-	}
-
-	@Override
-	public boolean canUserStamp(Optional<PlayerEntity> stamper) {
+		
 		return true;
 	}
-
-	@Override
-	public void onImpressedOther(StampData data, boolean success) {
-	}
-
+	
 	public enum State {
 		DISCONNECTED,
 		CONNECTED,

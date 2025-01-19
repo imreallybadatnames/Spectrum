@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.redstone;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
@@ -143,17 +143,16 @@ public class RedstoneTransceiverBlock extends AbstractRedstoneGateBlock implemen
 
 	@Override
 	public boolean color(World world, BlockPos pos, DyeColor color) {
-		BlockState currentState = world.getBlockState(pos);
-		if (getColor(currentState) == color) {
+		if (getColor(world, pos) == color) {
 			return false;
 		}
-		world.setBlockState(pos, currentState.with(CHANNEL, color));
+		world.setBlockState(pos, world.getBlockState(pos).with(CHANNEL, color));
 		return true;
 	}
 
 	@Override
-	public DyeColor getColor(BlockState state) {
-		return state.get(CHANNEL);
+	public DyeColor getColor(World world, BlockPos pos) {
+		return world.getBlockState(pos).get(CHANNEL);
 	}
 
 }

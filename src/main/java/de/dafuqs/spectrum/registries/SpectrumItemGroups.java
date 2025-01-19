@@ -48,7 +48,6 @@ public class SpectrumItemGroups {
 			.entries((displayContext, entries) -> {
 				addEquipmentEntry(SpectrumItems.GUIDEBOOK, entries);
 				addEquipmentEntry(SpectrumItems.PAINTBRUSH, entries);
-				addEquipmentEntry(SpectrumItems.TUNING_STAMP, entries);
 				addEquipmentEntry(SpectrumItems.BOTTLE_OF_FADING, entries);
 				addEquipmentEntry(SpectrumItems.BOTTLE_OF_FAILING, entries);
 				addEquipmentEntry(SpectrumItems.BOTTLE_OF_RUIN, entries);

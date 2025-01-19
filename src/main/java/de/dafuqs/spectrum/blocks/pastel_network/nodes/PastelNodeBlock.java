@@ -1,9 +1,10 @@
 package de.dafuqs.spectrum.blocks.pastel_network.nodes;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.blocks.decoration.*;
 import de.dafuqs.spectrum.blocks.pastel_network.network.*;
 import de.dafuqs.spectrum.progression.*;
@@ -13,7 +14,7 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityProvider {
+public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityProvider, ColorableBlock {
 
 	public static final MapCodec<PastelNodeBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 			createSettingsCodec(),
@@ -120,8 +121,10 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 
 	@Override
 	public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		// TODO: We do not handle the null possibility here!
 		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
+		if (blockEntity == null) {
+			return ItemActionResult.FAIL;
+		}
 
 		if (player.isSneaking() && stack.isEmpty()) {
 			if (AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.PASTEL_NODE_UPGRADING)) {
@@ -135,10 +138,11 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 				}
 			}
 			return ItemActionResult.FAIL;
-		} else if (stack.isOf(SpectrumItems.TUNING_STAMP)) {
-			return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		} else if (stack.isOf(SpectrumItems.PAINTBRUSH)) {
-			return sendDebugMessage(world, player, blockEntity);
+			if (player.isCreative() && player.isSneaking()) {
+				return sendDebugMessage(world, player, blockEntity);
+			}
+			return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		} else if (AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.PASTEL_NODE_UPGRADING) && stack.isIn(SpectrumItemTags.PASTEL_NODE_UPGRADES) && blockEntity.tryInteractRings(stack, pastelNodeType)) {
 			if (!world.isClient())
 				SpectrumAdvancementCriteria.PASTEL_NODE_UPGRADING.trigger((ServerPlayerEntity) player, stack);
@@ -221,5 +225,24 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new PastelNodeBlockEntity(pos, state);
 	}
-
+	
+	@Override
+	public boolean color(World world, BlockPos pos, DyeColor color) {
+		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
+		if (blockEntity != null) {
+			return false;
+		}
+		return blockEntity.setColor(color);
+	}
+	
+	@Override
+	public DyeColor getColor(World world, BlockPos pos) {
+		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
+		if (blockEntity != null) {
+			return DyeColor.RED;
+		}
+		
+		return blockEntity.getColor().orElse(DyeColor.GRAY);
+	}
+	
 }

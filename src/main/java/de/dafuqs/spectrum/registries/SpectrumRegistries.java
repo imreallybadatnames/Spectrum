@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.pastel.*;
 import de.dafuqs.spectrum.api.predicate.*;
 import de.dafuqs.spectrum.entity.variants.*;
@@ -50,10 +49,6 @@ public class SpectrumRegistries {
 	private static final Identifier PASTEL_UPGRADE_ID = SpectrumCommon.locate("pastel_upgrade");
 	public static final RegistryKey<Registry<PastelUpgradeSignature>> PASTEL_UPGRADE_KEY = RegistryKey.ofRegistry(PASTEL_UPGRADE_ID);
 	public static final Registry<PastelUpgradeSignature> PASTEL_UPGRADE = FabricRegistryBuilder.createSimple(PASTEL_UPGRADE_KEY).attribute(RegistryAttribute.SYNCED).buildAndRegister();
-
-	private static final Identifier STAMP_DATA_CATEGORY_ID = SpectrumCommon.locate("stamp_data_category");
-	public static final RegistryKey<Registry<StampDataCategory>> STAMP_DATA_CATEGORY_KEY = RegistryKey.ofRegistry(STAMP_DATA_CATEGORY_ID);
-	public static final Registry<StampDataCategory> STAMP_DATA_CATEGORY = FabricRegistryBuilder.createSimple(STAMP_DATA_CATEGORY_KEY).attribute(RegistryAttribute.SYNCED).buildAndRegister();
 	
 	private static final Identifier WORLD_CONDITION_TYPE_ID = SpectrumCommon.locate("world_condition_type");
 	public static final RegistryKey<Registry<SpectrumLocationPredicateType<?>>> WORLD_CONDITION_TYPE_KEY = RegistryKey.ofRegistry(WORLD_CONDITION_TYPE_ID);
