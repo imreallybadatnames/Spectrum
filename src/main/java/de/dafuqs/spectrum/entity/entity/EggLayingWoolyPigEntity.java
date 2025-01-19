@@ -19,6 +19,7 @@ import net.minecraft.loot.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -39,7 +40,7 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 	private static final int MAX_GRASS_TIMER = 40;
 	private static final TrackedData<Byte> COLOR_AND_SHEARED = DataTracker.registerData(EggLayingWoolyPigEntity.class, TrackedDataHandlerRegistry.BYTE);
 	private static final TrackedData<Boolean> HATLESS = DataTracker.registerData(EggLayingWoolyPigEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	private static final Map<DyeColor, float[]> COLORS = new EnumMap<>(ColorHelper.VANILLA_DYE_COLORS.stream().collect(Collectors.toMap(Function.identity(), EggLayingWoolyPigEntity::getDyedColor)));
+	private static final Map<DyeColor, Integer> COLORS = new EnumMap<>(ColorHelper.VANILLA_DYE_COLORS.stream().collect(Collectors.toMap(Function.identity(), EggLayingWoolyPigEntity::getDyedColor)));
 	
 	private int eatGrassTimer;
 	private EatGrassGoal eatGrassGoal;
@@ -205,11 +206,6 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 		}
 	}
 	
-	@Override
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-		return 0.95F * dimensions.height;
-	}
-	
 	public float getNeckAngle(float delta) {
 		if (this.eatGrassTimer <= 0) {
 			return 0.0F;
@@ -279,16 +275,19 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 	}
 	
 	// COLORING
-	public static float[] getRgbColor(DyeColor dyeColor) {
+	public static int getRgbColor(DyeColor dyeColor) {
 		return COLORS.get(dyeColor);
 	}
 	
-	private static float[] getDyedColor(DyeColor color) {
+	private static int getDyedColor(DyeColor color) {
 		if (color == DyeColor.WHITE) {
-			return new float[]{1.0F, 1.0F, 1.0F};
+			return -1644826;
 		} else {
-			float[] fs = color.getColorComponents();
-			return new float[]{fs[0], fs[1], fs[2]};
+			int i = color.getEntityColor();
+			return net.minecraft.util.math.ColorHelper.Argb.getArgb(255,
+					MathHelper.floor((float) net.minecraft.util.math.ColorHelper.Argb.getRed(i) * 0.75F),
+					MathHelper.floor((float) net.minecraft.util.math.ColorHelper.Argb.getGreen(i) * 0.75F),
+					MathHelper.floor((float) net.minecraft.util.math.ColorHelper.Argb.getBlue(i) * 0.75F));
 		}
 	}
 	
@@ -305,13 +304,17 @@ public class EggLayingWoolyPigEntity extends AnimalEntity implements Shearable {
 		World world = this.getWorld();
 		DyeColor dyeColor = ((EggLayingWoolyPigEntity) firstParent).getColor();
 		DyeColor dyeColor2 = ((EggLayingWoolyPigEntity) secondParent).getColor();
-		CraftingInventory craftingInventory = createDyeMixingCraftingInventory(dyeColor, dyeColor2);
-		Optional<Item> optionalItem = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingInventory, world).map((recipe) -> recipe.craft(craftingInventory, world.getRegistryManager())).map(ItemStack::getItem);
+		CraftingRecipeInput craftingRecipeInput = createChildColorRecipeInput(dyeColor, dyeColor2);
+		Optional<Item> optionalItem = this.getWorld().getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingRecipeInput, this.getWorld()).map((recipe) -> recipe.value().craft(craftingRecipeInput, this.getWorld().getRegistryManager())).map(ItemStack::getItem);
 		
 		if (optionalItem.isPresent() && optionalItem.get() instanceof DyeItem dyeItem) {
 			return dyeItem.getColor();
 		}
 		return world.random.nextBoolean() ? dyeColor : dyeColor2;
+	}
+	
+	private static CraftingRecipeInput createChildColorRecipeInput(DyeColor firstColor, DyeColor secondColor) {
+		return CraftingRecipeInput.create(2, 1, List.of(new ItemStack(DyeItem.byColor(firstColor)), new ItemStack(DyeItem.byColor(secondColor))));
 	}
 	
 	private static CraftingInventory createDyeMixingCraftingInventory(DyeColor firstColor, DyeColor secondColor) {

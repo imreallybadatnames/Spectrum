@@ -30,7 +30,7 @@ public class Spectrum3x3ContainerScreen extends HandledScreen<Spectrum3x3Contain
 	
 	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		this.renderBackground(drawContext);
+		this.renderBackground(drawContext, mouseX, mouseY, delta);
 		super.render(drawContext, mouseX, mouseY, delta);
 		this.drawMouseoverTooltip(drawContext, mouseX, mouseY);
 	}

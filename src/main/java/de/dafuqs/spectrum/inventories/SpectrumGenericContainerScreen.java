@@ -29,7 +29,7 @@ public class SpectrumGenericContainerScreen extends HandledScreen<GenericSpectru
 	
 	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		this.renderBackground(drawContext);
+		this.renderBackground(drawContext, mouseX, mouseY, delta);
 		super.render(drawContext, mouseX, mouseY, delta);
 		this.drawMouseoverTooltip(drawContext, mouseX, mouseY);
 	}

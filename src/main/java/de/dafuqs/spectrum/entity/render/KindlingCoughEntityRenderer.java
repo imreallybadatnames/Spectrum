@@ -29,7 +29,7 @@ public class KindlingCoughEntityRenderer extends EntityRenderer<KindlingCoughEnt
 		matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, kindlingCoughEntity.prevPitch, kindlingCoughEntity.getPitch())));
 		this.model.setAngles(kindlingCoughEntity, g, 0.0F, -0.1F, 0.0F, 0.0F);
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(TEXTURE));
-		this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+		this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV);
 		matrixStack.pop();
 		super.render(kindlingCoughEntity, f, g, matrixStack, vertexConsumerProvider, i);
 	}

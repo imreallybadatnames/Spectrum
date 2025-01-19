@@ -99,7 +99,7 @@ public class InventoryHelper {
 		List<ItemStack> foundStacks = new ArrayList<>();
 		int count = 0;
 		for (ItemStack inventoryStack : inventory) {
-			if (ItemStack.canCombine(inventoryStack, itemStack)) {
+			if (ItemStack.areItemsAndComponentsEqual(inventoryStack, itemStack)) {
 				foundStacks.add(inventoryStack);
 				count += inventoryStack.getCount();
 				if (count >= maxSearchAmount) {
@@ -161,7 +161,7 @@ public class InventoryHelper {
 	}
 
 	public static void combineStacks(ItemStack originalStack, ItemStack addingStack) {
-		if (ItemStack.canCombine(originalStack, addingStack)) {
+		if (ItemStack.areItemsAndComponentsEqual(originalStack, addingStack)) {
 			int leftOverAmountInExistingStack = originalStack.getMaxCount() - originalStack.getCount();
 			if (leftOverAmountInExistingStack > 0) {
 				int addAmount = Math.min(leftOverAmountInExistingStack, addingStack.getCount());
@@ -391,7 +391,7 @@ public class InventoryHelper {
 		int removeItemStackCount = removeItemStack.getCount();
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack currentStack = inventory.getStack(i);
-			if (ItemStack.canCombine(currentStack, removeItemStack)) {
+			if (ItemStack.areItemsAndComponentsEqual(currentStack, removeItemStack)) {
 				ItemStack remainder = currentStack.getRecipeRemainder();
 				
 				int amountAbleToDecrement = Math.min(currentStack.getCount(), removeItemStackCount);
@@ -415,7 +415,7 @@ public class InventoryHelper {
 	}
 	
 	public static boolean canCombineItemStacks(ItemStack currentItemStack, ItemStack additionalItemStack) {
-		return currentItemStack.isEmpty() || additionalItemStack.isEmpty() || (ItemStack.canCombine(currentItemStack, additionalItemStack)
+		return currentItemStack.isEmpty() || additionalItemStack.isEmpty() || (ItemStack.areItemsAndComponentsEqual(currentItemStack, additionalItemStack)
 				&& (currentItemStack.getCount() + additionalItemStack.getCount() <= currentItemStack.getMaxCount()));
 	}
 	
@@ -473,7 +473,7 @@ public class InventoryHelper {
 				}
 			} else {
 				itemCount += slotStack.getCount();
-				if (ItemStack.canCombine(itemStack, slotStack)) {
+				if (ItemStack.areItemsAndComponentsEqual(itemStack, slotStack)) {
 					matchingStack = slotStack;
 				}
 			}

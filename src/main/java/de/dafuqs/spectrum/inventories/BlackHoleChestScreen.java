@@ -39,9 +39,10 @@ public class BlackHoleChestScreen extends HandledScreen<BlackHoleChestScreenHand
 	
 	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		renderBackground(drawContext);
+		renderBackground(drawContext, mouseX, mouseY, delta);
 		super.render(drawContext, mouseX, mouseY, delta);
 		
+		// TODO: that should probably not be dummied out? o.O
 		/*if(mouseX > x+153 && mouseX < x+153+16 && mouseY > y+5 && mouseY < y+5+16) {
 			this.renderTooltip(matrices, Text.translatable("block.spectrum.compacting_chest.toggle_crafting_mode"), mouseX, mouseY);
 		} else {

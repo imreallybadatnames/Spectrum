@@ -4,6 +4,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.collection.*;
 
@@ -41,7 +42,9 @@ public class LockableCraftingResultSlot extends CraftingResultSlot {
 	@Override
 	public void onTakeItem(PlayerEntity player, ItemStack stack) {
 		this.onCrafted(stack);
-		DefaultedList<ItemStack> defaultedList = player.getWorld().getRecipeManager().getRemainingStacks(RecipeType.CRAFTING, this.input, player.getWorld());
+		CraftingRecipeInput.Positioned positioned = this.input.createPositionedRecipeInput();
+		CraftingRecipeInput craftingRecipeInput = positioned.input();
+		DefaultedList<ItemStack> defaultedList = player.getWorld().getRecipeManager().getRemainingStacks(RecipeType.CRAFTING, craftingRecipeInput, player.getWorld());
 		
 		for (int i = craftingGridStartIndex; i < craftingGridEndIndex + 1; ++i) {
 			ItemStack slotStack = this.input.getStack(i);
@@ -54,7 +57,7 @@ public class LockableCraftingResultSlot extends CraftingResultSlot {
 			if (!remainingStacks.isEmpty()) {
 				if (slotStack.isEmpty()) {
 					this.input.setStack(i, remainingStacks);
-				} else if (ItemStack.canCombine(slotStack, remainingStacks)) {
+				} else if (ItemStack.areItemsAndComponentsEqual(slotStack, remainingStacks)) {
 					remainingStacks.increment(slotStack.getCount());
 					this.input.setStack(i, remainingStacks);
 				} else if (!this.player.getInventory().insertStack(remainingStacks)) {

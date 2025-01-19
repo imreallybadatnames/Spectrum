@@ -28,32 +28,33 @@ public class EggLayingWoolyPigWoolFeatureRenderer extends FeatureRenderer<EggLay
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, EggLayingWoolyPigEntity entity, float f, float g, float h, float j, float k, float l) {
 		if (entity.isInvisible()) {
 			MinecraftClient minecraftClient = MinecraftClient.getInstance();
-			boolean bl = minecraftClient.hasOutline(entity);
-			if (bl) {
+			boolean hasOutline = minecraftClient.hasOutline(entity);
+			if (hasOutline) {
+				int rgbColor = EggLayingWoolyPigEntity.getRgbColor(entity.getColor());
 				VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getOutline(EggLayingWoolyPigEntityRenderer.TEXTURE));
 				if (!entity.isHatless()) {
 					this.getContextModel().copyStateTo(this.hat);
 					this.hat.animateModel(entity, f, g, h);
 					this.hat.setAngles(entity, f, g, j, k, l);
-					this.hat.render(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(entity, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+					this.hat.render(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(entity, 0.0F), rgbColor);
 				}
 				if (!entity.isSheared()) {
 					this.getContextModel().copyStateTo(this.wool);
 					this.wool.animateModel(entity, f, g, h);
 					this.wool.setAngles(entity, f, g, j, k, l);
-					this.wool.render(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(entity, 0.0F), 0.0F, 0.0F, 0.0F, 1.0F);
+					this.wool.render(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlay(entity, 0.0F), rgbColor);
 				}
 			}
 		} else {
-			float[] rgbColor = EggLayingWoolyPigEntity.getRgbColor(entity.getColor());
+			int rgbColor = EggLayingWoolyPigEntity.getRgbColor(entity.getColor());
 			if (!entity.isHatless()) {
 				this.getContextModel().copyStateTo(this.hat);
 				this.hat.animateModel(entity, f, g, h);
 				this.hat.setAngles(entity, f, g, j, k, l);
-				render(this.getContextModel(), this.hat, getTexture(entity), matrixStack, vertexConsumerProvider, i, entity, f, g, j, k, l, h, rgbColor[0], rgbColor[1], rgbColor[2]);
+				render(this.getContextModel(), this.hat, getTexture(entity), matrixStack, vertexConsumerProvider, i, entity, f, g, j, k, l, h, rgbColor);
 			}
 			if (!entity.isSheared()) {
-				render(this.getContextModel(), this.wool, getTexture(entity), matrixStack, vertexConsumerProvider, i, entity, f, g, j, k, l, h, rgbColor[0], rgbColor[1], rgbColor[2]);
+				render(this.getContextModel(), this.wool, getTexture(entity), matrixStack, vertexConsumerProvider, i, entity, f, g, j, k, l, h, rgbColor);
 			}
 		}
 	}
