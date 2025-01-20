@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.items.trinkets;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -12,7 +11,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -23,7 +22,7 @@ import net.minecraft.world.*;
 
 import java.util.*;
 
-public class TakeOffBeltItem extends SpectrumTrinketItem implements ExtendedEnchantable {
+public class TakeOffBeltItem extends SpectrumTrinketItem {
 	
 	public static final int CHARGE_TIME_TICKS = 20;
 	public static final int MAX_CHARGES = 8;
@@ -102,15 +101,9 @@ public class TakeOffBeltItem extends SpectrumTrinketItem implements ExtendedEnch
 		return stack.getCount() == 1;
 	}
 	
-	
 	@Override
 	public int getEnchantability() {
 		return 8;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.POWER || enchantment == Enchantments.FEATHER_FALLING;
 	}
 	
 }

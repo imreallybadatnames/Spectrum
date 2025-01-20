@@ -1,47 +1,58 @@
 package de.dafuqs.spectrum.mixin;
 
-import de.dafuqs.spectrum.SpectrumCommon;
-import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.helpers.SpectrumEnchantmentHelper;
+import com.llamalad7.mixinextras.injector.*;
+import de.dafuqs.spectrum.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
+import net.minecraft.registry.tag.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
+
+import java.util.*;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-
-	@Inject(method = "getApplicableItems()Lnet/minecraft/registry/entry/RegistryEntryList;", at = @At("RETURN"), cancellable = true)
-	public void spectrum$getAcceptableItems(CallbackInfoReturnable<RegistryEntryList<Item>> cir) {
-		var enchantment = (Enchantment) (Object) this;
-		var items = cir.getReturnValue();
-		var blacklist = SpectrumEnchantmentHelper.getBlacklist(enchantment);
-		var withoutBlacklisted = blacklist.stream().filter(b -> !items.contains(b)).toList();
-		cir.setReturnValue(RegistryEntryList.of(withoutBlacklisted));
+	
+	@ModifyReturnValue(method = "getApplicableItems()Lnet/minecraft/registry/entry/RegistryEntryList;", at = @At("RETURN"))
+	public RegistryEntryList<Item> spectrum$getAcceptableItems(RegistryEntryList<Item> original) {
+		Enchantment enchantment = (Enchantment) (Object) this;
+		
+		RegistryEntry<Enchantment> entry = RegistryEntry.of(enchantment);
+		TagKey<Item> blacklistedEnchantableTag = TagKey.of(RegistryKeys.ITEM, SpectrumCommon.locate("enchantable/blacklisted/" + entry.getIdAsString().replace(':', '_')));
+		List<RegistryEntry<Item>> modified = original.stream().filter(itemRegistryEntry -> itemRegistryEntry.isIn(blacklistedEnchantableTag)).toList();
+		
+		return RegistryEntryList.of(modified);
 	}
-
-	@Inject(method = "isSupportedItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"), cancellable = true)
-	public void spectrum$isSupportedItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(spectrum$modifyIsSupported((Enchantment) (Object) this, stack, cir.getReturnValue()));
+	
+	@ModifyReturnValue(method = "isSupportedItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
+	public boolean spectrum$isSupportedItems(boolean original, ItemStack stack) {
+		return spectrum$modifyIsSupported((Enchantment) (Object) this, stack, original);
 	}
-
-	@Inject(method = "isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"), cancellable = true)
-	public void spectrum$isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(spectrum$modifyIsSupported((Enchantment) (Object) this, stack, cir.getReturnValue()));
+	
+	@ModifyReturnValue(method = "isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
+	public boolean spectrum$isAcceptableItem(boolean original, ItemStack stack) {
+		return spectrum$modifyIsSupported((Enchantment) (Object) this, stack, original);
 	}
 
 	@Unique
 	private static boolean spectrum$modifyIsSupported(Enchantment enchantment, ItemStack stack, boolean original) {
-		var isExtendedEnchantable = stack.getItem() instanceof ExtendedEnchantable extendedEnchantable
-				&& SpectrumCommon.getRegistryLookup()
-				.flatMap(r -> r.getOptionalWrapper(RegistryKeys.ENCHANTMENT))
-				.map(impl -> extendedEnchantable.acceptsEnchantment(impl, enchantment))
-				.orElse(false);
-		var isBlacklisted = stack.isIn(SpectrumEnchantmentHelper.getBlacklist(enchantment));
-		return (original || isExtendedEnchantable) && !isBlacklisted;
+		if (original) {
+			RegistryEntry<Enchantment> entry = RegistryEntry.of(enchantment);
+			TagKey<Item> blacklistedEnchantableTag = TagKey.of(RegistryKeys.ITEM, SpectrumCommon.locate("enchantable/blacklisted/" + entry.getIdAsString().replace(':', '_')));
+			if (stack.isIn(blacklistedEnchantableTag)) {
+				original = false;
+			}
+		} else {
+			RegistryEntry<Enchantment> entry = RegistryEntry.of(enchantment);
+			TagKey<Item> extendedEnchantableTag = TagKey.of(RegistryKeys.ITEM, SpectrumCommon.locate("enchantable/extended/" + entry.getIdAsString().replace(':', '_')));
+			if (stack.isIn(extendedEnchantableTag)) {
+				original = true;
+			}
+		}
+		
+		return original;
 	}
 	
 }

@@ -1,25 +1,24 @@
 package de.dafuqs.spectrum.helpers;
 
-import de.dafuqs.spectrum.SpectrumCommon;
-import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.mixin.accessors.EnchantmentAccessor;
+import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.registry.entry.*;
+import net.minecraft.server.network.*;
+import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.*;
 
 public class SpectrumEnchantmentHelper {
 
@@ -185,15 +184,17 @@ public class SpectrumEnchantmentHelper {
 		return new Pair<>(itemStack, removals.get());
 	}
 	
-	public static <T extends Item & ExtendedEnchantable> ItemStack getMaxEnchantedStack(@NotNull T item) {
-		ItemStack itemStack = item.getDefaultStack();
-		for (Enchantment enchantment : Registries.ENCHANTMENT.stream().toList()) {
-			if (item.acceptsEnchantment(enchantment)) {
-				int maxLevel = enchantment.getMaxLevel();
-				itemStack = addOrUpgradeEnchantment(itemStack, enchantment, maxLevel, true, true).getRight();
-			}
+	public static ItemStack getEnchantedStack(RegistryWrapper.WrapperLookup lookup, Item item, Map<RegistryKey<Enchantment>, Integer> enchantments) {
+		RegistryWrapper<Enchantment> wrapper = lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+		ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+		
+		for (Map.Entry<RegistryKey<Enchantment>, Integer> e : enchantments.entrySet()) {
+			builder.add(wrapper.getOrThrow(e.getKey()), 5);
 		}
-		return itemStack;
+		ItemStack stack = item.getDefaultStack();
+		stack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
+		
+		return stack;
 	}
 
 	public static int getLevel(RegistryWrapper.WrapperLookup registryLookup, RegistryKey<Enchantment> enchantment, ItemStack stack) {
@@ -241,12 +242,6 @@ public class SpectrumEnchantmentHelper {
 
 	public static float getAddtionalCritDamageMultiplier(int improvedCriticalLevel) {
 		return SpectrumCommon.CONFIG.ImprovedCriticalExtraDamageMultiplierPerLevel * improvedCriticalLevel;
-	}
-
-	public static RegistryEntryList<Item> getBlacklist(Enchantment enchantment) {
-		return enchantment.effects().getOrDefault(
-				SpectrumEnchantmentEffectComponentTypes.BLACKLISTED_ITEMS,
-				RegistryEntryList.empty());
 	}
 
 }

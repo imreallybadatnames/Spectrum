@@ -23,6 +23,8 @@ import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 
+import java.util.*;
+
 @SuppressWarnings("unused")
 public class SpectrumItemGroups {
 	
@@ -113,7 +115,7 @@ public class SpectrumItemGroups {
 				addEquipmentEntry(SpectrumItems.GLOW_VISION_GOGGLES, entries);
 				addEquipmentEntry(SpectrumItems.JEOPARDANT, entries);
 				addEquipmentEntry(SpectrumItems.SEVEN_LEAGUE_BOOTS, entries);
-				entries.add(SpectrumEnchantmentHelper.getMaxEnchantedStack(SpectrumItems.SEVEN_LEAGUE_BOOTS));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.SEVEN_LEAGUE_BOOTS, Map.of(Enchantments.POWER, 5)));
 				entries.add(SpectrumItems.COTTON_CLOUD_BOOTS);
 				entries.add(SpectrumItems.RADIANCE_PIN);
 				entries.add(SpectrumItems.TOTEM_PENDANT);
