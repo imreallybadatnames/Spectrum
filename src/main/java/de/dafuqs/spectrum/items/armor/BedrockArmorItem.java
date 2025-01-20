@@ -8,14 +8,15 @@ import net.fabricmc.api.*;
 import net.minecraft.client.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.*;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
+
+import java.util.*;
 
 public class BedrockArmorItem extends ArmorItem implements Preenchanted {
     @Environment(EnvType.CLIENT)
@@ -71,8 +72,9 @@ public class BedrockArmorItem extends ArmorItem implements Preenchanted {
     public boolean hasGlint(ItemStack stack) {
         return false;
     }
-
-    @Override
-    public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-    }
+	
+	@Override
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+		return Map.of();
+	}
 }

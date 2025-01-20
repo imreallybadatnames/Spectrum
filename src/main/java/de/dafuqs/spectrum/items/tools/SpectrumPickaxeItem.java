@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.item.*;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
+
+import java.util.*;
 
 public class SpectrumPickaxeItem extends PickaxeItem implements Preenchanted {
 	
@@ -16,9 +17,9 @@ public class SpectrumPickaxeItem extends PickaxeItem implements Preenchanted {
 	public ItemStack getDefaultStack() {
 		return getDefaultEnchantedStack(this);
 	}
-
-	@Override
-	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-	}
 	
+	@Override
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+		return Map.of();
+	}
 }

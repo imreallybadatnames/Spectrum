@@ -117,28 +117,28 @@ public class SpectrumItems {
 	public static final Item MULTITOOL = new PreenchantedMultiToolItem(ToolMaterials.IRON, 2, -2.4F, IS.of(Rarity.UNCOMMON).maxDamage(ToolMaterials.IRON.getDurability()));
 	public static final Item TENDER_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterial.LOW_HEALTH, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.LOW_HEALTH.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterial.LOW_HEALTH, 1, -2.8F))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.SILK_TOUCH).ifPresent(e -> builder.add(e, 1));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.SILK_TOUCH, 1);
 		}
 	};
 	public static final Item LUCKY_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterial.LOW_HEALTH, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.LOW_HEALTH.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterial.LOW_HEALTH, 1, -2.8F))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.FORTUNE).ifPresent(e -> builder.add(e, 3));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.FORTUNE, 3);
 		}
 	};
 	public static final Item RAZOR_FALCHION = new RazorFalchionItem(SpectrumToolMaterial.LOW_HEALTH, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.LOW_HEALTH.getDurability()).attributeModifiers(SwordItem.createAttributeModifiers(SpectrumToolMaterial.LOW_HEALTH, 4, -2.2F)));
 	public static final Item OBLIVION_PICKAXE = new OblivionPickaxeItem(SpectrumToolMaterial.VOIDING, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.VOIDING.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterial.VOIDING, 1, -2.8F)));
 	public static final Item RESONANT_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterial.LOW_HEALTH_MINING_LEVEL_4, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.LOW_HEALTH.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterial.LOW_HEALTH_MINING_LEVEL_4, 1, -2.8F))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(SpectrumEnchantments.CLOAKED_RESONANCE).ifPresent(e -> builder.add(e, 1));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(SpectrumEnchantments.CLOAKED_RESONANCE, 1);
 		}
 	};
 	public static final Item DRAGONRENDING_PICKAXE = new GlintlessPickaxe(SpectrumToolMaterial.DRACONIC, IS.of(Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.DRACONIC.getDurability()).attributeModifiers(PickaxeItem.createAttributeModifiers(SpectrumToolMaterial.DRACONIC, 1, -2.8F))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(SpectrumEnchantments.CLOAKED_RAZING).ifPresent(e -> builder.add(e, 3));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(SpectrumEnchantments.CLOAKED_RAZING, 3);
 		}
 	};
 	public static final SpectrumFishingRodItem LAGOON_ROD = new LagoonRodItem(IS.of().maxDamage(256));
@@ -147,8 +147,8 @@ public class SpectrumItems {
 	// Bedrock Tools
 	public static final Item BEDROCK_PICKAXE = new SpectrumPickaxeItem(SpectrumToolMaterial.BEDROCK, IS.of(Rarity.UNCOMMON).attributeModifiers(AxeItem.createAttributeModifiers(SpectrumToolMaterial.BEDROCK, 1, -2.8F)).fireproof().maxDamage(SpectrumToolMaterial.BEDROCK.getDurability()).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.SILK_TOUCH).ifPresent(e -> builder.add(e, 1));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.SILK_TOUCH, 1);
 		}
 	};
 	public static final Item BEDROCK_AXE = new BedrockAxeItem(SpectrumToolMaterial.BEDROCK, IS.of(Rarity.UNCOMMON).attributeModifiers(AxeItem.createAttributeModifiers(SpectrumToolMaterial.BEDROCK, 5, -3.0F)).fireproof().maxDamage(SpectrumToolMaterial.BEDROCK.getDurability()).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false)));
@@ -197,26 +197,26 @@ public class SpectrumItems {
 	// Bedrock Armor
 	public static final Item BEDROCK_HELMET = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.HELMET, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*13).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.PROJECTILE_PROTECTION).ifPresent(e -> builder.add(e, 5));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.PROJECTILE_PROTECTION, 5);
 		}
 	};
 	public static final Item BEDROCK_CHESTPLATE = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.CHESTPLATE, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*15).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.PROTECTION).ifPresent(e -> builder.add(e, 5));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.PROTECTION, 5);
 		}
 	};
 	public static final Item BEDROCK_LEGGINGS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.LEGGINGS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*16).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.BLAST_PROTECTION).ifPresent(e -> builder.add(e, 5));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.BLAST_PROTECTION, 5);
 		}
 	};
 	public static final Item BEDROCK_BOOTS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.BOOTS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*11).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
-		public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-			impl.getOptional(Enchantments.FIRE_PROTECTION).ifPresent(e -> builder.add(e, 5));
+		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+			return Map.of(Enchantments.FIRE_PROTECTION, 5);
 		}
 	};
 	

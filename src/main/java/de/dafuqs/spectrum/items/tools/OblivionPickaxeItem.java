@@ -2,13 +2,14 @@ package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+
+import java.util.*;
 
 public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 	
@@ -30,8 +31,8 @@ public class OblivionPickaxeItem extends SpectrumPickaxeItem {
 	}
 	
 	@Override
-	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> impl, ItemEnchantmentsComponent.Builder builder) {
-		impl.getOptional(SpectrumEnchantments.CLOAKED_VOIDING).ifPresent(e -> builder.add(e, 1));
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+		return Map.of(SpectrumEnchantments.CLOAKED_VOIDING, 1);
 	}
 	
 	@Override

@@ -45,7 +45,7 @@ public class GreatswordItem extends SwordItem implements Preenchanted {
 
 	@Override
 	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
-		return Map.of(Enchantments.SWEEPING, 4);
+		return Map.of(Enchantments.SWEEPING_EDGE, 4);
 	}
 
 	@Override

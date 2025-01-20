@@ -8,14 +8,12 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -216,8 +214,8 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	}
 	
 	@Override
-	public void addDefaultEnchantments(RegistryWrapper.Impl<Enchantment> registryLookup, ItemEnchantmentsComponent.Builder builder) {
-		registryLookup.getOptional(Enchantments.FORTUNE).ifPresent(e -> builder.add(e, 4));
+	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
+		return Map.of(Enchantments.FORTUNE, 4);
 	}
 
 	@Override
