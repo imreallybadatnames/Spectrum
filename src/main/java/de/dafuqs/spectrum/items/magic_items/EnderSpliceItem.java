@@ -29,7 +29,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class EnderSpliceItem extends Item implements ExtendedEnchantable {
+public class EnderSpliceItem extends Item {
 	
 	public EnderSpliceItem(Settings settings) {
 		super(settings);
@@ -294,11 +294,6 @@ public class EnderSpliceItem extends Item implements ExtendedEnchantable {
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.UNBREAKING;
 	}
 	
 	@Override

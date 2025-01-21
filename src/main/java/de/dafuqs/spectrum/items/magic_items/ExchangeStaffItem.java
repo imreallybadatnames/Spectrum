@@ -31,7 +31,7 @@ import oshi.util.tuples.*;
 
 import java.util.*;
 
-public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnchantable {
+public class ExchangeStaffItem extends BuildingStaffItem {
 
 	public static final int INK_COST_PER_BLOCK = 5;
 	public static final int CREATIVE_RANGE = 5;
@@ -232,11 +232,6 @@ public class ExchangeStaffItem extends BuildingStaffItem implements ExtendedEnch
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.FORTUNE || enchantment == Enchantments.SILK_TOUCH;
 	}
 	
 	@Override

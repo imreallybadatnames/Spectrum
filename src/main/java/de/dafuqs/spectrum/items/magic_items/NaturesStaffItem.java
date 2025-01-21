@@ -32,7 +32,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPowered {
+public class NaturesStaffItem extends Item implements InkPowered {
 
 	public static final ItemStack ITEM_COST = new ItemStack(SpectrumItems.VEGETAL, 1);
 	public static final InkCost INK_COST = new InkCost(InkColors.LIME, 20);
@@ -313,11 +313,6 @@ public class NaturesStaffItem extends Item implements ExtendedEnchantable, InkPo
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.EFFICIENCY;
 	}
 	
 	@Override

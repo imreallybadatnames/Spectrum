@@ -20,7 +20,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class KnowledgeGemItem extends Item implements ExperienceStorageItem, ExtendedEnchantable, LoomPatternProvider {
+public class KnowledgeGemItem extends Item implements ExperienceStorageItem, LoomPatternProvider {
 	
 	private final int maxStorageBase;
 	
@@ -163,11 +163,6 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.EFFICIENCY || enchantment == Enchantments.QUICK_CHARGE;
 	}
 	
 	@Override

@@ -30,7 +30,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class MalachiteBidentItem extends TridentItem implements Preenchanted, ExtendedEnchantable, ExpandedStatTooltip, ArmorPiercingItem {
+public class MalachiteBidentItem extends TridentItem implements Preenchanted, ExpandedStatTooltip, ArmorPiercingItem {
 	
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	private final float armorPierce, protPierce;
@@ -196,11 +196,6 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	
 	public boolean isThrownAsMirrorImage(ItemStack stack, ServerWorld world, PlayerEntity player) {
 		return false;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.SHARPNESS || enchantment == Enchantments.SMITE || enchantment == Enchantments.BANE_OF_ARTHROPODS || enchantment == Enchantments.LOOTING || enchantment == SpectrumEnchantments.CLOVERS_FAVOR;
 	}
 	
 	@Override

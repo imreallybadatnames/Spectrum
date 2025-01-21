@@ -43,7 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class BottomlessBundleItem extends BlockItem implements InventoryInsertionAcceptor, ExtendedEnchantable {
+public class BottomlessBundleItem extends BlockItem implements InventoryInsertionAcceptor {
 
 	private static final long MAX_STORED_AMOUNT_BASE = 20000;
 
@@ -283,13 +283,6 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(RegistryWrapper.Impl<Enchantment> impl, Enchantment enchantment) {
-		return impl.getOptional(Enchantments.POWER)
-				.map(e -> e.value() == enchantment)
-				.orElse(false);
 	}
 	
 	@Override

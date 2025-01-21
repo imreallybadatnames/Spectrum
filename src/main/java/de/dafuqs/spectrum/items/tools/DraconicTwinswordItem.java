@@ -24,7 +24,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class DraconicTwinswordItem extends SwordItem implements SplittableItem, SlotReservingItem, Preenchanted, ExtendedEnchantable, ExtendedItemBarProvider, SlotBackgroundEffectProvider {
+public class DraconicTwinswordItem extends SwordItem implements SplittableItem, SlotReservingItem, Preenchanted, ExtendedItemBarProvider, SlotBackgroundEffectProvider {
 
 	public static final float MAX_CHARGE_TIME = 60;
 	private final Multimap<EntityAttribute, EntityAttributeModifier> phantomModifiers;
@@ -130,11 +130,6 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 		}
 	}
 	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.CHANNELING || enchantment == Enchantments.PIERCING || enchantment == SpectrumEnchantments.INERTIA;
-	}
-
 	@Override
 	public boolean hasGlint(ItemStack stack) {
 		return super.hasGlint(stack) && !isReservingSlot(stack);

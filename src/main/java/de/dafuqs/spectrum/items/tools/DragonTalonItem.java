@@ -27,7 +27,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class DragonTalonItem extends MalachiteBidentItem implements MergeableItem, SlotReservingItem, ExtendedEnchantable, SlotBackgroundEffectProvider {
+public class DragonTalonItem extends MalachiteBidentItem implements MergeableItem, SlotReservingItem, SlotBackgroundEffectProvider {
 	
 	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("3b9a13c8-a9a7-4545-8c32-e60baf25823e");
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers, phantomModifiers;
@@ -206,11 +206,6 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 		var composition = new DamageComposition();
 		composition.add(SpectrumDamageTypes.evisceration(attacker.getWorld(), attacker), damage);
 		return composition;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.CHANNELING || enchantment == Enchantments.PIERCING || enchantment == SpectrumEnchantments.INERTIA;
 	}
 	
 	@Override
