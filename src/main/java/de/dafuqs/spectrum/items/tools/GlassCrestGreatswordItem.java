@@ -4,6 +4,7 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
 import de.dafuqs.spectrum.spells.*;
@@ -15,6 +16,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
@@ -48,7 +50,7 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		if (getGroundSlamStrength(user.getStackInHand(hand)) > 0 && InkPowered.tryDrainEnergy(user, GROUND_SLAM_COST)) {
+		if (getGroundSlamStrength(world.getRegistryManager(), user.getStackInHand(hand)) > 0 && InkPowered.tryDrainEnergy(user, GROUND_SLAM_COST)) {
 			if (world.isClient) {
 				startSoundInstance(user);
 			}
@@ -83,7 +85,7 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			int groundSlamStrength = getGroundSlamStrength(stack);
+			int groundSlamStrength = getGroundSlamStrength(world.getRegistryManager(), stack);
 			if (groundSlamStrength > 0) {
 				performGroundSlam(world, user.getPos(), user, groundSlamStrength);
 				stack.damage(1, user, LivingEntity.getSlotForHand(user.getActiveHand()));
@@ -93,8 +95,8 @@ public class GlassCrestGreatswordItem extends GreatswordItem implements SplitDam
 		return stack;
 	}
 	
-	public int getGroundSlamStrength(ItemStack stack) {
-		return EnchantmentHelper.getLevel(Enchantments.SWEEPING, stack);
+	public int getGroundSlamStrength(RegistryWrapper.WrapperLookup lookup, ItemStack stack) {
+		return SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.SWEEPING_EDGE, stack);
 	}
 	
 	public void performGroundSlam(World world, Vec3d pos, LivingEntity attacker, float strength) {

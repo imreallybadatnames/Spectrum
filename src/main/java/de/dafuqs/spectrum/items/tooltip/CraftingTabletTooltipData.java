@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.items.tooltip;
 
-import net.minecraft.client.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.recipe.*;

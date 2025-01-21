@@ -54,7 +54,7 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 	public static void removeNegativeStatusEffects(@NotNull LivingEntity entity) {
 		Set<RegistryEntry<StatusEffect>> effectsToRemove = new HashSet<>();
 		for (var instance : entity.getStatusEffects()) {
-			if (affects(instance.getEffectType().value())) {
+			if (affects(instance.getEffectType())) {
 				effectsToRemove.add(instance.getEffectType());
 			}
 		}
@@ -70,7 +70,7 @@ public class WhispyCircletItem extends SpectrumTrinketItem {
 		
 		// remove them first, so hidden "stacked" effects are preserved
 		for (StatusEffectInstance instance : entity.getStatusEffects()) {
-			if (affects(instance.getEffectType().value())) {
+			if (affects(instance.getEffectType())) {
 				int newDurationTicks = instance.getDuration() - duration;
 				if (newDurationTicks > 0) {
 					newEffects.add(new StatusEffectInstance(instance.getEffectType(), newDurationTicks, instance.getAmplifier(), instance.isAmbient(), instance.shouldShowParticles(), instance.shouldShowIcon()));

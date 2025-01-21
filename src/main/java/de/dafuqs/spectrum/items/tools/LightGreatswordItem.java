@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.cca.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
@@ -78,7 +79,7 @@ public class LightGreatswordItem extends ParryingSwordItem implements SplitDamag
 			return;
 
 		var effect = target.isUndead() ? StatusEffects.REGENERATION : StatusEffects.POISON;
-		int sharpness = EnchantmentHelper.get(stack).getOrDefault(Enchantments.SHARPNESS, 0);
+		int sharpness = SpectrumEnchantmentHelper.getLevel(target.getWorld().getRegistryManager(), Enchantments.SHARPNESS, stack);
 		target.addStatusEffect(new StatusEffectInstance(effect, 20 * (5 + sharpness), 1));
 	}
 

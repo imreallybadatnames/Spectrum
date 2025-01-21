@@ -246,7 +246,7 @@ public class SpectrumCommon implements ModInitializer {
 		
 		logInfo("Common startup completed!");
 	}
-	
+
 	/**
 	 * When initializing a block entity, world can still be null
 	 * Therefore we use the RecipeManager reference from MinecraftServer
@@ -256,7 +256,7 @@ public class SpectrumCommon implements ModInitializer {
 	public static Optional<RecipeManager> getRecipeManager(@Nullable World world) {
 		return world == null ? minecraftServer == null ? Optional.empty() : Optional.of(minecraftServer.getRecipeManager()) : Optional.of(world.getRecipeManager());
 	}
-
+	
 	public static Optional<RegistryWrapper.WrapperLookup> getRegistryLookup() {
 		if (minecraftServer != null)
 			return Optional.of(minecraftServer.getRegistryManager());

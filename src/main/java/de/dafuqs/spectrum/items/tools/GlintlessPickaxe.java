@@ -13,8 +13,14 @@ public class GlintlessPickaxe extends SpectrumPickaxeItem {
 
     @Override
     public boolean hasGlint(ItemStack stack) {
-        var original = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getEnchantments();
-        original.removeAll(getDefaultEnchantments().getEnchantments());
-        return original.isEmpty();
+        var defaults = getDefaultEnchantments();
+		var comp = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
+		for (var entry : comp.getEnchantmentEntries()) {
+			var key = entry.getKey().getKey();
+			if (key.isEmpty()) continue;
+			if (entry.getIntValue() > defaults.getOrDefault(key.get(), 0))
+				return true;
+		}
+		return false;
     }
 }

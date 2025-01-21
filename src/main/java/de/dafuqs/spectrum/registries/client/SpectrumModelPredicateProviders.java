@@ -116,7 +116,7 @@ public class SpectrumModelPredicateProviders {
 			if (stack == null) {
 				return 0F;
 			}
-			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(MinecraftClient.getInstance().world.getRegistryManager(), stack);
+			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(stack);
 			if(projectile.isEmpty()) {
 				return 0F;
 			}

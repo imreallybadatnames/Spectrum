@@ -4,11 +4,9 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.conditional.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -32,10 +30,8 @@ public class MidnightAberrationItem extends CloakedItem {
 		super.inventoryTick(stack, world, entity, slot, selected);
 		
 		if (!world.isClient && world.getTime() % 20 == 0 && entity instanceof ServerPlayerEntity player) {
-			var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
-			if (nbt != null && nbt.contains("Stable") && nbt.copyNbt().getBoolean("Stable")) {
+			if (stack.getOrDefault(SpectrumDataComponentTypes.STABLE, false))
 				return;
-			}
 			
 			// check if it's a real stack in the player's inventory or just a proxy item (like a Bottomless Bundle)
 			if (world.random.nextFloat() < 0.2F) {
@@ -47,21 +43,18 @@ public class MidnightAberrationItem extends CloakedItem {
 			}
 		}
 	}
-
+	
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		
-		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
-		if (nbt != null && nbt.copyNbt().getBoolean("Stable")) {
+		if (stack.getOrDefault(SpectrumDataComponentTypes.STABLE, false))
 			tooltip.add(Text.translatable("item.spectrum.midnight_aberration.tooltip.stable"));
-		}
 	}
 	
 	public ItemStack getStableStack() {
 		ItemStack stack = getDefaultStack();
-		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putBoolean("Stable", true)));
+		stack.set(SpectrumDataComponentTypes.STABLE, true);
 		return stack;
 	}
 	

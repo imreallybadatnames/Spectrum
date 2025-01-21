@@ -1,4 +1,3 @@
-
 package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.api.item.*;
@@ -10,8 +9,6 @@ import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.*;
-import net.minecraft.component.*;
-import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -36,23 +33,18 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 	}
 	
 	public static void setStoredRecipe(ItemStack craftingTabletItemStack, RecipeEntry<?> recipe) {
-		craftingTabletItemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putString("recipe", recipe.id().toString())));
+		craftingTabletItemStack.set(SpectrumDataComponentTypes.STORED_RECIPE, recipe.id());
 	}
 	
 	public static void clearStoredRecipe(ItemStack craftingTabletItemStack) {
-		craftingTabletItemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.remove("recipe")));
+		craftingTabletItemStack.remove(SpectrumDataComponentTypes.STORED_RECIPE);
 	}
 	
 	public static RecipeEntry<?> getStoredRecipe(World world, ItemStack itemStack) {
 		if (world != null) {
-			var nbt = itemStack.get(DataComponentTypes.CUSTOM_DATA);
-			if (nbt != null && nbt.contains("recipe")) {
-				String recipeString = nbt.copyNbt().getString("recipe");
-				Identifier recipeIdentifier = Identifier.of(recipeString);
-				return world.getRecipeManager().get(recipeIdentifier).orElse(null);
-			}
+			var id = itemStack.get(SpectrumDataComponentTypes.STORED_RECIPE);
+			if (id != null)
+				return world.getRecipeManager().get(id).orElse(null);
 		}
 		return null;
 	}
@@ -112,7 +104,7 @@ public class CraftingTabletItem extends Item implements LoomPatternProvider {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);

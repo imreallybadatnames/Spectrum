@@ -4,6 +4,7 @@ import com.mojang.serialization.*;
 import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
 import de.dafuqs.spectrum.component_type.*;
 import net.minecraft.component.*;
+import net.minecraft.entity.effect.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
@@ -14,29 +15,39 @@ import static de.dafuqs.spectrum.registries.DeferredRegistrar.*;
 
 @SuppressWarnings("unused")
 public class SpectrumDataComponentTypes {
-
-    static { DeferredRegistrar.setClass(SpectrumDataComponentTypes.class); }
-
-    public static ComponentType<Boolean> ACTIVATED = register("activated", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
-    public static ComponentType<BottomlessBundleItem.BottomlessStack> BOTTOMLESS_STACK = register("bottomless_stack", builder -> builder.codec(BottomlessBundleItem.BottomlessStack.CODEC).packetCodec(BottomlessBundleItem.BottomlessStack.PACKET_CODEC));
-    public static ComponentType<Identifier> BOUND_ITEM = register("bound_item", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
-    public static ComponentType<Boolean> HIDE_USAGE_TOOLTIP = register("hide_usage_tooltip", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
-    public static ComponentType<InkStorageComponent> INK_STORAGE = register("ink_storage", builder -> builder.codec(InkStorageComponent.CODEC).packetCodec(InkStorageComponent.PACKET_CODEC));
-    public static ComponentType<Boolean> SOCKETED = register("socketed", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
-    public static ComponentType<Integer> STORED_EXPERIENCE = register("stored_experiene", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.VAR_INT));
-    public static ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
-    public static ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC));
-	public static ComponentType<ShootingStarComponent> SHOOTING_STAR = register("shooting_star", builder -> builder.codec(ShootingStarComponent.CODEC).packetCodec(ShootingStarComponent.PACKET_CODEC));
+	
+	static {
+		DeferredRegistrar.setClass(SpectrumDataComponentTypes.class);
+	}
+	
+	public static ComponentType<Boolean> ACTIVATED = register("activated", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
+	public static ComponentType<Integer> AOE = register("aoe", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.VAR_INT));
+	public static ComponentType<BottomlessBundleItem.BottomlessStack> BOTTOMLESS_STACK = register("bottomless_stack", builder -> builder.codec(BottomlessBundleItem.BottomlessStack.CODEC).packetCodec(BottomlessBundleItem.BottomlessStack.PACKET_CODEC));
+	public static ComponentType<Identifier> BOUND_ITEM = register("bound_item", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
+	public static ComponentType<Long> LAST_COOLDOWN_START = register("last_cooldown_start", builder -> builder.codec(Codec.LONG).packetCodec(PacketCodecs.VAR_LONG));
+	public static ComponentType<Boolean> HIDE_USAGE_TOOLTIP = register("hide_usage_tooltip", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
+	public static ComponentType<InkStorageComponent> INK_STORAGE = register("ink_storage", builder -> builder.codec(InkStorageComponent.CODEC).packetCodec(InkStorageComponent.PACKET_CODEC));
+	public static ComponentType<StatusEffectInstance> OIL_EFFECT = register("oil_effect", builder -> builder.codec(StatusEffectInstance.CODEC).packetCodec(StatusEffectInstance.PACKET_CODEC));
 	public static ComponentType<OptionalInkColorComponent> OPTIONAL_INK_COLOR = register("optional_ink_color", builder -> builder.codec(OptionalInkColorComponent.CODEC).packetCodec(OptionalInkColorComponent.PACKET_CODEC));
-
-    public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-        return defer(builderOperator.apply(ComponentType.builder()).build())
-                .withCommon(type -> Registry.register(Registries.DATA_COMPONENT_TYPE, id, type))
-                .value();
-    }
-
-    public static void register() {
-        DeferredRegistrar.registerCommon(SpectrumDataComponentTypes.class);
-    }
-
+	public static ComponentType<Float> OVERCHARGED = register("overcharged", builder -> builder.codec(Codec.FLOAT).packetCodec(PacketCodecs.FLOAT));
+	public static ComponentType<ShootingStarComponent> SHOOTING_STAR = register("shooting_star", builder -> builder.codec(ShootingStarComponent.CODEC).packetCodec(ShootingStarComponent.PACKET_CODEC));
+	public static ComponentType<Boolean> SOCKETED = register("socketed", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
+	public static ComponentType<Boolean> STABLE = register("stable", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
+	public static ComponentType<Integer> STORED_EXPERIENCE = register("stored_experiene", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.VAR_INT));
+	public static ComponentType<Identifier> STORED_RECIPE = register("stored_recipe", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
+	public static ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
+	public static ComponentType<Boolean> UNIDENTIFIABLE = register("unidentifiable", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
+	public static ComponentType<WorkstaffComponent> WORKSTAFF = register("workstaff", builder -> builder.codec(WorkstaffComponent.CODEC).packetCodec(WorkstaffComponent.PACKET_CODEC));
+	public static ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC));
+	
+	public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+		return defer(builderOperator.apply(ComponentType.builder()).build())
+				.withCommon(type -> Registry.register(Registries.DATA_COMPONENT_TYPE, id, type))
+				.value();
+	}
+	
+	public static void register() {
+		DeferredRegistrar.registerCommon(SpectrumDataComponentTypes.class);
+	}
+	
 }

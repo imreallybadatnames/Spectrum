@@ -11,7 +11,6 @@ import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
@@ -235,13 +234,9 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		}
 		OptionalInt potionColor = PotionContentsComponent.mixColors(instances);
 		
-		NbtCompound nbtCompound = NbtComponent.DEFAULT.copyNbt();
-		if (potionMod.unidentifiable) {
-			nbtCompound.putBoolean("spectrum_unidentifiable", true); // used in PotionItemMixin
-		}
 		PotionContentsComponent potionComponent = new PotionContentsComponent(Optional.empty(), Optional.of(potionColor.orElse(0)), instances);
 		stack.set(DataComponentTypes.POTION_CONTENTS, potionComponent);
-		stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+		stack.set(SpectrumDataComponentTypes.UNIDENTIFIABLE, potionMod.unidentifiable);
 	}
 	
 	private List<InkPoweredStatusEffectInstance> generateEffects(ItemStack baseIngredient, PotionMod potionMod, PotionWorkshopBrewingRecipe lastRecipe, Random random) {

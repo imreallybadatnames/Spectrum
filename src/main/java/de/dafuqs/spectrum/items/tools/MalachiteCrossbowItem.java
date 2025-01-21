@@ -14,8 +14,6 @@ import net.minecraft.registry.tag.*;
 import java.util.*;
 import java.util.function.*;
 
-import static net.minecraft.nbt.NbtElement.*;
-
 public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted, ArrowheadCrossbow {
 	
 	public static final Predicate<ItemStack> PROJECTILES = (stack) -> stack.isIn(ItemTags.ARROWS) || stack.isIn(SpectrumItemTags.GLASS_ARROWS);
@@ -34,15 +32,9 @@ public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted,
 		return getDefaultEnchantedStack(this);
 	}
 	
-	public static ItemStack getFirstProjectile(RegistryWrapper.WrapperLookup wrapperLookup, ItemStack crossbow) {
-		var nbtComp = crossbow.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-		if (nbtComp.contains("ChargedProjectiles")) {
-			NbtList nbtList = nbtComp.copyNbt().getList("ChargedProjectiles", COMPOUND_TYPE);
-			if (nbtList != null && nbtList.size() > 0) {
-				return ItemStack.fromNbt(wrapperLookup, nbtList.getCompound(0)).orElse(ItemStack.EMPTY);
-			}
-		}
-		return ItemStack.EMPTY;
+	public static ItemStack getFirstProjectile(ItemStack crossbow) {
+		var projectiles = crossbow.getOrDefault(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT).getProjectiles();
+		return projectiles.isEmpty() ? ItemStack.EMPTY : projectiles.getFirst();
 	}
 	
 	@Override

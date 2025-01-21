@@ -37,7 +37,7 @@ public abstract class SpectrumTrinketItem extends TrinketItem {
 		if (trinketComponent.isPresent()) {
 			List<Pair<SlotReference, ItemStack>> stacks = trinketComponent.get().getEquipped(item);
 			if (!stacks.isEmpty()) {
-				return Optional.of(stacks.get(0).getRight());
+				return Optional.of(stacks.getFirst().getRight());
 			}
 		}
 		return Optional.empty();

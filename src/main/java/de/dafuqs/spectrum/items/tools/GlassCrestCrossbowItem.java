@@ -8,8 +8,6 @@ import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -94,20 +92,15 @@ public class GlassCrestCrossbowItem extends MalachiteCrossbowItem implements Ext
     }
     
     public static float getOvercharge(ItemStack stack) {
-        var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-        if (!nbtComp.contains("Overcharged"))
-            return 0;
-        return nbtComp.copyNbt().getFloat("Overcharged");
+		return stack.getOrDefault(SpectrumDataComponentTypes.OVERCHARGED, 0f);
     }
     
     public static void overcharge(ItemStack stack, float percent) {
-        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-                comp -> comp.apply(nbt -> nbt.putFloat("Overcharged", percent)));
+		stack.set(SpectrumDataComponentTypes.OVERCHARGED, percent);
     }
     
     public static void unOvercharge(ItemStack stack) {
-        stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-                comp -> comp.apply(nbt -> nbt.remove("Overcharged")));
+		stack.remove(SpectrumDataComponentTypes.OVERCHARGED);
     }
     
     @Override

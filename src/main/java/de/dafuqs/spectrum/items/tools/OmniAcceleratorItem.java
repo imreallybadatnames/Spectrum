@@ -13,12 +13,11 @@ import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -82,40 +81,26 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 	}
 	
 	public static void decrementFirstItem(ItemStack acceleratorStack) {
-		acceleratorStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT, comp -> {
-			if (comp.contains("Items")) {
-				comp.apply(nbt -> {
-					NbtList itemsList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
-					if (!itemsList.isEmpty()) {
-						NbtCompound stackNbt = itemsList.getCompound(0);
-						int count = stackNbt.getByte("Count");
-						if (count > 1) {
-							stackNbt.putByte("Count", (byte) (count - 1));
-						} else {
-							itemsList.removeFirst();
-							if (itemsList.isEmpty()) {
-								nbt.remove("Items");
-							}
-						}
-					}
-				});
+		var comp = acceleratorStack.get(DataComponentTypes.BUNDLE_CONTENTS);
+		if (comp == null) return;
+		
+		var builder = new BundleContentsComponent.Builder(BundleContentsComponent.DEFAULT);
+		var first = true;
+		for (var stack : comp.iterateCopy()) {
+			if (first) {
+				stack.decrement(1);
+				first = false;
 			}
-		});
+			if (!stack.isEmpty())
+				builder.add(stack);
+		}
+		
+		acceleratorStack.set(DataComponentTypes.BUNDLE_CONTENTS, builder.build());
 	}
 	
 	public static Optional<ItemStack> getFirstStack(RegistryWrapper.WrapperLookup wrapperLookup, ItemStack stack) {
-		var nbtComp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-		if (!nbtComp.contains("Items")) {
-			return Optional.empty();
-		} else {
-			NbtList itemsList = nbtComp.copyNbt().getList("Items", NbtElement.COMPOUND_TYPE);
-			if (itemsList.isEmpty()) {
-				return Optional.empty();
-			} else {
-				NbtCompound stackNbt = itemsList.getCompound(0);
-				return ItemStack.fromNbt(wrapperLookup, stackNbt);
-			}
-		}
+		var contents = stack.getOrDefault(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT);
+		return contents.isEmpty() ? Optional.empty() : Optional.of(contents.get(0).copy());
 	}
 	
 	@Override
@@ -188,7 +173,6 @@ public class OmniAcceleratorItem extends BundleItem implements InkPowered, Exten
 		var activeStack = player.getStackInHand(player.getActiveHand());
 		if (activeStack != stack)
 			return ExtendedItemBarProvider.PASS;
-		
 		
 		var progress = Math.round(MathHelper.clampedLerp(0, 13, ((float) player.getItemUseTime() / CHARGE_TIME)));
 		return new ExtendedItemBarProvider.BarSignature(2, 13, 13, progress, 1, 0xFFFFFFFF, 2, ExtendedItemBarProvider.DEFAULT_BACKGROUND_COLOR);

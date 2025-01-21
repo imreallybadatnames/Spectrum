@@ -108,7 +108,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 			return SlotBackgroundEffectProvider.SlotEffect.NONE;
 		}
 		
-		var effect = getEffects(stack).get(0);
+		var effect = getEffects(stack).getFirst();
 		var usable = InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().color(), adjustFinalCostFor(effect)));
 		return usable ? SlotBackgroundEffectProvider.SlotEffect.BORDER_FADE : SlotEffect.BORDER;
 	}
@@ -118,7 +118,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 		if (getEffects(stack).isEmpty())
 			return 0x000000;
 		
-		return getEffects(stack).get(0).getColor();
+		return getEffects(stack).getFirst().getColor();
 	}
 	
 	@Override
@@ -126,7 +126,7 @@ public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFil
 		if (getEffects(stack).isEmpty())
 			return 0F;
 		
-		var effect = getEffects(stack).get(0);
+		var effect = getEffects(stack).getFirst();
 		if (InkPowered.hasAvailableInk(player, new InkCost(effect.getInkCost().color(), adjustFinalCostFor(effect))))
 			return 1F;
 		

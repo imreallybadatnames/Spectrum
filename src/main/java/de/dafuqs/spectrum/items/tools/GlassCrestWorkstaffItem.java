@@ -3,10 +3,10 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.entity.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -30,9 +30,7 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
     }
     
     public static boolean canShoot(ItemStack stack) {
-        var comp = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-        return !comp.contains(WorkstaffItem.PROJECTILES_DISABLED_NBT_STRING)
-                || comp.copyNbt().getBoolean(WorkstaffItem.PROJECTILES_DISABLED_NBT_STRING);
+		return stack.getOrDefault(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT).canShoot();
     }
     
     @Override
@@ -75,18 +73,21 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
 	
 	@Override
 	public int getBackgroundColor(@Nullable PlayerEntity player, ItemStack stack, float tickDelta) {
-		var resonance = EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.RESONANT_BLOCK_DROPS);
-		var silkTouch = EnchantmentHelper.hasSilkTouch(stack);
-		var fortune = EnchantmentHelper.getLevel(Enchantments.FORTUNE, stack) > 0;
-		
-		if (resonance)
-			return InkColors.WHITE_COLOR;
-		
-		if (silkTouch)
-			return InkColors.CYAN_COLOR;
-		
-		if (fortune)
-			return InkColors.LIGHT_BLUE_COLOR;
+		if (player != null) {
+			var lookup = player.getWorld().getRegistryManager();
+			var resonance = SpectrumEnchantmentHelper.getLevel(lookup, SpectrumEnchantments.RESONANCE, stack) > 0;
+			var silkTouch = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.SILK_TOUCH, stack) > 0;
+			var fortune = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.FORTUNE, stack) > 0;
+			
+			if (resonance)
+				return InkColors.WHITE_COLOR;
+			
+			if (silkTouch)
+				return InkColors.CYAN_COLOR;
+			
+			if (fortune)
+				return InkColors.LIGHT_BLUE_COLOR;
+		}
 		
 		return InkColors.LIGHT_GRAY_COLOR;
 	}

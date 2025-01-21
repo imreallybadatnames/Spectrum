@@ -7,8 +7,8 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
-import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
@@ -82,18 +82,16 @@ public abstract class ItemStackMixin {
 	@Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/item/TooltipContext;isAdvanced()Z", shift = At.Shift.BEFORE, ordinal = 2))
 	public void spectrum$expandTooltipPostDamage(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> tooltip) {
 		var stack = (ItemStack) (Object) this;
-		if (stack.hasNbt() && stack.getNbt().contains(ConcealingOilsItem.OIL_EFFECT_ID)) {
-			var oilNbt = stack.getNbt().getCompound(ConcealingOilsItem.OIL_EFFECT_ID);
-
-			if (player.getUuid().equals(oilNbt.getUuid(ConcealingOilsItem.POISONER_KEY))) {
-				var subText = new ArrayList<Text>();
-				PotionUtil.buildTooltip(List.of(StatusEffectInstance.fromNbt(oilNbt)), subText, 1F);
-
-				tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.info").styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR)));
-				tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.effect", subText.get(0)).styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR).withItalic(true)));
-			}
+		var oilEffect = stack.get(SpectrumDataComponentTypes.OIL_EFFECT);
+		var profile = stack.get(DataComponentTypes.PROFILE);
+		if (oilEffect != null && profile != null && player.getUuid().equals(profile.id().orElse(null))) {
+			var subText = new ArrayList<Text>();
+			PotionContentsComponent.buildTooltip(List.of(oilEffect), subText::add, 1f, 1F);
+			
+			tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.info").styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR)));
+			tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.effect", subText.getFirst()).styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR).withItalic(true)));
 		}
-
+		
 		if (item instanceof ExpandedStatTooltip expanded) {
 			expanded.expandTooltip(stack, player, tooltip, context);
 		}

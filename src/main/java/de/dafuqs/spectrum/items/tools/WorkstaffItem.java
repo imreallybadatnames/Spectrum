@@ -4,11 +4,11 @@ import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -51,10 +51,6 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		
 	}
 	
-	public static final String RANGE_NBT_STRING = "Range";
-	public static final String RIGHT_CLICK_DISABLED_NBT_STRING = "RightClickDisabled";
-	public static final String PROJECTILES_DISABLED_NBT_STRING = "ProjectilesDisabled";
-
     public WorkstaffItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
         super(material, attackDamage, attackSpeed, settings);
     }
@@ -82,8 +78,7 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 	
 	@Override
 	public boolean canTill(ItemStack stack) {
-		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
-		return nbt == null || !nbt.contains(RIGHT_CLICK_DISABLED_NBT_STRING) || !nbt.copyNbt().getBoolean(RIGHT_CLICK_DISABLED_NBT_STRING);
+		return stack.getOrDefault(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT).canTill();
 	}
 	
 	public NamedScreenHandlerFactory createScreenHandlerFactory(ItemStack itemStack) {
@@ -91,15 +86,6 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 				new WorkstaffScreenHandler(syncId, inventory, itemStack),
 				Text.translatable("item.spectrum.workstaff")
 		);
-	}
-	
-	@Override
-	public int getAoERange(ItemStack stack) {
-		var nbt = stack.get(DataComponentTypes.CUSTOM_DATA);
-		if (nbt == null || !nbt.contains(RANGE_NBT_STRING)) {
-			return 0;
-		}
-		return nbt.copyNbt().getInt(RANGE_NBT_STRING);
 	}
 	
 	@Override
@@ -117,18 +103,15 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		
 		switch (toggle) {
 			case SELECT_1x1 -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.remove(RANGE_NBT_STRING)));
+				stack.set(SpectrumDataComponentTypes.AOE, 0);
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case SELECT_3x3 -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.putInt(RANGE_NBT_STRING, 1)));
+				stack.set(SpectrumDataComponentTypes.AOE, 1);
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case SELECT_5x5 -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.putInt(RANGE_NBT_STRING, 2)));
+				stack.set(SpectrumDataComponentTypes.AOE, 2);
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			// switching to another enchantment
@@ -141,23 +124,23 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 			case SELECT_RESONANCE ->
 				enchantAndRemoveOthers(player, stack, toggle.getTriggerText(), SpectrumEnchantments.CLOAKED_RESONANCE);
 			case ENABLE_RIGHT_CLICK_ACTIONS -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.remove(RIGHT_CLICK_DISABLED_NBT_STRING)));
+				stack.apply(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT, comp ->
+						new WorkstaffComponent(true, comp.canShoot(), comp.fortuneLevel()));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case DISABLE_RIGHT_CLICK_ACTIONS -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.putBoolean(RIGHT_CLICK_DISABLED_NBT_STRING, true)));
+				stack.apply(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT, comp ->
+						new WorkstaffComponent(false, comp.canShoot(), comp.fortuneLevel()));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case ENABLE_PROJECTILES -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.remove(PROJECTILES_DISABLED_NBT_STRING)));
+				stack.apply(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT, comp ->
+						new WorkstaffComponent(comp.canTill(), true, comp.fortuneLevel()));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 			case DISABLE_PROJECTILES -> {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.putBoolean(PROJECTILES_DISABLED_NBT_STRING, true)));
+				stack.apply(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT, comp ->
+						new WorkstaffComponent(comp.canTill(), false, comp.fortuneLevel()));
 				player.sendMessage(toggle.getTriggerText(), true);
 			}
 		}
@@ -174,33 +157,24 @@ public class WorkstaffItem extends MultiToolItem implements AoEBreakingTool, Pre
 		
 		int level = 1;
 		
-		var nbtComp = stack.get(DataComponentTypes.CUSTOM_DATA);
 		if (enchantment == Enchantments.FORTUNE) {
-			if (nbtComp != null && nbtComp.contains("FortuneLevel")) {
-				level = nbtComp.copyNbt().getInt("FortuneLevel");
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.remove("FortuneLevel")));
-			}
+			level = stack.getOrDefault(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT).fortuneLevel();
 		} else {
 			int fortuneLevel = SpectrumEnchantmentHelper.getLevel(registryLookup, Enchantments.FORTUNE, stack);
-			if (fortuneLevel > 0) {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt -> nbt.putInt("FortuneLevel", fortuneLevel)));
-			}
+			stack.apply(SpectrumDataComponentTypes.WORKSTAFF, WorkstaffComponent.DEFAULT, comp ->
+					new WorkstaffComponent(comp.canTill(), comp.canShoot(), Math.max(fortuneLevel, 1)));
 		}
 		
 		ItemStack newStack = stack.copy();
-		var result = SpectrumEnchantmentHelper.removeEnchantments(registryLookup, newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.CLOAKED_RESONANCE, Enchantments.FORTUNE);
-		if (result.getRight() == 0) {
+		var removeResult = SpectrumEnchantmentHelper.removeEnchantments(registryLookup, newStack, Enchantments.SILK_TOUCH, SpectrumEnchantments.CLOAKED_RESONANCE, Enchantments.FORTUNE);
+		if (removeResult.getRight() == 0) {
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 				triggerUnenchantedWorkstaffAdvancement(serverPlayerEntity);
 			}
 		} else {
-			var result2 = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(registryLookup, result.getLeft(), enchantment, level, false, AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.APPLY_CONFLICTING_ENCHANTMENTS));
-			if (result2.getLeft()) {
-				stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-						comp -> comp.apply(nbt ->
-								result2.getRight().getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT)));
+			var addResult = SpectrumEnchantmentHelper.addOrUpgradeEnchantment(registryLookup, removeResult.getLeft(), enchantment, level, false, AdvancementHelper.hasAdvancement(player, SpectrumAdvancements.APPLY_CONFLICTING_ENCHANTMENTS));
+			if (addResult.getLeft()) {
+				stack.set(DataComponentTypes.ENCHANTMENTS, addResult.getRight().getEnchantments());
 				player.sendMessage(message, true);
 			} else {
 				player.sendMessage(Text.translatable("item.spectrum.workstaff.message.would_result_in_conflicting_enchantments"), true);

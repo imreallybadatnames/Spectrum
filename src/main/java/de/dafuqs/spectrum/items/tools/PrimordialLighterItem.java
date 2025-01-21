@@ -24,12 +24,12 @@ public class PrimordialLighterItem extends FlintAndSteelItem implements Creative
 	
 	public static final DispenserBehavior DISPENSER_BEHAVIOR = new FallibleItemDispenserBehavior() {
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-			World world = pointer.world();
+			var world = pointer.world();
 			this.setSuccess(true);
 			Direction direction = pointer.state().get(DispenserBlock.FACING);
 			BlockPos blockPos = pointer.pos().offset(direction);
 			if (PrimordialFireBlock.tryPlacePrimordialFire(world, blockPos, direction)) {
-				stack.damage(1, world.random, null);
+				stack.damage(1, world, null, item -> {});
 				this.setSuccess(true);
 			} else {
 				this.setSuccess(false);

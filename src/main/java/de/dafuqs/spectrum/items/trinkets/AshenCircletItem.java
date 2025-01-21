@@ -4,9 +4,9 @@ import com.google.common.collect.*;
 import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.cca.*;
+import de.dafuqs.spectrum.registries.*;
 import dev.emi.trinkets.api.*;
-import net.minecraft.component.*;
-import net.minecraft.component.type.*;
+import net.minecraft.client.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
@@ -34,18 +34,12 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 	}
 	
 	public static long getCooldownTicks(@NotNull ItemStack ashenCircletStack, @NotNull World world) {
-		var nbt = ashenCircletStack.get(DataComponentTypes.CUSTOM_DATA);
-		if (nbt == null || !nbt.contains("last_cooldown_start")) {
-			return 0;
-		} else {
-			long lastCooldownStart = nbt.copyNbt().getLong("last_cooldown_start");
-			return Math.max(0, lastCooldownStart - world.getTime() + COOLDOWN_TICKS);
-		}
+		var last = ashenCircletStack.getOrDefault(SpectrumDataComponentTypes.LAST_COOLDOWN_START, 0L);
+		return Math.max(0, last + COOLDOWN_TICKS - world.getTime());
 	}
 	
 	private static void setCooldown(@NotNull ItemStack ashenCircletStack, @NotNull World world) {
-		ashenCircletStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putLong("last_cooldown_start", world.getTime())));
+		ashenCircletStack.set(SpectrumDataComponentTypes.LAST_COOLDOWN_START, world.getTime());
 	}
 	
 	public static void grantFireResistance(@NotNull ItemStack ashenCircletStack, @NotNull LivingEntity livingEntity) {
@@ -74,6 +68,7 @@ public class AshenCircletItem extends SpectrumTrinketItem {
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("item.spectrum.ashen_circlet.tooltip2").formatted(Formatting.GRAY));
 		
+		var world = MinecraftClient.getInstance().world;
 		if (world != null) {
 			long cooldownTicks = getCooldownTicks(stack, world);
 			if (cooldownTicks == 0) {

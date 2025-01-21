@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.items.trinkets;
 
 import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -52,29 +53,29 @@ public class TakeOffBeltItem extends SpectrumTrinketItem {
 	}
 	
 	@Override
-    public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
+	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
 		World world = entity.getWorld();
 		super.tick(stack, slot, entity);
 		
 		if (!world.isClient) {
 			if (entity.isSneaking() && entity.isOnGround()) {
 				if (sneakingTimes.containsKey(entity)) {
-					long sneakTicks = entity.getWorld().getTime() - sneakingTimes.get(entity);
+					long sneakTicks = world.getTime() - sneakingTimes.get(entity);
 					if (sneakTicks % CHARGE_TIME_TICKS == 0) {
 						if (sneakTicks > CHARGE_TIME_TICKS * MAX_CHARGES) {
-							entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SpectrumSoundEvents.USE_FAIL, SoundCategory.NEUTRAL, 4.0F, 1.05F);
-							PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) entity.getWorld(), entity.getPos(), SpectrumParticleTypes.BLACK_CRAFTING, 20, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.05, 0.1));
+							world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SpectrumSoundEvents.USE_FAIL, SoundCategory.NEUTRAL, 4.0F, 1.05F);
+							PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, entity.getPos(), SpectrumParticleTypes.BLACK_CRAFTING, 20, new Vec3d(0, 0, 0), new Vec3d(0.1, 0.05, 0.1));
 							entity.removeStatusEffect(StatusEffects.JUMP_BOOST);
 						} else {
 							int sneakTimeMod = (int) sneakTicks / CHARGE_TIME_TICKS;
 							
-							entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SpectrumSoundEvents.BLOCK_TOPAZ_BLOCK_HIT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+							world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SpectrumSoundEvents.BLOCK_TOPAZ_BLOCK_HIT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 							for (Vec3d vec : VectorPattern.SIXTEEN.getVectors()) {
-								PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) entity.getWorld(), entity.getPos(), SpectrumParticleTypes.LIQUID_CRYSTAL_SPARKLE, 1, vec.multiply(0.5));
+								PlayParticleWithExactVelocityPayload.playParticleWithExactVelocity((ServerWorld) world, entity.getPos(), SpectrumParticleTypes.LIQUID_CRYSTAL_SPARKLE, 1, vec.multiply(0.5));
 							}
 							
-							int powerEnchantmentLevel = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
-							int featherFallingEnchantmentLevel = EnchantmentHelper.getLevel(Enchantments.FEATHER_FALLING, stack);
+							int powerEnchantmentLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.POWER, stack);
+							int featherFallingEnchantmentLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.FEATHER_FALLING, stack);
 							entity.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, CHARGE_TIME_TICKS, getJumpBoostAmplifier(sneakTimeMod, powerEnchantmentLevel), true, true));
 							if (featherFallingEnchantmentLevel > 0) {
 								entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, CHARGE_TIME_TICKS + featherFallingEnchantmentLevel * 20, 0, true, true));
@@ -82,14 +83,14 @@ public class TakeOffBeltItem extends SpectrumTrinketItem {
 						}
 					}
 				} else {
-					sneakingTimes.put(entity, entity.getWorld().getTime());
+					sneakingTimes.put(entity, world.getTime());
 					if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
 						PlayTakeOffBeltSoundInstancePayload.sendPlayTakeOffBeltSoundInstance(serverPlayerEntity);
 					}
 				}
-			} else if (entity.getWorld().getTime() % CHARGE_TIME_TICKS == 0 && sneakingTimes.containsKey(entity)) {
+			} else if (world.getTime() % CHARGE_TIME_TICKS == 0 && sneakingTimes.containsKey(entity)) {
 				long lastSneakingTime = sneakingTimes.get(entity);
-				if (lastSneakingTime < entity.getWorld().getTime() + CHARGE_TIME_TICKS) {
+				if (lastSneakingTime < world.getTime() + CHARGE_TIME_TICKS) {
 					sneakingTimes.remove(entity);
 				}
 			}

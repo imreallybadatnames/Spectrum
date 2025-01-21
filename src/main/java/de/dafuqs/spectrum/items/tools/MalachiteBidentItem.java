@@ -34,7 +34,6 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	private final float armorPierce, protPierce;
-	public static final String THROW_EFFECTS_DISABLED = "disabled";
 	
 	public MalachiteBidentItem(Item.Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
 		super(settings);
@@ -159,12 +158,11 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	}
 	
 	public void markDisabled(ItemStack stack, boolean disabled) {
-		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putBoolean(THROW_EFFECTS_DISABLED, disabled)));
+		stack.set(SpectrumDataComponentTypes.ACTIVATED, !disabled);
 	}
 	
 	public boolean isDisabled(ItemStack stack) {
-		return stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getBoolean(THROW_EFFECTS_DISABLED);
+		return !stack.getOrDefault(SpectrumDataComponentTypes.ACTIVATED, true);
 	}
 	
 	public boolean canBeDisabled() {

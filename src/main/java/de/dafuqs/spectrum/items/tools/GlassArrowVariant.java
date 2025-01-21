@@ -24,7 +24,7 @@ public class GlassArrowVariant {
 	public static void init() {
 	}
 	
-	// bit of a load order hack because arrows are not registered at the time the variant registry is needed
+	// A bit of a load order hack because arrows are not registered at the time the variant registry is needed
 	void setData(ArrowItem arrowItem, ParticleEffect particleEffect) {
 		this.arrow = arrowItem;
 		this.particleEffect = particleEffect;
