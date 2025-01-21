@@ -1,41 +1,36 @@
 package de.dafuqs.spectrum.helpers;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
-import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
 public class SpectrumEnchantmentHelper {
-
+	
 	public static void addRevealedEnchantments(Enchantment enchantment, ServerWorld world, int level, Entity user, ItemEnchantmentsComponent.Builder builder) {
 		EnchantmentAccessor.invokeApplyEffects(
 				enchantment.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED),
 				EnchantmentAccessor.invokeCreateEnchantedEntityLootContext(world, level, user, user.getPos()),
 				e -> builder.add(e, level));
 	}
-
+	
 	public static Pair<Boolean, ItemStack> addOrUpgradeEnchantment(RegistryWrapper.WrapperLookup registryLookup, ItemStack stack, RegistryKey<Enchantment> enchantmentKey, int level, boolean forceEvenIfNotApplicable, boolean allowEnchantmentConflicts) {
 		return getEntry(registryLookup, enchantmentKey)
 				.map(entry -> addOrUpgradeEnchantment(stack, entry, level, forceEvenIfNotApplicable, allowEnchantmentConflicts))
 				.orElse(new Pair<>(false, stack));
 	}
-
+	
 	/**
 	 * Adds an enchantment to an ItemStack. If the stack already has that enchantment, it gets upgraded instead
 	 *
@@ -50,7 +45,7 @@ public class SpectrumEnchantmentHelper {
 		boolean isAcceptable = enchantment.value().isAcceptableItem(stack) || forceEvenIfNotApplicable;
 		boolean isConflicting = !allowEnchantmentConflicts && !EnchantmentHelper.isCompatible(stack.getEnchantments().getEnchantments(), enchantment);
 		boolean isEnchantedBook = stack.isOf(Items.ENCHANTED_BOOK) || SpectrumEnchantmentHelper.isEnchantableBook(stack);
-
+		
 		// Can this enchant even go on that tool?
 		if (!isAcceptable && !isEnchantedBook) {
 			return new Pair<>(false, stack);
@@ -60,20 +55,20 @@ public class SpectrumEnchantmentHelper {
 		if (isConflicting) {
 			return new Pair<>(false, stack);
 		}
-
+		
 		// Convert enchantable books into enchanted books
 		if (isEnchantedBook && !stack.isOf(Items.ENCHANTED_BOOK)) {
 			ItemStack enchantedBookStack = new ItemStack(Items.ENCHANTED_BOOK, stack.getCount());
 			enchantedBookStack.applyChanges(stack.getComponentChanges());
 			stack = enchantedBookStack;
 		}
-
+		
 		// Is the existing enchantment the same or better than the new one?
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(stack));
 		if (level <= builder.getLevel(enchantment)) {
 			return new Pair<>(false, stack);
 		}
-
+		
 		// Add the enchantment
 		builder.set(enchantment, level);
 		EnchantmentHelper.set(stack, builder.build());
@@ -97,7 +92,7 @@ public class SpectrumEnchantmentHelper {
 	 * @param receiverStack             the stack that receives the enchantments
 	 * @param forceEvenIfNotApplicable  add enchantments to the item, even if the item does usually not support that enchantment
 	 * @param allowEnchantmentConflicts add enchantments to the item, even if there are enchantment conflicts
-	 * @param sourceStacks   sourceStacks the stacks that supply the enchantments
+	 * @param sourceStacks              sourceStacks the stacks that supply the enchantments
 	 * @return the resulting stack
 	 */
 	public static ItemStack clearAndCombineEnchantments(ItemStack receiverStack, boolean forceEvenIfNotApplicable, boolean allowEnchantmentConflicts, ItemStack... sourceStacks) {
@@ -135,38 +130,39 @@ public class SpectrumEnchantmentHelper {
 		var newEnchantments = EnchantmentHelper.getEnchantments(newStack).getEnchantments();
 		return existingEnchantments.isEmpty()
 				|| newEnchantments.stream().anyMatch(newEnchantment ->
-						EnchantmentHelper.isCompatible(existingEnchantments, newEnchantment));
+				EnchantmentHelper.isCompatible(existingEnchantments, newEnchantment));
 	}
-
+	
 	@SafeVarargs
 	public static Pair<ItemStack, Integer> removeEnchantments(RegistryWrapper.WrapperLookup registryLookup, @NotNull ItemStack itemStack, RegistryKey<Enchantment>... enchantmentKeys) {
 		if (!EnchantmentHelper.hasEnchantments(itemStack)) {
 			return new Pair<>(itemStack, 0);
 		}
-
+		
 		var wrapper = getRegistry(registryLookup).orElse(null);
 		if (wrapper == null) {
 			return new Pair<>(itemStack, 0);
 		}
-
+		
 		return removeEnchantments(itemStack, Arrays.stream(enchantmentKeys)
 				.map(key -> wrapper.getOptional(key).orElse(null))
 				.filter(Objects::nonNull)
 				.toList());
 	}
-
+	
 	@SafeVarargs
 	public static Pair<ItemStack, Integer> removeEnchantments(@NotNull ItemStack itemStack, RegistryEntry<Enchantment>... enchantments) {
 		return removeEnchantments(itemStack, Arrays.stream(enchantments).toList());
 	}
-
+	
 	/**
 	 * Removes the enchantments on a stack of items / enchanted book
+	 *
 	 * @param itemStack    the stack
 	 * @param enchantments the enchantments to remove
 	 * @return The resulting stack & the count of enchants that were removed
 	 */
-    public static <T extends RegistryEntry<Enchantment>> Pair<ItemStack, Integer> removeEnchantments(@NotNull ItemStack itemStack, List<T> enchantments) {
+	public static <T extends RegistryEntry<Enchantment>> Pair<ItemStack, Integer> removeEnchantments(@NotNull ItemStack itemStack, List<T> enchantments) {
 		var removals = new AtomicInteger(0);
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack));
 		enchantments.forEach(enchantment -> {
@@ -175,13 +171,13 @@ public class SpectrumEnchantmentHelper {
 				removals.getAndIncrement();
 			}
 		});
-
+		
 		var component = builder.build();
 		if (itemStack.isOf(Items.ENCHANTED_BOOK) && component.isEmpty()) {
 			itemStack = new ItemStack(Items.BOOK, itemStack.getCount());
 		}
 		EnchantmentHelper.set(itemStack, builder.build());
-
+		
 		return new Pair<>(itemStack, removals.get());
 	}
 	
@@ -197,52 +193,24 @@ public class SpectrumEnchantmentHelper {
 		
 		return stack;
 	}
-
+	
 	public static int getLevel(RegistryWrapper.WrapperLookup registryLookup, RegistryKey<Enchantment> enchantment, ItemStack stack) {
 		return getRegistry(registryLookup)
 				.flatMap(impl -> impl.getOptional(enchantment))
 				.map(entry -> EnchantmentHelper.getLevel(entry, stack))
 				.orElse(0);
 	}
-
+	
 	public static Optional<RegistryWrapper.Impl<Enchantment>> getRegistry(RegistryWrapper.WrapperLookup registryLookup) {
 		return registryLookup.getOptionalWrapper(RegistryKeys.ENCHANTMENT);
 	}
-
+	
 	public static Optional<RegistryEntry<Enchantment>> getEntry(RegistryWrapper.WrapperLookup lookup, RegistryKey<Enchantment> key) {
 		return getRegistry(lookup).flatMap(impl -> impl.getOptional(key));
 	}
-
+	
 	public static int getEquipmentLevel(RegistryWrapper.WrapperLookup lookup, RegistryKey<Enchantment> key, LivingEntity entity) {
 		return getEntry(lookup, key).map(e -> EnchantmentHelper.getEquipmentLevel(e, entity)).orElse(0);
 	}
-
-	public static void doTreasureHunterForPlayer(ServerPlayerEntity thisEntity, DamageSource source) {
-		if (!thisEntity.isSpectator() && source.getAttacker() instanceof LivingEntity) {
-			ServerWorld serverWorld = ((ServerWorld) thisEntity.getWorld());
-			int damageSourceTreasureHunt = getEquipmentLevel(
-					serverWorld.getRegistryManager(),
-					SpectrumEnchantments.TREASURE_HUNTER,
-					(LivingEntity) source.getAttacker());
-			if (damageSourceTreasureHunt > 0) {
-				boolean shouldDropHead = serverWorld.getRandom().nextFloat() < 0.2 * damageSourceTreasureHunt;
-				if (shouldDropHead) {
-					ItemStack headItemStack = new ItemStack(Items.PLAYER_HEAD);
-
-					NbtCompound compoundTag = new NbtCompound();
-					compoundTag.putString("SkullOwner", thisEntity.getName().getString());
-
-					headItemStack.setNbt(compoundTag);
-
-					ItemEntity headEntity = new ItemEntity(serverWorld, thisEntity.getX(), thisEntity.getY(), thisEntity.getZ(), headItemStack);
-					serverWorld.spawnEntity(headEntity);
-				}
-			}
-		}
-	}
-
-	public static float getAddtionalCritDamageMultiplier(int improvedCriticalLevel) {
-		return SpectrumCommon.CONFIG.ImprovedCriticalExtraDamageMultiplierPerLevel * improvedCriticalLevel;
-	}
-
+	
 }

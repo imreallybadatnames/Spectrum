@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.spectrum.cca.*;
-import de.dafuqs.spectrum.enchantments.InexorableEnchantment;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.status_effects.*;
 import net.minecraft.enchantment.*;
@@ -10,18 +10,18 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-
+	
 	@Inject(method = "onKilledOther", at = @At("HEAD"))
 	private void spectrum$rememberKillOther(ServerWorld world, LivingEntity other, CallbackInfoReturnable<Boolean> cir) {
 		Entity entity = (Entity) (Object) this;
@@ -34,11 +34,11 @@ public abstract class EntityMixin {
 			}
 		}
 	}
-
+	
 	@ModifyVariable(method = "slowMovement", at = @At(value = "LOAD"), argsOnly = true)
 	private Vec3d spectrum$applyInexorableAntiBlockSlowdown(Vec3d multiplier) {
 		var entity = (Entity) (Object) this;
-		if (entity instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
+		if (entity instanceof LivingEntity livingEntity && InexorableHelper.isArmorActive(livingEntity)) {
 			return Vec3d.ZERO;
 		}
 		return multiplier;
@@ -47,7 +47,7 @@ public abstract class EntityMixin {
 	@Inject(method = "getVelocityMultiplier", at = @At("RETURN"), cancellable = true)
 	private void spectrum$applyInexorableAntiSlowdown(CallbackInfoReturnable<Float> cir) {
 		var entity = (Entity) (Object) this;
-		if (entity instanceof LivingEntity livingEntity && InexorableEnchantment.isArmorActive(livingEntity)) {
+		if (entity instanceof LivingEntity livingEntity && InexorableHelper.isArmorActive(livingEntity)) {
 			cir.setReturnValue(Math.max(cir.getReturnValue(), 1F));
 		}
 	}
@@ -80,13 +80,13 @@ public abstract class EntityMixin {
 			}
 		}
 	}
-
+	
 	@ModifyReturnValue(method = "getPose", at = @At("RETURN"))
 	public EntityPose spectrum$forceSleepPose(EntityPose original) {
 		var entity = (Entity) (Object) this;
 		if (entity instanceof LivingEntity living && !(entity instanceof PlayerEntity) && (living.hasStatusEffect(SpectrumStatusEffects.ETERNAL_SLUMBER) || living.hasStatusEffect(SpectrumStatusEffects.FATAL_SLUMBER)))
 			return EntityPose.SLEEPING;
-
+		
 		return original;
 	}
 	

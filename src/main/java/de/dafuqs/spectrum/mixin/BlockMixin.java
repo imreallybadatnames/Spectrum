@@ -2,8 +2,7 @@ package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.spectrum.data_loaders.*;
-import de.dafuqs.spectrum.enchantments.*;
-import de.dafuqs.spectrum.helpers.FoundryHelper;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -34,7 +33,7 @@ public abstract class BlockMixin {
 	@ModifyReturnValue(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"))
 	private static List<ItemStack> spectrum$getDroppedStacks(List<ItemStack> original, BlockState state, ServerWorld world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack) {
 		List<ItemStack> droppedStacks = original;
-
+		
 		// Voiding curse: no drops
 		if (EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.NO_BLOCK_DROPS)) {
 			world.spawnParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.05);
@@ -73,7 +72,7 @@ public abstract class BlockMixin {
 							leftoverReturnStacks.add(itemStack);
 						}
 					}
-					if(anyAdded) {
+					if (anyAdded) {
 						playerEntity.getWorld().playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
 								SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
 								0.2F, ((playerEntity.getRandom().nextFloat() - playerEntity.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
@@ -91,7 +90,7 @@ public abstract class BlockMixin {
 		if (spectrum$breakingPlayer == null) {
 			return originalXP;
 		}
-		return (int) (originalXP * ExuberanceEnchantment.getExuberanceMod(spectrum$breakingPlayer));
+		return (int) (originalXP * ExuberanceHelper.getExuberanceMod(spectrum$breakingPlayer));
 	}
 	
 	@Inject(method = "afterBreak", at = @At("HEAD"))

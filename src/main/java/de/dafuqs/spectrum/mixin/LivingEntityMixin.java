@@ -12,8 +12,8 @@ import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.cca.azure_dike.*;
-import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
@@ -126,7 +126,7 @@ public abstract class LivingEntityMixin {
 		if (!b) {
 			return false;
 		}
-		return !InexorableEnchantment.isArmorActive((LivingEntity) (Object) this);
+		return !InexorableHelper.isArmorActive((LivingEntity) (Object) this);
 	}
 	
 	@Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasNoDrag()Z"))
@@ -532,7 +532,7 @@ public abstract class LivingEntityMixin {
 					
 					int disarmingLevel = EnchantmentHelper.getLevel(SpectrumEnchantments.DISARMING, livingSource.getMainHandStack());
 					if (disarmingLevel > 0 && Math.random() < disarmingLevel * SpectrumCommon.CONFIG.DisarmingChancePerLevelMobs) {
-						DisarmingEnchantment.disarmEntity((LivingEntity) (Object) this);
+						DisarmingHelper.disarmEntity((LivingEntity) (Object) this);
 					}
 				}
 			}
@@ -662,7 +662,7 @@ public abstract class LivingEntityMixin {
 	protected void applyInexorableEffects(CallbackInfo ci) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 		if (entity.getWorld() != null && entity.getWorld().getTime() % 20 == 0) {
-			InexorableEnchantment.checkAndRemoveSlowdownModifiers(entity);
+			InexorableHelper.checkAndRemoveSlowdownModifiers(entity);
 		}
 	}
 	

@@ -1,20 +1,15 @@
-package de.dafuqs.spectrum.helpers;
+package de.dafuqs.spectrum.helpers.enchantments;
 
-import de.dafuqs.spectrum.enchantments.SpectrumEnchantment;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.util.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class FoundryHelper {
-
+	
 	@Nullable
 	public static ItemStack getSmeltedItemStack(ItemStack inputItemStack, World world) {
 		var drm = world.getRegistryManager();
@@ -31,7 +26,7 @@ public class FoundryHelper {
 	@NotNull
 	public static List<ItemStack> applyFoundry(World world, List<ItemStack> originalStacks) {
 		List<ItemStack> returnItemStacks = new ArrayList<>();
-
+		
 		for (ItemStack is : originalStacks) {
 			ItemStack smeltedStack = FoundryHelper.getSmeltedItemStack(is, world);
 			if (smeltedStack == null) {
@@ -47,5 +42,5 @@ public class FoundryHelper {
 		}
 		return returnItemStacks;
 	}
-
+	
 }

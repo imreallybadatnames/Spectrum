@@ -1,25 +1,20 @@
 package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-
-import static de.dafuqs.spectrum.enchantments.InertiaEnchantment.*;
 
 @Mixin(MiningToolItem.class)
 public abstract class MiningToolItemMixin {
@@ -32,32 +27,22 @@ public abstract class MiningToolItemMixin {
 	public void countInertiaBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner, CallbackInfoReturnable<Boolean> cir) {
 		if (stack != null) { // thank you, gobber
 			long inertiaAmount = 0;
-
+			
 			if (SpectrumEnchantmentHelper.getLevel(miner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack) > 0) {
-				NbtCompound compound = stack.getOrCreateNbt();
-				Identifier brokenBlockIdentifier = Registries.BLOCK.getId(state.getBlock());
-				if (compound.getString("Inertia_LastMinedBlock").equals(brokenBlockIdentifier.toString())) {
-					inertiaAmount = compound.getLong(INERTIA_COUNT) + 1;
-					compound.putLong(INERTIA_COUNT, inertiaAmount);
-				} else {
-					compound.putString(INERTIA_BLOCK, brokenBlockIdentifier.toString());
-					compound.putLong(INERTIA_COUNT, 1);
-					inertiaAmount = 1;
-				}
-			}
-
-			if (miner instanceof ServerPlayerEntity serverPlayerEntity) {
-				SpectrumAdvancementCriteria.INERTIA_USED.trigger(serverPlayerEntity, state, (int) inertiaAmount);
+				var inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
+				inertiaAmount = state.isOf(inertia.lastMined()) ? inertia.count() + 1 : 1;
+				stack.set(SpectrumDataComponentTypes.INERTIA, new InertiaComponent(state.getBlock(), inertiaAmount));
 			}
 			
+			if (miner instanceof ServerPlayerEntity serverPlayerEntity)
+				SpectrumAdvancementCriteria.INERTIA_USED.trigger(serverPlayerEntity, state, (int) inertiaAmount);
 		}
 	}
 	
 	@ModifyReturnValue(method = "getMiningSpeedMultiplier(Lnet/minecraft/item/ItemStack;Lnet/minecraft/block/BlockState;)F", at = @At("RETURN"))
 	public float applyMiningSpeedMultipliers(float original, ItemStack stack, BlockState state) {
-		if (stack == null) {
+		if (stack == null)
 			return original; // thank you, gobber
-		}
 		
 		// RAZING GAMING
 		int razingLevel = SpectrumEnchantmentHelper.getLevel(lookup, SpectrumEnchantments.RAZING, stack);
@@ -69,22 +54,19 @@ public abstract class MiningToolItemMixin {
 		// INERTIA GAMING
 		// inertia mining speed calculation logic is capped at 5 levels.
 		// Higher and the formula would do weird stuff
-		int inertiaLevel = EnchantmentHelper.getLevel(SpectrumEnchantments.INERTIA, stack);
+		int inertiaLevel = SpectrumEnchantmentHelper.getLevel(lookup, SpectrumEnchantments.INERTIA, stack);
 		inertiaLevel = Math.min(4, inertiaLevel);
 		if (inertiaLevel > 0) {
-			NbtCompound compound = stack.getOrCreateNbt();
-			Identifier brokenBlockIdentifier = Registries.BLOCK.getId(state.getBlock());
-			if (compound.getString(INERTIA_BLOCK).equals(brokenBlockIdentifier.toString())) {
-				long lastMinedBlockCount = compound.getLong(INERTIA_COUNT);
-				double additionalSpeedPercent = 2.0 * Math.log(lastMinedBlockCount) / Math.log((6 - inertiaLevel) * (6 - inertiaLevel) + 1);
-				
-				original = original * (0.5F + (float) additionalSpeedPercent);
+			var inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
+			if (state.isOf(inertia.lastMined())) {
+				var additionalSpeedPercent = 2.0 * Math.log(inertia.count()) / Math.log((6 - inertiaLevel) * (6 - inertiaLevel) + 1);
+				original *= 0.5F + (float) additionalSpeedPercent;
 			} else {
-				original = original / 4;
+				original /= 4;
 			}
 		}
 		
 		return original;
 	}
-
+	
 }

@@ -1,11 +1,11 @@
-package de.dafuqs.spectrum.enchantments;
+package de.dafuqs.spectrum.helpers.enchantments;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 
-public class ExuberanceEnchantment {
+public class ExuberanceHelper {
 	
 	public static float getExuberanceMod(PlayerEntity breakingPlayer) {
 		if (breakingPlayer != null && EnchantmentHelper.getLevel(SpectrumEnchantments.EXUBERANCE, breakingPlayer.getMainHandStack()) > 0) {

@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.mixin;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
@@ -18,14 +18,15 @@ import java.util.*;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin {
-
-	@Shadow public abstract ServerWorld getServerWorld();
-
+	
+	@Shadow
+	public abstract ServerWorld getServerWorld();
+	
 	private long spectrum$lastGleamingPinTriggerTick = 0;
 	
 	@Inject(at = @At("HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
 	protected void spectrum$dropPlayerHeadWithTreasureHunt(DamageSource source, CallbackInfo ci) {
-		SpectrumEnchantmentHelper.doTreasureHunterForPlayer((ServerPlayerEntity) (Object) this, source);
+		TreasureHunterHelper.doTreasureHunterForPlayer((ServerPlayerEntity) (Object) this, source);
 	}
 	
 	@Inject(at = @At("RETURN"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
@@ -44,7 +45,7 @@ public abstract class ServerPlayerEntityMixin {
 			if (source.getAttacker() instanceof LivingEntity livingSource) {
 				int disarmingLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), SpectrumEnchantments.DISARMING, livingSource.getMainHandStack());
 				if (disarmingLevel > 0 && Math.random() < disarmingLevel * SpectrumCommon.CONFIG.DisarmingChancePerLevelPlayers) {
-					DisarmingEnchantment.disarmEntity(thisPlayer);
+					DisarmingHelper.disarmEntity(thisPlayer);
 				}
 			}
 		}

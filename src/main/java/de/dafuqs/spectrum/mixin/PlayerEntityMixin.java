@@ -9,9 +9,9 @@ import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.cca.*;
-import de.dafuqs.spectrum.enchantments.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.progression.*;
@@ -43,14 +43,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-
+	
 	@Shadow
 	public abstract Iterable<ItemStack> getHandItems();
-
-	@Shadow private int sleepTimer;
-
-	@Shadow public abstract boolean damage(DamageSource source, float amount);
-
+	
+	@Shadow
+	private int sleepTimer;
+	
+	@Shadow
+	public abstract boolean damage(DamageSource source, float amount);
+	
 	public SpectrumFishingBobberEntity spectrum$fishingBobber;
 	
 	@Inject(method = "updateSwimming()V", at = @At("HEAD"), cancellable = true)
@@ -71,7 +73,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 			((FrenzyStatusEffect) frenzy.getEffectType()).onKill(entity, frenzy.getAmplifier());
 		}
 	}
-
+	
 	@Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
 	private void spectrum$stopSleep(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		if (amount > 0) {
@@ -79,7 +81,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 			MiscPlayerDataComponent.get(entity).notifyHit();
 		}
 	}
-
+	
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D"))
 	protected void spectrum$calculateModifiers(Entity target, CallbackInfo ci) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
@@ -96,7 +98,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		
 		int improvedCriticalLevel = SpectrumEnchantmentHelper.getLevel(target.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, player.getMainHandStack());
 		if (improvedCriticalLevel > 0) {
-			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(UUID.fromString("e9bca8d4-9dcb-4e9e-8a7b-48b129c7ec5a"), "spectrum:improved_critical", SpectrumEnchantmentHelper.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
+			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(UUID.fromString("e9bca8d4-9dcb-4e9e-8a7b-48b129c7ec5a"), "spectrum:improved_critical", ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
 			map.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, improvedCriticalModifier);
 		}
 		
@@ -128,16 +130,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		}
 		return original;
 	}
-
+	
 	@ModifyVariable(method = "attack", at = @At(value = "STORE"), index = 8, require = 1)
 	private boolean spectrum$binglebongle(boolean value, Entity target) {
 		if (hasForcedCrits(target)) {
 			return true;
 		}
-
+		
 		return value;
 	}
-
+	
 	@Inject(
 			method = {"attack(Lnet/minecraft/entity/Entity;)V"},
 			at = {@At(
@@ -150,22 +152,20 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 			damage.set(damage.get() * 1.5F);
 		}
 	}
-
+	
 	@Unique
 	protected boolean hasForcedCrits(Entity target) {
 		var player = (PlayerEntity) (Object) this;
 		var component = MiscPlayerDataComponent.get(player);
-
+		
 		if (NectarLanceItem.sleepCrits(player, target)) {
 			return true;
-		}
-		else if (component.isParrying()) {
+		} else if (component.isParrying()) {
 			component.setParryTicks(0);
 			return true;
-		}
-		else return component.isLunging();
+		} else return component.isLunging();
 	}
-
+	
 	@WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playSound(Lnet/minecraft/entity/player/PlayerEntity;DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FF)V", ordinal = 2))
 	protected void spectrum$switchCritSound(World instance, PlayerEntity except, double x, double y, double z, SoundEvent sound, SoundCategory category, float volume, float pitch, Operation<Void> original) {
 		var player = (PlayerEntity) (Object) this;
@@ -192,10 +192,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	protected int getChanneling(ItemStack stack) {
 		return EnchantmentHelper.getLevel(Enchantments.CHANNELING, stack);
 	}
-
+	
 	@Inject(at = @At("TAIL"), method = "jump()V")
 	protected void spectrum$jumpAdvancementCriterion(CallbackInfo ci) {
-
+		
 		if ((Object) this instanceof ServerPlayerEntity serverPlayerEntity) {
 			SpectrumAdvancementCriteria.TAKE_OFF_BELT_JUMP.trigger(serverPlayerEntity);
 		}
@@ -205,8 +205,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	private float spectrum$damageArmor(float amount, DamageSource source) {
 		if (source.isIn(SpectrumDamageTypeTags.DOES_NOT_DAMAGE_ARMOR)) {
 			return 0;
-		}
-		else if (source.isIn(SpectrumDamageTypeTags.INCREASED_ARMOR_DAMAGE)) {
+		} else if (source.isIn(SpectrumDamageTypeTags.INCREASED_ARMOR_DAMAGE)) {
 			return amount * 10;
 		}
 		return amount;
@@ -216,12 +215,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	public void setSpectrumBobber(SpectrumFishingBobberEntity bobber) {
 		this.spectrum$fishingBobber = bobber;
 	}
-
+	
 	@Override
 	public void setSleepTimer(int ticks) {
 		this.sleepTimer = ticks;
 	}
-
+	
 	@Override
 	public SpectrumFishingBobberEntity getSpectrumBobber() {
 		return this.spectrum$fishingBobber;
@@ -270,33 +269,33 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		
 		return value;
 	}
-
+	
 	@ModifyReturnValue(method = "getBlockBreakingSpeed", at = @At("RETURN"))
 	public float applyInexorableAntiSlowdowns(float original) {
 		if (isInexorableActive()) {
 			var player = (PlayerEntity) (Object) this;
 			var f = original;
-
+			
 			if (player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player))
 				f *= 5;
-
+			
 			if (!player.isOnGround())
 				f *= 5;
-
+			
 			return f;
 		}
-
+		
 		return original;
-
+		
 	}
-
+	
 	@Inject(method = "wakeUp(ZZ)V", at = @At(value = "HEAD"))
 	public void spectrum$applyWakeUpEffects(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo ci) {
 		var player = (PlayerEntity) (Object) this;
 		if (!player.getWorld().isClient())
 			MiscPlayerDataComponent.get(player).resetSleepingState(true);
 	}
-
+	
 	@WrapOperation(method = "updatePose", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setPose(Lnet/minecraft/entity/EntityPose;)V"))
 	public void spectrum$forceSwimmingState(PlayerEntity instance, EntityPose entityPose, Operation<Void> original) {
 		var component = MiscPlayerDataComponent.get(instance);

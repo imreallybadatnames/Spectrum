@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.entity.entity;
 import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
@@ -183,7 +184,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 		}
 		
 		if (!attacked.isOnGround() && propelled) {
-			damage *= 3 + SpectrumEnchantmentHelper.getAddtionalCritDamageMultiplier(SpectrumEnchantmentHelper.getLevel(owner.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, stack));
+			damage *= 3 + ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(owner.getWorld().getRegistryManager(), stack);
 			crit = true;
 		}
 		
@@ -236,7 +237,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	}
 	
 	private void applyInertiaEffects(ItemStack stack) {
-		var inertia = EnchantmentHelper.getLevel(SpectrumEnchantments.INERTIA, stack);
+		var inertia = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack);
 		if (inertia > 0) {
 			damageMult += inertia * 0.1675F;
 			if (velMult < 2) {

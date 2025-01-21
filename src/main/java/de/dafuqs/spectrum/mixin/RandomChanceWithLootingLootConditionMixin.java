@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
-import de.dafuqs.spectrum.enchantments.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.loot.condition.*;
@@ -31,7 +31,7 @@ public abstract class RandomChanceWithLootingLootConditionMixin {
 				int level = EnchantmentHelper.getEquipmentLevel(this.enchantment, livingEntity);
 				if (level > 0) {
 					float enchantedChanceValue = this.enchantedChance.getValue(level);
-					original = context.getRandom().nextFloat() < CloversFavorEnchantment.rollChance(enchantedChanceValue, context.get(LootContextParameters.ATTACKING_ENTITY));
+					original = context.getRandom().nextFloat() < CloversFavorHelper.rollChance(enchantedChanceValue, context.get(LootContextParameters.ATTACKING_ENTITY));
 				}
 			}
 		}

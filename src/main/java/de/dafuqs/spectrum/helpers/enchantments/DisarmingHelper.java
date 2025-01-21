@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.enchantments;
+package de.dafuqs.spectrum.helpers.enchantments;
 
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.block.*;
@@ -9,7 +9,7 @@ import net.minecraft.sound.*;
 
 import java.util.*;
 
-public class DisarmingEnchantment {
+public class DisarmingHelper {
 	
 	public static void disarmEntity(LivingEntity livingEntity) {
 		// since endermen save their carried block as blockState, not in hand
@@ -46,5 +46,5 @@ public class DisarmingEnchantment {
 			break;
 		}
 	}
-
+	
 }

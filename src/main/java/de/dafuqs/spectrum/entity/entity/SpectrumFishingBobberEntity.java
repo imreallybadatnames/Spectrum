@@ -5,8 +5,7 @@ import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.data_loaders.*;
 import de.dafuqs.spectrum.data_loaders.EntityFishingDataLoader.*;
-import de.dafuqs.spectrum.enchantments.*;
-import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.progression.*;
@@ -60,14 +59,14 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	private boolean inTheOpen;
 	private @Nullable Entity hookedEntity;
 	private SpectrumFishingBobberEntity.State state;
-
+	
 	protected final int luckOfTheSeaLevel;
 	protected final int lureLevel;
 	protected final int exuberanceLevel;
 	protected final int bigCatchLevel;
 	protected final int serendipityReelLevel;
 	protected final boolean inventoryInsertion;
-
+	
 	public SpectrumFishingBobberEntity(EntityType<? extends SpectrumFishingBobberEntity> type, World world,
 									   int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel,
 									   int serendipityReelLevel, boolean inventoryInsertion, boolean ablaze) {
@@ -88,7 +87,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 	public SpectrumFishingBobberEntity(EntityType<? extends SpectrumFishingBobberEntity> entityType, World world) {
 		this(entityType, world, 0, 0, 0, 0, 0, false, false);
 	}
-
+	
 	public SpectrumFishingBobberEntity(EntityType<? extends SpectrumFishingBobberEntity> entityType, PlayerEntity thrower, World world,
 									   int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel,
 									   int serendipityReelLevel, boolean inventoryInsertion, boolean ablaze) {
@@ -570,7 +569,7 @@ public abstract class SpectrumFishingBobberEntity extends ProjectileEntity {
 			list = FoundryHelper.applyFoundry(this.getWorld(), list);
 		}
 		
-		float exuberanceMod = ExuberanceEnchantment.getExuberanceMod(this.exuberanceLevel);
+		float exuberanceMod = ExuberanceHelper.getExuberanceMod(this.exuberanceLevel);
 		for (ItemStack itemStack : list) {
 			int experienceAmount = this.random.nextInt((int) (6 * exuberanceMod) + 1);
 			

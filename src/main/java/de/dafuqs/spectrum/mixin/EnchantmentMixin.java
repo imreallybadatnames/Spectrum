@@ -35,7 +35,7 @@ public abstract class EnchantmentMixin {
 	public boolean spectrum$isAcceptableItem(boolean original, ItemStack stack) {
 		return spectrum$modifyIsSupported((Enchantment) (Object) this, stack, original);
 	}
-
+	
 	@Unique
 	private static boolean spectrum$modifyIsSupported(Enchantment enchantment, ItemStack stack, boolean original) {
 		if (original) {
