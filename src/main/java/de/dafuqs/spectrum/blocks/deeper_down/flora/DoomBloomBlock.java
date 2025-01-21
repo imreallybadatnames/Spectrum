@@ -1,11 +1,14 @@
 package de.dafuqs.spectrum.blocks.deeper_down.flora;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.block.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.tag.convention.v2.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
@@ -29,19 +32,27 @@ import org.jetbrains.annotations.*;
 
 public class DoomBloomBlock extends FlowerBlock implements Fertilizable, ExplosionAware {
 	
+	public static final MapCodec<DoomBloomBlock> CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(
+			STEW_EFFECT_CODEC.forGetter(FlowerBlock::getStewEffects),
+			createSettingsCodec()
+	).apply(i, DoomBloomBlock::new));
+	
 	public static final IntProperty AGE = Properties.AGE_4;
 	public static final int AGE_MAX = Properties.AGE_4_MAX;
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
 	protected static final double GROW_CHANCE = 0.2;
 	
 	public DoomBloomBlock(RegistryEntry<StatusEffect> suspiciousStewEffect, int effectDuration, Settings settings) {
-		super(suspiciousStewEffect, effectDuration, settings);
+		this(createStewEffectList(suspiciousStewEffect, effectDuration), settings);
+	}
+	
+	public DoomBloomBlock(SuspiciousStewEffectsComponent stewEffects, Settings settings) {
+		super(stewEffects, settings);
 	}
 
 	@Override
 	public MapCodec<? extends DoomBloomBlock> getCodec() {
-		//TODO: Make the codec
-		return null;
+		return CODEC;
 	}
 	
 	@Override
@@ -151,7 +162,7 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	@Override
 	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
 		super.afterBreak(world, player, pos, state, blockEntity, stack);
-		if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0 && !stack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
+		if (SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.SILK_TOUCH, stack) == 0 && !stack.isIn(ConventionalItemTags.SHEAR_TOOLS)) {
 			explode(world, pos, state);
 		}
 	}

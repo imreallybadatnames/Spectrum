@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
@@ -8,6 +7,7 @@ import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
+import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -38,13 +38,13 @@ public class DreamflayerItem extends SwordItem implements InkPowered, Activatabl
 	 */
 	public static final float ARMOR_DIFFERENCE_DAMAGE_MULTIPLIER = 2.5F;
 	
-	public final float attackDamage;
-	public final float attackSpeed;
+	private final float baseAttackDamage;
+	private final float baseAttackSpeed;
 	
 	public DreamflayerItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
 		super(toolMaterial, settings.attributeModifiers(SwordItem.createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
-		this.attackDamage = attackDamage;
-		this.attackSpeed = attackSpeed;
+		this.baseAttackDamage = attackDamage;
+		this.baseAttackSpeed = attackSpeed;
 	}
 	
 	public static float getDamageAfterModifier(float amount, LivingEntity attacker, LivingEntity target) {
@@ -63,13 +63,13 @@ public class DreamflayerItem extends SwordItem implements InkPowered, Activatabl
 		if (hand == Hand.MAIN_HAND && user.isSneaking()) {
 			boolean isActivated = ActivatableItem.isActivated(stack);
 			if (isActivated) {
-				ActivatableItem.setActivated(stack, false);
+				setActivated(stack, false);
 				if (!world.isClient) {
 					world.playSound(null, user.getX(), user.getY(), user.getZ(), SpectrumSoundEvents.DREAMFLAYER_DEACTIVATE, SoundCategory.PLAYERS, 1.0F, 1F);
 				}
 			} else {
 				if (InkPowered.tryDrainEnergy(user, USED_COLOR, INK_COST_FOR_ACTIVATION)) {
-					ActivatableItem.setActivated(stack, true);
+					setActivated(stack, true);
 					if (!world.isClient) {
 						world.playSound(null, user.getX(), user.getY(), user.getZ(), SpectrumSoundEvents.DREAMFLAYER_ACTIVATE, SoundCategory.PLAYERS, 1.0F, 1F);
 					}
@@ -98,7 +98,7 @@ public class DreamflayerItem extends SwordItem implements InkPowered, Activatabl
 		} else {
 			if (world.getTime() % 20 == 0 && ActivatableItem.isActivated(stack)) {
 				if (entity instanceof ServerPlayerEntity player && !InkPowered.tryDrainEnergy(player, USED_COLOR, INK_COST_PER_SECOND)) {
-					ActivatableItem.setActivated(stack, false);
+					setActivated(stack, false);
 					world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SpectrumSoundEvents.DREAMFLAYER_DEACTIVATE, SoundCategory.PLAYERS, 0.8F, 1F);
 				}
 			}
@@ -126,19 +126,24 @@ public class DreamflayerItem extends SwordItem implements InkPowered, Activatabl
 		return !after.isOf(this) || ActivatableItem.isActivated(before) != ActivatableItem.isActivated(after);
 	}
 	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		if (slot == EquipmentSlot.MAINHAND) {
-			if (ActivatableItem.isActivated(stack)) {
-				builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage * 1.5, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-				builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", this.attackSpeed * 0.75, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-			} else {
-				builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-				builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", this.attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-			}
+	public void setActivated(ItemStack stack, boolean active) {
+		if (ActivatableItem.isActivated(stack) != active) {
+			float damage = baseAttackDamage * (active ? 1.5f : 1f);
+			float speed = baseAttackSpeed * (active ? 0.75f : 1f);
+			stack.apply(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT, comp -> {
+				var builder = AttributeModifiersComponent.builder();
+				for (var entry : comp.modifiers()) {
+					if (entry.modifier().idMatches(BASE_ATTACK_DAMAGE_MODIFIER_ID))
+						builder.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+					if (entry.modifier().idMatches(BASE_ATTACK_SPEED_MODIFIER_ID))
+						builder.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+					else
+						builder.add(entry.attribute(), entry.modifier(), entry.slot());
+				}
+				return builder.build();
+			});
+			ActivatableItem.setActivated(stack, active);
 		}
-		return builder.build();
 	}
 
 	@Override

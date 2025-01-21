@@ -16,6 +16,7 @@ import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.*;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;

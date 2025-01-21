@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.items.tools;
 import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -78,7 +79,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 				player.incrementStat(Stats.USED.getOrCreateStat(this));
 
 				if (canStartRiptide(player, stack)) {
-					riptide(world, player, getRiptideLevel(stack));
+					riptide(world, player, getRiptideLevel(world.getRegistryManager(), stack));
 				} else if (!world.isClient) {
 					stack.damage(1, player, LivingEntity.getSlotForHand(user.getActiveHand()));
 					throwBident(stack, (ServerWorld) world, player);
@@ -92,8 +93,8 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 		return SpectrumToolMaterials.Material.MALACHITE.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
 	}
 	
-	public int getRiptideLevel(ItemStack stack) {
-		return EnchantmentHelper.getRiptide(stack);
+	public int getRiptideLevel(RegistryWrapper.WrapperLookup lookup, ItemStack stack) {
+		return SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.RIPTIDE, stack);
 	}
 	
 	protected void riptide(World world, PlayerEntity playerEntity, int riptideLevel) {
@@ -190,7 +191,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	}
 	
 	public boolean canStartRiptide(PlayerEntity player, ItemStack stack) {
-		return getRiptideLevel(stack) > 0 && player.isTouchingWaterOrRain();
+		return getRiptideLevel(player.getWorld().getRegistryManager(), stack) > 0 && player.isTouchingWaterOrRain();
 	}
 	
 	public boolean isThrownAsMirrorImage(ItemStack stack, ServerWorld world, PlayerEntity player) {

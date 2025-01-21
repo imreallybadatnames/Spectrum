@@ -203,7 +203,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerActivatableItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of(ActivatableItem.NBT_STRING), (stack, world, entity, i) -> {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("activated"), (stack, world, entity, i) -> {
 			if (ActivatableItem.isActivated(stack)) {
 				return 1.0F;
 			} else {

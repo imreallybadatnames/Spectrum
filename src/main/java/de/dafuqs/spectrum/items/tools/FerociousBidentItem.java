@@ -3,11 +3,13 @@ package de.dafuqs.spectrum.items.tools;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -31,8 +33,8 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 	}
 	
 	@Override
-	public int getRiptideLevel(ItemStack stack) {
-		return Math.max(EnchantmentHelper.getRiptide(stack), BUILTIN_RIPTIDE_LEVEL);
+	public int getRiptideLevel(RegistryWrapper.WrapperLookup lookup, ItemStack stack) {
+		return Math.max(SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.RIPTIDE, stack), BUILTIN_RIPTIDE_LEVEL);
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 				}
 			}
 			
-			yeetPlayer(player, getRiptideLevel(stack) / 128F - 0.75F);
+			yeetPlayer(player, getRiptideLevel(world.getRegistryManager(), stack) / 128F - 0.75F);
 			player.useRiptide(20);
 			
 			for (LivingEntity entityAround : world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), player.getBoundingBox().expand(2), LivingEntity::isAlive)) {

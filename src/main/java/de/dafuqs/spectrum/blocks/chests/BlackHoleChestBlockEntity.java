@@ -34,7 +34,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements ExtendedScreenHandlerFactory<FilterConfigurable.ExtendedData>, SidedInventory, EventQueue.Callback<Object> {
+public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory<FilterConfigurable.ExtendedData>, SidedInventory, EventQueue.Callback<Object> {
 	
 	public static final int INVENTORY_SIZE = 28;
 	public static final int ITEM_FILTER_SLOT_COUNT = 5;
@@ -141,10 +141,10 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 			}
 		}
 
-		if (canStoreExperience()) {
+		if (canStoreExperience() && world != null) {
 			var experienceStack = inventory.get(EXPERIENCE_STORAGE_PROVIDER_ITEM_SLOT);
 			var experienceStorage = (ExperienceStorageItem) experienceStack.getItem();
-			return ExperienceStorageItem.getStoredExperience(experienceStack) >= experienceStorage.getMaxStoredExperience(experienceStack);
+			return ExperienceStorageItem.getStoredExperience(experienceStack) >= experienceStorage.getMaxStoredExperience(world.getRegistryManager(), experienceStack);
 		}
 
 		return true;
@@ -257,7 +257,7 @@ public class BlackHoleChestBlockEntity extends SpectrumChestBlockEntity implemen
 		if (entry instanceof ExperienceOrbEventQueue.EventEntry experienceEntry) {
 			ExperienceOrbEntity experienceOrbEntity = experienceEntry.experienceOrbEntity;
 			if (experienceOrbEntity != null && experienceOrbEntity.isAlive() && hasExperienceStorageItem()) {
-				ExperienceStorageItem.addStoredExperience(this.inventory.get(EXPERIENCE_STORAGE_PROVIDER_ITEM_SLOT), experienceOrbEntity.getExperienceAmount()); // overflow experience is void, to not lag the world on large farms
+				ExperienceStorageItem.addStoredExperience(world.getRegistryManager(), this.inventory.get(EXPERIENCE_STORAGE_PROVIDER_ITEM_SLOT), experienceOrbEntity.getExperienceAmount()); // overflow experience is void, to not lag the world on large farms
 
 				sendPlayExperienceOrbEntityAbsorbedParticle((ServerWorld) world, experienceOrbEntity);
 				world.playSound(null, experienceOrbEntity.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 0.9F + world.random.nextFloat() * 0.2F, 0.9F + world.random.nextFloat() * 0.2F);

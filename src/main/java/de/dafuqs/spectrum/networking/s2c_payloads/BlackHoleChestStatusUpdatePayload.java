@@ -35,9 +35,9 @@ public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, bo
 		long storedXP = 0;
 		long maxStoredXP = 0;
 		
-		if (xpStack.getItem() instanceof ExperienceStorageItem experienceStorageItem) {
+		if (xpStack.getItem() instanceof ExperienceStorageItem experienceStorageItem && chest.getWorld() != null) {
 			storedXP = ExperienceStorageItem.getStoredExperience(xpStack);
-			maxStoredXP = experienceStorageItem.getMaxStoredExperience(xpStack);
+			maxStoredXP = experienceStorageItem.getMaxStoredExperience(chest.getWorld().getRegistryManager(), xpStack);
 		}
 		
 		for (ServerPlayerEntity player : PlayerLookup.tracking(chest)) {
@@ -45,17 +45,20 @@ public record BlackHoleChestStatusUpdatePayload(BlockPos pos, boolean isFull, bo
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.@NotNull PlayPayloadHandler<BlackHoleChestStatusUpdatePayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
 			client.execute(() -> {
-				Optional<BlackHoleChestBlockEntity> entity = client.world.getBlockEntity(payload.pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
-				entity.ifPresent(chest -> {
-					chest.setFull(payload.isFull);
-					chest.setHasXPStorage(payload.canStoreExperience);
-					chest.setXPData(payload.storedExperience, payload.maxStoredExperience);
-				});
+				if (client.world != null) {
+					Optional<BlackHoleChestBlockEntity> entity = client.world.getBlockEntity(payload.pos, SpectrumBlockEntities.BLACK_HOLE_CHEST);
+					entity.ifPresent(chest -> {
+						chest.setFull(payload.isFull);
+						chest.setHasXPStorage(payload.canStoreExperience);
+						chest.setXPData(payload.storedExperience, payload.maxStoredExperience);
+					});
+				}
 			});
 		};
 	}

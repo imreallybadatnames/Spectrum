@@ -437,6 +437,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	}
 	
 	private static void craftRecipe(@NotNull CinderhearthBlockEntity cinderhearth, ItemStack inputStack, List<ItemStack> outputs, float experience) {
+		var world = cinderhearth.world;
+		if (world == null) return;
+		
 		DefaultedList<ItemStack> backupInventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		for (int i = 0; i < cinderhearth.inventory.size(); i++) {
 			backupInventory.set(i, cinderhearth.inventory.get(i));
@@ -467,8 +470,8 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			
 			// grant experience & advancements
 			float experienceMod = cinderhearth.drainInkForUpgrades(cinderhearth, UpgradeType.EXPERIENCE, InkColors.PURPLE, cinderhearth.usesEfficiency);
-			int finalExperience = Support.getIntFromDecimalWithChance(experience * experienceMod, cinderhearth.world.random);
-			ExperienceStorageItem.addStoredExperience(cinderhearth.getStack(EXPERIENCE_STORAGE_ITEM_SLOT_ID), finalExperience);
+			int finalExperience = Support.getIntFromDecimalWithChance(experience * experienceMod, world.random);
+			ExperienceStorageItem.addStoredExperience(world.getRegistryManager(), cinderhearth.getStack(EXPERIENCE_STORAGE_ITEM_SLOT_ID), finalExperience);
 			cinderhearth.grantPlayerCinderhearthSmeltingAdvancement(inputStackCopy, outputs, finalExperience);
 		} else {
 			cinderhearth.inventory = backupInventory;

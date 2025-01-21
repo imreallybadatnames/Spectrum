@@ -231,9 +231,9 @@ public class SpectrumItemProjectileBehaviors {
 					int playerExperience = target.totalExperience;
 					if (playerExperience > 0) {
 						KnowledgeGemItem item = (KnowledgeGemItem) stack.getItem();
-						long transferableExperiencePerTick = item.getTransferableExperiencePerTick(stack);
+						long transferableExperiencePerTick = item.getTransferableExperiencePerTick(target.getWorld().getRegistryManager(), stack);
 						int xpToTransfer = (int) Math.min(target.totalExperience, transferableExperiencePerTick * 100);
-						int experienceOverflow = ExperienceStorageItem.addStoredExperience(stack, xpToTransfer);
+						int experienceOverflow = ExperienceStorageItem.addStoredExperience(target.getWorld().getRegistryManager(), stack, xpToTransfer);
 						
 						target.addExperience(-xpToTransfer + experienceOverflow);
 						target.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 0.3F, 0.8F + target.getWorld().getRandom().nextFloat() * 0.4F);

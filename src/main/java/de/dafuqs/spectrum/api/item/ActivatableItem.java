@@ -1,24 +1,16 @@
 package de.dafuqs.spectrum.api.item;
 
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 
 public interface ActivatableItem {
 	
-	String NBT_STRING = "activated";
-	
 	static void setActivated(ItemStack stack, boolean activated) {
-		NbtCompound compound = stack.getOrCreateNbt();
-		compound.putBoolean(NBT_STRING, activated);
-		stack.setNbt(compound);
+		stack.set(SpectrumDataComponentTypes.ACTIVATED, activated);
 	}
 	
 	static boolean isActivated(ItemStack stack) {
-		NbtCompound compound = stack.getNbt();
-		if (compound != null && compound.contains(NBT_STRING)) {
-			return compound.getBoolean(NBT_STRING);
-		}
-		return false;
+		return stack.getOrDefault(SpectrumDataComponentTypes.ACTIVATED, false);
 	}
 	
 }

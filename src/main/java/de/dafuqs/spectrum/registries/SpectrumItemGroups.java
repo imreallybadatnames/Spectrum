@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.fractal.api.*;
-import de.dafuqs.fractal.interfaces.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
@@ -30,8 +29,7 @@ public class SpectrumItemGroups {
 			.icon(() -> new ItemStack(SpectrumBlocks.PEDESTAL_ALL_BASIC))
 			.entries((displayContext, entries) -> {
 				entries.add(SpectrumBlocks.PEDESTAL_ALL_BASIC, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-				ItemGroupParent parent = (ItemGroupParent) SpectrumItemGroups.MAIN;
-				for (ItemSubGroup subGroup : parent.fractal$getChildren()) {
+				for (ItemSubGroup subGroup : SpectrumItemGroups.MAIN.fractal$getChildren()) {
 					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
 				}
 			})
@@ -155,11 +153,11 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumEnchantmentHelper.getMaxEnchantedStack(SpectrumItems.KNOWLEDGE_GEM));
 				
 				ItemStack knowledgeGemStack = SpectrumItems.KNOWLEDGE_GEM.getDefaultStack();
-				ExperienceStorageItem.addStoredExperience(knowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(knowledgeGemStack));
+				ExperienceStorageItem.addStoredExperience(displayContext.lookup(), knowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(displayContext.lookup(), knowledgeGemStack));
 				entries.add(knowledgeGemStack);
 				
 				ItemStack enchantedKnowledgeGemStack = SpectrumEnchantmentHelper.getMaxEnchantedStack(SpectrumItems.KNOWLEDGE_GEM);
-				ExperienceStorageItem.addStoredExperience(enchantedKnowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(enchantedKnowledgeGemStack));
+				ExperienceStorageItem.addStoredExperience(displayContext.lookup(), enchantedKnowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(displayContext.lookup(), enchantedKnowledgeGemStack));
 				entries.add(enchantedKnowledgeGemStack);
 				
 				entries.add(SpectrumItems.CELESTIAL_POCKETWATCH);

@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.items.magic_items;
 
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.enchantment.*;
@@ -8,7 +10,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -34,18 +35,14 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 	
 	public static ItemStack getKnowledgeDropStackWithXP(int experience, boolean noStoreTooltip) {
 		ItemStack stack = new ItemStack(SpectrumItems.KNOWLEDGE_GEM);
-		NbtCompound compound = new NbtCompound();
-		compound.putInt("stored_experience", experience);
-		if (noStoreTooltip) {
-			compound.putBoolean("do_not_display_store_tooltip", true);
-		}
-		stack.setNbt(compound);
+		stack.set(SpectrumDataComponentTypes.STORED_EXPERIENCE, experience);
+		stack.set(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP, noStoreTooltip);
 		return stack;
 	}
 
 	@Override
-	public int getMaxStoredExperience(ItemStack itemStack) {
-		int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, itemStack);
+	public int getMaxStoredExperience(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack) {
+		int efficiencyLevel = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.EFFICIENCY, itemStack);
 		return maxStorageBase * (int) Math.pow(10, Math.min(5, efficiencyLevel)); // to not exceed int max
 	}
 	
@@ -54,8 +51,8 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 		return UseAction.BOW;
 	}
 	
-	public int getTransferableExperiencePerTick(ItemStack itemStack) {
-		int quickChargeLevel = EnchantmentHelper.getLevel(Enchantments.QUICK_CHARGE, itemStack);
+	public int getTransferableExperiencePerTick(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack) {
+		int quickChargeLevel = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.QUICK_CHARGE, itemStack);
 		return (int) (2 * Math.pow(2, Math.min(10, quickChargeLevel)));
 	}
 	
@@ -76,15 +73,15 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 			
 			int playerExperience = serverPlayerEntity.totalExperience;
 			int itemExperience = ExperienceStorageItem.getStoredExperience(stack);
-			int transferableExperience = getTransferableExperiencePerTick(stack);
+			int transferableExperience = getTransferableExperiencePerTick(world.getRegistryManager(), stack);
 			
 			if (serverPlayerEntity.isSneaking()) {
-				int maxStorage = getMaxStoredExperience(stack);
+				int maxStorage = getMaxStoredExperience(world.getRegistryManager(), stack);
 				int experienceToTransfer = serverPlayerEntity.isCreative() ? Math.min(transferableExperience, maxStorage - itemExperience) : Math.min(Math.min(transferableExperience, playerExperience), maxStorage - itemExperience);
 				
 				// store experience in gem; drain from player
 				if (experienceToTransfer > 0 && itemExperience < maxStorage && removePlayerExperience(serverPlayerEntity, experienceToTransfer)) {
-					ExperienceStorageItem.addStoredExperience(stack, experienceToTransfer);
+					ExperienceStorageItem.addStoredExperience(world.getRegistryManager(), stack, experienceToTransfer);
 					
 					if (remainingUseTicks % 4 == 0) {
 						world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.3F, 0.8F + world.getRandom().nextFloat() * 0.4F);
@@ -114,22 +111,24 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Ext
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		
-		int maxExperience = getMaxStoredExperience(stack);
-		int storedExperience = ExperienceStorageItem.getStoredExperience(stack);
-		if (storedExperience == 0) {
-			tooltip.add(Text.literal("0 ").formatted(Formatting.DARK_GRAY).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
-		} else {
-			tooltip.add(Text.literal(storedExperience + " ").formatted(Formatting.GREEN).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
-		}
-		if (shouldDisplayUsageTooltip(stack)) {
-			tooltip.add(Text.translatable("item.spectrum.knowledge_gem.tooltip.use", getTransferableExperiencePerTick(stack)).formatted(Formatting.GRAY));
-			addBannerPatternProviderTooltip(tooltip);
-		}
+		SpectrumCommon.getRegistryLookup().ifPresent(lookup -> {
+			int maxExperience = getMaxStoredExperience(lookup, stack);
+			int storedExperience = ExperienceStorageItem.getStoredExperience(stack);
+			if (storedExperience == 0) {
+				tooltip.add(Text.literal("0 ").formatted(Formatting.DARK_GRAY).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
+			} else {
+				tooltip.add(Text.literal(storedExperience + " ").formatted(Formatting.GREEN).append(Text.translatable("item.spectrum.knowledge_gem.tooltip.stored_experience", maxExperience).formatted(Formatting.GRAY)));
+			}
+			if (shouldDisplayUsageTooltip(stack)) {
+				tooltip.add(Text.translatable("item.spectrum.knowledge_gem.tooltip.use", getTransferableExperiencePerTick(lookup, stack)).formatted(Formatting.GRAY));
+				addBannerPatternProviderTooltip(tooltip);
+			}
+		});
+		
 	}
 	
 	public boolean shouldDisplayUsageTooltip(ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		return nbtCompound == null || !nbtCompound.getBoolean("do_not_display_store_tooltip");
+		return itemStack.getOrDefault(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP, false);
 	}
 	
 	public boolean removePlayerExperience(@NotNull PlayerEntity playerEntity, int experience) {

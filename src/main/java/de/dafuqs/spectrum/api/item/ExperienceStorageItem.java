@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.api.item;
 
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
 import net.minecraft.util.math.random.*;
 
 public interface ExperienceStorageItem {
@@ -15,12 +15,7 @@ public interface ExperienceStorageItem {
 	 * @return The amount of stored experience
 	 */
 	static int getStoredExperience(ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound == null || !nbtCompound.contains("stored_experience", NbtElement.NUMBER_TYPE)) {
-			return 0;
-		} else {
-			return nbtCompound.getInt("stored_experience");
-		}
+		return itemStack.getOrDefault(SpectrumDataComponentTypes.STORED_EXPERIENCE, 0);
 	}
 	
 	/**
@@ -32,10 +27,10 @@ public interface ExperienceStorageItem {
 	 * @param random    A random
 	 * @return The overflow amount that could not be stored
 	 */
-	static int addStoredExperience(ItemStack itemStack, float amount, Random random) {
+	static int addStoredExperience(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack, float amount, Random random) {
 		if (amount > 0) {
 			int intAmount = Support.getIntFromDecimalWithChance(amount, random);
-			return addStoredExperience(itemStack, intAmount);
+			return addStoredExperience(lookup, itemStack, intAmount);
 		}
 		return 0;
 	}
@@ -48,38 +43,23 @@ public interface ExperienceStorageItem {
 	 * @param amount    The amount of experience to store
 	 * @return The overflow amount that could not be stored
 	 */
-	static int addStoredExperience(ItemStack itemStack, int amount) {
-		if (amount <= 0) {
+	static int addStoredExperience(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack, int amount) {
+		if (amount <= 0 || itemStack.isEmpty())
+			return 0;
+		
+		if (itemStack.getItem() instanceof ExperienceStorageItem experienceStorageItem) {
+			int maxStorage = experienceStorageItem.getMaxStoredExperience(lookup, itemStack);
+			int existing = itemStack.getOrDefault(SpectrumDataComponentTypes.STORED_EXPERIENCE, 0);
+			int toAdd = amount + existing;
+			int overflow = Math.max(toAdd - maxStorage, 0);
+			toAdd = Math.min(toAdd, maxStorage);
+			itemStack.set(SpectrumDataComponentTypes.STORED_EXPERIENCE, toAdd);
+			return overflow;
+		} else {
+			itemStack.apply(SpectrumDataComponentTypes.STORED_EXPERIENCE, 0, existing -> existing + amount);
 			return 0;
 		}
 		
-		if (itemStack.getItem() instanceof ExperienceStorageItem experienceStorageItem) {
-			int maxStorage = experienceStorageItem.getMaxStoredExperience(itemStack);
-			
-			NbtCompound nbtCompound = itemStack.getOrCreateNbt();
-			if (!nbtCompound.contains("stored_experience", NbtElement.NUMBER_TYPE)) {
-				nbtCompound.putInt("stored_experience", amount);
-				itemStack.setNbt(nbtCompound);
-				return 0;
-			} else {
-				int existingStoredExperience = nbtCompound.getInt("stored_experience");
-				int experienceOverflow = maxStorage - amount - existingStoredExperience;
-				
-				if (experienceOverflow < 0) {
-					nbtCompound.putInt("stored_experience", maxStorage);
-					itemStack.setNbt(nbtCompound);
-					return -experienceOverflow;
-				} else {
-					nbtCompound.putInt("stored_experience", existingStoredExperience + amount);
-					itemStack.setNbt(nbtCompound);
-					return 0;
-				}
-			}
-		} else if (!itemStack.isEmpty()) {
-			SpectrumCommon.logError("Tried to add stored Experience to a non-ExperienceStorageItem item: " + itemStack.getItem().getName().getString());
-		}
-		
-		return 0;
 	}
 	
 	/**
@@ -91,26 +71,17 @@ public interface ExperienceStorageItem {
 	 * @return If there was enough experience that could be removed
 	 */
 	static boolean removeStoredExperience(ItemStack itemStack, int amount) {
-		if (itemStack.getItem() instanceof ExperienceStorageItem) {
-			NbtCompound nbtCompound = itemStack.getNbt();
-			if (nbtCompound == null || !nbtCompound.contains("stored_experience", NbtElement.NUMBER_TYPE)) {
-				return false;
-			} else {
-				int existingStoredExperience = nbtCompound.getInt("stored_experience");
-				if (existingStoredExperience < amount) {
-					return false;
-				} else {
-					nbtCompound.putInt("stored_experience", existingStoredExperience - amount);
-					itemStack.setNbt(nbtCompound);
-					return true;
-				}
+		if (itemStack.contains(SpectrumDataComponentTypes.STORED_EXPERIENCE)) {
+			var existing = itemStack.getOrDefault(SpectrumDataComponentTypes.STORED_EXPERIENCE, 0);
+			var newAmount = existing - amount;
+			if (newAmount >= 0) {
+				itemStack.set(SpectrumDataComponentTypes.STORED_EXPERIENCE, newAmount);
+				return true;
 			}
-		} else {
-			SpectrumCommon.logError("Tried to remove stored Experience from a non-ExperienceStorageItem: " + itemStack.getItem().getName().getString());
-			return false;
 		}
+		return false;
 	}
 	
-	int getMaxStoredExperience(ItemStack itemStack);
+	int getMaxStoredExperience(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack);
 	
 }

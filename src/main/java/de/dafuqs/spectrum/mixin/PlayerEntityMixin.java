@@ -247,7 +247,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		for (ItemStack stack : getHandItems()) {
 			if (!player.isUsingItem() && stack.getItem() instanceof ExperienceStorageItem) {
-				experience = ExperienceStorageItem.addStoredExperience(stack, experience);
+				experience = ExperienceStorageItem.addStoredExperience(getWorld().getRegistryManager(), stack, experience);
 				player.experiencePickUpDelay = 0;
 				if (experience == 0) {
 					break;
