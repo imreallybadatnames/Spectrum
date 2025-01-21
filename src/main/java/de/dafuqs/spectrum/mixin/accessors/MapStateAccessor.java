@@ -1,39 +1,36 @@
 package de.dafuqs.spectrum.mixin.accessors;
 
-import net.minecraft.item.map.MapBannerMarker;
-import net.minecraft.item.map.MapIcon;
-import net.minecraft.item.map.MapState;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import net.minecraft.item.map.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.gen.*;
 
-import java.util.Map;
+import java.util.*;
 
 @Mixin(MapState.class)
 public interface MapStateAccessor {
-
-    @Accessor(value = "showIcons")
-    boolean getShowIcons();
-
-    @Accessor(value = "unlimitedTracking")
-    boolean getUnlimitedTracking();
-
-    @Accessor(value = "banners")
-    Map<String, MapBannerMarker> getBanners();
-
-    @Accessor(value = "icons")
-    Map<String, MapIcon> getIcons();
-
-    @Accessor(value = "iconCount")
-    int getIconCount();
-
-    @Accessor(value = "iconCount")
-    void setIconCount(int iconCount);
-
-    @Invoker("markIconsDirty")
-    void invokeMarkIconsDirty();
-
-    @Invoker("removeIcon")
-    void invokeRemoveIcon(String id);
-
+	
+	@Accessor
+	boolean getShowDecorations();
+	
+	@Accessor
+	boolean getUnlimitedTracking();
+	
+	@Accessor
+	Map<String, MapBannerMarker> getBanners();
+	
+	@Accessor
+	Map<String, MapDecoration> getDecorations();
+	
+	@Accessor
+	int getDecorationCount();
+	
+	@Accessor
+	void setDecorationCount(int decorationCount);
+	
+	@Invoker
+	void invokeMarkDecorationsDirty();
+	
+	@Invoker
+	void invokeRemoveDecoration(String id);
+	
 }
