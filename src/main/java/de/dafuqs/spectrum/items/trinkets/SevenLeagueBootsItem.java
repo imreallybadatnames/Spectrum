@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.items.trinkets;
 
 import com.google.common.collect.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.item.*;
 import dev.emi.trinkets.api.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
@@ -11,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.util.*;
 
-public class SevenLeagueBootsItem extends SpectrumTrinketItem implements ExtendedEnchantable {
+public class SevenLeagueBootsItem extends SpectrumTrinketItem {
 	
 	public static final Identifier MOVEMENT_SPEED_ATTRIBUTE_ID = SpectrumCommon.locate("seven_league_boots_movement_speed");
 	public static final Identifier STEP_UP_ATTRIBUTE_ID = SpectrumCommon.locate("seven_league_boots_step_up");
@@ -35,11 +34,6 @@ public class SevenLeagueBootsItem extends SpectrumTrinketItem implements Extende
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return stack.getCount() == 1;
-	}
-	
-	@Override
-	public boolean acceptsEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.POWER;
 	}
 	
 	@Override
