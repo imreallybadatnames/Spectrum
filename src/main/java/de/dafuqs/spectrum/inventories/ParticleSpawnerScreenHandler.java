@@ -1,7 +1,8 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.particle_spawner.*;
-import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.screen.*;
@@ -19,11 +20,11 @@ public class ParticleSpawnerScreenHandler extends ScreenHandler {
 	
 	public ParticleSpawnerScreenHandler(int syncId, PlayerInventory playerInventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.PARTICLE_SPAWNER, syncId);
-
+		
 		this.player = playerInventory.player;
 		this.propertyDelegate = propertyDelegate;
 		this.particleSpawnerBlockEntity = player.getWorld().getBlockEntity(getBlockPos(), SpectrumBlockEntities.PARTICLE_SPAWNER).orElse(null);
-
+		
 		addProperties(propertyDelegate);
 	}
 	
@@ -40,9 +41,9 @@ public class ParticleSpawnerScreenHandler extends ScreenHandler {
 	public boolean canUse(PlayerEntity player) {
 		return this.particleSpawnerBlockEntity != null && !this.particleSpawnerBlockEntity.isRemoved();
 	}
-
+	
 	public BlockPos getBlockPos() {
-		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
@@ -12,26 +13,26 @@ import net.minecraft.screen.slot.*;
 import net.minecraft.util.math.*;
 
 public class CompactingChestScreenHandler extends ScreenHandler {
-
+	
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;
 	protected final int ROWS = 3;
 	protected CompactingChestBlockEntity compactingChestBlockEntity;
-
+	
 	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, new SimpleInventory(27), new ArrayPropertyDelegate(4));
 	}
-
+	
 	public CompactingChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.COMPACTING_CHEST, syncId);
-
+		
 		this.inventory = inventory;
 		this.propertyDelegate = propertyDelegate;
-
+		
 		this.compactingChestBlockEntity = playerInventory.player.getWorld()
 				.getBlockEntity(getBlockPos(), SpectrumBlockEntities.COMPACTING_CHEST)
 				.orElse(null);
-
+		
 		checkSize(inventory, 27);
 		inventory.onOpen(playerInventory.player);
 		
@@ -54,7 +55,7 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		for (j = 0; j < 9; ++j) {
 			this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 170 + i));
 		}
-
+		
 		this.addProperties(propertyDelegate);
 	}
 	
@@ -96,13 +97,13 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		}
 		return itemStack;
 	}
-
+	
 	public void toggleMode() {
 		var newOrdinal = (getCraftingMode().ordinal() + 1) % AutoCompactingInventory.AutoCraftingMode.values().length;
 		this.propertyDelegate.set(3, newOrdinal);
 		sendContentUpdates();
 	}
-
+	
 	@Override
 	public void sendContentUpdates() {
 		super.sendContentUpdates();
@@ -118,9 +119,9 @@ public class CompactingChestScreenHandler extends ScreenHandler {
 		super.onClosed(player);
 		this.inventory.onClose(player);
 	}
-
+	
 	public BlockPos getBlockPos() {
-		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
 	}
 	
 	public CompactingChestBlockEntity getBlockEntity() {

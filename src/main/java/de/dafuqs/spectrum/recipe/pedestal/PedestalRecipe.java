@@ -23,7 +23,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInput> {
+public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<CraftingRecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("place_pedestal");
 	
@@ -73,20 +73,20 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	}
 	
 	@Override
-	public boolean matches(RecipeInput inv, World world) {
+	public boolean matches(CraftingRecipeInput inv, World world) {
 		int topazPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.CYAN, 0);
 		int amethystPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.MAGENTA, 0);
 		int citrinePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.YELLOW, 0);
 		int onyxPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.BLACK, 0);
 		int moonstonePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.WHITE, 0);
-
+		
 		return ((topazPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(9), SpectrumItems.TOPAZ_POWDER, topazPowderAmount))
 				&& (amethystPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(10), SpectrumItems.AMETHYST_POWDER, amethystPowderAmount))
 				&& (citrinePowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(11), SpectrumItems.CITRINE_POWDER, citrinePowderAmount))
 				&& (onyxPowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(12), SpectrumItems.ONYX_POWDER, onyxPowderAmount))
 				&& (moonstonePowderAmount == 0 || isStackAtLeast(inv.getStackInSlot(13), SpectrumItems.MOONSTONE_POWDER, moonstonePowderAmount)));
 	}
-
+	
 	private boolean isStackAtLeast(ItemStack sourceItemStack, Item item, int amount) {
 		return sourceItemStack.getItem().equals(item) && sourceItemStack.getCount() >= amount;
 	}
@@ -95,12 +95,12 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	public List<IngredientStack> getIngredientStacks() {
 		return inputs;
 	}
-
+	
 	@Override
-	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
+	public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
 		return this.output.copy();
 	}
-
+	
 	public PedestalRecipeTier getTier() {
 		return this.tier;
 	}
@@ -171,6 +171,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	public void consumeIngredients(PedestalBlockEntity pedestal) {
 		// consume the required gemstone powders
 		World world = pedestal.getWorld();
+		if (world == null) return;
 		for (GemstoneColor gemstoneColor : BuiltinGemstoneColor.values()) {
 			double efficiencyModifier = pedestal.getUpgradeHolder().getEffectiveValue(Upgradeable.UpgradeType.EFFICIENCY);
 			int gemstonePowderAmount = this.getGemstonePowderAmount(gemstoneColor);
@@ -181,6 +182,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInpu
 	
 	protected void decrementGridSlot(PedestalBlockEntity pedestal, int slot, int count, ItemStack invStack) {
 		ItemStack remainder = this.skipRecipeRemainders() ? ItemStack.EMPTY : invStack.getRecipeRemainder();
+		if (pedestal.getWorld() == null) return;
 		if (remainder.isEmpty()) {
 			invStack.decrement(count);
 		} else {

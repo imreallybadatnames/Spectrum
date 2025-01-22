@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.api.block.*;
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.registries.*;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -21,28 +22,28 @@ public class BlackHoleChestScreenHandler extends ScreenHandler {
 	protected final World world;
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;
-
+	
 	protected BlackHoleChestBlockEntity blackHoleChestBlockEntity;
 	protected Inventory filterInventory;
-
+	
 	public BlackHoleChestScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable.ExtendedData data) {
 		this(syncId, playerInventory, new SimpleInventory(BlackHoleChestBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(3), data);
 	}
-
+	
 	public BlackHoleChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate, FilterConfigurable.ExtendedData data) {
 		super(SpectrumScreenHandlerTypes.BLACK_HOLE_CHEST, syncId);
 		this.inventory = inventory;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
 		this.filterInventory = FilterConfigurable.getFilterInventoryFromExtendedData(syncId, playerInventory, data, this);
-
+		
 		this.blackHoleChestBlockEntity = playerInventory.player.getWorld()
 				.getBlockEntity(getBlockPos(), SpectrumBlockEntities.BLACK_HOLE_CHEST)
 				.orElse(null);
-
+		
 		checkSize(inventory, BlackHoleChestBlockEntity.INVENTORY_SIZE);
 		inventory.onOpen(playerInventory.player);
-
+		
 		int i = (ROWS - 4) * 18;
 		
 		// sucking chest slots
@@ -104,7 +105,7 @@ public class BlackHoleChestScreenHandler extends ScreenHandler {
 		
 		return itemStack;
 	}
-
+	
 	public Inventory getInventory() {
 		return this.inventory;
 	}
@@ -114,21 +115,21 @@ public class BlackHoleChestScreenHandler extends ScreenHandler {
 		super.onClosed(player);
 		this.inventory.onClose(player);
 	}
-
+	
 	public BlockPos getBlockPos() {
-		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
 	}
-
+	
 	public BlackHoleChestBlockEntity getBlockEntity() {
 		return this.blackHoleChestBlockEntity;
 	}
-
+	
 	protected class BlackHoleChestFilterSlot extends ShadowSlot {
-
+		
 		public BlackHoleChestFilterSlot(Inventory inventory, int index, int x, int y) {
 			super(inventory, index, x, y);
 		}
-
+		
 		@Override
 		public boolean onClicked(ItemStack heldStack, ClickType type, PlayerEntity player) {
 			if (blackHoleChestBlockEntity != null) {

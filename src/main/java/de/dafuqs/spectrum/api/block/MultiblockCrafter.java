@@ -9,7 +9,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.math.random.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
@@ -23,10 +23,20 @@ public interface MultiblockCrafter extends Upgradeable, PlayerOwned {
 			String recipeString = nbt.getString("CurrentRecipe");
 			if (!recipeString.isEmpty()) {
 				var recipe = SpectrumCommon.getRecipeManager(world).flatMap(m -> m.get(Identifier.of(recipeString)));
-
+				
 				if (recipe.isPresent() && recipeClass.isInstance(recipe.get())) {
 					return (T) recipe.get().value();
 				}
+			}
+		}
+		return null;
+	}
+	
+	static @Nullable RecipeEntry<?> getRecipeEntryFromNbt(@Nullable World world, NbtCompound nbt) {
+		if (nbt.contains("CurrentRecipe")) {
+			String recipeString = nbt.getString("CurrentRecipe");
+			if (!recipeString.isEmpty()) {
+				return SpectrumCommon.getRecipeManager(world).flatMap(m -> m.get(Identifier.of(recipeString))).orElse(null);
 			}
 		}
 		return null;

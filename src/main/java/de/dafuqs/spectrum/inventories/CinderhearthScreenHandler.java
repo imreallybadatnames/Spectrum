@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.cinderhearth.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -13,7 +14,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 public class CinderhearthScreenHandler extends ScreenHandler {
-
+	
 	public static final int PLAYER_INVENTORY_START_X = 8;
 	public static final int PLAYER_INVENTORY_START_Y = 84;
 	
@@ -35,14 +36,14 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, new ArrayPropertyDelegate(5));
 	}
-
+	
 	public CinderhearthScreenHandler(int syncId, PlayerInventory playerInventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.CINDERHEARTH, syncId);
-
+		
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
-
+		
 		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(getBlockPos());
 		if (blockEntity instanceof CinderhearthBlockEntity cinderhearthBlockEntity) {
 			this.blockEntity = cinderhearthBlockEntity;
@@ -91,7 +92,7 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 	public boolean canUse(PlayerEntity player) {
 		return this.blockEntity.canPlayerUse(player);
 	}
-
+	
 	@Override
 	public void onClosed(PlayerEntity player) {
 		super.onClosed(player);
@@ -122,9 +123,9 @@ public class CinderhearthScreenHandler extends ScreenHandler {
 		
 		return itemStack;
 	}
-
+	
 	public BlockPos getBlockPos() {
-		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
 	}
 	
 	public int getCraftingTime() {

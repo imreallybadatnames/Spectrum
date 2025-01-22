@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.energy.color.*;
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.energy.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -27,7 +28,7 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 	public final ServerPlayerEntity player;
 	private final PropertyDelegate propertyDelegate;
 	protected ColorPickerBlockEntity blockEntity;
-
+	
 	@Override
 	public void sendContentUpdates() {
 		super.sendContentUpdates();
@@ -40,16 +41,16 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory) {
 		this(syncId, playerInventory, new ArrayPropertyDelegate(4));
 	}
-
+	
 	public ColorPickerScreenHandler(int syncId, PlayerInventory playerInventory, PropertyDelegate propertyDelegate) {
 		super(SpectrumScreenHandlerTypes.COLOR_PICKER, syncId);
-
+		
 		this.player = playerInventory.player instanceof ServerPlayerEntity serverPlayerEntity ? serverPlayerEntity : null;
 		this.world = playerInventory.player.getWorld();
 		this.propertyDelegate = propertyDelegate;
 		
 		InkColor selectedColor = propertyDelegate.get(3) == -1 ? null : InkColor.ofDyeColor(DyeColor.byId(propertyDelegate.get(3)));
-
+		
 		BlockEntity blockEntity = playerInventory.player.getWorld().getBlockEntity(getBlockPos());
 		if (blockEntity instanceof ColorPickerBlockEntity colorPickerBlockEntity) {
 			this.blockEntity = colorPickerBlockEntity;
@@ -80,7 +81,7 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		if (this.player != null) {
 			UpdateBlockEntityInkPayload.updateBlockEntityInk(blockEntity.getPos(), this.blockEntity.getEnergyStorage(), player);
 		}
-
+		
 		addProperties(propertyDelegate);
 	}
 	
@@ -124,9 +125,9 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 		
 		return itemStack;
 	}
-
+	
 	public BlockPos getBlockPos() {
-		return new BlockPos(this.propertyDelegate.get(0), this.propertyDelegate.get(1), this.propertyDelegate.get(2));
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
 	}
 	
 	@Override

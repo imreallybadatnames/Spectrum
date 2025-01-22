@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
-import de.dafuqs.spectrum.blocks.BlockPosDelegate;
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -26,8 +26,8 @@ import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.particle.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.recipe.input.*;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -49,15 +49,15 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	public static final int FIRST_OUTPUT_SLOT_ID = 3;
 	public static final int LAST_OUTPUT_SLOT_ID = 10;
 	public static final int[] OUTPUT_SLOT_IDS = new int[]{3, 4, 5, 6, 7, 8, 9, 10};
-
+	
 	protected DefaultedList<ItemStack> inventory;
 	protected boolean inventoryChanged;
-
+	
 	public static final Set<InkColor> USED_INK_COLORS = Set.of(InkColors.ORANGE, InkColors.LIGHT_BLUE, InkColors.MAGENTA, InkColors.PURPLE, InkColors.BLACK);
 	public static final long INK_STORAGE_SIZE = 8 * 64 * 100;
 	public static final long INK_COST_PER_TICK = 8;
 	protected IndividualCappedInkStorage inkStorage;
-
+	
 	private UUID ownerUUID;
 	private UpgradeHolder upgrades;
 	private Recipe<?> currentRecipe; // blasting & cinderhearth
@@ -69,7 +69,30 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	protected CinderHearthStructureType structure = CinderHearthStructureType.NONE;
 	
-	protected final PropertyDelegate propertyDelegate;
+	protected final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
+		@Override
+		public int get(int index) {
+			return switch (index) {
+				case 3 -> craftingTime;
+				case 4 -> craftingTimeTotal;
+				default -> super.get(index);
+			};
+		}
+		
+		@Override
+		public void set(int index, int value) {
+			switch (index) {
+				case 3 -> craftingTime = value;
+				case 4 -> craftingTimeTotal = value;
+				default -> set(index, value);
+			}
+		}
+		
+		@Override
+		public int size() {
+			return super.size() + 2;
+		}
+	};
 	
 	@Override
 	public int[] getAvailableSlots(Direction side) {
@@ -105,7 +128,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	public boolean canExtract(int slot, ItemStack stack, Direction dir) {
 		return slot >= FIRST_OUTPUT_SLOT_ID;
 	}
-
+	
 	public enum CinderHearthStructureType {
 		NONE,
 		WITH_LAVA,
@@ -116,31 +139,6 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		super(SpectrumBlockEntities.CINDERHEARTH, pos, state);
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		this.inkStorage = new IndividualCappedInkStorage(INK_STORAGE_SIZE, USED_INK_COLORS);
-		
-		this.propertyDelegate = new BlockPosDelegate(pos) {
-			@Override
-			public int get(int index) {
-				return switch (index) {
-					case 3 -> craftingTime;
-					case 4 -> craftingTimeTotal;
-					default -> super.get(index);
-				};
-			}
-			
-			@Override
-			public void set(int index, int value) {
-				switch (index) {
-					case 3 -> CinderhearthBlockEntity.this.craftingTime = value;
-					case 4 -> CinderhearthBlockEntity.this.craftingTimeTotal = value;
-					default -> set(index, value);
-				}
-			}
-			
-			@Override
-			public int size() {
-				return super.size() + 2;
-			}
-		};
 	}
 	
 	@Override
@@ -189,22 +187,22 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	protected Text getContainerName() {
 		return Text.translatable("block.spectrum.cinderhearth");
 	}
-
+	
 	@Override
 	protected DefaultedList<ItemStack> getHeldStacks() {
 		return inventory;
 	}
-
+	
 	@Override
 	protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
 		this.inventory = inventory;
 	}
-
+	
 	@Override
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
 		return new CinderhearthScreenHandler(syncId, playerInventory, this.propertyDelegate);
 	}
-
+	
 	@Override
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
@@ -231,7 +229,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			this.upgrades = new UpgradeHolder();
 		}
 	}
-
+	
 	@Override
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
@@ -254,7 +252,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	}
 	
 	@SuppressWarnings("unused")
-    public static void serverTick(World world, BlockPos blockPos, BlockState blockState, CinderhearthBlockEntity cinderhearthBlockEntity) {
+	public static void serverTick(World world, BlockPos blockPos, BlockState blockState, CinderhearthBlockEntity cinderhearthBlockEntity) {
 		if (cinderhearthBlockEntity.upgrades == null) {
 			cinderhearthBlockEntity.calculateUpgrades();
 		}
@@ -358,7 +356,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	private static void calculateRecipe(@NotNull World world, @NotNull CinderhearthBlockEntity cinderhearthBlockEntity) {
 		var input = new SingleStackRecipeInput(cinderhearthBlockEntity.getStack(0));
-
+		
 		// test the cached recipe => faster
 		if (cinderhearthBlockEntity.currentRecipe instanceof CinderhearthRecipe recipe) {
 			if (recipe.matches(input, world)) {
@@ -600,7 +598,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	public Recipe<?> getCurrentRecipe() {
 		return currentRecipe;
 	}
-
+	
 	@Override
 	public void provideRecipeInputs(RecipeMatcher finder) {
 		this.inventory.forEach(finder::addInput);

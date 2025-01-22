@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
@@ -9,64 +10,50 @@ import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-public class PedestalScreenHandler extends AbstractRecipeScreenHandler<Inventory> {
+public class PedestalScreenHandler extends AbstractRecipeScreenHandler<RecipeInput, Recipe<RecipeInput>> {
 	
 	protected final World world;
 	private final Inventory inventory;
 	private final PropertyDelegate propertyDelegate;
 	private final RecipeBookCategory category;
 	
-	private final BlockPos pedestalPos;
-	private final PedestalRecipeTier pedestalRecipeTier;
-	private final PedestalRecipeTier maxPedestalRecipeTier;
-	
-	public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, @NotNull PacketByteBuf buf) {
-		this(SpectrumScreenHandlerTypes.PEDESTAL, ScreenHandlerContext.EMPTY, RecipeBookCategory.CRAFTING, syncId, playerInventory, buf.readInt(), buf.readInt(), buf.readBlockPos());
+	public PedestalScreenHandler(int syncId, PlayerInventory playerInventory) {
+		this(syncId, playerInventory, new SimpleInventory(PedestalBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(PedestalBlockEntity.PROPERTY_DELEGATE_SIZE));
 	}
 	
-	protected PedestalScreenHandler(ScreenHandlerType<?> type, ScreenHandlerContext context, RecipeBookCategory recipeBookCategory, int i, PlayerInventory playerInventory, int variant, int maxRecipeTier, BlockPos pedestalPos) {
-		this(type, context, recipeBookCategory, i, playerInventory, (Inventory) playerInventory.player.getWorld().getBlockEntity(pedestalPos), new ArrayPropertyDelegate(2), variant, maxRecipeTier, pedestalPos);
+	public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+		this(SpectrumScreenHandlerTypes.PEDESTAL, RecipeBookCategory.CRAFTING, syncId, playerInventory, inventory, propertyDelegate);
 	}
 	
-	public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate, int variant, int maxRecipeTier, BlockPos pedestalPos) {
-		this(SpectrumScreenHandlerTypes.PEDESTAL, ScreenHandlerContext.EMPTY, RecipeBookCategory.CRAFTING, syncId, playerInventory, inventory, propertyDelegate, variant, maxRecipeTier, pedestalPos);
-	}
-	
-	protected PedestalScreenHandler(ScreenHandlerType<?> type, ScreenHandlerContext context, RecipeBookCategory recipeBookCategory, int i, @NotNull PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate, int pedestalRecipeTier, int maxRecipeTier, BlockPos pedestalPos) {
+	protected PedestalScreenHandler(ScreenHandlerType<?> type, RecipeBookCategory recipeBookCategory, int i, @NotNull PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
 		super(type, i);
 		this.inventory = inventory;
 		this.category = recipeBookCategory;
 		this.propertyDelegate = propertyDelegate;
 		this.world = playerInventory.player.getWorld();
 		
-		this.pedestalPos = pedestalPos;
-		this.pedestalRecipeTier = PedestalRecipeTier.values()[pedestalRecipeTier];
-		this.maxPedestalRecipeTier = PedestalRecipeTier.values()[maxRecipeTier];
-		
 		checkSize(inventory, PedestalBlockEntity.INVENTORY_SIZE);
-		checkDataCount(propertyDelegate, 2);
+		checkDataCount(propertyDelegate, PedestalBlockEntity.PROPERTY_DELEGATE_SIZE);
 		inventory.onOpen(playerInventory.player);
 		
 		// crafting slots
-		int m;
-		int n;
-		for (m = 0; m < 3; ++m) {
-			for (n = 0; n < 3; ++n) {
-				this.addSlot(new Slot(inventory, n + m * 3, 30 + n * 18, 19 + m * 18));
+		for (int m = 0; m < 3; ++m) {
+			for (int n = 0; n < 3; ++n) {
+				addSlot(new Slot(inventory, n + m * 3, 30 + n * 18, 19 + m * 18));
 			}
 		}
 		
 		// gemstone powder slots
-		switch (this.pedestalRecipeTier) {
+		switch (getPedestalRecipeTier()) {
 			case BASIC, SIMPLE -> {
 				this.addSlot(new StackFilterSlot(inventory, 9, 44 + 18, 77, SpectrumItems.TOPAZ_POWDER));
 				this.addSlot(new StackFilterSlot(inventory, 10, 44 + 2 * 18, 77, SpectrumItems.AMETHYST_POWDER));
@@ -127,8 +114,8 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<Inventory
 	}
 	
 	@Override
-	public boolean matches(Recipe<? super Inventory> recipe) {
-		return recipe.matches(this.inventory, this.world);
+	public boolean matches(RecipeEntry<Recipe<RecipeInput>> recipe) {
+		return recipe.value().matches(input.createPedestalInput(), world);
 	}
 	
 	@Override
@@ -158,13 +145,13 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<Inventory
 	
 	@Environment(EnvType.CLIENT)
 	public int getCraftingProgress() {
-		int craftingTime = this.propertyDelegate.get(0); // craftingTime
-		int craftingTimeTotal = this.propertyDelegate.get(1); // craftingTimeTotal
+		int craftingTime = getCraftingTime();
+		int craftingTimeTotal = getCraftingTimeTotal();
 		return craftingTimeTotal != 0 && craftingTime != 0 ? craftingTime * 24 / craftingTimeTotal : 0;
 	}
 	
 	public boolean isCrafting() {
-		return this.propertyDelegate.get(0) > 0; // craftingTime
+		return getCraftingTime() > 0;
 	}
 	
 	@Override
@@ -189,7 +176,7 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<Inventory
 		ItemStack clickedStackCopy = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		
-		BlockEntity blockEntity = world.getBlockEntity(pedestalPos);
+		BlockEntity blockEntity = world.getBlockEntity(getBlockPos());
 		if (blockEntity instanceof PedestalBlockEntity pedestalBlockEntity) {
 			pedestalBlockEntity.setInventoryChanged();
 		}
@@ -250,16 +237,24 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<Inventory
 		return clickedStackCopy;
 	}
 	
-	public BlockPos getPedestalPos() {
-		return this.pedestalPos;
+	public BlockPos getBlockPos() {
+		return BlockPosDelegate.getBlockPos(propertyDelegate);
+	}
+	
+	public int getCraftingTime() {
+		return propertyDelegate.get(3);
+	}
+	
+	public int getCraftingTimeTotal() {
+		return propertyDelegate.get(4);
 	}
 	
 	public PedestalRecipeTier getPedestalRecipeTier() {
-		return this.pedestalRecipeTier;
+		return PedestalRecipeTier.values()[propertyDelegate.get(5)];
 	}
 	
 	public PedestalRecipeTier getMaxPedestalRecipeTier() {
-		return this.maxPedestalRecipeTier;
+		return PedestalRecipeTier.values()[propertyDelegate.get(6)];
 	}
 	
 	@Override
