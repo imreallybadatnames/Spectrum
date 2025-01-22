@@ -29,7 +29,7 @@ public class NbtHelper {
 		throw new UnsupportedOperationException("Nbt element is not an object or a string");
 	}
 	
-	public static byte getJsonElementType(JsonElement element) {
+	private static byte getJsonElementType(JsonElement element) {
 		if (element == null)
 			throw new UnsupportedOperationException("Null JSON NBT element");
 		if (element.isJsonObject())
@@ -42,7 +42,7 @@ public class NbtHelper {
 		throw new UnsupportedOperationException("Unknown JSON NBT element type");
 	}
 	
-	public static byte getJsonArrayType(JsonArray array) {
+	private static byte getJsonArrayType(JsonArray array) {
 		if (array == null) {
 			throw new UnsupportedOperationException("Null JSON NBT element");
 		}
@@ -69,7 +69,7 @@ public class NbtHelper {
 		return NbtElement.LIST_TYPE;
 	}
 	
-	public static byte getJsonPrimitiveType(JsonPrimitive primitive) {
+	private static byte getJsonPrimitiveType(JsonPrimitive primitive) {
 		if (primitive == null) {
 			throw new UnsupportedOperationException("Null JSON NBT element");
 		}
@@ -127,7 +127,7 @@ public class NbtHelper {
 		throw new UnsupportedOperationException("Unknown JSON NBT primitive type");
 	}
 	
-	public static NbtElement fromJson(JsonElement element) {
+	private static NbtElement fromJson(JsonElement element) {
 		if (element == null)
 			throw new UnsupportedOperationException("Null JSON NBT element");
 		if (element.isJsonObject())
@@ -140,7 +140,7 @@ public class NbtHelper {
 		throw new UnsupportedOperationException("Unknown JSON NBT element type");
 	}
 	
-	public static NbtCompound fromJsonObject(JsonObject object) {
+	private static NbtCompound fromJsonObject(JsonObject object) {
 		if (object == null) {
 			throw new UnsupportedOperationException("Null JSON NBT element");
 		}
@@ -158,7 +158,7 @@ public class NbtHelper {
 		return result;
 	}
 	
-	public static AbstractNbtList<?> fromJsonArray(JsonArray array) {
+	private static AbstractNbtList<?> fromJsonArray(JsonArray array) {
 		byte type = getJsonArrayType(array);
 		
 		if (type == NbtElement.LIST_TYPE) {
@@ -183,7 +183,7 @@ public class NbtHelper {
 		return nbtArray;
 	}
 	
-	public static NbtElement fromJsonPrimitive(JsonPrimitive primitive) {
+	private static NbtElement fromJsonPrimitive(JsonPrimitive primitive) {
 		byte type = getJsonPrimitiveType(primitive);
 		
 		if (primitive.isBoolean()) {

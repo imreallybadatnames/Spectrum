@@ -2,8 +2,8 @@ package de.dafuqs.spectrum.data_loaders;
 
 import com.google.gson.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.helpers.NbtHelper;
 import de.dafuqs.spectrum.api.predicate.entity.*;
+import de.dafuqs.spectrum.helpers.NbtHelper;
 import net.fabricmc.fabric.api.resource.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
@@ -56,7 +56,6 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 				JsonObject entryObject = entryElement.getAsJsonObject();
 				
 				EntityType<?> entityType = Registries.ENTITY_TYPE.get(Identifier.of(JsonHelper.getString(entryObject, "id")));
-				
 				Optional<NbtCompound> nbt = NbtHelper.getNbtCompound(entryObject.get("nbt"));
 
 				int weight = 1;
