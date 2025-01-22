@@ -64,7 +64,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected long itemCountUnderway = 0;
 
 	// upgrade impl stuff
-	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor;
+	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor, updated;
 	protected int transferCount = PastelTransmissionLogic.DEFAULT_MAX_TRANSFER_AMOUNT;
 	protected int transferTime = PastelTransmissionLogic.DEFAULT_TRANSFER_TICKS_PER_NODE;
 	protected int filterSlotRows = DEFAULT_FILTER_SLOT_ROWS;
@@ -135,6 +135,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 
 			if (node.spinTicks > 0)
 				node.spinTicks--;
+		}
+		else if(!node.updated) {
+			node.updateUpgrades();
+			node.updated = true;
 		}
 	}
 
@@ -219,6 +223,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		lit = false;
 		lamp = false;
 		sensor = false;
+		var oldPriority = priority;
 		priority = PastelNetwork.NodePriority.GENERIC;
 
 		//First one processed can't compound because it has nothing to compound on
@@ -235,9 +240,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 			lit = false;
 		}
 		
-		if (world != null && getCachedState().get(Properties.LIT) != lit) {
-			networkUUID.ifPresent(uuid -> ServerPastelNetworkManager.get((ServerWorld) world).getNetwork(uuid));
-			world.setBlockState(pos, getCachedState().with(Properties.LIT, lit));
+		if (world != null) {
+			networkUUID.ifPresent(uuid -> ServerPastelNetworkManager.get((ServerWorld) world).getNetwork(uuid).ifPresent(n -> n.updateNodePriority(this, oldPriority)));
+			if (getCachedState().get(Properties.LIT) != lit)
+				world.setBlockState(pos, getCachedState().with(Properties.LIT, lit));
 		}
 
 		if (filterSlotRows < oldFilterSlotCount) {
@@ -368,7 +374,6 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		if (this.getNodeType().usesFilters()) {
 			FilterConfigurable.readFilterNbt(nbt, this.filterItems);
 		}
-		updateUpgrades();
 	}
 
 	@Override

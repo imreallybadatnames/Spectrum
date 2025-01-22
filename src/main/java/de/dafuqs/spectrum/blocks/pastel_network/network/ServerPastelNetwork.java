@@ -241,6 +241,8 @@ public class ServerPastelNetwork extends PastelNetwork {
 		networkToIncorporate.graph.edgeSet().forEach(edge -> {
 			graph.addEdge(networkToIncorporate.getGraph().getEdgeSource(edge), networkToIncorporate.getGraph().getEdgeTarget(edge));
 		});
+		addNode(node);
+		addNode(otherNode);
 		addEdge(node, otherNode);
 		
 		this.transmissionLogic.invalidateCache();
