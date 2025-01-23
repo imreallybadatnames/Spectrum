@@ -1,15 +1,16 @@
 package de.dafuqs.spectrum.mixin.client.accessors;
 
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import net.minecraft.client.particle.*;
+import net.minecraft.util.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.gen.*;
 
-import java.util.Map;
+import java.util.*;
 
 @Mixin(ParticleManager.class)
 public interface ParticleManagerAccessor {
-    @Accessor("spriteAwareFactories")
-    Map<Identifier, SpriteProvider> getSpriteAwareFactories();
+	
+	@Accessor
+	Map<Identifier, SpriteProvider> getSpriteAwareFactories();
+	
 }

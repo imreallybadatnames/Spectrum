@@ -9,16 +9,16 @@ import org.spongepowered.asm.mixin.gen.*;
 @Mixin(SlimeEntity.class)
 public interface SlimeEntityAccessor {
 	
-	@Invoker("setSize")
+	@Invoker
 	void invokeSetSize(int newSize, boolean heal);
 	
-	@Invoker("getParticles")
+	@Invoker
 	ParticleEffect invokeGetParticles();
 	
-	@Invoker("getSquishSound")
+	@Invoker
 	SoundEvent invokeGetSquishSound();
 	
-	@Invoker("getSoundVolume")
+	@Invoker
 	float invokeGetSoundVolume();
 	
 }

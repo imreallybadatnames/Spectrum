@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.gen.*;
 @Mixin(StatusEffectInstance.class)
 public interface StatusEffectInstanceAccessor {
 	
-	@Accessor(value = "duration")
+	@Accessor
 	void setDuration(int newDuration);
-
-	@Accessor(value = "amplifier")
+	
+	@Accessor
 	void setAmplifier(int newAmplifier);
-
+	
 }

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.entity.entity;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
@@ -26,10 +27,11 @@ public abstract class BidentBaseEntity extends TridentEntity {
 		builder.add(STACK, Items.AIR.getDefaultStack());
 	}
 	
+	@Override
 	public void setStack(ItemStack stack) {
 		setTrackedStack(stack.copy());
-		((TridentEntityAccessor) this).spectrum$setTridentStack(stack);
-		this.dataTracker.set(TridentEntityAccessor.spectrum$getLoyalty(), (byte) EnchantmentHelper.getLoyalty(stack));
+		super.setStack(stack);
+		this.dataTracker.set(TridentEntityAccessor.spectrum$getLoyalty(), (byte) SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.LOYALTY, stack));
 		this.dataTracker.set(TridentEntityAccessor.spectrum$getEnchanted(), stack.hasGlint());
 	}
 	

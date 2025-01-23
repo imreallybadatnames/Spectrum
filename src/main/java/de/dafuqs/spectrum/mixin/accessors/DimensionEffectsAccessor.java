@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.gen.*;
 
 @Mixin(DimensionEffects.class)
 public interface DimensionEffectsAccessor {
-
-    @Accessor(value = "BY_IDENTIFIER")
-    static Object2ObjectMap<Identifier, DimensionEffects> getEffects() {
-        throw new AssertionError();
-    }
-
+	
+	@Accessor("BY_IDENTIFIER")
+	static Object2ObjectMap<Identifier, DimensionEffects> getEffects() {
+		throw new AssertionError();
+	}
+	
 }
