@@ -478,7 +478,7 @@ public class SpectrumBlocks {
 
 	// PASTEL NETWORK
 	private static Settings pastelNode(BlockSoundGroup soundGroup) {
-		return settings(MapColor.CLEAR, soundGroup, 1.5F).nonOpaque().requiresTool();
+		return settings(MapColor.CLEAR, soundGroup, 1.5F).pistonBehavior(PistonBehavior.DESTROY).nonOpaque().requiresTool();
 	}
 
 	public static final Block CONNECTION_NODE = new PastelNodeBlock(pastelNode(BlockSoundGroup.AMETHYST_CLUSTER), PastelNodeType.CONNECTION);
