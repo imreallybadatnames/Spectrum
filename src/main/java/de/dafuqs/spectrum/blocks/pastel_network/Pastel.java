@@ -36,7 +36,7 @@ public class Pastel {
     
     @Environment(EnvType.CLIENT)
     public static void clearClientInstance() {
-        clientManager = null;
+		getClientInstance().clear();
         EarlyRenderingParticleContainer.clear();
     }
 

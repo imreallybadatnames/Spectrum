@@ -5,35 +5,36 @@ import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.client.util.math.*;
+import net.minecraft.client.world.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
-import org.joml.*;
 import org.joml.Math;
+import org.joml.*;
 
 import java.util.*;
 
 @Environment(EnvType.CLIENT)
-public class ClientPastelNetworkManager implements PastelNetworkManager {
+public class ClientPastelNetworkManager implements PastelNetworkManager<ClientWorld, PastelNetwork<ClientWorld>>, Clearable {
 	
-	private final List<PastelNetwork> networks = new ArrayList<>();
+	private final List<PastelNetwork<ClientWorld>> networks = new ArrayList<>();
 	
 	@Override
-	public Optional<? extends PastelNetwork> getNetwork(UUID uuid) {
+	public Optional<? extends PastelNetwork<ClientWorld>> getNetwork(UUID uuid) {
 		return networks.stream().filter(n -> n.uuid.equals(uuid)).findFirst();
 	}
 	
 	@Override
-	public PastelNetwork createNetwork(World world, UUID uuid) {
-		PastelNetwork network = new PastelNetwork(world, uuid);
+	public PastelNetwork<ClientWorld> createNetwork(ClientWorld world, UUID uuid) {
+		PastelNetwork<ClientWorld> network = new PastelNetwork<>(world, uuid);
 		this.networks.add(network);
 		return network;
 	}
 	
 	public void renderLines(WorldRenderContext context) {
 		MinecraftClient client = MinecraftClient.getInstance();
-		for (PastelNetwork network : this.networks) {
+		for (PastelNetwork<ClientWorld> network : this.networks) {
 			if (network.getWorld().getDimension() != context.world().getDimension()) continue;
 			Graph<BlockPos, DefaultEdge> graph = network.getGraph();
 			int color = network.getColor();
@@ -62,6 +63,11 @@ public class ClientPastelNetworkManager implements PastelNetworkManager {
 				matrices.pop();
 			}
 		}
+	}
+	
+	@Override
+	public void clear() {
+		this.networks.clear();
 	}
 	
 }
