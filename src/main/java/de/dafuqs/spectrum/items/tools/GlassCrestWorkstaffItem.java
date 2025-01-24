@@ -11,7 +11,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -75,9 +75,9 @@ public class GlassCrestWorkstaffItem extends WorkstaffItem implements SlotBackgr
 	public int getBackgroundColor(@Nullable PlayerEntity player, ItemStack stack, float tickDelta) {
 		if (player != null) {
 			var lookup = player.getWorld().getRegistryManager();
-			var resonance = SpectrumEnchantmentHelper.getLevel(lookup, SpectrumEnchantments.RESONANCE, stack) > 0;
-			var silkTouch = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.SILK_TOUCH, stack) > 0;
-			var fortune = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.FORTUNE, stack) > 0;
+			var resonance = SpectrumEnchantmentHelper.hasEnchantment(lookup, SpectrumEnchantments.RESONANCE, stack);
+			var silkTouch = SpectrumEnchantmentHelper.hasEnchantment(lookup, Enchantments.SILK_TOUCH, stack);
+			var fortune = SpectrumEnchantmentHelper.hasEnchantment(lookup, Enchantments.FORTUNE, stack);
 			
 			if (resonance)
 				return InkColors.WHITE_COLOR;

@@ -1,16 +1,13 @@
 package de.dafuqs.spectrum.mixin.compat.quilt_status_effect.present;
 
-import de.dafuqs.spectrum.api.status_effect.Incurable;
-import de.dafuqs.spectrum.mixin.accessors.StatusEffectInstanceAccessor;
-import de.dafuqs.spectrum.registries.SpectrumEventListeners;
-import de.dafuqs.spectrum.registries.SpectrumStatusEffects;
-import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
-import net.minecraft.server.world.ServerWorld;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import de.dafuqs.spectrum.mixin.injectors.*;
+import de.dafuqs.spectrum.registries.*;
+import net.fabricmc.fabric.api.util.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.effect.*;
+import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.server.world.*;
+import org.spongepowered.asm.mixin.*;
 
 
 @Mixin(value = SpectrumEventListeners.class, remap = false)
@@ -20,9 +17,9 @@ public class SpectrumEventListenersMixin {
 	// return FAPI TriState -- MUST NOT USE TriState anywhere EXCEPT as return value.
 	@Unique
 	private static TriState _shouldRemove(LivingEntity entity, StatusEffectInstance effect, Object reason) {
-		if (Incurable.isIncurable(effect) && !affectedByImmunity(entity, effect.getAmplifier())) {
+		if (StatusEffectInstanceInjector.isIncurable(effect) && !affectedByImmunity(entity, effect.getAmplifier())) {
 			if (effect.getDuration() > 1200) {
-				((StatusEffectInstanceAccessor) effect).setDuration(effect.getDuration() - 1200);
+				effect.spectrum$setDuration(effect.getDuration() - 1200);
 				if (!entity.getWorld().isClient()) {
 					((ServerWorld) entity.getWorld()).getChunkManager().sendToNearbyPlayers(entity, new EntityStatusEffectS2CPacket(entity.getId(), effect));
 				}
@@ -38,7 +35,7 @@ public class SpectrumEventListenersMixin {
 		var cost = 1200 + 600 * amplifier;
 
 		if (immunity != null && immunity.getDuration() >= cost) {
-			((StatusEffectInstanceAccessor) immunity).setDuration(Math.max(5, immunity.getDuration() - cost));
+			immunity.spectrum$setDuration(Math.max(5, immunity.getDuration() - cost));
 			if (!instance.getWorld().isClient()) {
 				((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity));
 			}

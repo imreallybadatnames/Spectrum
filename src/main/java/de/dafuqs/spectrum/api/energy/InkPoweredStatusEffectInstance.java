@@ -1,13 +1,12 @@
 package de.dafuqs.spectrum.api.energy;
 
 import com.google.common.collect.*;
-import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
@@ -33,9 +32,7 @@ public class InkPoweredStatusEffectInstance {
 		this.customColor = customColor;
 		this.unidentifiable = unidentifiable;
 		this.incurable = incurable;
-
-		if (incurable)
-			((Incurable) statusEffectInstance).spectrum$setIncurable(true);
+		if (incurable) statusEffectInstance.spectrum$setIncurable(true);
 	}
 	
 	public StatusEffectInstance getStatusEffectInstance() {

@@ -143,7 +143,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 			yoink(owner, getPos(), 0.125, 0.165);
 		}
 		
-		if (EnchantmentHelper.getLevel(Enchantments.CHANNELING, getTrackedStack()) > 0 && owner != null) {
+		if (EnchantmentHelper.hasEnchantment(Enchantments.CHANNELING, getTrackedStack()) && owner != null) {
 			if (!getWorld().isClient()) {
 				var world = (ServerWorld) getWorld();
 				for (int i = 0; i < 10; i++) {

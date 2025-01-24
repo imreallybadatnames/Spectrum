@@ -58,6 +58,12 @@
 	],
 	"custom": {
 		"loom:injected_interfaces": {
+			"net/minecraft/class_1293": [
+				"de/dafuqs/spectrum/mixin/injectors/StatusEffectInstanceInjector"
+			],
+			"net/minecraft/class_2783": [
+				"de/dafuqs/spectrum/mixin/injectors/EntityStatusEffectS2CPacketInjector"
+			],
 			"net/minecraft/class_4174$class_4175": [
 				"de/dafuqs/spectrum/mixin/injectors/FoodComponentBuilderInjector"
 			]

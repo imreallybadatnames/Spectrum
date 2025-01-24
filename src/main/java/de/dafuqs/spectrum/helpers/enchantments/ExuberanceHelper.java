@@ -8,7 +8,7 @@ import net.minecraft.entity.player.*;
 public class ExuberanceHelper {
 	
 	public static float getExuberanceMod(PlayerEntity breakingPlayer) {
-		if (breakingPlayer != null && EnchantmentHelper.getLevel(SpectrumEnchantments.EXUBERANCE, breakingPlayer.getMainHandStack()) > 0) {
+		if (breakingPlayer != null && EnchantmentHelper.hasEnchantment(SpectrumEnchantments.EXUBERANCE, breakingPlayer.getMainHandStack())) {
 			int exuberanceLevel = EnchantmentHelper.getEquipmentLevel(SpectrumEnchantments.EXUBERANCE, breakingPlayer);
 			return getExuberanceMod(exuberanceLevel);
 		} else {

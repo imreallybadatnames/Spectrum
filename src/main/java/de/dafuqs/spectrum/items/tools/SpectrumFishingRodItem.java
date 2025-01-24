@@ -48,7 +48,7 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 				int exuberanceLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.EXUBERANCE, itemStack);
 				int bigCatchLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.BIG_CATCH, itemStack);
 				int serendipityReelLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.SERENDIPITY_REEL, itemStack);
-				boolean inventoryInsertion = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.INVENTORY_INSERTION, itemStack) > 0;
+				boolean inventoryInsertion = SpectrumEnchantmentHelper.hasEnchantment(drm, SpectrumEnchantments.INVENTORY_INSERTION, itemStack);
 				boolean shouldSmeltDrops = shouldSmeltDrops(itemStack);
 				spawnBobber(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, shouldSmeltDrops);
 			}

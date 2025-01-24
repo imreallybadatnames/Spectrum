@@ -166,7 +166,7 @@ public class SpectrumEnchantmentHelper {
 		var removals = new AtomicInteger(0);
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack));
 		enchantments.forEach(enchantment -> {
-			if (builder.getLevel(enchantment) > 0) {
+			if (builder.hasEnchantment(enchantment)) {
 				builder.set(enchantment, 0);
 				removals.getAndIncrement();
 			}
@@ -199,6 +199,10 @@ public class SpectrumEnchantmentHelper {
 				.flatMap(impl -> impl.getOptional(enchantment))
 				.map(entry -> EnchantmentHelper.getLevel(entry, stack))
 				.orElse(0);
+	}
+	
+	public static boolean hasEnchantment(RegistryWrapper.WrapperLookup registryLookup, RegistryKey<Enchantment> enchantment, ItemStack stack) {
+		return getLevel(registryLookup, enchantment, stack) > 0;
 	}
 	
 	public static Optional<RegistryWrapper.Impl<Enchantment>> getRegistry(RegistryWrapper.WrapperLookup registryLookup) {

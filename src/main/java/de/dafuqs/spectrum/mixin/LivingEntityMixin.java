@@ -17,6 +17,7 @@ import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
+import de.dafuqs.spectrum.mixin.injectors.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -228,12 +229,12 @@ public abstract class LivingEntityMixin {
 		var instance = (LivingEntity) (Object) this;
 		
 		if (original && this.hasStatusEffect(SpectrumStatusEffects.IMMUNITY) && statusEffectInstance.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL && !SpectrumStatusEffectTags.isIncurable(statusEffectInstance.getEffectType())) {
-			if (Incurable.isIncurable(statusEffectInstance)) {
+			if (StatusEffectInstanceInjector.isIncurable(statusEffectInstance)) {
 				var immunity = getStatusEffect(SpectrumStatusEffects.IMMUNITY);
 				var cost = 600 * (statusEffectInstance.getAmplifier() + 1);
 				
 				if (immunity.getDuration() >= cost) {
-					((StatusEffectInstanceAccessor) immunity).setDuration(Math.max(5, immunity.getDuration() - cost));
+					immunity.spectrum$setDuration(Math.max(5, immunity.getDuration() - cost));
 					if (!instance.getWorld().isClient()) {
 						((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity));
 					}
@@ -497,7 +498,7 @@ public abstract class LivingEntityMixin {
 		if (AetherGracedNectarGlovesItem.testEffectFor(entity, effect.getEffectType())) {
 			var cost = (effect.getAmplifier() + 1) * AetherGracedNectarGlovesItem.HARMFUL_EFFECT_COST;
 			
-			if (Incurable.isIncurable(effect))
+			if (StatusEffectInstanceInjector.isIncurable(effect))
 				cost *= 3;
 			
 			if (AetherGracedNectarGlovesItem.tryBlockEffect(entity, cost)) {
@@ -509,15 +510,15 @@ public abstract class LivingEntityMixin {
 		var resistanceModifier = MathHelper.clamp(SleepStatusEffect.getSleepResistance(effect, entity), 0.1F, 10F);
 		if (effect.getEffectType() == SpectrumStatusEffects.ETERNAL_SLUMBER) {
 			if (SleepStatusEffect.isImmuneish(entity)) {
-				((StatusEffectInstanceAccessor) effect).setDuration(Math.round(effect.getDuration() / resistanceModifier));
+				effect.spectrum$setDuration(Math.round(effect.getDuration() / resistanceModifier));
 			} else if (!entity.getType().isIn(SpectrumEntityTypeTags.SLEEP_RESISTANT)) {
-				((StatusEffectInstanceAccessor) effect).setDuration(StatusEffectInstance.INFINITE);
+				effect.spectrum$setDuration(StatusEffectInstance.INFINITE);
 			}
 		} else if (effect.getEffectType() == SpectrumStatusEffects.FATAL_SLUMBER) {
 			if (SleepStatusEffect.isImmuneish(entity) && entity.getType().isIn(ConventionalEntityTypeTags.BOSSES)) {
-				((StatusEffectInstanceAccessor) effect).setDuration(20 * 60);
+				effect.spectrum$setDuration(20 * 60);
 			} else {
-				((StatusEffectInstanceAccessor) effect).setDuration(Math.max(Math.round(effect.getDuration() * resistanceModifier * 3), 20 * 10));
+				effect.spectrum$setDuration(Math.max(Math.round(effect.getDuration() * resistanceModifier * 3), 20 * 10));
 			}
 		}
 	}
@@ -635,7 +636,7 @@ public abstract class LivingEntityMixin {
 		} else if (EffectProlongingStatusEffect.canBeExtended(effect.getEffectType())) {
 			StatusEffectInstance effectProlongingInstance = this.getStatusEffect(SpectrumStatusEffects.EFFECT_PROLONGING);
 			if (effectProlongingInstance != null) {
-				((StatusEffectInstanceAccessor) effect).setDuration(EffectProlongingStatusEffect.getExtendedDuration(effect.getDuration(), effectProlongingInstance.getAmplifier()));
+				effect.spectrum$setDuration(EffectProlongingStatusEffect.getExtendedDuration(effect.getDuration(), effectProlongingInstance.getAmplifier()));
 			}
 		}
 	}

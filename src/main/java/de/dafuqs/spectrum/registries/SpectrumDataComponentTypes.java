@@ -25,6 +25,7 @@ public class SpectrumDataComponentTypes {
 	public static ComponentType<InertiaComponent> INERTIA = register("inertia", builder -> builder.codec(InertiaComponent.CODEC).packetCodec(InertiaComponent.PACKET_CODEC));
 	public static ComponentType<InfusedBeverageComponent> INFUSED_BEVERAGE = register("infused_beverage", builder -> builder.codec(InfusedBeverageComponent.CODEC).packetCodec(InfusedBeverageComponent.PACKET_CODEC));
 	public static ComponentType<InkStorageComponent> INK_STORAGE = register("ink_storage", builder -> builder.codec(InkStorageComponent.CODEC).packetCodec(InkStorageComponent.PACKET_CODEC));
+	public static ComponentType<Unit> IS_PREVIEW_ITEM = register("is_preview_item", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static ComponentType<JadeWineComponent> JADE_WINE = register("jade_wine", builder -> builder.codec(JadeWineComponent.CODEC).packetCodec(JadeWineComponent.PACKET_CODEC));
 	public static ComponentType<StatusEffectInstance> OIL_EFFECT = register("oil_effect", builder -> builder.codec(StatusEffectInstance.CODEC).packetCodec(StatusEffectInstance.PACKET_CODEC));
 	public static ComponentType<OptionalInkColorComponent> OPTIONAL_INK_COLOR = register("optional_ink_color", builder -> builder.codec(OptionalInkColorComponent.CODEC).packetCodec(OptionalInkColorComponent.PACKET_CODEC));

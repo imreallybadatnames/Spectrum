@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.gen.*;
 public interface FoodComponentBuilderInjector {
 	
 	default FoodComponent.Builder setEatSeconds(float eatSeconds) {
-		((Access) this).spectrum$setEatSeconds(eatSeconds);
+		((_Accessor) this).spectrum$setEatSeconds(eatSeconds);
 		return (FoodComponent.Builder) this;
 	}
 	
 	@Mixin(FoodComponent.Builder.class)
-	interface Access {
+	interface _Accessor {
 		@Accessor("eatSeconds")
 		void spectrum$setEatSeconds(float eatSeconds);
 	}

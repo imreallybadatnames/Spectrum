@@ -52,7 +52,7 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackReci
 	
 	@Override
 	public ItemStack getResult(RegistryWrapper.WrapperLookup registryLookup) {
-		return resultsWithChance.get(0).getLeft();
+		return resultsWithChance.getFirst().getLeft();
 	}
 	
 	@Override

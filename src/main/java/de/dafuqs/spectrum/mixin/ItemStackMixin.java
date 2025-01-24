@@ -11,6 +11,7 @@ import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.text.*;
@@ -35,12 +36,6 @@ public abstract class ItemStackMixin {
 	public abstract Item getItem();
 	
 	@Shadow
-	@Final
-	@Deprecated
-	@Nullable
-	private Item item;
-	
-	@Shadow
 	@Nullable
 	public abstract <T> T remove(ComponentType<? extends T> type);
 	
@@ -56,7 +51,8 @@ public abstract class ItemStackMixin {
 	
 	@ModifyReturnValue(method = "isDamageable()Z", at = @At(value = "RETURN"))
 	public boolean spectrum$applyIndestructibleEnchantment(boolean original) {
-		return original || EnchantmentHelper.hasAnyEnchantmentsIn((ItemStack) (Object) this, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT);
+		var stack = (ItemStack) (Object) this;
+		return original || EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.INDESTRUCTIBLE_EFFECT);
 	}
 	
 	// thank you so, so much @williewillus / @Botania for this snippet of code
@@ -72,27 +68,28 @@ public abstract class ItemStackMixin {
 	
 	// The enchantment table does not allow enchanting items that already have enchantments applied
 	// This mixin changes items, that only got their DefaultEnchantments to still be enchantable
-	@Inject(method = "isEnchantable()Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;hasEnchantments()Z"), cancellable = true)
+	@Inject(method = "isEnchantable()Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/component/type/ItemEnchantmentsComponent;isEmpty()Z"), cancellable = true)
 	public void spectrum$isEnchantable(CallbackInfoReturnable<Boolean> cir) {
-		if (this.getItem() instanceof Preenchanted preenchanted && preenchanted.onlyHasPreEnchantments((ItemStack) (Object) this)) {
+		var stack = (ItemStack) (Object) this;
+		if (this.getItem() instanceof Preenchanted preenchanted && preenchanted.onlyHasPreEnchantments(stack)) {
 			cir.setReturnValue(true);
 		}
 	}
 	
-	@Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/item/TooltipContext;isAdvanced()Z", shift = At.Shift.BEFORE, ordinal = 2))
-	public void spectrum$expandTooltipPostDamage(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> tooltip) {
+	@Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/tooltip/TooltipType;isAdvanced()Z", shift = At.Shift.BEFORE, ordinal = 1))
+	public void spectrum$expandTooltipPostDamage(Item.TooltipContext context, PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> tooltip) {
 		var stack = (ItemStack) (Object) this;
 		var oilEffect = stack.get(SpectrumDataComponentTypes.OIL_EFFECT);
 		var profile = stack.get(DataComponentTypes.PROFILE);
 		if (oilEffect != null && profile != null && player.getUuid().equals(profile.id().orElse(null))) {
 			var subText = new ArrayList<Text>();
-			PotionContentsComponent.buildTooltip(List.of(oilEffect), subText::add, 1f, 1F);
+			PotionContentsComponent.buildTooltip(List.of(oilEffect), subText::add, 1f, context.getUpdateTickRate());
 			
 			tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.info").styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR)));
 			tooltip.add(Text.translatable("info.spectrum.tooltip.adulterated.effect", subText.getFirst()).styled(s -> s.withColor(ConcealingOilsItem.POISONED_COLOUR).withItalic(true)));
 		}
 		
-		if (item instanceof ExpandedStatTooltip expanded) {
+		if (stack.getItem() instanceof ExpandedStatTooltip expanded) {
 			expanded.expandTooltip(stack, player, tooltip, context);
 		}
 	}

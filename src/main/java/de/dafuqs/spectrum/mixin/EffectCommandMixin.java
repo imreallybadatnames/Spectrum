@@ -1,20 +1,15 @@
 package de.dafuqs.spectrum.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import de.dafuqs.spectrum.api.status_effect.Incurable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.command.EffectCommand;
-import net.minecraft.server.command.ServerCommandSource;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.llamalad7.mixinextras.sugar.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.effect.*;
+import net.minecraft.registry.entry.*;
+import net.minecraft.server.command.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
-import java.util.Collection;
+import java.util.*;
 
 @Mixin(EffectCommand.class)
 public class EffectCommandMixin {
@@ -23,8 +18,8 @@ public class EffectCommandMixin {
     private static void clearIncurableEffects(ServerCommandSource source, Collection<? extends Entity> targets, CallbackInfoReturnable<Integer> cir, @Local Entity target) {
         if (target instanceof LivingEntity living) {
             for (StatusEffectInstance effect : living.getStatusEffects()) {
-                if (((Incurable) effect).spectrum$isIncurable())
-                    ((Incurable) effect).spectrum$setIncurable(false);
+                if (effect.spectrum$isIncurable())
+                    effect.spectrum$setIncurable(false);
             }
         }
     }
@@ -34,8 +29,8 @@ public class EffectCommandMixin {
         if (target instanceof LivingEntity living) {
             var effect = living.getStatusEffect(ref);
             if (effect != null) {
-                if (((Incurable) effect).spectrum$isIncurable())
-                    ((Incurable) effect).spectrum$setIncurable(false);
+                if (effect.spectrum$isIncurable())
+                    effect.spectrum$setIncurable(false);
             }
         }
     }

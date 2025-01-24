@@ -30,7 +30,6 @@
 		"EndermanEntityMixin",
 		"EntityApplyFluidsMixin",
 		"EntityMixin",
-		"EntityStatusEffectS2CPacketMixin",
 		"EntityTypeMixin",
 		"ExplosionMixin",
 		"FallingBlockEntityMixin",
@@ -75,7 +74,6 @@
 		"ServerWorldMixin",
 		"ShearsDispenserBehaviorMixin",
 		"SpawnDensityCapperMixin",
-		"StatusEffectInstanceMixin",
 		"StatusEffectUtilMixin",
 		"SugarCaneBlockMixin",
 		"TemptGoalMixin",
@@ -100,7 +98,6 @@
 		"accessors.PersistentProjectileEntityAccessor",
 		"accessors.ProjectileAttackGoalAccessor",
 		"accessors.SlimeEntityAccessor",
-		"accessors.StatusEffectInstanceAccessor",
 		"accessors.TridentEntityAccessor",
 		"compat.connectormod.absent.EntityApplyFluidsMixinNoSinytra",
 		"compat.connectormod.absent.ExplosionMixin",
@@ -109,7 +106,9 @@
 		"compat.connectormod.present.PlayerEntityMixin",
 		"compat.quilt_status_effect.absent.LivingEntityPreventStatusClearMixin",
 		"compat.quilt_status_effect.present.SpectrumEventListenersMixin",
-		"injectors.FoodComponentBuilderInjector$Access"
+		"injectors.EntityStatusEffectS2CPacketInjector$_Mixin",
+		"injectors.FoodComponentBuilderInjector$_Accessor",
+		"injectors.StatusEffectInstanceInjector$_Mixin"
 	],
 	"client": [
 		"accessors.DimensionEffectsAccessor",
@@ -143,7 +142,7 @@
 		"client.RenderSystemMixin",
 		"client.SleepingChatScreenMixin",
 		"client.TranslationStorageMixin",
-		"client.TransparentBlockMixin",
+		"client.TranslucentBlockMixin",
 		"client.accessors.ParticleManagerAccessor",
 		"client.accessors.RenderLayerAccessor",
 		"compat.colorful_hearts.absent.InGameHudMixin",

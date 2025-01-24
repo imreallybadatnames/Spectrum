@@ -4,8 +4,7 @@ import com.llamalad7.mixinextras.injector.v2.*;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.*;
 import com.llamalad7.mixinextras.sugar.ref.*;
-import de.dafuqs.spectrum.api.status_effect.*;
-import de.dafuqs.spectrum.mixin.accessors.*;
+import de.dafuqs.spectrum.mixin.injectors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
@@ -24,12 +23,12 @@ public abstract class LivingEntityPreventStatusClearMixin {
 	
 	@WrapWithCondition(method = "clearStatusEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;onStatusEffectRemoved(Lnet/minecraft/entity/effect/StatusEffectInstance;)V"))
 	private boolean spectrum$preventStatusClear(LivingEntity instance, StatusEffectInstance effect, @Share("blockRemoval") LocalBooleanRef blockRemoval) {
-		if (Incurable.isIncurable(effect)) {
+		if (StatusEffectInstanceInjector.isIncurable(effect)) {
 			if (affectedByImmunity(instance, effect.getAmplifier()))
 				return true;
 			
 			if (effect.getDuration() > 1200) {
-				((StatusEffectInstanceAccessor) effect).setDuration(effect.getDuration() - 1200);
+				effect.spectrum$setDuration(effect.getDuration() - 1200);
 				if (!instance.getWorld().isClient()) {
 					((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), effect));
 				}
@@ -58,7 +57,7 @@ public abstract class LivingEntityPreventStatusClearMixin {
 		if (effect == null)
 			return original.call(instance, type);
 		
-		cancel = Incurable.isIncurable(effect);
+		cancel = StatusEffectInstanceInjector.isIncurable(effect);
 		
 		if (cancel) {
 			cancel = !affectedByImmunity(instance, effect.getAmplifier());
@@ -76,7 +75,7 @@ public abstract class LivingEntityPreventStatusClearMixin {
 		var cost = 1200 + 600 * amplifier;
 		
 		if (immunity != null && immunity.getDuration() >= cost) {
-			((StatusEffectInstanceAccessor) immunity).setDuration(Math.max(5, immunity.getDuration() - cost));
+			immunity.spectrum$setDuration(Math.max(5, immunity.getDuration() - cost));
 			if (!instance.getWorld().isClient()) {
 				((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity));
 			}

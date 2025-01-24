@@ -8,8 +8,9 @@ import net.minecraft.client.render.entity.*;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.entity.*;
-import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.screen.*;
 import net.minecraft.util.math.*;
+import org.joml.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -24,8 +25,8 @@ public abstract class EntityRenderDispatcherMixin {
 	private static void drawFireVertex(MatrixStack.Entry entry, VertexConsumer vertices, float x, float y, float z, float u, float v) {
 	}
 	
-	@Inject(method = "renderFire(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/Entity;)V", at = @At(value = "HEAD"), cancellable = true)
-	public void spectrum$render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, CallbackInfo ci) {
+	@Inject(method = "renderFire(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/Entity;Lorg/joml/Quaternionf;)V", at = @At(value = "HEAD"), cancellable = true)
+	public void spectrum$render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, Quaternionf rotation, CallbackInfo ci) {
 		if (entity instanceof LivingEntity livingEntity && OnPrimordialFireComponent.isOnPrimordialFire(livingEntity)) {
 			ci.cancel();
 		}

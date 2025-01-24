@@ -55,7 +55,7 @@ public class WorkstaffScreen extends QuickNavigationGridScreen<WorkstaffScreenHa
 					GridEntry.item(Items.ENCHANTED_BOOK, Text.translatable("item.spectrum.workstaff.gui.enchantment_group"), (screen) -> screen.selectGrid(ENCHANTMENT_GRID))
 			));
 		} else {
-			GridEntry enchantmentEntry = EnchantmentHelper.getLevel(Enchantments.FORTUNE, mainHandStack) > 0
+			GridEntry enchantmentEntry = EnchantmentHelper.hasEnchantment(Enchantments.FORTUNE, mainHandStack)
 					? GridEntry.item(Items.FEATHER, Text.translatable("item.spectrum.workstaff.gui.silk_touch"), (screen) -> WorkstaffScreen.select(WorkstaffItem.GUIToggle.SELECT_SILK_TOUCH))
 					: GridEntry.item(SpectrumBlocks.FOUR_LEAF_CLOVER.asItem(), Text.translatable("item.spectrum.workstaff.gui.fortune"), (screen) -> WorkstaffScreen.select(WorkstaffItem.GUIToggle.SELECT_FORTUNE));
 
