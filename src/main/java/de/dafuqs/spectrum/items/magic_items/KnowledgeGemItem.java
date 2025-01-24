@@ -36,10 +36,10 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Loo
 	public static ItemStack getKnowledgeDropStackWithXP(int experience, boolean noStoreTooltip) {
 		ItemStack stack = new ItemStack(SpectrumItems.KNOWLEDGE_GEM);
 		stack.set(SpectrumDataComponentTypes.STORED_EXPERIENCE, experience);
-		stack.set(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP, noStoreTooltip);
+		if (noStoreTooltip) stack.set(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP, Unit.INSTANCE);
 		return stack;
 	}
-
+	
 	@Override
 	public int getMaxStoredExperience(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack) {
 		int efficiencyLevel = SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.EFFICIENCY, itemStack);
@@ -106,7 +106,7 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Loo
 			}
 		}
 	}
-
+	
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
@@ -128,7 +128,7 @@ public class KnowledgeGemItem extends Item implements ExperienceStorageItem, Loo
 	}
 	
 	public boolean shouldDisplayUsageTooltip(ItemStack itemStack) {
-		return itemStack.getOrDefault(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP, false);
+		return itemStack.contains(SpectrumDataComponentTypes.HIDE_USAGE_TOOLTIP);
 	}
 	
 	public boolean removePlayerExperience(@NotNull PlayerEntity playerEntity, int experience) {

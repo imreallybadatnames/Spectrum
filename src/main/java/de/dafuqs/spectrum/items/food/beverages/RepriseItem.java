@@ -1,12 +1,13 @@
 package de.dafuqs.spectrum.items.food.beverages;
 
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -24,26 +25,6 @@ public class RepriseItem extends BeverageItem {
 	}
 	
 	@Override
-	public BeverageProperties getBeverageProperties(ItemStack itemStack) {
-		return new RepriseProperties(itemStack.getNbt());
-	}
-	
-	public static class RepriseProperties extends BeverageProperties {
-		
-		public RepriseProperties(NbtCompound nbtCompound) {
-			super(nbtCompound);
-		}
-		
-		@Override
-		public void addTooltip(ItemStack itemStack, List<Text> tooltip) {
-			super.addTooltip(itemStack, tooltip);
-			long teleportRange = getTeleportRange(itemStack);
-			tooltip.add(Text.translatable("item.spectrum.reprise.tooltip.teleport", teleportRange).formatted(Formatting.GRAY));
-		}
-		
-	}
-	
-	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (world instanceof ServerWorld serverWorld) {
 			randomTeleport(serverWorld, user, getTeleportRange(stack));
@@ -52,8 +33,8 @@ public class RepriseItem extends BeverageItem {
 	}
 
 	public static long getTeleportRange(ItemStack itemStack) {
-		BeverageProperties properties = BeverageProperties.getFromStack(itemStack);
-		return (long) Math.ceil(Math.pow(2, properties.alcPercent));
+		var alcPercent = itemStack.getOrDefault(SpectrumDataComponentTypes.BEVERAGE, BeverageComponent.DEFAULT).alcoholPercent();
+		return (long) Math.ceil(Math.pow(2, alcPercent));
 	}
 
 	public void randomTeleport(ServerWorld world, LivingEntity user, long maxRange) {
@@ -92,6 +73,12 @@ public class RepriseItem extends BeverageItem {
 		if (user instanceof PlayerEntity) {
 			((PlayerEntity) user).getItemCooldownManager().set(this, 20);
 		}
+	}
+	
+	@Override
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		super.appendTooltip(stack, context, tooltip, type);
+		tooltip.add(Text.translatable("item.spectrum.reprise.tooltip.teleport", getTeleportRange(stack)).formatted(Formatting.GRAY));
 	}
 	
 }

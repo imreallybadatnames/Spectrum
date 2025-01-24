@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.registries.client;
 
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.entity.*;
@@ -10,7 +11,6 @@ import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.*;
 import net.minecraft.client.item.*;
 import net.minecraft.client.world.*;
 import net.minecraft.component.*;
@@ -45,14 +45,14 @@ public class SpectrumModelPredicateProviders {
 		registerOversizedItemPredicate(SpectrumItems.NECTAR_LANCE);
 		registerOversizedItemPredicate(SpectrumItems.BEDROCK_SWORD);
 		registerOversizedItemPredicate(SpectrumItems.BEDROCK_AXE);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.PAINTBRUSH);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.DRACONIC_TWINSWORD);
 		registerOversizedItemPredicate(SpectrumItems.DRAGON_TALON);
 		registerSlotReservingItem(SpectrumItems.DRAGON_TALON);
 		registerSlotReservingItem(SpectrumItems.DRACONIC_TWINSWORD);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_WORKSTAFF);
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_ULTRA_GREATSWORD);
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_CROSSBOW);
@@ -76,7 +76,7 @@ public class SpectrumModelPredicateProviders {
 		registerMysteriousLocketPredicates(SpectrumItems.MYSTERIOUS_LOCKET);
 		registerStructureCompassPredicates(SpectrumItems.MYSTERIOUS_COMPASS);
 		registerNullableDyeColorPredicate(SpectrumBlocks.CRYSTALLARIEUM.asItem());
-
+		
 		registerPipeBombPredicates(SpectrumItems.PIPE_BOMB);
 	}
 	
@@ -91,7 +91,7 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerMysteriousLocketPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (stack, world, entity, i) -> stack.contains(SpectrumDataComponentTypes.SOCKETED) ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, SpectrumCommon.locate("socketed"), (stack, world, entity, i) -> stack.contains(SpectrumDataComponentTypes.SOCKETED) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerStructureCompassPredicates(Item item) {
@@ -117,7 +117,7 @@ public class SpectrumModelPredicateProviders {
 				return 0F;
 			}
 			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(stack);
-			if(projectile.isEmpty()) {
+			if (projectile.isEmpty()) {
 				return 0F;
 			}
 			
@@ -259,7 +259,7 @@ public class SpectrumModelPredicateProviders {
 			return chargedProjectilesComponent != null && chargedProjectilesComponent.contains(Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
 		});
 	}
-
+	
 	private static void registerPipeBombPredicates(Item pipeBombItem) {
 		ModelPredicateProviderRegistry.register(pipeBombItem, Identifier.of("armed"), (stack, world, entity, seed) -> PipeBombItem.isArmed(stack) ? 1.0F : 0.0F);
 	}

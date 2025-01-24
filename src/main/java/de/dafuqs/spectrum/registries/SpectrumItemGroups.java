@@ -12,7 +12,6 @@ import de.dafuqs.spectrum.compat.ae2.*;
 import de.dafuqs.spectrum.compat.create.*;
 import de.dafuqs.spectrum.compat.gobber.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
 import net.fabricmc.fabric.api.itemgroup.v1.*;
 import net.minecraft.block.*;
@@ -435,7 +434,7 @@ public class SpectrumItemGroups {
 				if (SpectrumCommon.minecraftServer != null) {
 					for (RecipeEntry<ITitrationBarrelRecipe> recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.TITRATION_BARREL)) {
 						ItemStack output = recipe.value().getResult(SpectrumCommon.minecraftServer.getRegistryManager()).copy();
-						if (output.getItem() instanceof VariantBeverageItem) {
+						if (output.getItem().getComponents().contains(SpectrumDataComponentTypes.INFUSED_BEVERAGE)) {
 							output.setCount(1);
 							entries.add(output);
 						}

@@ -8,7 +8,6 @@ import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.client.gui.screen.*;
-import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
@@ -59,7 +58,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	public ItemStack getDefaultStack() {
 		return getDefaultEnchantedStack(this);
 	}
-
+	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack handStack = user.getStackInHand(hand);
@@ -76,7 +75,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 			int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
 			if (useTime >= 10) {
 				player.incrementStat(Stats.USED.getOrCreateStat(this));
-
+				
 				if (canStartRiptide(player, stack)) {
 					riptide(world, player, getRiptideLevel(world.getRegistryManager(), stack));
 				} else if (!world.isClient) {
@@ -158,17 +157,17 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	}
 	
 	public void markDisabled(ItemStack stack, boolean disabled) {
-		stack.set(SpectrumDataComponentTypes.ACTIVATED, !disabled);
+		ActivatableItem.setActivated(stack, !disabled);
 	}
 	
 	public boolean isDisabled(ItemStack stack) {
-		return !stack.getOrDefault(SpectrumDataComponentTypes.ACTIVATED, true);
+		return !ActivatableItem.isActivated(stack);
 	}
 	
 	public boolean canBeDisabled() {
 		return false;
 	}
-
+	
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		if (isDisabled(stack))

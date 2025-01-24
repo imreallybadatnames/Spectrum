@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.entity.predicates.*;
 import de.dafuqs.spectrum.loot.functions.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.loot.v3.*;
+import net.minecraft.block.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
@@ -39,76 +40,76 @@ public class SpectrumLootPoolModifiers {
 		// Spectrum head drops
 		// ATTENTION: No specific enough loot tables exist for fox, axolotl, parrot and shulker variants.
 		// Those are handled separately in setup()
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/sheep")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHEEP).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/bat")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.BAT).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/blaze")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.BLAZE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cat")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.CAT).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cave_spider")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.CAVE_SPIDER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/chicken")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.CHICKEN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cow")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.COW).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/donkey")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.DONKEY).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/drowned")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.DROWNED).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/elder_guardian")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ELDER_GUARDIAN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/enderman")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ENDERMAN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/endermite")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ENDERMITE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/evoker")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.EVOKER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ghast")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.GHAST).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/guardian")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.GUARDIAN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/hoglin")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.HOGLIN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/horse")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.HORSE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/husk")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.HUSK).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/illusioner")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ILLUSIONER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/iron_golem")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.IRON_GOLEM).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/llama")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LLAMA).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/magma_cube")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.MAGMA_CUBE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/mule")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.MULE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ocelot")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.OCELOT).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/panda")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PANDA).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/phantom")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PHANTOM).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pig")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PIG).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/polar_bear")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.POLAR_BEAR).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pufferfish")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PUFFERFISH).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/rabbit")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.RABBIT).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ravager")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.RAVAGER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/salmon")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SALMON).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/silverfish")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SILVERFISH).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/slime")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SLIME).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/snow_golem")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SNOW_GOLEM).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/spider")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SPIDER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/squid")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SQUID).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/stray")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.STRAY).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/strider")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.STRIDER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/trader_llama")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LLAMA).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/turtle")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.TURTLE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/vex")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.VEX).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/villager")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.VILLAGER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/vindicator")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.VINDICATOR).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wandering_trader")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.WANDERING_TRADER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/witch")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.WITCH).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wither")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.WITHER).get().asItem(), 0.15F)); // he has 3 heads, after all!
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wolf")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.WOLF).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zoglin")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ZOGLIN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombie_villager")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ZOMBIE_VILLAGER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombified_piglin")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ZOMBIFIED_PIGLIN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/bee")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.BEE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/tropical_fish")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.TROPICAL_FISH).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/goat")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.GOAT).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/glow_squid")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.GLOW_SQUID).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/warden")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.WARDEN).get().asItem(), 0.2F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/tadpole")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.TADPOLE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/allay")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ALLAY).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/camel")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.CAMEL).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/sniffer")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SNIFFER).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/skeleton_horse")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SKELETON_HORSE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombie_horse")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ZOMBIE_HORSE).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/dolphin")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.DOLPHIN).get().asItem(), 0.02F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pillager")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PILLAGER).get().asItem(), 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/sheep")), new TreasureHunterDropDefinition(SpectrumSkullType.SHEEP, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/bat")), new TreasureHunterDropDefinition(SpectrumSkullType.BAT, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/blaze")), new TreasureHunterDropDefinition(SpectrumSkullType.BLAZE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cat")), new TreasureHunterDropDefinition(SpectrumSkullType.CAT, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cave_spider")), new TreasureHunterDropDefinition(SpectrumSkullType.CAVE_SPIDER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/chicken")), new TreasureHunterDropDefinition(SpectrumSkullType.CHICKEN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/cow")), new TreasureHunterDropDefinition(SpectrumSkullType.COW, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/donkey")), new TreasureHunterDropDefinition(SpectrumSkullType.DONKEY, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/drowned")), new TreasureHunterDropDefinition(SpectrumSkullType.DROWNED, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/elder_guardian")), new TreasureHunterDropDefinition(SpectrumSkullType.ELDER_GUARDIAN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/enderman")), new TreasureHunterDropDefinition(SpectrumSkullType.ENDERMAN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/endermite")), new TreasureHunterDropDefinition(SpectrumSkullType.ENDERMITE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/evoker")), new TreasureHunterDropDefinition(SpectrumSkullType.EVOKER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ghast")), new TreasureHunterDropDefinition(SpectrumSkullType.GHAST, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/guardian")), new TreasureHunterDropDefinition(SpectrumSkullType.GUARDIAN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/hoglin")), new TreasureHunterDropDefinition(SpectrumSkullType.HOGLIN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/horse")), new TreasureHunterDropDefinition(SpectrumSkullType.HORSE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/husk")), new TreasureHunterDropDefinition(SpectrumSkullType.HUSK, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/illusioner")), new TreasureHunterDropDefinition(SpectrumSkullType.ILLUSIONER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/iron_golem")), new TreasureHunterDropDefinition(SpectrumSkullType.IRON_GOLEM, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/llama")), new TreasureHunterDropDefinition(SpectrumSkullType.LLAMA, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/magma_cube")), new TreasureHunterDropDefinition(SpectrumSkullType.MAGMA_CUBE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/mule")), new TreasureHunterDropDefinition(SpectrumSkullType.MULE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ocelot")), new TreasureHunterDropDefinition(SpectrumSkullType.OCELOT, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/panda")), new TreasureHunterDropDefinition(SpectrumSkullType.PANDA, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/phantom")), new TreasureHunterDropDefinition(SpectrumSkullType.PHANTOM, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pig")), new TreasureHunterDropDefinition(SpectrumSkullType.PIG, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/polar_bear")), new TreasureHunterDropDefinition(SpectrumSkullType.POLAR_BEAR, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pufferfish")), new TreasureHunterDropDefinition(SpectrumSkullType.PUFFERFISH, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/rabbit")), new TreasureHunterDropDefinition(SpectrumSkullType.RABBIT, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/ravager")), new TreasureHunterDropDefinition(SpectrumSkullType.RAVAGER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/salmon")), new TreasureHunterDropDefinition(SpectrumSkullType.SALMON, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/silverfish")), new TreasureHunterDropDefinition(SpectrumSkullType.SILVERFISH, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/slime")), new TreasureHunterDropDefinition(SpectrumSkullType.SLIME, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/snow_golem")), new TreasureHunterDropDefinition(SpectrumSkullType.SNOW_GOLEM, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/spider")), new TreasureHunterDropDefinition(SpectrumSkullType.SPIDER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/squid")), new TreasureHunterDropDefinition(SpectrumSkullType.SQUID, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/stray")), new TreasureHunterDropDefinition(SpectrumSkullType.STRAY, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/strider")), new TreasureHunterDropDefinition(SpectrumSkullType.STRIDER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/trader_llama")), new TreasureHunterDropDefinition(SpectrumSkullType.LLAMA, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/turtle")), new TreasureHunterDropDefinition(SpectrumSkullType.TURTLE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/vex")), new TreasureHunterDropDefinition(SpectrumSkullType.VEX, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/villager")), new TreasureHunterDropDefinition(SpectrumSkullType.VILLAGER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/vindicator")), new TreasureHunterDropDefinition(SpectrumSkullType.VINDICATOR, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wandering_trader")), new TreasureHunterDropDefinition(SpectrumSkullType.WANDERING_TRADER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/witch")), new TreasureHunterDropDefinition(SpectrumSkullType.WITCH, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wither")), new TreasureHunterDropDefinition(SpectrumSkullType.WITHER, 0.15F)); // he has 3 heads, after all!
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/wolf")), new TreasureHunterDropDefinition(SpectrumSkullType.WOLF, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zoglin")), new TreasureHunterDropDefinition(SpectrumSkullType.ZOGLIN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombie_villager")), new TreasureHunterDropDefinition(SpectrumSkullType.ZOMBIE_VILLAGER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombified_piglin")), new TreasureHunterDropDefinition(SpectrumSkullType.ZOMBIFIED_PIGLIN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/bee")), new TreasureHunterDropDefinition(SpectrumSkullType.BEE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/tropical_fish")), new TreasureHunterDropDefinition(SpectrumSkullType.TROPICAL_FISH, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/goat")), new TreasureHunterDropDefinition(SpectrumSkullType.GOAT, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/glow_squid")), new TreasureHunterDropDefinition(SpectrumSkullType.GLOW_SQUID, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/warden")), new TreasureHunterDropDefinition(SpectrumSkullType.WARDEN, 0.2F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/tadpole")), new TreasureHunterDropDefinition(SpectrumSkullType.TADPOLE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/allay")), new TreasureHunterDropDefinition(SpectrumSkullType.ALLAY, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/camel")), new TreasureHunterDropDefinition(SpectrumSkullType.CAMEL, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/sniffer")), new TreasureHunterDropDefinition(SpectrumSkullType.SNIFFER, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/skeleton_horse")), new TreasureHunterDropDefinition(SpectrumSkullType.SKELETON_HORSE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/zombie_horse")), new TreasureHunterDropDefinition(SpectrumSkullType.ZOMBIE_HORSE, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/dolphin")), new TreasureHunterDropDefinition(SpectrumSkullType.DOLPHIN, 0.02F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pillager")), new TreasureHunterDropDefinition(SpectrumSkullType.PILLAGER, 0.02F));
 		
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/egg_laying_wooly_pig")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.EGG_LAYING_WOOLY_PIG).get().asItem(), 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/kindling")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.KINDLING).get().asItem(), 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/preservation_turret")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PRESERVATION_TURRET).get().asItem(), 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/monstrosity")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.MONSTROSITY).get().asItem(), 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/eraser")), new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.ERASER).get().asItem(), 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/egg_laying_wooly_pig")), new TreasureHunterDropDefinition(SpectrumSkullType.EGG_LAYING_WOOLY_PIG, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/kindling")), new TreasureHunterDropDefinition(SpectrumSkullType.KINDLING, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/preservation_turret")), new TreasureHunterDropDefinition(SpectrumSkullType.PRESERVATION_TURRET, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/monstrosity")), new TreasureHunterDropDefinition(SpectrumSkullType.MONSTROSITY, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/eraser")), new TreasureHunterDropDefinition(SpectrumSkullType.ERASER, 0.1F));
 	}};
 	
 	public static void setup() {
@@ -131,68 +132,68 @@ public class SpectrumLootPoolModifiers {
 				});
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/fox")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getFoxLootPool(enchant, FoxEntity.Type.RED, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.FOX).get().asItem(), 0.02F)));
-				builder.pool(getFoxLootPool(enchant, FoxEntity.Type.SNOW, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.FOX_ARCTIC).get().asItem(), 0.02F)));
+				builder.pool(getFoxLootPool(enchant, FoxEntity.Type.RED, new TreasureHunterDropDefinition(SpectrumSkullType.FOX, 0.02F)));
+				builder.pool(getFoxLootPool(enchant, FoxEntity.Type.SNOW, new TreasureHunterDropDefinition(SpectrumSkullType.FOX_ARCTIC, 0.02F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/mooshroom")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getMooshroomLootPool(enchant, MooshroomEntity.Type.BROWN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.MOOSHROOM_BROWN).get().asItem(), 0.02F)));
-				builder.pool(getMooshroomLootPool(enchant, MooshroomEntity.Type.RED, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.MOOSHROOM_RED).get().asItem(), 0.02F)));
+				builder.pool(getMooshroomLootPool(enchant, MooshroomEntity.Type.BROWN, new TreasureHunterDropDefinition(SpectrumSkullType.MOOSHROOM_BROWN, 0.02F)));
+				builder.pool(getMooshroomLootPool(enchant, MooshroomEntity.Type.RED, new TreasureHunterDropDefinition(SpectrumSkullType.MOOSHROOM_RED, 0.02F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/shulker")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getShulkerLootPool(enchant, null, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.BLACK, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_BLACK).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_BLUE).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.BROWN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_BROWN).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.CYAN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_CYAN).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.GRAY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_GRAY).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.GREEN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_GREEN).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.LIGHT_BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_LIGHT_BLUE).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.LIGHT_GRAY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_LIGHT_GRAY).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.LIME, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_LIME).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.MAGENTA, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_MAGENTA).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.ORANGE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_ORANGE).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.PINK, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_PINK).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.PURPLE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_PURPLE).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.RED, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_RED).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.WHITE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_WHITE).get().asItem(), 0.05F)));
-				builder.pool(getShulkerLootPool(enchant, DyeColor.YELLOW, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.SHULKER_YELLOW).get().asItem(), 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, null, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.BLACK, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_BLACK, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_BLUE, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.BROWN, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_BROWN, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.CYAN, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_CYAN, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.GRAY, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_GRAY, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.GREEN, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_GREEN, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.LIGHT_BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_LIGHT_BLUE, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.LIGHT_GRAY, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_LIGHT_GRAY, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.LIME, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_LIME, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.MAGENTA, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_MAGENTA, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.ORANGE, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_ORANGE, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.PINK, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_PINK, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.PURPLE, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_PURPLE, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.RED, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_RED, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.WHITE, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_WHITE, 0.05F)));
+				builder.pool(getShulkerLootPool(enchant, DyeColor.YELLOW, new TreasureHunterDropDefinition(SpectrumSkullType.SHULKER_YELLOW, 0.05F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/lizard")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getLizardLootPool(enchant, InkColors.BLACK, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_BLACK).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_BLUE).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.BROWN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_BROWN).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.CYAN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_CYAN).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.GRAY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_GRAY).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.GREEN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_GREEN).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.LIGHT_BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_LIGHT_BLUE).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.LIGHT_GRAY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_LIGHT_GRAY).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.LIME, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_LIME).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.MAGENTA, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_MAGENTA).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.ORANGE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_ORANGE).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.PINK, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_PINK).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.PURPLE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_PURPLE).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.RED, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_RED).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.WHITE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_WHITE).get().asItem(), 0.05F)));
-				builder.pool(getLizardLootPool(enchant, InkColors.YELLOW, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.LIZARD_YELLOW).get().asItem(), 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.BLACK, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_BLACK, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_BLUE, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.BROWN, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_BROWN, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.CYAN, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_CYAN, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.GRAY, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_GRAY, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.GREEN, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_GREEN, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.LIGHT_BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_LIGHT_BLUE, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.LIGHT_GRAY, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_LIGHT_GRAY, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.LIME, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_LIME, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.MAGENTA, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_MAGENTA, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.ORANGE, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_ORANGE, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.PINK, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_PINK, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.PURPLE, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_PURPLE, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.RED, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_RED, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.WHITE, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_WHITE, 0.05F)));
+				builder.pool(getLizardLootPool(enchant, InkColors.YELLOW, new TreasureHunterDropDefinition(SpectrumSkullType.LIZARD_YELLOW, 0.05F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/axolotl")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.AXOLOTL_BLUE).get().asItem(), 0.02F)));
-				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.CYAN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.AXOLOTL_CYAN).get().asItem(), 0.02F)));
-				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.GOLD, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.AXOLOTL_GOLD).get().asItem(), 0.02F)));
-				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.LUCY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.AXOLOTL_LEUCISTIC).get().asItem(), 0.02F)));
-				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.WILD, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.AXOLOTL_WILD).get().asItem(), 0.02F)));
+				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.AXOLOTL_BLUE, 0.02F)));
+				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.CYAN, new TreasureHunterDropDefinition(SpectrumSkullType.AXOLOTL_CYAN, 0.02F)));
+				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.GOLD, new TreasureHunterDropDefinition(SpectrumSkullType.AXOLOTL_GOLD, 0.02F)));
+				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.LUCY, new TreasureHunterDropDefinition(SpectrumSkullType.AXOLOTL_LEUCISTIC, 0.02F)));
+				builder.pool(getAxolotlLootPool(enchant, AxolotlEntity.Variant.WILD, new TreasureHunterDropDefinition(SpectrumSkullType.AXOLOTL_WILD, 0.02F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/parrot")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.RED_BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PARROT_RED).get().asItem(), 0.02F)));
-				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PARROT_BLUE).get().asItem(), 0.02F)));
-				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.GREEN, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PARROT_GREEN).get().asItem(), 0.02F)));
-				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.YELLOW_BLUE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PARROT_CYAN).get().asItem(), 0.02F)));
-				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.GRAY, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.PARROT_GRAY).get().asItem(), 0.02F)));
+				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.RED_BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.PARROT_RED, 0.02F)));
+				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.PARROT_BLUE, 0.02F)));
+				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.GREEN, new TreasureHunterDropDefinition(SpectrumSkullType.PARROT_GREEN, 0.02F)));
+				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.YELLOW_BLUE, new TreasureHunterDropDefinition(SpectrumSkullType.PARROT_CYAN, 0.02F)));
+				builder.pool(getParrotLootPool(enchant, ParrotEntity.Variant.GRAY, new TreasureHunterDropDefinition(SpectrumSkullType.PARROT_GRAY, 0.02F)));
 			} else if (key.equals(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("entities/frog")))) {
 				RegistryEntry.Reference<Enchantment> enchant = getTreasureHunter(wrapperLookup);
-				builder.pool(getFrogLootPool(enchant, FrogVariant.TEMPERATE, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.FROG_TEMPERATE).get().asItem(), 0.02F)));
-				builder.pool(getFrogLootPool(enchant, FrogVariant.COLD, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.FROG_COLD).get().asItem(), 0.02F)));
-				builder.pool(getFrogLootPool(enchant, FrogVariant.WARM, new TreasureHunterDropDefinition(SpectrumSkullBlock.getBlock(SpectrumSkullType.FROG_WARM).get().asItem(), 0.02F)));
+				builder.pool(getFrogLootPool(enchant, FrogVariant.TEMPERATE, new TreasureHunterDropDefinition(SpectrumSkullType.FROG_TEMPERATE, 0.02F)));
+				builder.pool(getFrogLootPool(enchant, FrogVariant.COLD, new TreasureHunterDropDefinition(SpectrumSkullType.FROG_COLD, 0.02F)));
+				builder.pool(getFrogLootPool(enchant, FrogVariant.WARM, new TreasureHunterDropDefinition(SpectrumSkullType.FROG_WARM, 0.02F)));
 			} else if (GoFishCompat.isLoaded()) {
 				//Go-Fish compat: fishing of crates & go-fish fishies
 				if (key.equals(SpectrumLootTables.LAVA_FISHING)) {
@@ -255,8 +256,6 @@ public class SpectrumLootPoolModifiers {
 	}
 	
 	private static LootPool getShulkerLootPool(RegistryEntry.Reference<Enchantment> enchantment, @Nullable DyeColor dyeColor, TreasureHunterDropDefinition dropDefinition) {
-		Optional<DyeColor> c = dyeColor == null ? Optional.empty() : Optional.of(dyeColor);
-
 		return new LootPool.Builder()
 				.rolls(ConstantLootNumberProvider.create(1))
 				.conditionally(Lootconditionbuilder(enchantment, dropDefinition.chancePerLevel).build())
@@ -312,6 +311,10 @@ public class SpectrumLootPoolModifiers {
 		
 		public TreasureHunterDropDefinition(Item drop, float chancePerLevel) {
 			this(drop, chancePerLevel, Registries.ITEM.getId(drop));
+		}
+		
+		public TreasureHunterDropDefinition(SpectrumSkullType skullType, float chancePerLevel) {
+			this(SpectrumSkullBlock.getBlock(skullType).orElse(Blocks.AIR).asItem(), chancePerLevel);
 		}
 		
 	}

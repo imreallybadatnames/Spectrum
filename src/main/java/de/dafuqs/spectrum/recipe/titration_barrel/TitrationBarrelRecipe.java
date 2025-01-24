@@ -3,13 +3,15 @@ package de.dafuqs.spectrum.recipe.titration_barrel;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
+import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -39,15 +41,15 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	public final FermentationData fermentationData;
 	
 	public TitrationBarrelRecipe(
-		String group,
-		boolean secret,
-		Identifier requiredAdvancementIdentifier,
-		List<IngredientStack> inputStacks,
-		FluidIngredient fluid,
-		ItemStack outputItemStack,
-		Item tappingItem,
-		int minFermentationTimeHours,
-		FermentationData fermentationData
+			String group,
+			boolean secret,
+			Identifier requiredAdvancementIdentifier,
+			List<IngredientStack> inputStacks,
+			FluidIngredient fluid,
+			ItemStack outputItemStack,
+			Item tappingItem,
+			int minFermentationTimeHours,
+			FermentationData fermentationData
 	) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
@@ -169,15 +171,12 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 			return SpectrumItems.PURE_ALCOHOL.getDefaultStack();
 		}
 		
-		BeverageProperties properties;
-		if (inputStack.getItem() instanceof FermentedItem fermentedItem) {
-			properties = fermentedItem.getBeverageProperties(inputStack);
-		} else {
-			// if it's not a set beverage (custom recipe) assume VariantBeverage to add that tag
-			properties = VariantBeverageProperties.getFromStack(inputStack);
-		}
+		// if it's not a set beverage (custom recipe) mark it as unknown
+		if (!(inputStack.getItem() instanceof FermentedItem))
+			inputStack.set(SpectrumDataComponentTypes.INFUSED_BEVERAGE, InfusedBeverageComponent.DEFAULT);
 		
-		if (properties instanceof StatusEffectBeverageProperties statusEffectBeverageProperties) {
+		var potionContents = inputStack.get(DataComponentTypes.POTION_CONTENTS);
+		if (potionContents != null) {
 			float durationMultiplier = (float) (Support.logBase(1 + thickness, 2));
 			
 			List<StatusEffectInstance> effects = new ArrayList<>();
@@ -189,18 +188,15 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 						potency = potencyEntry.potency();
 					}
 				}
-				if (potency > -1) {
+				if (potency > -1)
 					effects.add(new StatusEffectInstance(Registries.STATUS_EFFECT.entryOf(Registries.STATUS_EFFECT.getKey(entry.statusEffect()).get()), (int) (durationTicks * durationMultiplier), potency));
-				}
 			}
 			
-			statusEffectBeverageProperties.statusEffects = effects;
+			inputStack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.empty(), effects));
 		}
 		
-		properties.alcPercent = (int) alcPercent;
-		properties.ageDays = (long) ageIngameDays;
-		properties.thickness = thickness;
-		return properties.getStack(inputStack);
+		inputStack.set(SpectrumDataComponentTypes.BEVERAGE, new BeverageComponent((long) ageIngameDays, (int) alcPercent, thickness));
+		return inputStack;
 	}
 	
 	protected static double getAlcPercent(float fermentationSpeedMod, float thickness, float downfall, float ageIngameDays) {

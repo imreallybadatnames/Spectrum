@@ -236,7 +236,10 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		
 		PotionContentsComponent potionComponent = new PotionContentsComponent(Optional.empty(), Optional.of(potionColor.orElse(0)), instances);
 		stack.set(DataComponentTypes.POTION_CONTENTS, potionComponent);
-		stack.set(SpectrumDataComponentTypes.UNIDENTIFIABLE, potionMod.unidentifiable);
+		if (potionMod.unidentifiable)
+			stack.set(SpectrumDataComponentTypes.UNIDENTIFIABLE, Unit.INSTANCE);
+		else
+			stack.remove(SpectrumDataComponentTypes.UNIDENTIFIABLE);
 	}
 	
 	private List<InkPoweredStatusEffectInstance> generateEffects(ItemStack baseIngredient, PotionMod potionMod, PotionWorkshopBrewingRecipe lastRecipe, Random random) {

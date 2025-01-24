@@ -1,27 +1,21 @@
 package de.dafuqs.spectrum.items.food.beverages;
 
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
-import net.minecraft.client.item.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 
 import java.util.*;
 
 public class SuspiciousBrewItem extends BeverageItem {
 	
 	public SuspiciousBrewItem(Settings settings) {
-		super(settings);
+		super(settings.component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT));
 	}
 	
-	@Override
-	public BeverageProperties getBeverageProperties(ItemStack itemStack) {
-		return StatusEffectBeverageProperties.getFromStack(itemStack);
-	}
-
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
