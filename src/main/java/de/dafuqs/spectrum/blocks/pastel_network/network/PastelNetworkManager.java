@@ -4,10 +4,10 @@ import net.minecraft.world.*;
 
 import java.util.*;
 
-public interface PastelNetworkManager {
+public interface PastelNetworkManager<W extends World, N extends PastelNetwork<W>> {
 	
-	PastelNetwork createNetwork(World world, UUID uuid);
+	N createNetwork(W world, UUID uuid);
 	
-    Optional<? extends PastelNetwork> getNetwork(UUID uuid);
+	Optional<? extends N> getNetwork(UUID uuid);
 
 }

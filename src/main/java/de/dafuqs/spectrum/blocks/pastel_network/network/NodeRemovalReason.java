@@ -3,9 +3,7 @@ package de.dafuqs.spectrum.blocks.pastel_network.network;
 public enum NodeRemovalReason {
     UNLOADED(false),
     BROKEN(true),
-    DISCONNECT(true),
-    DISABLED(false),
-    MOVED(true);
+	DISCONNECT(true);
 
     public final boolean destructive;
 

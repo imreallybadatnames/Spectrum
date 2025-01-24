@@ -57,11 +57,11 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected UUID nodeId = UUID.randomUUID();
 	protected Optional<UUID> networkUUID = Optional.empty();
 	protected Optional<PastelUpgradeSignature> outerRing, innerRing, redstoneRing;
-	protected long lastTransferTick = 0;
+	protected long lastTransferTick = 0; // TODO: move to ServerPastelNetwork?
 	protected final long cachedRedstonePowerTick = 0;
 	protected boolean cachedUnpowered = true;
 	protected PastelNetwork.NodePriority priority = PastelNetwork.NodePriority.GENERIC;
-	protected long itemCountUnderway = 0;
+	protected long itemCountUnderway = 0; // TODO: move to ServerPastelNetwork?
 
 	// upgrade impl stuff
 	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor, updated;

@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.*;
 import net.fabricmc.fabric.api.transfer.v1.transaction.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
+import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -31,8 +32,8 @@ public class PastelTransmission implements SchedulerMap.Callback {
 	public void setNetwork(@NotNull ServerPastelNetwork network) {
         this.network = network;
     }
-
-    public @Nullable PastelNetwork getNetwork() {
+	
+	public @Nullable PastelNetwork<ServerWorld> getNetwork() {
         return this.network;
     }
 
@@ -66,31 +67,30 @@ public class PastelTransmission implements SchedulerMap.Callback {
     }
 
     private void arriveAtDestination() {
-        if (nodePositions.size() == 0) {
+		if (nodePositions.isEmpty()) {
             return;
         }
-
-        BlockPos destinationPos = nodePositions.get(nodePositions.size() - 1);
-        PastelNodeBlockEntity destinationNode = this.network.getNodeAt(destinationPos);
+		
+		@NotNull BlockPos destinationPos = nodePositions.get(nodePositions.size() - 1);
+		@Nullable PastelNodeBlockEntity destinationNode = this.network.getNodeAt(destinationPos);
         World world = this.network.getWorld();
-        if (!world.isClient) {
-            int inserted = 0;
-            if (destinationNode != null) {
-                Storage<ItemVariant> destinationStorage = destinationNode.getConnectedStorage();
-                if (destinationStorage != null) {
-                    try (Transaction transaction = Transaction.openOuter()) {
-                        if (destinationStorage.supportsInsertion()) {
-                            inserted = (int) destinationStorage.insert(variant, amount, transaction);
-                            destinationNode.addItemCountUnderway(-inserted);
-                            transaction.commit();
-                        }
-                    }
-                }
-            }
-            if (inserted != amount) {
-                InWorldInteractionHelper.scatter(world, destinationPos.getX() + 0.5, destinationPos.getY() + 0.5, destinationPos.getZ() + 0.5, variant, amount - inserted);
-            }
-        }
+		
+		int inserted = 0;
+		if (destinationNode != null) {
+			Storage<ItemVariant> destinationStorage = destinationNode.getConnectedStorage();
+			if (destinationStorage != null) {
+				try (Transaction transaction = Transaction.openOuter()) {
+					if (destinationStorage.supportsInsertion()) {
+						inserted = (int) destinationStorage.insert(variant, amount, transaction);
+						destinationNode.addItemCountUnderway(-inserted);
+						transaction.commit();
+					}
+				}
+			}
+		}
+		if (inserted != amount) {
+			InWorldInteractionHelper.scatter(world, destinationPos.getX() + 0.5, destinationPos.getY() + 0.5, destinationPos.getZ() + 0.5, variant, amount - inserted);
+		}
     }
 
     public NbtCompound toNbt() {

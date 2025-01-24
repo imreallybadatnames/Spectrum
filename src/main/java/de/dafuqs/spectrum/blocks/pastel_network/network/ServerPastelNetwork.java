@@ -8,9 +8,9 @@ import de.dafuqs.spectrum.networking.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 import org.jgrapht.alg.connectivity.*;
 import org.jgrapht.graph.*;
@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.*;
 
-public class ServerPastelNetwork extends PastelNetwork {
+public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 	
 	protected final Map<PastelNodeType, Set<PastelNodeBlockEntity>> loadedNodes = new ConcurrentHashMap<>();
 	protected final Set<PastelNodeBlockEntity> priorityNodes = new HashSet<>();
@@ -30,8 +30,8 @@ public class ServerPastelNetwork extends PastelNetwork {
 
 	protected final SchedulerMap<PastelTransmission> transmissions = new SchedulerMap<>();
 	protected final PastelTransmissionLogic transmissionLogic;
-
-	public ServerPastelNetwork(World world, @Nullable UUID uuid) {
+	
+	public ServerPastelNetwork(ServerWorld world, @Nullable UUID uuid) {
 		super(world, uuid);
 		for (PastelNodeType type : PastelNodeType.values()) {
 			this.loadedNodes.put(type, new HashSet<>());
@@ -81,8 +81,8 @@ public class ServerPastelNetwork extends PastelNetwork {
 		return builder.toString();
 	}
 	
-	public PastelNodeBlockEntity getNodeAt(BlockPos blockPos) {
-		if (!this.getWorld().isChunkLoaded(blockPos)) {
+	public @Nullable PastelNodeBlockEntity getNodeAt(BlockPos blockPos) {
+		if (!this.graph.vertexSet().contains(blockPos) || !this.getWorld().isChunkLoaded(blockPos)) {
 			return null; // hmmmmm
 		}
 		
@@ -129,37 +129,6 @@ public class ServerPastelNetwork extends PastelNetwork {
 	
 	public Map<PastelNodeType, Set<PastelNodeBlockEntity>> getLoadedNodes() {
 		return this.loadedNodes;
-	}
-	
-	public int getNodeCount() {
-		int nodes = 0;
-		for (Set<PastelNodeBlockEntity> nodeList : this.loadedNodes.values()) {
-			nodes += nodeList.size();
-		}
-		return nodes;
-	}
-	
-	public List<PastelNodeBlockEntity> getAllNodes() {
-		List<PastelNodeBlockEntity> nodes = new ArrayList<>();
-		for (Map.Entry<PastelNodeType, Set<PastelNodeBlockEntity>> nodeList : this.loadedNodes.entrySet()) {
-			nodes.addAll(this.loadedNodes.get(nodeList.getKey()));
-		}
-		return nodes;
-	}
-	
-	public boolean canConnect(PastelNodeBlockEntity newNode) {
-		if (newNode.getWorld() != this.getWorld()) {
-			return false;
-		}
-		
-		for (Set<PastelNodeBlockEntity> nodeList : this.loadedNodes.values()) {
-			for (PastelNodeBlockEntity currentNode : nodeList) {
-				if (currentNode.canConnect(newNode)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 	
 	public void addNode(PastelNodeBlockEntity node) {
@@ -209,7 +178,7 @@ public class ServerPastelNetwork extends PastelNetwork {
 				for (BlockPos disconnectedNode : disconnectedNodes) {
 					var switchedNode = getWorld().getBlockEntity(disconnectedNode);
 					if (switchedNode instanceof PastelNodeBlockEntity pastelNode) {
-						removeNode(pastelNode, NodeRemovalReason.DISCONNECT);
+						ServerPastelNetworkManager.get(world).removeNode(pastelNode, NodeRemovalReason.DISCONNECT);
 						newNetwork.addNode(pastelNode);
 						pastelNode.setNetworkUUID(newNetwork.getUUID());
 					}
@@ -248,7 +217,11 @@ public class ServerPastelNetwork extends PastelNetwork {
 		this.transmissionLogic.invalidateCache();
 	}
 	
-	public boolean removeNode(PastelNodeBlockEntity node, NodeRemovalReason reason) {
+	// Call ServerPastelNetworkManager.removeNode() where possible!
+	// that one does cleanup of networks with no entries
+	// Else we might get dangling empty networks
+	@Deprecated()
+	protected boolean removeNode(PastelNodeBlockEntity node, NodeRemovalReason reason) {
 		if (!graph.containsVertex(node.getPos())) {
 			return false;
 		}
@@ -394,7 +367,7 @@ public class ServerPastelNetwork extends PastelNetwork {
 	
 	public static ServerPastelNetwork fromNbt(NbtCompound nbt) {
 		UUID uuid = nbt.getUuid("UUID");
-		World world = SpectrumCommon.minecraftServer.getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(nbt.getString("World"))));
+		ServerWorld world = SpectrumCommon.minecraftServer.getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(nbt.getString("World"))));
 		ServerPastelNetwork network = new ServerPastelNetwork(world, uuid);
 		network.graph = graphFromNbt(nbt.getCompound("Graph"));
 		

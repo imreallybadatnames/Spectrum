@@ -218,8 +218,8 @@ public class SpectrumS2CPacketSender {
 		buf.writeUuid(network.getUUID());
 		buf.writeInt(travelTime);
 		PastelTransmission.writeToBuf(buf, transmission);
-	
-		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) network.getWorld(), transmission.getStartPos())) {
+		
+		for (ServerPlayerEntity player : PlayerLookup.tracking(network.getWorld(), transmission.getStartPos())) {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_TRANSMISSION, buf);
 		}
 	}
@@ -496,7 +496,7 @@ public class SpectrumS2CPacketSender {
 		buf.writeUuid(serverPastelNetwork.getUUID());
 		buf.writeNbt(serverPastelNetwork.graphToNbt());
 		
-		for (ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) serverPastelNetwork.getWorld(), pos)) {
+		for (ServerPlayerEntity player : PlayerLookup.tracking(serverPastelNetwork.getWorld(), pos)) {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NETWORK_EDGE_SYNC, buf);
 		}
 	}

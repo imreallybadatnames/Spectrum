@@ -12,10 +12,10 @@ import org.jgrapht.graph.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class PastelNetwork {
+public class PastelNetwork<W extends World> {
 	
 	protected Graph<BlockPos, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-	protected final World world;
+	protected final W world;
 	protected final UUID uuid;
 	
 	public enum NodePriority {
@@ -24,12 +24,12 @@ public class PastelNetwork {
         HIGH
     }
 	
-	public PastelNetwork(World world, @Nullable UUID uuid) {
+	public PastelNetwork(W world, @Nullable UUID uuid) {
 		this.world = world;
 		this.uuid = uuid == null ? UUID.randomUUID() : uuid;
 	}
-
-    public World getWorld() {
+	
+	public W getWorld() {
         return this.world;
     }
 	

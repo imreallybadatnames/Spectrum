@@ -11,7 +11,7 @@ import java.util.*;
 
 // Persisted together with the overworld
 // resetting the overworld will also reset all networks
-public class ServerPastelNetworkManager extends PersistentState implements PastelNetworkManager {
+public class ServerPastelNetworkManager extends PersistentState implements PastelNetworkManager<ServerWorld, ServerPastelNetwork> {
 	
 	private static final String PERSISTENT_STATE_ID = "spectrum_pastel_network_manager";
 	
@@ -21,6 +21,7 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 		super();
 	}
 	
+	
 	@Override
 	public boolean isDirty() {
 		return true;
@@ -29,7 +30,14 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 	public static ServerPastelNetworkManager get(ServerWorld world) {
 		return world.getPersistentStateManager().getOrCreate(ServerPastelNetworkManager::fromNbt, ServerPastelNetworkManager::new, PERSISTENT_STATE_ID);
 	}
-
+	
+	@Override
+	public ServerPastelNetwork createNetwork(ServerWorld world, UUID uuid) {
+		ServerPastelNetwork network = new ServerPastelNetwork(world, uuid);
+		this.networks.add(network);
+		return network;
+	}
+	
 	@Override
 	public Optional<ServerPastelNetwork> getNetwork(UUID uuid) {
 		return networks.stream().filter(n -> n.uuid.equals(uuid)).findFirst();
@@ -53,13 +61,6 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 		return manager;
 	}
 	
-	@Override
-	public ServerPastelNetwork createNetwork(World world, UUID uuid) {
-		ServerPastelNetwork network = new ServerPastelNetwork(world, uuid);
-		this.networks.add(network);
-		return network;
-	}
-	
 	public void tick() {
 		// using a for here instead of foreach
 		// to prevent ConcurrentModificationExceptions
@@ -70,7 +71,7 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 	}
 
 	@Contract("_, null -> new")
-	public PastelNetwork joinOrCreateNetwork(PastelNodeBlockEntity node, @Nullable UUID uuid) {
+	public PastelNetwork<ServerWorld> joinOrCreateNetwork(PastelNodeBlockEntity node, @Nullable UUID uuid) {
 		if (uuid != null) {
 			//noinspection ForLoopReplaceableByForEach
 			for (int i = 0; i < this.networks.size(); i++) {
@@ -82,7 +83,7 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 			}
 		}
 		
-		ServerPastelNetwork network = createNetwork(node.getWorld(), uuid);
+		ServerPastelNetwork network = createNetwork((ServerWorld) node.getWorld(), uuid);
 		network.addNode(node);
 		return network;
 	}
@@ -112,7 +113,7 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 			}
 		}
 		else {
-			ServerPastelNetwork newNetwork = createNetwork(node.getWorld(), node.getNodeId());
+			ServerPastelNetwork newNetwork = createNetwork((ServerWorld) node.getWorld(), node.getNodeId());
 			newNetwork.addNode(parent);
 			parent.setNetworkUUID(newNetwork.getUUID());
 			newNetwork.addNodeAndConnect(node, parent);
