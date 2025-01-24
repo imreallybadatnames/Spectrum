@@ -81,26 +81,20 @@ public class StuckStormStoneBlock extends HorizontalFacingBlock implements Revel
 	public Identifier getCloakAdvancementIdentifier() {
 		return SpectrumAdvancements.REVEAL_STORM_STONES;
 	}
-
+	
 	@Override
-	@SuppressWarnings("deprecation")
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		if (this.isVisibleTo(context)) {
-			return SHAPE;
-		}
-		return VoxelShapes.empty();
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (context instanceof EntityShapeContext entityShapeContext) {
-			Entity var4 = entityShapeContext.getEntity();
-			if (var4 instanceof PlayerEntity player) {
-				return this.isVisibleTo(player) ? SHAPE : VoxelShapes.empty();
+			Entity contextEntity = entityShapeContext.getEntity();
+			if (contextEntity instanceof PlayerEntity player) {
+				if (this.isVisibleTo(player)) {
+					return SHAPE;
+				} else {
+					return VoxelShapes.empty();
+				}
 			}
 		}
-		return VoxelShapes.empty();
+		return VoxelShapes.fullCube(); // like breaking particles
 	}
 	
 	@Override
