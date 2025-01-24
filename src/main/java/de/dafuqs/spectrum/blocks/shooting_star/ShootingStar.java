@@ -23,7 +23,7 @@ public interface ShootingStar {
 		GEMSTONE("gemstone", SpectrumLootTables.GEMSTONE_SHOOTING_STAR);
 		
 		public static Codec<Type> CODEC = StringIdentifiable.createCodec(Type::values);
-		public static final PacketCodec<ByteBuf, ShootingStar.Type> PACKET_CODEC = PacketCodecs.indexed(i -> ShootingStar.Type.values()[i], ShootingStar.Type::ordinal);
+		public static final PacketCodec<ByteBuf, ShootingStar.Type> PACKET_CODEC = PacketCodecHelper.enumOf(Type.class);
 		
 		private final String name;
 		private final RegistryKey<LootTable> lootTable;

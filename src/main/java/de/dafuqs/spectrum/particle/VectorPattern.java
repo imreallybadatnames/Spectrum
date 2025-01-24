@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.particle;
 
+import de.dafuqs.spectrum.helpers.*;
 import io.netty.buffer.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.util.math.*;
@@ -63,6 +64,6 @@ public enum VectorPattern {
 		return v;
 	}
 	
-	public static final PacketCodec<ByteBuf, VectorPattern> PACKET_CODEC = PacketCodecs.indexed(i -> VectorPattern.values()[i], VectorPattern::ordinal);
+	public static final PacketCodec<ByteBuf, VectorPattern> PACKET_CODEC = PacketCodecHelper.enumOf(VectorPattern.class);
 	
 }

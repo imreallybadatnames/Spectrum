@@ -17,17 +17,19 @@ public class EmptyRecipeSerializer<T extends Recipe<?>> implements RecipeSeriali
 	
 	public EmptyRecipeSerializer(Supplier<T> factory) {
 		this.codec = MapCodec.of(Encoder.empty(), Decoder.unit(factory));
-		this.packetCodec = PacketCodec.of((val, buf) -> {}, buf -> factory.get());
+		//TODO can this simply be `PacketCodec.unit(factory.get())`?
+		this.packetCodec = PacketCodec.of((val, buf) -> {
+		}, buf -> factory.get());
 	}
 	
 	@Override
 	public MapCodec<T> codec() {
 		return codec;
 	}
-
+	
 	@Override
 	public PacketCodec<RegistryByteBuf, T> packetCodec() {
 		return packetCodec;
 	}
-
+	
 }

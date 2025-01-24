@@ -2,20 +2,11 @@ package de.dafuqs.spectrum.helpers;
 
 import com.mojang.datafixers.util.*;
 import com.mojang.serialization.*;
-import io.netty.buffer.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.codec.*;
 
 import java.util.function.*;
 
 public class CodecHelper {
-	
-	public static <E extends Enum<?>> PacketCodec<ByteBuf, E> ofPacketEnum(Class<E> clazz) {
-		return PacketCodecs.VAR_INT.xmap(
-				ordinal -> clazz.getEnumConstants()[ordinal],
-				enumInst -> enumInst.ordinal()
-		);
-	}
 	
 	public static <T> void fromNbt(Codec<T> codec, NbtElement nbt, Consumer<? super T> ifValid) {
 		if (nbt != null)

@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.particle;
 import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.effect.*;
+import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.particle.v1.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -15,14 +16,15 @@ import java.util.function.*;
 
 public class SpectrumParticleTypes {
 	
-	// FIXME - Particle refactor required
-	public static ParticleType<ItemTransmissionParticleEffect> ITEM_TRANSMISSION = register("item_transfer", ItemTransmissionParticleEffect.FACTORY, (particleType) -> ItemTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<ExperienceTransmissionParticleEffect> EXPERIENCE_TRANSMISSION = register("experience_transfer", ExperienceTransmissionParticleEffect.FACTORY, (particleType) -> ExperienceTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<WirelessRedstoneTransmissionParticleEffect> WIRELESS_REDSTONE_TRANSMISSION = register("wireless_redstone_transmission", WirelessRedstoneTransmissionParticleEffect.FACTORY, (particleType) -> WirelessRedstoneTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<ColoredTransmissionParticleEffect> COLORED_TRANSMISSION = register("colored_transmission", ColoredTransmissionParticleEffect.FACTORY, (particleType) -> ColoredTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<BlockPosEventTransmissionParticleEffect> BLOCK_POS_EVENT_TRANSMISSION = register("block_pos_event_transmission", BlockPosEventTransmissionParticleEffect.FACTORY, (particleType) -> BlockPosEventTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<PastelTransmissionParticleEffect> PASTEL_TRANSMISSION = register("pastel_transmission", PastelTransmissionParticleEffect.FACTORY, (particleType) -> PastelTransmissionParticleEffect.CODEC, false);
-	public static ParticleType<HummingstoneTransmissionParticleEffect> HUMMINGSTONE_TRANSMISSION = register("hummingstone_transmission", HummingstoneTransmissionParticleEffect.FACTORY, (particleType) -> HummingstoneTransmissionParticleEffect.CODEC, false);
+	private static final Deferrer DEFERRER = new Deferrer();
+	
+	public static ParticleType<TransmissionParticleEffect> ITEM_TRANSMISSION = register("item_transfer", false, type -> TransmissionParticleEffect.CODEC, type -> TransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<TransmissionParticleEffect> EXPERIENCE_TRANSMISSION = register("experience_transfer", false, type -> TransmissionParticleEffect.CODEC, type -> TransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<TransmissionParticleEffect> WIRELESS_REDSTONE_TRANSMISSION = register("wireless_redstone_transmission", false, type -> TransmissionParticleEffect.CODEC, type -> TransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<ColoredTransmissionParticleEffect> COLORED_TRANSMISSION = register("colored_transmission", false, type -> ColoredTransmissionParticleEffect.CODEC, type -> ColoredTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<TransmissionParticleEffect> BLOCK_POS_EVENT_TRANSMISSION = register("block_pos_event_transmission", false, type -> TransmissionParticleEffect.CODEC, type -> TransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<PastelTransmissionParticleEffect> PASTEL_TRANSMISSION = register("pastel_transmission", false, type -> PastelTransmissionParticleEffect.CODEC, type -> PastelTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<TransmissionParticleEffect> HUMMINGSTONE_TRANSMISSION = register("hummingstone_transmission", false, type -> TransmissionParticleEffect.CODEC, type -> TransmissionParticleEffect.PACKET_CODEC);
 	
 	public static SimpleParticleType SHIMMERSTONE_SPARKLE = register("shimmerstone_sparkle", false);
 	public static SimpleParticleType SHIMMERSTONE_SPARKLE_SMALL = register("shimmerstone_sparkle_small", false);
@@ -36,11 +38,11 @@ public class SpectrumParticleTypes {
 	public static SimpleParticleType DRAKEBLOOD_DIKE_RUNES_MAJOR = register("drakeblood_dike_runes_major", false);
 	public static SimpleParticleType MALACHITE_DIKE_RUNES = register("malachite_dike_runes", false);
 	public static SimpleParticleType MALACHITE_DIKE_RUNES_MAJOR = register("malachite_dike_runes_major", false);
-
+	
 	public static SimpleParticleType AZURE_AURA = register("azure_aura", false);
 	public static SimpleParticleType AZURE_MOTE = register("azure_mote", false);
 	public static SimpleParticleType AZURE_MOTE_SMALL = register("azure_mote_small", false);
-
+	
 	public static SimpleParticleType BLUE_BUBBLE_POP = register("blue_bubble_pop", false);
 	public static SimpleParticleType GREEN_BUBBLE_POP = register("green_bubble_pop", false);
 	
@@ -189,36 +191,36 @@ public class SpectrumParticleTypes {
 	public static SimpleParticleType RED_EXPLOSION = register("red_explosion", true);
 	public static SimpleParticleType WHITE_EXPLOSION = register("white_explosion", true);
 	public static SimpleParticleType YELLOW_EXPLOSION = register("yellow_explosion", true);
-
+	
 	// Biome particles
 	public static SimpleParticleType FALLING_ASH = register("falling_ash", true);
 	public static SimpleParticleType FIREFLY = register("firefly", true);
 	public static SimpleParticleType BLOODFLY = register("bloodfly", true);
 	public static SimpleParticleType QUARTZ_FLUFF = register("quartz_fluff", true);
-
+	
 	public static SimpleParticleType LIGHT_RAIN = register("light_rain", true);
 	public static SimpleParticleType HEAVY_RAIN = register("heavy_rain", true);
 	public static SimpleParticleType RAIN_SPLASH = register("rain_splash", false);
 	public static SimpleParticleType RAIN_RIPPLE = register("rain_ripple", false);
-
+	
 	public static SimpleParticleType LIGHT_TRAIL = register("light_trail", true);
 	
-	public static ParticleType<DynamicParticleEffect> DYNAMIC = register("particle_spawner", DynamicParticleEffect.FACTORY, (particleType) -> DynamicParticleEffect.CODEC, false);
-	public static ParticleType<DynamicParticleEffectAlwaysShow> DYNAMIC_ALWAYS_SHOW = register("particle_spawner_always_show", DynamicParticleEffectAlwaysShow.FACTORY, (particleType) -> DynamicParticleEffectAlwaysShow.CODEC, true);
+	public static ParticleType<DynamicParticleEffect> DYNAMIC = register("particle_spawner", false, type -> DynamicParticleEffect.CODEC, type -> DynamicParticleEffect.PACKET_CODEC);
+	public static ParticleType<DynamicParticleEffect> DYNAMIC_ALWAYS_SHOW = register("particle_spawner_always_show", true, type -> DynamicParticleEffect.CODEC, type -> DynamicParticleEffect.PACKET_CODEC);
 	
 	// Simple particles
 	private static SimpleParticleType register(String name, boolean alwaysShow) {
-		return Registry.register(Registries.PARTICLE_TYPE, SpectrumCommon.locate(name), FabricParticleTypes.simple(alwaysShow));
+		return DEFERRER.defer(FabricParticleTypes.simple(alwaysShow), type -> Registry.register(Registries.PARTICLE_TYPE, SpectrumCommon.locate(name), type));
 	}
 	
 	// complex particles
 	private static <T extends ParticleEffect> ParticleType<T> register(
-		String name,
-		boolean alwaysShow,
-		Function<ParticleType<T>, MapCodec<T>> codecGetter,
-		Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter
+			String name,
+			boolean alwaysShow,
+			Function<ParticleType<T>, MapCodec<T>> codecGetter,
+			Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter
 	) {
-		return Registry.register(Registries.PARTICLE_TYPE, name, new ParticleType<T>(alwaysShow) {
+		return DEFERRER.defer(new ParticleType<T>(alwaysShow) {
 			@Override
 			public MapCodec<T> getCodec() {
 				return codecGetter.apply(this);
@@ -228,11 +230,11 @@ public class SpectrumParticleTypes {
 			public PacketCodec<? super RegistryByteBuf, T> getPacketCodec() {
 				return packetCodecGetter.apply(this);
 			}
-		});
+		}, type -> Registry.register(Registries.PARTICLE_TYPE, name, type));
 	}
 	
 	public static void register() {
-	
+		DEFERRER.flush();
 	}
 	
 	@NotNull

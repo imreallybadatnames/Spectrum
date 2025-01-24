@@ -11,14 +11,9 @@ import net.minecraft.util.*;
 
 import java.util.function.*;
 
-import static de.dafuqs.spectrum.registries.DeferredRegistrar.*;
-
-@SuppressWarnings("unused")
 public class SpectrumDataComponentTypes {
 	
-	static {
-		DeferredRegistrar.setClass(SpectrumDataComponentTypes.class);
-	}
+	private static final Deferrer DEFERRER = new Deferrer();
 	
 	public static ComponentType<Boolean> ACTIVATED = register("activated", builder -> builder.codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL));
 	public static ComponentType<Integer> AOE = register("aoe", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.VAR_INT));
@@ -42,13 +37,12 @@ public class SpectrumDataComponentTypes {
 	public static ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC));
 	
 	public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-		return defer(builderOperator.apply(ComponentType.builder()).build())
-				.withCommon(type -> Registry.register(Registries.DATA_COMPONENT_TYPE, id, type))
-				.value();
+		return DEFERRER.defer(builderOperator.apply(ComponentType.builder()).build(),
+				type -> Registry.register(Registries.DATA_COMPONENT_TYPE, id, type));
 	}
 	
 	public static void register() {
-		DeferredRegistrar.registerCommon(SpectrumDataComponentTypes.class);
+		DEFERRER.flush();
 	}
 	
 }
