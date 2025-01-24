@@ -213,7 +213,7 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.TITRATION_BARREL_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.TITRATION_BARREL;
 	}
 	
 	// sadly we cannot use text.append() here, since the guidebook does not support it

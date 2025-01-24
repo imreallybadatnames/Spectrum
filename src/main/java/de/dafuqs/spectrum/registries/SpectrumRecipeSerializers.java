@@ -28,6 +28,8 @@ import net.minecraft.registry.*;
 
 public class SpectrumRecipeSerializers {
 	
+	private static final Deferrer DEFERRER = new Deferrer();
+	
 	// VANILLA
 	public static final RecipeSerializer<RepairAnythingRecipe> REPAIR_ANYTHING_SERIALIZER = register("repair_anything", new EmptyRecipeSerializer<>(RepairAnythingRecipe::new));
 	public static final RecipeSerializer<ClearInkRecipe> CLEAR_INK_SERIALIZER = register("clear_ink", new EmptyRecipeSerializer<>(ClearInkRecipe::new));
@@ -86,7 +88,7 @@ public class SpectrumRecipeSerializers {
 	public static final RecipeSerializer<CinderhearthRecipe> CINDERHEARTH_RECIPE_SERIALIZER = register("cinderhearth", new CinderhearthRecipeSerializer());
 	
 	// Titration Barrel
-	public static final RecipeSerializer<TitrationBarrelRecipe> TITRATION_BARREL_RECIPE_SERIALIZER = register("titration_barrel", new TitrationBarrelRecipeSerializer());
+	public static final RecipeSerializer<TitrationBarrelRecipe> TITRATION_BARREL = register("titration_barrel", new TitrationBarrelRecipeSerializer());
 	public static final RecipeSerializer<JadeWineRecipe> TITRATION_BARREL_JADE_WINE = register("titration_barrel_jade_wine", new EmptyRecipeSerializer<>(JadeWineRecipe::new));
 	public static final RecipeSerializer<AquaRegiaRecipe> TITRATION_BARREL_AQUA_REGIA = register("titration_barrel_aqua_regia", new EmptyRecipeSerializer<>(AquaRegiaRecipe::new));
 	public static final RecipeSerializer<NecteredViognierRecipe> TITRATION_BARREL_NECTERED_VIOGNIER = register("titration_barrel_nectered_viognier", new EmptyRecipeSerializer<>(NecteredViognierRecipe::new));
@@ -100,11 +102,11 @@ public class SpectrumRecipeSerializers {
 	
 	
 	static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {
-		return Registry.register(Registries.RECIPE_SERIALIZER, SpectrumCommon.locate(id), serializer);
+		return DEFERRER.defer(serializer, v -> Registry.register(Registries.RECIPE_SERIALIZER, SpectrumCommon.locate(id), v));
 	}
 	
 	public static void register() {
-	
+		DEFERRER.flush();
 	}
 	
 }
