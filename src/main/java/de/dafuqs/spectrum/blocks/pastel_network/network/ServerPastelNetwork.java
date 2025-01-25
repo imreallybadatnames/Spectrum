@@ -82,8 +82,11 @@ public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 	}
 	
 	public @Nullable PastelNodeBlockEntity getNodeAt(BlockPos blockPos) {
-		if (!this.graph.vertexSet().contains(blockPos) || !this.getWorld().isChunkLoaded(blockPos)) {
-			return null; // hmmmmm
+		if (!this.graph.vertexSet().contains(blockPos)) {
+			return null; // the network might have been disconnected while the transfer was underway
+		}
+		if (!this.getWorld().isChunkLoaded(blockPos)) {
+			return null; // hmmmm
 		}
 		
 		BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);

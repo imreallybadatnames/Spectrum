@@ -187,7 +187,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	@NotNull
 	private static ActionResult sendDebugMessage(World world, PlayerEntity player, PastelNodeBlockEntity blockEntity) {
 		if (blockEntity != null) {
-			Optional<? extends PastelNetwork> network = blockEntity.networkUUID.isPresent() ? Pastel.getInstance(world.isClient).getNetwork(blockEntity.networkUUID.get()) : Optional.empty();
+			Optional<? extends PastelNetwork<?>> network = blockEntity.networkUUID.isPresent() ? Pastel.getInstance(world.isClient).getNetwork(blockEntity.networkUUID.get()) : Optional.empty();
 			String prefix = world.isClient ? "C" : "S";
 			if (network.isEmpty()) {
 				player.sendMessage(Text.literal(prefix + ": No connected network :("));

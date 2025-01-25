@@ -25,8 +25,8 @@ public class Pastel {
         }
         return serverManager;
     }
-
-    public static PastelNetworkManager getInstance(boolean client) {
+	
+	public static PastelNetworkManager<?, ?> getInstance(boolean client) {
         if (client) {
             return getClientInstance();
         } else {
