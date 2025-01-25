@@ -30,7 +30,6 @@
   ],
   "result": "spectrum:nightfalls_blade",
   "required_advancement": "spectrum:unlocks/equipment/nightfalls_blade",
-  "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [
     "nothing",

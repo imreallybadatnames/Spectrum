@@ -9,12 +9,9 @@
     "minecraft:sunflower"
   ],
   "required_advancement": "spectrum:unlocks/weather/clear",
-  "world_conditions": [
-    {
-      "type": "weather",
-      "weather_condition": "rain"
-    }
-  ],
+  "world_conditions": {
+		"weather": "rain"
+	},
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [],
   "finish_crafting_effect": "weather_clear",

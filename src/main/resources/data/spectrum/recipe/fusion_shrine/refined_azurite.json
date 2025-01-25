@@ -15,7 +15,6 @@
   ],
   "result": "spectrum:refined_azurite",
   "required_advancement": "spectrum:unlocks/resources/refined_azurite",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [],
   "finish_crafting_effect": "single_visual_explosion_on_shrine"

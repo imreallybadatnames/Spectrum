@@ -18,7 +18,6 @@
   ],
   "result": "spectrum:pigment_palette",
   "required_advancement": "spectrum:unlocks/trinkets/pigment_palette",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [],
   "finish_crafting_effect": "single_visual_explosion_on_shrine"

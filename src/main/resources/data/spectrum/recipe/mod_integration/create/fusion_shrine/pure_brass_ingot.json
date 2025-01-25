@@ -14,7 +14,6 @@
     "count": 4
   },
   "required_advancement": "spectrum:lategame/collect_pure_resource",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [
     "nothing",

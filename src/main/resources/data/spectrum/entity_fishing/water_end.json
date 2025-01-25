@@ -1,11 +1,7 @@
 {
   "location": {
-    "fluid": "#minecraft:water",
-    "dimension": {
-      "worlds": [
-        "minecraft:the_end"
-      ]
-    }
+    "fluids": "#minecraft:water",
+    "dimension": "minecraft:the_end"
   },
   "chance": 0.02,
   "entities": [

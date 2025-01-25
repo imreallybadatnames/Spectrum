@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.recipe.fusion_shrine;
 import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.predicate.location.*;
 import de.dafuqs.spectrum.api.recipe.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import io.wispforest.endec.*;
 import io.wispforest.endec.impl.*;
@@ -31,7 +32,7 @@ public class FusionShrineRecipeSerializer implements GatedRecipeSerializer<Fusio
 		Endec.BOOLEAN.optionalFieldOf("disable_yield_upgrades", recipe -> recipe.yieldUpgradesDisabled, false),
 		Endec.BOOLEAN.optionalFieldOf("play_crafting_finished_effects", recipe -> recipe.playCraftingFinishedEffects, true),
 		Endec.BOOLEAN.optionalFieldOf("copy_components", recipe -> recipe.copyComponents, false),
-		CodecUtils.toEndec(SpectrumLocationPredicate.CODEC).listOf().optionalFieldOf("world_conditions",recipe -> recipe.spectrumLocationPredicates, List.of()),
+		CodecUtils.toEndec(CodecHelper.singleOrList(WorldConditionsPredicate.CODEC)).optionalFieldOf("world_conditions", recipe -> recipe.worldConditionsPredicates, List.of()),
 		FusionShrineRecipeWorldEffect.ENDEC.fieldOf("start_crafting_effect", recipe -> recipe.startWorldEffect),
 		FusionShrineRecipeWorldEffect.ENDEC.listOf().optionalFieldOf("during_crafting_effects", recipe -> recipe.duringWorldEffects, List.of()),
 		FusionShrineRecipeWorldEffect.ENDEC.fieldOf("finish_crafting_effect", recipe -> recipe.finishWorldEffect),

@@ -41,7 +41,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final boolean yieldUpgradesDisabled;
 	protected final boolean playCraftingFinishedEffects;
 	
-	protected final List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates;
+	protected final List<WorldConditionsPredicate> worldConditionsPredicates;
 	@NotNull
 	protected final FusionShrineRecipeWorldEffect startWorldEffect;
 	@NotNull
@@ -65,7 +65,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		boolean yieldUpgradesDisabled,
 		boolean playCraftingFinishedEffects,
 		boolean copyComponents,
-		List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates,
+		List<WorldConditionsPredicate> worldConditionsPredicates,
 		@NotNull FusionShrineRecipeWorldEffect startWorldEffect,
 		@NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects,
 		@NotNull FusionShrineRecipeWorldEffect finishWorldEffect,
@@ -81,7 +81,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		this.yieldUpgradesDisabled = yieldUpgradesDisabled;
 		this.playCraftingFinishedEffects = playCraftingFinishedEffects;
 		
-		this.spectrumLocationPredicates = spectrumLocationPredicates;
+		this.worldConditionsPredicates = worldConditionsPredicates;
 		this.startWorldEffect = startWorldEffect;
 		this.duringWorldEffects = duringWorldEffects;
 		this.finishWorldEffect = finishWorldEffect;
@@ -149,16 +149,11 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	}
 	
 	/**
-	 * Returns a boolean depending on if the recipe condition is met.
-	 * This can always be true, a specific day or moon phase, or weather.
+	 * Returns a boolean depending on if any of the recipe conditions are met.
+	 * These can always be true, be a specific day or moon phase, weather, a command, biome, etc.
 	 */
 	public boolean areConditionMetCurrently(ServerWorld world, BlockPos pos) {
-		for (SpectrumLocationPredicate<?, ?> spectrumLocationPredicate : this.spectrumLocationPredicates) {
-			if (!spectrumLocationPredicate.test(world, pos)) {
-				return false;
-			}
-		}
-		return true;
+		return this.worldConditionsPredicates.stream().anyMatch(p -> p.test(world, pos));
 	}
 	
 	public FluidIngredient getFluid() {

@@ -10,7 +10,6 @@
     "minecraft:gold_ingot"
   ],
   "result": "minecraft:gilded_blackstone",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [
     "nothing",

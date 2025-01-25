@@ -9,12 +9,9 @@
     "spectrum:storm_stone"
   ],
   "required_advancement": "spectrum:unlocks/weather/thunder",
-  "world_conditions": [
-    {
-      "type": "weather",
-      "weather_condition": "not_thunder"
-    }
-  ],
+  "world_conditions": {
+		"weather": "not_thunder"
+	},
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [
     "lightning_on_shrine",

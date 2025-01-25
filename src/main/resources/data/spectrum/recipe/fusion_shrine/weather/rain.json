@@ -9,12 +9,9 @@
     "spectrum:mermaids_gem"
   ],
   "required_advancement": "spectrum:unlocks/weather/rain",
-  "world_conditions": [
-    {
-      "type": "weather",
-      "weather_condition": "clear_sky"
-    }
-  ],
+  "world_conditions": {
+		"weather": "clear_sky"
+	},
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [],
   "finish_crafting_effect": "weather_rain",

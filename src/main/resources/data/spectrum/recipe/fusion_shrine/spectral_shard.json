@@ -15,7 +15,6 @@
   ],
   "result": "spectrum:spectral_shard",
   "required_advancement": "spectrum:unlocks/resources/spectral_shard",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [
     "single_visual_explosion_on_shrine",

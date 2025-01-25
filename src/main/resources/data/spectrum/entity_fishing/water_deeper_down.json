@@ -1,11 +1,7 @@
 {
   "location": {
-    "fluid": "#minecraft:water",
-    "dimension": {
-      "worlds": [
-        "spectrum:deeper_down"
-      ]
-    }
+    "fluids": "#minecraft:water",
+    "dimension": "spectrum:deeper_down"
   },
   "chance": 0.05,
   "entities": [

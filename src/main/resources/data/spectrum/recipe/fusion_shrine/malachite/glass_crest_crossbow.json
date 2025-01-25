@@ -34,7 +34,6 @@
     }
   },
   "required_advancement": "spectrum:unlocks/malachite/glass_crest_crossbow",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [],
   "finish_crafting_effect": "single_visual_explosion_on_shrine"

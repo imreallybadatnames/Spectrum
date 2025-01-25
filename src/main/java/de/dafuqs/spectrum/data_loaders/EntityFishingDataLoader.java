@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.predicate.entity.*;
+import de.dafuqs.spectrum.api.predicate.location.*;
 import de.dafuqs.spectrum.helpers.*;
 import net.fabricmc.fabric.api.resource.*;
 import net.minecraft.entity.*;
@@ -41,10 +41,10 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 		
 	}
 
-	public record EntityFishingEntry(EntityFishingPredicate predicate, float entityChance, Pool<Weighted.Present<EntityFishingEntity>> weightedEntities) {
+	public record EntityFishingEntry(List<WorldConditionsPredicate> predicates, float entityChance, Pool<Weighted.Present<EntityFishingEntity>> weightedEntities) {
 		
 		public static final Codec<EntityFishingEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
-				EntityFishingPredicate.CODEC.fieldOf("location").forGetter(EntityFishingEntry::predicate),
+				CodecHelper.singleOrList(WorldConditionsPredicate.CODEC).fieldOf("location").forGetter(EntityFishingEntry::predicates),
 				Codec.FLOAT.fieldOf("chance").forGetter(EntityFishingEntry::entityChance),
 				EntityFishingEntity.WEIGHTED_CODEC.listOf().xmap(Pool::of, Pool::getEntries).fieldOf("entities").forGetter(EntityFishingEntry::weightedEntities)
 		).apply(i, EntityFishingEntry::new));
@@ -70,7 +70,7 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 	
 	public static Optional<EntityFishingEntity> tryCatchEntity(ServerWorld world, BlockPos pos, int bigCatchLevel) {
 		for (EntityFishingEntry entry : ENTITY_FISHING_ENTRIES) {
-			if (entry.predicate.test(world, pos)) {
+			if (entry.predicates.stream().anyMatch(p -> p.test(world, pos))) {
 				if (world.random.nextFloat() < entry.entityChance * (1 + bigCatchLevel)) {
 					var x = entry.weightedEntities.getOrEmpty(world.random);
 					if (x.isPresent()) {
