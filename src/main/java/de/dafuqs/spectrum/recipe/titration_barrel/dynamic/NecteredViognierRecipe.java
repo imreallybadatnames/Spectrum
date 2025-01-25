@@ -26,11 +26,11 @@ public class NecteredViognierRecipe extends SweetenableTitrationBarrelRecipe {
 	public static final ItemStack OUTPUT_STACK = getDefaultStackWithCount(SpectrumItems.NECTERED_VIOGNIER, 4);
 	public static final Item TAPPING_ITEM = Items.GLASS_BOTTLE;
 	public static final List<IngredientStack> INGREDIENT_STACKS = new ArrayList<>() {{
-		add(IngredientStack.ofItems(SpectrumBlocks.NEPHRITE_BLOSSOM_BULB));
+		add(IngredientStack.ofItems(SpectrumBlocks.NEPHRITE_BLOSSOM_BULB.asItem()));
 		add(IngredientStack.ofItems(4, SpectrumItems.GLASS_PEACH));
 	}};
 
-	public NecteredViognierRecipe(Identifier identifier) {
+	public NecteredViognierRecipe() {
 		super("", false, UNLOCK_IDENTIFIER, INGREDIENT_STACKS, FluidIngredient.of(Fluids.WATER), OUTPUT_STACK, TAPPING_ITEM, MIN_FERMENTATION_TIME_HOURS, new FermentationData(0.15F, 0.01F, List.of()));
 	}
 	
@@ -47,7 +47,8 @@ public class NecteredViognierRecipe extends SweetenableTitrationBarrelRecipe {
 	@Override
 	protected @NotNull List<StatusEffectInstance> getEffects(boolean nectar, double bloominess, double alcPercent) {
 		List<StatusEffectInstance> effects = new ArrayList<>();
-
+		
+		//TODO should this be a float, and only casted to int at the end?
 		int effectDuration = (int) (150 * Math.round(alcPercent % 10));
 		if (alcPercent >= 35) {
 			effects.add(new StatusEffectInstance(SpectrumStatusEffects.MAGIC_ANNULATION, effectDuration, (int) (alcPercent / 10)));

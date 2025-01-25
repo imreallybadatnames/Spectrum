@@ -62,10 +62,10 @@ public class SpectrumRecipeSerializers {
 	public static final RecipeSerializer<PotionWorkshopReactingRecipe> POTION_WORKSHOP_REACTING_SERIALIZER = register("potion_workshop_reacting", new PotionWorkshopReactingRecipeSerializer());
 	
 	// Fluid converting
-	public static final FluidConvertingRecipeSerializer GOO_CONVERTING_SERIALIZER = register("goo_converting", new FluidConvertingRecipeSerializer());
-	public static final FluidConvertingRecipeSerializer LIQUID_CRYSTAL_CONVERTING_SERIALIZER = register("liquid_crystal_converting", new FluidConvertingRecipeSerializer());
-	public static final FluidConvertingRecipeSerializer MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = register("midnight_solution_converting", new FluidConvertingRecipeSerializer());
-	public static final FluidConvertingRecipeSerializer DRAGONROT_CONVERTING_SERIALIZER = register("dragonrot_converting", new FluidConvertingRecipeSerializer());
+	public static final FluidConvertingRecipeSerializer<GooConvertingRecipe> GOO_CONVERTING_SERIALIZER = register("goo_converting", new FluidConvertingRecipeSerializer<>(GooConvertingRecipe::new));
+	public static final FluidConvertingRecipeSerializer<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING_SERIALIZER = register("liquid_crystal_converting", new FluidConvertingRecipeSerializer<>(LiquidCrystalConvertingRecipe::new));
+	public static final FluidConvertingRecipeSerializer<MidnightSolutionConvertingRecipe> MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = register("midnight_solution_converting", new FluidConvertingRecipeSerializer<>(MidnightSolutionConvertingRecipe::new));
+	public static final FluidConvertingRecipeSerializer<DragonrotConvertingRecipe> DRAGONROT_CONVERTING_SERIALIZER = register("dragonrot_converting", new FluidConvertingRecipeSerializer<>(DragonrotConvertingRecipe::new));
 	public static final RecipeSerializer<MeatToRottenFleshRecipe> DRAGONROT_MEAT_TO_ROTTEN_FLESH = register("meat_rotting", new EmptyRecipeSerializer<>(MeatToRottenFleshRecipe::new));
 	
 	// Spirit Instiller
@@ -98,7 +98,7 @@ public class SpectrumRecipeSerializers {
 	// Primordial Fire
 	public static final RecipeSerializer<PrimordialFireBurningRecipe> PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER = register("primordial_fire_burning", new PrimordialFireBurningRecipeSerializer());
 	public static final RecipeSerializer<MemoryDementiaRecipe> MEMORY_DEMENTIA = register("memory_dementia", new EmptyRecipeSerializer<>(MemoryDementiaRecipe::new));
-	public static final RecipeSerializer<EnchantedBookUnsoulingRecipe> ENCHANTED_BOOK_UNSOULING = register("enchanted_book_unsouling", new EmptyRecipeSerializer<>(EnchantedBookUnsoulingRecipe::new));
+	public static final RecipeSerializer<EnchantedBookUnsoulingRecipe> ENCHANTED_BOOK_UNSOULING = register("enchanted_book_unsouling", new EnchantedBookUnsoulingRecipe.Serializer());
 	
 	
 	static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {

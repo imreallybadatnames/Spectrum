@@ -29,7 +29,7 @@ public class AquaRegiaRecipe extends SweetenableTitrationBarrelRecipe {
 		add(IngredientStack.ofItems(3, SpectrumItems.JADEITE_PETALS));
 	}};
 
-	public AquaRegiaRecipe(Identifier identifier) {
+	public AquaRegiaRecipe() {
 		super("", false, UNLOCK_IDENTIFIER, INGREDIENT_STACKS, FluidIngredient.of(Fluids.WATER), OUTPUT_STACK, TAPPING_ITEM, MIN_FERMENTATION_TIME_HOURS, new FermentationData(0.2F, 0.01F, List.of()));
 	}
 	
@@ -47,6 +47,7 @@ public class AquaRegiaRecipe extends SweetenableTitrationBarrelRecipe {
 	protected @NotNull List<StatusEffectInstance> getEffects(boolean nectar, double bloominess, double alcPercent) {
 		List<StatusEffectInstance> effects = new ArrayList<>();
 
+		//TODO should this be a float, and only casted to int at the end?
 		int effectDuration = 1800;
 		if (alcPercent >= 40) {
 			effectDuration *= 2;

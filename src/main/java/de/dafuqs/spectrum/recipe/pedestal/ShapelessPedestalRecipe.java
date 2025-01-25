@@ -14,26 +14,22 @@ import java.util.*;
 
 public class ShapelessPedestalRecipe extends PedestalRecipe {
 	
-	public ShapelessPedestalRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier,
-								   PedestalRecipeTier tier, List<IngredientStack> craftingInputs, List<GemstoneColorInput> gemstonePowderInputs, ItemStack output,
-								   float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades) {
-		
+	public ShapelessPedestalRecipe(
+			String group, boolean secret, Identifier requiredAdvancementIdentifier,
+			PedestalRecipeTier tier, List<IngredientStack> craftingInputs, List<GemstoneColorInput> gemstonePowderInputs, ItemStack output,
+			float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades
+	) {
 		super(group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
 	}
 	
 	@Override
-	public boolean matches(RecipeInput recipeInput, World world) {
+	public boolean matches(CraftingRecipeInput recipeInput, World world) {
 		return matchIngredientStacksExclusively(recipeInput, getIngredientStacks(), CRAFTING_GRID_SLOTS) && super.matches(recipeInput, world);
 	}
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SpectrumRecipeSerializers.SHAPELESS_PEDESTAL_RECIPE_SERIALIZER;
-	}
-	
-	@Override
-	public RecipeType<?> getType() {
-		return SpectrumRecipeTypes.PEDESTAL;
 	}
 	
 	@Override

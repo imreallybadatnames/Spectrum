@@ -38,7 +38,7 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 			GameProfile gameProfile = getSkullOwner(inv.getStackInSlot(SpiritInstillerRecipe.CENTER_INGREDIENT));
-			if (gameProfile != null) {
+			if (gameProfile != null && SpectrumCommon.minecraftServer != null) {
 				ServerPlayerEntity revivedPlayer = SpectrumCommon.minecraftServer.getPlayerManager().getPlayer(gameProfile.getName());
 				if (revivedPlayer != null) {
 					HardcoreDeathComponent.removeHardcoreDeath(gameProfile);
@@ -66,7 +66,7 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 		ItemStack instillerStack = inventory.getStackInSlot(0);
 		if (instillerStack.isOf(Blocks.PLAYER_HEAD.asItem())) {
 			GameProfile gameProfile = getSkullOwner(instillerStack);
-			if (gameProfile == null) {
+			if (gameProfile == null || SpectrumCommon.minecraftServer == null) {
 				return false;
 			}
 			
@@ -84,14 +84,8 @@ public class HardcorePlayerRevivalRecipe extends SpiritInstillerRecipe {
 	
 	@Nullable
 	private GameProfile getSkullOwner(ItemStack instillerStack) {
-		if (instillerStack.contains(DataComponentTypes.PROFILE)) {
-			return instillerStack.get(DataComponentTypes.PROFILE).gameProfile();
-		}
-		// TODO - Check for legacy Custom Data?
-		//			} else if (nbtCompound.contains("SkullOwner", NbtElement.STRING_TYPE) && !StringUtils.isBlank(nbtCompound.getString("SkullOwner"))) {
-		//				gameProfile = new GameProfile(null, nbtCompound.getString("SkullOwner"));
-		//			}
-		return null;
+		var profile = instillerStack.get(DataComponentTypes.PROFILE);
+		return profile == null ? null : profile.gameProfile();
 	}
 	
 }

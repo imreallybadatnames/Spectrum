@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe.pedestal.dynamic;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.blocks.pedestal.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import de.dafuqs.spectrum.registries.*;
@@ -19,16 +18,13 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 	public static final float ENCHANTED_STAR_CANDY_CHANCE = 0.02F;
 	
 	public StarCandyRecipe() {
-		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, 3, 3, generateInputs(), Map.of(BuiltinGemstoneColor.YELLOW, 1), SpectrumItems.STAR_CANDY.getDefaultStack(), 1.0F, 20, false, false);
+		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, 3, 3, generateInputs(), List.of(new GemstoneColorInput(BuiltinGemstoneColor.YELLOW, 1)), SpectrumItems.STAR_CANDY.getDefaultStack(), 1.0F, 20, false, false);
 	}
 	
 	@Override
-	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
-		if (inv instanceof PedestalBlockEntity pedestal) {
-			if (pedestal.getWorld().random.nextFloat() < ENCHANTED_STAR_CANDY_CHANCE) {
-				return SpectrumItems.ENCHANTED_STAR_CANDY.getDefaultStack();
-			}
-		}
+	public ItemStack craft(CraftingRecipeInput inv, RegistryWrapper.WrapperLookup drm) {
+		if (inv.getWorld().random.nextFloat() < ENCHANTED_STAR_CANDY_CHANCE)
+			return SpectrumItems.ENCHANTED_STAR_CANDY.getDefaultStack();
 		return this.output.copy();
 	}
 	
@@ -42,7 +38,8 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 				IngredientStack.ofItems(1, SpectrumItems.STARDUST),
 				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS),
 				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS),
-				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS));
+				IngredientStack.ofItems(1, SpectrumItems.AMARANTH_GRAINS)
+		);
 	}
 	
 	@Override

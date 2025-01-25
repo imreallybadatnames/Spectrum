@@ -209,7 +209,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		
 		Inventories.readNbt(nbt, this.inventory, registryLookup);
 		
-		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"), storage ->
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage")).ifPresent(storage ->
 				this.inkStorage = new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.craftingTime = nbt.getShort("CraftingTime");
 		this.craftingTimeTotal = nbt.getShort("CraftingTimeTotal");

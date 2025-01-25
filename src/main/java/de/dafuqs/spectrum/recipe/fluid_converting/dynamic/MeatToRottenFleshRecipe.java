@@ -22,7 +22,7 @@ public class MeatToRottenFleshRecipe extends DragonrotConvertingRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.DRAGONROT_MEAT_TO_ROTTEN_FLESH;
+		return SpectrumRecipeSerializers.DRAGONROT_MEAT_TO_ROTTEN_FLESH;
 	}
 	
 }

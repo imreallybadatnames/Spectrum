@@ -115,7 +115,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		if (!this.readLootTable(nbt)) {
 			Inventories.readNbt(nbt, this.inventory, registryLookup);
 		}
-		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"), storage ->
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage")).ifPresent(storage ->
 				this.inkStorage = new TotalCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("SelectedColor", NbtElement.STRING_TYPE)) {

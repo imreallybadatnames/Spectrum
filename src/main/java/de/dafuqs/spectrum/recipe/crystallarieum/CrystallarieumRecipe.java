@@ -91,7 +91,7 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 	@Override
 	public ItemStack getResult(RegistryWrapper.WrapperLookup registryLookup) {
 		List<BlockState> states = getGrowthStages();
-		return states.get(states.size() - 1).getBlock().asItem().getDefaultStack();
+		return states.getLast().getBlock().asItem().getDefaultStack();
 	}
 	
 	@Override

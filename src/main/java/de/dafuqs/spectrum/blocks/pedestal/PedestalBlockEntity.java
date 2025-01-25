@@ -58,16 +58,17 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 	protected UUID ownerUUID;
 	protected PedestalVariant pedestalVariant;
 	protected DefaultedList<ItemStack> inventory;
-	protected CraftingRecipeInput recipeInput;
 	protected boolean shouldCraft;
 	protected float storedXP;
 	protected int craftingTime;
 	protected int craftingTimeTotal;
-	public @Nullable RecipeEntry<?> currentRecipe;
 	protected PedestalRecipeTier cachedMaxPedestalTier;
 	protected long cachedMaxPedestalTierTick;
 	protected UpgradeHolder upgrades;
 	protected boolean inventoryChanged;
+	
+	public CraftingRecipeInput recipeInput;
+	public @Nullable RecipeEntry<?> currentRecipe;
 	
 	protected final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
 		@Override

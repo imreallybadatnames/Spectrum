@@ -173,7 +173,7 @@ public class CrystallarieumBlockEntity extends InWorldInteractionBlockEntity imp
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
 		
-		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"),storage ->
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage")).ifPresent(storage ->
 				this.inkStorage = new IndividualCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		if (nbt.contains("Looper", NbtElement.COMPOUND_TYPE)) {
 			this.tickLooper = TickLooper.readNbt(nbt.getCompound("Looper"));

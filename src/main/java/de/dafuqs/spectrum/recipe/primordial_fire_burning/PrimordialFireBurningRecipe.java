@@ -23,8 +23,7 @@ import java.util.*;
 public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("lategame/collect_doombloom_seed");
-	
-	private static AutoCraftingInventory AUTO_INVENTORY = new AutoCraftingInventory(1, 1);
+	private static final AutoCraftingInventory AUTO_INVENTORY = new AutoCraftingInventory(1, 1);
 	
 	protected final Ingredient input;
 	protected final ItemStack output;
@@ -70,7 +69,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -92,7 +91,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 	
 	public static PrimordialFireBurningRecipe getRecipeFor(@NotNull World world, ItemStack stack) {
 		AUTO_INVENTORY.setInputInventory(Collections.singletonList(stack));
-		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).orElse(null).value();
+		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).map(RecipeEntry::value).orElse(null);
 	}
 	
 	public static boolean processBlock(World world, BlockPos pos, BlockState state) {

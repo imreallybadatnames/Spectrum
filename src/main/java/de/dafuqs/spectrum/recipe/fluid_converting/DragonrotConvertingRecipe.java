@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class DragonrotConvertingRecipe extends FluidConvertingRecipe {
-
+	
     public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("hidden/interact_with_dragonrot");
     private static final Set<Item> outputItems = new HashSet<>();
     
@@ -30,7 +30,7 @@ public class DragonrotConvertingRecipe extends FluidConvertingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SpectrumRecipeTypes.DRAGONROT_CONVERTING_SERIALIZER;
+        return SpectrumRecipeSerializers.DRAGONROT_CONVERTING_SERIALIZER;
     }
 
     @Override

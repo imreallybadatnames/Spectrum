@@ -50,8 +50,8 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final FusionShrineRecipeWorldEffect finishWorldEffect;
 	@Nullable
 	protected final Text description;
-	// copy all nbt data from the first stack in the ingredients to the output stack
-	protected final boolean copyNbt;
+	// copy all components from the first stack in the ingredients to the output stack
+	protected final boolean copyComponents;
 	
 	public FusionShrineRecipe(
 		String group,
@@ -64,7 +64,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		int craftingTime,
 		boolean yieldUpgradesDisabled,
 		boolean playCraftingFinishedEffects,
-		boolean copyNbt,
+		boolean copyComponents,
 		List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates,
 		@NotNull FusionShrineRecipeWorldEffect startWorldEffect,
 		@NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects,
@@ -86,7 +86,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		this.duringWorldEffects = duringWorldEffects;
 		this.finishWorldEffect = finishWorldEffect;
 		this.description = description;
-		this.copyNbt = copyNbt;
+		this.copyComponents = copyComponents;
 
 		registerInToastManager(getType(), this);
 	}
@@ -259,7 +259,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 			}
 		}
 
-		if (this.copyNbt) {
+		if (this.copyComponents) {
 			output = copyNbt(firstStack, output);
 		}
 		

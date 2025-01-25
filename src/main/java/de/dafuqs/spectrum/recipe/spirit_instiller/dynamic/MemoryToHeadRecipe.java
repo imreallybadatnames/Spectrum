@@ -53,7 +53,7 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			 */
 			Optional<Entity> optionalEntity = MemoryBlockEntity.hatchEntity(world, pos, spiritInstillerBlockEntity.getStack(0));
 			if (optionalEntity.isPresent()) {
-				if (optionalEntity.get() instanceof LivingEntity livingEntity) {
+				if (optionalEntity.get() instanceof LivingEntity livingEntity && world != null) {
 					LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(livingEntity.getLootTable());
 					
 					LootContextParameterSet.Builder builder = new LootContextParameterSet.Builder(world)

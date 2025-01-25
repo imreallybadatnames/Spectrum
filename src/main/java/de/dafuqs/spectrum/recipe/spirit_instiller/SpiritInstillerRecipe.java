@@ -29,7 +29,6 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 	public static final int FIRST_INGREDIENT = 1;
 	public static final int SECOND_INGREDIENT = 2;
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/build_spirit_instiller_structure");
-	;
 	
 	protected final IngredientStack centerIngredient;
 	protected final IngredientStack bowlIngredient1;
@@ -96,6 +95,7 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 			Upgradeable.UpgradeHolder upgradeHolder = spiritInstillerBlockEntity.getUpgradeHolder();
 			World world = spiritInstillerBlockEntity.getWorld();
+			if (world == null) return ItemStack.EMPTY;
 			BlockPos pos = spiritInstillerBlockEntity.getPos();
 			
 			resultStack = getResult(drm).copy();

@@ -29,6 +29,10 @@ public class IngredientStack implements CustomIngredient {
 		this.count = count;
 	}
 	
+	public IngredientStack(Ingredient ingredient) {
+		this(ingredient, null, 1);
+	}
+	
 	public int getCount() {
 		return count;
 	}
@@ -37,12 +41,20 @@ public class IngredientStack implements CustomIngredient {
 		return ingredient;
 	}
 	
+	public static IngredientStack of(Ingredient ingredient) {
+		return new IngredientStack(ingredient);
+	}
+	
 	public static IngredientStack ofItems(Item item) {
-		return new IngredientStack(Ingredient.ofItems(item), null, 1);
+		return new IngredientStack(Ingredient.ofItems(item));
 	}
 	
 	public static IngredientStack ofItems(int count, Item item) {
 		return new IngredientStack(Ingredient.ofItems(item), null, count);
+	}
+	
+	public static IngredientStack ofTag(TagKey<Item> tag) {
+		return new IngredientStack(Ingredient.fromTag(tag));
 	}
 	
 	public static IngredientStack ofTag(TagKey<Item> tag, int count) {

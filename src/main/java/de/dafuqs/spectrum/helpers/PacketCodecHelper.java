@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.helpers;
 
 import com.mojang.datafixers.util.*;
 import io.netty.buffer.*;
+import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.encoding.*;
 import net.minecraft.registry.*;
@@ -14,6 +15,7 @@ public class PacketCodecHelper {
 	
 	public static final PacketCodec<ByteBuf, Vec3i> VEC3I = PacketCodec.tuple(PacketCodecs.VAR_INT, Vec3i::getX, PacketCodecs.VAR_INT, Vec3i::getY, PacketCodecs.VAR_INT, Vec3i::getZ, Vec3i::new);
 	public static final PacketCodec<ByteBuf, Vec3d> VEC3D = PacketCodec.tuple(PacketCodecs.DOUBLE, Vec3d::getX, PacketCodecs.DOUBLE, Vec3d::getY, PacketCodecs.DOUBLE, Vec3d::getZ, Vec3d::new);
+	public static final PacketCodec<RegistryByteBuf, RegistryWrapper.WrapperLookup> LOOKUP = PacketCodec.ofStatic((buf, value) -> {}, RegistryByteBuf::getRegistryManager);
 	
 	/**
 	 * Use this if you can't use PacketCodecs.registryValue, such as when it isn't a RegistryByteBuf,

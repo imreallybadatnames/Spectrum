@@ -24,7 +24,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/modular_explosives");
 	
 	public ExplosionModificationRecipe() {
-		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), Map.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
+		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), List.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
 	}
 	
 	private static List<IngredientStack> collectIngredients() {
@@ -39,7 +39,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public boolean matches(RecipeInput inventory, World world) {
+	public boolean matches(CraftingRecipeInput inventory, World world) {
 		ItemStack nonModStack = validateGridAndFindModularExplosiveStack(inventory);
 		if (!(nonModStack.getItem() instanceof ModularExplosionProvider modularExplosionProvider)) {
 			return false;
@@ -91,7 +91,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
+	public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
 		ItemStack output = validateGridAndFindModularExplosiveStack(inventory).copy();
 		
 		Pair<List<ExplosionArchetype>, List<ExplosionModifier>> pair = findArchetypeAndModifiers(inventory);

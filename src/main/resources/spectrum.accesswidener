@@ -7,6 +7,7 @@ accessible class net/minecraft/client/render/BackgroundRenderer$FogData
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible class net/minecraft/loot/function/ApplyBonusLootFunction$Formula
 accessible class net/minecraft/structure/pool/StructurePoolBasedGenerator$StructurePoolGenerator
+accessible class net/minecraft/registry/RegistryOps$CachedRegistryInfoGetter
 accessible class net/minecraft/world/biome/Biome$Weather
 accessible class net/minecraft/world/SpawnDensityCapper$DensityCap
 accessible field net/minecraft/loot/LootTable pools Ljava/util/List;
