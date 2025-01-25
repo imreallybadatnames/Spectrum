@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -11,11 +11,7 @@ import net.minecraft.util.dynamic.*;
 
 import java.util.*;
 
-public record WrappedPresentComponent(
-		boolean wrapped,
-		PresentBlock.WrappingPaper variant,
-		Map<DyeColor, Integer> colors
-) {
+public record WrappedPresentComponent(boolean wrapped, PresentBlock.WrappingPaper variant, Map<DyeColor, Integer> colors) {
 	
 	public static final WrappedPresentComponent DEFAULT = new WrappedPresentComponent(false, PresentBlock.WrappingPaper.RED, Map.of());
 	
@@ -31,5 +27,13 @@ public record WrappedPresentComponent(
 			PacketCodecs.map(HashMap::new, DyeColor.PACKET_CODEC, PacketCodecs.VAR_INT), WrappedPresentComponent::colors,
 			WrappedPresentComponent::new
 	);
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof WrappedPresentComponent(boolean oWrapped, PresentBlock.WrappingPaper oVariant, Map<DyeColor, Integer> oColors)
+				&& oWrapped == wrapped
+				&& oVariant == variant
+				&& oColors.equals(colors);
+	}
 	
 }

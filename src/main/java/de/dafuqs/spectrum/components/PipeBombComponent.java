@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -19,5 +19,12 @@ public record PipeBombComponent(long timestamp, boolean isArmed) {
 			PacketCodecs.BOOL, c -> c.isArmed,
 			PipeBombComponent::new
 	);
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof PipeBombComponent(long oTimestamp, boolean oIsArmed)
+				&& oTimestamp == timestamp
+				&& oIsArmed == isArmed;
+	}
 	
 }

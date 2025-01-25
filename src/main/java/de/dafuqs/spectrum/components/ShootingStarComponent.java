@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -19,5 +19,12 @@ public record ShootingStarComponent(int remainingHits, boolean hardened) {
 			PacketCodecs.BOOL, c -> c.hardened,
 			ShootingStarComponent::new
 	);
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof ShootingStarComponent(int oRemainingHits, boolean oHardened)
+				&& oRemainingHits == remainingHits
+				&& oHardened == hardened;
+	}
 	
 }

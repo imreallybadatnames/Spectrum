@@ -43,6 +43,10 @@ public class CodecHelper {
 		return codec.decode(NbtOps.INSTANCE, nbt).result().map(Pair::getFirst);
 	}
 	
+	public static <T> T fromNbt(Codec<T> codec, NbtElement nbt, T defaultValue) {
+		return fromNbt(codec, nbt).orElse(defaultValue);
+	}
+	
 	public static <T> void toNbt(Codec<T> codec, T value, Consumer<? super NbtElement> ifValid) {
 		codec.encodeStart(NbtOps.INSTANCE, value).result().ifPresent(ifValid);
 	}

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.predicate.item;
 
 import com.mojang.serialization.*;
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.*;
 import net.minecraft.item.*;

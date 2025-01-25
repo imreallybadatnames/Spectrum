@@ -1,21 +1,22 @@
 package de.dafuqs.spectrum.api.energy;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import net.minecraft.nbt.*;
-
-import java.util.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
 
 public record InkCost(InkColor color, long cost) {
 	
-	public void writeNbt(NbtCompound nbt) {
-		nbt.putString("InkColor", color.getID().toString());
-		nbt.putLong("InkCost", cost);
-	}
+	public static final Codec<InkCost> CODEC = RecordCodecBuilder.create(i -> i.group(
+			InkColor.CODEC.fieldOf("color").forGetter(InkCost::color),
+			Codec.LONG.fieldOf("cost").forGetter(InkCost::cost)
+	).apply(i, InkCost::new));
 	
-	public static InkCost fromNbt(NbtCompound nbt) {
-		Optional<InkColor> inkColor = InkColor.ofIdString(nbt.getString("InkColor"));
-		long inkCost = nbt.getLong("InkCost");
-		return new InkCost(inkColor.orElse(InkColors.CYAN), inkCost);
-	}
+	public static final PacketCodec<ByteBuf, InkCost> PACKET_CODEC = PacketCodec.tuple(
+			InkColor.PACKET_CODEC, InkCost::color,
+			PacketCodecs.VAR_LONG, InkCost::cost,
+			InkCost::new
+	);
 	
 }

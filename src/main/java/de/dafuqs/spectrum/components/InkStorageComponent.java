@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -27,6 +27,14 @@ public record InkStorageComponent(long maxEnergyTotal, long maxPerColor, Map<Ink
 	
 	public InkStorageComponent(InkStorage storage) {
 		this(storage.getMaxTotal(), storage.getMaxPerColor(), storage.getEnergy());
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof InkStorageComponent(long oMaxEnergyTotal, long oMaxPerColor, Map<InkColor, Long> oStoredEnergy)
+				&& oMaxEnergyTotal == maxEnergyTotal
+				&& oMaxEnergyTotal == maxPerColor
+				&& oStoredEnergy.equals(storedEnergy);
 	}
 	
 }

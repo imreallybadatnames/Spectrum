@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -24,5 +24,13 @@ public record WorkstaffComponent(boolean canTill, boolean canShoot, int fortuneL
 			c -> c.fortuneLevel,
 			WorkstaffComponent::new
 	);
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof WorkstaffComponent(boolean oCanTill, boolean oCanShoot, int oFortuneLevel)
+				&& oCanTill == canTill
+				&& oCanShoot == canShoot
+				&& oFortuneLevel == fortuneLevel;
+	}
 	
 }

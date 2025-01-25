@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -29,6 +29,13 @@ public record InfusedBeverageComponent(String variant, int color) implements Too
 	@Override
 	public void appendTooltip(Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
 		tooltip.accept(Text.translatable("item.spectrum.infused_beverage.tooltip.variant." + variant).formatted(Formatting.YELLOW));
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof InfusedBeverageComponent(String oVariant, int oColor)
+				&& oVariant.equals(variant)
+				&& oColor == color;
 	}
 	
 }

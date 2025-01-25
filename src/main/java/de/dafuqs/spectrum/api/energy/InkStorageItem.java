@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.api.energy;
 
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 

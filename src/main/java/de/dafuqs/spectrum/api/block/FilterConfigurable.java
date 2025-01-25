@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.api.block;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.slots.*;
 import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -36,26 +37,15 @@ public interface FilterConfigurable {
     }
 
     static void writeFilterNbt(NbtCompound tag, List<ItemVariant> filterItems) {
-        for (int i = 0; i < filterItems.size(); i++) {
-			tag.put("FilterStack" + i, filterItems.get(i).toNbt());
-        }
+        for (int i = 0; i < filterItems.size(); i++)
+			CodecHelper.writeNbt(tag, "FilterStack" + i, ItemVariant.CODEC, filterItems.get(i));
     }
 
     static void readFilterNbt(NbtCompound tag, List<ItemVariant> filterItems) {
         for (int i = 0; i < filterItems.size(); i++) {
-            if (tag.contains("FilterStack" + i)) {
-				filterItems.set(i, ItemVariant.fromNbt(tag.getCompound("FilterStack" + i)));
-            }
+            if (tag.contains("FilterStack" + i))
+				filterItems.set(i, CodecHelper.fromNbt(ItemVariant.CODEC, tag.get("FilterStack" + i), null));
         }
-    }
-
-    static Inventory getFilterInventoryFromPacketClicker(PacketByteBuf packetByteBuf, ShadowSlotClicker clicker) {
-        int size = packetByteBuf.readInt();
-        Inventory inventory = new FilterInventory(clicker, size);
-        for (int i = 0; i < size; i++) {
-            inventory.setStack(i, packetByteBuf.readItemStack());
-        }
-        return inventory;
     }
 
     static Inventory getFilterInventoryFromDataClicker(ExtendedData data, ShadowSlotClicker clicker) {
@@ -67,25 +57,9 @@ public interface FilterConfigurable {
         return inventory;
     }
 
-    static Pair<Inventory, Integer[]> getFilterInventoryWithRowDataFromPacket(int syncId, @NotNull PlayerInventory playerInventory, PacketByteBuf packetByteBuf, @NotNull ScreenHandler thisHandler) {
-        var inventory = getFilterInventoryFromPacketHandler(syncId, playerInventory, packetByteBuf, thisHandler);
-        var arr = new Integer[]{
-                packetByteBuf.readInt(),
-                packetByteBuf.readInt(),
-                packetByteBuf.readInt()
-        };
-
-        return new Pair<>(inventory, arr);
-    }
-
     static Inventory getFilterInventoryFromExtendedData(int syncId, @NotNull PlayerInventory playerInventory, ExtendedData data, @NotNull ScreenHandler handler) {
         final var clicker = new ShadowSlotClicker.FromHandler(handler, playerInventory.player, syncId);
         return getFilterInventoryFromDataClicker(data, clicker);
-    }
-
-    static Inventory getFilterInventoryFromPacketHandler(int syncId, @NotNull PlayerInventory playerInventory, PacketByteBuf packetByteBuf, @NotNull ScreenHandler thisHandler) {
-        final var clicker = new ShadowSlotClicker.FromHandler(thisHandler, playerInventory.player, syncId);
-        return getFilterInventoryFromPacketClicker(packetByteBuf, clicker);
     }
 
     static Inventory getFilterInventoryFromItemsClicker(List<ItemVariant> items, ShadowSlotClicker clicker) {
@@ -145,11 +119,6 @@ public interface FilterConfigurable {
 
         public FilterInventory(@NotNull FilterConfigurable.ShadowSlotClicker slotClicker, int size) {
             super(size);
-            this.clicker = slotClicker;
-        }
-
-        public FilterInventory(@NotNull FilterConfigurable.ShadowSlotClicker slotClicker, ItemStack... items) {
-            super(items);
             this.clicker = slotClicker;
         }
 

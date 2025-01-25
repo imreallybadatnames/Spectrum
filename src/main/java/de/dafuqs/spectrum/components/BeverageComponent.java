@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -40,5 +40,13 @@ public record BeverageComponent(long daysAged, int alcoholPercent, float thickne
 		} else {
 			tooltip.accept(Text.translatable("item.spectrum.infused_beverage.tooltip.age", daysAged, alcoholPercent).formatted(Formatting.GRAY));
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof BeverageComponent(long oDaysAged, int oAlcoholPercent, float oThickness)
+				&& oDaysAged == daysAged
+				&& oAlcoholPercent == alcoholPercent
+				&& oThickness == thickness;
 	}
 }

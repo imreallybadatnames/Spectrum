@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.items.food.beverages;
 
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.*;
 import net.minecraft.component.type.*;

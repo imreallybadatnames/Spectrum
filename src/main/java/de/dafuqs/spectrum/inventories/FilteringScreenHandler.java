@@ -2,30 +2,23 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.inventories.slots.*;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class FilteringScreenHandler extends ScreenHandler {
 
 	protected final World world;
 	protected FilterConfigurable filterConfigurable;
 	protected final Inventory filterInventory;
 	protected final int rows, slotsPerRow, drawnSlots;
-
-	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf packetByteBuf) {
-		this(SpectrumScreenHandlerTypes.FILTERING, syncId, playerInventory,
-				(handler) -> FilterConfigurable.getFilterInventoryWithRowDataFromPacket(syncId, playerInventory, packetByteBuf, handler));
-	}
 
 	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable filterConfigurable) {
 		this(SpectrumScreenHandlerTypes.FILTERING, syncId, playerInventory,
@@ -98,10 +91,6 @@ public class FilteringScreenHandler extends ScreenHandler {
 	@Override
 	public void onClosed(PlayerEntity player) {
 		super.onClosed(player);
-	}
-
-	public FilterConfigurable getFilterConfigurable() {
-		return this.filterConfigurable;
 	}
 
 	protected class FilterSlot extends ShadowSlot {

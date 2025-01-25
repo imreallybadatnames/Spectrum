@@ -1,15 +1,18 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import io.netty.buffer.*;
+import net.minecraft.item.*;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.text.*;
 
 import java.util.*;
+import java.util.function.*;
 
-public record OptionalInkColorComponent(Optional<InkColor> color) {
+public record OptionalInkColorComponent(Optional<InkColor> color) implements TooltipAppender {
 	
 	public static final OptionalInkColorComponent DEFAULT = new OptionalInkColorComponent(Optional.empty());
 	
@@ -29,14 +32,14 @@ public record OptionalInkColorComponent(Optional<InkColor> color) {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		} else if (obj instanceof OptionalInkColorComponent otherComponent) {
-			return this.color.equals(otherComponent.color);
-		}
-		return false;
+	public void appendTooltip(Item.TooltipContext context, Consumer<Text> accept, TooltipType type) {
+		color.map(InkColor::getColoredInkName).ifPresent(accept);
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof OptionalInkColorComponent(Optional<InkColor> oColor)
+				&& oColor.equals(color);
+	}
 	
 }

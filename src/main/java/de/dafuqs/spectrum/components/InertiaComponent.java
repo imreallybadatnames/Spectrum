@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -23,5 +23,12 @@ public record InertiaComponent(Block lastMined, long count) {
 			InertiaComponent::count,
 			InertiaComponent::new
 	);
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof InertiaComponent(Block oLastMined, long oCount)
+				&& oLastMined.equals(lastMined)
+				&& oCount == count;
+	}
 	
 }

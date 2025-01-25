@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.component_type;
+package de.dafuqs.spectrum.components;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
@@ -32,6 +32,13 @@ public record JadeWineComponent(float bloominess, boolean sweetened) implements 
 			tooltip.accept(Text.translatable("item.spectrum.jade_wine.tooltip.bloominess_sweetened", bloominess).formatted(Formatting.GRAY));
 		else
 			tooltip.accept(Text.translatable("item.spectrum.jade_wine.tooltip.bloominess", bloominess).formatted(Formatting.GRAY));
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o instanceof JadeWineComponent(float oBloominess, boolean oSweetened)
+				&& oBloominess == bloominess
+				&& oSweetened == sweetened;
 	}
 	
 }

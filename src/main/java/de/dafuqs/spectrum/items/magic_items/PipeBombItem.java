@@ -2,11 +2,11 @@ package de.dafuqs.spectrum.items.magic_items;
 
 import com.mojang.authlib.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.sound.*;
-import net.fabricmc.api.*;
 import net.fabricmc.api.Environment;
+import net.fabricmc.api.*;
 import net.minecraft.client.*;
 import net.minecraft.component.*;
 import net.minecraft.component.type.*;

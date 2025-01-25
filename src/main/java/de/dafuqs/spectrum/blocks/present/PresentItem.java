@@ -1,19 +1,17 @@
 package de.dafuqs.spectrum.blocks.present;
 
-import com.mojang.authlib.GameProfile;
-import de.dafuqs.spectrum.items.bundles.PlaceableBundleItem;
-import de.dafuqs.spectrum.component_type.WrappedPresentComponent;
+import com.mojang.authlib.*;
+import de.dafuqs.spectrum.components.*;
+import de.dafuqs.spectrum.items.bundles.*;
 import de.dafuqs.spectrum.items.tooltip.*;
-import de.dafuqs.spectrum.registries.SpectrumDataComponentTypes;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
-import net.minecraft.component.type.ProfileComponent;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
