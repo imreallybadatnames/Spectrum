@@ -11,6 +11,7 @@ import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.tag.*;
+import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
@@ -41,16 +42,16 @@ public abstract class SpectrumFishingRodItem extends FishingRodItem {
 			user.emitGameEvent(GameEvent.ITEM_INTERACT_FINISH);
 		} else {
 			world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-			if (!world.isClient) {
+			if (world instanceof ServerWorld serverWorld) {
 				var drm = world.getRegistryManager();
-				int luckOfTheSeaLevel = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.LUCK_OF_THE_SEA, itemStack);
-				int lureLevel = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.LURE, itemStack);
+				int luckBonus = EnchantmentHelper.getFishingLuckBonus(serverWorld, itemStack, user);
+				int waitTimeReductionTicks = (int)(EnchantmentHelper.getFishingTimeReduction(serverWorld, itemStack, user) * 20.0F);
 				int exuberanceLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.EXUBERANCE, itemStack);
 				int bigCatchLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.BIG_CATCH, itemStack);
 				int serendipityReelLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.SERENDIPITY_REEL, itemStack);
 				boolean inventoryInsertion = SpectrumEnchantmentHelper.hasEnchantment(drm, SpectrumEnchantments.INVENTORY_INSERTION, itemStack);
 				boolean shouldSmeltDrops = shouldSmeltDrops(itemStack);
-				spawnBobber(user, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, shouldSmeltDrops);
+				spawnBobber(user, world, luckBonus, waitTimeReductionTicks, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, shouldSmeltDrops);
 			}
 			
 			user.incrementStat(Stats.USED.getOrCreateStat(this));

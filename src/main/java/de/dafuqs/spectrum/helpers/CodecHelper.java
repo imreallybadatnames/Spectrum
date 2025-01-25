@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.helpers;
 
+import com.google.gson.*;
 import com.mojang.datafixers.util.*;
 import com.mojang.serialization.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
@@ -38,13 +39,25 @@ public class CodecHelper {
 		return Codec.withAlternative(codec.listOf(), codec, List::of);
 	}
 	
+	public static <T, D> Optional<T> from(DynamicOps<D> ops, Codec<T> codec, D elem) {
+		if (elem == null) return Optional.empty();
+		return codec.decode(ops, elem).result().map(Pair::getFirst);
+	}
+	
 	public static <T> Optional<T> fromNbt(Codec<T> codec, NbtElement nbt) {
-		if (nbt == null) return Optional.empty();
-		return codec.decode(NbtOps.INSTANCE, nbt).result().map(Pair::getFirst);
+		return from(NbtOps.INSTANCE, codec, nbt);
 	}
 	
 	public static <T> T fromNbt(Codec<T> codec, NbtElement nbt, T defaultValue) {
 		return fromNbt(codec, nbt).orElse(defaultValue);
+	}
+	
+	public static <T> Optional<T> fromJson(Codec<T> codec, JsonElement json) {
+		return from(JsonOps.INSTANCE, codec, json);
+	}
+	
+	public static <T> T fromJson(Codec<T> codec, JsonElement json, T defaultValue) {
+		return fromJson(codec, json).orElse(defaultValue);
 	}
 	
 	public static <T> void toNbt(Codec<T> codec, T value, Consumer<? super NbtElement> ifValid) {
