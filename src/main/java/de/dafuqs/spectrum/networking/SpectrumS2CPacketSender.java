@@ -500,4 +500,14 @@ public class SpectrumS2CPacketSender {
 			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NETWORK_EDGE_SYNC, buf);
 		}
 	}
+	
+	public static void syncPastelNetworkRemoved(ServerPastelNetwork network) {
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeUuid(network.getUUID());
+		
+		for (ServerPlayerEntity player : PlayerLookup.all(network.getWorld().getServer())) {
+			ServerPlayNetworking.send(player, SpectrumS2CPackets.PASTEL_NETWORK_REMOVED, buf);
+		}
+	}
+	
 }

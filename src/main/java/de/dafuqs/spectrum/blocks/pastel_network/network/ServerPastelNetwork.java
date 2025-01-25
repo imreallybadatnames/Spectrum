@@ -193,7 +193,7 @@ public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 		}
 	}
 	
-	public void incorporate(ServerPastelNetwork networkToIncorporate, PastelNodeBlockEntity node, PastelNodeBlockEntity otherNode) {
+	public void incorporate(ServerPastelNetwork networkToIncorporate, BlockPos trackingPos) {
 		for (Map.Entry<PastelNodeType, Set<PastelNodeBlockEntity>> nodesToIncorporate : networkToIncorporate.getLoadedNodes().entrySet()) {
 			PastelNodeType type = nodesToIncorporate.getKey();
 			for (PastelNodeBlockEntity nodeToIncorporate : nodesToIncorporate.getValue()) {
@@ -210,23 +210,22 @@ public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 		networkToIncorporate.graph.edgeSet().forEach(edge -> {
 			graph.addEdge(networkToIncorporate.getGraph().getEdgeSource(edge), networkToIncorporate.getGraph().getEdgeTarget(edge));
 		});
-		addNode(node);
-		addNode(otherNode);
-		addEdge(node, otherNode);
-		
 		this.transmissionLogic.invalidateCache();
+		
+		Pastel.getServerInstance().removeNetwork(networkToIncorporate.getUUID());
+		SpectrumS2CPacketSender.syncPastelNetworkEdges(this, trackingPos);
 	}
 	
 	// Call ServerPastelNetworkManager.removeNode() where possible!
 	// that one does cleanup of networks with no entries
 	// Else we might get dangling empty networks
 	@Deprecated()
-	protected boolean removeNode(PastelNodeBlockEntity node, NodeRemovalReason reason) {
+	boolean removeNode(PastelNodeBlockEntity node, NodeRemovalReason reason) {
 		if (!graph.containsVertex(node.getPos())) {
 			return false;
 		}
 		
-		// delete the now removed node from this networks graph - IF IT WASN'T UNLOADED
+		// delete the now removed node from this network graph - IF IT WASN'T UNLOADED
 		if (reason != NodeRemovalReason.UNLOADED)
 			graph.removeVertex(node.getPos());
 		
@@ -365,11 +364,20 @@ public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 		return nbt;
 	}
 	
-	public static ServerPastelNetwork fromNbt(NbtCompound nbt) {
+	public static Optional<ServerPastelNetwork> fromNbt(NbtCompound nbt) {
 		UUID uuid = nbt.getUuid("UUID");
 		ServerWorld world = SpectrumCommon.minecraftServer.getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(nbt.getString("World"))));
 		ServerPastelNetwork network = new ServerPastelNetwork(world, uuid);
 		network.graph = graphFromNbt(nbt.getCompound("Graph"));
+		
+		if (network.graph.edgeSet().isEmpty()) {
+			SpectrumCommon.logError("Tried to load a Pastel Network without any edges");
+			return Optional.empty();
+		}
+		if (network.graph.vertexSet().isEmpty()) {
+			SpectrumCommon.logError("Tried to load a Pastel Network without any vertices");
+			return Optional.empty();
+		}
 		
 		if (nbt.contains("Looper", NbtElement.COMPOUND_TYPE)) {
 			network.transferLooper.readNbt(nbt.getCompound("Looper"));
@@ -382,6 +390,6 @@ public class ServerPastelNetwork extends PastelNetwork<ServerWorld> {
 			network.addTransmission(transmission, delay);
 		}
 		
-		return network;
+		return Optional.of(network);
 	}
 }

@@ -9,5 +9,7 @@ public interface PastelNetworkManager<W extends World, N extends PastelNetwork<W
 	N createNetwork(W world, UUID uuid);
 	
 	Optional<? extends N> getNetwork(UUID uuid);
-
+	
+	void removeNetwork(UUID uuid);
+	
 }

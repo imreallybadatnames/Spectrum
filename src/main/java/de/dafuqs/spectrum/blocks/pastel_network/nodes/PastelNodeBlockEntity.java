@@ -435,10 +435,6 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		}
 	}
 
-	public boolean canConnect(PastelNodeBlockEntity node) {
-		return this.pos.isWithinDistance(node.pos, RANGE);
-	}
-
 	public PastelNodeType getNodeType() {
 		if (this.getCachedState().getBlock() instanceof PastelNodeBlock pastelNodeBlock) {
 			return pastelNodeBlock.pastelNodeType;
@@ -749,7 +745,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		if (otherNode == this) {
 			return false;
 		}
-		if (!otherNode.canConnect(this))
+		if (!canConnect(this, otherNode))
 			return false;
 		
 		boolean success;
@@ -766,6 +762,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		}
 		
 		return success;
+	}
+	
+	public boolean canConnect(PastelNodeBlockEntity first, PastelNodeBlockEntity second) {
+		return first.getPos().isWithinDistance(second.getPos(), RANGE);
 	}
 	
 	public Optional<ServerPastelNetwork> getServerNetwork() {

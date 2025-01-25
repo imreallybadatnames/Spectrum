@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.client.networking.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.client.render.*;
+import net.minecraft.client.world.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.map.*;
@@ -547,17 +548,25 @@ public class SpectrumS2CPacketReceiver {
 		}))));
 		
 		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.PASTEL_NETWORK_EDGE_SYNC, (client, handler, buf, responseSender) -> {
-			var uuid = buf.readUuid();
+			UUID uuid = buf.readUuid();
 			NbtCompound nbt = buf.readNbt();
 			
 			client.execute(() -> {
-				Optional<? extends PastelNetwork> network = Pastel.getInstance(true).getNetwork(uuid);
+				Optional<? extends PastelNetwork<ClientWorld>> network = Pastel.getClientInstance().getNetwork(uuid);
 				if (network.isPresent()) {
 					network.get().setGraph(PastelNetwork.graphFromNbt(nbt));
 				} else {
-					PastelNetwork pn = Pastel.getClientInstance().createNetwork(client.world, uuid);
+					PastelNetwork<ClientWorld> pn = Pastel.getClientInstance().createNetwork(client.world, uuid);
 					pn.setGraph(PastelNetwork.graphFromNbt(nbt));
 				}
+			});
+		});
+		
+		ClientPlayNetworking.registerGlobalReceiver(SpectrumS2CPackets.PASTEL_NETWORK_REMOVED, (client, handler, buf, responseSender) -> {
+			UUID uuid = buf.readUuid();
+			
+			client.execute(() -> {
+				Pastel.getClientInstance().removeNetwork(uuid);
 			});
 		});
     }
