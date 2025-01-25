@@ -430,7 +430,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 	
 	public void onBroken() {
-		if (!world.isClient) {
+		if (world != null && !world.isClient) {
 			Pastel.getServerInstance().removeNode(this, NodeRemovalReason.BROKEN);
 		}
 	}
