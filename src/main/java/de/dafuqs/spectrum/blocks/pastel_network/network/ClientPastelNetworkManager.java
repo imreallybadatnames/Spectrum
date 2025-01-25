@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.client.world.*;
+import net.minecraft.entity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import org.jgrapht.*;
@@ -17,6 +18,8 @@ import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class ClientPastelNetworkManager implements PastelNetworkManager<ClientWorld, PastelNetwork<ClientWorld>>, Clearable {
+	
+	protected static final int MAX_RENDER_DISTANCE_SQUARED = 48 * 48;
 	
 	private final List<PastelNetwork<ClientWorld>> networks = new ArrayList<>();
 	
@@ -34,6 +37,13 @@ public class ClientPastelNetworkManager implements PastelNetworkManager<ClientWo
 	
 	public void renderLines(WorldRenderContext context) {
 		MinecraftClient client = MinecraftClient.getInstance();
+		
+		Entity cameraEntity = client.cameraEntity;
+		if (cameraEntity == null) {
+			return;
+		}
+		BlockPos cameraEntityPos = cameraEntity.getBlockPos();
+		
 		for (PastelNetwork<ClientWorld> network : this.networks) {
 			if (network.getWorld().getDimension() != context.world().getDimension()) continue;
 			Graph<BlockPos, DefaultEdge> graph = network.getGraph();
@@ -43,6 +53,11 @@ public class ClientPastelNetworkManager implements PastelNetworkManager<ClientWo
 			for (DefaultEdge edge : graph.edgeSet()) {
 				BlockPos source = graph.getEdgeSource(edge);
 				BlockPos target = graph.getEdgeTarget(edge);
+				
+				// do not render lines that are far away to save a few fps
+				if (cameraEntityPos.getSquaredDistance(source) > MAX_RENDER_DISTANCE_SQUARED && cameraEntityPos.getSquaredDistance(target) > MAX_RENDER_DISTANCE_SQUARED) {
+					continue;
+				}
 				
 				final MatrixStack matrices = context.matrixStack();
 				final Vec3d pos = context.camera().getPos();
@@ -68,6 +83,20 @@ public class ClientPastelNetworkManager implements PastelNetworkManager<ClientWo
 	@Override
 	public void clear() {
 		this.networks.clear();
+	}
+	
+	@Override
+	public void removeNetwork(UUID uuid) {
+		PastelNetwork<ClientWorld> foundNetwork = null;
+		for (PastelNetwork<ClientWorld> network : this.networks) {
+			if (network.uuid.equals(uuid)) {
+				foundNetwork = network;
+				break;
+			}
+		}
+		if (foundNetwork != null) {
+			this.networks.remove(foundNetwork);
+		}
 	}
 	
 }
