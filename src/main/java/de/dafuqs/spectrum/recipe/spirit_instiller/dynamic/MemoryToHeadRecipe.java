@@ -8,8 +8,6 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.component.*;
-import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
@@ -92,9 +90,8 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			return Optional.empty();
 		}
 		
-		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT).copyNbt());
+		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack);
 		return optionalMemoryEntity.flatMap(SpectrumSkullBlock::getSkullType);
-		
 	}
 	
 }

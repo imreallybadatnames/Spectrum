@@ -145,7 +145,7 @@ public class SpectrumColorProviders {
 			if (tintIndex == 2)
 				return 0xFFFFFF;
 			
-			return MemoryItem.getEggColor(stack.getNbt(), tintIndex);
+			return MemoryItem.getEggColor(stack, tintIndex);
 		}, memory.asItem());
 	}
 	

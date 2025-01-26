@@ -1482,7 +1482,7 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.LIZARD_SPAWN_EGG);
 				entries.add(SpectrumItems.ERASER_SPAWN_EGG);
 				entries.add(SpectrumItems.BUCKET_OF_ERASER);
-				MemoryItem.appendEntries(entries);
+				MemoryItem.appendEntries(displayContext.lookup(), entries);
 			}).build();
 	
 	public static final ItemSubGroup ENERGY = new ItemSubGroup.Builder(MAIN, ItemGroupIDs.SUBTAB_ENERGY, Text.translatable("itemGroup.spectrum.energy"))
