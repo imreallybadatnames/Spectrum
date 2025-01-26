@@ -8,6 +8,7 @@ import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.progression.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.potion_workshop.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.advancement.criterion.*;
@@ -19,7 +20,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.potion.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -327,14 +328,14 @@ public class PotionWorkshopBlockEntity extends BlockEntity implements NamedScree
 	private static PotionMod getPotionModFromReagents(PotionWorkshopBlockEntity potionWorkshopBlockEntity) {
 		World world = potionWorkshopBlockEntity.getWorld();
 		
-		PotionMod potionMod = new PotionMod();
+		var builder = new PotionMod.Builder();
 		for (int slot : REAGENT_SLOTS) {
 			ItemStack slotStack = potionWorkshopBlockEntity.getStack(slot);
 			if (!slotStack.isEmpty()) {
-				PotionWorkshopReactingRecipe.combine(potionMod, slotStack, world.random);
+				PotionWorkshopReactingRecipe.combine(builder, slotStack, world.random);
 			}
 		}
-		return potionMod;
+		return builder.build();
 	}
 	
 	public static void decrementBaseIngredientSlot(@NotNull PotionWorkshopBlockEntity potionWorkshopBlockEntity, int amount) {

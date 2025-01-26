@@ -1,10 +1,18 @@
 package de.dafuqs.spectrum.recipe.ink_converting;
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
+import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -102,6 +110,30 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public long getInkAmount() {
 		return this.amount;
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<InkConvertingRecipe> {
+		
+		public static final StructEndec<InkConvertingRecipe> ENDEC = StructEndecBuilder.of(
+				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+				CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).fieldOf("ingredient", recipe -> recipe.inputIngredient),
+				CodecUtils.toEndec(InkColor.CODEC).fieldOf("ink_color", recipe -> recipe.color),
+				Endec.LONG.fieldOf("amount", recipe -> recipe.amount),
+				InkConvertingRecipe::new
+		);
+		
+		@Override
+		public MapCodec<InkConvertingRecipe> codec() {
+			return CodecUtils.toMapCodec(ENDEC);
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, InkConvertingRecipe> packetCodec() {
+			return CodecUtils.toPacketCodec(ENDEC);
+		}
+		
 	}
 	
 }

@@ -1,10 +1,16 @@
 package de.dafuqs.spectrum.recipe.potion_workshop;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.potion_workshop.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -22,9 +28,11 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	protected final int requiredExperience;
 	protected final ItemStack output;
 	
-	public PotionWorkshopCraftingRecipe(Identifier id, String group, boolean secret, Identifier requiredAdvancementIdentifier,
-										IngredientStack baseIngredient, boolean consumeBaseIngredient, int requiredExperience, IngredientStack ingredient1, IngredientStack ingredient2, IngredientStack ingredient3, ItemStack output, int craftingTime, int color) {
-		
+	public PotionWorkshopCraftingRecipe(
+			String group, boolean secret, Identifier requiredAdvancementIdentifier, int craftingTime, int color,
+			IngredientStack ingredient1, IngredientStack ingredient2, IngredientStack ingredient3,
+			IngredientStack baseIngredient, boolean consumeBaseIngredient, int requiredExperience, ItemStack output
+	) {
 		super(group, secret, requiredAdvancementIdentifier, craftingTime, color, ingredient1, ingredient2, ingredient3);
 		this.output = output;
 		this.baseIngredient = baseIngredient;
@@ -119,6 +127,50 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 	@Override
 	public String getRecipeTypeShortID() {
 		return "potion_workshop_crafting";
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<PotionWorkshopCraftingRecipe> {
+		
+		public static final MapCodec<PotionWorkshopCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(c -> c.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(c -> c.secret),
+				Identifier.CODEC.fieldOf("required_advancement").forGetter(c -> c.requiredAdvancementIdentifier),
+				Codec.INT.optionalFieldOf("time", 200).forGetter(c -> c.craftingTime),
+				Codec.INT.optionalFieldOf("color", 0xc03058).forGetter(c -> c.color),
+				IngredientStack.Serializer.CODEC.codec().fieldOf("ingredient1").forGetter(c -> c.ingredient1),
+				IngredientStack.Serializer.CODEC.codec().optionalFieldOf("ingredient2", IngredientStack.EMPTY).forGetter(c -> c.ingredient2),
+				IngredientStack.Serializer.CODEC.codec().optionalFieldOf("ingredient3", IngredientStack.EMPTY).forGetter(c -> c.ingredient3),
+				IngredientStack.Serializer.CODEC.codec().fieldOf("base_ingredient").forGetter(c -> c.baseIngredient),
+				Codec.BOOL.optionalFieldOf("use_up_base_ingredient", true).forGetter(c -> c.consumeBaseIngredient),
+				Codec.INT.optionalFieldOf("required_experience", 0).forGetter(c -> c.requiredExperience),
+				ItemStack.CODEC.fieldOf("output").forGetter(c -> c.output)
+		).apply(i, PotionWorkshopCraftingRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, PotionWorkshopCraftingRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, c -> c.group,
+				PacketCodecs.BOOL, c -> c.secret,
+				Identifier.PACKET_CODEC, c -> c.requiredAdvancementIdentifier,
+				PacketCodecs.VAR_INT, c -> c.craftingTime,
+				PacketCodecs.VAR_INT, c -> c.color,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.ingredient1,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.ingredient2,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.ingredient3,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.baseIngredient,
+				PacketCodecs.BOOL, c -> c.consumeBaseIngredient,
+				PacketCodecs.VAR_INT, c -> c.requiredExperience,
+				ItemStack.PACKET_CODEC, c -> c.output,
+				PotionWorkshopCraftingRecipe::new
+		);
+		
+		@Override
+		public MapCodec<PotionWorkshopCraftingRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, PotionWorkshopCraftingRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
 	}
 	
 }

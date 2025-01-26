@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.recipe.titration_barrel;
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
@@ -8,6 +9,10 @@ import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
 import net.minecraft.component.*;
@@ -15,6 +20,8 @@ import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
@@ -252,6 +259,33 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 	@Override
 	public String getRecipeTypeShortID() {
 		return "titration_barrel";
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<TitrationBarrelRecipe> {
+		
+		public static final StructEndec<TitrationBarrelRecipe> ENDEC = StructEndecBuilder.of(
+				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.ENDEC.listOf().fieldOf("ingredients", recipe -> recipe.inputStacks),
+				FluidIngredient.ENDEC.fieldOf("fluid", recipe -> recipe.fluid),
+				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.outputItemStack),
+				MinecraftEndecs.ofRegistry(Registries.ITEM).fieldOf("tapping_item", recipe -> recipe.tappingItem),
+				Endec.INT.fieldOf("min_fermentation_time_hours", recipe -> recipe.minFermentationTimeHours),
+				FermentationData.ENDEC.fieldOf("fermentation_data", recipe -> recipe.fermentationData),
+				TitrationBarrelRecipe::new
+		);
+		
+		@Override
+		public MapCodec<TitrationBarrelRecipe> codec() {
+			return CodecUtils.toMapCodec(ENDEC);
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, TitrationBarrelRecipe> packetCodec() {
+			return CodecUtils.toPacketCodec(ENDEC);
+		}
+		
 	}
 	
 }
