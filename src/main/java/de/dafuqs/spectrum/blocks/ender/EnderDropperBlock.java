@@ -1,13 +1,10 @@
 package de.dafuqs.spectrum.blocks.ender;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.registries.SpectrumBlockEntities;
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import de.dafuqs.spectrum.registries.*;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
+import net.fabricmc.fabric.api.transfer.v1.storage.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
 import net.minecraft.block.entity.*;
@@ -96,7 +93,7 @@ public class EnderDropperBlock extends DispenserBlock {
 		}
 
 		BlockPointer blockPointer = new BlockPointer(world, pos, state, enderDropperBlockEntity);
-		int i = enderDropperBlockEntity.chooseNonEmptySlot();
+		int i = enderDropperBlockEntity.chooseNonEmptySlot(world.random);
 		if (i < 0) {
 			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0); // no items in inv
 		} else {
@@ -110,6 +107,7 @@ public class EnderDropperBlock extends DispenserBlock {
 					Storage<ItemVariant> target = ItemStorage.SIDED.find(world, pos.offset(direction), direction.getOpposite());
 					if (target != null) {
 						// getting inv will always work since .chooseNonEmptySlot() and others would fail otherwise
+						//noinspection DataFlowIssue
 						Inventory inv = enderDropperBlockEntity.getOwnerIfOnline().getEnderChestInventory();
 						long moved = StorageUtil.move(
 								InventoryStorage.of(inv, direction).getSlot(i),
