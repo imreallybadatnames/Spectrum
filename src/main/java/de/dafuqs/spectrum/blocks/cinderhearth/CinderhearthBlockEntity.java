@@ -60,7 +60,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	private UUID ownerUUID;
 	private UpgradeHolder upgrades;
-	private Recipe<?> currentRecipe; // blasting & cinderhearth
+	private RecipeEntry<?> currentRecipe; // blasting & cinderhearth
 	private int craftingTime;
 	private int craftingTimeTotal;
 	private boolean usesEfficiency;
@@ -149,13 +149,15 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	@Override
 	public void calculateUpgrades() {
+		if (world == null) return;
 		this.upgrades = Upgradeable.calculateUpgradeMods2(world, pos, Support.rotationFromDirection(world.getBlockState(pos).get(CinderhearthBlock.FACING)), 2, 1, 1, this.ownerUUID);
 		this.updateInClientWorld();
 		this.markDirty();
 	}
 	
 	public void updateInClientWorld() {
-		((ServerWorld) world).getChunkManager().markForUpdate(pos);
+		if (world instanceof ServerWorld serverWorld)
+			serverWorld.getChunkManager().markForUpdate(pos);
 	}
 	
 	@Nullable
@@ -222,7 +224,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			this.structure = CinderHearthStructureType.NONE;
 		}
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
-		this.currentRecipe = MultiblockCrafter.getRecipeFromNbt(world, nbt, Recipe.class);
+		this.currentRecipe = MultiblockCrafter.getRecipeEntryFromNbt(world, nbt);
 		if (nbt.contains("Upgrades", NbtElement.LIST_TYPE)) {
 			this.upgrades = UpgradeHolder.fromNbt(nbt.getList("Upgrades", NbtElement.COMPOUND_TYPE));
 		} else {
@@ -247,7 +249,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
 		if (this.currentRecipe != null) {
-			nbt.putString("CurrentRecipe", this.currentRecipe.getId().toString());
+			nbt.putString("CurrentRecipe", this.currentRecipe.id().toString());
 		}
 	}
 	
@@ -292,21 +294,25 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			}
 			
 			if (cinderhearthBlockEntity.craftingTime == 0) {
-				Recipe<?> recipe = cinderhearthBlockEntity.currentRecipe;
+				var recipe = cinderhearthBlockEntity.currentRecipe;
 				
 				cinderhearthBlockEntity.usesEfficiency = cinderhearthBlockEntity.drainInkForUpgradesRequired(cinderhearthBlockEntity, UpgradeType.EFFICIENCY, InkColors.BLACK, false);
 				
-				int baseTime = recipe instanceof AbstractCookingRecipe abstractCookingRecipe ? abstractCookingRecipe.getCookingTime() : ((CinderhearthRecipe) recipe).getCraftingTime();
-				float speedModifier = cinderhearthBlockEntity.drainInkForUpgrades(cinderhearthBlockEntity, UpgradeType.SPEED, InkColors.MAGENTA, cinderhearthBlockEntity.usesEfficiency);
-				cinderhearthBlockEntity.craftingTimeTotal = (int) Math.ceil(baseTime / speedModifier);
+				int baseTime = recipe.value() instanceof AbstractCookingRecipe abstractCookingRecipe ? abstractCookingRecipe.getCookingTime()
+						: recipe.value() instanceof CinderhearthRecipe cinderhearthRecipe ? cinderhearthRecipe.getCraftingTime()
+						: -1;
+				if (baseTime >= 0) {
+					float speedModifier = cinderhearthBlockEntity.drainInkForUpgrades(cinderhearthBlockEntity, UpgradeType.SPEED, InkColors.MAGENTA, cinderhearthBlockEntity.usesEfficiency);
+					cinderhearthBlockEntity.craftingTimeTotal = (int) Math.ceil(baseTime / speedModifier);
+				}
 			}
 			
 			cinderhearthBlockEntity.craftingTime++;
 			
 			if (cinderhearthBlockEntity.craftingTime == cinderhearthBlockEntity.craftingTimeTotal) {
-				if (cinderhearthBlockEntity.currentRecipe instanceof CinderhearthRecipe cinderhearthRecipe) {
+				if (cinderhearthBlockEntity.currentRecipe.value() instanceof CinderhearthRecipe cinderhearthRecipe) {
 					craftCinderhearthRecipe(world, cinderhearthBlockEntity, cinderhearthRecipe);
-				} else if (cinderhearthBlockEntity.currentRecipe instanceof BlastingRecipe blastingRecipe) {
+				} else if (cinderhearthBlockEntity.currentRecipe.value() instanceof BlastingRecipe blastingRecipe) {
 					craftBlastingRecipe(world, cinderhearthBlockEntity, blastingRecipe);
 				}
 			}
@@ -331,9 +337,9 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		return true;
 	}
 	
-	protected static boolean canAcceptRecipeOutput(World world, Recipe<?> recipe, Inventory inventory) {
+	protected static boolean canAcceptRecipeOutput(World world, RecipeEntry<?> recipe, Inventory inventory) {
 		if (recipe != null) {
-			ItemStack outputStack = recipe.getResult(world.getRegistryManager());
+			ItemStack outputStack = recipe.value().getResult(world.getRegistryManager());
 			if (outputStack.isEmpty()) {
 				return true;
 			} else {
@@ -358,14 +364,12 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		var input = new SingleStackRecipeInput(cinderhearthBlockEntity.getStack(0));
 		
 		// test the cached recipe => faster
-		if (cinderhearthBlockEntity.currentRecipe instanceof CinderhearthRecipe recipe) {
-			if (recipe.matches(input, world)) {
+		if (cinderhearthBlockEntity.currentRecipe.value() instanceof CinderhearthRecipe recipe) {
+			if (recipe.matches(input, world))
 				return;
-			}
-		} else if (cinderhearthBlockEntity.currentRecipe instanceof BlastingRecipe recipe) {
-			if (recipe.matches(input, world)) {
+		} else if (cinderhearthBlockEntity.currentRecipe.value() instanceof BlastingRecipe recipe) {
+			if (recipe.matches(input, world))
 				return;
-			}
 		}
 		
 		cinderhearthBlockEntity.currentRecipe = null;
@@ -375,11 +379,10 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		// cached recipe did not match => calculate new
 		ItemStack inputStack = cinderhearthBlockEntity.getStack(0);
 		if (!inputStack.isEmpty()) {
-			world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.CINDERHEARTH, input, world)
-					.ifPresentOrElse(
-							r -> cinderhearthBlockEntity.currentRecipe = r.value(),
-							() -> world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, input, world)
-									.ifPresent(r -> cinderhearthBlockEntity.currentRecipe = r.value()));
+			world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.CINDERHEARTH, input, world).ifPresentOrElse(
+					r -> cinderhearthBlockEntity.currentRecipe = r,
+					() -> world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, input, world).ifPresent(
+							r -> cinderhearthBlockEntity.currentRecipe = r));
 		}
 	}
 	
@@ -395,7 +398,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			return false;
 		}
 		
-		if (cinderhearthBlockEntity.currentRecipe instanceof GatedRecipe<?> gatedRecipe) {
+		if (cinderhearthBlockEntity.currentRecipe.value() instanceof GatedRecipe<?> gatedRecipe) {
 			return gatedRecipe.canPlayerCraft(lastInteractedPlayer);
 		}
 		return true;
@@ -449,7 +452,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 			
 			// use up input ingredient
 			ItemStack inputStackCopy = inputStack.copy();
-			int amountToDecrementInput = cinderhearth.currentRecipe instanceof CinderhearthRecipe cinderhearthRecipe ? cinderhearthRecipe.getIngredientStacks().getFirst().getCount() : 1;
+			int amountToDecrementInput = cinderhearth.currentRecipe.value() instanceof CinderhearthRecipe cinderhearthRecipe ? cinderhearthRecipe.getIngredientStacks().getFirst().getCount() : 1;
 			inputStack.decrement(amountToDecrementInput);
 			
 			if (remainder.isEmpty()) {
@@ -490,12 +493,13 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	public static void playCraftingFinishedEffects(@NotNull CinderhearthBlockEntity cinderhearthBlockEntity) {
 		Direction.Axis axis = null;
-		Direction direction = Direction.UP; // Give it a default so vscode will stop complaining
+		Direction direction = Direction.UP;
+		if (!(cinderhearthBlockEntity.world instanceof ServerWorld world)) return;
 		
 		for (Map.Entry<UpgradeType, Integer> entry : cinderhearthBlockEntity.upgrades.entrySet()) {
 			if (entry.getValue() > 1) {
 				if (axis == null) {
-					BlockState state = cinderhearthBlockEntity.getWorld().getBlockState(cinderhearthBlockEntity.pos);
+					BlockState state = world.getBlockState(cinderhearthBlockEntity.pos);
 					direction = state.get(CinderhearthBlock.FACING);
 					axis = direction.getAxis();
 				}
@@ -506,7 +510,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 				double h2 = 4D / 16D;
 				double i2 = axis == Direction.Axis.X ? (double) direction.getOffsetX() * g2 : h2;
 				double k2 = axis == Direction.Axis.Z ? (double) direction.getOffsetZ() * g2 : h2;
-				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) cinderhearthBlockEntity.getWorld(),
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity(world,
 						new Vec3d(d + i2, cinderhearthBlockEntity.pos.getY() + 1.1, f + k2),
 						ParticleTypes.CAMPFIRE_COSY_SMOKE,
 						3,
@@ -556,7 +560,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 	
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
-		if (this.getWorld().getBlockEntity(this.pos) != this) {
+		if (world == null || world.getBlockEntity(this.pos) != this) {
 			return false;
 		} else {
 			return player.squaredDistanceTo((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
@@ -595,7 +599,7 @@ public class CinderhearthBlockEntity extends LockableContainerBlockEntity implem
 		return this.inkDirty;
 	}
 	
-	public Recipe<?> getCurrentRecipe() {
+	public RecipeEntry<?> getCurrentRecipe() {
 		return currentRecipe;
 	}
 	

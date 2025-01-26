@@ -32,7 +32,6 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("3b9a13c8-a9a7-4545-8c32-e60baf25823e");
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers, phantomModifiers;
 	
-	
 	public DragonTalonItem(ToolMaterial toolMaterial, double damage, double extraReach, Item.Settings settings) {
 		super(settings, 0, 0, 0, 0);
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
@@ -98,7 +97,7 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 		result.setNbt(firstHalf.getNbt());
 		
 		var nbt = result.getOrCreateNbt();
-		nbt.remove("pairSignature");
+		result.remove(SpectrumDataComponentTypes.PAIRED_ITEM);
 		nbt.remove("lastNeedle");
 		nbt.remove("cooldown");
 		nbt.remove(SlotReservingItem.NBT_STRING);
@@ -158,7 +157,7 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 
 	@Override
 	public void playSound(ServerPlayerEntity player) {
-		player.playSound(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
+		player.playSoundToPlayer(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
 	}
 	
 	@Override

@@ -25,13 +25,14 @@ public abstract class AbstractHorseEntityMixin {
 	 */
 	@Inject(at = @At("HEAD"), method = "tick()V")
 	public void tick(CallbackInfo callbackInfo) {
-		if ((Object) this instanceof AbstractDonkeyEntity thisEntity
+		var horse = (AbstractHorseEntity) (Object) this;
+		if (horse instanceof AbstractDonkeyEntity thisEntity
 				&& !thisEntity.hasNoGravity()
 				&& thisEntity.hasChest()
 				&& thisEntity.getWorld() instanceof ServerWorld serverWorld) {
 			
 			double addedGravity = 0;
-			for (ItemStack stack : this.items.stacks) {
+			for (ItemStack stack : this.items.heldStacks) {
 				if (stack.getItem() instanceof GravitableItem gravitableItem) {
 					addedGravity += gravitableItem.applyGravity(stack, serverWorld, thisEntity);
 				}

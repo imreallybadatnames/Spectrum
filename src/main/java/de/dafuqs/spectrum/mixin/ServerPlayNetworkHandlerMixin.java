@@ -14,9 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(ServerPlayNetworkHandler.class)
 public class ServerPlayNetworkHandlerMixin {
 	
-	
-	@Shadow
-	public ServerPlayerEntity player;
+	@Shadow public ServerPlayerEntity player;
 	
 	@Inject(method = "onPlayerAction", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;", ordinal = 0), cancellable = true)
 	private void handleSwapInteractions(PlayerActionC2SPacket packet, CallbackInfo ci) {
@@ -41,12 +39,10 @@ public class ServerPlayNetworkHandlerMixin {
 	@Mixin(targets = "net/minecraft/server/network/ServerPlayNetworkHandler$1")
 	static class NetworkEntityValidationMixin {
 		
-		@Final
-		@Shadow(aliases = "field_28963")
+		@Final @Shadow(aliases = "field_28963")
 		private ServerPlayNetworkHandler this$0;
 		
-		@Final
-		@Shadow(aliases = "field_28962")
+		@Final @Shadow(aliases = "field_28962")
 		private Entity innerEntity;
 		
 		@Inject(method = "attack", at = @At(value = "HEAD"), cancellable = true)
@@ -56,6 +52,7 @@ public class ServerPlayNetworkHandlerMixin {
 				ci.cancel();
 			}
 		}
+		
 	}
 	
 	@Unique
@@ -75,4 +72,5 @@ public class ServerPlayNetworkHandlerMixin {
 		player.clearActiveItem();
 		mergeable.playSound(player);
 	}
+	
 }

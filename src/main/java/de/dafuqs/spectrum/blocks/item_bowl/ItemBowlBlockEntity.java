@@ -12,7 +12,6 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.client.world.*;
 import net.minecraft.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
@@ -35,24 +34,8 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		super.readNbt(nbt, registryLookup);
-		if (!this.deserializeLootTable(nbt)) {
-			Inventories.readNbt(nbt, this.items, registryLookup);
-		}
-	}
-
-	@Override
-	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		super.writeNbt(nbt, registryLookup);
-		if (!this.serializeLootTable(nbt)) {
-			Inventories.writeNbt(nbt, this.items, registryLookup);
-		}
-	}
-
-	@Override
 	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-		this.checkLootInteraction(null);
+		this.generateLoot(null);
 		return super.toInitialChunkDataNbt(registryLookup);
 	}
 	
@@ -85,7 +68,7 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 	
 	public int decrementBowlStack(Vec3d orbTargetPos, int amount, boolean doEffects) {
 		ItemStack storedStack = this.getStack(0);
-		if (storedStack.isEmpty()) {
+		if (storedStack.isEmpty() || world == null) {
 			return 0;
 		}
 		
@@ -119,7 +102,7 @@ public class ItemBowlBlockEntity extends InWorldInteractionBlockEntity {
 	
 	public void spawnOrbParticles(Vec3d orbTargetPos) {
 		ItemStack storedStack = this.getStack(0);
-		if (!storedStack.isEmpty()) {
+		if (!storedStack.isEmpty() && world != null) {
 			DyeColor itemColor = ColorRegistry.ITEM_COLORS.getMapping(storedStack.getItem(), DyeColor.PURPLE);
 			ParticleEffect sparkleRisingParticleEffect = SpectrumParticleTypes.getSparkleRisingParticle(itemColor);
 			

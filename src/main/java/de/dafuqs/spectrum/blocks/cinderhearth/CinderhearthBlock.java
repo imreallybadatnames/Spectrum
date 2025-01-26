@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.cinderhearth;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.*;
@@ -12,7 +12,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
-import net.minecraft.recipe.*;
 import net.minecraft.screen.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -140,7 +139,7 @@ public class CinderhearthBlock extends BlockWithEntity {
 			double e = pos.getY() + 0.4;
 			double f = (double) pos.getZ() + 0.5D;
 			
-			Recipe<?> recipe = cinderhearthBlockEntity.getCurrentRecipe();
+			var recipe = cinderhearthBlockEntity.getCurrentRecipe();
 			if (recipe != null) {
 				if (random.nextDouble() < 0.1D) {
 					world.playSound(d, e, f, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 0.8F, false);

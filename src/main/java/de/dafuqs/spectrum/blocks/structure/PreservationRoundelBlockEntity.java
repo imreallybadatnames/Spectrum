@@ -88,7 +88,7 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 	@Override
 	public void inventoryChanged() {
 		super.inventoryChanged();
-		if (!world.isClient && controllerOffset != null && inventoryAndConnectedOnesMatchRequirement()) {
+		if (world instanceof ServerWorld && controllerOffset != null && inventoryAndConnectedOnesMatchRequirement()) {
 			BlockEntity blockEntity = world.getBlockEntity(Support.directionalOffset(this.pos, this.controllerOffset, world.getBlockState(this.pos).get(PreservationControllerBlock.FACING)));
 			if (blockEntity instanceof PreservationControllerBlockEntity controller) {
 				// grant advancement
@@ -98,7 +98,7 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 	}
 	
 	public boolean inventoryAndConnectedOnesMatchRequirement() {
-		if (!inventoryMatchesRequirement()) {
+		if (!inventoryMatchesRequirement() || world == null) {
 			return false;
 		}
 		
@@ -142,7 +142,7 @@ public class PreservationRoundelBlockEntity extends ItemRoundelBlockEntity imple
 			}
 		}
 		
-		if (requirements.isEmpty()) {
+		if (requirements.isEmpty() && world != null) {
 			PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world, Vec3d.ofCenter(pos), ParticleTypes.HAPPY_VILLAGER, 10, new Vec3d(0.25, 0.5, 0.25), new Vec3d(0.1, 0.1, 0.1));
 			world.playSound(null, pos, SpectrumSoundEvents.NEW_RECIPE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			return true;

@@ -7,18 +7,15 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.loot.function.*;
+import net.minecraft.registry.entry.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(ApplyBonusLootFunction.class)
 public abstract class ApplyBonusLootFunctionMixin {
 	
-	@Shadow
-	@Final
-	Enchantment enchantment;
-	@Shadow
-	@Final
-	ApplyBonusLootFunction.Formula formula;
+	@Shadow @Final private RegistryEntry<Enchantment> enchantment;
+	@Shadow @Final private ApplyBonusLootFunction.Formula formula;
 	
 	@ModifyVariable(
 			method = "process(Lnet/minecraft/item/ItemStack;Lnet/minecraft/loot/context/LootContext;)Lnet/minecraft/item/ItemStack;",

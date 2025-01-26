@@ -170,7 +170,7 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 
 	@Override
 	public void playSound(ServerPlayerEntity player) {
-		player.playSound(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
+		player.playSoundToPlayer(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
 	}
 	
 	@Override

@@ -4,9 +4,8 @@ import de.dafuqs.spectrum.blocks.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.inventory.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.util.math.*;
 
 public class ItemRoundelBlockEntity extends InWorldInteractionBlockEntity {
@@ -26,24 +25,8 @@ public class ItemRoundelBlockEntity extends InWorldInteractionBlockEntity {
 	}
 
 	@Override
-	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		super.readNbt(nbt, registryLookup);
-		if (!this.deserializeLootTable(nbt)) {
-			Inventories.readNbt(nbt, this.items, registryLookup);
-		}
-	}
-
-	@Override
-	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		super.writeNbt(nbt, registryLookup);
-		if (!this.serializeLootTable(nbt)) {
-			Inventories.writeNbt(nbt, this.items, registryLookup);
-		}
-	}
-
-	@Override
 	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-		this.checkLootInteraction(null);
+		this.generateLoot(null);
 		return super.toInitialChunkDataNbt(registryLookup);
 	}
 }

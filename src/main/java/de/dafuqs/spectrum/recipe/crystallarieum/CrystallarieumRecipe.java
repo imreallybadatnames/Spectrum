@@ -20,6 +20,8 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/crystallarieum");
 
+	protected final static Map<BlockState, RecipeEntry<CrystallarieumRecipe>> STATE_CACHE = new HashMap<>();
+
 	protected final Ingredient ingredient;
 	protected final List<BlockState> growthStages;
 	protected final int secondsPerGrowthStage;
@@ -28,9 +30,6 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 	protected final boolean growsWithoutCatalyst;
 	protected final List<CrystallarieumCatalyst> catalysts;
 	protected final List<ItemStack> additionalResults; // these aren't actual results, but recipe managers will treat it as such, showing this recipe as a way to get them. Use for drops of the growth blocks, for example
-
-	protected final static Map<Ingredient, CrystallarieumRecipe> ingredientMap = new HashMap<>();
-	protected final static Map<BlockState, CrystallarieumRecipe> stateMap = new HashMap<>();
 
 	public CrystallarieumRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, Ingredient ingredient, List<BlockState> growthStages, int secondsPerGrowthStage, InkColor inkColor, int inkPerSecond, boolean growsWithoutCatalyst, List<CrystallarieumCatalyst> catalysts, List<ItemStack> additionalResults) {
 		super(group, secret, requiredAdvancementIdentifier);
@@ -44,34 +43,21 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 		this.catalysts = catalysts;
 		this.additionalResults = additionalResults;
 		
-		ingredientMap.put(ingredient, this);
-		for (BlockState growthStage : growthStages) {
-			stateMap.put(growthStage, this);
-		}
-		
 		registerInToastManager(getType(), this);
 	}
 	
 	@Nullable
-	public static CrystallarieumRecipe getRecipeForStack(ItemStack itemStack) {
-		for (Map.Entry<Ingredient, CrystallarieumRecipe> entry : ingredientMap.entrySet()) {
-			if (entry.getKey().test(itemStack)) {
-				return entry.getValue();
+	public static RecipeEntry<CrystallarieumRecipe> getRecipeForState(World world, BlockState state) {
+		return STATE_CACHE.computeIfAbsent(state, s -> {
+			var recipes = world.getRecipeManager().listAllOfType(SpectrumRecipeTypes.CRYSTALLARIEUM);
+			for (var recipe : recipes) {
+				if (recipe.value().growthStages.contains(s))
+					return recipe;
 			}
-		}
-		return null;
+			return null;
+		});
 	}
 	
-	@Nullable
-	public static CrystallarieumRecipe getRecipeForState(BlockState state) {
-		return stateMap.getOrDefault(state, null);
-	}
-	
-	public static void clearCache() {
-		ingredientMap.clear();
-		stateMap.clear();
-	}
-
 	@Override
 	public boolean matches(SingleStackRecipeInput input, World world) {
 		return ingredient.test(input.getStackInSlot(0));
@@ -167,8 +153,8 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 		return additionalResults;
 	}
 	
-	public Optional<BlockState> getNextState(CrystallarieumRecipe recipe, BlockState currentState) {
-		for (Iterator<BlockState> it = recipe.getGrowthStages().iterator(); it.hasNext(); ) {
+	public Optional<BlockState> getNextState(RecipeEntry<CrystallarieumRecipe> recipe, BlockState currentState) {
+		for (Iterator<BlockState> it = recipe.value().getGrowthStages().iterator(); it.hasNext(); ) {
 			BlockState state = it.next();
 			if (state.equals(currentState)) {
 				if (it.hasNext()) {

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.render;
 
+import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.cca.azure_dike.*;
 import net.fabricmc.api.*;
@@ -52,7 +53,9 @@ public class HudRenderers {
 			
 			x += SpectrumCommon.CONFIG.AzureDikeHudOffsetX;
 			y += hasArmor ? SpectrumCommon.CONFIG.AzureDikeHudOffsetYWithArmor : SpectrumCommon.CONFIG.AzureDikeHudOffsetY;
-
+			
+			RenderSystem.enableBlend();
+			
 			// back row
 			if (renderBackRow) {
 				for (int i = displayedDike / 2; i < 10; i++) {
@@ -93,6 +96,8 @@ public class HudRenderers {
 			for (int i = filledDikeCanisters; i < totalDikeCanisters; i++) {
 				drawContext.drawTexture(texture, x + i * 6, y - 9, 9, 0, 9, 9, 256, 256); // empty canisters
 			}
+			
+			RenderSystem.disableBlend();
 		}
 	}
 	

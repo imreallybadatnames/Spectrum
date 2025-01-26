@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.mixin.client;
 
 import com.llamalad7.mixinextras.injector.*;
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
@@ -10,6 +9,7 @@ import de.dafuqs.spectrum.status_effects.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.hud.*;
+import net.minecraft.client.render.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.util.*;
@@ -20,66 +20,46 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 
-
+	@Shadow @Final private MinecraftClient client;
+	
     @Shadow protected abstract PlayerEntity getCameraPlayer();
 
-    @Shadow public abstract void render(DrawContext context, float tickDelta);
+    @Shadow public abstract void render(DrawContext context, RenderTickCounter tickerCounter);
 
-    @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getArmor()I"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void spectrum$renderHealthBar(DrawContext context, CallbackInfo ci, PlayerEntity cameraPlayer, int lastHealth, boolean blinking, long timeStart, int health, HungerManager hungerManager, int foodLevel, int x, int foodX, int y, float maxHealth, int absorption, int heartRows, int rowHeight, int armorY) {
-        HudRenderers.renderAzureDike(context, cameraPlayer, x, armorY);
+    @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"))
+    private void spectrum$renderAzureDikeBar(DrawContext context, CallbackInfo ci, @Local PlayerEntity cameraPlayer, @Local(ordinal = 2) int x, @Local(ordinal = 4) int y, @Local(ordinal = 6) int heartRows, @Local(ordinal = 7) int rowHeight) {
+		client.getProfiler().swap("spectrum:azure");
+        HudRenderers.renderAzureDike(context, cameraPlayer, x, y - (heartRows - 1) * rowHeight - 10);
     }
 
-    @ModifyExpressionValue(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;isFancyGraphicsOrBetter()Z"))
+    @ModifyExpressionValue(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;isFancyGraphicsOrBetter()Z"))
     private boolean spectrum$disableVignietteInDimension(boolean original) {
-        if (isInDim()) {
-            return false;
-        }
-        return original;
+		var player = MinecraftClient.getInstance().player;
+		var isInDim = player != null && SpectrumDimensions.DIMENSION_KEY.equals(player.getWorld().getRegistryKey());
+        return !isInDim && original;
     }
 
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderCrosshair(Lnet/minecraft/client/gui/DrawContext;)V"))
-    private boolean spectrum$disableCrosshairSomnolence(InGameHud instance, DrawContext context) {
-        var player = getCameraPlayer();
-
-        if (player == null)
-            return true;
-		
-		var potency = SleepStatusEffect.getSleepScaling(player);
-
-        return potency <= 0.25F;
+    @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
+    private void spectrum$disableCrosshairSomnolence(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+		var potency = SleepStatusEffect.getSleepScaling(getCameraPlayer());
+        if (potency > 0.25F)
+			ci.cancel();
     }
 
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHotbar(FLnet/minecraft/client/gui/DrawContext;)V"))
-    private boolean spectrum$disableHotbarSomnolence(InGameHud instance, float tickDelta, DrawContext context) {
-        var player = getCameraPlayer();
-
-        if (player == null)
-            return true;
-		
-		var potency = SleepStatusEffect.getSleepScaling(player);
-
-        return potency <= 0.4F;
+    @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
+    private void spectrum$disableHotbarSomnolence(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+		var potency = SleepStatusEffect.getSleepScaling(getCameraPlayer());
+        if (potency > 0.4F)
+			ci.cancel();
     }
 
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V"))
-    private boolean spectrum$disableStatusSomnolence(InGameHud instance, DrawContext context) {
-        var player = getCameraPlayer();
-
-        if (player == null)
-            return true;
-		
-		var potency = SleepStatusEffect.getSleepScaling(player);
-
-        return potency <= 0.4F;
+    @Inject(method = "renderStatusBars", at = @At("HEAD"), cancellable = true)
+    private void spectrum$disableStatusSomnolence(DrawContext context, CallbackInfo ci) {
+		var potency = SleepStatusEffect.getSleepScaling(getCameraPlayer());
+		if (potency > 0.4F)
+			ci.cancel();
     }
 
-    @Unique
-    private static boolean isInDim() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        return SpectrumDimensions.DIMENSION_KEY.equals(client.player.getWorld().getRegistryKey());
-    }
-    
     @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
     private Identifier modifyAmbientEffectBackgrounds(Identifier texture, @Local StatusEffectInstance effect) {
         return StatusEffectHelper.getTexture(texture, effect);
