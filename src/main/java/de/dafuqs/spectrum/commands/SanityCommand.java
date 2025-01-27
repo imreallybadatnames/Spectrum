@@ -247,7 +247,7 @@ public class SanityCommand {
 					}
 					// "advancement count" criteria with nonexistent advancements
 				} else if (conditions instanceof AdvancementCountCriterion.Conditions hasAdvancementConditions) {
-					for (Identifier advancementIdentifier : hasAdvancementConditions.getAdvancementIdentifiers()) {
+					for (Identifier advancementIdentifier : hasAdvancementConditions.advancementIdentifiers()) {
 						AdvancementEntry advancementCriterionAdvancement = advancementLoader.get(advancementIdentifier);
 						if (advancementCriterionAdvancement == null) {
 							SpectrumCommon.logWarning("[SANITY: Advancement_Count Criteria] Advancement '" + advancementEntry.id() + "' references advancement '" + advancementIdentifier + "' that does not exist");
@@ -265,7 +265,7 @@ public class SanityCommand {
 			if (advancementId.getNamespace().equals(modId) && !path.startsWith("hidden") && !path.startsWith("progression") && !path.startsWith("milestones") && parentId.isPresent()) {
 				Identifier gottenPreviousAdvancementIdentifier = null;
 				for (List<String> requirement : advancement.value().requirements().requirements()) {
-					if (!requirement.isEmpty() && requirement.get(0).equals("gotten_previous")) { // TODO: is that correct?
+					if (!requirement.isEmpty() && requirement.getFirst().equals("gotten_previous")) { // TODO: is that correct?
 						CriterionConditions conditions = advancement.value().criteria().get("gotten_previous").conditions();
 						if (conditions instanceof AdvancementGottenCriterion.Conditions advancementConditions) {
 							gottenPreviousAdvancementIdentifier = advancementConditions.getAdvancementIdentifier();

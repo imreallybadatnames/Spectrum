@@ -23,6 +23,7 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<RecipeInp
 	
 	protected final World world;
 	private final Inventory inventory;
+	private final PedestalBlockEntity blockEntity;
 	private final PropertyDelegate propertyDelegate;
 	private final RecipeBookCategory category;
 	
@@ -40,6 +41,7 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<RecipeInp
 		this.category = recipeBookCategory;
 		this.propertyDelegate = propertyDelegate;
 		this.world = playerInventory.player.getWorld();
+		this.blockEntity = world.getBlockEntity(getBlockPos()) instanceof PedestalBlockEntity p ? p : null;
 		
 		checkSize(inventory, PedestalBlockEntity.INVENTORY_SIZE);
 		checkDataCount(propertyDelegate, PedestalBlockEntity.PROPERTY_DELEGATE_SIZE);
@@ -115,7 +117,7 @@ public class PedestalScreenHandler extends AbstractRecipeScreenHandler<RecipeInp
 	
 	@Override
 	public boolean matches(RecipeEntry<Recipe<RecipeInput>> recipe) {
-		return recipe.value().matches(input.createPedestalInput(), world);
+		return blockEntity != null && recipe.value().matches(blockEntity.recipeInput, world);
 	}
 	
 	@Override

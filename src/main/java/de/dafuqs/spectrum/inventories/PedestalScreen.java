@@ -71,7 +71,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
 		// if structure could be improved:
 		// show red blinking information icon
 		if (structureUpdateAvailable) {
-			if (client != null && (client.world.getTime() >> 4) % 2 == 0) {
+			if (client != null && client.world != null && (client.world.getTime() >> 4) % 2 == 0) {
 				drawContext.drawText(tr, "ℹ", informationIconX, informationIconY, 11010048, false);
 			} else {
 				drawContext.drawText(tr, "ℹ", informationIconX, informationIconY, 16252928, false);
@@ -104,7 +104,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
 			if (currentMultiBlock == multiblockToDisplay) {
 				ModonomiconHelper.clearRenderedMultiblock(currentMultiBlock);
 			} else {
-				ModonomiconHelper.renderMultiblock(multiblockToDisplay, maxPedestalRecipeTierForVariant.getStructureText(), this.handler.getPedestalPos().down(2), BlockRotation.NONE);
+				ModonomiconHelper.renderMultiblock(multiblockToDisplay, maxPedestalRecipeTierForVariant.getStructureText(), this.handler.getBlockPos().down(2), BlockRotation.NONE);
 			}
 			return true;
 		} else {
