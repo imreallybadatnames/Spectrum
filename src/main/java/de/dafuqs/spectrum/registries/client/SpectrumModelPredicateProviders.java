@@ -213,8 +213,8 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerSlotReservingItem(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of(SlotReservingItem.NBT_STRING), (stack, world, entity, i) -> {
-			if (stack.getItem() instanceof SlotReservingItem reserver && reserver.isReservingSlot(stack)) {
+		ModelPredicateProviderRegistry.register(item, SpectrumCommon.locate("reserved"), (stack, world, entity, i) -> {
+			if (SlotReservingItem.isReservingSlot(stack)) {
 				return 1.0F;
 			} else {
 				return 0.0F;

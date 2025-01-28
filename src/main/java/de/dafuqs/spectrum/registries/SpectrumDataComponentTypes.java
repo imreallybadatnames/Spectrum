@@ -9,6 +9,7 @@ import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 
+import java.util.*;
 import java.util.function.*;
 
 public class SpectrumDataComponentTypes {
@@ -34,12 +35,13 @@ public class SpectrumDataComponentTypes {
 	public static final ComponentType<OptionalInkColorComponent> OPTIONAL_INK_COLOR = register("optional_ink_color", builder -> builder.codec(OptionalInkColorComponent.CODEC).packetCodec(OptionalInkColorComponent.PACKET_CODEC));
 	public static final ComponentType<Float> OVERCHARGED = register("overcharged", builder -> builder.codec(Codec.FLOAT).packetCodec(PacketCodecs.FLOAT));
 	public static final ComponentType<PairedItemComponent> PAIRED_ITEM = register("paired_item", builder -> builder.codec(PairedItemComponent.CODEC).packetCodec(PairedItemComponent.PACKET_CODEC));
+	public static final ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
 	public static final ComponentType<ShootingStarComponent> SHOOTING_STAR = register("shooting_star", builder -> builder.codec(ShootingStarComponent.CODEC).packetCodec(ShootingStarComponent.PACKET_CODEC));
+	public static final ComponentType<UUID> SLOT_RESERVER = register("slot_eserver", builder -> builder.codec(Uuids.CODEC).packetCodec(Uuids.PACKET_CODEC));
 	public static final ComponentType<Unit> SOCKETED = register("socketed", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<Unit> STABLE = register("stable", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<Integer> STORED_EXPERIENCE = register("stored_experiene", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.VAR_INT));
 	public static final ComponentType<Identifier> STORED_RECIPE = register("stored_recipe", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
-	public static final ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
 	public static final ComponentType<Unit> UNIDENTIFIABLE = register("unidentifiable", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<WorkstaffComponent> WORKSTAFF = register("workstaff", builder -> builder.codec(WorkstaffComponent.CODEC).packetCodec(WorkstaffComponent.PACKET_CODEC));
 	public static final ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC).cache());

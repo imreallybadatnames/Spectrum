@@ -4,6 +4,8 @@ import de.dafuqs.spectrum.inventories.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -140,6 +142,7 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 		this.stateManager.updateViewerCount(this.getWorld(), this.getPos(), this.getCachedState());
 	}
 	
+	// TODO Should the loot table NBT only be maintained for TreasureChestBlockEntity?
 	@Override
 	public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(tag, registryLookup);
@@ -155,6 +158,12 @@ public abstract class SpectrumChestBlockEntity extends LootableContainerBlockEnt
 		if (!this.inventory.isEmpty()) {
 			Inventories.writeNbt(tag, this.inventory, registryLookup);
 		}
+	}
+	
+	@Override
+	protected void addComponents(ComponentMap.Builder componentMapBuilder) {
+		super.addComponents(componentMapBuilder);
+		componentMapBuilder.add(DataComponentTypes.CONTAINER_LOOT, new ContainerLootComponent(this.lootTable, this.lootTableSeed));
 	}
 	
 	public SoundEvent getOpenSound() {

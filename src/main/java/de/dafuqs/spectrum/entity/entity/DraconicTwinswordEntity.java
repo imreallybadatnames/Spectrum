@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.entity.entity;
 
+import com.google.common.util.concurrent.*;
 import de.dafuqs.spectrum.api.entity.*;
+import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.helpers.enchantments.*;
@@ -8,6 +10,8 @@ import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -41,7 +45,6 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	private final Set<Entity> piercedEntities = new HashSet<>();
 	private int travelingTicks = 0, jiggleTicks = 20, jiggleIntensity = 8;
 	private float damageMult = 1, velMult = 1;
-	
 	
 	public DraconicTwinswordEntity(World world) {
 		this(SpectrumEntityTypes.DRACONIC_TWINSWORD, world);
@@ -168,7 +171,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		var propelled = isPropelled();
 		ItemStack stack = getTrackedStack();
-		var channeling = EnchantmentHelper.getLevel(Enchantments.CHANNELING, stack);
+		var channeling = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.CHANNELING, stack);
 		Entity attacked = entityHitResult.getEntity();
 		Entity owner = this.getOwner();
 		
@@ -179,28 +182,29 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 		damage = adjustDamage(damage, channeling);
 		boolean crit = false;
 		
-		if (attacked instanceof LivingEntity livingAttacked) {
-			damage *= (getDamage(stack) + EnchantmentHelper.getAttackDamage(stack, livingAttacked.getGroup()));
+		DamageSource damageSource = SpectrumDamageTypes.impaling(getWorld(), this, owner);
+		
+		if (getWorld() instanceof ServerWorld serverWorld) {
+			damage *= EnchantmentHelper.getDamage(serverWorld, stack, attacked, damageSource, getDamage(stack));
 		}
 		
 		if (!attacked.isOnGround() && propelled) {
-			damage *= 3 + ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(owner.getWorld().getRegistryManager(), stack);
+			damage *= 3 + ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(getWorld().getRegistryManager(), stack);
 			crit = true;
 		}
 		
-		DamageSource damageSource = SpectrumDamageTypes.impaling(getWorld(), this, owner);
 		SoundEvent soundEvent = SpectrumSoundEvents.IMPALING_HIT;
 		if (attacked.damage(damageSource, damage)) {
 			if (attacked.getType() == EntityType.ENDERMAN) {
 				return;
 			}
 			
+			if (getWorld() instanceof ServerWorld serverWorld) {
+				EnchantmentHelper.onTargetDamaged(serverWorld, attacked, damageSource, stack);
+			}
+			
 			if (attacked instanceof LivingEntity livingAttacked) {
-				if (owner instanceof LivingEntity) {
-					EnchantmentHelper.onUserDamaged(livingAttacked, owner);
-					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingAttacked);
-				}
-				
+				this.knockback(livingAttacked, damageSource);
 				this.onHit(livingAttacked);
 			}
 		}
@@ -251,7 +255,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 		var pos = blockHitResult.getBlockPos();
 		var state = getWorld().getBlockState(pos);
 		var stack = getTrackedStack();
-		var channeling = EnchantmentHelper.getLevel(Enchantments.CHANNELING, stack);
+		var channeling = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.CHANNELING, stack);
 		var damage = adjustDamage(getDamage(stack), channeling);
 		var damageSource = SpectrumDamageTypes.impaling(getWorld(), this, getOwner());
 		
@@ -271,7 +275,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 			return;
 		}
 		
-		if (!isRebounding() && !isPropelled() && bounce) {
+		if (!isRebounding() && !isPropelled() && bounce && getOwner() != null) {
 			travelingTicks = 0;
 			rebound(getOwner().getPos(), 0.105, 0.15);
 			playSound(SpectrumSoundEvents.METAL_TAP, 1, 1.5F);
@@ -342,10 +346,21 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	}
 	
 	private float getDamage(ItemStack stack) {
-		return (float) stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_DAMAGE)
-				.stream()
-				.mapToDouble(EntityAttributeModifier::getValue)
-				.sum();
+		var damage = new AtomicDouble(0);
+		var key = EntityAttributes.GENERIC_ATTACK_DAMAGE.getKey().orElse(null);
+		var base = EntityAttributes.GENERIC_ATTACK_DAMAGE.value().getDefaultValue();
+		var modifiers = stack.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT);
+		modifiers.applyModifiers(EquipmentSlot.MAINHAND, (attribute, modifier) -> {
+			if (attribute.matchesKey(key)) {
+				var value = modifier.value();
+				damage.addAndGet(switch (modifier.operation()) {
+					case ADD_VALUE -> value;
+					case ADD_MULTIPLIED_BASE -> value * base;
+					case ADD_MULTIPLIED_TOTAL -> value * damage.get();
+				});
+			}
+		});
+		return (float) damage.get();
 	}
 	
 	@Override
@@ -389,7 +404,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	public void remove(RemovalReason reason) {
 		var rootStack = getRootStack();
 		if (!rootStack.isEmpty()) {
-			SpectrumItems.DRACONIC_TWINSWORD.markReserved(rootStack, false);
+			SlotReservingItem.free(rootStack);
 		}
 		super.remove(reason);
 	}
@@ -407,7 +422,6 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
 		this.dataTracker.set(HIT, nbt.getBoolean("hit"));
-		setTrackedStack(ItemStack.fromNbt(nbt));
 		setPropelled(nbt.getBoolean("propelled"));
 		setRebounding(nbt.getBoolean("rebounding"));
 	}
@@ -415,7 +429,6 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
-		getTrackedStack().writeNbt(nbt);
 		nbt.putBoolean("hit", this.dataTracker.get(HIT));
 		nbt.putBoolean("propelled", isPropelled());
 		nbt.putBoolean("rebounding", isRebounding());
@@ -431,15 +444,13 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 	
 	private ItemStack getRootStack() {
 		if (getOwner() instanceof PlayerEntity player) {
-			var rootStack = DraconicTwinswordItem.findThrownStack(player, uuid);
-			return rootStack;
+			return DraconicTwinswordItem.findThrownStack(player, uuid);
 		}
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
 	public void onPlayerCollision(PlayerEntity player) {
-	
 	}
 	
 	@Override
@@ -460,7 +471,7 @@ public class DraconicTwinswordEntity extends BidentBaseEntity implements NonLivi
 			if (this.getWorld().isClient())
 				return true;
 			
-			SpectrumItems.DRACONIC_TWINSWORD.markReserved(rootStack, false);
+			SlotReservingItem.free(rootStack);
 			player.sendPickup(this, 1);
 			player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, 1);
 			discard();

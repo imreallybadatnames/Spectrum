@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -31,22 +30,15 @@ import java.util.*;
 
 public class MalachiteBidentItem extends TridentItem implements Preenchanted, ExpandedStatTooltip, ArmorPiercingItem {
 	
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	private final float armorPierce, protPierce;
 	
 	public MalachiteBidentItem(Item.Settings settings, double attackSpeed, double damage, float armorPierce, float protPierce) {
-		super(settings);
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", damage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		this.attributeModifiers = builder.build();
+		super(settings.attributeModifiers(AttributeModifiersComponent.builder()
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.build()));
 		this.armorPierce = armorPierce;
 		this.protPierce = protPierce;
-	}
-	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
 	}
 	
 	@Override
@@ -77,7 +69,7 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 				player.incrementStat(Stats.USED.getOrCreateStat(this));
 				
 				if (canStartRiptide(player, stack)) {
-					riptide(world, player, getRiptideLevel(world.getRegistryManager(), stack));
+					riptide(world, player, stack, getRiptideLevel(world.getRegistryManager(), stack));
 				} else if (!world.isClient) {
 					stack.damage(1, player, LivingEntity.getSlotForHand(user.getActiveHand()));
 					throwBident(stack, (ServerWorld) world, player);
@@ -88,16 +80,16 @@ public class MalachiteBidentItem extends TridentItem implements Preenchanted, Ex
 	
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-		return SpectrumToolMaterials.Material.MALACHITE.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
+		return SpectrumToolMaterial.MALACHITE.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
 	}
 	
 	public int getRiptideLevel(RegistryWrapper.WrapperLookup lookup, ItemStack stack) {
 		return SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.RIPTIDE, stack);
 	}
 	
-	protected void riptide(World world, PlayerEntity playerEntity, int riptideLevel) {
+	protected void riptide(World world, PlayerEntity playerEntity, ItemStack stack, int riptideLevel) {
 		yeetPlayer(playerEntity, (float) riptideLevel);
-		playerEntity.useRiptide(20);
+		playerEntity.useRiptide(20, (float) playerEntity.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE), stack);
 		if (playerEntity.isOnGround()) {
 			playerEntity.move(MovementType.SELF, new Vec3d(0.0, 1.2, 0.0));
 		}

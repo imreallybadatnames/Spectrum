@@ -1,14 +1,15 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
 import de.dafuqs.spectrum.entity.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
@@ -27,47 +28,29 @@ import java.util.*;
 public class DraconicTwinswordItem extends SwordItem implements SplittableItem, SlotReservingItem, Preenchanted, ExtendedItemBarProvider, SlotBackgroundEffectProvider {
 
 	public static final float MAX_CHARGE_TIME = 60;
-	private final Multimap<EntityAttribute, EntityAttributeModifier> phantomModifiers;
+	private final AttributeModifiersComponent modifiers;
 	
 	public DraconicTwinswordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-		super(toolMaterial, attackDamage, attackSpeed, settings);
-		
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> phantom = ImmutableMultimap.builder();
-		this.phantomModifiers = phantom.build();
-	}
-	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-		if (slot != EquipmentSlot.MAINHAND)
-			return super.getAttributeModifiers(slot);
-		
-		var nbt = stack.getOrCreateNbt();
-		if (nbt.getBoolean("cooldown") || isReservingSlot(stack))
-			return phantomModifiers;
-		
-		return super.getAttributeModifiers(slot);
+		super(toolMaterial, settings);
+		this.modifiers = createAttributeModifiers(toolMaterial, attackDamage, attackSpeed);
 	}
 	
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-		if (isReservingSlot(stack) || remainingUseTicks == 0) {
+		if (SlotReservingItem.isReservingSlot(stack) || remainingUseTicks == 0) {
 			return;
 		}
 		
-		var strength = Math.min(Math.abs(remainingUseTicks - getMaxUseTime(stack)), MAX_CHARGE_TIME) / MAX_CHARGE_TIME;
+		var strength = Math.min(getMaxUseTime(stack, user) - remainingUseTicks, MAX_CHARGE_TIME) / MAX_CHARGE_TIME;
 		var twinsword = initiateTwinswordEntity(stack, world, user, strength);
 		
 		world.spawnEntity(twinsword);
-		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THROW;
 		
-		world.playSoundFromEntity(null, twinsword, soundEvent, SoundCategory.PLAYERS, 0.5F + strength / 2, 1.0F);
-		var nbt = stack.getOrCreateNbt();
-		markReserved(stack, true);
-		nbt.putUuid("lastTwinsword", twinsword.getUuid());
+		world.playSoundFromEntity(null, twinsword, SoundEvents.ITEM_TRIDENT_THROW.value(), SoundCategory.PLAYERS, 0.5F + strength / 2, 1.0F);
+		SlotReservingItem.reserve(stack, twinsword.getUuid());
 		
 		if (!world.isClient())
 			stack.damage(1, user, LivingEntity.getSlotForHand(user.getActiveHand()));
-		
 		
 		super.onStoppedUsing(stack, world, user, remainingUseTicks);
 	}
@@ -86,7 +69,7 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 		
 		twinsword.updatePosition(user.getX() + f * 1.334, user.getEyeY() - 0.2, user.getZ() + h * 1.334);
 		twinsword.setVelocity(0, strength, 0);
-		twinsword.setMaxPierce(EnchantmentHelper.getLevel(Enchantments.PIERCING, stack));
+		twinsword.setMaxPierce(SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.PIERCING, stack));
 		twinsword.velocityDirty = true;
 		twinsword.velocityModified = true;
 		twinsword.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
@@ -119,20 +102,17 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 		if (entity instanceof PlayerEntity player) {
-			var nbt = stack.getOrCreateNbt();
-			if (player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
-				if (!nbt.getBoolean("cooldown")) {
-					nbt.putBoolean("cooldown", true);
-				}
-			} else if (nbt.contains("cooldown")) {
-				nbt.remove("cooldown");
+			if (player.getItemCooldownManager().isCoolingDown(stack.getItem()) || SlotReservingItem.isReservingSlot(stack)) {
+				stack.remove(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+			} else {
+				stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, modifiers);
 			}
 		}
 	}
 	
 	@Override
 	public boolean hasGlint(ItemStack stack) {
-		return super.hasGlint(stack) && !isReservingSlot(stack);
+		return super.hasGlint(stack) && !SlotReservingItem.isReservingSlot(stack);
 	}
 	
 	@Override
@@ -140,18 +120,15 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 		var result = new ItemStack(SpectrumItems.DRAGON_TALON);
 		var durability = parent.getDamage();
 		
-		if (isReservingSlot(parent)) {
+		if (SlotReservingItem.isReservingSlot(parent)) {
 			durability += player.getAbilities().creativeMode ? 0 : 500;
 			player.getItemCooldownManager().set(result.getItem(), 400);
 		}
 		
-		var nbt = parent.getOrCreateNbt();
-		nbt.remove("lastTwinsword");
-		nbt.remove("cooldown");
-		nbt.remove(SlotReservingItem.NBT_STRING);
+		result.applyComponentsFrom(parent.getComponents());
+		result.remove(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+		SlotReservingItem.free(result);
 		
-		
-		result.setNbt(parent.getNbt());
 		result.setDamage(durability);
 		sign(player, result);
 		return result;
@@ -173,22 +150,11 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 		player.playSoundToPlayer(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
 	}
 	
-	@Override
-	public boolean isReservingSlot(ItemStack stack) {
-		return stack.getOrCreateNbt().getBoolean(SlotReservingItem.NBT_STRING);
-	}
-	
-	@Override
-	public void markReserved(ItemStack stack, boolean reserved) {
-		stack.getOrCreateNbt().putBoolean(SlotReservingItem.NBT_STRING, reserved);
-	}
-	
 	public static ItemStack findThrownStack(PlayerEntity player, UUID id) {
 		var inventory = player.getInventory();
 		for (int i = 0; i < inventory.size(); i++) {
 			var stack = inventory.getStack(i);
-			var nbt = stack.getNbt();
-			if (nbt != null && nbt.containsUuid("lastTwinsword") && nbt.getUuid("lastTwinsword").equals(id)) {
+			if (SlotReservingItem.isReserver(stack, id)) {
 				return stack;
 			}
 		}
@@ -207,7 +173,7 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 	
 	@Override
 	public boolean allowVanillaDurabilityBarRendering(@Nullable PlayerEntity player, ItemStack stack) {
-		if (player == null || isReservingSlot(stack) || player.getStackInHand(player.getActiveHand()) != stack)
+		if (player == null || SlotReservingItem.isReservingSlot(stack) || player.getStackInHand(player.getActiveHand()) != stack)
 			return true;
 		
 		return !player.isUsingItem();
@@ -215,13 +181,12 @@ public class DraconicTwinswordItem extends SwordItem implements SplittableItem, 
 	
 	@Override
 	public BarSignature getSignature(@Nullable PlayerEntity player, @NotNull ItemStack stack, int index) {
-		if (player == null || isReservingSlot(stack) || !player.isUsingItem())
+		if (player == null || SlotReservingItem.isReservingSlot(stack) || !player.isUsingItem())
 			return ExtendedItemBarProvider.PASS;
 		
 		var activeStack = player.getStackInHand(player.getActiveHand());
 		if (activeStack != stack)
 			return ExtendedItemBarProvider.PASS;
-		
 		
 		var progress = Math.round(MathHelper.clampedLerp(0, 13, ((float) player.getItemUseTime() / MAX_CHARGE_TIME)));
 		return new BarSignature(2, 13, 13, progress, 1, InkColors.YELLOW_COLOR, 2, ExtendedItemBarProvider.DEFAULT_BACKGROUND_COLOR);

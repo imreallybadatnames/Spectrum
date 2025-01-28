@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.cca;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.cca.azure_dike.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.tag.convention.v2.*;
@@ -40,8 +41,8 @@ public class OnPrimordialFireComponent implements AutoSyncedComponent, ServerTic
 	
 	// this is not optional
 	// removing this empty constructor will make the world not load
+	@SuppressWarnings("unused")
 	public OnPrimordialFireComponent() {
-	
 	}
 	
 	public OnPrimordialFireComponent(LivingEntity entity) {
@@ -49,14 +50,14 @@ public class OnPrimordialFireComponent implements AutoSyncedComponent, ServerTic
 	}
 
 	@Override
-	public void writeToNbt(@NotNull NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void writeToNbt(@NotNull NbtCompound tag, @NotNull RegistryWrapper.WrapperLookup wrapperLookup) {
 		if (this.primordialFireTicks > 0) {
 			tag.putLong("ticks", this.primordialFireTicks);
 		}
 	}
 	
 	@Override
-	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
+	public void readFromNbt(NbtCompound tag, @NotNull RegistryWrapper.WrapperLookup wrapperLookup) {
 		if (tag.contains("ticks", NbtElement.LONG_TYPE)) {
 			this.primordialFireTicks = tag.getLong("ticks");
 		} else {
@@ -72,7 +73,10 @@ public class OnPrimordialFireComponent implements AutoSyncedComponent, ServerTic
 
 	public static void addPrimordialFireTicks(LivingEntity livingEntity, int ticks) {
 		OnPrimordialFireComponent component = ON_PRIMORDIAL_FIRE_COMPONENT.get(livingEntity);
-		ticks = ProtectionEnchantment.transformFireDuration(livingEntity, ticks);
+		int i = SpectrumEnchantmentHelper.getEquipmentLevel(livingEntity.getWorld().getRegistryManager(), Enchantments.FIRE_PROTECTION, livingEntity);
+		if (i > 0) {
+			ticks -= MathHelper.floor(ticks * i * 0.15F);
+		}
 		component.primordialFireTicks += ticks;
 
 
@@ -143,7 +147,7 @@ public class OnPrimordialFireComponent implements AutoSyncedComponent, ServerTic
 
 	public float getDamagePenalties(LivingEntity entity) {
 		//fire prot has a cap of 50% DR, requiring fire protection 10 on an armor piece
-		float fireProt = Math.min(FIRE_PROT_DAMAGE_RESISTANCE * EnchantmentHelper.getEquipmentLevel(Enchantments.FIRE_PROTECTION, provider), 0.5F);
+		float fireProt = Math.min(FIRE_PROT_DAMAGE_RESISTANCE * SpectrumEnchantmentHelper.getEquipmentLevel(entity.getWorld().getRegistryManager(), Enchantments.FIRE_PROTECTION, provider), 0.5F);
 		int fireResLevel = Optional.ofNullable(provider.getStatusEffect(StatusEffects.FIRE_RESISTANCE)).map(StatusEffectInstance::getAmplifier).orElse(-1) + 1;
 		float fireRes = 0;
 

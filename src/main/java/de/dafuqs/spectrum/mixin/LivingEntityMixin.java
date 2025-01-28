@@ -137,7 +137,7 @@ public abstract class LivingEntityMixin {
 		var override = false;
 		var friction = -1F;
 		
-		if (talon.isReservingSlot(this.getMainHandStack()) || talon.isReservingSlot(this.getOffHandStack())) {
+		if (SlotReservingItem.isReservingSlot(this.getMainHandStack()) || SlotReservingItem.isReservingSlot(this.getOffHandStack())) {
 			if (!(entity).isOnGround()) {
 				friction = 0.945F;
 				override = true;

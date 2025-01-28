@@ -396,7 +396,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		pedestalBlockEntity.storedXP += experience;
 		
 		PlayerEntity player = pedestalBlockEntity.getOwnerIfOnline();
-		//TODO revisit onCraftByCrafter
+		//TODO revisit onCraftByCrafter (see OfflineDataLookup)
 		if (player != null) {
 			outputStack.onCraftByPlayer(world, player, outputStack.getCount());
 		}

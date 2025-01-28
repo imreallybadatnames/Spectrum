@@ -16,7 +16,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -79,8 +79,7 @@ public class TitrationBarrelBlockEntity extends BlockEntity implements FluidStac
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
 		Inventories.writeNbt(nbt, items, registryLookup);
-		// FIXME - No longer an NBT element
-		nbt.put("FluidVariant", this.fluidStorage.variant);
+		CodecHelper.writeNbt(nbt, "FluidVariant", FluidVariant.CODEC, this.fluidStorage.variant);
 		nbt.putLong("FluidAmount", this.fluidStorage.amount);
 		nbt.putLong("SealTime", this.sealTime);
 		nbt.putLong("TapTime", this.tapTime);
@@ -93,7 +92,7 @@ public class TitrationBarrelBlockEntity extends BlockEntity implements FluidStac
 		
 		this.items = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		Inventories.readNbt(nbt, items, registryLookup);
-		this.fluidStorage.variant = FluidVariant.CODEC.parse(NbtOps.INSTANCE, nbt.getCompound("FluidVariant")).getOrThrow();
+		this.fluidStorage.variant = CodecHelper.fromNbt(FluidVariant.CODEC, nbt.get("FluidVariant"), FluidVariant.blank());
 		this.fluidStorage.amount = nbt.getLong("FluidAmount");
 		this.sealTime = nbt.contains("SealTime", NbtElement.LONG_TYPE) ? nbt.getLong("SealTime") : -1;
 		this.tapTime = nbt.contains("TapTime", NbtElement.LONG_TYPE) ? nbt.getLong("TapTime") : -1;
@@ -150,7 +149,7 @@ public class TitrationBarrelBlockEntity extends BlockEntity implements FluidStac
 	}
 	
 	private boolean isEmpty(float temperature, int extractedBottles, ITitrationBarrelRecipe recipe) {
-		if (recipe.isEmpty() || !recipe.getFluidInput().test(getFluidVariant())) {
+		if (world == null || recipe.isEmpty() || !recipe.getFluidInput().test(getFluidVariant())) {
 			return true;
 		}
 		return extractedBottles >= recipe.getOutputCountAfterAngelsShare(this.world, temperature, getSealSeconds());
