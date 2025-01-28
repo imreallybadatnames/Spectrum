@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
@@ -15,7 +15,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.sound.*;
@@ -40,79 +39,19 @@ public class EnderSpliceItem extends Item {
 	}
 	
 	public static void setTeleportTargetPos(@NotNull ItemStack itemStack, World world, Vec3d pos) {
-		NbtCompound nbtCompound = itemStack.getOrCreateNbt();
-		
-		// Remove player tags, if present
-		if (nbtCompound.contains("TargetPlayerName")) {
-			nbtCompound.remove("TargetPlayerName");
-		}
-		if (nbtCompound.contains("TargetPlayerUUID")) {
-			nbtCompound.remove("TargetPlayerUUID");
-		}
-		
-		// Add pos
-		nbtCompound.putDouble("PosX", pos.getX());
-		nbtCompound.putDouble("PosY", pos.getY());
-		nbtCompound.putDouble("PosZ", pos.getZ());
-		nbtCompound.putString("Dimension", world.getRegistryKey().getValue().toString());
-		itemStack.setNbt(nbtCompound);
+		itemStack.set(SpectrumDataComponentTypes.ENDER_SPLICE, new EnderSpliceComponent(pos, world.getRegistryKey()));
 	}
 	
 	public static void setTeleportTargetPlayer(@NotNull ItemStack itemStack, ServerPlayerEntity player) {
-		NbtCompound nbtCompound = itemStack.getOrCreateNbt();
-		
-		// Override target pos, if present
-		if (nbtCompound.contains("PosX")) {
-			nbtCompound.remove("PosX");
-		}
-		if (nbtCompound.contains("PosY")) {
-			nbtCompound.remove("PosY");
-		}
-		if (nbtCompound.contains("PosZ")) {
-			nbtCompound.remove("PosZ");
-		}
-		if (nbtCompound.contains("Dimension")) {
-			nbtCompound.remove("Dimension");
-		}
-		
-		// Add player
-		nbtCompound.putString("TargetPlayerName", player.getName().getString());
-		nbtCompound.putUuid("TargetPlayerUUID", player.getUuid());
-		itemStack.setNbt(nbtCompound);
+		itemStack.set(SpectrumDataComponentTypes.ENDER_SPLICE, new EnderSpliceComponent(player.getName().getString(), player.getUuid()));
 	}
 	
 	public static boolean hasTeleportTarget(ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound == null) {
-			return false;
-		}
-		
-		return nbtCompound.contains("PosX") || nbtCompound.contains("TargetPlayerName");
+		return itemStack.contains(SpectrumDataComponentTypes.ENDER_SPLICE);
 	}
 	
 	public static void clearTeleportTarget(ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getOrCreateNbt();
-		
-		if (nbtCompound.contains("PosX")) {
-			nbtCompound.remove("PosX");
-		}
-		if (nbtCompound.contains("PosY")) {
-			nbtCompound.remove("PosY");
-		}
-		if (nbtCompound.contains("PosZ")) {
-			nbtCompound.remove("PosZ");
-		}
-		if (nbtCompound.contains("Dimension")) {
-			nbtCompound.remove("Dimension");
-		}
-		if (nbtCompound.contains("TargetPlayerName")) {
-			nbtCompound.remove("TargetPlayerName");
-		}
-		if (nbtCompound.contains("TargetPlayerUUID")) {
-			nbtCompound.remove("TargetPlayerUUID");
-		}
-		
-		itemStack.setNbt(nbtCompound);
+		itemStack.remove(SpectrumDataComponentTypes.ENDER_SPLICE);
 	}
 	
 	@Override
@@ -127,10 +66,9 @@ public class EnderSpliceItem extends Item {
 			boolean resonance = EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, SpectrumEnchantmentTags.DIMENSIONAL_TELEPORT);
 			
 			// If Dimension & Pos stored => Teleport to that position
-			Optional<Pair<String, Vec3d>> teleportTargetPos = getTeleportTargetPos(itemStack);
+			var teleportTargetPos = getTeleportTargetPos(itemStack);
 			if (teleportTargetPos.isPresent()) {
-				RegistryKey<World> targetWorldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(teleportTargetPos.get().getLeft()));
-				World targetWorld = world.getServer().getWorld(targetWorldKey);
+				World targetWorld = world.getServer().getWorld(teleportTargetPos.get().getLeft());
 				if (teleportPlayerToPos(world, user, playerEntity, targetWorld, teleportTargetPos.get().getRight(), resonance)) {
 					decrementWithChance(itemStack, world, playerEntity);
 				}
@@ -172,7 +110,7 @@ public class EnderSpliceItem extends Item {
 		// If aiming at an entity: trigger entity interaction
 		MinecraftClient client = MinecraftClient.getInstance();
 		HitResult hitResult = client.crosshairTarget;
-		if (hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof PlayerEntity playerEntity) {
+		if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof PlayerEntity playerEntity) {
 			ClientPlayNetworking.send(new BindEnderSpliceToPlayerPayload(playerEntity.getId()));
 		}
 	}
@@ -238,9 +176,9 @@ public class EnderSpliceItem extends Item {
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		// If Dimension & Pos stored => Teleport to that position
-		Optional<Pair<String, Vec3d>> teleportTargetPos = getTeleportTargetPos(stack);
+		var teleportTargetPos = getTeleportTargetPos(stack);
 		if (teleportTargetPos.isPresent()) {
-			String dimensionDisplayString = Support.getReadableDimensionString(teleportTargetPos.get().getLeft());
+			String dimensionDisplayString = Support.getReadableDimensionString(teleportTargetPos.get().getLeft().getValue().toString());
 			Vec3d pos = teleportTargetPos.get().getRight();
 			tooltip.add(Text.translatable("item.spectrum.ender_splice.tooltip.bound_pos", (int) pos.x, (int) pos.y, (int) pos.z, dimensionDisplayString));
 			return;
@@ -261,34 +199,19 @@ public class EnderSpliceItem extends Item {
 		tooltip.add(Text.translatable("item.spectrum.ender_splice.tooltip.unbound"));
 	}
 	
-	public Optional<Pair<String, Vec3d>> getTeleportTargetPos(@NotNull ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound != null && nbtCompound.contains("PosX") && nbtCompound.contains("PosY") && nbtCompound.contains("PosZ") && nbtCompound.contains("Dimension")) {
-			String dimensionKeyString = nbtCompound.getString("Dimension");
-			double x = nbtCompound.getDouble("PosX");
-			double y = nbtCompound.getDouble("PosY");
-			double z = nbtCompound.getDouble("PosZ");
-			Vec3d pos = new Vec3d(x, y, z);
-			
-			return Optional.of(new Pair<>(dimensionKeyString, pos));
-		}
+	public Optional<Pair<RegistryKey<World>, Vec3d>> getTeleportTargetPos(@NotNull ItemStack itemStack) {
+		var component = itemStack.getOrDefault(SpectrumDataComponentTypes.ENDER_SPLICE, EnderSpliceComponent.DEFAULT);
+		if (component.pos().isPresent() && component.dimension().isPresent())
+			return Optional.of(new Pair<>(component.dimension().get(), component.pos().get()));
 		return Optional.empty();
 	}
 	
 	public Optional<UUID> getTeleportTargetPlayerUUID(@NotNull ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound != null && nbtCompound.contains("TargetPlayerUUID")) {
-			return Optional.of(nbtCompound.getUuid("TargetPlayerUUID"));
-		}
-		return Optional.empty();
+		return itemStack.getOrDefault(SpectrumDataComponentTypes.ENDER_SPLICE, EnderSpliceComponent.DEFAULT).targetUUID();
 	}
 	
 	public Optional<String> getTeleportTargetPlayerName(@NotNull ItemStack itemStack) {
-		NbtCompound nbtCompound = itemStack.getNbt();
-		if (nbtCompound != null && nbtCompound.contains("TargetPlayerName")) {
-			return Optional.of(nbtCompound.getString("TargetPlayerName"));
-		}
-		return Optional.empty();
+		return itemStack.getOrDefault(SpectrumDataComponentTypes.ENDER_SPLICE, EnderSpliceComponent.DEFAULT).targetName();
 	}
 	
 	@Override

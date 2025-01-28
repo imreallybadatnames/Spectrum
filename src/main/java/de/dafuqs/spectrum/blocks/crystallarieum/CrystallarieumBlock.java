@@ -106,9 +106,9 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 		return ItemActionResult.SUCCESS;
 	}
 	
-	public ItemStack asStackWithColor(Optional<InkColor> color) {
+	public ItemStack asStackWithColor(InkColor color) {
 		ItemStack stack = asItem().getDefaultStack();
-		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(color));
+		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(Optional.of(color)));
 		return stack;
 	}
 

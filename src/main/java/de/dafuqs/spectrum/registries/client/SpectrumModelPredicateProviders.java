@@ -280,9 +280,8 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerEnderSplicePredicates(Item enderSpliceItem) {
-		ModelPredicateProviderRegistry.register(enderSpliceItem, Identifier.of("bound"), (stack, world, entity, i) -> {
-			NbtCompound compoundTag = stack.getNbt();
-			if (compoundTag != null && (compoundTag.contains("PosX") || compoundTag.contains("TargetPlayerUUID"))) {
+		ModelPredicateProviderRegistry.register(enderSpliceItem, SpectrumCommon.locate("bound"), (stack, world, entity, i) -> {
+			if (EnderSpliceItem.hasTeleportTarget(stack)) {
 				return 1.0F;
 			} else {
 				return 0.0F;

@@ -1,16 +1,15 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.crystallarieum.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.text.*;
@@ -80,7 +79,7 @@ public class BookCrystallarieumGrowingPageRenderer extends BookGatedRecipePageRe
         }
 
         // crystallarieum
-        parentScreen.renderItemStack(drawContext, recipeX + 23, recipeY + 8, mouseX, mouseY, SpectrumBlocks.CRYSTALLARIEUM.asStackWithColor(NullableDyeColor.get(recipe.getInkColor().getDyeColor())));
+        parentScreen.renderItemStack(drawContext, recipeX + 23, recipeY + 8, mouseX, mouseY, SpectrumBlocks.CRYSTALLARIEUM.asStackWithColor(recipe.getInkColor()));
 
         // catalyst text
         renderBookTextHolder(drawContext, catalystText, 0, 38, BookEntryScreen.PAGE_WIDTH);
@@ -92,11 +91,11 @@ public class BookCrystallarieumGrowingPageRenderer extends BookGatedRecipePageRe
         int offsetPerReagent = 18;
         for (CrystallarieumCatalyst catalyst : recipe.getCatalysts()) {
             int offsetX = recipeX + startX + offsetPerReagent * x;
-            parentScreen.renderIngredient(drawContext, recipeX + startX + offsetPerReagent * x, recipeY + 27, mouseX, mouseY, catalyst.ingredient);
+            parentScreen.renderIngredient(drawContext, recipeX + startX + offsetPerReagent * x, recipeY + 27, mouseX, mouseY, catalyst.ingredient());
 
-            float growthAcceleration = catalyst.growthAccelerationMod;
-            float inkConsumption = catalyst.inkConsumptionMod;
-            float consumeChance = catalyst.consumeChancePerSecond;
+            float growthAcceleration = catalyst.growthAccelerationMod();
+            float inkConsumption = catalyst.inkConsumptionMod();
+            float consumeChance = catalyst.consumeChancePerSecond();
 
             RenderSystem.enableBlend();
             int offsetU = growthAcceleration == 1 ? 97 : growthAcceleration >= 6 ? 85 : growthAcceleration > 1 ? 67 : growthAcceleration <= 0.25 ? 79 : 73;

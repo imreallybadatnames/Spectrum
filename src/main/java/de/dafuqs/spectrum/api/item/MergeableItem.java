@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.api.item;
 
-import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.server.network.*;
@@ -16,8 +15,8 @@ public interface MergeableItem {
 			return false;
 		
 		var comp = parent.get(SpectrumDataComponentTypes.PAIRED_ITEM);
-		var otherSig = other.getOrDefault(SpectrumDataComponentTypes.PAIRED_ITEM, PairedItemComponent.DEFAULT).signature();
-		return comp != null && comp.signature() == otherSig;
+		var otherComp = other.get(SpectrumDataComponentTypes.PAIRED_ITEM);
+		return comp != null && otherComp != null && comp.signature() == otherComp.signature();
 	}
 
 	void playSound(ServerPlayerEntity player);

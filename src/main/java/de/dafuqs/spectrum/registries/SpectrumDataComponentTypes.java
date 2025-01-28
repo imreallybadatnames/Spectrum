@@ -22,6 +22,7 @@ public class SpectrumDataComponentTypes {
 	public static final ComponentType<BeverageComponent> BEVERAGE = register("beverage", builder -> builder.codec(BeverageComponent.CODEC).packetCodec(BeverageComponent.PACKET_CODEC));
 	public static final ComponentType<BottomlessBundleItem.BottomlessStack> BOTTOMLESS_STACK = register("bottomless_stack", builder -> builder.codec(BottomlessBundleItem.BottomlessStack.CODEC).packetCodec(BottomlessBundleItem.BottomlessStack.PACKET_CODEC));
 	public static final ComponentType<Identifier> BOUND_ITEM = register("bound_item", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
+	public static final ComponentType<EnderSpliceComponent> ENDER_SPLICE = register("ender_splice", builder -> builder.codec(EnderSpliceComponent.CODEC).packetCodec(EnderSpliceComponent.PACKET_CODEC));
 	public static final ComponentType<Unit> HIDE_USAGE_TOOLTIP = register("hide_usage_tooltip", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<InertiaComponent> INERTIA = register("inertia", builder -> builder.codec(InertiaComponent.CODEC).packetCodec(InertiaComponent.PACKET_CODEC));
 	public static final ComponentType<InfusedBeverageComponent> INFUSED_BEVERAGE = register("infused_beverage", builder -> builder.codec(InfusedBeverageComponent.CODEC).packetCodec(InfusedBeverageComponent.PACKET_CODEC));
