@@ -21,6 +21,7 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import java.util.stream.*;
 
+//TODO: Hey, someone rename this to FabricationChestBlockEntity (no I will not do it I'd rather not anger the port gods)
 public class RestockingChestBlockEntity extends SpectrumChestBlockEntity implements SidedInventory {
 	
 	public static final int INVENTORY_SIZE = 27 + 4 + 4; // 27 items, 4 crafting tablets, 4 result slots
@@ -86,12 +87,11 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 						if (couldCraft) {
 							chest.setCooldown(chest, 20);
 							chest.markDirty();
-							chest.updateFullState();
+							chest.updateFullState(false);
 							return;
 						}
 					}
 				}
-				chest.updateFullState();
 			}
 		}
 	}
@@ -290,11 +290,15 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 		return !isFull && hasValidRecipes();
 	}
 
-	public void updateFullState() {
+	public void updateFullState(boolean force) {
 		if (!world.isClient()) {
+			var wasFull = isFull;
 			isFull = isFull();
+			var hadValidRecipes = hasValidRecipes;
 			hasValidRecipes = hasValidRecipes();
-			SpectrumS2CPacketSender.sendRestockingChestStatusUpdate(this);
+			if (force || wasFull != isFull || hadValidRecipes != hasValidRecipes) {
+				SpectrumS2CPacketSender.sendRestockingChestStatusUpdate(this);
+			}
 		}
 	}
 
@@ -330,6 +334,34 @@ public class RestockingChestBlockEntity extends SpectrumChestBlockEntity impleme
 	public boolean canSlotFitCraftingOutput(ItemStack slot, Recipe<?> recipe) {
         return slot.isEmpty() || slot.getCount() + recipe.getOutput(world.getRegistryManager()).getCount() < slot.getMaxCount();
     }
+	
+	@Override
+	protected void onInvOpenOrClose(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
+		super.onInvOpenOrClose(world, pos, state, oldViewerCount, newViewerCount);
+		updateFullState(true);
+	}
+	
+	@Override
+	public void setStack(int slot, ItemStack stack) {
+		super.setStack(slot, stack);
+		updateFullState(false);
+	}
+	
+	@Override
+	public ItemStack removeStack(int slot, int amount) {
+		var stack = super.removeStack(slot, amount);
+		if (!stack.isEmpty())
+			updateFullState(false);
+		return stack;
+	}
+	
+	@Override
+	public ItemStack removeStack(int slot) {
+		var stack = super.removeStack(slot);
+		if (!stack.isEmpty())
+			updateFullState(false);
+		return stack;
+	}
 
 	public void updateState(boolean full, boolean hasValidRecipes, List<ItemStack> cachedOutputs) {
 		this.isFull = full;
