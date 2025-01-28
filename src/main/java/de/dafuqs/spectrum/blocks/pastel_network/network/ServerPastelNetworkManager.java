@@ -88,9 +88,19 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 		return network;
 	}
 	
-	public void connectNodes(PastelNodeBlockEntity firstNode, PastelNodeBlockEntity secondNode) {
+	/**
+	 * Connect a set of Pastel Nodes - or disconnect them, if they already were connected
+	 *
+	 * @return true if they successfully connected / disconnected
+	 */
+	public boolean toggleNodeConnection(PastelNodeBlockEntity firstNode, PastelNodeBlockEntity secondNode) {
 		Optional<ServerPastelNetwork> firstNetwork = firstNode.getServerNetwork();
 		Optional<ServerPastelNetwork> secondNetwork = secondNode.getServerNetwork();
+		
+		if (secondNetwork.isPresent() && secondNetwork.equals(firstNetwork)) {
+			return firstNetwork.get().removeEdge(firstNode, secondNode) || firstNetwork.get().addEdge(firstNode, secondNode);
+		}
+		
 		ServerPastelNetwork biggerNetwork, smallerNetwork;
 		
 		// we have no network yet
@@ -100,9 +110,7 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 			newNetwork.addNode(secondNode);
 			secondNode.setNetworkUUID(newNetwork.getUUID());
 			newNetwork.addNodeAndConnect(firstNode, secondNode);
-			firstNode.setNetworkUUID(newNetwork.getUUID());
-			SpectrumS2CPacketSender.syncPastelNetworkEdges(newNetwork, firstNode.getPos());
-			return;
+			return true;
 		}
 		
 		// Both nodes have an existing network
@@ -121,15 +129,20 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 			biggerNetwork.addEdge(firstNode, secondNode);
 			this.networks.remove(smallerNetwork);
 			SpectrumS2CPacketSender.syncPastelNetworkEdges(biggerNetwork, firstNode.getPos());
-			return;
+			return true;
 		}
 		
 		// Only one of the nodes has an existing network
-		// => add the single node to that
-		biggerNetwork = firstNetwork.orElseGet(secondNetwork::get);
-		biggerNetwork.addNodeAndConnect(firstNode, secondNode);
-		firstNode.setNetworkUUID(biggerNetwork.getUUID());
-		SpectrumS2CPacketSender.syncPastelNetworkEdges(biggerNetwork, firstNode.getPos());
+		// => add the single node to that one
+		if (firstNetwork.isPresent()) {
+			ServerPastelNetwork n = firstNetwork.get();
+			n.addNodeAndConnect(secondNode, firstNode);
+		} else {
+			ServerPastelNetwork n = secondNetwork.get();
+			n.addNodeAndConnect(firstNode, secondNode);
+		}
+		
+		return true;
 	}
 	
 	@Override
@@ -152,18 +165,6 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 		if (optional.isPresent()) {
 			ServerPastelNetwork network = optional.get();
 			network.removeNode(node, reason);
-			
-			if (reason == NodeRemovalReason.UNLOADED) {
-				return;
-			}
-			
-			if (network.hasNodes()) {
-				// check if the removed node split the network into subnetworks
-				network.checkForNetworkSplit();
-			} else if (reason.destructive) {
-				this.networks.remove(network);
-			}
-			SpectrumS2CPacketSender.syncPastelNetworkEdges(network, node.getPos());
 		}
 	}
 	

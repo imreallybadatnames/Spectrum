@@ -33,7 +33,7 @@ import java.util.*;
 public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityProvider {
 	
 	public static final BooleanProperty LIT = Properties.LIT;
-	public static final BooleanProperty EMITTING = Properties.POWERED;
+	public static final BooleanProperty REDSTONE_EMITTING = Properties.POWERED;
 	
 	public static final Map<Direction, VoxelShape> SHAPES = new HashMap<>() {{
 		put(Direction.UP, Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D));
@@ -49,7 +49,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	public PastelNodeBlock(Settings settings, PastelNodeType pastelNodeType) {
 		super(settings.luminance(s -> s.get(LIT) ? 13 : 0));
 		this.pastelNodeType = pastelNodeType;
-		setDefaultState(getDefaultState().with(LIT, false).with(EMITTING, false));
+		setDefaultState(getDefaultState().with(LIT, false).with(REDSTONE_EMITTING, false));
 	}
 	
 	@Override
@@ -107,7 +107,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder);
-		builder.add(LIT, EMITTING);
+		builder.add(LIT, REDSTONE_EMITTING);
 	}
 	
 	@Override
@@ -176,12 +176,12 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	
 	@Override
 	public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-		return state.get(EMITTING) ? 15 : 0;
+		return state.get(REDSTONE_EMITTING) ? 15 : 0;
 	}
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		world.setBlockState(pos, state.with(EMITTING, false));
+		world.setBlockState(pos, state.with(REDSTONE_EMITTING, false));
 	}
 	
 	@NotNull

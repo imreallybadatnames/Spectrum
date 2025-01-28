@@ -57,11 +57,13 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected UUID nodeId = UUID.randomUUID();
 	protected Optional<UUID> networkUUID = Optional.empty();
 	protected Optional<PastelUpgradeSignature> outerRing, innerRing, redstoneRing;
-	protected long lastTransferTick = 0; // TODO: move to ServerPastelNetwork?
+	
+	// TODO: move these to ServerPastelNetwork?
+	protected long lastTransferTick = 0;
 	protected final long cachedRedstonePowerTick = 0;
 	protected boolean cachedUnpowered = true;
 	protected PastelNetwork.NodePriority priority = PastelNetwork.NodePriority.GENERIC;
-	protected long itemCountUnderway = 0; // TODO: move to ServerPastelNetwork?
+	protected long itemCountUnderway = 0;
 
 	// upgrade impl stuff
 	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor, updated;
@@ -299,7 +301,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 			return false;
 
 		long time = this.getWorld().getTime();
-		if (time > this.cachedRedstonePowerTick && !getCachedState().get(PastelNodeBlock.EMITTING)) {
+		if (time > this.cachedRedstonePowerTick && !getCachedState().get(PastelNodeBlock.REDSTONE_EMITTING)) {
 			this.cachedUnpowered = world.getReceivedRedstonePower(this.pos) == 0;
 		}
 
@@ -335,42 +337,18 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
-		if (nbt.contains("NetworkUUID")) {
-			this.networkUUID = Optional.of(nbt.getUuid("NetworkUUID"));
-		}
-		if (nbt.contains("Triggered")) {
-			this.triggered = nbt.getBoolean("Triggered");
-		}
-		if (nbt.contains("Waiting")) {
-			this.waiting = nbt.getBoolean("Waiting");
-		}
-		if (nbt.contains("creationStamp")) {
-			this.creationStamp = nbt.getLong("creationStamp");
-		}
-		if (nbt.contains("NodeID")) {
-			this.nodeId = nbt.getUuid("NodeID");
-		}
-		if (nbt.contains("LastTransferTick", NbtElement.LONG_TYPE)) {
-			this.lastTransferTick = nbt.getLong("LastTransferTick");
-		}
-		if (nbt.contains("ItemCountUnderway", NbtElement.LONG_TYPE)) {
-			this.itemCountUnderway = nbt.getLong("ItemCountUnderway");
-		}
-		if (nbt.contains("OuterRing")) {
-			outerRing = Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("OuterRing"))));
-		} else {
-			outerRing = Optional.empty();
-		}
-		if (nbt.contains("InnerRing")) {
-			innerRing = Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("InnerRing"))));
-		} else {
-			innerRing = Optional.empty();
-		}
-		if (nbt.contains("RedstoneRing")) {
-			redstoneRing = Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("RedstoneRing"))));
-		} else {
-			redstoneRing = Optional.empty();
-		}
+		
+		this.nodeId = nbt.contains("NodeID") ? nbt.getUuid("NodeID") : UUID.randomUUID();
+		this.networkUUID = nbt.contains("NetworkUUID") ? Optional.of(nbt.getUuid("NetworkUUID")) : Optional.empty();
+		this.triggered = nbt.contains("Triggered") && nbt.getBoolean("Triggered");
+		this.waiting = nbt.contains("Waiting") && nbt.getBoolean("Waiting");
+		this.creationStamp = nbt.contains("creationStamp") ? nbt.getLong("creationStamp") : 0;
+		this.lastTransferTick = nbt.contains("LastTransferTick", NbtElement.LONG_TYPE) ? nbt.getLong("LastTransferTick") : 0;
+		this.itemCountUnderway = nbt.contains("ItemCountUnderway", NbtElement.LONG_TYPE) ? nbt.getLong("ItemCountUnderway") : 0;
+		this.outerRing = nbt.contains("OuterRing") ? Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("OuterRing")))) : Optional.empty();
+		this.innerRing = nbt.contains("InnerRing") ? Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("InnerRing")))) : Optional.empty();
+		this.redstoneRing = nbt.contains("RedstoneRing") ? Optional.ofNullable(SpectrumRegistries.PASTEL_UPGRADE.get(Identifier.tryParse(nbt.getString("RedstoneRing")))) : Optional.empty();
+		
 		if (this.getNodeType().usesFilters()) {
 			FilterConfigurable.readFilterNbt(nbt, this.filterItems);
 		}
@@ -442,11 +420,11 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		return PastelNodeType.CONNECTION;
 	}
 	
-	public void setNetworkUUID(UUID uuid) {
-		this.networkUUID = Optional.of(uuid);
+	public void setNetworkUUID(@Nullable UUID uuid) {
+		this.networkUUID = Optional.ofNullable(uuid);
 		if (this.getWorld() != null && !this.getWorld().isClient()) {
-			updateInClientWorld();
 			this.markDirty();
+			this.updateInClientWorld();
 		}
 	}
 
@@ -748,17 +726,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 		if (!canConnect(this, otherNode))
 			return false;
 		
-		boolean success;
-		if (otherNode.networkUUID.isPresent() && otherNode.networkUUID.equals(this.networkUUID)) {
-			var thisNetwork = getServerNetwork();
-			success = thisNetwork.get().removeEdge(this, otherNode) || thisNetwork.get().addEdge(this, otherNode);
-		} else {
-			Pastel.getServerInstance().connectNodes(this, otherNode);
-			success = true;
-		}
-		
-		if (success && this.networkUUID.isPresent() && user.isPresent() && user.get() instanceof ServerPlayerEntity serverPlayer) {
-			SpectrumAdvancementCriteria.PASTEL_NETWORK_CREATING.trigger(serverPlayer, Pastel.getServerInstance().getNetwork(this.networkUUID.get()).get());
+		boolean success = Pastel.getServerInstance().toggleNodeConnection(this, otherNode);
+		if (success && user.isPresent() && user.get() instanceof ServerPlayerEntity serverPlayer) {
+			Optional<ServerPastelNetwork> thisNetwork = getServerNetwork();
+			thisNetwork.ifPresent(serverPastelNetwork -> SpectrumAdvancementCriteria.PASTEL_NETWORK_CREATING.trigger(serverPlayer, serverPastelNetwork));
 		}
 		
 		return success;
