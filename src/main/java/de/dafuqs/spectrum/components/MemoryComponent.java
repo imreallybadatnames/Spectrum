@@ -5,8 +5,6 @@ import com.mojang.serialization.codecs.*;
 import io.netty.buffer.*;
 import net.minecraft.network.codec.*;
 
-import java.util.*;
-
 public record MemoryComponent(int ticksToManifest, boolean spawnAsAdult, boolean brokenPromise, boolean unrecognizable) {
 	
 	// zero or negative ticks to manifest: never hatch
@@ -27,20 +25,6 @@ public record MemoryComponent(int ticksToManifest, boolean spawnAsAdult, boolean
 			PacketCodecs.BOOL, MemoryComponent::unrecognizable,
 			MemoryComponent::new
 	);
-	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof MemoryComponent(int oTicksToManifest, boolean oSpawnAsAdult, boolean oBrokenPromise, boolean oUnrecognizable)
-				&& oTicksToManifest == ticksToManifest
-				&& oSpawnAsAdult == spawnAsAdult
-				&& oBrokenPromise == brokenPromise
-				&& oUnrecognizable == unrecognizable;
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(ticksToManifest, spawnAsAdult, brokenPromise, unrecognizable);
-	}
 	
 	public static class Builder {
 		private int ticksToManifest;

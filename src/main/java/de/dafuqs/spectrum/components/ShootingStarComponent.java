@@ -20,11 +20,4 @@ public record ShootingStarComponent(int remainingHits, boolean hardened) {
 			ShootingStarComponent::new
 	);
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof ShootingStarComponent(int oRemainingHits, boolean oHardened)
-				&& oRemainingHits == remainingHits
-				&& oHardened == hardened;
-	}
-	
 }

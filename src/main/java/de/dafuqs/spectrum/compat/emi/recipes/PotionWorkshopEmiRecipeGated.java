@@ -26,7 +26,7 @@ public class PotionWorkshopEmiRecipeGated extends GatedSpectrumEmiRecipe<PotionW
 		widgets.addSlot(inputs.get(3), 0, 24);
 		widgets.addSlot(inputs.get(4), 36, 24);
 		
-		widgets.addSlot(outputs.get(0), 94, 24).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 94, 24).recipeContext(this);
 		
 		// bubbles
 		widgets.addTexture(BACKGROUND_TEXTURE, 21, 20, 11, 27, 176, 0);

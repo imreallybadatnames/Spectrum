@@ -42,11 +42,4 @@ public record BeverageComponent(long daysAged, int alcoholPercent, float thickne
 		}
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof BeverageComponent(long oDaysAged, int oAlcoholPercent, float oThickness)
-				&& oDaysAged == daysAged
-				&& oAlcoholPercent == alcoholPercent
-				&& oThickness == thickness;
-	}
 }

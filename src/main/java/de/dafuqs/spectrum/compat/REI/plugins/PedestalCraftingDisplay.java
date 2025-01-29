@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.recipe.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.util.collection.*;
 
 import java.util.*;
@@ -30,7 +29,7 @@ public class PedestalCraftingDisplay extends GatedSpectrumDisplay {
 	 * @param recipe The recipe
 	 */
 	public PedestalCraftingDisplay(RecipeEntry<PedestalRecipe> recipe) {
-		super(recipe.value(), mapIngredients(recipe.value()), Collections.singletonList(EntryIngredients.of(recipe.value().getResult(BasicDisplay.registryAccess()))));
+		super(recipe, mapIngredients(recipe.value()), Collections.singletonList(EntryIngredients.of(recipe.value().getResult(BasicDisplay.registryAccess()))));
 		this.pedestalRecipeTier = recipe.value().getTier();
 		this.width = recipe.value().getWidth();
 		this.height = recipe.value().getHeight();

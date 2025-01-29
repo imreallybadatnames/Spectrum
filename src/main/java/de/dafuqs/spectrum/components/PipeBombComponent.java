@@ -20,11 +20,4 @@ public record PipeBombComponent(long timestamp, boolean isArmed) {
 			PipeBombComponent::new
 	);
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof PipeBombComponent(long oTimestamp, boolean oIsArmed)
-				&& oTimestamp == timestamp
-				&& oIsArmed == isArmed;
-	}
-	
 }

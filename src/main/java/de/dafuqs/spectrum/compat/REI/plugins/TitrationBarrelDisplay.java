@@ -10,6 +10,7 @@ import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -20,15 +21,15 @@ public class TitrationBarrelDisplay extends GatedSpectrumDisplay {
 	protected final int minFermentationTimeHours;
 	protected final FermentationData fermentationData;
 	
-	public TitrationBarrelDisplay(@NotNull ITitrationBarrelRecipe recipe) {
-		super(recipe, buildInputs(recipe), List.of(buildOutputs(recipe)));
-		if (recipe.getTappingItem() == Items.AIR) {
+	public TitrationBarrelDisplay(@NotNull RecipeEntry<ITitrationBarrelRecipe> recipe) {
+		super(recipe, buildInputs(recipe.value()), List.of(buildOutputs(recipe.value())));
+		if (recipe.value().getTappingItem() == Items.AIR) {
 			this.tappingIngredient = EntryIngredient.empty();
 		} else {
-			this.tappingIngredient = EntryIngredients.of(recipe.getTappingItem().getDefaultStack());
+			this.tappingIngredient = EntryIngredients.of(recipe.value().getTappingItem().getDefaultStack());
 		}
-		this.minFermentationTimeHours = recipe.getMinFermentationTimeHours();
-		this.fermentationData = recipe.getFermentationData();
+		this.minFermentationTimeHours = recipe.value().getMinFermentationTimeHours();
+		this.fermentationData = recipe.value().getFermentationData();
 	}
 	
 	private static EntryIngredient buildOutputs(ITitrationBarrelRecipe recipe) {

@@ -18,6 +18,19 @@ import java.util.concurrent.atomic.*;
 
 public class SpectrumEnchantmentHelper {
 	
+	public static boolean isCloaking(Enchantment ench) {
+		return !ench.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).isEmpty();
+	}
+	
+	public static boolean canReveal(Enchantment cloak, ServerWorld world, int level, Entity user) {
+		var canReveal = new AtomicBoolean(false);
+		EnchantmentAccessor.invokeApplyEffects(
+				cloak.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED),
+				EnchantmentAccessor.invokeCreateEnchantedEntityLootContext(world, level, user, user.getPos()),
+				e -> canReveal.set(true));
+		return canReveal.get();
+	}
+	
 	public static void addRevealedEnchantments(Enchantment enchantment, ServerWorld world, int level, Entity user, ItemEnchantmentsComponent.Builder builder) {
 		EnchantmentAccessor.invokeApplyEffects(
 				enchantment.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED),
@@ -73,16 +86,6 @@ public class SpectrumEnchantmentHelper {
 		builder.set(enchantment, level);
 		EnchantmentHelper.set(stack, builder.build());
 		return new Pair<>(true, stack);
-	}
-	
-	public static void setStoredEnchantments(Map<Enchantment, Integer> enchantments, ItemStack stack) {
-		stack.removeSubNbt(EnchantedBookItem.STORED_ENCHANTMENTS_KEY); // clear existing enchantments
-		for (Map.Entry<Enchantment, Integer> enchantmentIntegerEntry : enchantments.entrySet()) {
-			Enchantment enchantment = enchantmentIntegerEntry.getKey();
-			if (enchantment != null) {
-				EnchantedBookItem.addEnchantment(stack, new EnchantmentLevelEntry(enchantment, enchantmentIntegerEntry.getValue()));
-			}
-		}
 	}
 	
 	/**
@@ -166,7 +169,7 @@ public class SpectrumEnchantmentHelper {
 		var removals = new AtomicInteger(0);
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack));
 		enchantments.forEach(enchantment -> {
-			if (builder.hasEnchantment(enchantment)) {
+			if (builder.getEnchantments().contains(enchantment)) {
 				builder.set(enchantment, 0);
 				removals.getAndIncrement();
 			}

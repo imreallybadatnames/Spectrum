@@ -25,12 +25,4 @@ public record WorkstaffComponent(boolean canTill, boolean canShoot, int fortuneL
 			WorkstaffComponent::new
 	);
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof WorkstaffComponent(boolean oCanTill, boolean oCanShoot, int oFortuneLevel)
-				&& oCanTill == canTill
-				&& oCanShoot == canShoot
-				&& oFortuneLevel == fortuneLevel;
-	}
-	
 }

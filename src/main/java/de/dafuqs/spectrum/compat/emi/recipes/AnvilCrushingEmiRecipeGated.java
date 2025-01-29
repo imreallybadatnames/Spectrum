@@ -21,12 +21,12 @@ public class AnvilCrushingEmiRecipeGated extends GatedSpectrumEmiRecipe<AnvilCru
 	
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
-		widgets.addSlot(inputs.get(0), 21, 30);
+		widgets.addSlot(inputs.getFirst(), 21, 30);
 		widgets.addTexture(WALL_TEXTURE, 0, 0, 16, 48, 0, 0); // dirt wall
 		widgets.addSlot(EmiStack.of(Items.ANVIL), 21, 10).drawBack(false);
 		widgets.addTexture(WALL_TEXTURE, 22, 1, 16, 16, 16, 1); // falling stripes for anvil
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, 50, 16);
-		widgets.addSlot(outputs.get(0), 90, 11).large(true).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 90, 11).large(true).recipeContext(this);
 		
 		widgets.addText(Text.translatable("container.spectrum.rei.anvil_crushing.plus_xp", recipe.getExperience()),
 				width, 40, 0x3f3f3f, false).horizontalAlign(Alignment.END);

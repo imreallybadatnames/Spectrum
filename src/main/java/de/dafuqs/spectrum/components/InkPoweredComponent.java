@@ -21,10 +21,4 @@ public record InkPoweredComponent(List<InkPoweredStatusEffectInstance> effects) 
 			InkPoweredComponent::new
 	);
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof InkPoweredComponent(List<InkPoweredStatusEffectInstance> oEffects)
-				&& oEffects.equals(effects);
-	}
-	
 }

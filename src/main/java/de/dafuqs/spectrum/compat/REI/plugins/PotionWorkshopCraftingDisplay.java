@@ -5,8 +5,8 @@ import de.dafuqs.spectrum.compat.REI.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.potion_workshop.*;
 import me.shedaniel.rei.api.common.category.*;
-
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 
 public class PotionWorkshopCraftingDisplay extends PotionWorkshopRecipeDisplay {
 	
@@ -18,10 +18,10 @@ public class PotionWorkshopCraftingDisplay extends PotionWorkshopRecipeDisplay {
 	 *
 	 * @param recipe The recipe
 	 */
-	public PotionWorkshopCraftingDisplay(PotionWorkshopCraftingRecipe recipe) {
+	public PotionWorkshopCraftingDisplay(RecipeEntry<PotionWorkshopCraftingRecipe> recipe) {
 		super(recipe);
-		this.baseIngredient = recipe.getBaseIngredient();
-		this.consumeBaseIngredient = recipe.consumesBaseIngredient();
+		this.baseIngredient = recipe.value().getBaseIngredient();
+		this.consumeBaseIngredient = recipe.value().consumesBaseIngredient();
 	}
 	
 	@Override

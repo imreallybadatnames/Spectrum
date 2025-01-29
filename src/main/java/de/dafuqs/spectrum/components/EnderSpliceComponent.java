@@ -39,13 +39,4 @@ public record EnderSpliceComponent(Optional<Vec3d> pos, Optional<RegistryKey<Wor
 		this(Optional.empty(), Optional.empty(), Optional.of(targetName), Optional.of(targetUUID));
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof EnderSpliceComponent(Optional<Vec3d> oPos, Optional<RegistryKey<World>> oDimension, Optional<String> oTargetName, Optional<UUID> oTargetUUID)
-				&& oPos.equals(pos)
-				&& oDimension.equals(dimension)
-				&& oTargetName.equals(targetName)
-				&& oTargetUUID.equals(targetUUID);
-	}
-	
 }

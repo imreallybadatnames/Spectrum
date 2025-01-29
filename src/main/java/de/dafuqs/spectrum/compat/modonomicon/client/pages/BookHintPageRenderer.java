@@ -156,7 +156,7 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
                     for (int s = 0; s < mutableText.getSiblings().size(); s++) {
                         Text sibling = mutableText.getSiblings().get(s);
                         newMutableText.append(c + s == revealProgress - start && sibling.getSiblings().size() == 1
-                                ? sibling.getSiblings().get(0).copy().setStyle(sibling.getStyle())
+                                ? sibling.getSiblings().getFirst().copy().setStyle(sibling.getStyle())
                                 : sibling);
                     }
                     mutableTexts.set(i, newMutableText);
@@ -173,9 +173,9 @@ public class BookHintPageRenderer extends BookPageRenderer<BookHintPage> impleme
     private boolean isDoneRevealing(BookTextHolder obfText) {
         if (obfText instanceof RenderedBookTextHolder renderedText) {
             var mutableTexts = renderedText.getRenderedText();
-            var lastText = mutableTexts.get(mutableTexts.size() - 1);
+            var lastText = mutableTexts.getLast();
             var siblings = lastText.getSiblings();
-            var lastSibling = siblings.get(siblings.size() - 1);
+            var lastSibling = siblings.getLast();
             return lastSibling.getSiblings().isEmpty();
         }
         return true;

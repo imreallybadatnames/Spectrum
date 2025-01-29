@@ -5,10 +5,11 @@ import de.dafuqs.spectrum.compat.REI.*;
 import de.dafuqs.spectrum.recipe.potion_workshop.*;
 import me.shedaniel.rei.api.common.category.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 
 public class PotionWorkshopReactingDisplay extends GatedItemInformationDisplay {
 	
-	public PotionWorkshopReactingDisplay(PotionWorkshopReactingRecipe recipe) {
+	public PotionWorkshopReactingDisplay(RecipeEntry<PotionWorkshopReactingRecipe> recipe) {
 		super(recipe);
 	}
 	

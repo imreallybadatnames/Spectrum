@@ -31,7 +31,7 @@ public class EnchanterEmiRecipeGated extends GatedSpectrumEmiRecipe<GatedSpectru
 	public EnchanterEmiRecipeGated(EmiRecipeCategory category, EnchantmentUpgradeRecipe recipe) {
 		this(category, recipe, Text.translatable("container.spectrum.rei.enchantment_upgrade.required_item_count", recipe.getRequiredItemCount()), 0);
 		inputs = Lists.newArrayList();
-		inputs.add(EmiIngredient.of(recipe.getIngredients().get(0))); // the center stack
+		inputs.add(EmiIngredient.of(recipe.getIngredients().getFirst())); // the center stack
 		int requiredItemCountSplit = recipe.getRequiredItemCount() / 8;
 		int requiredItemCountModulo = recipe.getRequiredItemCount() % 8;
 		for (int i = 0; i < 8; i++) {
@@ -70,7 +70,7 @@ public class EnchanterEmiRecipeGated extends GatedSpectrumEmiRecipe<GatedSpectru
 		widgets.addSlot(inputs.get(7), 0, 44);
 		widgets.addSlot(inputs.get(8), 0, 18);
 		
-		widgets.addSlot(outputs.get(0), 106, 26).large(true).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 106, 26).large(true).recipeContext(this);
 		
 		if (craftingTime != 0) {
 			widgets.addFillingArrow(80, 31, craftingTime * 50);

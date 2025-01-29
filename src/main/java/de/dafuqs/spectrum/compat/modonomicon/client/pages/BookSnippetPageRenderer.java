@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.client.gui.book.markdown.*;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import com.mojang.blaze3d.systems.*;
@@ -67,7 +67,7 @@ public class BookSnippetPageRenderer extends BookPageRenderer<BookSnippetPage> i
 
     @Nullable
     @Override
-    protected Style getClickedComponentStyleAtForTextHolder(BookTextHolder text, int x, int y, int width, double pMouseX, double pMouseY) {
+    protected Style getClickedComponentStyleAtForTextHolder(BookTextHolder text, int x, int y, int width, int height, double pMouseX, double pMouseY) {
         if (text.hasComponent()) {
             for (OrderedText formattedCharSequence : font.wrapLines(text.getComponent(), width)) {
                 if (pMouseY > y && pMouseY < y + font.fontHeight) {

@@ -18,7 +18,7 @@ public class CinderhearthEmiRecipeGated extends GatedSpectrumEmiRecipe<Cinderhea
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
 		int xOff = 5;
-		widgets.addSlot(inputs.get(0), xOff, 0);
+		widgets.addSlot(inputs.getFirst(), xOff, 0);
 
 		widgets.addFillingArrow(22 + xOff, 9, recipe.getCraftingTime() * 50);
 

@@ -134,7 +134,6 @@
 		"client.HeldItemRendererMixin",
 		"client.InGameHudMixin",
 		"client.InGameOverlayRendererMixin",
-		"client.ItemEnchantmentsComponentMixin",
 		"client.ItemRendererMixin",
 		"client.LightmapTextureManagerMixin",
 		"client.MixinParticleManager",
@@ -149,7 +148,8 @@
 		"client.accessors.RenderLayerAccessor",
 		"compat.colorful_hearts.absent.InGameHudMixin",
 		"compat.colorful_hearts.present.HeartMixin",
-		"compat.sodium.present.ColorProviderRegistryMixin"
+		"compat.sodium.present.ColorProviderRegistryMixin",
+		"injectors.ItemEnchantmentsComponentInjector$_Mixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

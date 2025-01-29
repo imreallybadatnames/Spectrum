@@ -1,20 +1,19 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
-
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
+import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
-import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -30,8 +29,8 @@ public class BookTitrationBarrelFermentingPageRenderer extends BookGatedRecipePa
     public BookTitrationBarrelFermentingPageRenderer(BookGatedRecipePage<TitrationBarrelRecipe> page) {
         super(page);
 
-        TitrationBarrelRecipe recipe1 = page.getRecipe1();
-        TitrationBarrelRecipe recipe2 = page.getRecipe2();
+        var recipe1 = page.getRecipe1().value();
+        var recipe2 = page.getRecipe2().value();
         
         Identifier font = BookDataManager.Client.get().safeFont(this.page.getBook().getFont());
         durationText1 = recipe1 == null ? null : new BookTextHolder(TitrationBarrelRecipe.getDurationText(recipe1.getMinFermentationTimeHours(), recipe1.getFermentationData()).styled(s -> s.withFont(font)));

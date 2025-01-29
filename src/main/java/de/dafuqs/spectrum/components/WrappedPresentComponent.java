@@ -28,12 +28,4 @@ public record WrappedPresentComponent(boolean wrapped, PresentBlock.WrappingPape
 			WrappedPresentComponent::new
 	);
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof WrappedPresentComponent(boolean oWrapped, PresentBlock.WrappingPaper oVariant, Map<DyeColor, Integer> oColors)
-				&& oWrapped == wrapped
-				&& oVariant == variant
-				&& oColors.equals(colors);
-	}
-	
 }

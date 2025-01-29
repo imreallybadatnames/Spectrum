@@ -309,7 +309,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	@Unique
 	private boolean isInexorableActive() {
 		PlayerEntity player = (PlayerEntity) (Object) this;
-		return SpectrumEnchantments.INEXORABLE.canEntityUse(player) && EnchantmentHelper.hasEnchantment(SpectrumEnchantments.INEXORABLE, player.getStackInHand(player.getActiveHand()));
+		return SpectrumEnchantmentHelper.hasEnchantment(player.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, player.getStackInHand(player.getActiveHand()));
 	}
 	
 }

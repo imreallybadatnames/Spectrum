@@ -29,12 +29,4 @@ public record InkStorageComponent(long maxEnergyTotal, long maxPerColor, Map<Ink
 		this(storage.getMaxTotal(), storage.getMaxPerColor(), storage.getEnergy());
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof InkStorageComponent(long oMaxEnergyTotal, long oMaxPerColor, Map<InkColor, Long> oStoredEnergy)
-				&& oMaxEnergyTotal == maxEnergyTotal
-				&& oMaxEnergyTotal == maxPerColor
-				&& oStoredEnergy.equals(storedEnergy);
-	}
-	
 }

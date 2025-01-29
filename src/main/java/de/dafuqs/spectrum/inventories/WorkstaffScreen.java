@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.inventories;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.networking.c2s_payloads.*;
 import de.dafuqs.spectrum.registries.*;
@@ -55,7 +56,8 @@ public class WorkstaffScreen extends QuickNavigationGridScreen<WorkstaffScreenHa
 					GridEntry.item(Items.ENCHANTED_BOOK, Text.translatable("item.spectrum.workstaff.gui.enchantment_group"), (screen) -> screen.selectGrid(ENCHANTMENT_GRID))
 			));
 		} else {
-			GridEntry enchantmentEntry = EnchantmentHelper.hasEnchantment(Enchantments.FORTUNE, mainHandStack)
+			var drm = MinecraftClient.getInstance().player.getRegistryManager();
+			GridEntry enchantmentEntry = SpectrumEnchantmentHelper.hasEnchantment(drm, Enchantments.FORTUNE, mainHandStack)
 					? GridEntry.item(Items.FEATHER, Text.translatable("item.spectrum.workstaff.gui.silk_touch"), (screen) -> WorkstaffScreen.select(WorkstaffItem.GUIToggle.SELECT_SILK_TOUCH))
 					: GridEntry.item(SpectrumBlocks.FOUR_LEAF_CLOVER.asItem(), Text.translatable("item.spectrum.workstaff.gui.fortune"), (screen) -> WorkstaffScreen.select(WorkstaffItem.GUIToggle.SELECT_FORTUNE));
 

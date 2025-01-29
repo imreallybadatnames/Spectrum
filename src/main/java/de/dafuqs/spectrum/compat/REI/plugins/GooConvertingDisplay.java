@@ -8,7 +8,7 @@ import net.minecraft.util.*;
 
 public class GooConvertingDisplay extends FluidConvertingDisplay {
 	
-	public GooConvertingDisplay(RecipeEntry<FluidConvertingRecipe> recipe) {
+	public GooConvertingDisplay(RecipeEntry<GooConvertingRecipe> recipe) {
 		super(recipe);
 	}
 	

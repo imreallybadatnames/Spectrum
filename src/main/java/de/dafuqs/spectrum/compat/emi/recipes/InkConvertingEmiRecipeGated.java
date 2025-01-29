@@ -16,7 +16,7 @@ public class InkConvertingEmiRecipeGated extends GatedSpectrumEmiRecipe<InkConve
 	
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
-		widgets.addSlot(inputs.get(0), 0, 1);
+		widgets.addSlot(inputs.getFirst(), 0, 1);
 		
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, 22, 1);
 

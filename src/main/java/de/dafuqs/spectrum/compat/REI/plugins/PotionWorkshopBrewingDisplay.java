@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.recipe.potion_workshop.*;
 import me.shedaniel.rei.api.common.category.*;
 import net.minecraft.client.*;
 import net.minecraft.entity.effect.*;
+import net.minecraft.recipe.*;
 
 public class PotionWorkshopBrewingDisplay extends PotionWorkshopRecipeDisplay {
 	
@@ -16,9 +17,9 @@ public class PotionWorkshopBrewingDisplay extends PotionWorkshopRecipeDisplay {
 	 *
 	 * @param recipe The recipe
 	 */
-	public PotionWorkshopBrewingDisplay(PotionWorkshopBrewingRecipe recipe) {
+	public PotionWorkshopBrewingDisplay(RecipeEntry<PotionWorkshopBrewingRecipe> recipe) {
 		super(recipe);
-		this.statusEffect = recipe.getStatusEffect();
+		this.statusEffect = recipe.value().getStatusEffect();
 	}
 	
 	@Override

@@ -9,6 +9,7 @@ import me.shedaniel.rei.api.common.display.basic.*;
 import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -20,10 +21,10 @@ public class EnchanterEnchantingDisplay extends EnchanterDisplay {
 	protected final int craftingTime;
 	
 	// first input is the center, all others around clockwise
-	public EnchanterEnchantingDisplay(@NotNull EnchanterRecipe recipe) {
-		super(recipe, buildIngredients(recipe), recipe.getResult(BasicDisplay.registryAccess()));
-		this.requiredExperience = recipe.getRequiredExperience();
-		this.craftingTime = recipe.getCraftingTime();
+	public EnchanterEnchantingDisplay(@NotNull RecipeEntry<EnchanterRecipe> recipe) {
+		super(recipe, buildIngredients(recipe.value()), recipe.value().getResult(BasicDisplay.registryAccess()));
+		this.requiredExperience = recipe.value().getRequiredExperience();
+		this.craftingTime = recipe.value().getCraftingTime();
 	}
 	
 	private static List<EntryIngredient> buildIngredients(EnchanterRecipe recipe) {

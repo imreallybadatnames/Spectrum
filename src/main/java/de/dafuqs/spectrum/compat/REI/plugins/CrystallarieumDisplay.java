@@ -11,6 +11,7 @@ import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -23,17 +24,17 @@ public class CrystallarieumDisplay extends GatedSpectrumDisplay {
 	protected final boolean growsWithoutCatalyst;
 	protected final int secondsPerStage;
 	
-	public CrystallarieumDisplay(@NotNull CrystallarieumRecipe recipe) {
-		super(recipe, inputs(recipe), outputs(recipe));
+	public CrystallarieumDisplay(@NotNull RecipeEntry<CrystallarieumRecipe> recipe) {
+		super(recipe, inputs(recipe.value()), outputs(recipe.value()));
 		
 		this.growthStages = new ArrayList<>();
-		for (BlockState state : recipe.getGrowthStages()) {
+		for (BlockState state : recipe.value().getGrowthStages()) {
 			growthStages.add(EntryIngredients.of(state.getBlock().asItem()));
 		}
-		this.catalysts = recipe.getCatalysts();
-		this.inkColor = recipe.getInkColor();
-		this.growsWithoutCatalyst = recipe.growsWithoutCatalyst();
-		this.secondsPerStage = recipe.getSecondsPerGrowthStage();
+		this.catalysts = recipe.value().getCatalysts();
+		this.inkColor = recipe.value().getInkColor();
+		this.growsWithoutCatalyst = recipe.value().growsWithoutCatalyst();
+		this.secondsPerStage = recipe.value().getSecondsPerGrowthStage();
 	}
 	
 	public static List<EntryIngredient> inputs(CrystallarieumRecipe recipe) {

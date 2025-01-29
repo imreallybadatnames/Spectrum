@@ -34,11 +34,4 @@ public record JadeWineComponent(float bloominess, boolean sweetened) implements 
 			tooltip.accept(Text.translatable("item.spectrum.jade_wine.tooltip.bloominess", bloominess).formatted(Formatting.GRAY));
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		return this == o || o instanceof JadeWineComponent(float oBloominess, boolean oSweetened)
-				&& oBloominess == bloominess
-				&& oSweetened == sweetened;
-	}
-	
 }

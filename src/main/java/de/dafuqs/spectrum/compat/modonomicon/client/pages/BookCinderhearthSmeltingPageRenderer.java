@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.data.*;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.cinderhearth.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
@@ -49,7 +49,7 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
         Identifier font = BookDataManager.Client.get().safeFont(this.page.getBook().getFont());
 
         List<BookTextHolder> chanceTexts = new ArrayList<>();
-        List<Pair<ItemStack, Float>> possibleOutputs = recipe.getOutputsWithChance(world.getRegistryManager());
+        List<Pair<ItemStack, Float>> possibleOutputs = recipe.getResultsWithChance();
 
         int chanceTextIndex = 0;
         for (Pair<ItemStack, Float> possibleOutput : possibleOutputs) {
@@ -77,7 +77,7 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
 
         RenderSystem.enableBlend();
 
-        List<Pair<ItemStack, Float>> possibleOutputs = recipe.getOutputsWithChance(world.getRegistryManager());
+        List<Pair<ItemStack, Float>> possibleOutputs = recipe.getResultsWithChance();
         recipeX = Math.max(recipeX, recipeX + 26 - possibleOutputs.size() * 10);
 
         int backgroundTextureWidth = 34 + possibleOutputs.size() * 24;
@@ -86,7 +86,7 @@ public class BookCinderhearthSmeltingPageRenderer extends BookGatedRecipePageRen
         renderTitle(drawContext, recipeY, second);
 
         // the ingredient
-        Ingredient ingredient = recipe.getIngredients().get(0);
+        Ingredient ingredient = recipe.getIngredients().getFirst();
         parentScreen.renderIngredient(drawContext, recipeX + 2, recipeY + 7, mouseX, mouseY, ingredient);
 
         // cinderhearth
