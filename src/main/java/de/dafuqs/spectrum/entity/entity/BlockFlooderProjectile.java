@@ -33,7 +33,7 @@ public class BlockFlooderProjectile extends ThrownItemEntity {
 	}
 
 	private ParticleEffect getParticleParameters() {
-		ItemStack itemStack = this.getItem();
+		ItemStack itemStack = this.getStack();
 		return (itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
 	}
 
