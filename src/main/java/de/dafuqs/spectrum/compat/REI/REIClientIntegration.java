@@ -108,7 +108,7 @@ public class REIClientIntegration implements REIClientPlugin {
 	
 	@Override
 	public void registerDisplays(DisplayRegistry registry) {
-		registry.registerFiller(AnvilCrushingRecipe.class, AnvilCrushingDisplay::new);
+		registry.registerRecipeFiller(AnvilCrushingRecipe.class, SpectrumRecipeTypes.ANVIL_CRUSHING, AnvilCrushingDisplay::new);
 		registry.registerRecipeFiller(PedestalRecipe.class, SpectrumRecipeTypes.PEDESTAL, PedestalCraftingDisplay::new);
 		registry.registerRecipeFiller(FusionShrineRecipe.class, SpectrumRecipeTypes.FUSION_SHRINE, FusionShrineDisplay::new);
 		registry.registerRecipeFiller(EnchanterRecipe.class, SpectrumRecipeTypes.ENCHANTER, EnchanterEnchantingDisplay::new);

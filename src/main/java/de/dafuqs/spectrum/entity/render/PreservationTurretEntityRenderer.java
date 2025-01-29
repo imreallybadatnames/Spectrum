@@ -24,11 +24,11 @@ public class PreservationTurretEntityRenderer extends MobEntityRenderer<Preserva
 	}
 	
 	@Override
-	protected void setupTransforms(PreservationTurretEntity turretEntity, MatrixStack matrixStack, float f, float g, float h) {
-		super.setupTransforms(turretEntity, matrixStack, f, g + 180.0F, h);
-		matrixStack.translate(0.0, 0.5, 0.0);
-		matrixStack.multiply(turretEntity.getAttachedFace().getOpposite().getRotationQuaternion());
-		matrixStack.translate(0.0, -0.5, 0.0);
+	protected void setupTransforms(PreservationTurretEntity turretEntity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+		super.setupTransforms(turretEntity, matrices, animationProgress, bodyYaw + 180.0F, tickDelta, scale);
+		matrices.translate(0.0, 0.5, 0.0);
+		matrices.multiply(turretEntity.getAttachedFace().getOpposite().getRotationQuaternion());
+		matrices.translate(0.0, -0.5, 0.0);
 	}
 	
 }

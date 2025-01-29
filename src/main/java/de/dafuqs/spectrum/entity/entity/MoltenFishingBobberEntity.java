@@ -23,7 +23,7 @@ public class MoltenFishingBobberEntity extends SpectrumFishingBobberEntity {
 		}
 	}
 
-	public MoltenFishingBobberEntity(PlayerEntity thrower, World world, int luckBonus, float waitTimeReductionTicks, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion) {
+	public MoltenFishingBobberEntity(PlayerEntity thrower, World world, int luckBonus, int waitTimeReductionTicks, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion) {
 		super(SpectrumEntityTypes.MOLTEN_FISHING_BOBBER, thrower, world, luckBonus, waitTimeReductionTicks, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, true);
 	}
 	

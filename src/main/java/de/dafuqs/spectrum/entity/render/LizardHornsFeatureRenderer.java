@@ -8,7 +8,6 @@ import net.fabricmc.api.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.feature.*;
 import net.minecraft.client.util.math.*;
-import org.joml.*;
 
 @Environment(EnvType.CLIENT)
 public class LizardHornsFeatureRenderer<T extends LizardEntity> extends FeatureRenderer<T, LizardEntityModel<T>> {
@@ -22,9 +21,9 @@ public class LizardHornsFeatureRenderer<T extends LizardEntity> extends FeatureR
         
         LizardHornVariant horns = lizard.getHorns();
         if (horns != LizardHornVariant.ONLY_LIKES_YOU_AS_A_FRIEND) {
-            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(SpectrumRenderLayers.GlowInTheDarkRenderLayer.get(horns.texture()));
-			Vector3f color = lizard.getColor().getColorVec();
-            this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, color.x(), color.y(), color.z(), 1.0F);
+            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(SpectrumRenderLayers.GlowInTheDarkRenderLayer.get(horns.getTexture()));
+			var color = lizard.getColor().getColorInt();
+            this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, color);
         }
     }
     

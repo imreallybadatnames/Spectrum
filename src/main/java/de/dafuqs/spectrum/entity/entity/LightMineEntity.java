@@ -3,6 +3,8 @@ package de.dafuqs.spectrum.entity.entity;
 import com.google.common.collect.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.entity.*;
+import de.dafuqs.spectrum.helpers.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.*;
 import net.minecraft.entity.effect.*;
@@ -50,7 +52,7 @@ public class LightMineEntity extends LightShardBaseEntity {
         if (this.effects.isEmpty()) {
             setColor(16777215);
         } else {
-            setColor(PotionUtil.getColor(this.effects));
+            setColor(PotionContentsComponent.getColor(this.effects));
         }
     }
 
@@ -71,11 +73,7 @@ public class LightMineEntity extends LightShardBaseEntity {
             nbt.putInt("Color", this.getColor());
         }
         if (!this.effects.isEmpty()) {
-            NbtList nbtList = new NbtList();
-            for (StatusEffectInstance statusEffectInstance : this.effects) {
-                nbtList.add(statusEffectInstance.writeNbt(new NbtCompound()));
-            }
-            nbt.put("CustomPotionEffects", nbtList);
+			CodecHelper.writeNbt(nbt, "CustomPotionEffects", StatusEffectInstance.CODEC.listOf(), this.effects.stream().toList());
         }
     }
     
@@ -83,7 +81,7 @@ public class LightMineEntity extends LightShardBaseEntity {
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
     
-        this.setEffects(PotionUtil.getCustomPotionEffects(nbt));
+        this.setEffects(CodecHelper.fromNbt(StatusEffectInstance.CODEC.listOf(), nbt.get("CustomPotionEffects"), List.of()));
     
         if (nbt.contains("Color", NbtElement.NUMBER_TYPE)) {
             this.setColor(nbt.getInt("Color"));
@@ -92,7 +90,7 @@ public class LightMineEntity extends LightShardBaseEntity {
             if (this.effects.isEmpty()) {
                 this.dataTracker.set(COLOR, NO_POTION_COLOR);
             } else {
-                this.dataTracker.set(COLOR, PotionUtil.getColor(this.effects));
+                this.dataTracker.set(COLOR, PotionContentsComponent.getColor(this.effects));
             }
         }
     }
@@ -119,10 +117,7 @@ public class LightMineEntity extends LightShardBaseEntity {
     private void spawnParticles() {
         if (!this.effects.isEmpty()) {
             int color = this.getColor();
-            double d = (double) (color >> 16 & 255) / 255.0;
-            double e = (double) (color >> 8 & 255) / 255.0;
-            double f = (double) (color & 255) / 255.0;
-            this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), d, e, f);
+            this.getWorld().addParticle(EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, color), this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
         }
     }
     

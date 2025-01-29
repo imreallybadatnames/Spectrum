@@ -250,7 +250,7 @@ public class SpectrumBossEntity extends PathAwareEntity {
 	}
 	
 	@Override
-	public boolean canBeLeashedBy(PlayerEntity player) {
+	public boolean canBeLeashed() {
 		return false;
 	}
 	

@@ -163,7 +163,7 @@ public class MonstrosityEntity extends SpectrumBossEntity implements RangedAttac
 
 		if (this.hasInvincibilityTicks()) {
 			for (int j = 0; j < 3; ++j) {
-				this.getWorld().addParticle(ParticleTypes.ENTITY_EFFECT, this.getX() + this.random.nextGaussian(), this.getY() + (double) (this.random.nextFloat() * 3.3F), this.getZ() + this.random.nextGaussian(), 0.7, 0.7, 0.7);
+				this.getWorld().addParticle(EntityEffectParticleEffect.create(ParticleTypes.ENTITY_EFFECT, 0.7f, 0.7f, 0.7f), this.getX() + this.random.nextGaussian(), this.getY() + (double) (this.random.nextFloat() * 3.3F), this.getZ() + this.random.nextGaussian(), 0.0, 0.0, 0.0);
 			}
 		}
 	}

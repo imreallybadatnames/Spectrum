@@ -43,8 +43,6 @@ import java.util.*;
 
 public class KindlingEntity extends AbstractHorseEntity implements RangedAttackMob, Angerable, Shearable {
 	
-	private static final UUID HORSE_ARMOR_BONUS_ID = UUID.fromString("f55b70e7-db42-4384-8843-6e9c843336af");
-	
 	protected static final TrackedData<KindlingVariant> VARIANT = DataTracker.registerData(KindlingEntity.class, SpectrumTrackedDataHandlerRegistry.KINDLING_VARIANT);
 	protected static final Ingredient FOOD = Ingredient.fromTag(SpectrumItemTags.KINDLING_FOOD);
 	
@@ -155,22 +153,14 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	@Override
-	public double getMountedHeightOffset() {
-		return super.getMountedHeightOffset() - 0.25;
-	}
-	
-	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		this.writeAngerToNbt(nbt);
-		nbt.putString("variant", SpectrumRegistries.KINDLING_VARIANT.getId(this.getKindlingVariant()).toString());
+		Optional.ofNullable(SpectrumRegistries.KINDLING_VARIANT.getId(this.getKindlingVariant())).ifPresent(id ->
+				nbt.putString("variant", id.toString()));
 		nbt.putInt("chillTime", getChillTime());
 		nbt.putInt("eepyTime", getEepyTime());
 		nbt.putBoolean("playing", isPlaying());
-		
-		if (!this.items.getStack(1).isEmpty()) {
-			nbt.put("ArmorItem", this.items.getStack(1).writeNbt(new NbtCompound()));
-		}
 	}
 	
 	@Override
@@ -186,13 +176,13 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		setPlaying(nbt.getBoolean("playing"));
 
 		if (nbt.contains("ArmorItem", 10)) {
-			ItemStack itemStack = ItemStack.fromNbt(nbt.getCompound("ArmorItem"));
+			ItemStack itemStack = ItemStack.fromNbt(this.getRegistryManager(), nbt.getCompound("ArmorItem")).orElse(ItemStack.EMPTY);
 			if (!itemStack.isEmpty() && this.isHorseArmor(itemStack)) {
 				this.items.setStack(1, itemStack);
 			}
 		}
 		
-		this.updateSaddle();
+		this.updateSaddledFlag();
 	}
 	
 	@Override
@@ -210,46 +200,18 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		return baby;
 	}
 	
-	public ItemStack getArmorType() {
-		return this.getEquippedStack(EquipmentSlot.CHEST);
-	}
-	
-	private void equipArmor(ItemStack stack) {
-		this.equipStack(EquipmentSlot.CHEST, stack);
-		this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0F);
-	}
-	
-	protected void updateSaddle() {
-		if (!this.getWorld().isClient) {
-			super.updateSaddle();
-			this.setArmorTypeFromStack(this.items.getStack(1));
-			this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0F);
-		}
-	}
-	
-	private void setArmorTypeFromStack(ItemStack stack) {
-		this.equipArmor(stack);
-		if (!this.getWorld().isClient) {
-			this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).removeModifier(HORSE_ARMOR_BONUS_ID);
-			if (this.isHorseArmor(stack)) {
-				int armorBonus = ((AnimalArmorItem) stack.getItem()).getBonus();
-				if (armorBonus != 0) {
-					this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).addTemporaryModifier(new EntityAttributeModifier(HORSE_ARMOR_BONUS_ID, "Horse armor bonus", armorBonus, EntityAttributeModifier.Operation.ADD_VALUE));
-				}
-			}
-		}
-	}
-	
+	@Override
 	public void onInventoryChanged(Inventory sender) {
-		ItemStack itemStack = this.getArmorType();
+		ItemStack itemStack = this.getBodyArmor();
 		super.onInventoryChanged(sender);
-		ItemStack itemStack2 = this.getArmorType();
+		ItemStack itemStack2 = this.getBodyArmor();
 		if (this.age > 20 && this.isHorseArmor(itemStack2) && itemStack != itemStack2) {
 			this.playSound(SoundEvents.ENTITY_HORSE_ARMOR, 0.5F, 1.0F);
 		}
 	}
 	
-	public boolean hasArmorSlot() {
+	@Override
+	public boolean canUseSlot(EquipmentSlot slot) {
 		return true;
 	}
 	
@@ -700,7 +662,7 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 	}
 	
 	@Override
-	public void attack(LivingEntity target, float pullProgress) {
+	public void shootAt(LivingEntity target, float pullProgress) {
 		this.coughAt(target);
 	}
 	
@@ -714,11 +676,6 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		return other != this && other instanceof KindlingEntity otherKindling && this.canBreed() && otherKindling.canBreed();
 	}
 	
-	@Override
-	public EntityView method_48926() {
-		return this.getWorld();
-	}
-
 	protected class CoughRevengeGoal extends RevengeGoal {
 		
 		public CoughRevengeGoal(KindlingEntity kindling) {
@@ -795,9 +752,8 @@ public class KindlingEntity extends AbstractHorseEntity implements RangedAttackM
 		}
 		
 		@Override
-		protected void attack(LivingEntity target, double squaredDistance) {
-			double d = this.getSquaredMaxAttackDistance(target);
-			if (squaredDistance <= d && this.getCooldown() <= 0) {
+		protected void attack(LivingEntity target) {
+			if (this.canAttack(target)) {
 				this.resetCooldown();
 				this.mob.swingHand(Hand.MAIN_HAND);
 				this.mob.tryAttack(target);

@@ -40,21 +40,20 @@ public class MagicProjectileEntityRenderer extends EntityRenderer<MagicProjectil
 		int u = (int) (starColor.z() * 255.0F);
 		MatrixStack.Entry entry = matrixStack.peek();
 		Matrix4f matrix4f = entry.getPositionMatrix();
-		Matrix3f matrix3f = entry.getNormalMatrix();
 		
 		matrixStack.translate(0.0D, 0.10000000149011612D, 0.0D);
 		matrixStack.multiply(this.dispatcher.getRotation());
 		matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
 		
-		vertex(vertexConsumer, matrix4f, matrix3f, -0.5F, -0.25F, s, t, u, h, m, light);
-		vertex(vertexConsumer, matrix4f, matrix3f, 0.5F, -0.25F, s, t, u, k, m, light);
-		vertex(vertexConsumer, matrix4f, matrix3f, 0.5F, 0.75F, s, t, u, k, l, light);
-		vertex(vertexConsumer, matrix4f, matrix3f, -0.5F, 0.75F, s, t, u, h, l, light);
+		vertex(vertexConsumer, entry, matrix4f, -0.5F, -0.25F, s, t, u, h, m, light);
+		vertex(vertexConsumer, entry, matrix4f, 0.5F, -0.25F, s, t, u, k, m, light);
+		vertex(vertexConsumer, entry, matrix4f, 0.5F, 0.75F, s, t, u, k, l, light);
+		vertex(vertexConsumer, entry, matrix4f, -0.5F, 0.75F, s, t, u, h, l, light);
 		matrixStack.pop();
 	}
 	
-	private static void vertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, float x, float y, int red, int green, int blue, float u, float v, int light) {
-		vertexConsumer.vertex(positionMatrix, x, y, 0.0F).color(red, green, blue, 128).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0.0F, 1.0F, 0.0F).next();
+	private static void vertex(VertexConsumer vertexConsumer, MatrixStack.Entry matrix, Matrix4f positionMatrix, float x, float y, int red, int green, int blue, float u, float v, int light) {
+		vertexConsumer.vertex(positionMatrix, x, y, 0.0F).color(red, green, blue, 128).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix, 0.0F, 1.0F, 0.0F);
 	}
 
 	@Override

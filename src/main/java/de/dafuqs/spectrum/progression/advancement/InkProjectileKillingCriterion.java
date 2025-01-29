@@ -5,9 +5,11 @@ import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.advancement.criterion.*;
+import net.minecraft.entity.*;
 import net.minecraft.loot.context.*;
 import net.minecraft.predicate.NumberRange.*;
 import net.minecraft.predicate.entity.*;
+import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -21,6 +23,18 @@ public class InkProjectileKillingCriterion extends AbstractCriterion<InkProjecti
 		return Conditions.CODEC;
 	}
 	
+	public void trigger(ServerPlayerEntity player, List<Entity> piercingKilledEntities) {
+		List<LootContext> list = Lists.newArrayList();
+		Set<EntityType<?>> set = Sets.newHashSet();
+		
+		for (Entity entity : piercingKilledEntities) {
+			set.add(entity.getType());
+			list.add(EntityPredicate.createAdvancementEntityLootContext(player, entity));
+		}
+		
+		this.trigger(player, (conditions) -> conditions.matches(list, set.size()));
+	}
+	
 	public record Conditions(
 		Optional<LootContextPredicate> player,
 		List<LootContextPredicate> victims,
@@ -32,7 +46,6 @@ public class InkProjectileKillingCriterion extends AbstractCriterion<InkProjecti
 			LootContextPredicate.CODEC.listOf().fieldOf("victims").forGetter(Conditions::victims),
 			IntRange.CODEC.fieldOf("unique_entity_types").forGetter(Conditions::uniqueEntities)
 		).apply(instance, Conditions::new));
-		
 		
 		public boolean matches(Collection<LootContext> victimContexts, int uniqueEntityTypeCount) {
 			if (!this.victims.isEmpty()) {

@@ -9,8 +9,11 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.feature.*;
 import net.minecraft.client.render.entity.model.*;
 import net.minecraft.client.util.math.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 
 @Environment(EnvType.CLIENT)
 public class KindlingEntityArmorFeatureRenderer extends FeatureRenderer<KindlingEntity, KindlingEntityModel> {
@@ -29,28 +32,15 @@ public class KindlingEntityArmorFeatureRenderer extends FeatureRenderer<Kindling
 	
 	@Override
 	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, KindlingEntity kindlingEntity, float f, float g, float h, float j, float k, float l) {
-		ItemStack itemStack = kindlingEntity.getArmorType();
+		ItemStack itemStack = kindlingEntity.getBodyArmor();
 		
-		if (itemStack.getItem() instanceof AnimalArmorItem horseArmorItem) {
+		if (itemStack.getItem() instanceof AnimalArmorItem armorItem) {
 			this.getContextModel().copyStateTo(this.model);
 			this.model.animateModel(kindlingEntity, f, g, h);
 			this.model.setAngles(kindlingEntity, f, g, j, k, l);
-			float red;
-			float green;
-			float blue;
-			if (horseArmorItem instanceof DyeableHorseArmorItem dyeableHorseArmorItem) {
-				int color = dyeableHorseArmorItem.getColor(itemStack);
-				red = (float) (color >> 16 & 255) / 255.0F;
-				green = (float) (color >> 8 & 255) / 255.0F;
-				blue = (float) (color & 255) / 255.0F;
-			} else {
-				red = 1.0F;
-				green = 1.0F;
-				blue = 1.0F;
-			}
-			
-			VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(getTextureForArmor(horseArmorItem)));
-			this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, red, green, blue, 1.0F);
+			var color = itemStack.isIn(ItemTags.DYEABLE) ? ColorHelper.Argb.fullAlpha(DyedColorComponent.getColor(itemStack, DyedColorComponent.DEFAULT_COLOR)) : -1;
+			VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(getTextureForArmor(armorItem)));
+			this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, color);
 		}
 	}
 	

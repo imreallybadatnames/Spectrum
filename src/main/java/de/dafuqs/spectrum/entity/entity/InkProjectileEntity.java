@@ -122,44 +122,41 @@ public class InkProjectileEntity extends MagicProjectileEntity {
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		super.onEntityHit(entityHitResult);
 		
-		Entity entity = entityHitResult.getEntity();
+		Entity target = entityHitResult.getEntity();
 		
-		if (EntityColorProcessorRegistry.colorEntity(entity, getInkColor().getDyeColor())) {
-			entity.getWorld().playSoundFromEntity(null, entity, SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		if (EntityColorProcessorRegistry.colorEntity(target, getInkColor().getDyeColor())) {
+			target.getWorld().playSoundFromEntity(null, target, SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		}
 		
 		float velocity = (float) this.getVelocity().length();
 		int damage = MathHelper.ceil(MathHelper.clamp((double) velocity * DAMAGE_PER_POTENCY * SPELL_POTENCY, 0.0D, 2.147483647E9D));
 		
-		Entity entity2 = this.getOwner();
+		Entity owner = this.getOwner();
 		DamageSource damageSource;
-		if (entity2 == null) {
+		if (owner == null) {
 			damageSource = SpectrumDamageTypes.inkProjectile(this, this);
 		} else {
-			damageSource = SpectrumDamageTypes.inkProjectile(this, entity2);
-			if (entity2 instanceof LivingEntity) {
-				((LivingEntity) entity2).onAttacking(entity);
+			damageSource = SpectrumDamageTypes.inkProjectile(this, owner);
+			if (owner instanceof LivingEntity livingOwner) {
+				livingOwner.onAttacking(target);
 			}
 		}
 		
-		if (entity.damage(damageSource, (float) damage)) {
-			if (entity instanceof LivingEntity livingEntity) {
+		if (target.damage(damageSource, (float) damage)) {
+			if (target instanceof LivingEntity livingTarget) {
 				
-				if (!this.getWorld().isClient() && entity2 instanceof LivingEntity) {
-					EnchantmentHelper.onUserDamaged(livingEntity, entity2);
-					EnchantmentHelper.onTargetDamaged((LivingEntity) entity2, livingEntity);
+				if (this.getWorld() instanceof ServerWorld serverWorld) {
+					EnchantmentHelper.onTargetDamaged(serverWorld, target, damageSource, null);
 				}
 				
-				this.onHit(livingEntity);
+				this.onHit(livingTarget);
 				
-				if (livingEntity != entity2 && livingEntity instanceof PlayerEntity && entity2 instanceof ServerPlayerEntity && !this.isSilent()) {
-					((ServerPlayerEntity) entity2).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER, 0.0F));
+				if (target != owner && target instanceof PlayerEntity && owner instanceof ServerPlayerEntity ownerPlayer && !this.isSilent()) {
+					ownerPlayer.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER, 0.0F));
 				}
 				
-				if (!this.getWorld().isClient() && entity2 instanceof ServerPlayerEntity serverPlayerEntity) {
-					if (!entity.isAlive()) {
-						SpectrumAdvancementCriteria.KILLED_BY_INK_PROJECTILE.trigger(serverPlayerEntity, List.of(entity));
-					}
+				if (owner instanceof ServerPlayerEntity ownerPlayer && !target.isAlive()) {
+					SpectrumAdvancementCriteria.KILLED_BY_INK_PROJECTILE.trigger(ownerPlayer, List.of(target));
 				}
 			}
 			
@@ -221,23 +218,17 @@ public class InkProjectileEntity extends MagicProjectileEntity {
 		if (colorOrdinal != -1) {
 			//InkColor.all().get(colorOrdinal);
 			
-			
 			Entity entity = target; //this.getEffectCause();
 
-			if(this.getInkColor() == InkColors.ORANGE)
-			{
+			if(this.getInkColor() == InkColors.ORANGE) {
 				entity.setOnFireFor(2);
-			}
-			else
-			{
+			} else {
 				// TODO: this is a dummy effect
 				Vec3d vec3d = this.getVelocity().multiply(1.0D, 0.0D, 1.0D).normalize().multiply((double) 3 * 0.6D);
 				if (vec3d.lengthSquared() > 0.0D) {
 					entity.addVelocity(vec3d.x, 0.1D, vec3d.z);
 				}
 			}
-
-
 			
 			affectEntitiesInRange(this.getOwner());
 			
@@ -288,7 +279,7 @@ public class InkProjectileEntity extends MagicProjectileEntity {
 				entity.getWorld().playSoundFromEntity(null, entity, SoundEvents.ITEM_DYE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			}
 			
-			if (!entity.isImmuneToExplosion()) {
+			if (!entity.isImmuneToExplosion(null)) {
 				double w = Math.sqrt(entity.squaredDistanceTo(vec3d)) / (double) q;
 				if (w <= 1.0D) {
 					double x = entity.getX() - posX;
@@ -300,17 +291,19 @@ public class InkProjectileEntity extends MagicProjectileEntity {
 						y /= aa;
 						z /= aa;
 						double ab = Explosion.getExposure(vec3d, entity);
-						double ac = (1.0D - w) * ab;
+						double velocity = (1.0D - w) * ab;
 						
 						//float damage = (float) ((int) ((ac * ac + ac) / 2.0D * (double) q + 1.0D));
 						//entity.damage(SpectrumDamageSources.inkProjectile(this, attacker), damage);
 						
-						double ad = ac;
 						if (entity instanceof LivingEntity livingEntity) {
-							ad = ProtectionEnchantment.transformExplosionKnockback(livingEntity, ac);
+							int i = SpectrumEnchantmentHelper.getEquipmentLevel(getWorld().getRegistryManager(), Enchantments.BLAST_PROTECTION, livingEntity);
+							if (i > 0) {
+								velocity *= MathHelper.clamp(1.0 - (double)i * 0.15, 0.0, 1.0);
+							}
 						}
 						
-						entity.setVelocity(entity.getVelocity().add(x * ad, y * ad, z * ad));
+						entity.setVelocity(entity.getVelocity().add(x * velocity, y * velocity, z * velocity));
 					}
 				}
 			}
