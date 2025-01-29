@@ -148,6 +148,10 @@ public interface FilterConfigurable {
 
     record ExtendedData(List<ItemVariant> filterItems, int rows, int slotsPerRow, int drawnSlots) {
 
+		public ExtendedData(FilterConfigurable configurable) {
+			this(configurable.getItemFilters(), configurable.getFilterRows(), configurable.getSlotsPerRow(), configurable.getDrawnSlots());
+		}
+		
         public static final PacketCodec<RegistryByteBuf, ExtendedData> PACKET_CODEC = PacketCodec.tuple(
                 ItemVariant.PACKET_CODEC.collect(PacketCodecs.toList()),
                 ExtendedData::filterItems,

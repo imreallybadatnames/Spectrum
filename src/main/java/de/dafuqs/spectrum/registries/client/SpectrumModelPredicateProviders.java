@@ -82,11 +82,8 @@ public class SpectrumModelPredicateProviders {
 	
 	private static void registerNullableDyeColorPredicate(Item item) {
 		ModelPredicateProviderRegistry.register(item, Identifier.of("color"), (stack, clientWorld, entity, i) -> {
-			OptionalInkColorComponent component = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
-			if (component == null || component.color().isEmpty()) {
-				return -1;
-			}
-			return component.color().get().getColorInt();
+			var color = stack.get(SpectrumDataComponentTypes.INK_COLOR);
+			return color == null ? -1 : color.getColorInt();
 		});
 	}
 	

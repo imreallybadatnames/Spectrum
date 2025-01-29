@@ -159,11 +159,8 @@ public class SpectrumColorProviders {
 	public static void registerOptionalInkColor(Item item) {
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			if (tintIndex == 0) {
-				OptionalInkColorComponent component = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
-				if (component == null || component.color().isEmpty()) {
-					return -1;
-				}
-				return component.color().get().getColorInt();
+				var color = stack.get(SpectrumDataComponentTypes.INK_COLOR);
+				return color == null ? -1 : color.getColorInt();
 			}
 			return -1;
 		}, item);

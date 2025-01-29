@@ -4,7 +4,6 @@ import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.*;
-import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -108,15 +107,16 @@ public class CrystallarieumBlock extends InWorldInteractionBlock {
 	
 	public ItemStack asStackWithColor(InkColor color) {
 		ItemStack stack = asItem().getDefaultStack();
-		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(Optional.of(color)));
+		stack.set(SpectrumDataComponentTypes.INK_COLOR, color);
 		return stack;
 	}
 
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
-		OptionalInkColorComponent component = stack.getOrDefault(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, OptionalInkColorComponent.DEFAULT);
-		component.addTooltip(tooltip);
+		var color = stack.get(SpectrumDataComponentTypes.INK_COLOR);
+		if (color != null)
+			tooltip.add(color.getColoredInkName());
 	}
 	
 }

@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.compat.claims.*;
-import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
@@ -99,15 +98,11 @@ public class PaintbrushItem extends Item implements SignChangingItem {
 	}
 	
 	public static void setColor(ItemStack stack, @Nullable InkColor color) {
-		stack.set(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR, new OptionalInkColorComponent(Optional.ofNullable(color)));
+		stack.set(SpectrumDataComponentTypes.INK_COLOR, color);
 	}
 	
 	public static Optional<InkColor> getColor(ItemStack stack) {
-		OptionalInkColorComponent compound = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
-		if (compound == null || compound.color().isEmpty()) {
-			return Optional.empty();
-		}
-		return compound.color();
+		return Optional.ofNullable(stack.get(SpectrumDataComponentTypes.INK_COLOR));
 	}
 	
 	@Override

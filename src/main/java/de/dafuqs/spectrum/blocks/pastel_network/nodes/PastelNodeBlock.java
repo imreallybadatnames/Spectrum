@@ -229,7 +229,7 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	@Override
 	public boolean color(World world, BlockPos pos, DyeColor color) {
 		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
-		if (blockEntity != null) {
+		if (blockEntity == null) {
 			return false;
 		}
 		return blockEntity.setColor(color);
@@ -238,10 +238,9 @@ public class PastelNodeBlock extends SpectrumFacingBlock implements BlockEntityP
 	@Override
 	public DyeColor getColor(World world, BlockPos pos) {
 		@Nullable PastelNodeBlockEntity blockEntity = getBlockEntity(world, pos);
-		if (blockEntity != null) {
+		if (blockEntity == null) {
 			return DyeColor.RED;
 		}
-		
 		return blockEntity.getColor().orElse(DyeColor.GRAY);
 	}
 	
