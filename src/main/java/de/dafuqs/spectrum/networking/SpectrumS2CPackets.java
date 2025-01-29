@@ -27,7 +27,7 @@ public class SpectrumS2CPackets {
 		PayloadTypeRegistry.playC2S().register(StartSkyLerpingPayload.ID, StartSkyLerpingPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(PlayMemoryManifestingParticlesPayload.ID, PlayMemoryManifestingParticlesPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(UpdateBlockEntityInkPayload.ID, UpdateBlockEntityInkPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(InkColorSelectedPayload.ID, InkColorSelectedPayload.CODEC);
+		PayloadTypeRegistry.playC2S().register(InkColorSelectedS2CPayload.ID, InkColorSelectedS2CPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(PlayAscensionAppliedEffectsPayload.ID, PlayAscensionAppliedEffectsPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(PlayDivinityAppliedEffectsPayload.ID, PlayDivinityAppliedEffectsPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(MoonstoneBlastPayload.ID, MoonstoneBlastPayload.CODEC);
@@ -60,7 +60,7 @@ public class SpectrumS2CPackets {
 		ClientPlayNetworking.registerGlobalReceiver(PlayBlockBoundSoundInstancePayload.ID, PlayBlockBoundSoundInstancePayload.getPayloadHandler());
 		ClientPlayNetworking.registerGlobalReceiver(PlayTakeOffBeltSoundInstancePayload.ID, PlayTakeOffBeltSoundInstancePayload.getPayloadHandler());
 		ClientPlayNetworking.registerGlobalReceiver(UpdateBlockEntityInkPayload.ID, UpdateBlockEntityInkPayload.getPayloadHandler());
-		ClientPlayNetworking.registerGlobalReceiver(InkColorSelectedPayload.ID, InkColorSelectedPayload.getPayloadHandler());
+		ClientPlayNetworking.registerGlobalReceiver(InkColorSelectedS2CPayload.ID, InkColorSelectedS2CPayload.getPayloadHandler());
 		ClientPlayNetworking.registerGlobalReceiver(PlayPresentOpeningParticlesPayload.ID, PlayPresentOpeningParticlesPayload.getPayloadHandler());
 		ClientPlayNetworking.registerGlobalReceiver(PlayAscensionAppliedEffectsPayload.ID, PlayAscensionAppliedEffectsPayload.getPayloadHandler());
 		ClientPlayNetworking.registerGlobalReceiver(PlayDivinityAppliedEffectsPayload.ID, PlayDivinityAppliedEffectsPayload.getPayloadHandler());

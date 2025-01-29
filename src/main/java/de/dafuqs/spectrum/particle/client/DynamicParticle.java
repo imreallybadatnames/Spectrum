@@ -1,13 +1,14 @@
 package de.dafuqs.spectrum.particle.client;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.mixin.client.accessors.ParticleManagerAccessor;
+import de.dafuqs.spectrum.mixin.client.accessors.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.world.*;
+import net.minecraft.registry.*;
 import org.jetbrains.annotations.*;
 
 @Environment(EnvType.CLIENT)
@@ -40,12 +41,12 @@ public class DynamicParticle extends SpriteBillboardParticle {
 	
 	public void apply(@NotNull DynamicParticleEffect effect) {
 		this.setSprite(sprite);
-		this.setMaxAge(effect.lifetimeTicks);
-		this.scale(effect.scale);
-		this.setColor(effect.color.x(), effect.color.y(), effect.color.z());
-		this.gravityStrength = effect.gravity;
-		this.collidesWithWorld = effect.collisions;
-		this.glowInTheDark = effect.glowing;
+		this.setMaxAge(effect.lifetimeTicks());
+		this.scale(effect.scale());
+		this.setColor(effect.color().x(), effect.color().y(), effect.color().z());
+		this.gravityStrength = effect.gravity();
+		this.collidesWithWorld = effect.collisions();
+		this.glowInTheDark = effect.glowing();
 	}
 	
 	public static class Factory<P extends DynamicParticleEffect> implements ParticleFactory<P> {
@@ -61,9 +62,10 @@ public class DynamicParticle extends SpriteBillboardParticle {
 			MinecraftClient client = MinecraftClient.getInstance();
 			DynamicParticle particle = new DynamicParticle(clientWorld, x, y, z, velocityX, velocityY, velocityZ);
 			
-			SpriteProvider dynamicProvider = ((ParticleManagerAccessor) client.particleManager).getSpriteAwareFactories().get(parameters.particleTypeIdentifier);
+			var particleTypeIdentifier = Registries.PARTICLE_TYPE.getId(parameters.particleType());
+			SpriteProvider dynamicProvider = ((ParticleManagerAccessor) client.particleManager).getSpriteAwareFactories().get(particleTypeIdentifier);
 			if (dynamicProvider == null) {
-				SpectrumCommon.logError("Trying to use a non-existent sprite provider for particle spawner particle: " + parameters.particleTypeIdentifier);
+				SpectrumCommon.logError("Trying to use a non-existent sprite provider for particle spawner particle: " + particleTypeIdentifier);
 				particle.setSprite(spriteProvider);
 			} else {
 				particle.setSprite(dynamicProvider);

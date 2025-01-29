@@ -721,7 +721,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-		return new FilteringScreenHandler(syncId, inv, this);
+		return new FilteringScreenHandler(syncId, inv, new ExtendedData(this));
 	}
 
 	@Override

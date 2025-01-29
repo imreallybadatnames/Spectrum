@@ -10,6 +10,7 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
+import java.lang.reflect.*;
 import java.util.function.*;
 
 public class PacketCodecHelper {
@@ -30,7 +31,7 @@ public class PacketCodecHelper {
 		return Identifier.PACKET_CODEC.xmap(registry::get, registry::getId);
 	}
 	
-	public static <B extends ByteBuf, C> PacketCodec<B, C> nullableOf(PacketCodec<B, C> codec) {
+	public static <B extends ByteBuf, C> PacketCodec<B, C> nullable(PacketCodec<B, C> codec) {
 		return new PacketCodec<>() {
 			@Override
 			public C decode(B buf) {
@@ -54,6 +55,27 @@ public class PacketCodecHelper {
 			
 			public void encode(ByteBuf byteBuf, E value) {
 				VarInts.write(byteBuf, value.ordinal());
+			}
+		};
+	}
+	
+	public static <B extends ByteBuf, V> PacketCodec<B, V[]> array(Class<V> clazz, PacketCodec<B, V> codec) {
+		return new PacketCodec<>() {
+			@Override
+			@SuppressWarnings("unchecked")
+			public V[] decode(B buf) {
+				var length = VarInts.read(buf);
+				var array = (V[]) Array.newInstance(clazz, length);
+				for (int i = 0; i < length; i++)
+					array[i] = codec.decode(buf);
+				return array;
+			}
+			
+			@Override
+			public void encode(B buf, V[] value) {
+				VarInts.write(buf, value.length);
+				for (var v : value)
+					codec.encode(buf, v);
 			}
 		};
 	}

@@ -28,7 +28,7 @@ public class AnvilCrushingRecipeSerializer implements GatedRecipeSerializer<Anvi
 	private static final PacketCodec<RegistryByteBuf, AnvilCrushingRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
 			PacketCodecs.STRING, c -> c.group,
 			PacketCodecs.BOOL, c -> c.secret,
-			PacketCodecHelper.nullableOf(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
+			PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
 			Ingredient.PACKET_CODEC, c -> c.ingredient,
 			ItemStack.PACKET_CODEC, c -> c.result,
 			PacketCodecs.FLOAT, c -> c.crushedItemsPerPointOfDamage,

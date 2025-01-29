@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.particle.client;
 
 import de.dafuqs.spectrum.helpers.ColorHelper;
-import de.dafuqs.spectrum.particle.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.color.world.*;
 import net.minecraft.client.particle.*;
@@ -67,10 +66,10 @@ public class RainRippleParticle extends SpriteBillboardParticle {
 		float m = this.getMinV();
 		float n = this.getMaxV();
 		int o = this.getBrightness(tickDelta);
-		vertexConsumer.vertex(vector3fs[0].x(), (double) vector3fs[0].y(), (double) vector3fs[0].z()).texture(l, n).color(this.red, this.green, this.blue, this.alpha).light(o).next();
-		vertexConsumer.vertex(vector3fs[1].x(), (double) vector3fs[1].y(), (double) vector3fs[1].z()).texture(l, m).color(this.red, this.green, this.blue, this.alpha).light(o).next();
-		vertexConsumer.vertex(vector3fs[2].x(), (double) vector3fs[2].y(), (double) vector3fs[2].z()).texture(k, m).color(this.red, this.green, this.blue, this.alpha).light(o).next();
-		vertexConsumer.vertex(vector3fs[3].x(), (double) vector3fs[3].y(), (double) vector3fs[3].z()).texture(k, n).color(this.red, this.green, this.blue, this.alpha).light(o).next();
+		vertexConsumer.vertex(vector3fs[0].x(), vector3fs[0].y(), vector3fs[0].z()).texture(l, n).color(this.red, this.green, this.blue, this.alpha).light(o);
+		vertexConsumer.vertex(vector3fs[1].x(), vector3fs[1].y(), vector3fs[1].z()).texture(l, m).color(this.red, this.green, this.blue, this.alpha).light(o);
+		vertexConsumer.vertex(vector3fs[2].x(), vector3fs[2].y(), vector3fs[2].z()).texture(k, m).color(this.red, this.green, this.blue, this.alpha).light(o);
+		vertexConsumer.vertex(vector3fs[3].x(), vector3fs[3].y(), vector3fs[3].z()).texture(k, n).color(this.red, this.green, this.blue, this.alpha).light(o);
 	}
 	
 	@Override

@@ -4,7 +4,9 @@ import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
 import de.dafuqs.spectrum.components.*;
+import de.dafuqs.spectrum.explosion.*;
 import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
@@ -39,6 +41,8 @@ public class SpectrumDataComponentTypes {
 	public static final ComponentType<PairedItemComponent> PAIRED_ITEM = register("paired_item", builder -> builder.codec(PairedItemComponent.CODEC).packetCodec(PairedItemComponent.PACKET_CODEC));
 	public static final ComponentType<PipeBombComponent> PIPE_BOMB = register("pipe_bomb", builder -> builder.codec(PipeBombComponent.CODEC).packetCodec(PipeBombComponent.PACKET_CODEC));
 	public static final ComponentType<ShootingStarComponent> SHOOTING_STAR = register("shooting_star", builder -> builder.codec(ShootingStarComponent.CODEC).packetCodec(ShootingStarComponent.PACKET_CODEC));
+	public static final ComponentType<ItemEnchantmentsComponent> CANVAS_ENCHANTMENTS = register("canvas_enchantments", (builder) -> builder.codec(ItemEnchantmentsComponent.CODEC).packetCodec(ItemEnchantmentsComponent.PACKET_CODEC).cache());
+	public static final ComponentType<ModularExplosionDefinition> MODULAR_EXPLOSION = register("modular_explosion", builder -> builder.codec(ModularExplosionDefinition.CODEC).packetCodec(ModularExplosionDefinition.PACKET_CODEC));
 	public static final ComponentType<UUID> SLOT_RESERVER = register("slot_eserver", builder -> builder.codec(Uuids.CODEC).packetCodec(Uuids.PACKET_CODEC));
 	public static final ComponentType<Unit> SOCKETED = register("socketed", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<Unit> STABLE = register("stable", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));

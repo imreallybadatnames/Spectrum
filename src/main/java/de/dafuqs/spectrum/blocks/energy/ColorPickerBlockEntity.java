@@ -300,8 +300,8 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		return amount;
 	}
 	
-	public void setSelectedColor(Optional<InkColor> inkColor) {
-		this.selectedColor = inkColor;
+	public void setSelectedColor(@Nullable InkColor inkColor) {
+		this.selectedColor = Optional.ofNullable(inkColor);
 		this.paused = false;
 		this.markDirty();
 	}

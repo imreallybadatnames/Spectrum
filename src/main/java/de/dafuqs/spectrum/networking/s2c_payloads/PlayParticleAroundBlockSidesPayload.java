@@ -14,19 +14,17 @@ import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.math.*;
 
-import java.util.*;
 import java.util.function.*;
 
-// TODO: playParticleAroundBlockSides() is a mess
-public record PlayParticleAroundBlockSidesPayload(BlockPos pos, int quantity, Vec3d velocity, ParticleEffect particle, List<Direction> sides) implements CustomPayload {
+public record PlayParticleAroundBlockSidesPayload(BlockPos pos, int quantity, Vec3d velocity, ParticleEffect particle, Direction[] sides) implements CustomPayload {
 	
 	public static final Id<PlayParticleAroundBlockSidesPayload> ID = SpectrumC2SPackets.makeId("play_particle_around_block_sides");
 	public static final PacketCodec<RegistryByteBuf, PlayParticleAroundBlockSidesPayload> CODEC = PacketCodec.tuple(
 			BlockPos.PACKET_CODEC, PlayParticleAroundBlockSidesPayload::pos,
-			PacketCodecs.INTEGER, PlayParticleAroundBlockSidesPayload::quantity,
-			SpectrumPacketCodecs.VEC_3D, PlayParticleAroundBlockSidesPayload::velocity,
+			PacketCodecs.VAR_INT, PlayParticleAroundBlockSidesPayload::quantity,
+			PacketCodecHelper.VEC3D, PlayParticleAroundBlockSidesPayload::velocity,
 			ParticleTypes.PACKET_CODEC, PlayParticleAroundBlockSidesPayload::particle,
-			Direction.PACKET_CODEC, PlayParticleAroundBlockSidesPayload::directions,
+			PacketCodecHelper.array(Direction.class, Direction.PACKET_CODEC), PlayParticleAroundBlockSidesPayload::sides,
 			PlayParticleAroundBlockSidesPayload::new
 	);
 	
@@ -34,18 +32,17 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos, int quantity, Ve
 		for (ServerPlayerEntity player : PlayerLookup.tracking(world, pos)) {
 			if (!sendCheck.test(player))
 				continue;
-			
 			ServerPlayNetworking.send(player, new PlayParticleAroundBlockSidesPayload(pos, quantity, velocity, particleEffect, sides));
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
+	@SuppressWarnings({"resource", "DataFlowIssue"})
 	public static ClientPlayNetworking.PlayPayloadHandler<PlayParticleAroundBlockSidesPayload> getPayloadHandler() {
 		return (payload, context) -> {
 			MinecraftClient client = context.client();
-			client.execute(() -> {
-				ParticleHelper.playParticleAroundBlockSides(client.world, payload.particle, payload.pos, payload.sides, payload.quantity, payload.velocity);
-			});
+			client.execute(() ->
+				ParticleHelper.playParticleAroundBlockSides(client.world, payload.particle, payload.pos, payload.sides, payload.quantity, payload.velocity));
 		};
 	}
 	

@@ -88,7 +88,7 @@ public class SpectrumClientEventListeners {
 		ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipType, lines) -> {
 			if (stack.contains(DataComponentTypes.FOOD)) {
 				if (Registries.ITEM.getId(stack.getItem()).getNamespace().equals(SpectrumCommon.MOD_ID)) {
-					TooltipHelper.addFoodComponentEffectTooltip(stack, lines);
+					TooltipHelper.addFoodComponentEffectTooltip(stack, lines, tooltipContext.getUpdateTickRate());
 				}
 			}
 			if (stack.isIn(SpectrumItemTags.COMING_SOON_TOOLTIP)) {

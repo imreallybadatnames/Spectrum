@@ -16,18 +16,18 @@ import java.util.function.*;
 public class FilteringScreenHandler extends ScreenHandler {
 
 	protected final World world;
-	protected FilterConfigurable filterConfigurable;
+	protected FilterConfigurable.ExtendedData filterConfigurable;
 	protected final Inventory filterInventory;
 	protected final int rows, slotsPerRow, drawnSlots;
 
-	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable filterConfigurable) {
+	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable.ExtendedData data) {
 		this(SpectrumScreenHandlerTypes.FILTERING, syncId, playerInventory,
-				(handler) -> new Pair<>(FilterConfigurable.getFilterInventoryFromItemsHandler(syncId, playerInventory, filterConfigurable.getItemFilters(), handler), new Integer[]{
-						filterConfigurable.getFilterRows(),
-						filterConfigurable.getSlotsPerRow(),
-						filterConfigurable.getDrawnSlots()
+				(handler) -> new Pair<>(FilterConfigurable.getFilterInventoryFromItemsHandler(syncId, playerInventory, data.filterItems(), handler), new Integer[]{
+						data.rows(),
+						data.slotsPerRow(),
+						data.drawnSlots()
 				}));
-		this.filterConfigurable = filterConfigurable;
+		this.filterConfigurable = data;
 	}
 
 	protected FilteringScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Function<ScreenHandler, Pair<Inventory, Integer[]>> filterInventoryFactory) {
@@ -102,7 +102,7 @@ public class FilteringScreenHandler extends ScreenHandler {
 		@Override
 		public boolean onClicked(ItemStack heldStack, ClickType type, PlayerEntity player) {
 			if (!world.isClient && filterConfigurable != null) {
-				filterConfigurable.setFilterItem(getIndex(), ItemVariant.of(heldStack));
+				filterConfigurable.filterItems().set(getIndex(), ItemVariant.of(heldStack));
 			}
 			return super.onClicked(heldStack, type, player);
 		}

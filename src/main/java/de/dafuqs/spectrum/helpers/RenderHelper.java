@@ -8,7 +8,6 @@ import org.joml.*;
 public class RenderHelper {
 
 	public static final int GREEN_COLOR = 3289650;
-    protected static final BufferBuilder builder = Tessellator.getInstance().getBuffer();
 	
 	/**
 	 * Draws a filled triangle
@@ -24,10 +23,10 @@ public class RenderHelper {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-		builder.begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
-		builder.vertex(matrix, p1x, p1y, 0F).color(red, green, blue, alpha).next();
-		builder.vertex(matrix, p2x, p2y, 0F).color(red, green, blue, alpha).next();
-		builder.vertex(matrix, p3x, p3y, 0F).color(red, green, blue, alpha).next();
+		var builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
+		builder.vertex(matrix, p1x, p1y, 0F).color(red, green, blue, alpha);
+		builder.vertex(matrix, p2x, p2y, 0F).color(red, green, blue, alpha);
+		builder.vertex(matrix, p3x, p3y, 0F).color(red, green, blue, alpha);
 		BufferRenderer.drawWithGlobalProgram(builder.end());
 		RenderSystem.disableBlend();
 	}
@@ -45,11 +44,11 @@ public class RenderHelper {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		builder.vertex(matrix, x, y, 0F).color(red, green, blue, alpha).next();
-		builder.vertex(matrix, x, y + height, 0F).color(red, green, blue, alpha).next();
-		builder.vertex(matrix, x + width, y + height, 0F).color(red, green, blue, alpha).next();
-		builder.vertex(matrix, x + width, y, 0F).color(red, green, blue, alpha).next();
+		var builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+		builder.vertex(matrix, x, y, 0F).color(red, green, blue, alpha);
+		builder.vertex(matrix, x, y + height, 0F).color(red, green, blue, alpha);
+		builder.vertex(matrix, x + width, y + height, 0F).color(red, green, blue, alpha);
+		builder.vertex(matrix, x + width, y, 0F).color(red, green, blue, alpha);
 		BufferRenderer.drawWithGlobalProgram(builder.end());
 		RenderSystem.disableBlend();
 	}

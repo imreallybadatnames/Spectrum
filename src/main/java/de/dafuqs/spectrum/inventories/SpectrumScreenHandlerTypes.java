@@ -59,7 +59,7 @@ public class SpectrumScreenHandlerTypes {
 		BLACK_HOLE_CHEST = registerExtended(SpectrumScreenHandlerIDs.BLACK_HOLE_CHEST, BlackHoleChestScreenHandler::new, FilterConfigurable.ExtendedData.PACKET_CODEC);
 		COLOR_PICKER = registerSimple(SpectrumScreenHandlerIDs.COLOR_PICKER, ColorPickerScreenHandler::new);
 		CINDERHEARTH = registerSimple(SpectrumScreenHandlerIDs.CINDERHEARTH, CinderhearthScreenHandler::new);
-		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new);
+		FILTERING = registerExtended(SpectrumScreenHandlerIDs.FILTERING, FilteringScreenHandler::new, FilterConfigurable.ExtendedData.PACKET_CODEC);
 		BAG_OF_HOLDING = registerSimple(SpectrumScreenHandlerIDs.BAG_OF_HOLDING, BagOfHoldingScreenHandler::new);
 		
 		CRAFTING_TABLET = registerSimple(SpectrumScreenHandlerIDs.CRAFTING_TABLET, CraftingTabletScreenHandler::new);

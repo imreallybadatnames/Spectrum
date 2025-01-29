@@ -2,16 +2,20 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
+import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.block.*;
 import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.apache.commons.lang3.*;
 import org.jetbrains.annotations.*;
@@ -74,7 +78,7 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 	}
 	
 	protected boolean canTakeOutput(PlayerEntity player, boolean present) {
-		return player.getAbilities().creativeMode || player.experienceLevel >= this.levelCost.get();
+		return player.isInCreativeMode() || player.experienceLevel >= this.levelCost.get();
 	}
 	
 	protected void onTakeOutput(PlayerEntity player, ItemStack stack) {
@@ -100,44 +104,38 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 	}
 	
 	public void updateResult() {
-		boolean combined = false;
+		boolean combined = false; // We added this line
 		
 		ItemStack inputStack = this.input.getStack(0);
-		this.levelCost.set(0);
+		this.levelCost.set(0);  // We changed '1' -> '0'
 		int enchantmentLevelCost = 0;
-		int repairLevelCost = 0;
-		int k = 0;
-		if (inputStack.isEmpty()) {
-			this.output.setStack(0, ItemStack.EMPTY);
-			this.levelCost.set(0);
-		} else {
+		long repairLevelCost = 0L;
+//		int renameCost = 0; // We removed this line - Renames are free
+		if (!inputStack.isEmpty() && EnchantmentHelper.canHaveEnchantments(inputStack)) {
 			ItemStack outputStack = inputStack.copy();
 			ItemStack repairSlotStack = this.input.getStack(1);
-			Map<Enchantment, Integer> enchantmentLevelMap = EnchantmentHelper.get(outputStack);
-			repairLevelCost += inputStack.getRepairCost() + (repairSlotStack.isEmpty() ? 0 : repairSlotStack.getRepairCost());
+			ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(outputStack));
+			repairLevelCost += (long) inputStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0)
+					+ (long) repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
 			this.repairItemCount = 0;
 			if (!repairSlotStack.isEmpty()) {
-				combined = true;
+				combined = true; // We added this line
 				
-				boolean enchantedBookInInputSlot = inputStack.isOf(Items.ENCHANTED_BOOK) && !EnchantedBookItem.getEnchantmentNbt(inputStack).isEmpty();
-				boolean enchantedBookInRepairSlot = repairSlotStack.isOf(Items.ENCHANTED_BOOK) && !EnchantedBookItem.getEnchantmentNbt(repairSlotStack).isEmpty();
-
-				int o;
-				int repairItemCount;
-				int newOutputStackDamage;
+				boolean enchantedBookInRepairSlot = repairSlotStack.isOf(Items.ENCHANTED_BOOK) && !inputStack.contains(DataComponentTypes.STORED_ENCHANTMENTS);
 				if (outputStack.isDamageable() && outputStack.getItem().canRepair(inputStack, repairSlotStack)) {
-					o = Math.min(outputStack.getDamage(), outputStack.getMaxDamage() / 4);
-					if (o <= 0) {
+					int toRepair = Math.min(outputStack.getDamage(), outputStack.getMaxDamage() / 4);
+					if (toRepair <= 0) {
 						this.output.setStack(0, ItemStack.EMPTY);
 						this.levelCost.set(0);
 						return;
 					}
 					
-					for (repairItemCount = 0; o > 0 && repairItemCount < repairSlotStack.getCount(); ++repairItemCount) {
-						newOutputStackDamage = outputStack.getDamage() - o;
+					int repairItemCount;
+					for (repairItemCount = 0; toRepair > 0 && repairItemCount < repairSlotStack.getCount(); ++repairItemCount) {
+						int newOutputStackDamage = outputStack.getDamage() - toRepair;
 						outputStack.setDamage(newOutputStackDamage);
 						++enchantmentLevelCost;
-						o = Math.min(outputStack.getDamage(), outputStack.getMaxDamage() / 4);
+						toRepair = Math.min(outputStack.getDamage(), outputStack.getMaxDamage() / 4);
 					}
 					
 					this.repairItemCount = repairItemCount;
@@ -149,94 +147,88 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 					}
 					
 					if (outputStack.isDamageable() && !enchantedBookInRepairSlot) {
-						o = inputStack.getMaxDamage() - inputStack.getDamage();
-						repairItemCount = repairSlotStack.getMaxDamage() - repairSlotStack.getDamage();
-						newOutputStackDamage = repairItemCount + outputStack.getMaxDamage() * 12 / 100;
-						int r = o + newOutputStackDamage;
-						int s = outputStack.getMaxDamage() - r;
-						if (s < 0) {
-							s = 0;
+						int inputItemDurability = inputStack.getMaxDamage() - inputStack.getDamage();
+						int repairItemDurability = repairSlotStack.getMaxDamage() - repairSlotStack.getDamage();
+						int toRepair = repairItemDurability + outputStack.getMaxDamage() * 12 / 100;
+						int outputItemDurability = inputItemDurability + toRepair;
+						int outputItemDamage = outputStack.getMaxDamage() - outputItemDurability;
+						if (outputItemDamage < 0) {
+							outputItemDamage = 0;
 						}
 						
-						if (s < outputStack.getDamage()) {
-							outputStack.setDamage(s);
+						if (outputItemDamage < outputStack.getDamage()) {
+							outputStack.setDamage(outputItemDamage);
 							enchantmentLevelCost += 2;
 						}
 					}
 					
-					Map<Enchantment, Integer> currentEnchantments = EnchantmentHelper.get(repairSlotStack);
-					boolean bl2 = false;
-					boolean bl3 = false;
-					Iterator<Enchantment> enchantmentIterator = currentEnchantments.keySet().iterator();
+					ItemEnchantmentsComponent itemEnchantmentsComponent = EnchantmentHelper.getEnchantments(repairSlotStack);
+					boolean foundAcceptable = false;
+					boolean foundUnacceptable = false;
 					
-					label155:
-					while (true) {
-						Enchantment enchantment;
-						do {
-							if (!enchantmentIterator.hasNext()) {
-								if (bl3 && !bl2) {
-									this.output.setStack(0, ItemStack.EMPTY);
-									this.levelCost.set(0);
-									return;
-								}
-								break label155;
-							}
-							enchantment = enchantmentIterator.next();
-						} while (enchantment == null);
-						
-						int t = enchantmentLevelMap.getOrDefault(enchantment, 0);
-						int newEnchantmentLevel = currentEnchantments.get(enchantment);
+					for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : itemEnchantmentsComponent.getEnchantmentEntries()) {
+						RegistryEntry<Enchantment> registryEntry = entry.getKey();
+						int t = builder.getLevel(registryEntry);
+						int newEnchantmentLevel = entry.getIntValue();
 						newEnchantmentLevel = t == newEnchantmentLevel ? newEnchantmentLevel + 1 : Math.max(newEnchantmentLevel, t);
+						Enchantment enchantment = registryEntry.value();
 						boolean itemStackIsAcceptableForStack = enchantment.isAcceptableItem(inputStack);
 						if (this.player.getAbilities().creativeMode || inputStack.isOf(Items.ENCHANTED_BOOK)) {
 							itemStackIsAcceptableForStack = true;
 						}
 						
-						for (Enchantment enchantment2 : enchantmentLevelMap.keySet()) {
-							if (enchantment2 != enchantment && !enchantment.canCombine(enchantment2)) {
+						for (RegistryEntry<Enchantment> registryEntry2 : builder.getEnchantments()) {
+							if (!registryEntry2.equals(registryEntry) && !Enchantment.canBeCombined(registryEntry, registryEntry2)) {
 								itemStackIsAcceptableForStack = false;
 								++enchantmentLevelCost;
 							}
 						}
 						
 						if (!itemStackIsAcceptableForStack) {
-							bl3 = true;
+							foundUnacceptable = true;
 						} else {
-							bl2 = true;
-							boolean capToMaxLevel = enchantedBookInInputSlot || !SpectrumCommon.CONFIG.BedrockAnvilCanExceedMaxVanillaEnchantmentLevel;
-							if (capToMaxLevel && newEnchantmentLevel > enchantment.getMaxLevel()) {
+							foundAcceptable = true;
+							boolean capToMaxLevel = (inputStack.isOf(Items.ENCHANTED_BOOK) && !inputStack.contains(DataComponentTypes.STORED_ENCHANTMENTS)) || !SpectrumCommon.CONFIG.BedrockAnvilCanExceedMaxVanillaEnchantmentLevel; // We added this line
+							if (capToMaxLevel && newEnchantmentLevel > enchantment.getMaxLevel()) { // We added 'capToMaxLevel &&'
 								newEnchantmentLevel = enchantment.getMaxLevel();
 							}
 							
-							enchantmentLevelMap.put(enchantment, newEnchantmentLevel);
-							int enchantmentRarityInt = switch (enchantment.getRarity()) {
-								case COMMON -> 1;
-								case UNCOMMON -> 2;
-								case RARE -> 4;
-								case VERY_RARE -> 8;
-							};
-							
+							builder.set(registryEntry, newEnchantmentLevel);
+							int anvilCost = enchantment.getAnvilCost();
 							if (enchantedBookInRepairSlot) {
-								enchantmentRarityInt = Math.max(1, enchantmentRarityInt / 2);
+								anvilCost = Math.max(1, anvilCost / 2);
 							}
 							
-							enchantmentLevelCost += enchantmentRarityInt * newEnchantmentLevel;
+							enchantmentLevelCost += anvilCost * newEnchantmentLevel;
 							if (inputStack.getCount() > 1) {
 								enchantmentLevelCost = 40;
 							}
 						}
+					}
+					
+					if (foundUnacceptable && !foundAcceptable) {
+						this.output.setStack(0, ItemStack.EMPTY);
+						this.levelCost.set(0);
+						return;
 					}
 				}
 			}
 			
 			if (this.newItemName != null && !StringHelper.isBlank(this.newItemName)) {
 				if (!this.newItemName.equals(inputStack.getName().getString())) {
+					// We removed these - Renames are free
+//					 renameCost = 1;
+//					 enchantmentLevelCost += renameCost;
 					outputStack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(this.newItemName));
 				}
 			} else if (inputStack.contains(DataComponentTypes.CUSTOM_NAME)) {
+				// We removed these - Renames are free
+// 				 renameCost = 1;
+//				 enchantmentLevelCost += renameCost;
 				outputStack.remove(DataComponentTypes.CUSTOM_NAME);
 			}
 			
+			// We added this if/elseif block
 			if (this.newLoreString != null && !StringHelper.isBlank(this.newLoreString)) {
 				List<Text> lore = LoreHelper.getLoreTextArrayFromString(this.newLoreString);
 				if (!LoreHelper.equalsLore(lore, inputStack)) {
@@ -246,29 +238,43 @@ public class BedrockAnvilScreenHandler extends ForgingScreenHandler {
 				LoreHelper.removeLore(outputStack);
 			}
 			
-			this.levelCost.set(repairLevelCost + enchantmentLevelCost);
-			if (enchantmentLevelCost < 0) {
+			int totalCost = (int) MathHelper.clamp(repairLevelCost + (long) enchantmentLevelCost, 0L, 2147483647L);
+			this.levelCost.set(totalCost);
+			if (enchantmentLevelCost < 0) { // We modified this ('<=' -> '<')
 				outputStack = ItemStack.EMPTY;
 			}
 			
-			if (!combined) {
-				// renaming and lore is free
+			// We removed this - Renames are free and we allow +40lvl enchants
+//			if (renameCost == enchantmentLevelCost && renameCost > 0 && this.levelCost.get() >= 40) {
+//				this.levelCost.set(39);
+//			}
+
+			// We removed this - We allow costs greater than 40 levels
+//			if (this.levelCost.get() >= 40 && !this.player.getAbilities().creativeMode) {
+//				itemStack2 = ItemStack.EMPTY;
+//			}
+			
+			if (!combined) { // We added this if - Renames are free
 				this.levelCost.set(0);
 			} else if (!outputStack.isEmpty()) {
 				int repairCost = outputStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
-				if (!repairSlotStack.isEmpty() && repairCost < repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0)) {
+				if (repairCost < repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0)) {
 					repairCost = repairSlotStack.getOrDefault(DataComponentTypes.REPAIR_COST, 0);
 				}
-				if (k != enchantmentLevelCost) {
+				
+				if (enchantmentLevelCost > 0) { // We changed 'renameCost != enchantmentLevelCost || renameCost == 0' -> 'enchantmentLevelCost > 0'
 					repairCost = getNextCost(repairCost);
-					outputStack.set(DataComponentTypes.REPAIR_COST, k);
+					outputStack.set(DataComponentTypes.REPAIR_COST, repairCost);
 				}
 				
-				EnchantmentHelper.set(enchantmentLevelMap, outputStack);
+				EnchantmentHelper.set(outputStack, builder.build());
 			}
 			
 			this.output.setStack(0, outputStack);
 			this.sendContentUpdates();
+		} else {
+			this.output.setStack(0, ItemStack.EMPTY);
+			this.levelCost.set(0);
 		}
 	}
 	

@@ -7,8 +7,6 @@ import net.minecraft.client.world.*;
 import net.minecraft.particle.*;
 import net.minecraft.util.math.*;
 
-import java.lang.Math;
-
 @Environment(EnvType.CLIENT)
 public class AzureAuraParticle extends AbstractSlowingParticle {
 	
@@ -93,10 +91,10 @@ public class AzureAuraParticle extends AbstractSlowingParticle {
 		final float minV = this.getMinV();
 		final float maxV = this.getMaxV();
 		final int   brightness = this.getBrightness(tickDelta);
-		vertexConsumer.vertex(negX, negY, posZ).texture(maxU, maxV).color(this.red, this.green, this.blue, 0).light(brightness).next();
-		vertexConsumer.vertex(negX, posY, posZ).texture(maxU, minV).color(this.red, this.green, this.blue, this.alpha).light(brightness).next();
-		vertexConsumer.vertex(posX, posY, negZ).texture(minU, minV).color(this.red, this.green, this.blue, this.alpha).light(brightness).next();
-		vertexConsumer.vertex(posX, negY, negZ).texture(minU, maxV).color(this.red, this.green, this.blue, 0).light(brightness).next();
+		vertexConsumer.vertex(negX, negY, posZ).texture(maxU, maxV).color(this.red, this.green, this.blue, 0).light(brightness);
+		vertexConsumer.vertex(negX, posY, posZ).texture(maxU, minV).color(this.red, this.green, this.blue, this.alpha).light(brightness);
+		vertexConsumer.vertex(posX, posY, negZ).texture(minU, minV).color(this.red, this.green, this.blue, this.alpha).light(brightness);
+		vertexConsumer.vertex(posX, negY, negZ).texture(minU, maxV).color(this.red, this.green, this.blue, 0).light(brightness);
 	}
 	
 	@Override
