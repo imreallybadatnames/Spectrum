@@ -11,13 +11,13 @@ import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.*;
 import net.minecraft.client.util.math.*;
-import net.minecraft.entity.decoration.*;
+import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.item.map.*;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 
-public class PhantomFrameEntityRenderer<T extends ItemFrameEntity> extends ItemFrameEntityRenderer<PhantomFrameEntity> {
+public class PhantomFrameEntityRenderer<T extends PhantomFrameEntity> extends ItemFrameEntityRenderer<T> {
 
 	public static final ModelIdentifier NORMAL_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("item_frame"), "map=false");
 	public static final ModelIdentifier MAP_FRAME_MODEL_IDENTIFIER = new ModelIdentifier(Identifier.ofVanilla("item_frame"), "map=true");
@@ -33,20 +33,20 @@ public class PhantomFrameEntityRenderer<T extends ItemFrameEntity> extends ItemF
 	}
 
 	@Override
-	protected int getBlockLight(PhantomFrameEntity itemFrameEntity, BlockPos blockPos) {
-		return itemFrameEntity.getType() == SpectrumEntityTypes.GLOW_PHANTOM_FRAME ? Math.max(5, super.getBlockLight(itemFrameEntity, blockPos)) : super.getBlockLight(itemFrameEntity, blockPos);
+	protected int getBlockLight(T entity, BlockPos blockPos) {
+		return entity.getType() == SpectrumEntityTypes.GLOW_PHANTOM_FRAME ? Math.max(5, super.getBlockLight(entity, blockPos)) : super.getBlockLight(entity, blockPos);
 	}
 
 	@Override
-	public void render(PhantomFrameEntity entity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
+	public void render(T entity, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
 		if (this.hasLabel(entity)) {
-			this.renderLabelIfPresent(entity, entity.getDisplayName(), matrixStack, vertexConsumerProvider, light);
+			this.renderLabelIfPresent(entity, entity.getDisplayName(), matrixStack, vertexConsumerProvider, light, tickDelta);
 		}
 		
 		matrixStack.push();
 		
 		Direction direction = entity.getHorizontalFacing();
-		Vec3d vec3d = this.getPositionOffset(entity, g);
+		Vec3d vec3d = this.getPositionOffset(entity, tickDelta);
 		matrixStack.translate(-vec3d.getX(), -vec3d.getY(), -vec3d.getZ());
 		double d = 0.46875D;
 		matrixStack.translate((double) direction.getOffsetX() * d, (double) direction.getOffsetY() * d, (double) direction.getOffsetZ() * d);
@@ -65,7 +65,7 @@ public class PhantomFrameEntityRenderer<T extends ItemFrameEntity> extends ItemF
 		}
 		
 		if (!itemStack.isEmpty()) {
-			boolean isRenderingMap = itemStack.isOf(Items.FILLED_MAP);
+			MapIdComponent mapIdComponent = entity.getMapId(itemStack);
 			if (isInvisible) {
 				matrixStack.translate(0.0D, 0.0D, 0.5D);
 			} else {
@@ -74,41 +74,29 @@ public class PhantomFrameEntityRenderer<T extends ItemFrameEntity> extends ItemF
 			
 			int renderLight = entity.shouldRenderAtMaxLight() ? LightmapTextureManager.MAX_LIGHT_COORDINATE : light;
 			
-			int bakedModelManager = isRenderingMap ? entity.getRotation() % 4 * 2 : entity.getRotation();
-			matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float) bakedModelManager * 360.0F / 8.0F));
-			if (isRenderingMap) {
+			int j = mapIdComponent != null ? entity.getRotation() % 4 * 2 : entity.getRotation();
+			matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float) j * 360.0F / 8.0F));
+			if (mapIdComponent != null) {
 				matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
-				float scale = 0.0078125F;
-				matrixStack.scale(scale, scale, scale);
-				matrixStack.translate(-64.0D, -64.0D, 0.0D);
-				Integer mapId = FilledMapItem.getMapId(itemStack);
-				MapState mapState = FilledMapItem.getMapState(mapId, entity.getWorld());
-				matrixStack.translate(0.0D, 0.0D, -1.0D);
+				matrixStack.scale(0.0078125F, 0.0078125F, 0.0078125F);
+				matrixStack.translate(-64.0F, -64.0F, 0.0F);
+				MapState mapState = FilledMapItem.getMapState(mapIdComponent, entity.getWorld());
+				matrixStack.translate(0.0F, 0.0F, -1.0F);
 				if (mapState != null) {
-					this.client.gameRenderer.getMapRenderer().draw(matrixStack, vertexConsumerProvider, mapId, mapState, true, renderLight);
+					int k = this.getLight(entity, 15728850, renderLight);
+					MinecraftClient.getInstance().gameRenderer.getMapRenderer().draw(matrixStack, vertexConsumerProvider, mapIdComponent, mapState, true, k);
 				}
 			} else {
-				float scale = 0.75F;
-				matrixStack.scale(scale, scale, scale);
-				this.itemRenderer.renderItem(itemStack, ModelTransformationMode.FIXED, renderLight, OverlayTexture.DEFAULT_UV, matrixStack, vertexConsumerProvider, entity.getWorld(), entity.getId());
+				int l = this.getLight(entity, 15728880, renderLight);
+				matrixStack.scale(0.5F, 0.5F, 0.5F);
+				this.itemRenderer.renderItem(itemStack, ModelTransformationMode.FIXED, l, OverlayTexture.DEFAULT_UV, matrixStack, vertexConsumerProvider, entity.getWorld(), entity.getId());
 			}
 		}
 
 		matrixStack.pop();
 	}
 	
-	@Override
-	protected boolean hasLabel(PhantomFrameEntity itemFrameEntity) {
-		if (MinecraftClient.isHudEnabled() && !itemFrameEntity.getHeldItemStack().isEmpty() && itemFrameEntity.getHeldItemStack().hasCustomName() && this.dispatcher.targetedEntity == itemFrameEntity) {
-			double d = this.dispatcher.getSquaredDistanceToCamera(itemFrameEntity);
-			float f = itemFrameEntity.isSneaky() ? 32.0F : 64.0F;
-			return d < (double) (f * f);
-		} else {
-			return false;
-		}
-	}
-	
-	private ModelIdentifier getModelId(PhantomFrameEntity entity, ItemStack stack) {
+	private ModelIdentifier getModelId(T entity, ItemStack stack) {
 		boolean bl = entity.getType() == SpectrumEntityTypes.GLOW_PHANTOM_FRAME;
 		if (stack.isOf(Items.FILLED_MAP)) {
 			return bl ? MAP_GLOW_FRAME_MODEL_IDENTIFIER : MAP_FRAME_MODEL_IDENTIFIER;

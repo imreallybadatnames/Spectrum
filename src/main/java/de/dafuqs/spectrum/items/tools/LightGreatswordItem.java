@@ -52,7 +52,7 @@ public class LightGreatswordItem extends ParryingSwordItem implements SplitDamag
 		if (!player.isOnGround() && maxShieldTime - remainingUseTicks > 5) {
 			var  yaw = player.getYaw();
 			var pitch = player.getPitch();
-			var roll = player.getRoll();
+			var roll = player.getBodyYaw();
 
 			float f = -MathHelper.sin(yaw * (float) (Math.PI / 180.0)) * MathHelper.cos(pitch * (float) (Math.PI / 180.0));
 			float g = -MathHelper.sin((pitch + roll) * (float) (Math.PI / 180.0));
