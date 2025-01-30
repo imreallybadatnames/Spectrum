@@ -201,9 +201,9 @@ public class SpectrumEventListeners {
 		// CCA 1.21 supports mob conversion by default, but for now we have to persist this component ourselves
 		// TODO do we need this now?
 		ServerLivingEntityEvents.MOB_CONVERSION.register((previous, converted, keepEquipment) -> {
-			if (EverpromiseRibbonComponent.hasRibbon(previous)) {
+			/*if (EverpromiseRibbonComponent.hasRibbon(previous)) {
 				EverpromiseRibbonComponent.attachRibbon(converted);
-			}
+			}*/
 		});
 		
 		ServerEntityEvents.EQUIPMENT_CHANGE.register((livingEntity, equipmentSlot, previousStack, currentStack) -> {

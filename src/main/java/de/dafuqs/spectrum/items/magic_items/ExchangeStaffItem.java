@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -10,15 +9,17 @@ import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.item.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.text.*;
@@ -242,6 +243,11 @@ public class ExchangeStaffItem extends BuildingStaffItem {
 	@Override
 	public List<InkColor> getUsedColors() {
 		return List.of(USED_COLOR);
+	}
+	
+	@Override
+	public boolean canBeEnchantedWith(ItemStack stack, RegistryEntry<Enchantment> enchantment, EnchantingContext context) {
+		return super.canBeEnchantedWith(stack, enchantment, context) || enchantment.matchesKey(Enchantments.FORTUNE) || enchantment.matchesKey(Enchantments.SILK_TOUCH) || enchantment.matchesKey(SpectrumEnchantments.RESONANCE);
 	}
 	
 }
