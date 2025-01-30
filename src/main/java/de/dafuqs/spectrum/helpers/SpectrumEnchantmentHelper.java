@@ -75,16 +75,6 @@ public class SpectrumEnchantmentHelper {
 		return new Pair<>(true, stack);
 	}
 	
-	public static void setStoredEnchantments(Map<Enchantment, Integer> enchantments, ItemStack stack) {
-		stack.removeSubNbt(EnchantedBookItem.STORED_ENCHANTMENTS_KEY); // clear existing enchantments
-		for (Map.Entry<Enchantment, Integer> enchantmentIntegerEntry : enchantments.entrySet()) {
-			Enchantment enchantment = enchantmentIntegerEntry.getKey();
-			if (enchantment != null) {
-				EnchantedBookItem.addEnchantment(stack, new EnchantmentLevelEntry(enchantment, enchantmentIntegerEntry.getValue()));
-			}
-		}
-	}
-	
 	/**
 	 * Clears all enchantments of receiverStack and replaces them with the ones present in sourceStacks
 	 * The enchantments are applied in order, so if there are conflicts, the first enchantment in sourceStacks gets chosen
