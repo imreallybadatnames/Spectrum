@@ -1,8 +1,11 @@
 package de.dafuqs.spectrum.networking;
 
 import io.netty.buffer.*;
+import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.util.math.*;
+
+import java.util.*;
 
 public class SpectrumPacketCodecs {
 	
@@ -17,4 +20,7 @@ public class SpectrumPacketCodecs {
 			byteBuf.writeDouble(blockPos.getZ());
 		}
 	};
+	
+	public static final PacketCodec<ByteBuf, List<BlockPos>> BLOCKPOS_LIST = BlockPos.PACKET_CODEC.collect(PacketCodecs.toCollection(ObjectArrayList::new));
+	
 }
