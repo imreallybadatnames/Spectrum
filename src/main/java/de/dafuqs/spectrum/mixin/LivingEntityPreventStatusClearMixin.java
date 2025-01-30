@@ -1,4 +1,4 @@
-package de.dafuqs.spectrum.mixin.compat.quilt_status_effect.absent;
+package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.*;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
