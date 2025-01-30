@@ -1,12 +1,13 @@
 package de.dafuqs.spectrum.api.recipe;
 
 import com.google.gson.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.endec.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
@@ -18,18 +19,23 @@ import java.util.*;
 import java.util.stream.*;
 
 public class FluidIngredient {
-    public static final Endec<FluidIngredient> ENDEC = StructEndecBuilder.of(
-        MinecraftEndecs.ofRegistry(Registries.FLUID).optionalFieldOf("fluid", o -> o.fluid, Fluids.EMPTY),
-        MinecraftEndecs.IDENTIFIER.optionalFieldOf("tag", o -> o.tag, () -> null),
-        FluidIngredient::new
-    ).validate(fluidIngredient -> {
-        boolean hasFluid = fluidIngredient.fluid != null;
-        boolean isTag = fluidIngredient.tag != null;
-        
-        if ((hasFluid && isTag) || !(hasFluid || isTag)) {
-            throw new AssertionError("Invalid FluidIngredient object");
-        }
-    });
+	
+	public static final Codec<FluidIngredient> CODEC = RecordCodecBuilder.<FluidIngredient>create(i -> i.group(
+			Registries.FLUID.getCodec().optionalFieldOf("fluid", Fluids.EMPTY).forGetter(o -> o.fluid),
+			Identifier.CODEC.optionalFieldOf("tag", null).forGetter(o -> o.tag)
+	).apply(i, FluidIngredient::new)).validate(fluidIngredient -> {
+		boolean hasFluid = fluidIngredient.fluid != null;
+		boolean isTag = fluidIngredient.tag != null;
+		if ((hasFluid && isTag) || !(hasFluid || isTag))
+			return DataResult.error(() -> "FluidIngredients may only specify a fluid or a tag");
+		return DataResult.success(fluidIngredient);
+	});
+	
+	public static final PacketCodec<RegistryByteBuf, FluidIngredient> PACKET_CODEC = PacketCodec.tuple(
+			PacketCodecs.registryValue(RegistryKeys.FLUID), o -> o.fluid,
+			Identifier.PACKET_CODEC, o -> o.tag,
+			FluidIngredient::new
+	);
     
     private final @Nullable Fluid fluid;
     private final @Nullable Identifier tag;

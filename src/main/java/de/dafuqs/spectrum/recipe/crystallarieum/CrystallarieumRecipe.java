@@ -1,11 +1,17 @@
 package de.dafuqs.spectrum.recipe.crystallarieum;
 
+import com.google.common.collect.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -164,5 +170,50 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 		}
 		return Optional.empty();
 	}
-
+	
+	public static class Serializer implements RecipeSerializer<CrystallarieumRecipe> {
+		
+		private static final MapCodec<CrystallarieumRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+				CodecHelper.BLOCK_STATE.listOf().fieldOf("growth_stage_states").forGetter(recipe -> recipe.growthStages),
+				Codec.INT.fieldOf("seconds_per_growth_stage").forGetter(recipe -> recipe.secondsPerGrowthStage),
+				InkColor.CODEC.fieldOf("ink_color").forGetter(recipe -> recipe.inkColor),
+				Codec.INT.xmap(
+						d -> d == 0 ? 0 : (int) Math.pow(2, d- 1),
+						e -> e
+				).fieldOf("ink_cost_tier").forGetter(recipe -> recipe.inkPerSecond),
+				Codec.BOOL.optionalFieldOf("grows_without_catalyst", false).forGetter(recipe -> recipe.growsWithoutCatalyst),
+				CrystallarieumCatalyst.CODEC.listOf().fieldOf("catalysts").forGetter(recipe -> recipe.catalysts),
+				ItemStack.CODEC.listOf().optionalFieldOf("additional_recipe_manager_results", ImmutableList.of()).forGetter(recipe -> recipe.additionalResults)
+		).apply(i, CrystallarieumRecipe::new));
+		
+		private static final PacketCodec<RegistryByteBuf, CrystallarieumRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				Ingredient.PACKET_CODEC, recipe -> recipe.ingredient,
+				PacketCodecHelper.BLOCK_STATE.collect(PacketCodecs.toList()), recipe -> recipe.growthStages,
+				PacketCodecs.VAR_INT, recipe -> recipe.secondsPerGrowthStage,
+				InkColor.PACKET_CODEC, recipe -> recipe.inkColor,
+				PacketCodecs.VAR_INT, recipe -> recipe.inkPerSecond,
+				PacketCodecs.BOOL, recipe -> recipe.growsWithoutCatalyst,
+				CrystallarieumCatalyst.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.catalysts,
+				ItemStack.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.additionalResults,
+				CrystallarieumRecipe::new
+		);
+		
+		@Override
+		public MapCodec<CrystallarieumRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, CrystallarieumRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
+	}
+	
 }

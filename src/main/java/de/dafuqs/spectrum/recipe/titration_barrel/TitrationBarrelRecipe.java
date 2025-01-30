@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.recipe.titration_barrel;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
@@ -9,10 +10,6 @@ import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
-import io.wispforest.owo.serialization.endec.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
 import net.minecraft.component.*;
@@ -261,29 +258,41 @@ public class TitrationBarrelRecipe extends GatedStackSpectrumRecipe<TitrationBar
 		return "titration_barrel";
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<TitrationBarrelRecipe> {
+	public static class Serializer implements RecipeSerializer<TitrationBarrelRecipe> {
 		
-		public static final StructEndec<TitrationBarrelRecipe> ENDEC = StructEndecBuilder.of(
-				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
-				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
-				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-				IngredientStack.Serializer.ENDEC.listOf().fieldOf("ingredients", recipe -> recipe.inputStacks),
-				FluidIngredient.ENDEC.fieldOf("fluid", recipe -> recipe.fluid),
-				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.outputItemStack),
-				MinecraftEndecs.ofRegistry(Registries.ITEM).fieldOf("tapping_item", recipe -> recipe.tappingItem),
-				Endec.INT.fieldOf("min_fermentation_time_hours", recipe -> recipe.minFermentationTimeHours),
-				FermentationData.ENDEC.fieldOf("fermentation_data", recipe -> recipe.fermentationData),
+		public static final MapCodec<TitrationBarrelRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.CODEC.codec().listOf().fieldOf("ingredient").forGetter(recipe -> recipe.inputStacks),
+				FluidIngredient.CODEC.fieldOf("fluid").forGetter(recipe -> recipe.fluid),
+				ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.outputItemStack),
+				Registries.ITEM.getCodec().fieldOf("tapping_item").forGetter(recipe -> recipe.tappingItem),
+				Codec.INT.fieldOf("min_fermentation_time_hours").forGetter(recipe -> recipe.minFermentationTimeHours),
+				FermentationData.CODEC.fieldOf("fermentation_data").forGetter(recipe -> recipe.fermentationData)
+		).apply(i, TitrationBarrelRecipe::new));
+		
+		private static final PacketCodec<RegistryByteBuf, TitrationBarrelRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, c -> c.group,
+				PacketCodecs.BOOL, c -> c.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
+				IngredientStack.Serializer.PACKET_CODEC.collect(PacketCodecs.toList()), c -> c.inputStacks,
+				FluidIngredient.PACKET_CODEC, c -> c.fluid,
+				ItemStack.PACKET_CODEC, c -> c.outputItemStack,
+				PacketCodecs.registryValue(RegistryKeys.ITEM), recipe -> recipe.tappingItem,
+				PacketCodecs.VAR_INT, recipe -> recipe.minFermentationTimeHours,
+				FermentationData.PACKET_CODEC, recipe -> recipe.fermentationData,
 				TitrationBarrelRecipe::new
 		);
 		
 		@Override
 		public MapCodec<TitrationBarrelRecipe> codec() {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, TitrationBarrelRecipe> packetCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 		
 	}

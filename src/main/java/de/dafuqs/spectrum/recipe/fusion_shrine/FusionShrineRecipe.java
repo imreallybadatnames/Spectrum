@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.recipe.fusion_shrine;
 
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.predicate.location.*;
@@ -11,10 +12,6 @@ import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
-import io.wispforest.owo.serialization.endec.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
 import net.minecraft.item.*;
@@ -311,38 +308,55 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		return this.playCraftingFinishedEffects;
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<FusionShrineRecipe> {
+	public static class Serializer implements RecipeSerializer<FusionShrineRecipe> {
 		
-		public static final StructEndec<FusionShrineRecipe> ENDEC = StructEndecBuilder.of(
-				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
-				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
-				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-				IngredientStack.Serializer.ENDEC.listOf().validate(stacks -> {
-					if (stacks.size() > 7) throw new AssertionError("Recipe cannot have more than 7 ingredients. Has " + stacks.size());
-				}).fieldOf("ingredients", recipe -> recipe.craftingInputs),
-				FluidIngredient.ENDEC.optionalFieldOf("fluid", recipe -> recipe.fluid, FluidIngredient.EMPTY),
-				MinecraftEndecs.ITEM_STACK.optionalFieldOf("output", recipe -> recipe.output, ItemStack.EMPTY),
-				Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 0f),
-				Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
-				Endec.BOOLEAN.optionalFieldOf("disable_yield_upgrades", recipe -> recipe.yieldUpgradesDisabled, false),
-				Endec.BOOLEAN.optionalFieldOf("play_crafting_finished_effects", recipe -> recipe.playCraftingFinishedEffects, true),
-				Endec.BOOLEAN.optionalFieldOf("copy_components", recipe -> recipe.copyComponents, false),
-				CodecUtils.toEndec(CodecHelper.singleOrList(WorldConditionsPredicate.CODEC)).optionalFieldOf("world_conditions", recipe -> recipe.worldConditionsPredicates, List.of()),
-				FusionShrineRecipeWorldEffect.ENDEC.fieldOf("start_crafting_effect", recipe -> recipe.startWorldEffect),
-				FusionShrineRecipeWorldEffect.ENDEC.listOf().optionalFieldOf("during_crafting_effects", recipe -> recipe.duringWorldEffects, List.of()),
-				FusionShrineRecipeWorldEffect.ENDEC.fieldOf("finish_crafting_effect", recipe -> recipe.finishWorldEffect),
-				MinecraftEndecs.TEXT.optionalFieldOf("description", recipe -> recipe.description, Text.empty()),
+		public static final MapCodec<FusionShrineRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.CODEC.codec().listOf(0, 7).fieldOf("ingredients").forGetter(recipe -> recipe.craftingInputs),
+				FluidIngredient.CODEC.optionalFieldOf("fluid", FluidIngredient.EMPTY).forGetter(recipe -> recipe.fluid),
+				ItemStack.CODEC.optionalFieldOf("output", ItemStack.EMPTY).forGetter(recipe -> recipe.output),
+				Codec.FLOAT.optionalFieldOf("experience", 0f).forGetter(recipe -> recipe.experience),
+				Codec.INT.optionalFieldOf("time", 200).forGetter(recipe -> recipe.craftingTime),
+				Codec.BOOL.optionalFieldOf("disable_yield_upgrades", false).forGetter(recipe -> recipe.yieldUpgradesDisabled),
+				Codec.BOOL.optionalFieldOf("play_crafting_finished_effects", true).forGetter(recipe -> recipe.playCraftingFinishedEffects),
+				Codec.BOOL.optionalFieldOf("copy_components", false).forGetter(recipe -> recipe.copyComponents),
+				CodecHelper.singleOrList(WorldConditionsPredicate.CODEC).optionalFieldOf("world_conditions", List.of()).forGetter(recipe -> recipe.worldConditionsPredicates),
+				FusionShrineRecipeWorldEffect.CODEC.fieldOf("start_crafting_effect").forGetter(recipe -> recipe.startWorldEffect),
+				FusionShrineRecipeWorldEffect.CODEC.listOf().optionalFieldOf("during_crafting_effects", List.of()).forGetter(recipe -> recipe.duringWorldEffects),
+				FusionShrineRecipeWorldEffect.CODEC.fieldOf("finish_crafting_effect").forGetter(recipe -> recipe.finishWorldEffect),
+				TextCodecs.CODEC.optionalFieldOf("description", Text.empty()).forGetter(recipe -> recipe.description)
+		).apply(i, FusionShrineRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, FusionShrineRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				IngredientStack.Serializer.PACKET_CODEC.collect(PacketCodecs.toList(7)), recipe -> recipe.craftingInputs,
+				FluidIngredient.PACKET_CODEC, recipe -> recipe.fluid,
+				ItemStack.PACKET_CODEC, recipe -> recipe.output,
+				PacketCodecs.FLOAT, recipe -> recipe.experience,
+				PacketCodecs.VAR_INT, recipe -> recipe.craftingTime,
+				PacketCodecs.BOOL, recipe -> recipe.yieldUpgradesDisabled,
+				PacketCodecs.BOOL, recipe -> recipe.playCraftingFinishedEffects,
+				PacketCodecs.BOOL, recipe -> recipe.copyComponents,
+				WorldConditionsPredicate.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.worldConditionsPredicates,
+				FusionShrineRecipeWorldEffect.PACKET_CODEC, recipe -> recipe.startWorldEffect,
+				FusionShrineRecipeWorldEffect.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.duringWorldEffects,
+				FusionShrineRecipeWorldEffect.PACKET_CODEC, recipe -> recipe.finishWorldEffect,
+				TextCodecs.PACKET_CODEC, recipe -> recipe.description,
 				FusionShrineRecipe::new
 		);
 		
 		@Override
 		public MapCodec<FusionShrineRecipe> codec() {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, FusionShrineRecipe> packetCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 		
 	}

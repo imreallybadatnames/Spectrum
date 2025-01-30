@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.particle.effect;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.util.*;
@@ -19,7 +19,7 @@ public class ColoredTransmission extends SimpleTransmission {
 	).apply(instance, ColoredTransmission::new));
 	
 	public static final PacketCodec<RegistryByteBuf, ColoredTransmission> PACKET_CODEC = PacketCodec.tuple(
-			SpectrumPacketCodecs.VEC_3D, c -> c.origin,
+			PacketCodecHelper.VEC3D, c -> c.origin,
 			PositionSource.PACKET_CODEC, c -> c.destination,
 			PacketCodecs.INTEGER, c -> c.arrivalInTicks,
 			DyeColor.PACKET_CODEC, c -> c.dyeColor,

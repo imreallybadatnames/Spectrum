@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;

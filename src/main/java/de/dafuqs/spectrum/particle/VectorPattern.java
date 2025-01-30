@@ -64,6 +64,6 @@ public enum VectorPattern {
 		return v;
 	}
 	
-	public static final PacketCodec<ByteBuf, VectorPattern> PACKET_CODEC = PacketCodecHelper.enumOf(VectorPattern.class);
+	public static final PacketCodec<ByteBuf, VectorPattern> PACKET_CODEC = PacketCodecHelper.enumOf(VectorPattern::values);
 	
 }

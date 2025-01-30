@@ -2,9 +2,6 @@ package de.dafuqs.spectrum.recipe;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
@@ -89,13 +86,6 @@ public class IngredientStack implements CustomIngredient {
 	public static class Serializer implements CustomIngredientSerializer<IngredientStack> {
 		
 		public static Serializer INSTANCE = new Serializer();
-		
-		public static final StructEndec<IngredientStack> ENDEC = StructEndecBuilder.of(
-			CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).fieldOf("ingredient", o -> o.ingredient),
-			CodecUtils.toEndec(ComponentPredicate.CODEC).fieldOf("components", o -> o.componentPredicate),
-			Endec.INT.fieldOf("count", o -> o.count),
-			IngredientStack::new
-		);
 		
 		public static final MapCodec<IngredientStack> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(o -> o.ingredient),

@@ -7,7 +7,7 @@ import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.recipe.input.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.math.*;

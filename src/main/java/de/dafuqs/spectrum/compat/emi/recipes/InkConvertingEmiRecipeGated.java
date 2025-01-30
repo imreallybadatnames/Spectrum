@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.emi.recipes;
 
 import de.dafuqs.spectrum.compat.emi.*;
-import de.dafuqs.spectrum.recipe.ink_converting.*;
+import de.dafuqs.spectrum.recipe.*;
 import dev.emi.emi.api.render.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.*;

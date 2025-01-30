@@ -21,7 +21,7 @@ public record PlayParticleWithPatternAndVelocityPayload(Vec3d pos, ParticleEffec
 	
 	public static final Id<PlayParticleWithPatternAndVelocityPayload> ID = SpectrumC2SPackets.makeId("play_particle_with_pattern_and_velocity");
 	public static final PacketCodec<RegistryByteBuf, PlayParticleWithPatternAndVelocityPayload> CODEC = PacketCodec.tuple(
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithPatternAndVelocityPayload::pos,
+			PacketCodecHelper.VEC3D, PlayParticleWithPatternAndVelocityPayload::pos,
 			ParticleTypes.PACKET_CODEC, PlayParticleWithPatternAndVelocityPayload::effect,
 			VectorPattern.PACKET_CODEC, PlayParticleWithPatternAndVelocityPayload::pattern,
 			PacketCodecs.DOUBLE, PlayParticleWithPatternAndVelocityPayload::velocity,

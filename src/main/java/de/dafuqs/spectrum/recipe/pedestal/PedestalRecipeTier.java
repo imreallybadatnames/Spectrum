@@ -1,11 +1,11 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
+import com.mojang.serialization.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import io.netty.buffer.*;
-import io.wispforest.endec.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.text.*;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public enum PedestalRecipeTier {
+public enum PedestalRecipeTier implements StringIdentifiable {
 	BASIC(SpectrumAdvancements.PLACED_PEDESTAL, new GemstoneColor[]{BuiltinGemstoneColor.CYAN, BuiltinGemstoneColor.MAGENTA, BuiltinGemstoneColor.YELLOW}),
 	SIMPLE(SpectrumAdvancements.BUILD_BASIC_PEDESTAL_STRUCTURE, new GemstoneColor[]{BuiltinGemstoneColor.CYAN, BuiltinGemstoneColor.MAGENTA, BuiltinGemstoneColor.YELLOW}),
 	ADVANCED(SpectrumAdvancements.BUILD_ADVANCED_PEDESTAL_STRUCTURE, new GemstoneColor[]{BuiltinGemstoneColor.CYAN, BuiltinGemstoneColor.MAGENTA, BuiltinGemstoneColor.YELLOW, BuiltinGemstoneColor.BLACK}),
@@ -23,8 +23,8 @@ public enum PedestalRecipeTier {
 	private final Identifier unlockAdvancementId;
 	private final GemstoneColor[] gemstoneColors;
 	
-	public static final Endec<PedestalRecipeTier> ENDEC = Endec.forEnum(PedestalRecipeTier.class);
-	public static final PacketCodec<ByteBuf, PedestalRecipeTier> PACKET_CODEC = PacketCodecHelper.enumOf(PedestalRecipeTier.class);
+	public static final Codec<PedestalRecipeTier> CODEC = StringIdentifiable.createCodec(PedestalRecipeTier::values);
+	public static final PacketCodec<ByteBuf, PedestalRecipeTier> PACKET_CODEC = PacketCodecHelper.enumOf(PedestalRecipeTier::values);
 	
 	PedestalRecipeTier(Identifier unlockAdvancementId, GemstoneColor[] gemstoneColors) {
 		this.unlockAdvancementId = unlockAdvancementId;
@@ -112,4 +112,8 @@ public enum PedestalRecipeTier {
 		}
 	}
 	
+	@Override
+	public String asString() {
+		return name().toLowerCase();
+	}
 }

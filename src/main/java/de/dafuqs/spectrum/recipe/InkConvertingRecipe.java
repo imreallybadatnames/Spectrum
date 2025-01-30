@@ -1,15 +1,10 @@
-package de.dafuqs.spectrum.recipe.ink_converting;
+package de.dafuqs.spectrum.recipe;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.api.recipe.*;
-import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
-import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -112,26 +107,35 @@ public class InkConvertingRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return this.amount;
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<InkConvertingRecipe> {
+	public static class Serializer implements RecipeSerializer<InkConvertingRecipe> {
 		
-		public static final StructEndec<InkConvertingRecipe> ENDEC = StructEndecBuilder.of(
-				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
-				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
-				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-				CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).fieldOf("ingredient", recipe -> recipe.inputIngredient),
-				CodecUtils.toEndec(InkColor.CODEC).fieldOf("ink_color", recipe -> recipe.color),
-				Endec.LONG.fieldOf("amount", recipe -> recipe.amount),
+		public static final MapCodec<InkConvertingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.fieldOf("required_advancement").forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.inputIngredient),
+				InkColor.CODEC.fieldOf("ink_color").forGetter(recipe -> recipe.color),
+				Codec.LONG.fieldOf("amount").forGetter(recipe -> recipe.amount)
+		).apply(i, InkConvertingRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, InkConvertingRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				Identifier.PACKET_CODEC, recipe -> recipe.requiredAdvancementIdentifier,
+				Ingredient.PACKET_CODEC, recipe -> recipe.inputIngredient,
+				InkColor.PACKET_CODEC, recipe -> recipe.color,
+				PacketCodecs.VAR_LONG, recipe -> recipe.amount,
 				InkConvertingRecipe::new
 		);
 		
 		@Override
 		public MapCodec<InkConvertingRecipe> codec() {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, InkConvertingRecipe> packetCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 		
 	}

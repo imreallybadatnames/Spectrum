@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.recipe.potion_workshop;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.potion_workshop.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
@@ -129,12 +128,12 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 		return "potion_workshop_crafting";
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<PotionWorkshopCraftingRecipe> {
+	public static class Serializer implements RecipeSerializer<PotionWorkshopCraftingRecipe> {
 		
 		public static final MapCodec<PotionWorkshopCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 				Codec.STRING.optionalFieldOf("group", "").forGetter(c -> c.group),
 				Codec.BOOL.optionalFieldOf("secret", false).forGetter(c -> c.secret),
-				Identifier.CODEC.fieldOf("required_advancement").forGetter(c -> c.requiredAdvancementIdentifier),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(c -> c.requiredAdvancementIdentifier),
 				Codec.INT.optionalFieldOf("time", 200).forGetter(c -> c.craftingTime),
 				Codec.INT.optionalFieldOf("color", 0xc03058).forGetter(c -> c.color),
 				IngredientStack.Serializer.CODEC.codec().fieldOf("ingredient1").forGetter(c -> c.ingredient1),
@@ -149,7 +148,7 @@ public class PotionWorkshopCraftingRecipe extends PotionWorkshopRecipe {
 		public static final PacketCodec<RegistryByteBuf, PotionWorkshopCraftingRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
 				PacketCodecs.STRING, c -> c.group,
 				PacketCodecs.BOOL, c -> c.secret,
-				Identifier.PACKET_CODEC, c -> c.requiredAdvancementIdentifier,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
 				PacketCodecs.VAR_INT, c -> c.craftingTime,
 				PacketCodecs.VAR_INT, c -> c.color,
 				IngredientStack.Serializer.PACKET_CODEC, c -> c.ingredient1,

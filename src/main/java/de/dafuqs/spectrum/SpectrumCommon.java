@@ -63,6 +63,12 @@ public class SpectrumCommon implements ModInitializer {
 		return Identifier.of(MOD_ID, name);
 	}
 	
+	/**
+	 * This is the Spectrum analogue of Identifier.ofVanilla. It's best used in a codec where
+	 * the default namespace will be spectrum.
+	 * @param id The stringified identifier to parse
+	 * @return The parsed identifier
+	 */
 	public static Identifier ofSpectrum(String id) {
 		int i = id.indexOf(':');
 		String path = id.substring(i + 1);

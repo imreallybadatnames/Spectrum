@@ -384,8 +384,8 @@ public class SpectrumEventListeners {
 	// It could have been so much easier and performant, but KubeJS overrides the ENTIRE recipe manager
 	// and cancels all sorts of functions at HEAD unconditionally, so Spectrum cannot mixin into it
 //	public static void injectEnchantmentUpgradeRecipes(MinecraftServer minecraftServer) {
-//		if (!EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.isEmpty()) {
-//			ImmutableMap<Identifier, Recipe<?>> collectedRecipes = EnchantmentUpgradeRecipeSerializer.enchantmentUpgradeRecipesToInject.stream().collect(ImmutableMap.toImmutableMap(EnchantmentUpgradeRecipe::getId, enchantmentUpgradeRecipe -> enchantmentUpgradeRecipe));
+//		if (!enchantmentUpgradeRecipesToInject.isEmpty()) {
+//			ImmutableMap<Identifier, Recipe<?>> collectedRecipes = enchantmentUpgradeRecipesToInject.stream().collect(ImmutableMap.toImmutableMap(EnchantmentUpgradeRecipe::getId, enchantmentUpgradeRecipe -> enchantmentUpgradeRecipe));
 //			Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes = ((RecipeManagerAccessor) minecraftServer.getRecipeManager()).getRecipes();
 //
 //			ArrayList<Recipe<?>> newList = new ArrayList<>();

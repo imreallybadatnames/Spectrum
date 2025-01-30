@@ -25,7 +25,7 @@ public class ShimmerstoneOreBlock extends CloakedOreBlock {
 			IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(b -> ((ExperienceDroppingBlockAccessor) b).getExperienceDropped()),
 			createSettingsCodec(),
 			Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
-			BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+			CodecHelper.BLOCK_STATE.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
 	).apply(instance, ShimmerstoneOreBlock::new));
 	
 	public ShimmerstoneOreBlock(IntProvider experienceDropped, Settings settings, Identifier cloakAdvancementIdentifier, BlockState cloakBlockState) {

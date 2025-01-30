@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.events;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.helpers.*;
 import io.netty.buffer.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.util.math.*;
@@ -17,7 +17,7 @@ public class ExactPositionSource implements PositionSource {
 			Vec3d.CODEC.fieldOf("pos").forGetter((blockPositionSource) -> blockPositionSource.pos)
 	).apply(instance, ExactPositionSource::new));
 	
-	public static final PacketCodec<ByteBuf, ExactPositionSource> PACKET_CODEC = PacketCodec.tuple(SpectrumPacketCodecs.VEC_3D, (source) -> source.pos, ExactPositionSource::new);
+	public static final PacketCodec<ByteBuf, ExactPositionSource> PACKET_CODEC = PacketCodec.tuple(PacketCodecHelper.VEC3D, (source) -> source.pos, ExactPositionSource::new);
 	
 	final Vec3d pos;
 	

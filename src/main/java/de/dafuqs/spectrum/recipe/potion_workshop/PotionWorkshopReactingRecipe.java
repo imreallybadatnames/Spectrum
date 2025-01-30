@@ -113,12 +113,12 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInpu
 		return builder;
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<PotionWorkshopReactingRecipe> {
+	public static class Serializer implements RecipeSerializer<PotionWorkshopReactingRecipe> {
 		
 		public static final MapCodec<PotionWorkshopReactingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 				Codec.STRING.optionalFieldOf("group", "").forGetter(c -> c.group),
 				Codec.BOOL.optionalFieldOf("secret", false).forGetter(c -> c.secret),
-				Identifier.CODEC.fieldOf("required_advancement").forGetter(c -> c.requiredAdvancementIdentifier),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(c -> c.requiredAdvancementIdentifier),
 				Registries.ITEM.getCodec().fieldOf("item").forGetter(c -> c.item),
 				CodecHelper.singleOrList(PotionMod.CODEC).fieldOf("modifiers").forGetter(c -> c.modifiers)
 		).apply(i, PotionWorkshopReactingRecipe::new));
@@ -126,7 +126,7 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInpu
 		public static final PacketCodec<RegistryByteBuf, PotionWorkshopReactingRecipe> PACKET_CODEC = PacketCodec.tuple(
 				PacketCodecs.STRING, c -> c.group,
 				PacketCodecs.BOOL, c -> c.secret,
-				Identifier.PACKET_CODEC, c -> c.requiredAdvancementIdentifier,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
 				PacketCodecs.registryValue(RegistryKeys.ITEM), c -> c.item,
 				PotionMod.PACKET_CODEC.collect(PacketCodecs.toList()), c -> c.modifiers,
 				PotionWorkshopReactingRecipe::new

@@ -1,12 +1,10 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
-import com.mojang.serialization.Codec;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.*;
 import net.minecraft.util.*;
 
 public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
@@ -18,14 +16,8 @@ public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 
 	private final DyeColor dyeColor;
 
-	public static final Endec<BuiltinGemstoneColor> ENDEC = Endec.forEnum(BuiltinGemstoneColor.class);
-
-	public static final StructEndec<GemstoneColor> STRING_ENDEC = StructEndecBuilder.of(
-		CodecUtils.toEndec(DyeColor.CODEC).fieldOf("color", BuiltinGemstoneColor::getDyeColor),
-		BuiltinGemstoneColor::of
-	).xmap(t -> t, color -> BuiltinGemstoneColor.valueOf(color.asString()));
-
 	BuiltinGemstoneColor(DyeColor dyeColor) {
+		Registry.register(SpectrumRegistries.GEMSTONE_COLORS, SpectrumCommon.locate(dyeColor.name()), this);
 		this.dyeColor = dyeColor;
 	}
 
@@ -75,11 +67,6 @@ public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
 			}
 			default -> throw new RuntimeException("Tried getting powder item for a color which does not have one");
 		}
-	}
-
-	@Override
-	public Codec<GemstoneColor> getCodec() {
-		return CodecUtils.toCodec(STRING_ENDEC);
 	}
 
 	@Override

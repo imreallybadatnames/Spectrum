@@ -14,7 +14,7 @@ import java.util.*;
 
 public class InkColor {
 
-	public static final Codec<InkColor> CODEC = Identifier.CODEC.comapFlatMap(
+	public static final Codec<InkColor> CODEC = CodecHelper.SPECTRUM_IDENTIFIER.comapFlatMap(
 			id -> ofId(id).map(DataResult::success).orElse(DataResult.error(() -> "Not a valid ink color: " + id)),
 			InkColor::getID
 	);

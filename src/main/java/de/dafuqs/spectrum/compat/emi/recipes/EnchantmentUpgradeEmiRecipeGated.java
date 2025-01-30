@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.emi.recipes;
 
 import de.dafuqs.revelationary.api.advancements.*;
-import de.dafuqs.spectrum.recipe.enchantment_upgrade.*;
+import de.dafuqs.spectrum.recipe.enchanter.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.emi.api.recipe.*;
 import net.minecraft.client.*;

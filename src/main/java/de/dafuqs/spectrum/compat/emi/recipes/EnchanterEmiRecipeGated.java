@@ -6,7 +6,6 @@ import de.dafuqs.spectrum.compat.emi.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
-import de.dafuqs.spectrum.recipe.enchantment_upgrade.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.render.*;

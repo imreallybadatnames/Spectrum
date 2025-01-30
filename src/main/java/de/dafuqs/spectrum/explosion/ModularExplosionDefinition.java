@@ -30,7 +30,7 @@ public class ModularExplosionDefinition {
 	).apply(i, ModularExplosionDefinition::new));
 	
 	public static final PacketCodec<RegistryByteBuf, ModularExplosionDefinition> PACKET_CODEC = PacketCodec.tuple(
-			PacketCodecHelper.enumOf(ExplosionArchetype.class), c -> c.archetype,
+			PacketCodecHelper.enumOf(ExplosionArchetype::values), c -> c.archetype,
 			PacketCodecs.registryValue(SpectrumRegistries.EXPLOSION_MODIFIERS.getKey()).collect(PacketCodecs.toList()), c -> c.modifiers,
 			ModularExplosionDefinition::new
 	);

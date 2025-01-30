@@ -1,10 +1,10 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
@@ -12,10 +12,6 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
-import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
@@ -194,30 +190,43 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 		return width * height >= 3;
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<SpiritInstillerRecipe> {
+	public static class Serializer implements RecipeSerializer<SpiritInstillerRecipe> {
 		
-		public static final StructEndec<SpiritInstillerRecipe> ENDEC = StructEndecBuilder.of(
-				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
-				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
-				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-				IngredientStack.Serializer.ENDEC.fieldOf("center_ingredient", recipe -> recipe.centerIngredient),
-				IngredientStack.Serializer.ENDEC.fieldOf("ingredient1", recipe -> recipe.bowlIngredient1),
-				IngredientStack.Serializer.ENDEC.fieldOf("ingredient2", recipe -> recipe.bowlIngredient2),
-				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.output),
-				Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
-				Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 1.0f),
-				Endec.BOOLEAN.optionalFieldOf("disable_yield_and_efficiency_upgrades", recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades, false),
+		public static final MapCodec<SpiritInstillerRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.CODEC.fieldOf("center_ingredient").forGetter(recipe -> recipe.centerIngredient),
+				IngredientStack.Serializer.CODEC.fieldOf("ingredient1").forGetter(recipe -> recipe.bowlIngredient1),
+				IngredientStack.Serializer.CODEC.fieldOf("ingredient2").forGetter(recipe -> recipe.bowlIngredient2),
+				ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+				Codec.INT.optionalFieldOf("time", 200).forGetter(recipe -> recipe.craftingTime),
+				Codec.FLOAT.optionalFieldOf("experience",1.0f).forGetter(recipe -> recipe.experience),
+				Codec.BOOL.optionalFieldOf("disable_yield_and_efficiency_upgrades", false).forGetter(recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades)
+		).apply(i, SpiritInstillerRecipe::new));
+		
+		private static final PacketCodec<RegistryByteBuf, SpiritInstillerRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, c -> c.group,
+				PacketCodecs.BOOL, c -> c.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.centerIngredient,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.bowlIngredient1,
+				IngredientStack.Serializer.PACKET_CODEC, c -> c.bowlIngredient2,
+				ItemStack.PACKET_CODEC, c -> c.output,
+				PacketCodecs.VAR_INT, recipe -> recipe.craftingTime,
+				PacketCodecs.FLOAT, recipe -> recipe.experience,
+				PacketCodecs.BOOL, recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades,
 				SpiritInstillerRecipe::new
 		);
 		
 		@Override
 		public MapCodec<SpiritInstillerRecipe> codec() {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, SpiritInstillerRecipe> packetCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 	}
 	

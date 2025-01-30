@@ -15,7 +15,7 @@ public record ChangeCompactingChestSettingsPayload(
 	
 	public static final CustomPayload.Id<ChangeCompactingChestSettingsPayload> ID = SpectrumC2SPackets.makeId("change_compacting_chest_settings");
 	public static final PacketCodec<PacketByteBuf, ChangeCompactingChestSettingsPayload> CODEC = PacketCodec.tuple(
-			PacketCodecHelper.enumOf(AutoCompactingInventory.AutoCraftingMode.class),
+			PacketCodecHelper.enumOf(AutoCompactingInventory.AutoCraftingMode::values),
 			ChangeCompactingChestSettingsPayload::mode,
 			ChangeCompactingChestSettingsPayload::new
 	);

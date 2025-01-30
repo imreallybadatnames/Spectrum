@@ -2,6 +2,9 @@ package de.dafuqs.spectrum.api.predicate.location;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.helpers.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.predicate.*;
 import net.minecraft.predicate.entity.*;
 import net.minecraft.registry.*;
@@ -54,6 +57,22 @@ public record WorldConditionsPredicate(
 			Codec.BOOL.optionalFieldOf("smokey").forGetter(p -> p.location.smokey()),
 			Codec.BOOL.optionalFieldOf("can_see_sky").forGetter(p -> p.location.canSeeSky())
 	).apply(instance, WorldConditionsPredicate::new));
+	
+	public static final PacketCodec<RegistryByteBuf, WorldConditionsPredicate> PACKET_CODEC = PacketCodecHelper.tuple(
+			PacketCodecs.optional(MoonPhasePredicate.PACKET_CODEC), p -> p.moonPhase,
+			PacketCodecs.optional(TimeOfDayPredicate.PACKET_CODEC), p -> p.timeOfDay,
+			PacketCodecs.optional(WeatherPredicate.PACKET_CODEC), p -> p.weather,
+			PacketCodecs.optional(CommandPredicate.PACKET_CODEC), p -> p.command,
+			PacketCodecs.optional(PacketCodecs.registryEntryList(RegistryKeys.BIOME)), p -> p.location.biomes(),
+			PacketCodecs.optional(PacketCodecs.registryEntryList(RegistryKeys.STRUCTURE)), p -> p.location.structures(),
+			PacketCodecs.optional(RegistryKey.createPacketCodec(RegistryKeys.WORLD)), p -> p.location.dimension(),
+			PacketCodecs.optional(PacketCodecHelper.LIGHT_PREDICATE), p -> p.location.light(),
+			PacketCodecs.optional(BlockPredicate.PACKET_CODEC), p -> p.location.block(),
+			PacketCodecs.optional(PacketCodecHelper.FLUID_PREDICATE), p -> p.location.fluid(),
+			PacketCodecs.optional(PacketCodecs.BOOL), p -> p.location.smokey(),
+			PacketCodecs.optional(PacketCodecs.BOOL), p -> p.location.canSeeSky(),
+			WorldConditionsPredicate::new
+	);
 	
 	public boolean test(ServerWorld world, BlockPos pos) {
 		return location.test(world, pos.getX(), pos.getY(), pos.getZ())

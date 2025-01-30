@@ -1,6 +1,8 @@
 package de.dafuqs.spectrum.api.predicate.location;
 
 import com.mojang.serialization.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.server.*;
 import net.minecraft.server.command.*;
 import net.minecraft.server.world.*;
@@ -12,6 +14,7 @@ import java.util.concurrent.atomic.*;
 public record CommandPredicate(String command) implements CommandOutput {
 	
 	public static final Codec<CommandPredicate> CODEC = Codec.STRING.xmap(CommandPredicate::new, CommandPredicate::command);
+	public static final PacketCodec<ByteBuf, CommandPredicate> PACKET_CODEC = PacketCodecs.STRING.xmap(CommandPredicate::new, CommandPredicate::command);
 	
 	public boolean test(ServerWorld world, BlockPos pos) {
 		AtomicBoolean passed = new AtomicBoolean(false);

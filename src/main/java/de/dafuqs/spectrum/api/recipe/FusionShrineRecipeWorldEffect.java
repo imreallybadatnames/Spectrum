@@ -1,32 +1,42 @@
 package de.dafuqs.spectrum.api.recipe;
 
 import com.google.gson.*;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
-import io.wispforest.endec.*;
+import de.dafuqs.spectrum.registries.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.*;
 import net.minecraft.server.command.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.math.*;
 
-import java.util.*;
-
 /**
  * Effects that are played when crafting with the fusion shrine
  */
 public interface FusionShrineRecipeWorldEffect {
 	
-	Map<String, FusionShrineRecipeWorldEffect> TYPES = new HashMap<>();
-	
-	Endec<FusionShrineRecipeWorldEffect> ENDEC = Endec.STRING.xmap(FusionShrineRecipeWorldEffect::fromString, Objects::toString);
+	Codec<FusionShrineRecipeWorldEffect> CODEC = Codec.STRING.xmap(
+			FusionShrineRecipeWorldEffect::fromString,
+			effect -> effect instanceof CommandRecipeWorldEffect command
+					? command.command
+					: String.valueOf(SpectrumRegistries.WORLD_EFFECTS.getId(effect)));
 
+	PacketCodec<ByteBuf, FusionShrineRecipeWorldEffect> PACKET_CODEC = PacketCodecs.STRING.xmap(
+			FusionShrineRecipeWorldEffect::fromString,
+			effect -> effect instanceof CommandRecipeWorldEffect command
+					? command.command
+					: String.valueOf(SpectrumRegistries.WORLD_EFFECTS.getId(effect)));
+	
 	FusionShrineRecipeWorldEffect NOTHING = register("nothing", new FusionShrineRecipeWorldEffect.SingleTimeRecipeWorldEffect() {
 		@Override
 		public void trigger(ServerWorld world, BlockPos pos) { }
 	});
 	
 	static FusionShrineRecipeWorldEffect register(String id, FusionShrineRecipeWorldEffect effect) {
-		TYPES.put(id, effect);
+		Registry.register(SpectrumRegistries.WORLD_EFFECTS, SpectrumCommon.locate(id), effect);
 		return effect;
 	}
 	
@@ -38,7 +48,7 @@ public interface FusionShrineRecipeWorldEffect {
 			return new CommandRecipeWorldEffect(string);
 		}
 		
-		FusionShrineRecipeWorldEffect effect = TYPES.get(string);
+		FusionShrineRecipeWorldEffect effect = SpectrumRegistries.WORLD_EFFECTS.get(SpectrumCommon.ofSpectrum(string));
 		if (effect == null) {
 			SpectrumCommon.logError("Unknown fusion shrine world effect '" + string + "'. Will be ignored.");
 			return NOTHING;

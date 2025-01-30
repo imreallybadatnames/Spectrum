@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.spells.*;
 import net.fabricmc.api.*;
@@ -25,7 +26,7 @@ public record MoonstoneBlastPayload(double x, double y, double z, float power, f
 			PacketCodecs.DOUBLE, MoonstoneBlastPayload::z,
 			PacketCodecs.FLOAT, MoonstoneBlastPayload::power,
 			PacketCodecs.FLOAT, MoonstoneBlastPayload::knockbackMod,
-			SpectrumPacketCodecs.VEC_3D, MoonstoneBlastPayload::playerVelocity,
+			PacketCodecHelper.VEC3D, MoonstoneBlastPayload::playerVelocity,
 			MoonstoneBlastPayload::new
 	);
 	

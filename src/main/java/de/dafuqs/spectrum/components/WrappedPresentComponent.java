@@ -23,7 +23,7 @@ public record WrappedPresentComponent(boolean wrapped, PresentBlock.WrappingPape
 	
 	public static final PacketCodec<RegistryByteBuf, WrappedPresentComponent> PACKET_CODEC = PacketCodec.tuple(
 			PacketCodecs.BOOL, WrappedPresentComponent::wrapped,
-			PacketCodecHelper.enumOf(PresentBlock.WrappingPaper.class), WrappedPresentComponent::variant,
+			PacketCodecHelper.enumOf(PresentBlock.WrappingPaper::values), WrappedPresentComponent::variant,
 			PacketCodecs.map(HashMap::new, DyeColor.PACKET_CODEC, PacketCodecs.VAR_INT), WrappedPresentComponent::colors,
 			WrappedPresentComponent::new
 	);

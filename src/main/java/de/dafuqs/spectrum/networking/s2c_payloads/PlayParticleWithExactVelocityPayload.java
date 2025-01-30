@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -19,10 +20,10 @@ public record PlayParticleWithExactVelocityPayload(Vec3d pos, ParticleEffect par
 	
 	public static final Id<PlayParticleWithExactVelocityPayload> ID = SpectrumC2SPackets.makeId("play_particle_with_exact_velocity");
 	public static final PacketCodec<RegistryByteBuf, PlayParticleWithExactVelocityPayload> CODEC = PacketCodec.tuple(
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithExactVelocityPayload::pos,
+			PacketCodecHelper.VEC3D, PlayParticleWithExactVelocityPayload::pos,
 			ParticleTypes.PACKET_CODEC, PlayParticleWithExactVelocityPayload::particle,
 			PacketCodecs.INTEGER, PlayParticleWithExactVelocityPayload::amount,
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithExactVelocityPayload::velocity,
+			PacketCodecHelper.VEC3D, PlayParticleWithExactVelocityPayload::velocity,
 			PlayParticleWithExactVelocityPayload::new
 	);
 	

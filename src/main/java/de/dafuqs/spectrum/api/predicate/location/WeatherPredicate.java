@@ -1,6 +1,9 @@
 package de.dafuqs.spectrum.api.predicate.location;
 
 import com.mojang.serialization.*;
+import de.dafuqs.spectrum.helpers.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -15,6 +18,7 @@ public enum WeatherPredicate implements StringIdentifiable {
 	NOT_THUNDER(world -> !world.isThundering());
 	
 	public static final Codec<WeatherPredicate> CODEC = StringIdentifiable.createCodec(WeatherPredicate::values);
+	public static final PacketCodec<ByteBuf, WeatherPredicate> PACKET_CODEC = PacketCodecHelper.enumOf(WeatherPredicate::values);
 	
 	private final Function<ServerWorld, Boolean> test;
 	

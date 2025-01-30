@@ -7,12 +7,10 @@ import de.dafuqs.spectrum.recipe.cinderhearth.*;
 import de.dafuqs.spectrum.recipe.crafting.dynamic.*;
 import de.dafuqs.spectrum.recipe.crystallarieum.*;
 import de.dafuqs.spectrum.recipe.enchanter.*;
-import de.dafuqs.spectrum.recipe.enchantment_upgrade.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.dynamic.*;
 import de.dafuqs.spectrum.recipe.fusion_shrine.*;
 import de.dafuqs.spectrum.recipe.fusion_shrine.dynamic.*;
-import de.dafuqs.spectrum.recipe.ink_converting.*;
 import de.dafuqs.spectrum.recipe.pedestal.*;
 import de.dafuqs.spectrum.recipe.pedestal.dynamic.*;
 import de.dafuqs.spectrum.recipe.potion_workshop.*;
@@ -40,21 +38,21 @@ public class SpectrumRecipeSerializers {
 	public static final RecipeSerializer<WrapPresentRecipe> WRAP_PRESENT_SERIALIZER = register("wrap_present", new EmptyRecipeSerializer<>(WrapPresentRecipe::new));
 	
 	// Pedestal
-	public static final RecipeSerializer<ShapedPedestalRecipe> SHAPED_PEDESTAL_RECIPE_SERIALIZER = register("pedestal", new ShapedPedestalRecipeSerializer());
-	public static final RecipeSerializer<ShapelessPedestalRecipe> SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = register("pedestal_shapeless", new ShapelessPedestalRecipeSerializer());
+	public static final RecipeSerializer<ShapedPedestalRecipe> SHAPED_PEDESTAL_RECIPE_SERIALIZER = register("pedestal", new ShapedPedestalRecipe.Serializer());
+	public static final RecipeSerializer<ShapelessPedestalRecipe> SHAPELESS_PEDESTAL_RECIPE_SERIALIZER = register("pedestal_shapeless", new ShapelessPedestalRecipe.Serializer());
 	public static final RecipeSerializer<StarCandyRecipe> PEDESTAL_STAR_CANDY = register("pedestal_star_candy", new EmptyRecipeSerializer<>(StarCandyRecipe::new));
 	public static final RecipeSerializer<ExplosionModificationRecipe> MODULAR_EXPLOSIVE_MODIFICATION = register("modular_explosive_modification", new EmptyRecipeSerializer<>(ExplosionModificationRecipe::new));
 	
 	// Anvil Crushing
-	public static final RecipeSerializer<AnvilCrushingRecipe> ANVIL_CRUSHING_RECIPE_SERIALIZER = register("anvil_crushing", new AnvilCrushingRecipeSerializer());
+	public static final RecipeSerializer<AnvilCrushingRecipe> ANVIL_CRUSHING_RECIPE_SERIALIZER = register("anvil_crushing", new AnvilCrushingRecipe.Serializer());
 	
 	// Fusion Shrine
 	public static final RecipeSerializer<FusionShrineRecipe> FUSION_SHRINE_RECIPE_SERIALIZER = register("fusion_shrine", new FusionShrineRecipe.Serializer());
 	public static final RecipeSerializer<ShootingStarHardeningRecipe> SHOOTING_STAR_HARDENING = register("shooting_star_hardening", new EmptyRecipeSerializer<>(ShootingStarHardeningRecipe::new));
 	
 	// Enchanter
-	public static final RecipeSerializer<EnchanterRecipe> ENCHANTER_RECIPE_SERIALIZER = register("enchanter", new EnchanterRecipeSerializer());
-	public static final RecipeSerializer<EnchantmentUpgradeRecipe> ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = register("enchantment_upgrade", new EnchantmentUpgradeRecipeSerializer());
+	public static final RecipeSerializer<EnchanterRecipe> ENCHANTER_RECIPE_SERIALIZER = register("enchanter", new EnchanterRecipe.Serializer());
+	public static final RecipeSerializer<EnchantmentUpgradeRecipe> ENCHANTMENT_UPGRADE_RECIPE_SERIALIZER = register("enchantment_upgrade", new EnchantmentUpgradeRecipe.Serializer());
 	
 	// Potion Workshop
 	public static final RecipeSerializer<PotionWorkshopBrewingRecipe> POTION_WORKSHOP_BREWING_RECIPE_SERIALIZER = register("potion_workshop_brewing", new PotionWorkshopBrewingRecipe.Serializer());
@@ -62,10 +60,10 @@ public class SpectrumRecipeSerializers {
 	public static final RecipeSerializer<PotionWorkshopReactingRecipe> POTION_WORKSHOP_REACTING_SERIALIZER = register("potion_workshop_reacting", new PotionWorkshopReactingRecipe.Serializer());
 	
 	// Fluid converting
-	public static final FluidConvertingRecipeSerializer<GooConvertingRecipe> GOO_CONVERTING_SERIALIZER = register("goo_converting", new FluidConvertingRecipeSerializer<>(GooConvertingRecipe::new));
-	public static final FluidConvertingRecipeSerializer<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING_SERIALIZER = register("liquid_crystal_converting", new FluidConvertingRecipeSerializer<>(LiquidCrystalConvertingRecipe::new));
-	public static final FluidConvertingRecipeSerializer<MidnightSolutionConvertingRecipe> MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = register("midnight_solution_converting", new FluidConvertingRecipeSerializer<>(MidnightSolutionConvertingRecipe::new));
-	public static final FluidConvertingRecipeSerializer<DragonrotConvertingRecipe> DRAGONROT_CONVERTING_SERIALIZER = register("dragonrot_converting", new FluidConvertingRecipeSerializer<>(DragonrotConvertingRecipe::new));
+	public static final FluidConvertingRecipe.Serializer<GooConvertingRecipe> GOO_CONVERTING_SERIALIZER = register("goo_converting", new FluidConvertingRecipe.Serializer<>(GooConvertingRecipe::new));
+	public static final FluidConvertingRecipe.Serializer<LiquidCrystalConvertingRecipe> LIQUID_CRYSTAL_CONVERTING_SERIALIZER = register("liquid_crystal_converting", new FluidConvertingRecipe.Serializer<>(LiquidCrystalConvertingRecipe::new));
+	public static final FluidConvertingRecipe.Serializer<MidnightSolutionConvertingRecipe> MIDNIGHT_SOLUTION_CONVERTING_SERIALIZER = register("midnight_solution_converting", new FluidConvertingRecipe.Serializer<>(MidnightSolutionConvertingRecipe::new));
+	public static final FluidConvertingRecipe.Serializer<DragonrotConvertingRecipe> DRAGONROT_CONVERTING_SERIALIZER = register("dragonrot_converting", new FluidConvertingRecipe.Serializer<>(DragonrotConvertingRecipe::new));
 	public static final RecipeSerializer<MeatToRottenFleshRecipe> DRAGONROT_MEAT_TO_ROTTEN_FLESH = register("meat_rotting", new EmptyRecipeSerializer<>(MeatToRottenFleshRecipe::new));
 	
 	// Spirit Instiller
@@ -82,10 +80,10 @@ public class SpectrumRecipeSerializers {
 	public static final RecipeSerializer<InkConvertingRecipe> INK_CONVERTING_RECIPE_SERIALIZER = register("ink_converting", new InkConvertingRecipe.Serializer());
 	
 	// Crystallarieum
-	public static final RecipeSerializer<CrystallarieumRecipe> CRYSTALLARIEUM_RECIPE_SERIALIZER = register("crystallarieum_growing", new CrystallarieumRecipeSerializer());
+	public static final RecipeSerializer<CrystallarieumRecipe> CRYSTALLARIEUM_RECIPE_SERIALIZER = register("crystallarieum_growing", new CrystallarieumRecipe.Serializer());
 	
 	// Cinderhearth
-	public static final RecipeSerializer<CinderhearthRecipe> CINDERHEARTH_RECIPE_SERIALIZER = register("cinderhearth", new CinderhearthRecipeSerializer());
+	public static final RecipeSerializer<CinderhearthRecipe> CINDERHEARTH_RECIPE_SERIALIZER = register("cinderhearth", new CinderhearthRecipe.Serializer());
 	
 	// Titration Barrel
 	public static final RecipeSerializer<TitrationBarrelRecipe> TITRATION_BARREL = register("titration_barrel", new TitrationBarrelRecipe.Serializer());

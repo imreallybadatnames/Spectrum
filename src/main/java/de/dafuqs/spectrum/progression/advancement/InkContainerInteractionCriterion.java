@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.item.*;
@@ -40,7 +39,7 @@ public class InkContainerInteractionCriterion extends AbstractCriterion<InkConta
 		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
 			ItemPredicate.CODEC.fieldOf("item").forGetter(Conditions::itemPredicate),
-			Codec.simpleMap(CodecHelper.spectrumRegistryValue(SpectrumRegistries.INK_COLORS), LongRange.CODEC, SpectrumRegistries.INK_COLORS).forGetter(Conditions::colorRanges),
+			Codec.simpleMap(SpectrumRegistries.INK_COLORS.getCodec(), LongRange.CODEC, SpectrumRegistries.INK_COLORS).forGetter(Conditions::colorRanges),
 			ColorPredicate.CODEC.fieldOf("change_color").forGetter(Conditions::changeColorPredicate),
 			LongRange.CODEC.fieldOf("change_range").forGetter(Conditions::changeRange)
 		).apply(instance, Conditions::new));

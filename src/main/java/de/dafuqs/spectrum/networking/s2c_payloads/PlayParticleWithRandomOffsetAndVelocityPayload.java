@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -20,11 +21,11 @@ public record PlayParticleWithRandomOffsetAndVelocityPayload(Vec3d pos, Particle
 	
 	public static final Id<PlayParticleWithRandomOffsetAndVelocityPayload> ID = SpectrumC2SPackets.makeId("play_particle_with_random_offset_and_velocity");
 	public static final PacketCodec<RegistryByteBuf, PlayParticleWithRandomOffsetAndVelocityPayload> CODEC = PacketCodec.tuple(
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithRandomOffsetAndVelocityPayload::pos,
+			PacketCodecHelper.VEC3D, PlayParticleWithRandomOffsetAndVelocityPayload::pos,
 			ParticleTypes.PACKET_CODEC, PlayParticleWithRandomOffsetAndVelocityPayload::effect,
 			PacketCodecs.INTEGER, PlayParticleWithRandomOffsetAndVelocityPayload::amount,
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithRandomOffsetAndVelocityPayload::randomOffset,
-			SpectrumPacketCodecs.VEC_3D, PlayParticleWithRandomOffsetAndVelocityPayload::randomVelocity,
+			PacketCodecHelper.VEC3D, PlayParticleWithRandomOffsetAndVelocityPayload::randomOffset,
+			PacketCodecHelper.VEC3D, PlayParticleWithRandomOffsetAndVelocityPayload::randomVelocity,
 			PlayParticleWithRandomOffsetAndVelocityPayload::new
 	);
 	

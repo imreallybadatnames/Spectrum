@@ -1,12 +1,16 @@
-package de.dafuqs.spectrum.recipe.enchantment_upgrade;
+package de.dafuqs.spectrum.recipe.enchanter;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
-import de.dafuqs.spectrum.recipe.enchanter.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -165,9 +169,9 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return this.enchantmentDestinationLevel > this.enchantmentEntry.value().getMaxLevel();
 	}
 	
-	public static EnchantmentUpgradeRecipe createRecipes(String group, Boolean secret, Identifier requiredAdvancementId, RegistryEntry<Enchantment> enchantEntry, List<EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry> enchantUpgradeLevelEntries) {
+	public static EnchantmentUpgradeRecipe createRecipes(String group, boolean secret, Identifier requiredAdvancementId, RegistryEntry<Enchantment> enchantEntry, List<EnchantUpgradeLevelEntry> enchantUpgradeLevelEntries) {
 		List<EnchantmentUpgradeRecipe> recipes = new ArrayList<>();
-		for (EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry enchantUpgradeLevelEntry : enchantUpgradeLevelEntries) {
+		for (EnchantUpgradeLevelEntry enchantUpgradeLevelEntry : enchantUpgradeLevelEntries) {
 			recipes.add(new EnchantmentUpgradeRecipe(
 				group, secret, requiredAdvancementId, enchantEntry, enchantUpgradeLevelEntries.size(), enchantUpgradeLevelEntry.experience(), enchantUpgradeLevelEntry.requiredItem(), enchantUpgradeLevelEntry.count()
 			));
@@ -175,9 +179,57 @@ public class EnchantmentUpgradeRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		return recipes.getFirst();
 	}
 	
-	public List<EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry> getDefaultLevelEntry() {
-		return List.of(new EnchantmentUpgradeRecipeSerializer.EnchantUpgradeLevelEntry(
+	public List<EnchantUpgradeLevelEntry> getDefaultLevelEntry() {
+		return List.of(new EnchantUpgradeLevelEntry(
 			this.requiredExperience, this.requiredItem, this.requiredItemCount
 		));
 	}
+	
+	public static class Serializer implements RecipeSerializer<EnchantmentUpgradeRecipe> {
+		
+		public static final MapCodec<EnchantmentUpgradeRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				Enchantment.ENTRY_CODEC.fieldOf("enchantment").forGetter(recipe -> recipe.enchantmentEntry),
+				EnchantUpgradeLevelEntry.CODEC.listOf().fieldOf("levels").forGetter(EnchantmentUpgradeRecipe::getDefaultLevelEntry)
+		).apply(i, EnchantmentUpgradeRecipe::createRecipes));
+		
+		public static final PacketCodec<RegistryByteBuf, EnchantmentUpgradeRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				Enchantment.ENTRY_PACKET_CODEC, recipe -> recipe.enchantmentEntry,
+				EnchantUpgradeLevelEntry.PACKET_CODEC.collect(PacketCodecs.toList()), EnchantmentUpgradeRecipe::getDefaultLevelEntry,
+				EnchantmentUpgradeRecipe::createRecipes
+		);
+		
+		@Override
+		public MapCodec<EnchantmentUpgradeRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, EnchantmentUpgradeRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
+	}
+	
+	public record EnchantUpgradeLevelEntry(int experience, Item requiredItem, int count) {
+		
+		public static final Codec<EnchantUpgradeLevelEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
+				Codec.INT.fieldOf("experience").forGetter(EnchantUpgradeLevelEntry::experience),
+				Registries.ITEM.getCodec().fieldOf("required_item").forGetter(EnchantUpgradeLevelEntry::requiredItem),
+				Codec.INT.fieldOf("count").forGetter(EnchantUpgradeLevelEntry::count)
+		).apply(i, EnchantUpgradeLevelEntry::new));
+		
+		public static final PacketCodec<RegistryByteBuf, EnchantUpgradeLevelEntry> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.VAR_INT, EnchantUpgradeLevelEntry::experience,
+				PacketCodecs.registryValue(RegistryKeys.ITEM), EnchantUpgradeLevelEntry::requiredItem,
+				PacketCodecs.VAR_INT, EnchantUpgradeLevelEntry::count,
+				EnchantUpgradeLevelEntry::new
+		);
+		
+	}
+	
 }

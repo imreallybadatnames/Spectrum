@@ -1,10 +1,15 @@
 package de.dafuqs.spectrum.recipe.enchanter;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -126,6 +131,45 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	@Override
 	public String getRecipeTypeShortID() {
 		return "enchanter";
+	}
+	
+	public static class Serializer implements RecipeSerializer<EnchanterRecipe> {
+		
+		public static final MapCodec<EnchanterRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				Ingredient.DISALLOW_EMPTY_CODEC.listOf().optionalFieldOf("ingredients", List.of()).forGetter(recipe -> recipe.inputs),
+				ItemStack.CODEC.fieldOf("output").forGetter(recipe -> recipe.output),
+				Codec.INT.optionalFieldOf("required_experience", 0).forGetter(recipe -> recipe.requiredExperience),
+				Codec.INT.optionalFieldOf("time", 200).forGetter(recipe -> recipe.craftingTime),
+				Codec.BOOL.optionalFieldOf("disable_yield_and_efficiency_upgrades", false).forGetter(recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades),
+				Codec.BOOL.optionalFieldOf("copy_components", false).forGetter(recipe -> recipe.copyNbt)
+		).apply(i, EnchanterRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, EnchanterRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.inputs,
+				ItemStack.PACKET_CODEC, recipe -> recipe.output,
+				PacketCodecs.VAR_INT, recipe -> recipe.requiredExperience,
+				PacketCodecs.VAR_INT, recipe -> recipe.craftingTime,
+				PacketCodecs.BOOL, recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades,
+				PacketCodecs.BOOL, recipe -> recipe.copyNbt,
+				EnchanterRecipe::new
+		);
+		
+		@Override
+		public MapCodec<EnchanterRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, EnchanterRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
+		
 	}
 	
 }

@@ -1,8 +1,9 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.block.*;
 import net.minecraft.util.math.*;
@@ -21,7 +22,7 @@ public class GemstoneGlassBlock extends TransparentBlock {
 		this.gemstoneColor = gemstoneColor;
 		this.codec = RecordCodecBuilder.mapCodec(i -> i.group(
 				createSettingsCodec(),
-				gemstoneColor.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor)
+				SpectrumRegistries.GEMSTONE_COLORS.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor)
 		).apply(i, GemstoneGlassBlock::new));
 	}
 

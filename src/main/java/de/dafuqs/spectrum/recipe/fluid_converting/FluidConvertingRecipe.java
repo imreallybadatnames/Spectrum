@@ -1,7 +1,13 @@
 package de.dafuqs.spectrum.recipe.fluid_converting;
 
+import com.mojang.datafixers.util.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -46,6 +52,41 @@ public abstract class FluidConvertingRecipe extends GatedSpectrumRecipe<RecipeIn
 		DefaultedList<Ingredient> defaultedList = DefaultedList.of();
 		defaultedList.add(this.input);
 		return defaultedList;
+	}
+	
+	public static class Serializer<T extends FluidConvertingRecipe> implements RecipeSerializer<T> {
+		
+		private final MapCodec<T> codec;
+		private final PacketCodec<RegistryByteBuf, T> packetCodec;
+		
+		public Serializer(Function5<String, Boolean, Identifier, Ingredient, ItemStack, T> factory) {
+			codec = RecordCodecBuilder.mapCodec(i -> i.group(
+					Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+					Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+					Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+					Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
+					ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+			).apply(i, factory));
+			
+			packetCodec = PacketCodec.tuple(
+					PacketCodecs.STRING, recipe -> recipe.group,
+					PacketCodecs.BOOL, recipe -> recipe.secret,
+					PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+					Ingredient.PACKET_CODEC, recipe -> recipe.input,
+					ItemStack.PACKET_CODEC, recipe -> recipe.output,
+					factory
+			);
+		}
+		
+		@Override
+		public MapCodec<T> codec() {
+			return codec;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, T> packetCodec() {
+			return packetCodec;
+		}
 	}
 	
 }

@@ -1,9 +1,11 @@
 package de.dafuqs.spectrum.blocks.conditional;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.mixin.accessors.ExperienceDroppingBlockAccessor;
+import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.mixin.accessors.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.intprovider.*;
@@ -19,9 +21,9 @@ public class GemstoneOreBlock extends CloakedOreBlock {
 		this.codec = RecordCodecBuilder.mapCodec(instance -> instance.group(
 				IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(b -> ((ExperienceDroppingBlockAccessor) b).getExperienceDropped()),
 				createSettingsCodec(),
-				gemstoneColor.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor),
+				SpectrumRegistries.GEMSTONE_COLORS.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor),
 				Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
-				BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+				CodecHelper.BLOCK_STATE.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
 		).apply(instance, GemstoneOreBlock::new));
 	}
 

@@ -37,6 +37,17 @@ public class RecipeUtils {
 		return BlockArgumentParser.block(Registries.BLOCK.getReadOnlyWrapper(), new StringReader(string), true).blockState();
 	}
 	
+	public static DataResult<BlockState> blockStateDataFromString(String string) {
+		try {
+			return DataResult.success(blockStateFromString(string));
+		} catch (CommandSyntaxException e) {
+			return DataResult.error(e::getMessage);
+		}
+	}
+	
+	public static String blockStateToString(BlockState state) {
+		return BlockArgumentParser.stringifyBlockState(state);
+	}
 
 	/* TODO - Remove
 	public static List<IngredientStack> createIngredientStackPatternMatrix(String[] pattern, Map<String, IngredientStack> symbols, int width, int height) {

@@ -1,13 +1,14 @@
 package de.dafuqs.spectrum.helpers;
 
 import com.google.gson.*;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
+import de.dafuqs.spectrum.recipe.*;
+import net.minecraft.block.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.util.*;
 
 import java.util.*;
@@ -15,6 +16,10 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class CodecHelper {
+	
+	public static Codec<BlockState> BLOCK_STATE = Codec.STRING.flatXmap(RecipeUtils::blockStateDataFromString, state -> DataResult.success(RecipeUtils.blockStateToString(state)));
+	
+	public static Codec<Identifier> SPECTRUM_IDENTIFIER = Codec.STRING.xmap(SpectrumCommon::ofSpectrum, Identifier::toString);
 	
 	public static MapCodec<RegistryWrapper.WrapperLookup> LOOKUP = new MapCodec<>() {
 		@Override
@@ -29,7 +34,7 @@ public class CodecHelper {
 				var lookup = ((CachedRegistryInfoGetterAccessor) infoGetter).getRegistriesLookup();
 				return DataResult.success(lookup);
 			}
-			return DataResult.error(() -> "Error: The LOOKUP codec requires RegistryOps.");
+			return DataResult.error(() -> "The LOOKUP codec requires RegistryOps.");
 		}
 		
 		@Override
@@ -38,25 +43,11 @@ public class CodecHelper {
 		}
 	};
 	
-	public static <T, R extends Registry<T>> Codec<T> spectrumRegistryValue(R registry) {
-		return Codec.STRING
-				.xmap(SpectrumCommon::ofSpectrum, Identifier::toString)
-				.comapFlatMap(
-						id -> registry.getEntry(id).map(DataResult::success).orElse(DataResult.error(
-								() -> "Unknown registry key in " + registry.getKey() + ": " + id
-						)),
-						entry -> entry.registryKey().getValue()
-				).flatComapMap(
-						RegistryEntry.Reference::value,
-						(value) -> {
-							var entry = registry.getEntry(value);
-							if (entry instanceof RegistryEntry.Reference<T> reference) {
-								return DataResult.success(reference);
-							} else {
-								return DataResult.error(() -> "Unregistered holder in " + registry.getKey() + ": " + entry);
-							}
-						}
-				);
+	public static <L, R> MapCodec<Pair<L, R>> mapPair(MapCodec<L> leftCodec, MapCodec<R> rightCodec) {
+		return RecordCodecBuilder.mapCodec(i -> i.group(
+				leftCodec.forGetter(Pair::getLeft),
+				rightCodec.forGetter(Pair::getRight)
+		).apply(i, Pair::new));
 	}
 	
 	public static <T> Codec<List<T>> singleOrList(Codec<T> codec) {
@@ -65,7 +56,7 @@ public class CodecHelper {
 	
 	public static <T, D> Optional<T> from(DynamicOps<D> ops, Codec<T> codec, D elem) {
 		if (elem == null) return Optional.empty();
-		return codec.decode(ops, elem).result().map(Pair::getFirst);
+		return codec.decode(ops, elem).result().map(com.mojang.datafixers.util.Pair::getFirst);
 	}
 	
 	public static <T> Optional<T> fromNbt(Codec<T> codec, NbtElement nbt) {

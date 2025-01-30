@@ -1,16 +1,13 @@
 package de.dafuqs.spectrum.recipe.primordial_fire_burning;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.entity.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
-import io.wispforest.endec.*;
-import io.wispforest.endec.impl.*;
-import io.wispforest.owo.serialization.*;
-import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
@@ -150,25 +147,33 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 		return true;
 	}
 	
-	public static class Serializer implements GatedRecipeSerializer<PrimordialFireBurningRecipe> {
+	public static class Serializer implements RecipeSerializer<PrimordialFireBurningRecipe> {
 		
-		public static final StructEndec<PrimordialFireBurningRecipe> ENDEC = StructEndecBuilder.of(
-				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
-				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
-				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
-				CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).fieldOf("ingredient", recipe -> recipe.input),
-				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.output),
+		public static final MapCodec<PrimordialFireBurningRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
+				ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+		).apply(i, PrimordialFireBurningRecipe::new));
+		
+		private static final PacketCodec<RegistryByteBuf, PrimordialFireBurningRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.STRING, c -> c.group,
+				PacketCodecs.BOOL, c -> c.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), c -> c.requiredAdvancementIdentifier,
+				Ingredient.PACKET_CODEC, c -> c.input,
+				ItemStack.PACKET_CODEC, c -> c.output,
 				PrimordialFireBurningRecipe::new
 		);
 		
 		@Override
 		public MapCodec<PrimordialFireBurningRecipe> codec() {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, PrimordialFireBurningRecipe> packetCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 		
 	}

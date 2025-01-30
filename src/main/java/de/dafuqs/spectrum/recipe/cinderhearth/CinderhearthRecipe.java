@@ -1,10 +1,14 @@
 package de.dafuqs.spectrum.recipe.cinderhearth;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -126,6 +130,43 @@ public class CinderhearthRecipe extends GatedStackSpectrumRecipe<SingleStackReci
 	
 	public List<Pair<ItemStack, Float>> getResultsWithChance() {
 		return resultsWithChance;
+	}
+	
+	public static class Serializer implements RecipeSerializer<CinderhearthRecipe> {
+		
+		public static final MapCodec<CinderhearthRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+				Codec.INT.fieldOf("time").forGetter(recipe -> recipe.time),
+				Codec.FLOAT.optionalFieldOf("experience", 0f).forGetter(recipe -> recipe.experience),
+				CodecHelper.mapPair(
+						ItemStack.CODEC.fieldOf("result"),
+						Codec.FLOAT.optionalFieldOf("chance", 1.0f)
+				).codec().listOf().fieldOf("results").forGetter(recipe -> recipe.resultsWithChance)
+		).apply(i, CinderhearthRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, CinderhearthRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				IngredientStack.Serializer.PACKET_CODEC, recipe -> recipe.ingredient,
+				PacketCodecs.VAR_INT, recipe -> recipe.time,
+				PacketCodecs.FLOAT, recipe -> recipe.experience,
+				PacketCodecHelper.pair(ItemStack.PACKET_CODEC, PacketCodecs.FLOAT).collect(PacketCodecs.toList()), recipe -> recipe.resultsWithChance,
+				CinderhearthRecipe::new
+		);
+		
+		@Override
+		public MapCodec<CinderhearthRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, CinderhearthRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
 	}
 
 }

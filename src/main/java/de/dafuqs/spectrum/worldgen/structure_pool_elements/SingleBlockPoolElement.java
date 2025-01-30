@@ -2,10 +2,11 @@ package de.dafuqs.spectrum.worldgen.structure_pool_elements;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.block.enums.*;
+import net.minecraft.block.enums.Orientation;
 import net.minecraft.nbt.*;
 import net.minecraft.structure.*;
 import net.minecraft.structure.pool.*;
@@ -21,7 +22,7 @@ import java.util.*;
 public class SingleBlockPoolElement extends StructurePoolElement {
 	
 	public static final MapCodec<SingleBlockPoolElement> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-			BlockState.CODEC.fieldOf("block").forGetter((pool) -> pool.state),
+			CodecHelper.BLOCK_STATE.fieldOf("block").forGetter((pool) -> pool.state),
 			NbtCompound.CODEC.fieldOf("nbt").forGetter((pool) -> pool.blockNbt),
 			projectionGetter()
 	).apply(instance, SingleBlockPoolElement::new));

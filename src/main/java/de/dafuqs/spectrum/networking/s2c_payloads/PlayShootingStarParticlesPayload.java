@@ -2,6 +2,7 @@ package de.dafuqs.spectrum.networking.s2c_payloads;
 
 import de.dafuqs.spectrum.blocks.shooting_star.*;
 import de.dafuqs.spectrum.entity.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
@@ -19,7 +20,7 @@ public record PlayShootingStarParticlesPayload(Vec3d shootingStarPos, ShootingSt
 	
 	public static final Id<PlayShootingStarParticlesPayload> ID = SpectrumC2SPackets.makeId("play_shooting_star_particles");
 	public static final PacketCodec<PacketByteBuf, PlayShootingStarParticlesPayload> CODEC = PacketCodec.tuple(
-			SpectrumPacketCodecs.VEC_3D, PlayShootingStarParticlesPayload::shootingStarPos,
+			PacketCodecHelper.VEC3D, PlayShootingStarParticlesPayload::shootingStarPos,
 			ShootingStar.Type.PACKET_CODEC, PlayShootingStarParticlesPayload::type,
 			PlayShootingStarParticlesPayload::new
 	);

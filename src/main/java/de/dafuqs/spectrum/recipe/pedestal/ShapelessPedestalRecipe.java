@@ -1,10 +1,16 @@
 package de.dafuqs.spectrum.recipe.pedestal;
 
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.blocks.pedestal.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
@@ -16,7 +22,7 @@ public class ShapelessPedestalRecipe extends PedestalRecipe {
 	
 	public ShapelessPedestalRecipe(
 			String group, boolean secret, Identifier requiredAdvancementIdentifier,
-			PedestalRecipeTier tier, List<IngredientStack> craftingInputs, List<GemstoneColorInput> gemstonePowderInputs, ItemStack output,
+			PedestalRecipeTier tier, List<IngredientStack> craftingInputs, Map<GemstoneColor, Integer> gemstonePowderInputs, ItemStack output,
 			float experience, int craftingTime, boolean skipRecipeRemainders, boolean noBenefitsFromYieldUpgrades
 	) {
 		super(group, secret, requiredAdvancementIdentifier, tier, craftingInputs, gemstonePowderInputs, output, experience, craftingTime, skipRecipeRemainders, noBenefitsFromYieldUpgrades);
@@ -44,6 +50,48 @@ public class ShapelessPedestalRecipe extends PedestalRecipe {
 					break;
 				}
 			}
+		}
+	}
+	
+	public static class Serializer implements RecipeSerializer<ShapelessPedestalRecipe> {
+		
+		public static final MapCodec<ShapelessPedestalRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
+				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
+				PedestalRecipeTier.CODEC.optionalFieldOf("tier", PedestalRecipeTier.BASIC).forGetter(recipe -> recipe.tier),
+				IngredientStack.Serializer.CODEC.codec().listOf().fieldOf("ingredients").forGetter(recipe -> recipe.inputs),
+				Codec.simpleMap(SpectrumRegistries.GEMSTONE_COLORS.getCodec(), Codec.INT, SpectrumRegistries.GEMSTONE_COLORS).forGetter(recipe -> recipe.powderInputs),
+				ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+				Codec.FLOAT.optionalFieldOf("experience", 0f).forGetter(recipe -> recipe.experience),
+				Codec.INT.optionalFieldOf("time", 200).forGetter(recipe -> recipe.craftingTime),
+				Codec.BOOL.optionalFieldOf("skip_recipe_remainders", false).forGetter(recipe -> recipe.skipRecipeRemainders),
+				Codec.BOOL.optionalFieldOf("disable_yield_upgrades", false).forGetter(recipe -> recipe.noBenefitsFromYieldUpgrades)
+		).apply(i, ShapelessPedestalRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, ShapelessPedestalRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
+				PacketCodecs.STRING, recipe -> recipe.group,
+				PacketCodecs.BOOL, recipe -> recipe.secret,
+				PacketCodecHelper.nullable(Identifier.PACKET_CODEC), recipe -> recipe.requiredAdvancementIdentifier,
+				PedestalRecipeTier.PACKET_CODEC, recipe -> recipe.tier,
+				IngredientStack.Serializer.PACKET_CODEC.collect(PacketCodecs.toList()), recipe -> recipe.inputs,
+				PacketCodecs.map(HashMap::new, PacketCodecs.registryValue(SpectrumRegistries.GEMSTONE_COLORS_KEY), PacketCodecs.VAR_INT), recipe -> recipe.powderInputs,
+				ItemStack.PACKET_CODEC, recipe -> recipe.output,
+				PacketCodecs.FLOAT, recipe -> recipe.experience,
+				PacketCodecs.VAR_INT, recipe -> recipe.craftingTime,
+				PacketCodecs.BOOL, recipe -> recipe.skipRecipeRemainders,
+				PacketCodecs.BOOL, recipe -> recipe.noBenefitsFromYieldUpgrades,
+				ShapelessPedestalRecipe::new
+		);
+		
+		@Override
+		public MapCodec<ShapelessPedestalRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, ShapelessPedestalRecipe> packetCodec() {
+			return PACKET_CODEC;
 		}
 	}
 	

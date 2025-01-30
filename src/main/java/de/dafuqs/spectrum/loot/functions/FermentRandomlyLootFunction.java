@@ -8,7 +8,6 @@ import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.loot.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
-import io.wispforest.owo.serialization.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.*;
@@ -24,7 +23,7 @@ import java.util.*;
 public class FermentRandomlyLootFunction extends ConditionalLootFunction {
 	
 	public static final MapCodec<FermentRandomlyLootFunction> CODEC = RecordCodecBuilder.mapCodec(i -> addConditionsField(i).and(i.group(
-			Codec.either(Identifier.CODEC, CodecUtils.toCodec(FermentationData.ENDEC)).fieldOf("fermentation").forGetter(c -> c.fermentation),
+			Codec.either(Identifier.CODEC, FermentationData.CODEC).fieldOf("fermentation").forGetter(c -> c.fermentation),
 			LootNumberProviderTypes.CODEC.fieldOf("days_fermented").forGetter(c -> c.daysFermented),
 			LootNumberProviderTypes.CODEC.fieldOf("days_fermented").forGetter(c -> c.thickness)
 	)).apply(i, FermentRandomlyLootFunction::new));
