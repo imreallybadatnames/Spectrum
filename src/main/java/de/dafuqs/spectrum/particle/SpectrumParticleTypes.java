@@ -15,41 +15,13 @@ import java.util.function.*;
 
 public class SpectrumParticleTypes {
 	
-	public static ParticleType<ItemTransmissionParticleEffect> ITEM_TRANSMISSION = register("item_transmission", false, (type) -> {
-		return ItemTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return ItemTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<ExperienceTransmissionParticleEffect> EXPERIENCE_TRANSMISSION = register("experience_transmission", false, (type) -> {
-		return ExperienceTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return ExperienceTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<WirelessRedstoneTransmissionParticleEffect> WIRELESS_REDSTONE_TRANSMISSION = register("wireless_redstone_transmission", false, (type) -> {
-		return WirelessRedstoneTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return WirelessRedstoneTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<ColoredTransmissionParticleEffect> COLORED_TRANSMISSION = register("colored_transmission", false, (type) -> {
-		return ColoredTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return ColoredTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<BlockPosEventTransmissionParticleEffect> BLOCK_POS_EVENT_TRANSMISSION = register("block_pos_event_transmission", false, (type) -> {
-		return BlockPosEventTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return BlockPosEventTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<PastelTransmissionParticleEffect> PASTEL_TRANSMISSION = register("pastel_transmission", false, (type) -> {
-		return PastelTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return PastelTransmissionParticleEffect.PACKET_CODEC;
-	});
-	public static ParticleType<HummingstoneTransmissionParticleEffect> HUMMINGSTONE_TRANSMISSION = register("hummingstone_transmission", false, (type) -> {
-		return HummingstoneTransmissionParticleEffect.CODEC;
-	}, (type) -> {
-		return HummingstoneTransmissionParticleEffect.PACKET_CODEC;
-	});
+	public static ParticleType<ItemTransmissionParticleEffect> ITEM_TRANSMISSION = register("item_transmission", false, (type) -> ItemTransmissionParticleEffect.CODEC, (type) -> ItemTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<ExperienceTransmissionParticleEffect> EXPERIENCE_TRANSMISSION = register("experience_transmission", false, (type) -> ExperienceTransmissionParticleEffect.CODEC, (type) -> ExperienceTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<WirelessRedstoneTransmissionParticleEffect> WIRELESS_REDSTONE_TRANSMISSION = register("wireless_redstone_transmission", false, (type) -> WirelessRedstoneTransmissionParticleEffect.CODEC, (type) -> WirelessRedstoneTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<ColoredTransmissionParticleEffect> COLORED_TRANSMISSION = register("colored_transmission", false, (type) -> ColoredTransmissionParticleEffect.CODEC, (type) -> ColoredTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<BlockPosEventTransmissionParticleEffect> BLOCK_POS_EVENT_TRANSMISSION = register("block_pos_event_transmission", false, (type) -> BlockPosEventTransmissionParticleEffect.CODEC, (type) -> BlockPosEventTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<PastelTransmissionParticleEffect> PASTEL_TRANSMISSION = register("pastel_transmission", false, (type) -> PastelTransmissionParticleEffect.CODEC, (type) -> PastelTransmissionParticleEffect.PACKET_CODEC);
+	public static ParticleType<HummingstoneTransmissionParticleEffect> HUMMINGSTONE_TRANSMISSION = register("hummingstone_transmission", false, (type) -> HummingstoneTransmissionParticleEffect.CODEC, (type) -> HummingstoneTransmissionParticleEffect.PACKET_CODEC);
 	
 	public static SimpleParticleType SHIMMERSTONE_SPARKLE = register("shimmerstone_sparkle", false);
 	public static SimpleParticleType SHIMMERSTONE_SPARKLE_SMALL = register("shimmerstone_sparkle_small", false);
@@ -230,8 +202,8 @@ public class SpectrumParticleTypes {
 
 	public static SimpleParticleType LIGHT_TRAIL = register("light_trail", true);
 	
-	public static ParticleType<DynamicParticleEffect> DYNAMIC = register("particle_spawner", DynamicParticleEffect.FACTORY, (particleType) -> DynamicParticleEffect.CODEC, false);
-	public static ParticleType<DynamicParticleEffectAlwaysShow> DYNAMIC_ALWAYS_SHOW = register("particle_spawner_always_show", DynamicParticleEffectAlwaysShow.FACTORY, (particleType) -> DynamicParticleEffectAlwaysShow.CODEC, true);
+	public static ParticleType<DynamicParticleEffect> DYNAMIC = register("dynamic", false, (type) -> DynamicParticleEffect.CODEC, (type) -> DynamicParticleEffect.PACKET_CODEC);
+	public static ParticleType<DynamicParticleEffectAlwaysShow> DYNAMIC_ALWAYS_SHOW = register("dynamic_always_show", true, (type) -> DynamicParticleEffectAlwaysShow.CODEC, (type) -> DynamicParticleEffectAlwaysShow.PACKET_CODEC);
 	
 	// Simple particles
 	private static SimpleParticleType register(String name, boolean alwaysShow) {

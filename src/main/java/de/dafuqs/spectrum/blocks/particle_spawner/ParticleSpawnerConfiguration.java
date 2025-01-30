@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.blocks.particle_spawner;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.networking.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.minecraft.network.*;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.*;
 import net.minecraft.particle.*;
 import net.minecraft.registry.*;
-import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
@@ -28,8 +28,7 @@ public record ParticleSpawnerConfiguration(
 	int lifetimeTicks,
 	int lifetimeVariance,
 	float gravity,
-	boolean collisions
-) {
+	boolean collisions) {
 
 	public static final Codec<ParticleSpawnerConfiguration> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Registries.PARTICLE_TYPE.getCodec().fieldOf("particle_type_identifier").forGetter(ParticleSpawnerConfiguration::particleType),
@@ -47,62 +46,30 @@ public record ParticleSpawnerConfiguration(
 			Codec.FLOAT.fieldOf("gravity").forGetter(ParticleSpawnerConfiguration::gravity),
 			Codec.BOOL.fieldOf("collisions").forGetter(ParticleSpawnerConfiguration::collisions)
 	).apply(i, ParticleSpawnerConfiguration::new));
-
-	public static final PacketCodec<PacketByteBuf, ParticleSpawnerConfiguration> PACKET_CODEC = PacketCodec.ofStatic(ParticleSpawnerConfiguration::write, ParticleSpawnerConfiguration::fromBuf);
-
-	public static Vector3fc CMYtoRGB(Vec3i cmy) {
+	
+	public static PacketCodec<RegistryByteBuf, ParticleSpawnerConfiguration> PACKET_CODEC = SpectrumPacketCodecs.tuple(
+			PacketCodecs.registryValue(RegistryKeys.PARTICLE_TYPE), ParticleSpawnerConfiguration::particleType,
+			SpectrumPacketCodecs.VEC_3I, ParticleSpawnerConfiguration::cmyColor,
+			PacketCodecs.BOOL, ParticleSpawnerConfiguration::glowing,
+			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::particlesPerSecond,
+			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::sourcePosition,
+			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::sourcePositionVariance,
+			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::velocity,
+			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::velocityVariance,
+			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::scale,
+			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::scaleVariance,
+			PacketCodecs.INTEGER, ParticleSpawnerConfiguration::lifetimeTicks,
+			PacketCodecs.INTEGER, ParticleSpawnerConfiguration::lifetimeVariance,
+			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::gravity,
+			PacketCodecs.BOOL, ParticleSpawnerConfiguration::collisions,
+			ParticleSpawnerConfiguration::new
+	);
+	
+	public static Vector3f CMYtoRGB(Vec3i cmy) {
 		float r = 1F - cmy.getX() / 100F;
 		float g = 1F - cmy.getY() / 100F;
 		float b = 1F - cmy.getZ() / 100F;
 		return new Vector3f(r, g, b);
-	}
-	
-	public static void write(PacketByteBuf buf, ParticleSpawnerConfiguration configuration) {
-		buf.writeString(Registries.PARTICLE_TYPE.getId(configuration.particleType).toString());
-		buf.writeInt(configuration.cmyColor.getX());
-		buf.writeInt(configuration.cmyColor.getY());
-		buf.writeInt(configuration.cmyColor.getZ());
-		buf.writeBoolean(configuration.glowing);
-		buf.writeFloat(configuration.particlesPerSecond);
-		buf.writeDouble(configuration.sourcePosition.x);
-		buf.writeDouble(configuration.sourcePosition.y);
-		buf.writeDouble(configuration.sourcePosition.z);
-		buf.writeDouble(configuration.sourcePositionVariance.x);
-		buf.writeDouble(configuration.sourcePositionVariance.y);
-		buf.writeDouble(configuration.sourcePositionVariance.z);
-		buf.writeDouble(configuration.velocity.x);
-		buf.writeDouble(configuration.velocity.y);
-		buf.writeDouble(configuration.velocity.z);
-		buf.writeDouble(configuration.velocityVariance.x);
-		buf.writeDouble(configuration.velocityVariance.y);
-		buf.writeDouble(configuration.velocityVariance.z);
-		buf.writeFloat(configuration.scale);
-		buf.writeFloat(configuration.scaleVariance);
-		buf.writeInt(configuration.lifetimeTicks);
-		buf.writeInt(configuration.lifetimeVariance);
-		buf.writeFloat(configuration.gravity);
-		buf.writeBoolean(configuration.collisions);
-	}
-	
-	public static ParticleSpawnerConfiguration fromBuf(PacketByteBuf buf) {
-		Identifier particleIdentifier = Identifier.of(buf.readString());
-		ParticleType<?> particleType = Registries.PARTICLE_TYPE.get(particleIdentifier);
-		Vec3i cmyColor = new Vec3i(buf.readInt(), buf.readInt(), buf.readInt());
-		boolean glowing = buf.readBoolean();
-		float particlesPerSecond = buf.readFloat();
-		Vec3d sourcePosition = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		Vec3d sourcePositionVariance = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		Vec3d velocity = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		Vec3d velocityVariance = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		float scale = buf.readFloat();
-		float scaleVariance = buf.readFloat();
-		int lifetimeTicks = buf.readInt();
-		int lifetimeVariance = buf.readInt();
-		float gravity = buf.readFloat();
-		boolean collisions = buf.readBoolean();
-		
-		return new ParticleSpawnerConfiguration(particleType, cmyColor, glowing, particlesPerSecond, sourcePosition, sourcePositionVariance,
-				velocity, velocityVariance, scale, scaleVariance, lifetimeTicks, lifetimeVariance, gravity, collisions);
 	}
 
 	public void spawnParticles(World world, @NotNull BlockPos pos) {
@@ -129,7 +96,7 @@ public record ParticleSpawnerConfiguration(
 			var rgbColor = CMYtoRGB(cmyColor);
 
 			world.addParticle(
-					new DynamicParticleEffect(particleType, gravity, new Vector3f(rgbColor), randomScale, randomLifetime, collisions, glowing),
+					new DynamicParticleEffect(particleType, gravity, rgbColor, randomScale, randomLifetime, collisions, glowing),
 					(double) pos.getX() + 0.5 + sourcePosition.x + randomOffsetX,
 					(double) pos.getY() + 0.5 + sourcePosition.y + randomOffsetY,
 					(double) pos.getZ() + 0.5 + sourcePosition.z + randomOffsetZ,

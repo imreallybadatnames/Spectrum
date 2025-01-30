@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.particle.client;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.mixin.client.accessors.ParticleManagerAccessor;
+import de.dafuqs.spectrum.mixin.client.accessors.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.*;
@@ -61,9 +61,9 @@ public class DynamicParticle extends SpriteBillboardParticle {
 			MinecraftClient client = MinecraftClient.getInstance();
 			DynamicParticle particle = new DynamicParticle(clientWorld, x, y, z, velocityX, velocityY, velocityZ);
 			
-			SpriteProvider dynamicProvider = ((ParticleManagerAccessor) client.particleManager).getSpriteAwareFactories().get(parameters.particleTypeIdentifier);
+			SpriteProvider dynamicProvider = ((ParticleManagerAccessor) client.particleManager).getSpriteAwareFactories().get(parameters.particleType);
 			if (dynamicProvider == null) {
-				SpectrumCommon.logError("Trying to use a non-existent sprite provider for particle spawner particle: " + parameters.particleTypeIdentifier);
+				SpectrumCommon.logError("Trying to use a non-existent sprite provider for particle spawner particle: " + parameters.particleType);
 				particle.setSprite(spriteProvider);
 			} else {
 				particle.setSprite(dynamicProvider);
