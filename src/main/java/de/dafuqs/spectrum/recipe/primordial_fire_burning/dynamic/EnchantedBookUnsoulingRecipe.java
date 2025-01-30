@@ -1,10 +1,14 @@
 package de.dafuqs.spectrum.recipe.primordial_fire_burning.dynamic;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -13,11 +17,12 @@ import net.minecraft.world.*;
 
 public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
 	
-	public EnchantedBookUnsoulingRecipe() {
-		// FIXME - What to do about enchantments here?
-		super("", false, UNLOCK_IDENTIFIER,
-				Ingredient.ofStacks(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SOUL_SPEED, 1, false, false).getRight()),
-				SpectrumEnchantmentHelper.addOrUpgradeEnchantment(Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SWIFT_SNEAK, 1, false, false).getRight());
+	public EnchantedBookUnsoulingRecipe(RegistryWrapper.WrapperLookup lookup) {
+		super(
+				"", false, UNLOCK_IDENTIFIER,
+				Ingredient.ofStacks(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(lookup, Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SOUL_SPEED, 1, false, false).getRight()),
+				SpectrumEnchantmentHelper.addOrUpgradeEnchantment(lookup, Items.ENCHANTED_BOOK.getDefaultStack(), Enchantments.SWIFT_SNEAK, 1, false, false).getRight()
+		);
 	}
 	
 	@Override
@@ -43,6 +48,29 @@ public class EnchantedBookUnsoulingRecipe extends PrimordialFireBurningRecipe {
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SpectrumRecipeSerializers.ENCHANTED_BOOK_UNSOULING;
+	}
+	
+	public static class Serializer implements RecipeSerializer<EnchantedBookUnsoulingRecipe> {
+		
+		public static final MapCodec<EnchantedBookUnsoulingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				CodecHelper.LOOKUP.forGetter(c -> null)
+		).apply(i, EnchantedBookUnsoulingRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, EnchantedBookUnsoulingRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecHelper.LOOKUP, c -> null,
+				EnchantedBookUnsoulingRecipe::new
+		);
+		
+		@Override
+		public MapCodec<EnchantedBookUnsoulingRecipe> codec() {
+			return CODEC;
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, EnchantedBookUnsoulingRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
+		
 	}
 	
 }

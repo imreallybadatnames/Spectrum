@@ -15,7 +15,6 @@
 	"count": 8
   },
   "required_advancement": "spectrum:midgame/collect_storm_stone",
-  "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [
     "nothing",

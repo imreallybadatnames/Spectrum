@@ -9,6 +9,7 @@ import de.dafuqs.spectrum.blocks.fluid.*;
 import de.dafuqs.spectrum.blocks.gravity.*;
 import de.dafuqs.spectrum.blocks.jade_vines.*;
 import de.dafuqs.spectrum.blocks.rock_candy.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.items.*;
 import de.dafuqs.spectrum.items.armor.*;
@@ -41,7 +42,6 @@ import net.minecraft.util.*;
 import java.util.*;
 
 import static de.dafuqs.spectrum.SpectrumCommon.*;
-import static de.dafuqs.spectrum.registries.DeferredRegistrar.*;
 import static de.dafuqs.spectrum.registries.SpectrumFluids.*;
 
 public class SpectrumItems {
@@ -65,9 +65,9 @@ public class SpectrumItems {
 		}
 		
 	}
-
-	static { DeferredRegistrar.setClass(SpectrumItems.class); }
-
+	
+	private static final Deferrer DEFERRER = new Deferrer();
+	
 	// Main items
 	public static final Item GUIDEBOOK = new GuidebookItem(IS.of(1));
 	public static final Item PAINTBRUSH = new PaintbrushItem(IS.of(1));
@@ -181,7 +181,7 @@ public class SpectrumItems {
 	public static final Item MOONSTONE_GLASS_ARROW = new GlassArrowItem(IS.of(Rarity.UNCOMMON), GlassArrowVariant.MOONSTONE, SpectrumParticleTypes.WHITE_CRAFTING);
 	
 	public static final Item OMNI_ACCELERATOR = new OmniAcceleratorItem(IS.of(1, Rarity.UNCOMMON));
-
+	
 	public static final Item AZURITE_GLASS_AMPOULE = new GlassAmpouleItem(IS.of(Rarity.UNCOMMON));
 	public static final Item MALACHITE_GLASS_AMPOULE = new MalachiteGlassAmpouleItem(IS.of(Rarity.UNCOMMON));
 	public static final Item BLOODSTONE_GLASS_AMPOULE = new BloodstoneGlassAmpouleItem(IS.of(Rarity.UNCOMMON).attributeModifiers(BloodstoneGlassAmpouleItem.createAttributeModifiers()));
@@ -193,27 +193,27 @@ public class SpectrumItems {
 	public static final DragonTalonItem DRAGON_TALON = new DragonTalonItem(SpectrumToolMaterial.DRACONIC, -3.0, -1.0, IS.of(1, Rarity.RARE).maxDamage(SpectrumToolMaterial.DRACONIC.getDurability()));
 	public static final LightGreatswordItem KNOTTED_SWORD = new LightGreatswordItem(SpectrumToolMaterial.VERDIGRIS, 3, -2.4F, 0.25F, 0.5F, 0xFFd4d6ff, IS.of(1, Rarity.UNCOMMON).maxDamage(SpectrumToolMaterial.VERDIGRIS.getDurability()));
 	public static final LightGreatswordItem NECTAR_LANCE = new NectarLanceItem(SpectrumToolMaterial.NECTAR, 0, -2.4F, 0.5F, 1.5F, 0xFFf8e8ff, IS.of(1, Rarity.EPIC).maxDamage(SpectrumToolMaterial.NECTAR.getDurability()));
-
+	
 	// Bedrock Armor
-	public static final Item BEDROCK_HELMET = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.HELMET, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*13).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
+	public static final Item BEDROCK_HELMET = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.HELMET, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70 * 13).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
 		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 			return Map.of(Enchantments.PROJECTILE_PROTECTION, 5);
 		}
 	};
-	public static final Item BEDROCK_CHESTPLATE = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.CHESTPLATE, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*15).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
+	public static final Item BEDROCK_CHESTPLATE = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.CHESTPLATE, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70 * 15).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
 		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 			return Map.of(Enchantments.PROTECTION, 5);
 		}
 	};
-	public static final Item BEDROCK_LEGGINGS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.LEGGINGS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*16).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
+	public static final Item BEDROCK_LEGGINGS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.LEGGINGS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70 * 16).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
 		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 			return Map.of(Enchantments.BLAST_PROTECTION, 5);
 		}
 	};
-	public static final Item BEDROCK_BOOTS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.BOOTS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70*11).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
+	public static final Item BEDROCK_BOOTS = new BedrockArmorItem(SpectrumArmorMaterials.BEDROCK, ArmorItem.Type.BOOTS, IS.of(Rarity.UNCOMMON).fireproof().maxDamage(70 * 11).component(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(false))) {
 		@Override
 		public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 			return Map.of(Enchantments.FIRE_PROTECTION, 5);
@@ -221,10 +221,10 @@ public class SpectrumItems {
 	};
 	
 	// Armor
-	public static final Item FETCHLING_HELMET = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.HELMET, IS.of(Rarity.UNCOMMON).maxDamage(9*13));
-	public static final Item FEROCIOUS_CHESTPLATE = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.CHESTPLATE, IS.of(Rarity.UNCOMMON).maxDamage(9*15));
-	public static final Item SYLPH_LEGGINGS = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.LEGGINGS, IS.of(Rarity.UNCOMMON).maxDamage(9*16));
-	public static final Item OREAD_BOOTS = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.BOOTS, IS.of(Rarity.UNCOMMON).maxDamage(9*11));
+	public static final Item FETCHLING_HELMET = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.HELMET, IS.of(Rarity.UNCOMMON).maxDamage(9 * 13));
+	public static final Item FEROCIOUS_CHESTPLATE = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.CHESTPLATE, IS.of(Rarity.UNCOMMON).maxDamage(9 * 15));
+	public static final Item SYLPH_LEGGINGS = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.LEGGINGS, IS.of(Rarity.UNCOMMON).maxDamage(9 * 16));
+	public static final Item OREAD_BOOTS = new GemstoneArmorItem(SpectrumArmorMaterials.GEMSTONE, ArmorItem.Type.BOOTS, IS.of(Rarity.UNCOMMON).maxDamage(9 * 11));
 	
 	// Decay drops
 	public static final Item VEGETAL = new CloakedItemWithLoomPattern(IS.of(), SpectrumAdvancements.CRAFT_BOTTLE_OF_FADING, Items.GUNPOWDER, SpectrumBannerPatterns.VEGETAL);
@@ -284,7 +284,7 @@ public class SpectrumItems {
 	public static final Item JADEITE_PETALS = new Item(IS.of(Rarity.UNCOMMON));
 	
 	public static final Item BLOOD_ORCHID_PETAL = new CloakedItem(IS.of(), SpectrumAdvancements.SOLVE_WIRELESS_REDSTONE_PRESERVATION_RUIN, Items.RED_DYE);
-
+	
 	public static final Item ROCK_CANDY = new RockCandyItem(IS.of().food(SpectrumFoodComponents.ROCK_CANDY), RockCandy.RockCandyVariant.SUGAR);
 	public static final Item TOPAZ_ROCK_CANDY = new RockCandyItem(IS.of().food(SpectrumFoodComponents.TOPAZ_ROCK_CANDY), RockCandy.RockCandyVariant.TOPAZ);
 	public static final Item AMETHYST_ROCK_CANDY = new RockCandyItem(IS.of().food(SpectrumFoodComponents.AMETHYST_ROCK_CANDY), RockCandy.RockCandyVariant.AMETHYST);
@@ -320,14 +320,14 @@ public class SpectrumItems {
 	//public static final Item STUFFED_PETALS = new Item(IS.of().food(SpectrumFoodComponents.STUFFED_PETALS));
 	//public static final Item PASTICHE = new Item(IS.of().food(SpectrumFoodComponents.PASTICHE));
 	//public static final Item VITTORIAS_ROAST = new Item(IS.of().food(SpectrumFoodComponents.VITTORIAS_ROAST));
-
-	public static final Item INFUSED_BEVERAGE = new VariantBeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).recipeRemainder(Items.GLASS_BOTTLE));
+	
+	public static final Item INFUSED_BEVERAGE = new BeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).recipeRemainder(Items.GLASS_BOTTLE).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).component(SpectrumDataComponentTypes.INFUSED_BEVERAGE, InfusedBeverageComponent.DEFAULT));
 	public static final Item SUSPICIOUS_BREW = new SuspiciousBrewItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item REPRISE = new RepriseItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item PURE_ALCOHOL = new DrinkItem(IS.of(16, Rarity.UNCOMMON).food(SpectrumFoodComponents.PURE_ALCOHOL).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item JADE_WINE = new JadeWineItem(IS.of(16, Rarity.UNCOMMON).food(SpectrumFoodComponents.BEVERAGE).recipeRemainder(Items.GLASS_BOTTLE));
 	public static final Item CHRYSOCOLLA = new DrinkItem(IS.of(16, Rarity.UNCOMMON).food(SpectrumFoodComponents.PURE_ALCOHOL).recipeRemainder(Items.GLASS_BOTTLE));
-
+	
 	public static final Item HONEY_PASTRY = new Item(IS.of().food(SpectrumFoodComponents.HONEY_PASTRY));
 	public static final Item LUCKY_ROLL = new Item(IS.of(16).food(SpectrumFoodComponents.LUCKY_ROLL));
 	public static final Item TRIPLE_MEAT_POT_PIE = new Item(IS.of(8).food(SpectrumFoodComponents.TRIPLE_MEAT_POT_PIE));
@@ -352,7 +352,7 @@ public class SpectrumItems {
 	public static final Item SALTED_JARAMEL_TRIFLE = new Item(IS.of().food(SpectrumFoodComponents.SALTED_JARAMEL_TRIFLE));
 	public static final Item MONSTER_TRIFLE = new Item(IS.of().food(SpectrumFoodComponents.MONSTER_TRIFLE));
 	public static final Item DEMON_TRIFLE = new Item(IS.of().food(SpectrumFoodComponents.DEMON_TRIFLE));
-
+	
 	public static final Item MYCEYLON = new CloakedItem(IS.of(), locate("lategame/collect_myceylon"), Items.ORANGE_DYE);
 	public static final Item MYCEYLON_APPLE_PIE = new Item(IS.of().food(SpectrumFoodComponents.MYCEYLON_APPLE_PIE));
 	public static final Item MYCEYLON_PUMPKIN_PIE = new Item(IS.of().food(SpectrumFoodComponents.MYCEYLON_PUMPKIN_PIE));
@@ -364,9 +364,7 @@ public class SpectrumItems {
 	public static final Item DRAGONBONE_BROTH = new StackableStewItem(IS.of(8).food(SpectrumFoodComponents.DRAGONBONE_BROTH));
 	public static final Item DOOMBLOOM_SEED = new AliasedBlockItem(SpectrumBlocks.DOOMBLOOM, IS.of().fireproof());
 	
-	public static final RegistryKey<Item> GLISTERING_MELON_SEEDS = defer(keyOf("glistering_melon_seeds"))
-			.withCommon(key -> register(key, new AliasedBlockItem(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON_STEM), IS.of()), DyeColor.LIME))
-			.value();
+	public static final RegistryKey<Item> GLISTERING_MELON_SEEDS = DEFERRER.defer(keyOf("glistering_melon_seeds"), key -> register(key, new AliasedBlockItem(Registries.BLOCK.get(SpectrumBlocks.GLISTERING_MELON_STEM), IS.of()), DyeColor.LIME));
 	public static final Item AMARANTH_GRAINS = new AliasedBlockItem(SpectrumBlocks.AMARANTH, IS.of());
 	
 	public static final Item MELOCHITES_COOKBOOK_VOL_1 = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/melochites_cookbook_vol_1")));
@@ -376,12 +374,12 @@ public class SpectrumItems {
 	public static final Item BREWERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/brewers_handbook")));
 	//public static final Item VARIA_COOKBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.UNCOMMON), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("cuisine/cookbooks/varia_cookbook")));
 	public static final Item POISONERS_HANDBOOK = new CookbookItem(IS.of().maxCount(1).rarity(Rarity.EPIC), GuidebookItem.addressOf(GuidebookItem.CUISINE_CATEGORY_ID, SpectrumCommon.locate("dimension/lore/poisoners_handbook")), SpectrumStatusEffects.ETERNAL_SLUMBER_COLOR);
-
+	
 	public static final Item AQUA_REGIA = new JadeWineItem(IS.of(16).food(SpectrumFoodComponents.AQUA_REGIA));
 	public static final Item BAGNUN = new Item(IS.of().food(SpectrumFoodComponents.BAGNUN));
 	public static final Item BANYASH = new Item(IS.of().food(SpectrumFoodComponents.BANYASH));
 	public static final Item BERLINER = new Item(IS.of().food(SpectrumFoodComponents.BERLINER));
-	public static final Item BRISTLE_MEAD = new SimpleBeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE));
+	public static final Item BRISTLE_MEAD = new BeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT));
 	public static final Item CHAUVE_SOURIS_AU_VIN = new Item(IS.of().food(SpectrumFoodComponents.CHAUVE_SOURIS_AU_VIN));
 	public static final Item CRAWFISH = new Item(IS.of().food(SpectrumFoodComponents.CRAWFISH));
 	public static final Item CRAWFISH_COCKTAIL = new Item(IS.of().food(SpectrumFoodComponents.CRAWFISH_COCKTAIL));
@@ -397,7 +395,7 @@ public class SpectrumItems {
 	public static final Item MEATLOAF = new Item(IS.of().food(SpectrumFoodComponents.MEATLOAF));
 	public static final Item MEATLOAF_SANDWICH = new Item(IS.of().food(SpectrumFoodComponents.MEATLOAF_SANDWICH));
 	public static final Item MELLOW_SHALLOT_SOUP = new Item(IS.of().food(SpectrumFoodComponents.MELLOW_SHALLOT_SOUP));
-	public static final Item MORCHELLA = new SimpleBeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE));
+	public static final Item MORCHELLA = new BeverageItem(IS.of(16).food(SpectrumFoodComponents.BEVERAGE).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT));
 	public static final Item NECTERED_VIOGNIER = new JadeWineItem(IS.of(16).food(SpectrumFoodComponents.NECTERED_VIOGNIER));
 	public static final Item PEACHES_FLAMBE = new Item(IS.of().food(SpectrumFoodComponents.PEACHES_FLAMBE));
 	public static final Item PEACH_CREAM = new TeaItem(IS.of(16).food(SpectrumFoodComponents.PEACH_CREAM), SpectrumFoodComponents.PEACH_CREAM_SCONE_BONUS);
@@ -407,7 +405,7 @@ public class SpectrumItems {
 	public static final Item SLUSHSLIDE = new ItemWithTooltip(IS.of().food(SpectrumFoodComponents.SLUSHSLIDE), "item.spectrum.slushslide.tooltip");
 	public static final Item SURSTROMMING = new Item(IS.of().food(SpectrumFoodComponents.SURSTROMMING));
 	public static final Item EVERNECTAR = new EvernectarItem(IS.of(1, Rarity.EPIC).food(SpectrumFoodComponents.EVERNECTAR).recipeRemainder(Items.GLASS_BOTTLE), "item.spectrum.evernectar.tooltip");
-
+	
 	// Banner Patterns
 	public static final Item LOGO_BANNER_PATTERN = new BannerPatternItem(SpectrumBannerPatternTags.SPECTRUM_LOGO_TAG, IS.of(1, Rarity.UNCOMMON));
 	public static final Item AMETHYST_SHARD_BANNER_PATTERN = new BannerPatternItem(SpectrumBannerPatternTags.AMETHYST_SHARD_TAG, IS.of(1));
@@ -416,8 +414,8 @@ public class SpectrumItems {
 	public static final Item VELVET_ASTROLOGER_BANNER_PATTERN = new BannerPatternItem(SpectrumBannerPatternTags.VELVET_ASTROLOGER_TAG, IS.of(1, Rarity.UNCOMMON));
 	public static final Item POISONBLOOM_BANNER_PATTERN = new BannerPatternItem(SpectrumBannerPatternTags.POISONBLOOM_TAG, IS.of(1, Rarity.RARE));
 	public static final Item DEEP_LIGHT_BANNER_PATTERN = new BannerPatternItem(SpectrumBannerPatternTags.DEEP_LIGHT_TAG, IS.of(1, Rarity.RARE));
-
-
+	
+	
 	public static final Item BUCKET_OF_ERASER = new EmptyFluidEntityBucketItem(SpectrumEntityTypes.ERASER, Fluids.EMPTY, SoundEvents.ITEM_BUCKET_EMPTY, IS.of());
 	
 	public static final Item EGG_LAYING_WOOLY_PIG_SPAWN_EGG = new SpawnEggItem(SpectrumEntityTypes.EGG_LAYING_WOOLY_PIG, 0x3a2c38, 0xfff2e0, IS.of());
@@ -463,7 +461,7 @@ public class SpectrumItems {
 	public static final Item GILDED_BOOK = new GildedBookItem(IS.of(Rarity.UNCOMMON));
 	public static final Item ENCHANTMENT_CANVAS = new EnchantmentCanvasItem(IS.of(16, Rarity.UNCOMMON));
 	public static final Item EVERPROMISE_RIBBON = new EverpromiseRibbonItem(IS.of());
-
+	
 	// Lore
 	public static final Item MYSTERIOUS_LOCKET = new MysteriousLocketItem(IS.of(1, Rarity.UNCOMMON));
 	public static final Item MYSTERIOUS_COMPASS = new MysteriousCompassItem(IS.of(1, Rarity.RARE));
@@ -493,7 +491,7 @@ public class SpectrumItems {
 	public static final InkDrainTrinketItem RING_OF_DENSER_STEPS = new RingOfDenserStepsItem(IS.of(1, Rarity.UNCOMMON));
 	public static final InkDrainTrinketItem RING_OF_AERIAL_GRACE = new RingOfAerialGraceItem(IS.of(1, Rarity.UNCOMMON));
 	public static final InkDrainTrinketItem LAURELS_OF_SERENITY = new LaurelsOfSerenityItem(IS.of(1, Rarity.UNCOMMON));
-
+	
 	public static final InkFlaskItem INK_FLASK = new InkFlaskItem(IS.of(1), 64 * 64 * 100); // 64 stacks of pigments (1 pigment => 100 energy)
 	public static final InkAssortmentItem INK_ASSORTMENT = new InkAssortmentItem(IS.of(1), 64 * 100);
 	public static final PigmentPaletteItem PIGMENT_PALETTE = new PigmentPaletteItem(IS.of(1, Rarity.UNCOMMON), 64 * 64 * 100);
@@ -509,7 +507,7 @@ public class SpectrumItems {
 	public static final Item WHISPY_CIRCLET = new WhispyCircletItem(IS.of(1, Rarity.UNCOMMON));
 	public static final Item CIRCLET_OF_ARROGANCE = new CircletOfArroganceItem(IS.of(1, Rarity.UNCOMMON));
 	public static final Item NEAT_RING = new NeatRingItem(IS.of(1, Rarity.EPIC));
-
+	
 	public static final Item AETHER_GRACED_NECTAR_GLOVES = new AetherGracedNectarGlovesItem(IS.of(1, Rarity.EPIC));
 	
 	// Pure Clusters
@@ -526,7 +524,7 @@ public class SpectrumItems {
 	public static final Item PURE_IRON = new Item(IS.of());
 	public static final Item PURE_NETHERITE_SCRAP = new Item(IS.of().fireproof());
 	public static final Item PURE_ECHO = new Item(IS.of());
-
+	
 	//Technical Items
 	public static final Item CONNECTION_NODE_CRYSTAL = new Item(IS.of());
 	public static final Item PROVIDER_NODE_CRYSTAL = new Item(IS.of());
@@ -534,21 +532,21 @@ public class SpectrumItems {
 	public static final Item STORAGE_NODE_CRYSTAL = new Item(IS.of());
 	public static final Item BUFFER_NODE_CRYSTAL = new Item(IS.of());
 	public static final Item GATHER_NODE_CRYSTAL = new Item(IS.of());
-
+	
 	public static RegistryKey<Item> keyOf(String name) {
 		return RegistryKey.of(RegistryKeys.ITEM, locate(name));
 	}
-
+	
 	public static void register(String name, Item item, DyeColor dyeColor) {
 		Registry.register(Registries.ITEM, locate(name), item);
 		ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
 	}
-
+	
 	public static void register(RegistryKey<Item> key, Item item, DyeColor dyeColor) {
 		Registry.register(Registries.ITEM, key, item);
 		ItemColors.ITEM_COLORS.registerColorMapping(item, dyeColor);
 	}
-
+	
 	public static void register() {
 		register("guidebook", GUIDEBOOK, DyeColor.WHITE);
 		register("paintbrush", PAINTBRUSH, DyeColor.WHITE);
@@ -569,8 +567,8 @@ public class SpectrumItems {
 		registerSpawningStuff();
 		registerMusicDisks();
 		registerTechnicalItems();
-
-		DeferredRegistrar.registerCommon(SpectrumItems.class);
+		
+		DEFERRER.flush();
 	}
 	
 	public static void registerMusicDisks() {
@@ -581,7 +579,7 @@ public class SpectrumItems {
 	
 	public static void registerSpawningStuff() {
 		register("bucket_of_eraser", BUCKET_OF_ERASER, DyeColor.PINK);
-
+		
 		register("egg_laying_wooly_pig_spawn_egg", EGG_LAYING_WOOLY_PIG_SPAWN_EGG, DyeColor.WHITE);
 		register("preservation_turret_spawn_egg", PRESERVATION_TURRET_SPAWN_EGG, DyeColor.WHITE);
 		register("kindling_spawn_egg", KINDLING_SPAWN_EGG, DyeColor.WHITE);
@@ -675,9 +673,9 @@ public class SpectrumItems {
 		register("downstone_fragments", DOWNSTONE_FRAGMENTS, DyeColor.LIGHT_GRAY);
 		register("resonance_shard", RESONANCE_SHARD, DyeColor.WHITE);
 		register("aether_vestiges", AETHER_VESTIGES, DyeColor.WHITE);
-
+		
 		register("ash_flakes", ASH_FLAKES, DyeColor.LIGHT_GRAY);
-
+		
 		register("quitoxic_powder", QUITOXIC_POWDER, DyeColor.PURPLE);
 		register("mermaids_gem", MERMAIDS_GEM, DyeColor.LIGHT_BLUE);
 		register("storm_stone", STORM_STONE, DyeColor.YELLOW);
@@ -689,7 +687,7 @@ public class SpectrumItems {
 		register("germinated_jade_vine_bulb", GERMINATED_JADE_VINE_BULB, DyeColor.LIME);
 		register("jade_vine_petals", JADE_VINE_PETALS, DyeColor.LIME);
 		register("jadeite_petals", JADEITE_PETALS, DyeColor.BROWN);
-
+		
 		register("amaranth_grains", AMARANTH_GRAINS, DyeColor.LIME);
 		
 		register("vegetal", VEGETAL, DyeColor.LIME);
@@ -743,17 +741,17 @@ public class SpectrumItems {
 		register("bedrock_crossbow", BEDROCK_CROSSBOW, DyeColor.BLACK);
 		register("bedrock_shears", BEDROCK_SHEARS, DyeColor.BLACK);
 		register("bedrock_fishing_rod", BEDROCK_FISHING_ROD, DyeColor.BLACK);
-
+		
 		register("bedrock_helmet", BEDROCK_HELMET, DyeColor.BLACK);
 		register("bedrock_chestplate", BEDROCK_CHESTPLATE, DyeColor.BLACK);
 		register("bedrock_leggings", BEDROCK_LEGGINGS, DyeColor.BLACK);
 		register("bedrock_boots", BEDROCK_BOOTS, DyeColor.BLACK);
-
+		
 		register("malachite_workstaff", MALACHITE_WORKSTAFF, DyeColor.GREEN);
 		register("malachite_ultra_greatsword", MALACHITE_ULTRA_GREATSWORD, DyeColor.GREEN);
 		register("malachite_crossbow", MALACHITE_CROSSBOW, DyeColor.GREEN);
 		register("malachite_bident", MALACHITE_BIDENT, DyeColor.GREEN);
-
+		
 		register("glass_crest_workstaff", GLASS_CREST_WORKSTAFF, DyeColor.WHITE);
 		register("glass_crest_ultra_greatsword", GLASS_CREST_ULTRA_GREATSWORD, DyeColor.WHITE);
 		register("ferocious_glass_crest_bident", FEROCIOUS_GLASS_CREST_BIDENT, DyeColor.WHITE);
@@ -766,9 +764,9 @@ public class SpectrumItems {
 		register("citrine_glass_arrow", CITRINE_GLASS_ARROW, DyeColor.YELLOW);
 		register("onyx_glass_arrow", ONYX_GLASS_ARROW, DyeColor.BLACK);
 		register("moonstone_glass_arrow", MOONSTONE_GLASS_ARROW, DyeColor.WHITE);
-
+		
 		register("omni_accelerator", OMNI_ACCELERATOR, DyeColor.YELLOW);
-
+		
 		register("azurite_glass_ampoule", AZURITE_GLASS_AMPOULE, DyeColor.BLUE);
 		register("bloodstone_glass_ampoule", BLOODSTONE_GLASS_AMPOULE, DyeColor.RED);
 		register("malachite_glass_ampoule", MALACHITE_GLASS_AMPOULE, DyeColor.GREEN);
@@ -803,12 +801,12 @@ public class SpectrumItems {
 		register("perturbed_eye", PERTURBED_EYE, DyeColor.RED);
 		register("crescent_clock", CRESCENT_CLOCK, DyeColor.MAGENTA);
 		register("primordial_lighter", PRIMORDIAL_LIGHTER, DyeColor.ORANGE);
-
+		
 		register("night_salts", NIGHT_SALTS, DyeColor.PURPLE);
 		register("soothing_bouquet", SOOTHING_BOUQUET, DyeColor.PURPLE);
 		register("concealing_oils", CONCEALING_OILS, DyeColor.BLACK);
 		register("bitter_oils", BITTER_OILS, DyeColor.BLUE);
-
+		
 		register("mysterious_locket", MYSTERIOUS_LOCKET, DyeColor.GRAY);
 		register("mysterious_compass", MYSTERIOUS_COMPASS, DyeColor.GRAY);
 	}
@@ -820,7 +818,7 @@ public class SpectrumItems {
 		register("citrine_rock_candy", CITRINE_ROCK_CANDY, DyeColor.YELLOW);
 		register("onyx_rock_candy", ONYX_ROCK_CANDY, DyeColor.BLACK);
 		register("moonstone_rock_candy", MOONSTONE_ROCK_CANDY, DyeColor.WHITE);
-
+		
 		register("cheong", CHEONG, DyeColor.PINK);
 		register("mermaids_jam", MERMAIDS_JAM, DyeColor.PINK);
 		register("mermaids_popcorn", MERMAIDS_POPCORN, DyeColor.PINK);
@@ -828,21 +826,21 @@ public class SpectrumItems {
 		//register("stuffed_petals", STUFFED_PETALS, DyeColor.PINK);
 		//register("pastiche", PASTICHE, DyeColor.PINK);
 		//register("vittorias_roast", VITTORIAS_ROAST, DyeColor.PINK);
-
+		
 		register("triple_meat_pot_pie", TRIPLE_MEAT_POT_PIE, DyeColor.PINK);
 		register("kimchi", KIMCHI, DyeColor.PINK);
 		
 		register("clotted_cream", CLOTTED_CREAM, DyeColor.PINK);
 		register("fresh_chocolate", FRESH_CHOCOLATE, DyeColor.PINK);
 		register("bodacious_berry_bar", BODACIOUS_BERRY_BAR, DyeColor.PINK);
-
+		
 		register("hot_chocolate", HOT_CHOCOLATE, DyeColor.PINK);
 		register("karak_chai", KARAK_CHAI, DyeColor.PINK);
 		register("restoration_tea", RESTORATION_TEA, DyeColor.PINK);
 		register("glistering_jelly_tea", GLISTERING_JELLY_TEA, DyeColor.PINK);
 		register("azalea_tea", AZALEA_TEA, DyeColor.PURPLE);
 		register("demon_tea", DEMON_TEA, DyeColor.RED);
-
+		
 		register("enchanted_golden_carrot", ENCHANTED_GOLDEN_CARROT, DyeColor.PINK);
 		register("jade_jelly", JADE_JELLY, DyeColor.LIME);
 		register("jaramel", JARAMEL, DyeColor.PINK);
@@ -866,12 +864,12 @@ public class SpectrumItems {
 		register("weeping_tart", WEEPING_TART, DyeColor.PINK);
 		register("whispy_tart", WHISPY_TART, DyeColor.PINK);
 		register("puff_tart", PUFF_TART, DyeColor.PINK);
-
+		
 		register("jaramel_trifle", JARAMEL_TRIFLE, DyeColor.PINK);
 		register("salted_jaramel_trifle", SALTED_JARAMEL_TRIFLE, DyeColor.PINK);
 		register("monster_trifle", MONSTER_TRIFLE, DyeColor.PINK);
 		register("demon_trifle", DEMON_TRIFLE, DyeColor.PINK);
-
+		
 		register("myceylon", MYCEYLON, DyeColor.PINK);
 		register("myceylon_apple_pie", MYCEYLON_APPLE_PIE, DyeColor.PINK);
 		register("myceylon_pumpkin_pie", MYCEYLON_PUMPKIN_PIE, DyeColor.PINK);
@@ -900,7 +898,7 @@ public class SpectrumItems {
 		register("brewers_handbook", BREWERS_HANDBOOK, DyeColor.PURPLE);
 		//register("varia_cookbook", VARIA_COOKBOOK, DyeColor.PURPLE);
 		register("poisoners_handbook", POISONERS_HANDBOOK, DyeColor.PURPLE);
-
+		
 		register("aqua_regia", AQUA_REGIA, DyeColor.PINK);
 		register("bagnun", BAGNUN, DyeColor.PINK);
 		register("banyash", BANYASH, DyeColor.PINK);
@@ -985,7 +983,7 @@ public class SpectrumItems {
 		FluidStorage.combinedItemApiProvider(SpectrumItems.MERMAIDS_GEM).register(context ->
 				new RemainderlessItemFluidStorage(context, FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET));
 	}
-
+	
 	public static void registerTechnicalItems() {
 		register("connection_node_crystal", CONNECTION_NODE_CRYSTAL, DyeColor.LIGHT_GRAY);
 		register("provider_node_crystal", PROVIDER_NODE_CRYSTAL, DyeColor.MAGENTA);
@@ -997,13 +995,13 @@ public class SpectrumItems {
 	
 	public static void registerFuelRegistry() {
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.WET_LAVA_SPONGE.asItem(), 12800);
-
+		
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.LIGHT_LEVEL_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.WEATHER_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.ITEM_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.PLAYER_DETECTOR.asItem(), 300);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.CREATURE_DETECTOR.asItem(), 300);
-
+		
 		FuelRegistry.INSTANCE.add(SpectrumItems.PURE_COAL, 3200);
 		FuelRegistry.INSTANCE.add(SpectrumBlocks.PURE_COAL_BLOCK, 32000);
 		
@@ -1012,9 +1010,9 @@ public class SpectrumItems {
 		
 		FuelRegistry.INSTANCE.add(SpectrumItems.PURE_ALCOHOL, 16000);
 		FuelRegistry.INSTANCE.add(SpectrumItems.CHRYSOCOLLA, 16000);
-
+		
 		FuelRegistry.INSTANCE.add(SpectrumItems.INCANDESCENT_ESSENCE, 2400);
-
+		
 		FuelRegistry.INSTANCE.add(SpectrumItemTags.COLORED_FENCES, 300);
 		FuelRegistry.INSTANCE.add(SpectrumItemTags.COLORED_FENCE_GATES, 300);
 	}

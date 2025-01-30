@@ -58,7 +58,7 @@ public class ItemProjectileEntity extends ThrownItemEntity {
 	@Override
 	public void handleStatus(byte status) {
 		if (status == 3) {
-			ItemStack itemStack = this.getItem();
+			ItemStack itemStack = this.getStack();
 			ParticleEffect particleEffect = (itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
 
 			for(int i = 0; i < 8; ++i) {

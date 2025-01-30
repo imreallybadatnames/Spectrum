@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.recipe.fusion_shrine;
 
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.predicate.location.*;
@@ -10,9 +11,15 @@ import de.dafuqs.spectrum.blocks.upgrade.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
@@ -41,7 +48,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final boolean yieldUpgradesDisabled;
 	protected final boolean playCraftingFinishedEffects;
 	
-	protected final List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates;
+	protected final List<WorldConditionsPredicate> worldConditionsPredicates;
 	@NotNull
 	protected final FusionShrineRecipeWorldEffect startWorldEffect;
 	@NotNull
@@ -50,8 +57,8 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	protected final FusionShrineRecipeWorldEffect finishWorldEffect;
 	@Nullable
 	protected final Text description;
-	// copy all nbt data from the first stack in the ingredients to the output stack
-	protected final boolean copyNbt;
+	// copy all components from the first stack in the ingredients to the output stack
+	protected final boolean copyComponents;
 	
 	public FusionShrineRecipe(
 		String group,
@@ -64,8 +71,8 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		int craftingTime,
 		boolean yieldUpgradesDisabled,
 		boolean playCraftingFinishedEffects,
-		boolean copyNbt,
-		List<SpectrumLocationPredicate<?, ?>> spectrumLocationPredicates,
+		boolean copyComponents,
+		List<WorldConditionsPredicate> worldConditionsPredicates,
 		@NotNull FusionShrineRecipeWorldEffect startWorldEffect,
 		@NotNull List<FusionShrineRecipeWorldEffect> duringWorldEffects,
 		@NotNull FusionShrineRecipeWorldEffect finishWorldEffect,
@@ -81,12 +88,12 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		this.yieldUpgradesDisabled = yieldUpgradesDisabled;
 		this.playCraftingFinishedEffects = playCraftingFinishedEffects;
 		
-		this.spectrumLocationPredicates = spectrumLocationPredicates;
+		this.worldConditionsPredicates = worldConditionsPredicates;
 		this.startWorldEffect = startWorldEffect;
 		this.duringWorldEffects = duringWorldEffects;
 		this.finishWorldEffect = finishWorldEffect;
 		this.description = description;
-		this.copyNbt = copyNbt;
+		this.copyComponents = copyComponents;
 
 		registerInToastManager(getType(), this);
 	}
@@ -149,16 +156,11 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	}
 	
 	/**
-	 * Returns a boolean depending on if the recipe condition is met.
-	 * This can always be true, a specific day or moon phase, or weather.
+	 * Returns a boolean depending on if any of the recipe conditions are met.
+	 * These can always be true, be a specific day or moon phase, weather, a command, biome, etc.
 	 */
 	public boolean areConditionMetCurrently(ServerWorld world, BlockPos pos) {
-		for (SpectrumLocationPredicate<?, ?> spectrumLocationPredicate : this.spectrumLocationPredicates) {
-			if (!spectrumLocationPredicate.test(world, pos)) {
-				return false;
-			}
-		}
-		return true;
+		return this.worldConditionsPredicates.stream().anyMatch(p -> p.test(world, pos));
 	}
 	
 	public FluidIngredient getFluid() {
@@ -259,7 +261,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 			}
 		}
 
-		if (this.copyNbt) {
+		if (this.copyComponents) {
 			output = copyNbt(firstStack, output);
 		}
 		
@@ -307,6 +309,42 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 	
 	public boolean shouldPlayCraftingFinishedEffects() {
 		return this.playCraftingFinishedEffects;
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<FusionShrineRecipe> {
+		
+		public static final StructEndec<FusionShrineRecipe> ENDEC = StructEndecBuilder.of(
+				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.ENDEC.listOf().validate(stacks -> {
+					if (stacks.size() > 7) throw new AssertionError("Recipe cannot have more than 7 ingredients. Has " + stacks.size());
+				}).fieldOf("ingredients", recipe -> recipe.craftingInputs),
+				FluidIngredient.ENDEC.optionalFieldOf("fluid", recipe -> recipe.fluid, FluidIngredient.EMPTY),
+				MinecraftEndecs.ITEM_STACK.optionalFieldOf("output", recipe -> recipe.output, ItemStack.EMPTY),
+				Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 0f),
+				Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
+				Endec.BOOLEAN.optionalFieldOf("disable_yield_upgrades", recipe -> recipe.yieldUpgradesDisabled, false),
+				Endec.BOOLEAN.optionalFieldOf("play_crafting_finished_effects", recipe -> recipe.playCraftingFinishedEffects, true),
+				Endec.BOOLEAN.optionalFieldOf("copy_components", recipe -> recipe.copyComponents, false),
+				CodecUtils.toEndec(CodecHelper.singleOrList(WorldConditionsPredicate.CODEC)).optionalFieldOf("world_conditions", recipe -> recipe.worldConditionsPredicates, List.of()),
+				FusionShrineRecipeWorldEffect.ENDEC.fieldOf("start_crafting_effect", recipe -> recipe.startWorldEffect),
+				FusionShrineRecipeWorldEffect.ENDEC.listOf().optionalFieldOf("during_crafting_effects", recipe -> recipe.duringWorldEffects, List.of()),
+				FusionShrineRecipeWorldEffect.ENDEC.fieldOf("finish_crafting_effect", recipe -> recipe.finishWorldEffect),
+				MinecraftEndecs.TEXT.optionalFieldOf("description", recipe -> recipe.description, Text.empty()),
+				FusionShrineRecipe::new
+		);
+		
+		@Override
+		public MapCodec<FusionShrineRecipe> codec() {
+			return CodecUtils.toMapCodec(ENDEC);
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, FusionShrineRecipe> packetCodec() {
+			return CodecUtils.toPacketCodec(ENDEC);
+		}
+		
 	}
 	
 }

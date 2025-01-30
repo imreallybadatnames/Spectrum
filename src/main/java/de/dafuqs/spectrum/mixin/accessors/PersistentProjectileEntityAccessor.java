@@ -12,4 +12,5 @@ public interface PersistentProjectileEntityAccessor {
 	
 	@Accessor
 	void setLife(int life);
+	
 }

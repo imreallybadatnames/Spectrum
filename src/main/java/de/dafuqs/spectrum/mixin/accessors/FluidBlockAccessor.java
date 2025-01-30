@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.*;
 @Mixin(FluidBlock.class)
 public interface FluidBlockAccessor {
 	
-	@Accessor(value = "fluid")
+	@Accessor("fluid")
 	FlowableFluid getFlowableFluid();
 	
 }

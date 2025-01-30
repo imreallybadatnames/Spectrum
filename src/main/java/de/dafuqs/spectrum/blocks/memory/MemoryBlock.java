@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.memory;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.*;
@@ -58,7 +58,6 @@ public class MemoryBlock extends BlockWithEntity implements Waterloggable {
 		return SHAPE;
 	}
 	
-	@Override
 	public void onPlaced(@NotNull World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof MemoryBlockEntity memoryBlockEntity) {

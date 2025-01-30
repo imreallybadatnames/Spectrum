@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.helpers;
 
+import net.minecraft.util.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
@@ -37,13 +38,21 @@ public class TimeHelper {
 		return time / 24000L % 2147483647L;
 	}
 	
-	public enum TimeOfDay {
-		DAY,
-		NOON,
-		NIGHT,
-		SUNRISE,
-		SUNSET,
-		MIDNIGHT;
+	public enum TimeOfDay implements StringIdentifiable {
+		DAY(0, 12000),
+		NIGHT(12000, 24000),
+		NOON(6000, 7000),
+		SUNSET(12000, 13000),
+		MIDNIGHT(18000, 19000),
+		SUNRISE(23000, 24000);
+		
+		public final int from;
+		public final int to;
+		
+		TimeOfDay(int from, int to) {
+			this.from = from;
+			this.to = to;
+		}
 		
 		public boolean isNight() {
 			return this == NIGHT || this == MIDNIGHT;
@@ -51,6 +60,11 @@ public class TimeHelper {
 		
 		public boolean isDay() {
 			return this == DAY || this == NOON;
+		}
+		
+		@Override
+		public String asString() {
+			return name().toLowerCase();
 		}
 	}
 	

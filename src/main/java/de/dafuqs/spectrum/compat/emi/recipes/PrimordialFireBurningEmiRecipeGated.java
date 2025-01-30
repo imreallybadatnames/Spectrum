@@ -20,10 +20,10 @@ public class PrimordialFireBurningEmiRecipeGated extends GatedSpectrumEmiRecipe<
 	
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
-		widgets.addSlot(inputs.get(0), 0, 0);
+		widgets.addSlot(inputs.getFirst(), 0, 0);
 		widgets.add(new AnimatedTexturedWidget(FIRE_TEXTURE, 1, 19, 16, 176, 1000));
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, 24, 9);
-		widgets.addSlot(outputs.get(0), 54, 4).large(true).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 54, 4).large(true).recipeContext(this);
 	}
 	
 }

@@ -1,33 +1,29 @@
 package de.dafuqs.spectrum.blocks;
 
 import de.dafuqs.spectrum.api.block.*;
-import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
-import net.minecraft.loot.context.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.registry.*;
-import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
-import net.minecraft.util.*;
 import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.*;
 
-// TODO: this should prob. implement LootableInventory
-public abstract class InWorldInteractionBlockEntity extends BlockEntity implements ImplementedInventory {
+public abstract class InWorldInteractionBlockEntity extends BlockEntity implements LootableInventory, ImplementedInventory {
 	
 	private final int inventorySize;
 	protected DefaultedList<ItemStack> items;
-	@Nullable
-	protected Identifier lootTableId;
+	@Nullable protected RegistryKey<LootTable> lootTable;
 	protected long lootTableSeed;
 	
 	public InWorldInteractionBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int inventorySize) {
@@ -38,7 +34,8 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 	
 	// interaction methods
 	public void updateInClientWorld() {
-		((ServerWorld) world).getChunkManager().markForUpdate(pos);
+		if (world instanceof ServerWorld serverWorld)
+			serverWorld.getChunkManager().markForUpdate(pos);
 	}
 	
 	// Called when the chunk is first loaded to initialize this be
@@ -53,61 +50,25 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.readNbt(nbt, registryLookup);
 		this.items = DefaultedList.ofSize(inventorySize, ItemStack.EMPTY);
-		Inventories.readNbt(nbt, items, registryLookup);
+		if (!this.readLootTable(nbt)) {
+			Inventories.readNbt(nbt, items, registryLookup);
+		}
 	}
 	
 	@Override
 	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
-		Inventories.writeNbt(nbt, items, registryLookup);
-	}
-	
-	protected boolean deserializeLootTable(NbtCompound nbt) {
-		if (nbt.contains("LootTable", NbtElement.STRING_TYPE)) {
-			this.lootTableId = Identifier.of(nbt.getString("LootTable"));
-			this.lootTableSeed = nbt.getLong("LootTableSeed");
-			return true;
+		if (!this.writeLootTable(nbt)) {
+			Inventories.writeNbt(nbt, items, registryLookup);
 		}
-		
-		return false;
 	}
 
-	protected boolean serializeLootTable(NbtCompound nbt) {
-		if (this.lootTableId == null) {
-			return false;
-		}
-		
-		nbt.putString("LootTable", this.lootTableId.toString());
-		if (this.lootTableSeed != 0L) {
-			nbt.putLong("LootTableSeed", this.lootTableSeed);
-		}
-		
-		return true;
-	}
-
-	public void checkLootInteraction(@Nullable PlayerEntity player) {
-		var world = this.getWorld();
-		if (world != null && this.lootTableId != null && world.getServer() != null) {
-			LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(this.lootTableId);
-			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
-				Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger(serverPlayerEntity, this.lootTableId);
-			}
-			
-			this.lootTableId = null;
-			var builder = new LootContextParameterSet.Builder((ServerWorld) world)
-					.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos));
-			if (player != null) {
-				builder.luck(player.getLuck()).add(LootContextParameters.THIS_ENTITY, player);
-			}
-
-			if (lootTableSeed != 0) {
-				lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), lootTableSeed);
-			} else {
-				lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), this.getWorld().getRandom().nextLong());
-			}
-
-			this.markDirty();
-		}
+	@Override
+	public void generateLoot(@Nullable PlayerEntity player) {
+		if (lootTableSeed == 0 && world != null)
+			lootTableSeed = world.getRandom().nextLong();
+		LootableInventory.super.generateLoot(player);
+		this.markDirty();
 	}
 	
 	@Nullable
@@ -126,6 +87,44 @@ public abstract class InWorldInteractionBlockEntity extends BlockEntity implemen
 		this.markDirty();
 		if (world != null && !world.isClient) {
 			updateInClientWorld();
+		}
+	}
+	
+	@Override
+	public @Nullable RegistryKey<LootTable> getLootTable() {
+		return lootTable;
+	}
+	
+	@Override
+	public void setLootTable(@Nullable RegistryKey<LootTable> lootTable) {
+		this.lootTable = lootTable;
+	}
+	
+	@Override
+	public long getLootTableSeed() {
+		return lootTableSeed;
+	}
+	
+	@Override
+	public void setLootTableSeed(long lootTableSeed) {
+		this.lootTableSeed = lootTableSeed;
+	}
+	
+	@Override
+	protected void readComponents(BlockEntity.ComponentsAccess components) {
+		super.readComponents(components);
+		ContainerLootComponent containerLootComponent = components.get(DataComponentTypes.CONTAINER_LOOT);
+		if (containerLootComponent != null) {
+			this.lootTable = containerLootComponent.lootTable();
+			this.lootTableSeed = containerLootComponent.seed();
+		}
+	}
+	
+	@Override
+	protected void addComponents(ComponentMap.Builder componentMapBuilder) {
+		super.addComponents(componentMapBuilder);
+		if (this.lootTable != null) {
+			componentMapBuilder.add(DataComponentTypes.CONTAINER_LOOT, new ContainerLootComponent(this.lootTable, this.lootTableSeed));
 		}
 	}
 	

@@ -1,10 +1,14 @@
 package de.dafuqs.spectrum.explosion;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -15,10 +19,21 @@ import java.util.*;
 
 /**
  * A Set of ExplosionModifiers
- * - serializable / deserializable via nbt
+ * - serializable as SpectrumDataComponentTypes.MODULAR_EXPLOSION
  * - implements the actual explosion logic
  */
 public class ModularExplosionDefinition {
+	
+	public static final Codec<ModularExplosionDefinition> CODEC = RecordCodecBuilder.create(i -> i.group(
+			StringIdentifiable.createCodec(ExplosionArchetype::values).fieldOf("archetype").forGetter(c -> c.archetype),
+			SpectrumRegistries.EXPLOSION_MODIFIERS.getCodec().listOf().fieldOf("modifiers").forGetter(c -> c.modifiers)
+	).apply(i, ModularExplosionDefinition::new));
+	
+	public static final PacketCodec<RegistryByteBuf, ModularExplosionDefinition> PACKET_CODEC = PacketCodec.tuple(
+			PacketCodecHelper.enumOf(ExplosionArchetype.class), c -> c.archetype,
+			PacketCodecs.registryValue(SpectrumRegistries.EXPLOSION_MODIFIERS.getKey()).collect(PacketCodecs.toList()), c -> c.modifiers,
+			ModularExplosionDefinition::new
+	);
 	
 	protected ExplosionArchetype archetype = ExplosionArchetype.COSMETIC;
 	protected List<ExplosionModifier> modifiers;
@@ -27,12 +42,9 @@ public class ModularExplosionDefinition {
 		this.modifiers = new ArrayList<>();
 	}
 	
-	public ModularExplosionDefinition(ArrayList<ExplosionModifier> modifiers) {
+	public ModularExplosionDefinition(ExplosionArchetype archetype, List<ExplosionModifier> modifiers) {
+		this.archetype = archetype;
 		this.modifiers = modifiers;
-	}
-	
-	public void addModifier(ExplosionModifier modifier) {
-		this.modifiers.add(modifier);
 	}
 	
 	public void addModifiers(List<ExplosionModifier> modifiers) {
@@ -72,58 +84,16 @@ public class ModularExplosionDefinition {
 		return this.modifiers.size();
 	}
 	
-	protected static String NBT_ROOT_KEY = "explosion_data";
-	protected static String NBT_ARCHETYPE_KEY = "archetype";
-	protected static String NBT_MODIFIER_LIST_KEY = "mods";
-	
-	// Serialization
-	public NbtCompound toNbt() {
-		NbtCompound nbt = new NbtCompound();
-		
-		nbt.putString(NBT_ARCHETYPE_KEY, this.archetype.toString());
-		NbtList modifierList = new NbtList();
-		for (ExplosionModifier modifier : this.modifiers) {
-			modifierList.add(NbtString.of(modifier.getId().toString()));
-		}
-		nbt.put(NBT_MODIFIER_LIST_KEY, modifierList);
-		
-		return nbt;
-	}
-	
-	public static ModularExplosionDefinition fromNbt(NbtCompound nbt) {
-		ModularExplosionDefinition set = new ModularExplosionDefinition();
-		if (nbt == null) {
-			return set;
-		}
-		
-		if (nbt.contains(NBT_ARCHETYPE_KEY, NbtElement.STRING_TYPE)) {
-			set.archetype = ExplosionArchetype.tryParse(nbt.getString(NBT_ARCHETYPE_KEY));
-		}
-		NbtList modifierList = nbt.getList(NBT_MODIFIER_LIST_KEY, NbtElement.STRING_TYPE);
-		for (NbtElement e : modifierList) {
-			ExplosionModifier mod = SpectrumRegistries.EXPLOSION_MODIFIERS.get(Identifier.tryParse(e.asString()));
-			if (mod != null) {
-				set.modifiers.add(mod);
-			}
-		}
-		
-		return set;
-	}
-	
 	public static ModularExplosionDefinition getFromStack(ItemStack stack) {
-		NbtCompound nbt = stack.getNbt();
-		if (nbt != null && nbt.contains(NBT_ROOT_KEY, NbtElement.COMPOUND_TYPE)) {
-			return fromNbt(nbt.getCompound(NBT_ROOT_KEY));
-		}
-		return new ModularExplosionDefinition();
+		return stack.getOrDefault(SpectrumDataComponentTypes.MODULAR_EXPLOSION, new ModularExplosionDefinition());
 	}
 	
 	public void attachToStack(ItemStack stack) {
-		stack.setSubNbt(NBT_ROOT_KEY, toNbt());
+		stack.set(SpectrumDataComponentTypes.MODULAR_EXPLOSION, this);
 	}
 	
 	public static void removeFromStack(ItemStack stack) {
-		stack.removeSubNbt(NBT_ROOT_KEY);
+		stack.remove(SpectrumDataComponentTypes.MODULAR_EXPLOSION);
 	}
 	
 	// Tooltips

@@ -3,14 +3,11 @@ package de.dafuqs.spectrum.blocks.pastel_network.nodes;
 import com.google.common.base.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
-import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.pastel.*;
 import de.dafuqs.spectrum.blocks.pastel_network.*;
 import de.dafuqs.spectrum.blocks.pastel_network.network.*;
-import de.dafuqs.spectrum.component_type.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
-import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.lookup.v1.block.*;
 import net.fabricmc.fabric.api.screenhandler.v1.*;
@@ -18,11 +15,10 @@ import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.fabricmc.fabric.api.transfer.v1.storage.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.enchantment.*;
+import net.minecraft.component.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.*;
 import net.minecraft.network.listener.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
@@ -45,7 +41,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.*;
 
-public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory, PastelUpgradeable {
+public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigurable, ExtendedScreenHandlerFactory<FilterConfigurable.ExtendedData>, PastelUpgradeable {
 
 	public static final int MAX_FILTER_SLOTS = 25;
 	public static final int SLOTS_PER_ROW = 5;
@@ -62,7 +58,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	protected boolean cachedUnpowered = true;
 	protected PastelNetwork.Priority priority = PastelNetwork.Priority.GENERIC;
 	protected long itemCountUnderway = 0;
-	protected OptionalInkColorComponent color = OptionalInkColorComponent.DEFAULT;
+	@Nullable protected DyeColor color = null;
 
 	// upgrade impl stuff
 	protected boolean lit, triggerTransfer, triggered, waiting, lamp, sensor;
@@ -447,7 +443,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	public boolean canConnect(PastelNodeBlockEntity node) {
-		return this.pos.isWithinDistance(node.pos, RANGE) && this.color.equals(node.color);
+		return this.pos.isWithinDistance(node.pos, RANGE) && this.color == node.color;
 	}
 
 	@Nullable
@@ -516,16 +512,13 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 				.anyMatch(filterItem -> {
 					ItemStack filterStack = filterItem.toStack();
 					if (LoreHelper.hasLore(filterStack)) {
-						if (variant.getNbt() == null)
-							return false;
-
 						for (Text text : LoreHelper.getLoreList(filterStack)) {
 							if (!testNBTPredicates(text.getString(), filterStack, variant))
 								return false;
 						}
 					}
 
-					if (!filterStack.hasCustomName() || !filterStack.isIn(SpectrumItemTags.TAG_FILTERING_ITEMS))
+					if (!filterStack.contains(DataComponentTypes.CUSTOM_NAME) || !filterStack.isIn(SpectrumItemTags.TAG_FILTERING_ITEMS))
 						return filterStack.getItem() == variant.getItem();
 
 					var name = StringUtils.trim(filterStack.getName().getString());
@@ -550,159 +543,160 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 				});
 	}
 
-	public static final String GREATER_THAN_KEYWORD = "above";
-	public static final String LESSER_THAN_KEYWORD = "below";
-	public static final String DAMAGED_KEYWORD = "damaged";
-	public static final String NOT_DAMAGED_KEYWORD = "not damaged";
-	public static final String STRING_EMPTY_KEYWORD = "is empty";
-	public static final String STRING_NOT_EMPTY_KEYWORD = "is not empty";
-	public static final String ENCHANTMENT_MATCH_KEYWORD = "with";
-	public static final String ENCHANTMENT_LEVEL_KEYWORD = "level";
+//	public static final String GREATER_THAN_KEYWORD = "above";
+//	public static final String LESSER_THAN_KEYWORD = "below";
+//	public static final String DAMAGED_KEYWORD = "damaged";
+//	public static final String NOT_DAMAGED_KEYWORD = "not damaged";
+//	public static final String STRING_EMPTY_KEYWORD = "is empty";
+//	public static final String STRING_NOT_EMPTY_KEYWORD = "is not empty";
+//	public static final String ENCHANTMENT_MATCH_KEYWORD = "with";
+//	public static final String ENCHANTMENT_LEVEL_KEYWORD = "level";
 
 	public boolean testNBTPredicates(String description, ItemStack stack, ItemVariant variant) {
-		var tested = variant.getNbt();
-		var cleanString = StringUtils.trim(description);
-		var pieces = StringUtils.splitByWholeSeparator(cleanString, null);
-		var target = pieces[0];
-		var predicateString = StringUtils.remove(cleanString, target); // We don't want ambiguity when checking for keywords
-		var source = stack.getNbt(); //No need to check if it has nbt, to get here it already had to have some.
-		boolean nullSourceFilter = false;
-
-		// A few corrections for ease of use
-		if (StringUtils.equalsAnyIgnoreCase(target, "durability", "uses"))
-			target = "Damage";
-
-		if (StringUtils.equalsAnyIgnoreCase(target, "enchs", "enchants", "enchantment")) {
-			target = "Enchantments";
-		}
-
-		// Exit early if it just is not there
-		assert source != null;
-		if (source.contains(target) && !tested.contains(target)) {
-			return false;
-		}
-
-		// Null-source filtering
-		if (!source.contains(target) && tested.contains(target)) {
-			nullSourceFilter = true;
-		}
-
-		// By now we know that the target exists in both places, but what is it?
-		var sourceData = source.get(target);
-		var testedData = tested.get(target);
-
-		// Duh
-		assert nullSourceFilter || sourceData != null;
-		assert testedData != null;
-		if (!nullSourceFilter && sourceData.getType() != testedData.getType())
-			return false;
-
-		boolean lessThan = StringUtils.containsIgnoreCase(predicateString, LESSER_THAN_KEYWORD);
-		boolean moreThan = StringUtils.containsIgnoreCase(predicateString, GREATER_THAN_KEYWORD);
-
-		// Enchantments are so fucking cursed
-		if (target.equals("Enchantments") || target.equals("StoredEnchantments")) {
-			if (testedData.getType() != NbtElement.LIST_TYPE)
-				return false;
-
-			var testedEnchants = EnchantmentHelper.fromNbt((NbtList) testedData);
-
-			if (StringUtils.containsIgnoreCase(predicateString, ENCHANTMENT_MATCH_KEYWORD)) {
-				var noKeyWordString = StringUtils.remove(predicateString, ENCHANTMENT_MATCH_KEYWORD);
-				var potentialEnchants = StringUtils.splitByWholeSeparator(noKeyWordString, null);
-
-				Optional<Enchantment> enchantment = Optional.empty();
-				for (String potentialEnchant : potentialEnchants) {
-					enchantment = Registries.ENCHANTMENT.getOrEmpty(Identifier.tryParse(potentialEnchant));
-					if (enchantment.isPresent())
-						break;
-				}
-
-				if (enchantment.isEmpty())
-					return false;
-
-				if (!testedEnchants.containsKey(enchantment.get()))
-					return false;
-
-				if (StringUtils.containsIgnoreCase(predicateString, ENCHANTMENT_LEVEL_KEYWORD)) {
-					return testedEnchants.get(enchantment.get()) == Math.round(getNumber(noKeyWordString));
-				}
-
-				if (lessThan) {
-					return testedEnchants.get(enchantment.get()) < Math.round(getNumber(noKeyWordString));
-				}
-
-				if (moreThan) {
-					return testedEnchants.get(enchantment.get()) > Math.round(getNumber(noKeyWordString));
-				}
-
-				return true;
-			}
-
-			if (nullSourceFilter)
-				return true;
-
-			return EnchantmentHelper.get(stack).keySet().stream().allMatch(testedEnchants::containsKey);
-		}
-
-		switch (testedData.getType()) {
-			case NbtElement.NUMBER_TYPE: {
-				var testedNum = ((AbstractNbtNumber) testedData).doubleValue();
-
-				// Special damage keywords - durability is weird and counts up as it decreases
-				if (target.equals("Damage")) {
-					if (StringUtils.containsIgnoreCase(predicateString, DAMAGED_KEYWORD)) {
-						return testedNum > 0;
-					}
-
-					if (StringUtils.containsIgnoreCase(predicateString, NOT_DAMAGED_KEYWORD)) {
-						return MathHelper.approximatelyEquals(testedNum, 0);
-					}
-				}
-
-				if (lessThan) {
-					double comparator;
-					comparator = getNumber(predicateString);
-
-					return testedNum < comparator;
-				}
-
-				if (moreThan) {
-					double comparator;
-					comparator = getNumber(predicateString);
-
-					return testedNum < comparator;
-				}
-
-				if (nullSourceFilter)
-					return true;
-
-				return MathHelper.approximatelyEquals(((AbstractNbtNumber) sourceData).doubleValue(), testedNum);
-			}
-			case NbtElement.STRING_TYPE: {
-				var testedString = testedData.asString();
-
-				if (StringUtils.containsIgnoreCase(predicateString, STRING_EMPTY_KEYWORD)) {
-					return StringUtils.isBlank(testedString);
-				}
-
-				if (StringUtils.containsIgnoreCase(predicateString, STRING_NOT_EMPTY_KEYWORD)) {
-					return StringUtils.isNotBlank(testedString);
-				}
-
-				if (nullSourceFilter)
-					return true;
-
-				return StringUtils.equalsIgnoreCase(sourceData.asString(), testedString);
-			}
-			default: {
-				if (nullSourceFilter)
-					return true;
-
-				// Last resort that will work 50% of the time maybe not realy
-				return sourceData.asString().equals(testedData.asString());
-			}
-		}
+		return false;
+//		var tested = variant.getNbt();
+//		var cleanString = StringUtils.trim(description);
+//		var pieces = StringUtils.splitByWholeSeparator(cleanString, null);
+//		var target = pieces[0];
+//		var predicateString = StringUtils.remove(cleanString, target); // We don't want ambiguity when checking for keywords
+//		var source = stack.getNbt(); //No need to check if it has nbt, to get here it already had to have some.
+//		boolean nullSourceFilter = false;
+//
+//		// A few corrections for ease of use
+//		if (StringUtils.equalsAnyIgnoreCase(target, "durability", "uses"))
+//			target = "Damage";
+//
+//		if (StringUtils.equalsAnyIgnoreCase(target, "enchs", "enchants", "enchantment")) {
+//			target = "Enchantments";
+//		}
+//
+//		// Exit early if it just is not there
+//		assert source != null;
+//		if (source.contains(target) && !tested.contains(target)) {
+//			return false;
+//		}
+//
+//		// Null-source filtering
+//		if (!source.contains(target) && tested.contains(target)) {
+//			nullSourceFilter = true;
+//		}
+//
+//		// By now we know that the target exists in both places, but what is it?
+//		var sourceData = source.get(target);
+//		var testedData = tested.get(target);
+//
+//		// Duh
+//		assert nullSourceFilter || sourceData != null;
+//		assert testedData != null;
+//		if (!nullSourceFilter && sourceData.getType() != testedData.getType())
+//			return false;
+//
+//		boolean lessThan = StringUtils.containsIgnoreCase(predicateString, LESSER_THAN_KEYWORD);
+//		boolean moreThan = StringUtils.containsIgnoreCase(predicateString, GREATER_THAN_KEYWORD);
+//
+//		// Enchantments are so fucking cursed
+//		if (target.equals("Enchantments") || target.equals("StoredEnchantments")) {
+//			if (testedData.getType() != NbtElement.LIST_TYPE)
+//				return false;
+//
+//			var testedEnchants = EnchantmentHelper.fromNbt((NbtList) testedData);
+//
+//			if (StringUtils.containsIgnoreCase(predicateString, ENCHANTMENT_MATCH_KEYWORD)) {
+//				var noKeyWordString = StringUtils.remove(predicateString, ENCHANTMENT_MATCH_KEYWORD);
+//				var potentialEnchants = StringUtils.splitByWholeSeparator(noKeyWordString, null);
+//
+//				Optional<Enchantment> enchantment = Optional.empty();
+//				for (String potentialEnchant : potentialEnchants) {
+//					enchantment = Registries.ENCHANTMENT.getOrEmpty(Identifier.tryParse(potentialEnchant));
+//					if (enchantment.isPresent())
+//						break;
+//				}
+//
+//				if (enchantment.isEmpty())
+//					return false;
+//
+//				if (!testedEnchants.containsKey(enchantment.get()))
+//					return false;
+//
+//				if (StringUtils.containsIgnoreCase(predicateString, ENCHANTMENT_LEVEL_KEYWORD)) {
+//					return testedEnchants.get(enchantment.get()) == Math.round(getNumber(noKeyWordString));
+//				}
+//
+//				if (lessThan) {
+//					return testedEnchants.get(enchantment.get()) < Math.round(getNumber(noKeyWordString));
+//				}
+//
+//				if (moreThan) {
+//					return testedEnchants.get(enchantment.get()) > Math.round(getNumber(noKeyWordString));
+//				}
+//
+//				return true;
+//			}
+//
+//			if (nullSourceFilter)
+//				return true;
+//
+//			return EnchantmentHelper.get(stack).keySet().stream().allMatch(testedEnchants::containsKey);
+//		}
+//
+//		switch (testedData.getType()) {
+//			case NbtElement.NUMBER_TYPE: {
+//				var testedNum = ((AbstractNbtNumber) testedData).doubleValue();
+//
+//				// Special damage keywords - durability is weird and counts up as it decreases
+//				if (target.equals("Damage")) {
+//					if (StringUtils.containsIgnoreCase(predicateString, DAMAGED_KEYWORD)) {
+//						return testedNum > 0;
+//					}
+//
+//					if (StringUtils.containsIgnoreCase(predicateString, NOT_DAMAGED_KEYWORD)) {
+//						return MathHelper.approximatelyEquals(testedNum, 0);
+//					}
+//				}
+//
+//				if (lessThan) {
+//					double comparator;
+//					comparator = getNumber(predicateString);
+//
+//					return testedNum < comparator;
+//				}
+//
+//				if (moreThan) {
+//					double comparator;
+//					comparator = getNumber(predicateString);
+//
+//					return testedNum < comparator;
+//				}
+//
+//				if (nullSourceFilter)
+//					return true;
+//
+//				return MathHelper.approximatelyEquals(((AbstractNbtNumber) sourceData).doubleValue(), testedNum);
+//			}
+//			case NbtElement.STRING_TYPE: {
+//				var testedString = testedData.asString();
+//
+//				if (StringUtils.containsIgnoreCase(predicateString, STRING_EMPTY_KEYWORD)) {
+//					return StringUtils.isBlank(testedString);
+//				}
+//
+//				if (StringUtils.containsIgnoreCase(predicateString, STRING_NOT_EMPTY_KEYWORD)) {
+//					return StringUtils.isNotBlank(testedString);
+//				}
+//
+//				if (nullSourceFilter)
+//					return true;
+//
+//				return StringUtils.equalsIgnoreCase(sourceData.asString(), testedString);
+//			}
+//			default: {
+//				if (nullSourceFilter)
+//					return true;
+//
+//				// Last resort that will work 50% of the time maybe not realy
+//				return sourceData.asString().equals(testedData.asString());
+//			}
+//		}
 	}
 
 	private static double getNumber(String predicateString) {
@@ -727,7 +721,7 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-		return new FilteringScreenHandler(syncId, inv, this);
+		return new FilteringScreenHandler(syncId, inv, new ExtendedData(this));
 	}
 
 	@Override
@@ -741,10 +735,10 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 
 	@Override
-	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		FilterConfigurable.writeScreenOpeningData(buf, this);
+	public FilterConfigurable.ExtendedData getScreenOpeningData(ServerPlayerEntity player) {
+		return new FilterConfigurable.ExtendedData(this);
 	}
-
+	
 	public boolean equals(Object obj) {
 		return obj instanceof PastelNodeBlockEntity blockEntity && this.pos.equals(blockEntity.pos);
 	}
@@ -754,35 +748,35 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	}
 	
 	// TODO: rewrite; we're searching for a matching network with the same color close by
-	@Override
-	public boolean scanForMatchingNetworks(Optional<UUID> stamper, Optional<PlayerEntity> user, BlockReference reference, World world) {
-		var sourceNode = (PastelNodeBlockEntity) reference.tryGetBlockEntity().orElseThrow(() -> new IllegalStateException("Attempted to connect a non-existent node - what did you do?!"));
-		var manager = Pastel.getInstance(world.isClient());
-
-		if (!sourceNode.canConnect(this))
-			return false;
-
-		if (sourceNode.parentNetwork != null && sourceNode.parentNetwork == this.parentNetwork) {
-			if (manager.tryRemoveEdge(this, sourceNode))
-				return true;
-
-			return manager.tryAddEdge(this, sourceNode);
-		}
-
-		if (sourceNode.parentID.map(uuid -> uuid.equals(this.parentID.orElse(null))).orElse(false)) {
-			return false;
-		}
-
-		manager.connectNodes(this, sourceNode);
-
-		if (this.parentNetwork != null) {
-			user.filter(u -> u instanceof ServerPlayerEntity).ifPresent(p -> {
-				SpectrumAdvancementCriteria.PASTEL_NETWORK_CREATING.trigger((ServerPlayerEntity) p, (ServerPastelNetwork) parentNetwork);
-			});
-		}
-
-		return true;
-	}
+//	@Override
+//	public boolean scanForMatchingNetworks(Optional<UUID> stamper, Optional<PlayerEntity> user, BlockReference reference, World world) {
+//		var sourceNode = (PastelNodeBlockEntity) reference.tryGetBlockEntity().orElseThrow(() -> new IllegalStateException("Attempted to connect a non-existent node - what did you do?!"));
+//		var manager = Pastel.getInstance(world.isClient());
+//
+//		if (!sourceNode.canConnect(this))
+//			return false;
+//
+//		if (sourceNode.parentNetwork != null && sourceNode.parentNetwork == this.parentNetwork) {
+//			if (manager.tryRemoveEdge(this, sourceNode))
+//				return true;
+//
+//			return manager.tryAddEdge(this, sourceNode);
+//		}
+//
+//		if (sourceNode.parentID.map(uuid -> uuid.equals(this.parentID.orElse(null))).orElse(false)) {
+//			return false;
+//		}
+//
+//		manager.connectNodes(this, sourceNode);
+//
+//		if (this.parentNetwork != null) {
+//			user.filter(u -> u instanceof ServerPlayerEntity).ifPresent(p -> {
+//				SpectrumAdvancementCriteria.PASTEL_NETWORK_CREATING.trigger((ServerPlayerEntity) p, (ServerPastelNetwork) parentNetwork);
+//			});
+//		}
+//
+//		return true;
+//	}
 	
 	public State getState() {
 		return state;
@@ -790,16 +784,14 @@ public class PastelNodeBlockEntity extends BlockEntity implements FilterConfigur
 	
 	
 	public Optional<DyeColor> getColor() {
-		Optional<InkColor> optional = this.color.color();
-		return optional.map(InkColor::getDyeColor);
+		return Optional.ofNullable(this.color);
 	}
 	
 	public boolean setColor(DyeColor color) {
-		if (this.color.color().isPresent() && this.color.color().get().getDyeColor() == color) {
+		if (this.color == color)
 			return false;
-		}
 		
-		this.color = new OptionalInkColorComponent(Optional.ofNullable(InkColor.ofDyeColor(color)));
+		this.color = color;
 		
 		if (parentNetwork != null) {
 			Pastel.getInstance(world.isClient()).removeNode(this, NodeRemovalReason.DISCONNECT);

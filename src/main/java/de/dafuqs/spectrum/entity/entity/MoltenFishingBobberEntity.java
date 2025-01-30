@@ -10,10 +10,6 @@ import net.minecraft.world.*;
 
 public class MoltenFishingBobberEntity extends SpectrumFishingBobberEntity {
 
-	public MoltenFishingBobberEntity(EntityType<? extends SpectrumFishingBobberEntity> type, World world, int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion) {
-		super(type, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, true);
-	}
-	
 	public MoltenFishingBobberEntity(EntityType<? extends SpectrumFishingBobberEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -27,8 +23,8 @@ public class MoltenFishingBobberEntity extends SpectrumFishingBobberEntity {
 		}
 	}
 
-	public MoltenFishingBobberEntity(PlayerEntity thrower, World world, int luckOfTheSeaLevel, int lureLevel, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion) {
-		super(SpectrumEntityTypes.MOLTEN_FISHING_BOBBER, thrower, world, luckOfTheSeaLevel, lureLevel, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, true);
+	public MoltenFishingBobberEntity(PlayerEntity thrower, World world, int luckBonus, int waitTimeReductionTicks, int exuberanceLevel, int bigCatchLevel, int serendipityReelLevel, boolean inventoryInsertion) {
+		super(SpectrumEntityTypes.MOLTEN_FISHING_BOBBER, thrower, world, luckBonus, waitTimeReductionTicks, exuberanceLevel, bigCatchLevel, serendipityReelLevel, inventoryInsertion, true);
 	}
 	
 	@Override

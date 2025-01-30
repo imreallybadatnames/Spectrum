@@ -12,7 +12,6 @@
     "spectrum:refined_bloodstone"
   ],
   "result": "minecraft:raw_copper",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [
     "nothing"

@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.recipe.ink_converting.*;
 import me.shedaniel.rei.api.common.category.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -16,10 +17,10 @@ public class InkConvertingDisplay extends GatedSpectrumDisplay {
 	protected final InkColor color;
 	protected final long amount;
 	
-	public InkConvertingDisplay(@NotNull InkConvertingRecipe recipe) {
-		super(recipe, EntryIngredients.ofIngredients(recipe.getIngredients()), List.of());
-		this.color = recipe.getInkColor();
-		this.amount = recipe.getInkAmount();
+	public InkConvertingDisplay(@NotNull RecipeEntry<InkConvertingRecipe> recipe) {
+		super(recipe, EntryIngredients.ofIngredients(recipe.value().getIngredients()), List.of());
+		this.color = recipe.value().getInkColor();
+		this.amount = recipe.value().getInkAmount();
 	}
 	
 	@Override

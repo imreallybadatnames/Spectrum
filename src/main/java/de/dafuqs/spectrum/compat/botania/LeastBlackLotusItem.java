@@ -1,14 +1,11 @@
 package de.dafuqs.spectrum.compat.botania;
 
-import net.minecraft.client.item.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 import vazkii.botania.api.item.*;
 import vazkii.botania.api.mana.*;
 import vazkii.botania.common.handler.*;

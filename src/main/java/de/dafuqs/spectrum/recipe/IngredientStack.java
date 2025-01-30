@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.recipe;
 
 import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import io.wispforest.endec.*;
 import io.wispforest.endec.impl.*;
 import io.wispforest.owo.serialization.*;
@@ -29,6 +30,10 @@ public class IngredientStack implements CustomIngredient {
 		this.count = count;
 	}
 	
+	public IngredientStack(Ingredient ingredient) {
+		this(ingredient, null, 1);
+	}
+	
 	public int getCount() {
 		return count;
 	}
@@ -37,12 +42,20 @@ public class IngredientStack implements CustomIngredient {
 		return ingredient;
 	}
 	
+	public static IngredientStack of(Ingredient ingredient) {
+		return new IngredientStack(ingredient);
+	}
+	
 	public static IngredientStack ofItems(Item item) {
-		return new IngredientStack(Ingredient.ofItems(item), null, 1);
+		return new IngredientStack(Ingredient.ofItems(item));
 	}
 	
 	public static IngredientStack ofItems(int count, Item item) {
 		return new IngredientStack(Ingredient.ofItems(item), null, count);
+	}
+	
+	public static IngredientStack ofTag(TagKey<Item> tag) {
+		return new IngredientStack(Ingredient.fromTag(tag));
 	}
 	
 	public static IngredientStack ofTag(TagKey<Item> tag, int count) {
@@ -84,6 +97,19 @@ public class IngredientStack implements CustomIngredient {
 			IngredientStack::new
 		);
 		
+		public static final MapCodec<IngredientStack> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(o -> o.ingredient),
+				ComponentPredicate.CODEC.fieldOf("components").forGetter(o -> o.componentPredicate),
+				Codec.INT.fieldOf("count").forGetter(o -> o.count)
+		).apply(i, IngredientStack::new));
+		
+		public static final PacketCodec<RegistryByteBuf, IngredientStack> PACKET_CODEC = PacketCodec.tuple(
+				Ingredient.PACKET_CODEC, o -> o.ingredient,
+				ComponentPredicate.PACKET_CODEC, o -> o.componentPredicate,
+				PacketCodecs.VAR_INT, o -> o.count,
+				IngredientStack::new
+		);
+		
 		@Override
 		public Identifier getIdentifier() {
 			return Identifier.of("spectrum:ingredient_stack");
@@ -91,12 +117,12 @@ public class IngredientStack implements CustomIngredient {
 		
 		@Override
 		public MapCodec<IngredientStack> getCodec(boolean allowEmpty) {
-			return CodecUtils.toMapCodec(ENDEC);
+			return CODEC;
 		}
 		
 		@Override
 		public PacketCodec<RegistryByteBuf, IngredientStack> getPacketCodec() {
-			return CodecUtils.toPacketCodec(ENDEC);
+			return PACKET_CODEC;
 		}
 	}
 }

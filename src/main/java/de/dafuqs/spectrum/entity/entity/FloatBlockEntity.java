@@ -319,7 +319,7 @@ public class FloatBlockEntity extends Entity {
 						}
 					}
 					
-					blockState.readNbt(compoundTag, registryLookup);
+					blockEntity.read(compoundTag, registryLookup);
 					blockEntity.markDirty();
 				}
 			}

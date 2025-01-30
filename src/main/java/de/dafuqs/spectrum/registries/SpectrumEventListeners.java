@@ -23,7 +23,6 @@ import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.fabric.api.resource.*;
 import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.*;
-import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.effect.*;
@@ -33,7 +32,6 @@ import net.minecraft.fluid.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.resource.*;
 import net.minecraft.server.*;
@@ -46,6 +44,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class SpectrumEventListeners {
 	
@@ -190,6 +189,7 @@ public class SpectrumEventListeners {
 		});
 		
 		// CCA 1.21 supports mob conversion by default, but for now we have to persist this component ourselves
+		// TODO do we need this now?
 		ServerLivingEntityEvents.MOB_CONVERSION.register((previous, converted, keepEquipment) -> {
 			if (EverpromiseRibbonComponent.hasRibbon(previous)) {
 				EverpromiseRibbonComponent.attachRibbon(converted);
@@ -197,37 +197,25 @@ public class SpectrumEventListeners {
 		});
 		
 		ServerEntityEvents.EQUIPMENT_CHANGE.register((livingEntity, equipmentSlot, previousStack, currentStack) -> {
-			var oldInexorable = EnchantmentHelper.getLevel(SpectrumEnchantments.INEXORABLE, previousStack);
-			var newInexorable = EnchantmentHelper.getLevel(SpectrumEnchantments.INEXORABLE, currentStack);
+			var oldInexorable = SpectrumEnchantmentHelper.getLevel(livingEntity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, previousStack);
+			var newInexorable = SpectrumEnchantmentHelper.getLevel(livingEntity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, currentStack);
 			
 			var effectType = equipmentSlot == EquipmentSlot.CHEST ? SpectrumAttributeTags.INEXORABLE_ARMOR_EFFECTIVE : SpectrumAttributeTags.INEXORABLE_HANDHELD_EFFECTIVE;
 			
+			//TODO make inexorable use enchantment effects or something
+			//TODO also move the enchantment cloaking logic from LivingEntityMixin into here
 			if (oldInexorable > 0 && newInexorable <= 0) {
 				livingEntity.getStatusEffects()
 						.stream()
 						.filter(instance -> {
-							var statusEffect = instance.getEffectType();
-							var attributes = statusEffect.getAttributeModifiers().keySet();
-							return attributes.stream()
-									.anyMatch(attribute -> {
-										var attributeRegistryOptional = Registries.ATTRIBUTE.getEntryList(effectType);
-										
-										return attributeRegistryOptional.map(registryEntries -> registryEntries
-												.stream()
-												.map(RegistryEntry::value)
-												.anyMatch(entityAttribute -> {
-													
-													if (!statusEffect.getAttributeModifiers().containsKey(entityAttribute))
-														return false;
-													
-													var value = statusEffect.getAttributeModifiers().get(entityAttribute).getValue();
-													return value < 0;
-													
-												})).orElse(false);
-										
-									});
+							AtomicBoolean result = new AtomicBoolean(false);
+							instance.getEffectType().value().forEachAttributeModifier(instance.amplifier, (attribute, modifier) -> {
+								if (attribute.isIn(effectType))
+									result.set(true);
+							});
+							return result.get();
 						})
-						.forEach(instance -> instance.getEffectType().onApplied(livingEntity, livingEntity.getAttributes(), instance.getAmplifier()));
+						.forEach(instance -> instance.getEffectType().value().onApplied(livingEntity, instance.getAmplifier()));
 			}
 			
 		});
@@ -304,7 +292,6 @@ public class SpectrumEventListeners {
 			if (damageSource.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 				return true;
 			}
-			
 			Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(entity);
 			if (optionalTrinketComponent.isPresent()) {
 				List<Pair<SlotReference, ItemStack>> totems = optionalTrinketComponent.get().getEquipped(SpectrumItems.TOTEM_PENDANT);

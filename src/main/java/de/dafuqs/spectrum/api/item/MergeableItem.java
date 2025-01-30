@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.api.item;
 
-import net.minecraft.enchantment.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
 import net.minecraft.server.network.*;
 
@@ -11,15 +11,12 @@ public interface MergeableItem {
 	boolean canMerge(ServerPlayerEntity player, ItemStack parent, ItemStack other);
 	
 	default boolean verify(ItemStack parent, ItemStack other) {
-		if (!EnchantmentHelper.get(parent).equals(EnchantmentHelper.get(other))) {
+		if (!parent.getEnchantments().equals(other.getEnchantments()))
 			return false;
-		}
 		
-		var parNbt = parent.getOrCreateNbt();
-		var otherNbt = other.getOrCreateNbt();
-		if (parNbt.contains("pairSignature") && otherNbt.contains("pairSignature"))
-			return parNbt.getLong("pairSignature") == otherNbt.getLong("pairSignature");
-		return false;
+		var comp = parent.get(SpectrumDataComponentTypes.PAIRED_ITEM);
+		var otherComp = other.get(SpectrumDataComponentTypes.PAIRED_ITEM);
+		return comp != null && otherComp != null && comp.signature() == otherComp.signature();
 	}
 
 	void playSound(ServerPlayerEntity player);

@@ -28,7 +28,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 	public static final int[] CHEST_SLOTS = IntStream.rangeClosed(0, 26).toArray();
 	public static final int[] RECIPE_SLOTS = IntStream.rangeClosed(27, 30).toArray();
 	public static final int[] RESULT_SLOTS = IntStream.rangeClosed(31, 34).toArray();
-	private final List<ItemStack> cachedOutputs = new ArrayList<>(4);
+	private List<ItemStack> cachedOutputs = new ArrayList<>(4);
 	private int coolDownTicks = 0;
 	private boolean isOpen, isFull, hasValidRecipes;
 	private State state = State.CLOSED;
@@ -299,7 +299,7 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 			FabricationChestStatusUpdatePayload.sendFabricationChestStatusUpdate(this);
 		}
 	}
-
+	
 	public boolean isFullServer() {
 		return isFull;
 	}
@@ -334,6 +334,12 @@ public class FabricationChestBlockEntity extends SpectrumChestBlockEntity implem
 			return false;
         return slot.isEmpty() || slot.getCount() + recipe.getResult(world.getRegistryManager()).getCount() < slot.getMaxCount();
     }
+	
+	public void updateState(boolean full, boolean hasValidRecipes, List<ItemStack> cachedOutputs) {
+		this.isFull = full;
+		this.hasValidRecipes = hasValidRecipes;
+		this.cachedOutputs = cachedOutputs;
+	}
 
 	public State getState() {
 		return state;

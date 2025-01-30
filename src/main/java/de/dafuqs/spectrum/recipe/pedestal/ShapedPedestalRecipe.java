@@ -87,8 +87,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 	public void consumeIngredients(PedestalBlockEntity pedestal) {
 		super.consumeIngredients(pedestal);
 
-		// FIXME - Figure out why this broke
-		Triplet<Integer, Integer, Boolean> orientation = getRecipeOrientation(pedestal);
+		Triplet<Integer, Integer, Boolean> orientation = getRecipeOrientation(pedestal.recipeInput);
 		if (orientation == null) {
 			return;
 		}
@@ -114,11 +113,6 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return SpectrumRecipeSerializers.SHAPED_PEDESTAL_RECIPE_SERIALIZER;
-	}
-
-	@Override
-	public RecipeType<?> getType() {
-		return SpectrumRecipeTypes.PEDESTAL;
 	}
 
 	@Override

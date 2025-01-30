@@ -3,10 +3,10 @@ package de.dafuqs.spectrum.networking.c2s_payloads;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.fabric.api.networking.v1.*;
-import net.minecraft.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
+import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
 public record RenameItemInBedrockAnvilPayload(String name) implements CustomPayload {
@@ -22,7 +22,7 @@ public record RenameItemInBedrockAnvilPayload(String name) implements CustomPayl
 	public static ServerPlayNetworking.@NotNull PlayPayloadHandler<RenameItemInBedrockAnvilPayload> getPayloadHandler() {
 		return (payload, context) -> {
 			if (context.player().currentScreenHandler instanceof BedrockAnvilScreenHandler bedrockAnvilScreenHandler) {
-				String string = SharedConstants.stripInvalidChars(payload.name);
+				String string = StringHelper.stripInvalidChars(payload.name);
 				if (string.length() <= 50) {
 					bedrockAnvilScreenHandler.setNewItemName(string);
 				}

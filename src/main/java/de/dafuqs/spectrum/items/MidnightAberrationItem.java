@@ -30,7 +30,7 @@ public class MidnightAberrationItem extends CloakedItem {
 		super.inventoryTick(stack, world, entity, slot, selected);
 		
 		if (!world.isClient && world.getTime() % 20 == 0 && entity instanceof ServerPlayerEntity player) {
-			if (stack.getOrDefault(SpectrumDataComponentTypes.STABLE, false))
+			if (stack.contains(SpectrumDataComponentTypes.STABLE))
 				return;
 			
 			// check if it's a real stack in the player's inventory or just a proxy item (like a Bottomless Bundle)
@@ -48,13 +48,13 @@ public class MidnightAberrationItem extends CloakedItem {
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		
-		if (stack.getOrDefault(SpectrumDataComponentTypes.STABLE, false))
+		if (stack.contains(SpectrumDataComponentTypes.STABLE))
 			tooltip.add(Text.translatable("item.spectrum.midnight_aberration.tooltip.stable"));
 	}
 	
 	public ItemStack getStableStack() {
 		ItemStack stack = getDefaultStack();
-		stack.set(SpectrumDataComponentTypes.STABLE, true);
+		stack.set(SpectrumDataComponentTypes.STABLE, Unit.INSTANCE);
 		return stack;
 	}
 	

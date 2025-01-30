@@ -1,16 +1,14 @@
 package de.dafuqs.spectrum.registries.client;
 
-import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.component_type.*;
-import de.dafuqs.spectrum.items.energy.*;
+import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.items.magic_items.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.client.*;
 import net.minecraft.client.item.*;
 import net.minecraft.client.world.*;
 import net.minecraft.component.*;
@@ -18,8 +16,9 @@ import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+
+import java.util.*;
 
 // Vanilla models see: ModelPredicateProviderRegistry
 public class SpectrumModelPredicateProviders {
@@ -45,14 +44,14 @@ public class SpectrumModelPredicateProviders {
 		registerOversizedItemPredicate(SpectrumItems.NECTAR_LANCE);
 		registerOversizedItemPredicate(SpectrumItems.BEDROCK_SWORD);
 		registerOversizedItemPredicate(SpectrumItems.BEDROCK_AXE);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.PAINTBRUSH);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.DRACONIC_TWINSWORD);
 		registerOversizedItemPredicate(SpectrumItems.DRAGON_TALON);
 		registerSlotReservingItem(SpectrumItems.DRAGON_TALON);
 		registerSlotReservingItem(SpectrumItems.DRACONIC_TWINSWORD);
-
+		
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_WORKSTAFF);
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_ULTRA_GREATSWORD);
 		registerOversizedItemPredicate(SpectrumItems.MALACHITE_CROSSBOW);
@@ -71,53 +70,48 @@ public class SpectrumModelPredicateProviders {
 		registerMalachiteCrossbowPredicates(SpectrumItems.GLASS_CREST_CROSSBOW);
 		
 		registerBottomlessBundlePredicates(SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem());
-		registerEnchantmentCanvasPrediates(SpectrumItems.ENCHANTMENT_CANVAS);
+		registerEnchantmentCanvasPredicates(SpectrumItems.ENCHANTMENT_CANVAS);
 		registerPresentPredicates(SpectrumBlocks.PRESENT.asItem());
 		registerMysteriousLocketPredicates(SpectrumItems.MYSTERIOUS_LOCKET);
 		registerStructureCompassPredicates(SpectrumItems.MYSTERIOUS_COMPASS);
 		registerNullableDyeColorPredicate(SpectrumBlocks.CRYSTALLARIEUM.asItem());
-
+		
 		registerPipeBombPredicates(SpectrumItems.PIPE_BOMB);
 	}
 	
 	private static void registerNullableDyeColorPredicate(Item item) {
 		ModelPredicateProviderRegistry.register(item, Identifier.of("color"), (stack, clientWorld, entity, i) -> {
-			OptionalInkColorComponent component = stack.get(SpectrumDataComponentTypes.OPTIONAL_INK_COLOR);
-			if (component == null || component.color().isEmpty()) {
-				return -1;
-			}
-			return component.color().get().getColorInt();
+			var color = stack.get(SpectrumDataComponentTypes.INK_COLOR);
+			return color == null ? -1 : color.getColorInt();
 		});
 	}
 	
 	private static void registerMysteriousLocketPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (stack, world, entity, i) -> stack.contains(SpectrumDataComponentTypes.SOCKETED) ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, Identifier.of("socketed"), (stack, world, entity, i) ->
+				stack.contains(SpectrumDataComponentTypes.SOCKETED) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerStructureCompassPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> StructureCompassItem.getStructurePos(stack)));
+		ModelPredicateProviderRegistry.register(item, Identifier.of("angle"),
+				new CompassAnglePredicateProvider((world, stack, entity) -> StructureCompassItem.getStructurePos(stack)));
 	}
 	
 	private static void registerMalachiteCrossbowPredicates(Item crossbowItem) {
-		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (stack, world, user, i) -> {
-			if (user == null) {
-				return 0.0F;
-			} else {
-				return CrossbowItem.isCharged(stack) ? 0.0F : (float) (stack.getMaxUseTime(user) - user.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(stack, user);
-			}
-		});
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (stack, world, user, i) ->
+				user == null || CrossbowItem.isCharged(stack) ? 0.0F : (float) (stack.getMaxUseTime(user) - user.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(stack, user));
+		
 		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pulling"), (stack, world, entity, i) ->
-				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F
-		);
+				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
+		
 		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("charged"), (stack, world, entity, i) ->
-				entity != null && CrossbowItem.isCharged(stack) ? 1.0F : 0.0F
-		);
+				entity != null && CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
+		
 		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("projectile"), (stack, world, entity, seed) -> {
 			if (stack == null) {
 				return 0F;
 			}
 			ItemStack projectile = MalachiteCrossbowItem.getFirstProjectile(stack);
-			if(projectile.isEmpty()) {
+			if (projectile.isEmpty()) {
 				return 0F;
 			}
 			
@@ -160,25 +154,16 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerPresentPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("variant"), (stack, world, entity, i) -> {
-			WrappedPresentComponent component = stack.get(SpectrumDataComponentTypes.WRAPPED_PRESENT);
-			return component == null ? 0.0F : component.variant().ordinal() / 10F;
-		});
+		ModelPredicateProviderRegistry.register(item, Identifier.of("variant"), (stack, world, entity, i) ->
+				stack.getOrDefault(SpectrumDataComponentTypes.WRAPPED_PRESENT, WrappedPresentComponent.DEFAULT).variant().ordinal() / 10F);
 	}
 	
 	private static void registerBottomlessBundlePredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("locked"), (stack, world, entity, i) -> {
-			NbtCompound compound = stack.getNbt();
-			if (compound == null)
-				return 0.0F;
-			return compound.contains("Locked") ? 1.0F : 0.0F;
-		});
-		ModelPredicateProviderRegistry.register(SpectrumBlocks.BOTTOMLESS_BUNDLE, Identifier.of("filled"), (stack, world, entity, i) -> {
-			NbtCompound compound = stack.getNbt();
-			if (compound == null)
-				return 0.0F;
-			return compound.contains("StoredStack") ? 1.0F : 0.0F;
-		});
+		ModelPredicateProviderRegistry.register(item, Identifier.of("locked"), (stack, world, entity, i) ->
+				BottomlessBundleItem.isLocked(stack) ? 1.0F : 0.0F);
+		
+		ModelPredicateProviderRegistry.register(item, Identifier.of("filled"), (stack, world, entity, i) ->
+				BottomlessBundleItem.getStoredAmount(stack) > 0 ? 1.0F : 0.0F);
 	}
 	
 	private static void registerMoonPhasePredicates(Item item) {
@@ -203,152 +188,96 @@ public class SpectrumModelPredicateProviders {
 	}
 	
 	private static void registerActivatableItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("activated"), (stack, world, entity, i) -> {
-			if (ActivatableItem.isActivated(stack)) {
-				return 1.0F;
-			} else {
-				return 0.0F;
-			}
-		});
+		ModelPredicateProviderRegistry.register(item, Identifier.of("activated"), (stack, world, entity, i) ->
+				ActivatableItem.isActivated(stack) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerSlotReservingItem(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of(SlotReservingItem.NBT_STRING), (stack, world, entity, i) -> {
-			if (stack.getItem() instanceof SlotReservingItem reserver && reserver.isReservingSlot(stack)) {
-				return 1.0F;
-			} else {
-				return 0.0F;
-			}
-		});
+		ModelPredicateProviderRegistry.register(item, Identifier.of("reserved"), (stack, world, entity, i) ->
+				SlotReservingItem.isReservingSlot(stack) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerOversizedItemPredicate(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("oversized"), (stack, world, entity, seed) -> seed == 817210941 ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(item, Identifier.of("oversized"), (stack, world, entity, seed) ->
+				seed == 817210941 ? 1.0F : 0.0F);
 	}
 	
 	private static void registerBowPredicates(Item bowItem) {
-		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pull"), (stack, world, entity, i) -> {
-			if (entity == null) {
-				return 0.0F;
-			} else {
-				return entity.getActiveItem() != stack ? 0.0F : (float) (stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / 20.0F;
-			}
-		});
-		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pulling"), (stack, world, entity, i) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pull"), (stack, world, entity, i) ->
+				entity == null || entity.getActiveItem() != stack ? 0.0F : (float) (stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / 20.0F);
+		
+		ModelPredicateProviderRegistry.register(bowItem, Identifier.of("pulling"), (stack, world, entity, i) ->
+				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
 	}
 	
 	private static void registerCrossbowPredicates(Item crossbowItem) {
-		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (stack, world, entity, i) -> {
-			if (entity == null) {
-				return 0.0F;
-			} else {
-				return CrossbowItem.isCharged(stack) ? 0.0F : (float) (stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(stack, entity);
-			}
-		});
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pull"), (stack, world, entity, i) ->
+				entity == null || CrossbowItem.isCharged(stack) ? 0.0F : (float) (stack.getMaxUseTime(entity) - entity.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(stack, entity));
 		
 		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("pulling"), (stack, world, entity, i) ->
-				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F
-		);
+				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
 		
 		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("charged"), (stack, world, entity, i) ->
-				entity != null && CrossbowItem.isCharged(stack) ? 1.0F : 0.0F
-		);
+				entity != null && CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
 		
-		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("firework"), (stack, world, entity, seed) -> {
-			ChargedProjectilesComponent chargedProjectilesComponent = stack.get(DataComponentTypes.CHARGED_PROJECTILES);
-			return chargedProjectilesComponent != null && chargedProjectilesComponent.contains(Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
-		});
+		ModelPredicateProviderRegistry.register(crossbowItem, Identifier.of("firework"), (stack, world, entity, seed) ->
+				stack.getOrDefault(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT).contains(Items.FIREWORK_ROCKET) ? 1.0F : 0.0F);
 	}
-
-	private static void registerPipeBombPredicates(Item pipeBombItem) {
-		ModelPredicateProviderRegistry.register(pipeBombItem, Identifier.of("armed"), (stack, world, entity, seed) -> PipeBombItem.isArmed(stack) ? 1.0F : 0.0F);
+	
+	private static void registerPipeBombPredicates(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("armed"), (stack, world, entity, seed) ->
+				PipeBombItem.isArmed(stack) ? 1.0F : 0.0F);
 	}
 	
 	private static void registerSpectrumFishingRodItemPredicates(Item fishingRodItem) {
 		ModelPredicateProviderRegistry.register(fishingRodItem, Identifier.of("cast"), (stack, world, entity, i) -> {
-			if (entity == null) {
+			if (entity == null)
 				return 0.0F;
-			} else {
-				boolean isInMainHand = entity.getMainHandStack() == stack;
-				boolean isInOffhand = entity.getOffHandStack() == stack;
-				if (entity.getMainHandStack().getItem() instanceof SpectrumFishingRodItem) {
-					isInOffhand = false;
-				}
-				return (isInMainHand || isInOffhand) && entity instanceof PlayerEntity && ((PlayerEntityAccessor) entity).getSpectrumBobber() != null ? 1.0F : 0.0F;
-			}
+			boolean isInMainHand = entity.getMainHandStack() == stack;
+			boolean isInOffhand = entity.getOffHandStack() == stack && !(entity.getMainHandStack().getItem() instanceof SpectrumFishingRodItem);
+			return (isInMainHand || isInOffhand) && entity instanceof PlayerEntity && ((PlayerEntityAccessor) entity).getSpectrumBobber() != null ? 1.0F : 0.0F;
 		});
 	}
 	
-	private static void registerEnderSplicePredicates(Item enderSpliceItem) {
-		ModelPredicateProviderRegistry.register(enderSpliceItem, Identifier.of("bound"), (stack, world, entity, i) -> {
-			NbtCompound compoundTag = stack.getNbt();
-			if (compoundTag != null && (compoundTag.contains("PosX") || compoundTag.contains("TargetPlayerUUID"))) {
-				return 1.0F;
-			} else {
-				return 0.0F;
-			}
-		});
+	private static void registerEnderSplicePredicates(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("bound"), (stack, world, entity, i) ->
+			EnderSpliceItem.hasTeleportTarget(stack) ? 1.0F : 0.0F);
 	}
 	
-	private static void registerAshenCircletPredicates(Item ashenCircletItem) {
-		ModelPredicateProviderRegistry.register(ashenCircletItem, Identifier.of("cooldown"), (stack, world, entity, i) -> {
-			if (entity != null && AshenCircletItem.getCooldownTicks(stack, entity.getWorld()) == 0) {
-				return 0.0F;
-			} else {
-				return 1.0F;
-			}
-		});
+	private static void registerAshenCircletPredicates(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("cooldown"), (stack, world, entity, i) ->
+				world != null && AshenCircletItem.getCooldownTicks(stack, world) == 0 ? 0.0F : 1.0F);
 	}
 	
 	private static void registerAnimatedWandPredicates(Item item) {
 		ModelPredicateProviderRegistry.register(item, Identifier.of("in_use"), (stack, world, entity, i) ->
-				(entity != null && entity.isUsingItem() && entity.getActiveItem() == stack) ? 1.0F : 0.0F
-		);
+				entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
 	}
 	
 	private static void registerKnowledgeDropPredicates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("stored_experience_10000"), (stack, world, entity, i) -> {
-			if (SpectrumItems.KNOWLEDGE_GEM instanceof ExperienceStorageItem) {
-				return ExperienceStorageItem.getStoredExperience(stack) / 10000F;
-			} else {
-				return 0;
-			}
-		});
+		ModelPredicateProviderRegistry.register(item, Identifier.of("stored_experience_10000"), (stack, world, entity, i) ->
+				ExperienceStorageItem.getStoredExperience(stack) / 10000F);
 	}
 	
-	private static void registerInkColorPredicate(InkFlaskItem item) {
-		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, Identifier.of("color"), (stack, world, entity, i) -> {
+	private static void registerInkColorPredicate(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("color"), (stack, world, entity, i) ->
+				Optional.ofNullable(SpectrumItems.INK_FLASK.getEnergyStorage(stack).getStoredColor())
+						.map(c -> (1F + c.getDyeColor().getId()) / 100F)
+						.orElse(0F));
+	}
+	
+	private static void registerInkFillStateItemPredicate(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("fill_state"), (stack, world, entity, i) -> {
 			SingleInkStorage storage = SpectrumItems.INK_FLASK.getEnergyStorage(stack);
-			InkColor color = storage.getStoredColor();
-			
-			if (color == null) {
-				return 0F;
-			}
-			return (1F + color.getDyeColor().getId()) / 100F;
+			float current = (float) storage.getCurrentTotal();
+			float maximum = (float) storage.getMaxTotal();
+			return current == 0 || maximum == 0 ? 0.0F : Math.max(0.01F, current / maximum);
 		});
 	}
 	
-	private static void registerInkFillStateItemPredicate(InkFlaskItem item) {
-		ModelPredicateProviderRegistry.register(SpectrumItems.INK_FLASK, Identifier.of("fill_state"), (stack, world, entity, i) -> {
-			SingleInkStorage storage = SpectrumItems.INK_FLASK.getEnergyStorage(stack);
-			long current = storage.getCurrentTotal();
-			if (current == 0) {
-				return 0.0F;
-			} else {
-				long max = storage.getMaxTotal();
-				return (float) Math.max(0.01, (double) current / (double) max);
-			}
-		});
-	}
-	
-	private static void registerEnchantmentCanvasPrediates(Item item) {
-		ModelPredicateProviderRegistry.register(item, Identifier.of("bound"), (stack, world, entity, i) -> {
-			NbtCompound nbt = stack.getNbt();
-			if (nbt != null && nbt.contains("BoundItem", NbtElement.STRING_TYPE)) {
-				return 1;
-			}
-			return 0;
-		});
+	private static void registerEnchantmentCanvasPredicates(Item item) {
+		ModelPredicateProviderRegistry.register(item, Identifier.of("bound"), (stack, world, entity, i) ->
+			stack.contains(SpectrumDataComponentTypes.BOUND_ITEM) ? 1.0F : 0.0F);
 	}
 	
 }

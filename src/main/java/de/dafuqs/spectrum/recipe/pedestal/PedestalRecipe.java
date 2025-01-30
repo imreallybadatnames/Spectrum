@@ -23,7 +23,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<CraftingRecipeInput> {
+public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("place_pedestal");
 	
@@ -73,7 +73,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<CraftingRe
 	}
 	
 	@Override
-	public boolean matches(CraftingRecipeInput inv, World world) {
+	public boolean matches(RecipeInput inv, World world) {
 		int topazPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.CYAN, 0);
 		int amethystPowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.MAGENTA, 0);
 		int citrinePowderAmount = this.powderInputs.getOrDefault(BuiltinGemstoneColor.YELLOW, 0);
@@ -97,7 +97,7 @@ public abstract class PedestalRecipe extends GatedStackSpectrumRecipe<CraftingRe
 	}
 	
 	@Override
-	public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup registryManager) {
 		return this.output.copy();
 	}
 	

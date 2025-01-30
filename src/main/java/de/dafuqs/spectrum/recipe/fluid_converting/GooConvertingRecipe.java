@@ -30,7 +30,7 @@ public class GooConvertingRecipe extends FluidConvertingRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.GOO_CONVERTING_SERIALIZER;
+		return SpectrumRecipeSerializers.GOO_CONVERTING_SERIALIZER;
 	}
 	
 	@Override

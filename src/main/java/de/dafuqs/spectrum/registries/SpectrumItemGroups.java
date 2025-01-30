@@ -12,7 +12,6 @@ import de.dafuqs.spectrum.compat.ae2.*;
 import de.dafuqs.spectrum.compat.create.*;
 import de.dafuqs.spectrum.compat.gobber.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
 import net.fabricmc.fabric.api.itemgroup.v1.*;
 import net.minecraft.block.*;
@@ -46,8 +45,6 @@ public class SpectrumItemGroups {
 	public static final ItemSubGroup EQUIPMENT = new ItemSubGroup.Builder(MAIN, ItemGroupIDs.SUBTAB_EQUIPMENT, Text.translatable("itemGroup.spectrum.equipment"))
 			.styled(ItemGroupIDs.STYLE)
 			.entries((displayContext, entries) -> {
-				RegistryWrapper.WrapperLookup lookup = displayContext.lookup();
-				
 				addEquipmentEntry(SpectrumItems.GUIDEBOOK, entries);
 				addEquipmentEntry(SpectrumItems.PAINTBRUSH, entries);
 				addEquipmentEntry(SpectrumItems.BOTTLE_OF_FADING, entries);
@@ -115,7 +112,7 @@ public class SpectrumItemGroups {
 				addEquipmentEntry(SpectrumItems.GLOW_VISION_GOGGLES, entries);
 				addEquipmentEntry(SpectrumItems.JEOPARDANT, entries);
 				addEquipmentEntry(SpectrumItems.SEVEN_LEAGUE_BOOTS, entries);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumItems.SEVEN_LEAGUE_BOOTS, Map.of(Enchantments.POWER, 5)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.SEVEN_LEAGUE_BOOTS, Map.of(Enchantments.POWER, 5)));
 				entries.add(SpectrumItems.COTTON_CLOUD_BOOTS);
 				entries.add(SpectrumItems.RADIANCE_PIN);
 				entries.add(SpectrumItems.TOTEM_PENDANT);
@@ -437,7 +434,7 @@ public class SpectrumItemGroups {
 				if (SpectrumCommon.minecraftServer != null) {
 					for (RecipeEntry<ITitrationBarrelRecipe> recipe : SpectrumCommon.minecraftServer.getRecipeManager().listAllOfType(SpectrumRecipeTypes.TITRATION_BARREL)) {
 						ItemStack output = recipe.value().getResult(SpectrumCommon.minecraftServer.getRegistryManager()).copy();
-						if (output.getItem() instanceof VariantBeverageItem) {
+						if (output.getItem().getComponents().contains(SpectrumDataComponentTypes.INFUSED_BEVERAGE)) {
 							output.setCount(1);
 							entries.add(output);
 						}
@@ -1485,7 +1482,7 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.LIZARD_SPAWN_EGG);
 				entries.add(SpectrumItems.ERASER_SPAWN_EGG);
 				entries.add(SpectrumItems.BUCKET_OF_ERASER);
-				MemoryItem.appendEntries(entries);
+				MemoryItem.appendEntries(displayContext.lookup(), entries);
 			}).build();
 	
 	public static final ItemSubGroup ENERGY = new ItemSubGroup.Builder(MAIN, ItemGroupIDs.SUBTAB_ENERGY, Text.translatable("itemGroup.spectrum.energy"))

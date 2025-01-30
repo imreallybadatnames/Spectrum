@@ -6,6 +6,7 @@ import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.world.*;
 
@@ -47,7 +48,7 @@ public class AscensionStatusEffect extends SpectrumStatusEffect {
 		// only apply divinity if ascension ran out
 		// does not apply when curing the effect by other means, such as drinking milk
 		// which would trigger a ConcurrentModificationException
-		StatusEffectInstance instance = entity.getStatusEffect(this);
+		StatusEffectInstance instance = entity.getStatusEffect(entity.getWorld().getRegistryManager().get(RegistryKeys.STATUS_EFFECT).getEntry(this));
 		if (instance == null) { // null if the effect ran out; non-null for milk and stuff
 			entity.addStatusEffect(new StatusEffectInstance(SpectrumStatusEffects.DIVINITY, MUSIC_DURATION_TICKS - MUSIC_INTRO_TICKS, DivinityStatusEffect.ASCENSION_AMPLIFIER));
 		}

@@ -9,7 +9,7 @@ import com.klikli_dev.modonomicon.client.gui.book.markdown.*;
 import com.klikli_dev.modonomicon.util.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
 import net.minecraft.network.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -104,7 +104,12 @@ public class BookChecklistPage extends BookTextPage {
     @Override
     public void toNetwork(RegistryByteBuf buffer) {
         super.toNetwork(buffer);
-        buffer.writeMap(checklist, PacketByteBuf::writeIdentifier, (buf, value) -> value.toNetwork(buf));
+		
+		buffer.writeVarInt(checklist.size());
+		for (var entry : checklist.entrySet()) {
+			buffer.writeIdentifier(entry.getKey());
+			entry.getValue().toNetwork(buffer);
+		}
     }
 
 }

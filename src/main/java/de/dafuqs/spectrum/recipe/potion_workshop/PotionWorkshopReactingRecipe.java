@@ -1,9 +1,14 @@
 package de.dafuqs.spectrum.recipe.potion_workshop;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.recipe.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -100,13 +105,43 @@ public class PotionWorkshopReactingRecipe extends GatedSpectrumRecipe<RecipeInpu
 		return reagents.containsKey(item);
 	}
 	
-	public static PotionMod combine(PotionMod potionMod, ItemStack reagentStack, Random random) {
+	public static PotionMod.Builder combine(PotionMod.Builder builder, ItemStack reagentStack, Random random) {
 		Item reagent = reagentStack.getItem();
 		List<PotionMod> reagentMods = reagents.getOrDefault(reagent, null);
-		if (reagentMods != null) {
-			potionMod.modifyFrom(reagentMods.get(random.nextInt(reagentMods.size())));
+		if (reagentMods != null)
+			builder.combine(reagentMods.get(random.nextInt(reagentMods.size())));
+		return builder;
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<PotionWorkshopReactingRecipe> {
+		
+		public static final MapCodec<PotionWorkshopReactingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Codec.STRING.optionalFieldOf("group", "").forGetter(c -> c.group),
+				Codec.BOOL.optionalFieldOf("secret", false).forGetter(c -> c.secret),
+				Identifier.CODEC.fieldOf("required_advancement").forGetter(c -> c.requiredAdvancementIdentifier),
+				Registries.ITEM.getCodec().fieldOf("item").forGetter(c -> c.item),
+				CodecHelper.singleOrList(PotionMod.CODEC).fieldOf("modifiers").forGetter(c -> c.modifiers)
+		).apply(i, PotionWorkshopReactingRecipe::new));
+		
+		public static final PacketCodec<RegistryByteBuf, PotionWorkshopReactingRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.STRING, c -> c.group,
+				PacketCodecs.BOOL, c -> c.secret,
+				Identifier.PACKET_CODEC, c -> c.requiredAdvancementIdentifier,
+				PacketCodecs.registryValue(RegistryKeys.ITEM), c -> c.item,
+				PotionMod.PACKET_CODEC.collect(PacketCodecs.toList()), c -> c.modifiers,
+				PotionWorkshopReactingRecipe::new
+		);
+		
+		@Override
+		public MapCodec<PotionWorkshopReactingRecipe> codec() {
+			return CODEC;
 		}
-		return potionMod;
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, PotionWorkshopReactingRecipe> packetCodec() {
+			return PACKET_CODEC;
+		}
+		
 	}
 	
 }

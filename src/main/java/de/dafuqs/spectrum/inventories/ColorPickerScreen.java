@@ -14,10 +14,9 @@ import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
-import java.util.*;
 import java.util.function.*;
 
-public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> implements Consumer<Optional<RegistryEntry<InkColor>>> {
+public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> implements Consumer<RegistryEntry<InkColor>> {
 	
 	protected final Identifier BACKGROUND = SpectrumCommon.locate("textures/gui/container/color_picker.png");
 	protected ColorSelectionWidget colorSelectionWidget;
@@ -93,9 +92,9 @@ public class ColorPickerScreen extends HandledScreen<ColorPickerScreenHandler> i
 	}
 	
 	@Override
-	public void accept(Optional<RegistryEntry<InkColor>> inkColor) {
+	public void accept(RegistryEntry<InkColor> inkColor) {
 		ColorPickerBlockEntity colorPicker = this.handler.getBlockEntity();
-		colorPicker.setSelectedColor(inkColor);
+		colorPicker.setSelectedColor(inkColor == null ? null : inkColor.value());
 		ClientPlayNetworking.send(new InkColorSelectedC2SPayload(inkColor));
 	}
 	

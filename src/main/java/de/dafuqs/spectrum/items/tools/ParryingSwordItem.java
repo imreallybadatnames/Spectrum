@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
 import de.dafuqs.additionalentityattributes.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.render.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
@@ -15,46 +15,20 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
-
 public abstract class ParryingSwordItem extends SwordItem implements ExtendedItemBarProvider {
-
-	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("b011e7af-6117-4aef-b4e9-a613f4fb0a2a");
-	protected static final UUID CRIT_MODIFIER_ID = UUID.fromString("50cfc2f8-42fb-4bf5-b21c-c0ff4ee952bf");
 
 	public static final int DEFAULT_MAX_BLOCK_TIME = 40;
 	public static final int DEFAULT_PERFECT_PARRY_WINDOW = 5;
 
-	private final float attackDamage;
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-
 	public ParryingSwordItem(ToolMaterial material, int attackDamage, float attackSpeed, float crit, float reach, Settings settings) {
-		super(material, attackDamage, attackSpeed, settings);
-		this.attackDamage = (float) attackDamage + material.getAttackDamage();
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, new EntityAttributeModifier(CRIT_MODIFIER_ID, "Weapon modifier", crit, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", reach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		this.attributeModifiers = builder.build();
+		super(material, settings.attributeModifiers(AttributeModifiersComponent.builder()
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, material.getAttackDamage() + attackDamage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, new EntityAttributeModifier(SpectrumCommon.locate("crit_modifier"), crit, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(SpectrumCommon.locate("reach_modifier"), reach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.build()));
 	}
 	
-	public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, int baseAttackDamage, float attackSpeed) {
-		return AttributeModifiersComponent.builder()
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, ((float) baseAttackDamage + material.getAttackDamage()), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
-	}
-
-	@Override
-	public float getAttackDamage() {
-		return this.attackDamage;
-	}
-
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
-	}
-
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
 		super.onStoppedUsing(stack, world, user, remainingUseTicks);
@@ -111,9 +85,10 @@ public abstract class ParryingSwordItem extends SwordItem implements ExtendedIte
 	}
 
 	public int getMaxShieldingTime(LivingEntity user, ItemStack stack) {
-		return getMaxUseTime(stack);
+		return getMaxUseTime(stack, user);
 	}
 
+	@SuppressWarnings("unused")
 	public int getPerfectParryWindow(LivingEntity user, ItemStack stack) {
 		return DEFAULT_PERFECT_PARRY_WINDOW;
 	}

@@ -16,8 +16,7 @@ import net.minecraft.server.network.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-
-import java.util.*;
+import org.jetbrains.annotations.*;
 
 public class ColorPickerScreenHandler extends ScreenHandler implements InkColorSelectedPacketReceiver {
 	
@@ -131,8 +130,8 @@ public class ColorPickerScreenHandler extends ScreenHandler implements InkColorS
 	}
 	
 	@Override
-	public void onInkColorSelectedPacket(Optional<RegistryEntry<InkColor>> inkColor) {
-		this.blockEntity.setSelectedColor(inkColor.map(RegistryEntry::value).orElse(null));
+	public void onInkColorSelectedPacket(@Nullable RegistryEntry<InkColor> inkColor) {
+		this.blockEntity.setSelectedColor(inkColor == null ? null : inkColor.value());
 	}
 	
 }

@@ -1,31 +1,50 @@
 package de.dafuqs.spectrum.api.energy;
 
 import com.google.common.collect.*;
-import de.dafuqs.spectrum.api.status_effect.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class InkPoweredStatusEffectInstance {
 	
+	public static final Codec<InkPoweredStatusEffectInstance> CODEC = RecordCodecBuilder.create(i -> i.group(
+			StatusEffectInstance.CODEC.fieldOf("status_effect").forGetter(c -> c.statusEffectInstance),
+			InkCost.CODEC.fieldOf("ink_cost").forGetter(c -> c.cost),
+			Codec.INT.optionalFieldOf("custom_color", -1).forGetter(c -> c.customColor),
+			Codec.BOOL.optionalFieldOf("unidentifiable", false).forGetter(c -> c.unidentifiable),
+			Codec.BOOL.optionalFieldOf("incurable", false).forGetter(c -> c.incurable)
+	).apply(i, InkPoweredStatusEffectInstance::new));
+	
+	public static final PacketCodec<RegistryByteBuf, InkPoweredStatusEffectInstance> PACKET_CODEC = PacketCodec.tuple(
+			StatusEffectInstance.PACKET_CODEC, c -> c.statusEffectInstance,
+			InkCost.PACKET_CODEC, c -> c.cost,
+			PacketCodecs.VAR_INT, c -> c.customColor,
+			PacketCodecs.BOOL, c -> c.unidentifiable,
+			PacketCodecs.BOOL, c -> c.incurable,
+			InkPoweredStatusEffectInstance::new
+	);
+	
 	public static final String NBT_KEY = "InkPoweredStatusEffects";
-	public static final String UNIDENTIFIABLE_NBT_KEY = "Unidentifiable";
-	public static final String INCURABLE_NBT_KEY = "Incurable";
-	public static final String CUSTOM_COLOR_NBT_KEY = "CustomColor";
 
 	private final StatusEffectInstance statusEffectInstance;
 	private final InkCost cost;
-	private final boolean unidentifiable;
-	private final boolean incurable;
 	private final int customColor; // -1: use effect default
+	private final boolean unidentifiable;
+	//TODO why can't this use StatusEffectInstance's mixed-in incurable?
+	private final boolean incurable;
 	
 	public InkPoweredStatusEffectInstance(StatusEffectInstance statusEffectInstance, InkCost cost, int customColor, boolean unidentifiable, boolean incurable) {
 		this.statusEffectInstance = statusEffectInstance;
@@ -33,9 +52,7 @@ public class InkPoweredStatusEffectInstance {
 		this.customColor = customColor;
 		this.unidentifiable = unidentifiable;
 		this.incurable = incurable;
-
-		if (incurable)
-			((Incurable) statusEffectInstance).spectrum$setIncurable(true);
+		if (incurable) statusEffectInstance.spectrum$setIncurable(true);
 	}
 	
 	public StatusEffectInstance getStatusEffectInstance() {
@@ -46,73 +63,16 @@ public class InkPoweredStatusEffectInstance {
 		return cost;
 	}
 	
-	public NbtCompound toNbt() {
-		NbtCompound nbt = new NbtCompound();
-		this.statusEffectInstance.writeNbt(nbt);
-		this.cost.writeNbt(nbt);
-		if (customColor != -1) {
-			nbt.putInt(CUSTOM_COLOR_NBT_KEY, this.customColor);
-		}
-		if (unidentifiable) {
-			nbt.putBoolean(UNIDENTIFIABLE_NBT_KEY, true);
-		}
-		if (incurable) {
-			nbt.putBoolean(INCURABLE_NBT_KEY, true);
-		}
-		return nbt;
-	}
-	
-	public static InkPoweredStatusEffectInstance fromNbt(NbtCompound nbt) {
-		StatusEffectInstance statusEffectInstance = StatusEffectInstance.fromNbt(nbt);
-		InkCost cost = InkCost.fromNbt(nbt);
-		int customColor = -1;
-		if (nbt.contains(CUSTOM_COLOR_NBT_KEY, NbtElement.NUMBER_TYPE)) {
-			customColor = nbt.getInt(CUSTOM_COLOR_NBT_KEY);
-		}
-		boolean unidentifiable = false;
-		if (nbt.contains(UNIDENTIFIABLE_NBT_KEY)) {
-			unidentifiable = nbt.getBoolean(UNIDENTIFIABLE_NBT_KEY);
-		}
-		boolean incurable = false;
-		if (nbt.contains(INCURABLE_NBT_KEY)) {
-			incurable = nbt.getBoolean(INCURABLE_NBT_KEY);
-		}
-		return new InkPoweredStatusEffectInstance(statusEffectInstance, cost, customColor, unidentifiable, incurable);
-	}
-	
 	public static List<InkPoweredStatusEffectInstance> getEffects(ItemStack stack) {
-		return getEffects(stack.getNbt());
+		return stack.getOrDefault(SpectrumDataComponentTypes.INK_POWERED, InkPoweredComponent.DEFAULT).effects();
 	}
 	
-	public static List<InkPoweredStatusEffectInstance> getEffects(@Nullable NbtCompound nbt) {
-		List<InkPoweredStatusEffectInstance> list = new ArrayList<>();
-		if (nbt != null && nbt.contains(NBT_KEY, NbtElement.LIST_TYPE)) {
-			NbtList nbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE);
-			
-			for (int i = 0; i < nbtList.size(); ++i) {
-				NbtCompound nbtCompound = nbtList.getCompound(i);
-				InkPoweredStatusEffectInstance instance = InkPoweredStatusEffectInstance.fromNbt(nbtCompound);
-				list.add(instance);
-			}
-		}
-		return list;
-	}
-	
-	public static void setEffects(ItemStack stack, Collection<InkPoweredStatusEffectInstance> effects) {
-		if (!effects.isEmpty()) {
-			NbtCompound nbtCompound = stack.getOrCreateNbt();
-			NbtList nbtList = nbtCompound.getList(NBT_KEY, NbtElement.LIST_TYPE);
-			
-			for (InkPoweredStatusEffectInstance effect : effects) {
-				nbtList.add(effect.toNbt());
-			}
-			
-			nbtCompound.put(NBT_KEY, nbtList);
-		}
+	public static void setEffects(ItemStack stack, List<InkPoweredStatusEffectInstance> effects) {
+		stack.set(SpectrumDataComponentTypes.INK_POWERED, new InkPoweredComponent(effects));
 	}
 	
 	public static void buildTooltip(List<Text> tooltip, List<InkPoweredStatusEffectInstance> effects, MutableText attributeModifierText, boolean showDuration, float tickRate) {
-		if (effects.size() > 0) {
+		if (!effects.isEmpty()) {
 			List<Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> attributeModifiers = Lists.newArrayList();
 			for (InkPoweredStatusEffectInstance entry : effects) {
 				if (entry.isUnidentifiable()) {
@@ -159,10 +119,10 @@ public class InkPoweredStatusEffectInstance {
 					}
 					
 					if (statusEffect > 0.0D) {
-						tooltip.add((Text.translatable("attribute.modifier.plus." + mutableText.operation().getId(), ItemStack.MODIFIER_FORMAT.format(d), translatedAttribute)).formatted(Formatting.BLUE));
+						tooltip.add((Text.translatable("attribute.modifier.plus." + mutableText.operation().getId(), AttributeModifiersComponent.DECIMAL_FORMAT.format(d), translatedAttribute)).formatted(Formatting.BLUE));
 					} else if (statusEffect < 0.0D) {
 						d *= -1.0D;
-						tooltip.add((Text.translatable("attribute.modifier.take." + mutableText.operation().getId(), ItemStack.MODIFIER_FORMAT.format(d), translatedAttribute)).formatted(Formatting.RED));
+						tooltip.add((Text.translatable("attribute.modifier.take." + mutableText.operation().getId(), AttributeModifiersComponent.DECIMAL_FORMAT.format(d), translatedAttribute)).formatted(Formatting.RED));
 					}
 				}
 			}

@@ -93,8 +93,8 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	
 	@Override
 	public void onClose() {
-		if (!world.isClient && controllerOffset != null) {
-			BlockEntity blockEntity = world.getBlockEntity(Support.directionalOffset(this.pos, this.controllerOffset, world.getBlockState(this.pos).get(PreservationControllerBlock.FACING)));
+		if (world instanceof ServerWorld serverWorld && controllerOffset != null) {
+			BlockEntity blockEntity = serverWorld.getBlockEntity(Support.directionalOffset(this.pos, this.controllerOffset, serverWorld.getBlockState(this.pos).get(PreservationControllerBlock.FACING)));
 			if (blockEntity instanceof PreservationControllerBlockEntity controller) {
 				controller.openExit();
 			}
@@ -103,8 +103,8 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	
 	// Generate new loot for each player that has never opened this chest before
 	@Override
-	public void checkLootInteraction(@Nullable PlayerEntity player) {
-		if (player != null && this.lootTableId != null && this.getWorld() != null && !hasOpenedThisChestBefore(player)) {
+	public void generateLoot(@Nullable PlayerEntity player) {
+		if (player != null && this.lootTable != null && this.getWorld() != null && !hasOpenedThisChestBefore(player)) {
 			supplyInventory(player);
 			rememberPlayer(player);
 		}
@@ -120,13 +120,14 @@ public class TreasureChestBlockEntity extends SpectrumChestBlockEntity {
 	}
 	
 	public void supplyInventory(@NotNull PlayerEntity player) {
-		LootTable lootTable = this.getWorld().getServer().getReloadableRegistries().getLootTable(this.lootTableId);
-		var builder = (new LootContextParameterSet.Builder((ServerWorld) this.getWorld())).add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos));
-		builder.luck(player.getLuck()).add(LootContextParameters.THIS_ENTITY, player);
-		lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), lootTableSeed);
-		
-		if (player instanceof ServerPlayerEntity) {
-			Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger((ServerPlayerEntity) player, this.lootTableId);
+		if (player instanceof ServerPlayerEntity serverPlayer) {
+			LootTable lootTable = serverPlayer.getServerWorld().getServer().getReloadableRegistries().getLootTable(this.lootTable);
+			var builder = new LootContextParameterSet.Builder(serverPlayer.getServerWorld()).add(LootContextParameters.ORIGIN, Vec3d.ofCenter(this.pos));
+			builder.luck(player.getLuck()).add(LootContextParameters.THIS_ENTITY, player);
+			lootTable.supplyInventory(this, builder.build(LootContextTypes.CHEST), lootTableSeed);
+			if (player instanceof ServerPlayerEntity) {
+				Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger(serverPlayer, this.lootTable);
+			}
 		}
 	}
 	

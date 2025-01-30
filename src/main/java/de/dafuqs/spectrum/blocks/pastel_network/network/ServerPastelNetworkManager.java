@@ -1,9 +1,9 @@
 package de.dafuqs.spectrum.blocks.pastel_network.network;
 
 import de.dafuqs.spectrum.blocks.pastel_network.nodes.*;
-import de.dafuqs.spectrum.helpers.CodecHelper;
+import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
@@ -48,9 +48,8 @@ public class ServerPastelNetworkManager extends PersistentState implements Paste
 	
 	public static ServerPastelNetworkManager fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		ServerPastelNetworkManager manager = new ServerPastelNetworkManager();
-		for (NbtElement element : nbt.getList("Networks", NbtElement.COMPOUND_TYPE)) {
-			CodecHelper.fromNbt(ServerPastelNetwork.CODEC, element, manager.networks::add);
-		}
+		for (NbtElement element : nbt.getList("Networks", NbtElement.COMPOUND_TYPE))
+			CodecHelper.fromNbt(ServerPastelNetwork.CODEC, element).ifPresent(manager.networks::add);
 		return manager;
 	}
 	

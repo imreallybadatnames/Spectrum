@@ -1,7 +1,6 @@
 package de.dafuqs.spectrum.recipe;
 
 import de.dafuqs.spectrum.api.recipe.*;
-import de.dafuqs.spectrum.helpers.NbtHelper;
 import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
@@ -77,7 +76,7 @@ public abstract class GatedSpectrumRecipe<C extends RecipeInput> implements Gate
 		if (sourceNbt != null) {
 			ItemStack modifiedOutput = output.copy();
 			NbtCompound modifiedNbt = sourceNbt.copy();
-			NbtHelper.mergeNbt(modifiedNbt, sourceNbt);
+			modifiedNbt.copyFrom(sourceNbt);
 			modifiedNbt.remove(ItemStack.DAMAGE_KEY);
 			modifiedOutput.setNbt(modifiedNbt);
 			// ...therefore, we need to restore all previous enchantments that the original item had and are still applicable to the new item

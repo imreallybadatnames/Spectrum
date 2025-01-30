@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.render.*;
-import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.status_effects.*;
 import net.minecraft.enchantment.*;
@@ -83,7 +82,7 @@ public class NectarLanceItem extends LightGreatswordItem implements SlotBackgrou
 			var stolenEffect = target.getStatusEffects()
 					.stream()
 					.filter(instance -> instance.getEffectType().value().isBeneficial())
-					.filter(instance -> !((Incurable) instance).spectrum$isIncurable())
+					.filter(instance -> !instance.spectrum$isIncurable())
 					.findFirst();
 
 			if (stolenEffect.isEmpty() || !target.removeStatusEffect(stolenEffect.get().getEffectType()))

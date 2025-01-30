@@ -81,7 +81,7 @@ public class PedestalCraftingEmiRecipeGated extends GatedSpectrumEmiRecipe<Pedes
 			widgets.addTexture(EmiTexture.SHAPELESS, 94, 0);
 		}
 		
-		widgets.addSlot(outputs.get(0), 90, 14).large(true).drawBack(false).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 90, 14).large(true).drawBack(false).recipeContext(this);
 		widgets.addFillingArrow(60, 18, recipe.getCraftingTime() * 50);
 		widgets.addText(getCraftingTimeText(recipe.getCraftingTime(), recipe.getExperience()), width / 2, 80, 0x3f3f3f, false).horizontalAlign(Alignment.CENTER);
 	}

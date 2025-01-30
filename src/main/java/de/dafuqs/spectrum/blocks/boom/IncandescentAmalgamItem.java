@@ -1,14 +1,14 @@
 package de.dafuqs.spectrum.blocks.boom;
 
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.server.network.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -45,9 +45,8 @@ public class IncandescentAmalgamItem extends BlockItem implements DamageAwareIte
 		super.appendTooltip(stack, context, tooltip, type);
 		tooltip.add(Text.translatable("block.spectrum.incandescent_amalgam.tooltip").formatted(Formatting.GRAY));
 		tooltip.add(Text.translatable("block.spectrum.incandescent_amalgam.tooltip_power", getExplosionPower(stack, false)).formatted(Formatting.GRAY));
-		if (FermentedItem.isPreviewStack(stack)) {
+		if (FermentedItem.isPreviewStack(stack))
 			tooltip.add(Text.translatable("block.spectrum.incandescent_amalgam.tooltip.preview").formatted(Formatting.GRAY));
-		}
 	}
 	
 	@Override
@@ -62,18 +61,9 @@ public class IncandescentAmalgamItem extends BlockItem implements DamageAwareIte
 		world.createExplosion(itemEntity, SpectrumDamageTypes.incandescence(world, itemEntity), new EntityExplosionBehavior(itemEntity), itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), explosionPower, true, World.ExplosionSourceType.NONE);
 	}
 
-	@Override
-	public BeverageProperties getBeverageProperties(ItemStack stack) {
-		return BeverageProperties.getFromStack(stack);
-	}
-
 	public float getExplosionPower(ItemStack stack, boolean useCount) {
-		float alcPercent = getBeverageProperties(stack).alcPercent;
-		if (alcPercent <= 0) {
-			return 6;
-		} else {
-			return alcPercent + (useCount ? stack.getCount() / 8F : 0);
-		}
+		float alcPercent = stack.getOrDefault(SpectrumDataComponentTypes.BEVERAGE, BeverageComponent.DEFAULT).alcoholPercent();
+		return alcPercent <= 0 ? 6 : alcPercent + (useCount ? stack.getCount() / 8F : 0);
 	}
 	
 }

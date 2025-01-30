@@ -4,18 +4,18 @@ import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.thrown.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.predicate.item.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
@@ -106,14 +106,10 @@ public interface ItemProjectileBehavior {
 				world.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(), soundEvent, projectile.getSoundCategory(), 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
 				creeperEntity.ignite();
 				
-				if (stack.isDamageable()) {
-					stack.damage(1, world.getRandom(), null);
-				} else {
-					NbtCompound nbtCompound = stack.getNbt();
-					boolean isUnbreakable = nbtCompound != null && nbtCompound.getBoolean("Unbreakable");
-					if (!isUnbreakable) {
-						stack.decrement(1); // In Vanilla unbreakable Flint & Steel is not handled correctly and therefore consumed. This here probably still does not handle every modded item perfectly
-					}
+				if (stack.isDamageable() && world instanceof ServerWorld serverWorld) {
+					stack.damage(1, serverWorld, null, item -> {});
+				} else if(!stack.contains(DataComponentTypes.UNBREAKABLE)) {
+					stack.decrement(1); // In Vanilla unbreakable Flint & Steel is not handled correctly and therefore consumed. This here probably still does not handle every modded item perfectly
 				}
 			}
 			
@@ -180,8 +176,7 @@ public interface ItemProjectileBehavior {
 				}
 				
 				if (target instanceof LivingEntity livingTarget) {
-					if (owner.getWorld() instanceof ServerWorld serverWorld && owner instanceof LivingEntity livingOwner) {
-						EnchantmentHelper.onUserDamaged(livingTarget, livingOwner);
+					if (owner.getWorld() instanceof ServerWorld serverWorld) {
 						EnchantmentHelper.onTargetDamaged(serverWorld, target, livingTarget.getRecentDamageSource(), stack);
 					}
 					if (target != owner && target instanceof PlayerEntity && owner instanceof ServerPlayerEntity serverPlayerOwner && !projectile.isSilent()) {

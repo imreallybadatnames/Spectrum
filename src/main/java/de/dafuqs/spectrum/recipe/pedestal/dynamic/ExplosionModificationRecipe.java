@@ -24,7 +24,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/blocks/modular_explosives");
 	
 	public ExplosionModificationRecipe() {
-		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), Map.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
+		super("", false, UNLOCK_IDENTIFIER, PedestalRecipeTier.BASIC, collectIngredients(), List.of(), ItemStack.EMPTY, 0.0F, 40, false, true);
 	}
 	
 	private static List<IngredientStack> collectIngredients() {

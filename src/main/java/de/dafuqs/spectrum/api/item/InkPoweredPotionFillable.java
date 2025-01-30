@@ -51,11 +51,7 @@ public interface InkPoweredPotionFillable {
 	
 	@Deprecated
 	default List<StatusEffectInstance> getVanillaEffects(ItemStack stack) {
-		List<StatusEffectInstance> effects = new ArrayList<>();
-		for (InkPoweredStatusEffectInstance instance : InkPoweredStatusEffectInstance.getEffects(stack)) {
-			effects.add(instance.getStatusEffectInstance());
-		}
-		return effects;
+		return InkPoweredStatusEffectInstance.getEffects(stack).stream().map(InkPoweredStatusEffectInstance::getStatusEffectInstance).toList();
 	}
 	
 	default boolean isFull(ItemStack itemStack) {
@@ -63,11 +59,11 @@ public interface InkPoweredPotionFillable {
 	}
 	
 	default boolean isAtLeastPartiallyFilled(ItemStack itemStack) {
-		return InkPoweredStatusEffectInstance.getEffects(itemStack).size() > 0;
+		return !InkPoweredStatusEffectInstance.getEffects(itemStack).isEmpty();
 	}
 	
 	default void clearEffects(ItemStack itemStack) {
-		itemStack.removeSubNbt(InkPoweredStatusEffectInstance.NBT_KEY);
+		InkPoweredStatusEffectInstance.setEffects(itemStack, List.of());
 	}
 	
 	default void appendPotionFillableTooltip(ItemStack stack, List<Text> tooltip, MutableText attributeModifierText, boolean showDuration, float tickRate) {

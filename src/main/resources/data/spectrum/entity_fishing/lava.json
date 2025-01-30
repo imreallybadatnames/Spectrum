@@ -1,6 +1,6 @@
 {
   "location": {
-    "fluid": "#minecraft:lava"
+    "fluids": "#minecraft:lava"
   },
   "chance": 0.02,
   "entities": [

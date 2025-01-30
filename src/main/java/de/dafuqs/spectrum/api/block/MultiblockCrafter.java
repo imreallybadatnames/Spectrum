@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.input.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.*;
@@ -40,6 +41,11 @@ public interface MultiblockCrafter extends Upgradeable, PlayerOwned {
 			}
 		}
 		return null;
+	}
+	
+	static @Nullable <R extends RecipeInput, T extends Recipe<R>> RecipeEntry<T> getRecipeEntryFromNbt(@Nullable World world, NbtCompound nbt, Class<T> clazz) {
+		var entry = getRecipeEntryFromNbt(world, nbt);
+		return entry == null ? null : new RecipeEntry<>(entry.id(), clazz.cast(entry.value()));
 	}
 	
 	static void spawnExperience(World world, BlockPos blockPos, float amount, Random random) {

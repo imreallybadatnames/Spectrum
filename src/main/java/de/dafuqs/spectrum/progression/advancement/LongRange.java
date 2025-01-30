@@ -7,8 +7,9 @@ import java.util.*;
 
 public record LongRange(Optional<Long> min, Optional<Long> max, Optional<Long> minSquared, Optional<Long> maxSquared) implements NumberRange<Long> {
 	
-	public static final Codec<LongRange> CODEC = NumberRange.createCodec(Codec.LONG, LongRange::new);
-	public static final LongRange ANY = new LongRange(null, null);
+	// The generic specifier is required for some reason
+	public static final Codec<LongRange> CODEC = NumberRange.<Long, LongRange>createCodec(Codec.LONG, LongRange::new);
+	public static final LongRange ANY = new LongRange(Optional.empty(), Optional.empty());
 	
 	private LongRange(Optional<Long> min, Optional<Long> max) {
 		this(min, max, square(min), square(max));
@@ -34,12 +35,8 @@ public record LongRange(Optional<Long> min, Optional<Long> max, Optional<Long> m
 		return new LongRange(Optional.empty(), Optional.of(value));
 	}
 	
-	// TODO - Review logic
 	public boolean test(long value) {
-		if (this.min.isPresent() && this.min.get() > value) {
-			return false;
-		} else {
-			return this.max.isEmpty() || this.max.get() >= value;
-		}
+		return (this.min.isEmpty() || this.min.get() <= value)
+				&& (this.max.isEmpty() || this.max.get() >= value);
 	}
 }

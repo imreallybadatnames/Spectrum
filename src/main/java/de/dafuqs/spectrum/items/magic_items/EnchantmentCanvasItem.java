@@ -1,13 +1,13 @@
 package de.dafuqs.spectrum.items.magic_items;
 
 import de.dafuqs.spectrum.registries.*;
-import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.sound.*;
@@ -62,8 +62,8 @@ public class EnchantmentCanvasItem extends Item {
 			return false;
 		}
 		
-		var canvasEnchantments = canvasStack.getEnchantments();
-		var targetEnchantments = targetStack.getEnchantments();
+		var canvasEnchantments = canvasStack.getOrDefault(SpectrumDataComponentTypes.CANVAS_ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
+		var targetEnchantments = EnchantmentHelper.getEnchantments(targetStack);
 		if (canvasEnchantments.isEmpty() && targetEnchantments.isEmpty()) {
 			return false;
 		}
@@ -78,7 +78,7 @@ public class EnchantmentCanvasItem extends Item {
 		if (itemLock.isEmpty() && !targetEnchantments.isEmpty()) {
 			bindTo(canvasStack, targetStack);
 		}
-		canvasStack.set(DataComponentTypes.STORED_ENCHANTMENTS, targetEnchantments);
+		canvasStack.set(SpectrumDataComponentTypes.CANVAS_ENCHANTMENTS, targetEnchantments);
 		EnchantmentHelper.set(targetStack, canvasEnchantments);
 		
 		if (drop && receiver != null) {

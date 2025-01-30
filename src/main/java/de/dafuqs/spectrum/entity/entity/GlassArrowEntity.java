@@ -5,13 +5,16 @@ import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.spells.*;
 import net.minecraft.block.*;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
+import net.minecraft.entity.damage.*;
 import net.minecraft.entity.data.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.particle.*;
+import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.*;
@@ -29,19 +32,19 @@ public class GlassArrowEntity extends PersistentProjectileEntity {
 		super(entityType, world);
 	}
 	
-	public GlassArrowEntity(World world, LivingEntity owner) {
-		super(SpectrumEntityTypes.GLASS_ARROW, owner, world);
+	public GlassArrowEntity(World world, LivingEntity owner, ItemStack stack, ItemStack shotFrom) {
+		super(SpectrumEntityTypes.GLASS_ARROW, owner, world, stack, shotFrom);
 		setDamage(getDamage() * DAMAGE_MODIFIER);
 	}
 	
-	public GlassArrowEntity(World world, double x, double y, double z) {
-		super(SpectrumEntityTypes.GLASS_ARROW, x, y, z, world);
+	public GlassArrowEntity(World world, double x, double y, double z, ItemStack stack, ItemStack shotFrom) {
+		super(SpectrumEntityTypes.GLASS_ARROW, x, y, z, world, stack, shotFrom);
 		setDamage(getDamage() * DAMAGE_MODIFIER);
 	}
 	
 	@Override
-	public void applyEnchantmentEffects(LivingEntity entity, float damageModifier) {
-		super.applyEnchantmentEffects(entity, damageModifier);
+	public void applyDamageModifier(float damageModifier) {
+		super.applyDamageModifier(damageModifier);
 		setDamage(getDamage() * DAMAGE_MODIFIER);
 	}
 	
@@ -134,8 +137,8 @@ public class GlassArrowEntity extends PersistentProjectileEntity {
 	}
 	
 	@Override
-	protected ItemStack asItemStack() {
-		return dataTracker.get(VARIANT).getArrow().getDefaultStack();
+	protected ItemStack getDefaultItemStack() {
+		return getVariant().getArrow().getDefaultStack();
 	}
 	
 	/**
@@ -172,11 +175,23 @@ public class GlassArrowEntity extends PersistentProjectileEntity {
 		return this.dataTracker.get(VARIANT);
 	}
 	
+	@Override
+	protected void knockback(LivingEntity target, DamageSource source) {
+		double punch = getVariant() == GlassArrowVariant.CITRINE ? 5 : 0;
+		punch += getWeaponStack() != null && getWorld() instanceof ServerWorld serverWorld
+						? EnchantmentHelper.modifyKnockback(serverWorld, getWeaponStack(), target, source, 0.0F)
+						: 0.0F;
+		if (punch > 0.0) {
+			double e = Math.max(0.0, 1.0 - target.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
+			Vec3d vec3d = this.getVelocity().multiply(1.0, 0.0, 1.0).normalize().multiply(punch * 0.6 * e);
+			if (vec3d.lengthSquared() > 0.0) {
+				target.addVelocity(vec3d.x, 0.1, vec3d.z);
+			}
+		}
+	}
+	
 	public void setVariant(GlassArrowVariant variant) {
 		this.dataTracker.set(VARIANT, variant);
-		if (variant == GlassArrowVariant.CITRINE) {
-			setPunch(5);
-		}
 	}
 	
 	@Override

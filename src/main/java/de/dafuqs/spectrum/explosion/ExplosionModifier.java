@@ -5,7 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.world.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;

@@ -1,13 +1,21 @@
 package de.dafuqs.spectrum.recipe.primordial_fire_burning;
 
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
+import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -23,8 +31,7 @@ import java.util.*;
 public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("lategame/collect_doombloom_seed");
-	
-	private static AutoCraftingInventory AUTO_INVENTORY = new AutoCraftingInventory(1, 1);
+	private static final AutoCraftingInventory AUTO_INVENTORY = new AutoCraftingInventory(1, 1);
 	
 	protected final Ingredient input;
 	protected final ItemStack output;
@@ -70,7 +77,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER;
+		return SpectrumRecipeSerializers.PRIMORDIAL_FIRE_BURNING_RECIPE_SERIALIZER;
 	}
 	
 	@Override
@@ -92,7 +99,7 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 	
 	public static PrimordialFireBurningRecipe getRecipeFor(@NotNull World world, ItemStack stack) {
 		AUTO_INVENTORY.setInputInventory(Collections.singletonList(stack));
-		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).orElse(null).value();
+		return world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PRIMORDIAL_FIRE_BURNING, AUTO_INVENTORY, world).map(RecipeEntry::value).orElse(null);
 	}
 	
 	public static boolean processBlock(World world, BlockPos pos, BlockState state) {
@@ -142,4 +149,28 @@ public class PrimordialFireBurningRecipe extends GatedSpectrumRecipe<RecipeInput
 		
 		return true;
 	}
+	
+	public static class Serializer implements GatedRecipeSerializer<PrimordialFireBurningRecipe> {
+		
+		public static final StructEndec<PrimordialFireBurningRecipe> ENDEC = StructEndecBuilder.of(
+				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+				CodecUtils.toEndec(Ingredient.DISALLOW_EMPTY_CODEC).fieldOf("ingredient", recipe -> recipe.input),
+				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.output),
+				PrimordialFireBurningRecipe::new
+		);
+		
+		@Override
+		public MapCodec<PrimordialFireBurningRecipe> codec() {
+			return CodecUtils.toMapCodec(ENDEC);
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, PrimordialFireBurningRecipe> packetCodec() {
+			return CodecUtils.toPacketCodec(ENDEC);
+		}
+		
+	}
+	
 }

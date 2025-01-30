@@ -3,14 +3,10 @@ package de.dafuqs.spectrum.registries;
 import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
 import de.dafuqs.spectrum.blocks.mob_head.*;
 import de.dafuqs.spectrum.blocks.shooting_star.*;
-import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.items.tools.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
-import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
-import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 
 public class SpectrumDispenserBehaviors {
 	
@@ -26,7 +22,7 @@ public class SpectrumDispenserBehaviors {
 		DispenserBlock.registerBehavior(SpectrumBlocks.PRISTINE_SHOOTING_STAR, new ShootingStarDispenserBehavior());
 		
 		// Fluid Buckets
-		DispenserBehavior fluidBucketBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.WATER_BUCKET.getDefaultStack());
+		DispenserBehavior fluidBucketBehavior = DispenserBlock.BEHAVIORS.get(Items.WATER_BUCKET);
 		DispenserBlock.registerBehavior(SpectrumItems.GOO_BUCKET, fluidBucketBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.LIQUID_CRYSTAL_BUCKET, fluidBucketBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.MIDNIGHT_SOLUTION_BUCKET, fluidBucketBehavior);
@@ -34,19 +30,11 @@ public class SpectrumDispenserBehaviors {
 		
 		// Arrows
 		for (GlassArrowVariant variant : SpectrumRegistries.GLASS_ARROW_VARIANT) {
-			DispenserBlock.registerBehavior(variant.getArrow(), new ProjectileDispenserBehavior() {
-				@Override
-				protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-					GlassArrowEntity arrow = new GlassArrowEntity(world, position.getX(), position.getY(), position.getZ());
-					arrow.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
-					arrow.setVariant(variant);
-					return arrow;
-				}
-			});
+			DispenserBlock.registerProjectileBehavior(variant.getArrow());
 		}
 		
 		// Spawn Eggs
-		DispenserBehavior spawnEggBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.SHEEP_SPAWN_EGG.getDefaultStack());
+		DispenserBehavior spawnEggBehavior = DispenserBlock.BEHAVIORS.get(Items.SHEEP_SPAWN_EGG);
 		DispenserBlock.registerBehavior(SpectrumItems.EGG_LAYING_WOOLY_PIG_SPAWN_EGG, spawnEggBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.KINDLING_SPAWN_EGG, spawnEggBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.LIZARD_SPAWN_EGG, spawnEggBehavior);
@@ -54,7 +42,7 @@ public class SpectrumDispenserBehaviors {
         DispenserBlock.registerBehavior(SpectrumItems.ERASER_SPAWN_EGG, spawnEggBehavior);
 		
 		// Equipping Mob Heads
-		DispenserBehavior armorEquipBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.PLAYER_HEAD.getDefaultStack());
+		DispenserBehavior armorEquipBehavior = DispenserBlock.BEHAVIORS.get(Items.PLAYER_HEAD);
 		for (Block skullBlock : SpectrumSkullBlock.MOB_HEADS.values()) {
 			DispenserBlock.registerBehavior(skullBlock, armorEquipBehavior);
 		}

@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.transfer.v1.context.*;
 import net.fabricmc.fabric.api.transfer.v1.fluid.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
+import net.minecraft.component.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.fluid.*;
 import net.minecraft.item.*;
@@ -30,7 +31,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 
 	public static final MapCodec<TitrationBarrelBlock> CODEC = createCodec(TitrationBarrelBlock::new);
 	
-	enum BarrelState implements StringIdentifiable {
+	public enum BarrelState implements StringIdentifiable {
 		EMPTY,
 		FILLED,
 		SEALED,
@@ -146,7 +147,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 					case SEALED -> {
 						// player is able to query the days the barrel already ferments
 						// or open it with a shift-click
-						Optional<ITitrationBarrelRecipe> recipe = barrelEntity.getRecipeForInventory(world);
+						var recipe = barrelEntity.getRecipeForInventory(world);
 						if (recipe.isPresent()) {
 							if (player.isCreative() && player.getMainHandStack().isOf(SpectrumItems.PAINTBRUSH)) {
 								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.debug_added_day"), true);
@@ -156,7 +157,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 							
 							// funky check to allow shenanigans when sealing it when changing the computer's clock to the past
 							long sealSeconds = barrelEntity.getSealSeconds();
-							if (sealSeconds >= 0 && !recipe.get().isFermentingLongEnoughToTap(barrelEntity.getSealSeconds())) {
+							if (sealSeconds >= 0 && !recipe.get().value().isFermentingLongEnoughToTap(barrelEntity.getSealSeconds())) {
 								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.not_yet_ready", barrelEntity.getSealMinecraftDays(), barrelEntity.getSealRealDays()), true);
 								break;
 							}
@@ -174,7 +175,7 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 						if (player.isSneaking()) {
 							Optional<RecipeEntry<ITitrationBarrelRecipe>> recipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.TITRATION_BARREL, barrelEntity, world);
 							if (recipe.isPresent()) {
-								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.days_of_sealing_after_opened_with_extractable_amount", recipe.get().craft(barrelEntity, world.getRegistryManager()).getName().getString(), barrelEntity.getSealMinecraftDays(), barrelEntity.getSealRealDays()), true);
+								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.days_of_sealing_after_opened_with_extractable_amount", recipe.get().value().craft(barrelEntity, world.getRegistryManager()).getName().getString(), barrelEntity.getSealMinecraftDays(), barrelEntity.getSealRealDays()), true);
 							} else {
 								player.sendMessage(Text.translatable("block.spectrum.titration_barrel.invalid_recipe_when_tapping"), true);
 							}
@@ -229,8 +230,9 @@ public class TitrationBarrelBlock extends HorizontalFacingBlock implements Block
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		BlockState state = this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
 		
-		NbtCompound nbt = ctx.getStack().getSubNbt("BlockEntityTag");
-		if(nbt != null) {
+		var comp = ctx.getStack().get(DataComponentTypes.BLOCK_ENTITY_DATA);
+		if(comp != null) {
+			var nbt = comp.copyNbt();
 			boolean inventoryEmpty = nbt.getList("Inventory", NbtElement.COMPOUND_TYPE).isEmpty();
 			long fluidAmount = nbt.getLong("FluidAmount");
 			long sealTime = nbt.contains("SealTime", NbtElement.LONG_TYPE) ? nbt.getLong("SealTime") : -1;

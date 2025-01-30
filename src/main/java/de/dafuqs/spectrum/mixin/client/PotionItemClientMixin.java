@@ -17,7 +17,7 @@ public abstract class PotionItemClientMixin {
 	
 	@Inject(method = "appendTooltip(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/item/tooltip/TooltipType;)V", at = @At("HEAD"), cancellable = true)
 	private void spectrum$makePotionUnidentifiable(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, CallbackInfo ci) {
-		if (stack.getOrDefault(SpectrumDataComponentTypes.UNIDENTIFIABLE, false)) {
+		if (stack.contains(SpectrumDataComponentTypes.UNIDENTIFIABLE)) {
 			tooltip.add(Text.translatable("item.spectrum.potion.tooltip.unidentifiable"));
 			ci.cancel();
 		}

@@ -48,7 +48,7 @@ public class LightShardEntity extends LightShardBaseEntity {
 	}
 	
 	static {
-		SPRITES = Identifier.of[4];
+		SPRITES = new Identifier[4];
 		SPRITES[0] = SpectrumCommon.locate("textures/entity/projectile/light_shard_0.png");
 		SPRITES[1] = SpectrumCommon.locate("textures/entity/projectile/light_shard_1.png");
 		SPRITES[2] = SpectrumCommon.locate("textures/entity/projectile/light_shard_2.png");

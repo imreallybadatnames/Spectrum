@@ -1,11 +1,15 @@
 package de.dafuqs.spectrum.entity.entity;
 
+import com.google.common.util.concurrent.*;
+import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -61,27 +65,31 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	
 	@Override
 	protected void onEntityHit(EntityHitResult entityHitResult) {
+		ItemStack stack = getTrackedStack();
 		Entity attacked = entityHitResult.getEntity();
-		float f = 2.0F;
-		if (attacked instanceof LivingEntity livingAttacked) {
-			f *= (getDamage(getTrackedStack()) + EnchantmentHelper.getAttackDamage(getTrackedStack(), livingAttacked.getGroup()));
+		Entity owner = this.getOwner();
+		
+		float damage = 2.0F;
+		
+		DamageSource damageSource = SpectrumDamageTypes.impaling(getWorld(), this, owner);
+		
+		if (getWorld() instanceof ServerWorld serverWorld) {
+			damage *= EnchantmentHelper.getDamage(serverWorld, stack, attacked, damageSource, getDamage(stack));
 		}
 		
-		Entity owner = this.getOwner();
-		DamageSource damageSource = SpectrumDamageTypes.impaling(getWorld(), this, owner);
 		((TridentEntityAccessor) this).spectrum$setDealtDamage(true);
 		SoundEvent soundEvent = SpectrumSoundEvents.IMPALING_HIT;
-		if (attacked.damage(damageSource, f)) {
+		if (attacked.damage(damageSource, damage)) {
 			if (attacked.getType() == EntityType.ENDERMAN) {
 				return;
 			}
 			
+			if (getWorld() instanceof ServerWorld serverWorld) {
+				EnchantmentHelper.onTargetDamaged(serverWorld, attacked, damageSource, stack);
+			}
+			
 			if (attacked instanceof LivingEntity livingAttacked) {
-				if (owner instanceof LivingEntity) {
-					EnchantmentHelper.onUserDamaged(livingAttacked, owner);
-					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingAttacked);
-				}
-				
+				this.knockback(livingAttacked, damageSource);
 				this.onHit(livingAttacked);
 			}
 		}
@@ -94,10 +102,21 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	}
 	
 	private float getDamage(ItemStack stack) {
-		return (float) stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_DAMAGE)
-				.stream()
-				.mapToDouble(EntityAttributeModifier::getValue)
-				.sum();
+		var damage = new AtomicDouble(0);
+		var key = EntityAttributes.GENERIC_ATTACK_DAMAGE.getKey().orElse(null);
+		var base = EntityAttributes.GENERIC_ATTACK_DAMAGE.value().getDefaultValue();
+		var modifiers = stack.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT);
+		modifiers.applyModifiers(EquipmentSlot.MAINHAND, (attribute, modifier) -> {
+			if (attribute.matchesKey(key)) {
+				var value = modifier.value();
+				damage.addAndGet(switch (modifier.operation()) {
+					case ADD_VALUE -> value;
+					case ADD_MULTIPLIED_BASE -> value * base;
+					case ADD_MULTIPLIED_TOTAL -> value * damage.get();
+				});
+			}
+		});
+		return (float) damage.get();
 	}
 	
 	@Override
@@ -129,6 +148,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	}
 	
 	private float getVolumeDif(LivingEntity target, float pullMod) {
+		if (getOwner() == null) return 0;
 		var ownerBox = getOwner().getBoundingBox();
 		var targetBox = target.getBoundingBox();
 		float ownerVolume = (float) (ownerBox.getLengthX() * ownerBox.getLengthY() * ownerBox.getLengthZ());
@@ -143,9 +163,8 @@ public class DragonTalonEntity extends BidentBaseEntity {
 			yoink(owner, getPos(), 0.125, 0.165);
 		}
 		
-		if (EnchantmentHelper.getLevel(Enchantments.CHANNELING, getTrackedStack()) > 0 && owner != null) {
-			if (!getWorld().isClient()) {
-				var world = (ServerWorld) getWorld();
+		if (SpectrumEnchantmentHelper.hasEnchantment(getWorld().getRegistryManager(), Enchantments.CHANNELING, getTrackedStack()) && owner != null) {
+			if (getWorld() instanceof ServerWorld world) {
 				for (int i = 0; i < 10; i++) {
 					world.spawnParticles(ParticleTypes.GLOW,
 							getParticleX(1),
@@ -216,7 +235,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	public void remove(RemovalReason reason) {
 		var rootStack = getRootStack();
 		if (!rootStack.isEmpty()) {
-			SpectrumItems.DRAGON_TALON.markReserved(rootStack, false);
+			SlotReservingItem.free(rootStack);
 		}
 		super.remove(reason);
 	}
@@ -241,8 +260,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	
 	private ItemStack getRootStack() {
 		if (getOwner() instanceof PlayerEntity player) {
-			var rootStack = DragonTalonItem.findThrownStack(player, uuid);
-			return rootStack;
+			return DragonTalonItem.findThrownStack(player, uuid);
 		}
 		return ItemStack.EMPTY;
 	}
@@ -251,7 +269,7 @@ public class DragonTalonEntity extends BidentBaseEntity {
 	protected boolean tryPickup(PlayerEntity player) {
 		var rootStack = DragonTalonItem.findThrownStack(player, uuid);
 		if (!rootStack.isEmpty()) {
-			SpectrumItems.DRAGON_TALON.markReserved(rootStack, false);
+			SlotReservingItem.free(rootStack);
 			return true;
 		} else if (player == getOwner()) {
 			discard();

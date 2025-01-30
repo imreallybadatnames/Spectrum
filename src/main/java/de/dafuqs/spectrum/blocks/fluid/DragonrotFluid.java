@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.blocks.fluid;
 
-import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.recipe.fluid_converting.*;
 import de.dafuqs.spectrum.registries.*;
@@ -122,7 +121,7 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 						livingEntity.addStatusEffect(new StatusEffectInstance(SpectrumStatusEffects.LIFE_DRAIN, 600, 0));
 					}
 					else if(existingEffect.getDuration() < 500) {
-						((StatusEffectInstanceAccessor) existingEffect).setDuration(300);
+						existingEffect.spectrum$setDuration(300);
 
 						serverWorld.getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect, true));
 					}
@@ -137,7 +136,7 @@ public abstract class DragonrotFluid extends SpectrumFluid {
 						if (existingEffect.getDuration() <= cut) {
 							livingEntity.removeStatusEffect(SpectrumStatusEffects.IMMUNITY);
 						} else {
-							((StatusEffectInstanceAccessor) existingEffect).setDuration(existingEffect.getDuration() - cut);
+							existingEffect.spectrum$setDuration(existingEffect.getDuration() - cut);
 							serverWorld.getChunkManager().sendToNearbyPlayers(livingEntity, new EntityStatusEffectS2CPacket(livingEntity.getId(), existingEffect, true));
 						}
 					}

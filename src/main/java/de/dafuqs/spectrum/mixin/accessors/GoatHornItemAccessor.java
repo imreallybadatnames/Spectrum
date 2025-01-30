@@ -10,7 +10,7 @@ import java.util.*;
 @Mixin(GoatHornItem.class)
 public interface GoatHornItemAccessor {
 	
-	@Invoker("getInstrument")
+	@Invoker
 	Optional<RegistryEntry<Instrument>> invokeGetInstrument(ItemStack stack);
 	
 }

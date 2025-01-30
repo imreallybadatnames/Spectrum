@@ -1,6 +1,7 @@
 package de.dafuqs.spectrum.entity.entity;
 
 import de.dafuqs.spectrum.entity.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.spells.*;
@@ -59,9 +60,10 @@ public class BidentMirrorImageEntity extends BidentBaseEntity {
     }
     
     private void processHit(@Nullable Entity target, float effectMult) {
+		var drm = target.getWorld().getRegistryManager();
 		var stack = getTrackedStack();
-        var power = EnchantmentHelper.getLevel(Enchantments.POWER, stack) * 0.3F + 1;
-        var efficiency = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
+        var power = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.POWER, stack) * 0.3F + 1;
+        var efficiency = SpectrumEnchantmentHelper.getLevel(drm, Enchantments.EFFICIENCY, stack);
         var world = this.getWorld();
         var user = getOwner() instanceof LivingEntity livingOwner ? livingOwner : null;
         Optional<LivingEntity> optionalTarget = target instanceof LivingEntity livingEntity ? Optional.of(livingEntity) : Optional.empty();

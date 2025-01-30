@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
@@ -28,7 +28,7 @@ public abstract class MiningToolItemMixin {
 		if (stack != null) { // thank you, gobber
 			long inertiaAmount = 0;
 			
-			if (SpectrumEnchantmentHelper.getLevel(miner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack) > 0) {
+			if (SpectrumEnchantmentHelper.hasEnchantment(miner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack)) {
 				var inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
 				inertiaAmount = state.isOf(inertia.lastMined()) ? inertia.count() + 1 : 1;
 				stack.set(SpectrumDataComponentTypes.INERTIA, new InertiaComponent(state.getBlock(), inertiaAmount));

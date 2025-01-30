@@ -20,7 +20,7 @@ public class BlockToBlockWithChanceEmiRecipe extends SpectrumEmiRecipe {
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, 23, 4);
-		widgets.addSlot(inputs.get(0), 0, 4);
-		widgets.addSlot(outputs.get(0), 52, 0).large(true).recipeContext(this);
+		widgets.addSlot(inputs.getFirst(), 0, 4);
+		widgets.addSlot(outputs.getFirst(), 52, 0).large(true).recipeContext(this);
 	}
 }

@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.helpers;
 
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.status_effect.*;
+import de.dafuqs.spectrum.mixin.injectors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.util.*;
@@ -18,7 +18,7 @@ public class StatusEffectHelper {
 		if (type == SpectrumStatusEffects.DIVINITY)
 			return DIVINITY_EFFECT_BACKGROUNDS;
 		
-		if (Incurable.isIncurable(effect) && type != SpectrumStatusEffects.ETERNAL_SLUMBER && type != SpectrumStatusEffects.FATAL_SLUMBER) {
+		if (StatusEffectInstanceInjector.isIncurable(effect) && type != SpectrumStatusEffects.ETERNAL_SLUMBER && type != SpectrumStatusEffects.FATAL_SLUMBER) {
 			return INCURABLE_EFFECT_BACKGROUNDS;
 		}
 		

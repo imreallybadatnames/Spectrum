@@ -5,6 +5,8 @@ import com.klikli_dev.modonomicon.book.conditions.*;
 import com.klikli_dev.modonomicon.book.conditions.context.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.*;
+import de.dafuqs.spectrum.helpers.*;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
 import net.minecraft.registry.*;
@@ -17,23 +19,23 @@ public class EnchantmentRegisteredCondition extends BookCondition {
     
     protected static final String TOOLTIP = "book.condition.tooltip." + SpectrumCommon.MOD_ID + ".enchantment_registered";
     
-    protected Identifier enchantmentID;
+    protected RegistryKey<Enchantment> enchantmentKey;
     
-    public EnchantmentRegisteredCondition(Text tooltip, Identifier enchantmentID) {
+    public EnchantmentRegisteredCondition(Text tooltip, RegistryKey<Enchantment> enchantmentKey) {
         super(tooltip);
-        this.enchantmentID = enchantmentID;
+        this.enchantmentKey = enchantmentKey;
     }
     
     public static EnchantmentRegisteredCondition fromJson(Identifier conditionParentId, JsonObject json, RegistryWrapper.WrapperLookup provider) {
         Identifier enchantmentID = Identifier.of(JsonHelper.getString(json, "enchantment_id"));
         Text tooltip = tooltipFromJson(json, provider);
-        return new EnchantmentRegisteredCondition(tooltip, enchantmentID);
+        return new EnchantmentRegisteredCondition(tooltip, RegistryKey.of(RegistryKeys.ENCHANTMENT, enchantmentID));
     }
     
     public static EnchantmentRegisteredCondition fromNetwork(RegistryByteBuf buffer) {
         var tooltip = buffer.readBoolean() ? TextCodecs.REGISTRY_PACKET_CODEC.decode(buffer) : null;
         var entryId = buffer.readIdentifier();
-        return new EnchantmentRegisteredCondition(tooltip, entryId);
+        return new EnchantmentRegisteredCondition(tooltip, RegistryKey.of(RegistryKeys.ENCHANTMENT, entryId));
     }
     
     @Override
@@ -47,18 +49,18 @@ public class EnchantmentRegisteredCondition extends BookCondition {
         if (this.tooltip != null) {
             TextCodecs.REGISTRY_PACKET_CODEC.encode(buffer, this.tooltip);
         }
-        buffer.writeIdentifier(this.enchantmentID);
+        buffer.writeIdentifier(this.enchantmentKey.getValue());
     }
     
     @Override
     public boolean test(BookConditionContext context, PlayerEntity player) {
-        return Registries.ENCHANTMENT.containsId(this.enchantmentID);
+		return SpectrumEnchantmentHelper.getEntry(player.getWorld().getRegistryManager(), this.enchantmentKey).isPresent();
     }
     
     @Override
     public List<Text> getTooltip(PlayerEntity player, BookConditionContext context) {
         if (this.tooltip == null && context instanceof BookConditionEntryContext entryContext) {
-            this.tooltip = Text.translatable(TOOLTIP, Text.translatable(entryContext.getBook().getEntry(this.enchantmentID).getName()));
+            this.tooltip = Text.translatable(TOOLTIP, Text.translatable(entryContext.getBook().getEntry(this.enchantmentKey.getValue()).getName()));
         }
         return super.getTooltip(player, context);
     }

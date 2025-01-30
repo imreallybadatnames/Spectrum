@@ -6,7 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.*;
 import org.jetbrains.annotations.*;
 
 public class SleepStatusEffect extends SpectrumStatusEffect {
@@ -72,6 +72,7 @@ public class SleepStatusEffect extends SpectrumStatusEffect {
      * @return -1 = false
      */
     public static float getSleepScaling(LivingEntity entity) {
+		if (entity == null) return -1;
         var potency = getGeneralSleepResistanceIfEntityHasSoporificEffect(entity);
         
         if (potency == -1 || potency >= 1)

@@ -8,8 +8,6 @@ import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.spirit_instiller.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.component.*;
-import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.loot.*;
@@ -53,7 +51,7 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			 */
 			Optional<Entity> optionalEntity = MemoryBlockEntity.hatchEntity(world, pos, spiritInstillerBlockEntity.getStack(0));
 			if (optionalEntity.isPresent()) {
-				if (optionalEntity.get() instanceof LivingEntity livingEntity) {
+				if (optionalEntity.get() instanceof LivingEntity livingEntity && world != null) {
 					LootTable lootTable = world.getServer().getReloadableRegistries().getLootTable(livingEntity.getLootTable());
 					
 					LootContextParameterSet.Builder builder = new LootContextParameterSet.Builder(world)
@@ -92,9 +90,8 @@ public class MemoryToHeadRecipe extends SpiritInstillerRecipe {
 			return Optional.empty();
 		}
 		
-		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack.getOrDefault(DataComponentTypes.ENTITY_DATA, NbtComponent.DEFAULT).copyNbt());
+		Optional<EntityType<?>> optionalMemoryEntity = MemoryItem.getEntityType(instillerStack);
 		return optionalMemoryEntity.flatMap(SpectrumSkullBlock::getSkullType);
-		
 	}
 	
 }

@@ -1,59 +1,44 @@
 package de.dafuqs.spectrum.networking.s2c_payloads;
 
-import de.dafuqs.spectrum.blocks.particle_spawner.*;
 import de.dafuqs.spectrum.items.map.*;
 import de.dafuqs.spectrum.networking.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.client.networking.v1.*;
-import net.minecraft.client.*;
-import net.minecraft.client.render.*;
-import net.minecraft.item.*;
-import net.minecraft.item.map.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
 
-// TODO: seems like a LOT around maps changed. ArtisansAtlas and this will need a bigger refactor
-public record SyncArtisansAtlasPayload(BlockPos pos, ParticleSpawnerConfiguration configuration) implements CustomPayload {
+import java.util.*;
+
+public record SyncArtisansAtlasPayload(Optional<Identifier> targetId, MapUpdateS2CPacket packet) implements CustomPayload {
 	
 	public static final Id<SyncArtisansAtlasPayload> ID = SpectrumC2SPackets.makeId("sync_artisans_atlas");
-	public static final PacketCodec<PacketByteBuf, SyncArtisansAtlasPayload> CODEC = PacketCodec.tuple(
-			BlockPos.PACKET_CODEC, SyncArtisansAtlasPayload::pos,
-			ParticleSpawnerConfiguration.PACKET_CODEC, SyncArtisansAtlasPayload::configuration,
+	public static final PacketCodec<RegistryByteBuf, SyncArtisansAtlasPayload> CODEC = PacketCodec.tuple(
+			PacketCodecs.optional(Identifier.PACKET_CODEC), SyncArtisansAtlasPayload::targetId,
+			MapUpdateS2CPacket.CODEC, SyncArtisansAtlasPayload::packet,
 			SyncArtisansAtlasPayload::new
 	);
 	
+	@SuppressWarnings("resource")
 	@Environment(EnvType.CLIENT)
 	public static ClientPlayNetworking.PlayPayloadHandler<SyncArtisansAtlasPayload> getPayloadHandler() {
 		return (payload, context) -> {
-			MinecraftClient client = context.client();
-			String targetIdStr = buf.readString();
-			Identifier targetId = targetIdStr.length() == 0 ? null : Identifier.of(targetIdStr);
-			
-			MapUpdateS2CPacket packet = new MapUpdateS2CPacket(buf);
-			
+			var client = context.client();
+			if (client.world == null) return;
 			client.execute(() -> {
-				NetworkThreadUtils.forceMainThread(packet, handler, client);
-				MapRenderer mapRenderer = client.gameRenderer.getMapRenderer();
-				int i = packet.getId();
-				String string = FilledMapItem.getMapName(i);
-				
-				if (client.world != null) {
-					MapState mapState = client.world.getMapState(string);
-					
-					if (mapState == null) {
-						mapState = new ArtisansAtlasState(packet.getScale(), packet.isLocked(), client.world.getRegistryKey());
-						client.world.putClientsideMapState(string, mapState);
-					}
-					
-					if (mapState instanceof ArtisansAtlasState artisansAtlasState) {
-						artisansAtlasState.setTargetId(targetId);
-						packet.apply(mapState);
-						mapRenderer.updateTexture(i, mapState);
-					}
+				NetworkThreadUtils.forceMainThread(payload.packet, client.getNetworkHandler(), client);
+				var mapRenderer = client.gameRenderer.getMapRenderer();
+				var mapIdComponent = payload.packet.mapId();
+				var mapState = client.world.getMapState(mapIdComponent);
+				if (mapState == null) {
+					mapState = new ArtisansAtlasState(payload.packet.scale(), payload.packet.locked(), client.world.getRegistryKey());
+					client.world.putClientsideMapState(mapIdComponent, mapState);
+				}
+				if (mapState instanceof ArtisansAtlasState artisansAtlasState) {
+					artisansAtlasState.setTargetId(payload.targetId.orElse(null));
+					mapRenderer.updateTexture(mapIdComponent, mapState);
 				}
 			});
 		};

@@ -6,7 +6,7 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.energy.storage.*;
 import de.dafuqs.spectrum.blocks.*;
-import de.dafuqs.spectrum.component_type.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.inventories.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -115,7 +115,7 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		if (!this.readLootTable(nbt)) {
 			Inventories.readNbt(nbt, this.inventory, registryLookup);
 		}
-		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage"), storage ->
+		CodecHelper.fromNbt(InkStorageComponent.CODEC, nbt.get("InkStorage")).ifPresent(storage ->
 				this.inkStorage = new TotalCappedInkStorage(storage.maxEnergyTotal(), storage.storedEnergy()));
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("SelectedColor", NbtElement.STRING_TYPE)) {
@@ -300,8 +300,8 @@ public class ColorPickerBlockEntity extends LootableContainerBlockEntity impleme
 		return amount;
 	}
 	
-	public void setSelectedColor(Optional<InkColor> inkColor) {
-		this.selectedColor = inkColor;
+	public void setSelectedColor(@Nullable InkColor inkColor) {
+		this.selectedColor = Optional.ofNullable(inkColor);
 		this.paused = false;
 		this.markDirty();
 	}

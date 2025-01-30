@@ -1,12 +1,31 @@
 package de.dafuqs.spectrum.api.item;
 
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
+import org.jetbrains.annotations.*;
+
+import java.util.*;
 
 public interface SlotReservingItem {
 	
-	public static String NBT_STRING = "reserved";
+	static boolean isReservingSlot(ItemStack stack) {
+		return stack.contains(SpectrumDataComponentTypes.SLOT_RESERVER);
+	}
 	
-	boolean isReservingSlot(ItemStack stack);
+	static UUID getReserver(ItemStack stack) {
+		return stack.get(SpectrumDataComponentTypes.SLOT_RESERVER);
+	}
 	
-	void markReserved(ItemStack stack, boolean reserved);
+	static boolean isReserver(ItemStack stack, @NotNull  UUID uuid) {
+		return uuid.equals(getReserver(stack));
+	}
+	
+	static void reserve(ItemStack stack, UUID reserver) {
+		stack.set(SpectrumDataComponentTypes.SLOT_RESERVER, reserver);
+	}
+	
+	static void free(ItemStack stack) {
+		stack.remove(SpectrumDataComponentTypes.SLOT_RESERVER);
+	}
+	
 }

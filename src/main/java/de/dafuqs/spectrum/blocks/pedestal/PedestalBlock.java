@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.pedestal;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.api.recipe.*;
@@ -77,6 +77,7 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
     public static void spawnUpgradeParticleEffectsForTier(BlockPos blockPos, @NotNull PedestalRecipeTier newPedestalRecipeTier) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		World world = client.world;
+		if (world == null) return;
 		Random random = world.getRandom();
 		
 		switch (newPedestalRecipeTier) {
@@ -150,9 +151,6 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof PedestalBlockEntity pedestalBlockEntity) {
 				pedestalBlockEntity.setOwner((ServerPlayerEntity) placer);
-				if (itemStack.hasCustomName()) {
-					pedestalBlockEntity.setCustomName(itemStack.getName());
-				}
 				blockEntity.markDirty();
 			}
 		}
@@ -299,7 +297,7 @@ public class PedestalBlock extends BlockWithEntity implements RedstonePoweredBlo
 			if (pedestalBlockEntity.currentRecipe == null) {
 				return ItemActionResult.FAIL;
 			}
-			if (pedestalBlockEntity.currentRecipe instanceof GatedRecipe<?> gatedRecipe && !gatedRecipe.canPlayerCraft(player)) {
+			if (pedestalBlockEntity.currentRecipe.value() instanceof GatedRecipe<?> gatedRecipe && !gatedRecipe.canPlayerCraft(player)) {
 				return ItemActionResult.FAIL;
 			}
 			

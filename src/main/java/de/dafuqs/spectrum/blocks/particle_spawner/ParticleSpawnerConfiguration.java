@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.blocks.particle_spawner;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import de.dafuqs.spectrum.networking.*;
+import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.particle.effect.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
@@ -15,21 +15,22 @@ import org.jetbrains.annotations.*;
 import org.joml.*;
 
 public record ParticleSpawnerConfiguration(
-	ParticleType<?> particleType,
-	Vec3i cmyColor, // 0-100 cmy
-	boolean glowing,
-	float particlesPerSecond, /* >1 = every xth tick */
-	Vec3d sourcePosition,
-	Vec3d sourcePositionVariance,
-	Vec3d velocity,
-	Vec3d velocityVariance,
-	float scale,
-	float scaleVariance,
-	int lifetimeTicks,
-	int lifetimeVariance,
-	float gravity,
-	boolean collisions) {
-
+		ParticleType<?> particleType,
+		Vec3i cmyColor, // 0-100 cmy
+		boolean glowing,
+		float particlesPerSecond, /* >1 = every xth tick */
+		Vec3d sourcePosition,
+		Vec3d sourcePositionVariance,
+		Vec3d velocity,
+		Vec3d velocityVariance,
+		float scale,
+		float scaleVariance,
+		int lifetimeTicks,
+		int lifetimeVariance,
+		float gravity,
+		boolean collisions
+) {
+	
 	public static final Codec<ParticleSpawnerConfiguration> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Registries.PARTICLE_TYPE.getCodec().fieldOf("particle_type_identifier").forGetter(ParticleSpawnerConfiguration::particleType),
 			Vec3i.CODEC.fieldOf("color").forGetter(ParticleSpawnerConfiguration::cmyColor),
@@ -47,31 +48,31 @@ public record ParticleSpawnerConfiguration(
 			Codec.BOOL.fieldOf("collisions").forGetter(ParticleSpawnerConfiguration::collisions)
 	).apply(i, ParticleSpawnerConfiguration::new));
 	
-	public static PacketCodec<RegistryByteBuf, ParticleSpawnerConfiguration> PACKET_CODEC = SpectrumPacketCodecs.tuple(
-			PacketCodecs.registryValue(RegistryKeys.PARTICLE_TYPE), ParticleSpawnerConfiguration::particleType,
-			SpectrumPacketCodecs.VEC_3I, ParticleSpawnerConfiguration::cmyColor,
-			PacketCodecs.BOOL, ParticleSpawnerConfiguration::glowing,
-			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::particlesPerSecond,
-			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::sourcePosition,
-			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::sourcePositionVariance,
-			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::velocity,
-			SpectrumPacketCodecs.VEC_3D, ParticleSpawnerConfiguration::velocityVariance,
-			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::scale,
-			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::scaleVariance,
-			PacketCodecs.INTEGER, ParticleSpawnerConfiguration::lifetimeTicks,
-			PacketCodecs.INTEGER, ParticleSpawnerConfiguration::lifetimeVariance,
-			PacketCodecs.FLOAT, ParticleSpawnerConfiguration::gravity,
-			PacketCodecs.BOOL, ParticleSpawnerConfiguration::collisions,
+	public static final PacketCodec<PacketByteBuf, ParticleSpawnerConfiguration> PACKET_CODEC = PacketCodecHelper.tuple(
+			PacketCodecHelper.registryValueByName(Registries.PARTICLE_TYPE), c -> c.particleType,
+			PacketCodecHelper.VEC3I, c -> c.cmyColor,
+			PacketCodecs.BOOL, c -> c.glowing,
+			PacketCodecs.FLOAT, c -> c.particlesPerSecond,
+			PacketCodecHelper.VEC3D, c -> c.sourcePosition,
+			PacketCodecHelper.VEC3D, c -> c.sourcePositionVariance,
+			PacketCodecHelper.VEC3D, c -> c.velocity,
+			PacketCodecHelper.VEC3D, c -> c.velocityVariance,
+			PacketCodecs.FLOAT, c -> c.scale,
+			PacketCodecs.FLOAT, c -> c.scaleVariance,
+			PacketCodecs.VAR_INT, c -> c.lifetimeTicks,
+			PacketCodecs.VAR_INT, c -> c.lifetimeVariance,
+			PacketCodecs.FLOAT, c -> c.gravity,
+			PacketCodecs.BOOL, c -> c.collisions,
 			ParticleSpawnerConfiguration::new
 	);
 	
-	public static Vector3f CMYtoRGB(Vec3i cmy) {
+	public static Vector3fc CMYtoRGB(Vec3i cmy) {
 		float r = 1F - cmy.getX() / 100F;
 		float g = 1F - cmy.getY() / 100F;
 		float b = 1F - cmy.getZ() / 100F;
 		return new Vector3f(r, g, b);
 	}
-
+	
 	public void spawnParticles(World world, @NotNull BlockPos pos) {
 		float particlesToSpawn = particlesPerSecond / 20F;
 		while (particlesToSpawn >= 1 || world.random.nextFloat() < particlesToSpawn) {
@@ -92,11 +93,11 @@ public record ParticleSpawnerConfiguration(
 			double randomVelocityX = velocityVariance.x == 0 ? 0 : velocityVariance.x - random.nextDouble() * velocityVariance.x * 2.0D;
 			double randomVelocityY = velocityVariance.y == 0 ? 0 : velocityVariance.y - random.nextDouble() * velocityVariance.y * 2.0D;
 			double randomVelocityZ = velocityVariance.z == 0 ? 0 : velocityVariance.z - random.nextDouble() * velocityVariance.z * 2.0D;
-
+			
 			var rgbColor = CMYtoRGB(cmyColor);
-
+			
 			world.addParticle(
-					new DynamicParticleEffect(particleType, gravity, rgbColor, randomScale, randomLifetime, collisions, glowing),
+					new DynamicParticleEffect(particleType, gravity, new Vector3f(rgbColor), randomScale, randomLifetime, collisions, glowing),
 					(double) pos.getX() + 0.5 + sourcePosition.x + randomOffsetX,
 					(double) pos.getY() + 0.5 + sourcePosition.y + randomOffsetY,
 					(double) pos.getZ() + 0.5 + sourcePosition.z + randomOffsetZ,

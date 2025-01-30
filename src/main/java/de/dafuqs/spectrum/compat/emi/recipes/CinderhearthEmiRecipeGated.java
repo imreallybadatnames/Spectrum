@@ -11,14 +11,14 @@ public class CinderhearthEmiRecipeGated extends GatedSpectrumEmiRecipe<Cinderhea
 	
 	public CinderhearthEmiRecipeGated(CinderhearthRecipe recipe) {
 		super(SpectrumEmiRecipeCategories.CINDERHEARTH, recipe, 136, 48);
-		this.inputs = recipe.getIngredientStacks().stream().map(s -> EmiIngredient.of(s.getStacks().stream().map(EmiStack::of).toList())).toList();
+		this.inputs = recipe.getIngredientStacks().stream().map(s -> EmiIngredient.of(s.getMatchingStacks().stream().map(EmiStack::of).toList())).toList();
 		this.outputs = recipe.getResultsWithChance().stream().map(p -> EmiStack.of(p.getLeft()).setChance(p.getRight())).toList();
 	}
 	
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
 		int xOff = 5;
-		widgets.addSlot(inputs.get(0), xOff, 0);
+		widgets.addSlot(inputs.getFirst(), xOff, 0);
 
 		widgets.addFillingArrow(22 + xOff, 9, recipe.getCraftingTime() * 50);
 

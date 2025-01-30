@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
 import de.dafuqs.spectrum.recipe.primordial_fire_burning.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
@@ -37,7 +37,7 @@ public class BookPrimordialFireBurningPageRenderer<R extends PrimordialFireBurni
 		
 		// the ingredient
 		DefaultedList<Ingredient> ingredients = recipe.getIngredients();
-		parentScreen.renderIngredient(drawContext, recipeX + 16, recipeY + 8, mouseX, mouseY, ingredients.get(0));
+		parentScreen.renderIngredient(drawContext, recipeX + 16, recipeY + 8, mouseX, mouseY, ingredients.getFirst());
 		
 		// the output
 		parentScreen.renderItemStack(drawContext, recipeX + 51, recipeY + 8, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));

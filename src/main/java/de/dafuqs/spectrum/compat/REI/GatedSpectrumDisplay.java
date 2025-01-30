@@ -21,20 +21,20 @@ public abstract class GatedSpectrumDisplay extends BasicDisplay implements Gated
 	private final @Nullable Text secretHintText;
 	
 	// 1 input => 1 output
-	public GatedSpectrumDisplay(GatedRecipe<?> recipe, Ingredient input, ItemStack output) {
+	public GatedSpectrumDisplay(RecipeEntry<? extends GatedRecipe<?>> recipe, Ingredient input, ItemStack output) {
 		this(recipe, Collections.singletonList(EntryIngredients.ofIngredient(input)), Collections.singletonList(EntryIngredients.of(output)));
 	}
 
 	// n inputs => 1 output
-	public GatedSpectrumDisplay(GatedRecipe<?> recipe, List<EntryIngredient> inputs, ItemStack output) {
+	public GatedSpectrumDisplay(RecipeEntry<? extends GatedRecipe<?>> recipe, List<EntryIngredient> inputs, ItemStack output) {
 		this(recipe, inputs, Collections.singletonList(EntryIngredients.of(output)));
 	}
 
 	// n inputs => m outputs
-	public GatedSpectrumDisplay(GatedRecipe<?> recipe, List<EntryIngredient> inputs, List<EntryIngredient> outputs) {
+	public GatedSpectrumDisplay(RecipeEntry<? extends GatedRecipe<?>> recipe, List<EntryIngredient> inputs, List<EntryIngredient> outputs) {
 		super(inputs, outputs);
-		this.secret = recipe.isSecret();
-		this.requiredAdvancementIdentifier = recipe.getRequiredAdvancementIdentifier();
+		this.secret = recipe.value().isSecret();
+		this.requiredAdvancementIdentifier = recipe.value().getRequiredAdvancementIdentifier();
 		// FIXME
 		//this.secretHintText = recipe.getSecretHintText(id);
 		this.secretHintText = null;

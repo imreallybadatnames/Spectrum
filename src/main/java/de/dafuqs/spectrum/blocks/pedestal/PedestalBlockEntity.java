@@ -54,20 +54,20 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 	private static final int[] ACCESSIBLE_SLOTS_ADVANCED = {9, 10, 11, 12};
 	private static final int[] ACCESSIBLE_SLOTS_COMPLEX = {9, 10, 11, 12, 13};
 	
-	protected final AutoCraftingInventory autoCraftingInventory;
 	protected UUID ownerUUID;
 	protected PedestalVariant pedestalVariant;
 	protected DefaultedList<ItemStack> inventory;
-	protected CraftingRecipeInput recipeInput;
 	protected boolean shouldCraft;
 	protected float storedXP;
 	protected int craftingTime;
 	protected int craftingTimeTotal;
-	public @Nullable RecipeEntry<?> currentRecipe;
 	protected PedestalRecipeTier cachedMaxPedestalTier;
 	protected long cachedMaxPedestalTierTick;
 	protected UpgradeHolder upgrades;
 	protected boolean inventoryChanged;
+	
+	public CraftingRecipeInput recipeInput;
+	public @Nullable RecipeEntry<?> currentRecipe;
 	
 	protected final PropertyDelegate propertyDelegate = new BlockPosDelegate(pos) {
 		@Override
@@ -104,7 +104,6 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		} else {
 			this.pedestalVariant = BuiltinPedestalVariant.BASIC_AMETHYST;
 		}
-		autoCraftingInventory = new AutoCraftingInventory(3, 3);
 		
 		this.inventory = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
 		this.recipeInput = CraftingRecipeInput.create(3, 3, this.inventory);
@@ -320,8 +319,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		
 		// unchanged vanilla recipe?
 		if (SpectrumCommon.CONFIG.canPedestalCraftVanillaRecipes()) {
-			pedestalBlockEntity.autoCraftingInventory.setInputInventory(pedestalBlockEntity.inventory.subList(0, 9));
-			if (currentRecipe instanceof CraftingRecipe craftingRecipe && craftingRecipe.matches(pedestalBlockEntity.autoCraftingInventory, world)) {
+			if (currentRecipe instanceof CraftingRecipe craftingRecipe && craftingRecipe.matches(pedestalBlockEntity.recipeInput, world)) {
 				return pedestalBlockEntity.currentRecipe;
 			}
 		}
@@ -331,7 +329,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		var pedestalRecipe = world.getRecipeManager().getFirstMatch(SpectrumRecipeTypes.PEDESTAL, pedestalBlockEntity.recipeInput, world).orElse(null);
 		if (pedestalRecipe == null) {
 			if (SpectrumCommon.CONFIG.canPedestalCraftVanillaRecipes()) {
-				return world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, pedestalBlockEntity.autoCraftingInventory, world).orElse(null);
+				return world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, pedestalBlockEntity.recipeInput, world).orElse(null);
 			}
 			return null;
 		}
@@ -348,8 +346,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 			if (recipe instanceof PedestalRecipe pedestalRecipe) {
 				output = pedestalRecipe.craft(input, null);
 			} else if (recipe instanceof CraftingRecipe craftingRecipe) {
-				autoCraftingInventory.setInputInventory(this, 0, 9);
-				output = craftingRecipe.craft(autoCraftingInventory, null);
+				output = craftingRecipe.craft(recipeInput, null);
 			} else {
 				output = ItemStack.EMPTY;
 			}
@@ -399,7 +396,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		pedestalBlockEntity.storedXP += experience;
 		
 		PlayerEntity player = pedestalBlockEntity.getOwnerIfOnline();
-		//TODO revisit onCraftByCrafter
+		//TODO revisit onCraftByCrafter (see OfflineDataLookup)
 		if (player != null) {
 			outputStack.onCraftByPlayer(world, player, outputStack.getCount());
 		}
@@ -633,9 +630,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 	
 	private boolean craftVanillaRecipe(@Nullable CraftingRecipe recipe, Inventory inventory, int maxCountPerStack) {
 		if (canAcceptRecipeOutput(recipe, recipeInput, maxCountPerStack)) {
-			autoCraftingInventory.setInputInventory(inventory, 0, 9);
-			
-			ItemStack recipeOutput = recipe.craft(autoCraftingInventory, null);
+			ItemStack recipeOutput = recipe.craft(recipeInput, null);
 			PlayerEntity player = getOwnerIfOnline();
 			//TODO revise for non-player crafting
 			if (player != null) { // some recipes may assume the player is never null (since this is the case in vanilla)
@@ -794,8 +789,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity implements
 		}
 		
 		if (currentRecipe instanceof CraftingRecipe craftingRecipe) {
-			autoCraftingInventory.setInputInventory(this, 0, 9);
-			return craftingRecipe.craft(autoCraftingInventory, null);
+			return craftingRecipe.craft(recipeInput, null);
 		}
 		
 		return ItemStack.EMPTY;

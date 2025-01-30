@@ -23,7 +23,7 @@ public class TitrationBarrelEmiRecipeGated extends GatedSpectrumEmiRecipe<ITitra
 		if (recipe.getFluidInput() != FluidIngredient.EMPTY) {
 			inputs.add(FluidIngredientEmi.into(recipe.getFluidInput()));
 		}
-		inputs.addAll(recipe.getIngredientStacks().stream().map(s -> EmiIngredient.of(s.getStacks().stream().map(EmiStack::of).toList())).toList());
+		inputs.addAll(recipe.getIngredientStacks().stream().map(s -> EmiIngredient.of(s.getMatchingStacks().stream().map(EmiStack::of).toList())).toList());
 		
 		displayedStacks = buildFermentationOutputVariations(recipe);
 	}
@@ -56,8 +56,8 @@ public class TitrationBarrelEmiRecipeGated extends GatedSpectrumEmiRecipe<ITitra
 		}
 		
 		if (displayedStacks == null) {
-			widgets.addSlot(outputs.get(0), 100, 5).large(true).recipeContext(this);
-		} else {
+			widgets.addSlot(outputs.getFirst(), 100, 5).large(true).recipeContext(this);
+		} else if (MinecraftClient.getInstance().world != null) {
 			widgets.addGeneratedSlot(random -> displayedStacks.get((int) (MinecraftClient.getInstance().world.getTime() % displayedStacks.size())), 1, 100, 5).large(true).recipeContext(this);
 		}
 		

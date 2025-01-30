@@ -1,14 +1,10 @@
 package de.dafuqs.spectrum.entity.entity;
 
-import com.google.common.collect.*;
 import de.dafuqs.spectrum.entity.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.data.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.listener.*;
-import net.minecraft.network.packet.*;
-import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -31,7 +27,6 @@ public class SeatEntity extends Entity {
         super(SpectrumEntityTypes.SEAT, world);
         this.offset = offset;
     }
-
 
     @Override
     public void tick() {
@@ -118,11 +113,6 @@ public class SeatEntity extends Entity {
         nbt.putDouble("offset", offset);
     }
 	
-	@Override
-	public Packet<ClientPlayPacketListener> createSpawnPacket() {
-		return new EntitySpawnS2CPacket(this);
-	}
-
     @Override
     public boolean isInvulnerable() {
         return true;
@@ -145,34 +135,32 @@ public class SeatEntity extends Entity {
         double y = this.getBoundingBox().minY + 0.5;
         double z = this.getZ() + offset.z;
         BlockPos.Mutable testPos = new BlockPos.Mutable();
-        UnmodifiableIterator<EntityPose> poses = passenger.getPoses().iterator();
-    
-        while (poses.hasNext()) {
-            EntityPose pose = poses.next();
-            testPos.set(x, y, z);
-            double maxHeight = this.getBoundingBox().maxY + 0.75;
-        
-            while (true) {
-                double height = this.getWorld().getDismountHeight(testPos);
-                if ((double) testPos.getY() + height > maxHeight) {
-                    break;
-                }
-            
-                if (Dismounting.canDismountInBlock(height)) {
-                    Box boundingBox = passenger.getBoundingBox(pose);
-                    Vec3d pos = new Vec3d(x, (double) testPos.getY() + height, z);
-                    if (Dismounting.canPlaceEntityAt(this.getWorld(), passenger, boundingBox.offset(pos))) {
-                        passenger.setPose(pose);
-                        return pos;
-                    }
-                }
-            
-                testPos.move(Direction.UP);
-                if (testPos.getY() >= maxHeight) {
-                    break;
-                }
-            }
-        }
+		
+		for (EntityPose pose : passenger.getPoses()) {
+			testPos.set(x, y, z);
+			double maxHeight = this.getBoundingBox().maxY + 0.75;
+			
+			while (true) {
+				double height = this.getWorld().getDismountHeight(testPos);
+				if ((double) testPos.getY() + height > maxHeight) {
+					break;
+				}
+				
+				if (Dismounting.canDismountInBlock(height)) {
+					Box boundingBox = passenger.getBoundingBox(pose);
+					Vec3d pos = new Vec3d(x, (double) testPos.getY() + height, z);
+					if (Dismounting.canPlaceEntityAt(this.getWorld(), passenger, boundingBox.offset(pos))) {
+						passenger.setPose(pose);
+						return pos;
+					}
+				}
+				
+				testPos.move(Direction.UP);
+				if (testPos.getY() >= maxHeight) {
+					break;
+				}
+			}
+		}
 
         return null;
     }

@@ -13,10 +13,4 @@ public interface PedestalVariant {
 		return this.getRecipeTier().ordinal() > other.getRecipeTier().ordinal();
 	}
 	
-	default boolean isEqualOrBetterThan(PedestalVariant other) {
-		return this.getRecipeTier().ordinal() >= other.getRecipeTier().ordinal();
-	}
-	
-	
 }
-

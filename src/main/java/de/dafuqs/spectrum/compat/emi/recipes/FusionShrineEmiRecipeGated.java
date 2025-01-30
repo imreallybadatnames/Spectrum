@@ -40,9 +40,9 @@ public class FusionShrineEmiRecipeGated extends GatedSpectrumEmiRecipe<FusionShr
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
 		// shrine + fluid
-		if (!inputs.get(0).isEmpty()) {
+		if (!inputs.getFirst().isEmpty()) {
 			widgets.addSlot(EmiStack.of(SpectrumBlocks.FUSION_SHRINE_BASALT), 10, 25).drawBack(false);
-			widgets.addSlot(inputs.get(0), 30, 25);
+			widgets.addSlot(inputs.getFirst(), 30, 25);
 		} else {
 			widgets.addSlot(EmiStack.of(SpectrumBlocks.FUSION_SHRINE_BASALT), 20, 25).drawBack(false);
 		}
@@ -53,7 +53,7 @@ public class FusionShrineEmiRecipeGated extends GatedSpectrumEmiRecipe<FusionShr
 			widgets.addSlot(inputs.get(i), startX + i * 20, 0);
 		}
 		
-		widgets.addSlot(outputs.get(0), 90, 20).large(true).recipeContext(this);
+		widgets.addSlot(outputs.getFirst(), 90, 20).large(true).recipeContext(this);
 		
 		widgets.addFillingArrow(60, 25, recipe.getCraftingTime() * 50);
 

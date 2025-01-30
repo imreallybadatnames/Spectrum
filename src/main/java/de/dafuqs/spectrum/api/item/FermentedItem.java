@@ -1,22 +1,17 @@
 package de.dafuqs.spectrum.api.item;
 
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.util.*;
 
 public interface FermentedItem {
 	
-	BeverageProperties getBeverageProperties(ItemStack itemStack);
-	
 	static boolean isPreviewStack(ItemStack stack) {
-		NbtCompound nbtCompound = stack.getNbt();
-		return nbtCompound != null && nbtCompound.getBoolean("Preview");
+		return stack.contains(SpectrumDataComponentTypes.IS_PREVIEW_ITEM);
 	}
 	
 	static void setPreviewStack(ItemStack stack) {
-		NbtCompound compound = stack.getOrCreateNbt();
-		compound.putBoolean("Preview", true);
-		stack.setNbt(compound);
+		stack.set(SpectrumDataComponentTypes.IS_PREVIEW_ITEM, Unit.INSTANCE);
 	}
 	
 }

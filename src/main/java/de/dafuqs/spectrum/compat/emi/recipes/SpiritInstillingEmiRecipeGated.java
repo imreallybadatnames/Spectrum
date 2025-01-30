@@ -35,7 +35,7 @@ public class SpiritInstillingEmiRecipeGated extends GatedSpectrumEmiRecipe<Spiri
 		widgets.addSlot(EmiStack.of(SpectrumBlocks.ITEM_BOWL_CALCITE), 40, 17).drawBack(false);
 		
 		if (!outputs.isEmpty()) {
-			widgets.addSlot(outputs.get(0), 90, 4).large(true).recipeContext(this);
+			widgets.addSlot(outputs.getFirst(), 90, 4).large(true).recipeContext(this);
 		}
 		
 		widgets.addFillingArrow(60, 9, recipe.getCraftingTime() * 50);

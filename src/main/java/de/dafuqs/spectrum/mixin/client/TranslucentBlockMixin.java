@@ -10,17 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Environment(EnvType.CLIENT)
 @Mixin(TranslucentBlock.class)
-public abstract class TranslucentBlockMixin extends Block {
-	
-	public TranslucentBlockMixin(Settings settings) {
-		super(settings);
-	}
+public abstract class TranslucentBlockMixin {
 
 	@Inject(method = "isSideInvisible", at = @At("HEAD"), cancellable = true)
-	public void dontRenderVanillaPlayerOnlyGlass(BlockState state, BlockState stateFrom, Direction direction, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-		if (this == Blocks.GLASS && stateFrom.getBlock() == SpectrumBlocks.SEMI_PERMEABLE_GLASS || this == Blocks.TINTED_GLASS && stateFrom.getBlock() == SpectrumBlocks.TINTED_SEMI_PERMEABLE_GLASS) {
+	public void spectrum$dontRenderVanillaPlayerOnlyGlass(BlockState state, BlockState stateFrom, Direction direction, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+		if (state.isOf(Blocks.GLASS) && stateFrom.isOf(SpectrumBlocks.SEMI_PERMEABLE_GLASS)
+				|| state.isOf(Blocks.TINTED_GLASS) && stateFrom.isOf(SpectrumBlocks.TINTED_SEMI_PERMEABLE_GLASS))
 			callbackInfoReturnable.setReturnValue(true);
-		}
 	}
 	
 }

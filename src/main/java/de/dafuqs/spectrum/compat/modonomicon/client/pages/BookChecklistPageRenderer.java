@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 
 import com.klikli_dev.modonomicon.book.*;
-import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
+import com.klikli_dev.modonomicon.client.gui.book.entry.*;
 import com.klikli_dev.modonomicon.client.render.page.*;
 import com.klikli_dev.modonomicon.data.*;
 import de.dafuqs.revelationary.api.advancements.*;
@@ -33,7 +33,7 @@ public class BookChecklistPageRenderer extends BookTextPageRenderer {
             boolean hasAchievement = AdvancementHelper.hasAdvancementClient(entry.getKey());
             renderedTexts.get(i).fillStyle(Style.EMPTY.withStrikethrough(hasAchievement).withFont(font));
             List<Text> siblings = renderedTexts.get(i).getSiblings();
-            siblings.remove(siblings.size()-1);
+            siblings.removeLast();
             siblings.add(Text.literal(hasAchievement ? " ✔" : ""));
             i++;
         }

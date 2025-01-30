@@ -1,10 +1,11 @@
 package de.dafuqs.spectrum.explosion;
 
 import net.minecraft.text.*;
+import net.minecraft.util.*;
 
 import java.util.*;
 
-public enum ExplosionArchetype {
+public enum ExplosionArchetype implements StringIdentifiable {
 	COSMETIC("cosmetic", false, false),
 	DESTROY_BLOCKS("destroy_blocks", true, false),
 	DAMAGE_ENTITIES("damage_entities", false, true),
@@ -37,6 +38,11 @@ public enum ExplosionArchetype {
 	
 	public Text getName() {
 		return name;
+	}
+	
+	@Override
+	public String asString() {
+		return name().toLowerCase();
 	}
 	
 }

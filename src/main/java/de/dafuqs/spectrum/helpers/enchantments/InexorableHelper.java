@@ -11,7 +11,7 @@ public class InexorableHelper {
 	
 	public static void checkAndRemoveSlowdownModifiers(LivingEntity entity) {
 		var armorInexorable = isArmorActive(entity);
-		var toolInexorable = SpectrumEnchantmentHelper.getLevel(entity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, entity.getStackInHand(entity.getActiveHand())) > 0;
+		var toolInexorable = SpectrumEnchantmentHelper.hasEnchantment(entity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, entity.getStackInHand(entity.getActiveHand()));
 		
 		var armorAttributes = Registries.ATTRIBUTE.getEntryList(SpectrumAttributeTags.INEXORABLE_ARMOR_EFFECTIVE);
 		var toolAttributes = Registries.ATTRIBUTE.getEntryList(SpectrumAttributeTags.INEXORABLE_HANDHELD_EFFECTIVE);
@@ -52,6 +52,6 @@ public class InexorableHelper {
 	}
 	
 	public static boolean isArmorActive(LivingEntity entity) {
-		return SpectrumEnchantmentHelper.getLevel(entity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, entity.getEquippedStack(EquipmentSlot.CHEST)) > 0;
+		return SpectrumEnchantmentHelper.hasEnchantment(entity.getWorld().getRegistryManager(), SpectrumEnchantments.INEXORABLE, entity.getEquippedStack(EquipmentSlot.CHEST));
 	}
 }

@@ -2,39 +2,32 @@ package de.dafuqs.spectrum.inventories;
 
 import de.dafuqs.spectrum.api.block.*;
 import de.dafuqs.spectrum.inventories.slots.*;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
-@SuppressWarnings("UnstableApiUsage")
 public class FilteringScreenHandler extends ScreenHandler {
 
 	protected final World world;
-	protected FilterConfigurable filterConfigurable;
+	protected FilterConfigurable.ExtendedData filterConfigurable;
 	protected final Inventory filterInventory;
 	protected final int rows, slotsPerRow, drawnSlots;
 
-	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf packetByteBuf) {
+	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable.ExtendedData data) {
 		this(SpectrumScreenHandlerTypes.FILTERING, syncId, playerInventory,
-				(handler) -> FilterConfigurable.getFilterInventoryWithRowDataFromPacket(syncId, playerInventory, packetByteBuf, handler));
-	}
-
-	public FilteringScreenHandler(int syncId, PlayerInventory playerInventory, FilterConfigurable filterConfigurable) {
-		this(SpectrumScreenHandlerTypes.FILTERING, syncId, playerInventory,
-				(handler) -> new Pair<>(FilterConfigurable.getFilterInventoryFromItemsHandler(syncId, playerInventory, filterConfigurable.getItemFilters(), handler), new Integer[]{
-						filterConfigurable.getFilterRows(),
-						filterConfigurable.getSlotsPerRow(),
-						filterConfigurable.getDrawnSlots()
+				(handler) -> new Pair<>(FilterConfigurable.getFilterInventoryFromItemsHandler(syncId, playerInventory, data.filterItems(), handler), new Integer[]{
+						data.rows(),
+						data.slotsPerRow(),
+						data.drawnSlots()
 				}));
-		this.filterConfigurable = filterConfigurable;
+		this.filterConfigurable = data;
 	}
 
 	protected FilteringScreenHandler(ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Function<ScreenHandler, Pair<Inventory, Integer[]>> filterInventoryFactory) {
@@ -100,10 +93,6 @@ public class FilteringScreenHandler extends ScreenHandler {
 		super.onClosed(player);
 	}
 
-	public FilterConfigurable getFilterConfigurable() {
-		return this.filterConfigurable;
-	}
-
 	protected class FilterSlot extends ShadowSlot {
 
 		public FilterSlot(Inventory inventory, int index, int x, int y) {
@@ -113,7 +102,7 @@ public class FilteringScreenHandler extends ScreenHandler {
 		@Override
 		public boolean onClicked(ItemStack heldStack, ClickType type, PlayerEntity player) {
 			if (!world.isClient && filterConfigurable != null) {
-				filterConfigurable.setFilterItem(getIndex(), ItemVariant.of(heldStack));
+				filterConfigurable.filterItems().set(getIndex(), ItemVariant.of(heldStack));
 			}
 			return super.onClicked(heldStack, type, player);
 		}

@@ -44,7 +44,6 @@
   ],
   "result": "spectrum:draconic_twinsword",
   "required_advancement": "spectrum:unlocks/equipment/draconic_twinsword",
-  "world_conditions": [],
   "start_crafting_effect": "single_visual_explosion_on_shrine",
   "during_crafting_effects": [
     "nothing",

@@ -78,7 +78,7 @@ public class LightGreatswordItem extends ParryingSwordItem implements SplitDamag
 		if (target.getType() == EntityType.ENDERMAN)
 			return;
 
-		var effect = target.isUndead() ? StatusEffects.REGENERATION : StatusEffects.POISON;
+		var effect = target.hasInvertedHealingAndHarm() ? StatusEffects.REGENERATION : StatusEffects.POISON;
 		int sharpness = SpectrumEnchantmentHelper.getLevel(target.getWorld().getRegistryManager(), Enchantments.SHARPNESS, stack);
 		target.addStatusEffect(new StatusEffectInstance(effect, 20 * (5 + sharpness), 1));
 	}

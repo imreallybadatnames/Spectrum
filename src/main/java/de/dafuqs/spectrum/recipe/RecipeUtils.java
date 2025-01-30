@@ -4,16 +4,11 @@ import com.google.gson.*;
 import com.mojang.brigadier.*;
 import com.mojang.brigadier.exceptions.*;
 import com.mojang.serialization.*;
-import de.dafuqs.spectrum.helpers.NbtHelper;
 import net.minecraft.block.*;
 import net.minecraft.command.argument.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.recipe.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
-
-import java.util.*;
 
 public class RecipeUtils {
 	

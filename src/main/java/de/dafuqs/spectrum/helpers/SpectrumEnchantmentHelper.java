@@ -15,8 +15,22 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.stream.*;
 
 public class SpectrumEnchantmentHelper {
+	
+	public static boolean isCloaking(Enchantment ench) {
+		return !ench.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED).isEmpty();
+	}
+	
+	public static boolean canReveal(Enchantment cloak, ServerWorld world, int level, Entity user) {
+		var canReveal = new AtomicBoolean(false);
+		EnchantmentAccessor.invokeApplyEffects(
+				cloak.getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED),
+				EnchantmentAccessor.invokeCreateEnchantedEntityLootContext(world, level, user, user.getPos()),
+				e -> canReveal.set(true));
+		return canReveal.get();
+	}
 	
 	public static void addRevealedEnchantments(Enchantment enchantment, ServerWorld world, int level, Entity user, ItemEnchantmentsComponent.Builder builder) {
 		EnchantmentAccessor.invokeApplyEffects(
@@ -29,6 +43,15 @@ public class SpectrumEnchantmentHelper {
 		return getEntry(registryLookup, enchantmentKey)
 				.map(entry -> addOrUpgradeEnchantment(stack, entry, level, forceEvenIfNotApplicable, allowEnchantmentConflicts))
 				.orElse(new Pair<>(false, stack));
+	}
+	
+	public static ItemStack getMaxEnchantedStack(RegistryWrapper.WrapperLookup drm, Item item) {
+		var stack = item.getDefaultStack();
+		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(stack));
+		drm.getOptionalWrapper(RegistryKeys.ENCHANTMENT).map(RegistryWrapper::streamEntries).orElse(Stream.empty())
+				.forEach(enchantment -> builder.set(enchantment, enchantment.value().getMaxLevel()));
+		EnchantmentHelper.set(stack, builder.build());
+		return stack;
 	}
 	
 	/**
@@ -156,7 +179,7 @@ public class SpectrumEnchantmentHelper {
 		var removals = new AtomicInteger(0);
 		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(itemStack));
 		enchantments.forEach(enchantment -> {
-			if (builder.getLevel(enchantment) > 0) {
+			if (builder.getEnchantments().contains(enchantment)) {
 				builder.set(enchantment, 0);
 				removals.getAndIncrement();
 			}
@@ -189,6 +212,10 @@ public class SpectrumEnchantmentHelper {
 				.flatMap(impl -> impl.getOptional(enchantment))
 				.map(entry -> EnchantmentHelper.getLevel(entry, stack))
 				.orElse(0);
+	}
+	
+	public static boolean hasEnchantment(RegistryWrapper.WrapperLookup registryLookup, RegistryKey<Enchantment> enchantment, ItemStack stack) {
+		return getLevel(registryLookup, enchantment, stack) > 0;
 	}
 	
 	public static Optional<RegistryWrapper.Impl<Enchantment>> getRegistry(RegistryWrapper.WrapperLookup registryLookup) {

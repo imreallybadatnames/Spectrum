@@ -15,7 +15,6 @@ import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 
 public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 	
@@ -36,10 +35,11 @@ public abstract class SpawnerChangeRecipe extends SpiritInstillerRecipe {
 		ItemStack resultStack = ItemStack.EMPTY;
 		
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
-			BlockEntity leftBowlBlockEntity = spiritInstillerBlockEntity.getWorld().getBlockEntity(SpiritInstillerBlockEntity.getItemBowlPos(spiritInstillerBlockEntity, false));
-			BlockEntity rightBowlBlockEntity = spiritInstillerBlockEntity.getWorld().getBlockEntity(SpiritInstillerBlockEntity.getItemBowlPos(spiritInstillerBlockEntity, true));
+			var world = spiritInstillerBlockEntity.getWorld();
+			if (world == null) return ItemStack.EMPTY;
+			BlockEntity leftBowlBlockEntity = world.getBlockEntity(SpiritInstillerBlockEntity.getItemBowlPos(spiritInstillerBlockEntity, false));
+			BlockEntity rightBowlBlockEntity = world.getBlockEntity(SpiritInstillerBlockEntity.getItemBowlPos(spiritInstillerBlockEntity, true));
 			if (leftBowlBlockEntity instanceof ItemBowlBlockEntity leftBowl && rightBowlBlockEntity instanceof ItemBowlBlockEntity rightBowl) {
-				World world = spiritInstillerBlockEntity.getWorld();
 				BlockPos pos = spiritInstillerBlockEntity.getPos();
 				
 				ItemStack firstBowlStack = leftBowl.getStack(0);

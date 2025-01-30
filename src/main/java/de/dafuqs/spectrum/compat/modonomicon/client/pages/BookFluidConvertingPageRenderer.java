@@ -3,7 +3,7 @@ package de.dafuqs.spectrum.compat.modonomicon.client.pages;
 import com.mojang.blaze3d.systems.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.compat.modonomicon.pages.*;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.recipe.*;
 import net.minecraft.util.*;
@@ -37,7 +37,7 @@ public abstract class BookFluidConvertingPageRenderer<R extends GatedRecipe<?>, 
 
         // the ingredients
         DefaultedList<Ingredient> ingredients = recipe.getIngredients();
-        parentScreen.renderIngredient(drawContext, recipeX + 23, recipeY + 7, mouseX, mouseY, ingredients.get(0));
+        parentScreen.renderIngredient(drawContext, recipeX + 23, recipeY + 7, mouseX, mouseY, ingredients.getFirst());
 
         // the output
         parentScreen.renderItemStack(drawContext, recipeX + 75, recipeY + 7, mouseX, mouseY, recipe.getResult(world.getRegistryManager()));

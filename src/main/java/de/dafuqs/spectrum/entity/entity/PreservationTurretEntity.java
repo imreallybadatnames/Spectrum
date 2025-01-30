@@ -194,9 +194,11 @@ public class PreservationTurretEntity extends GolemEntity implements Monster, Vi
 	}
 	
 	@Override
-	public double getHeightOffset() {
-		EntityType<?> vehicleType = this.getVehicle().getType();
-		return vehicleType != EntityType.BOAT && vehicleType != EntityType.MINECART ? super.getHeightOffset() : 0.1875 - this.getVehicle().getMountedHeightOffset();
+	public Vec3d getVehicleAttachmentPos(Entity vehicle) {
+		if (vehicle.getType() != EntityType.BOAT && vehicle.getType() != EntityType.MINECART)
+			return super.getVehicleAttachmentPos(vehicle);
+		var ridingPos = vehicle.getPassengerRidingPos(this);
+		return new Vec3d(ridingPos.x, 0.1875 - ridingPos.y, ridingPos.z);
 	}
 	
 	@Override

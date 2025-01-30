@@ -3,23 +3,25 @@ package de.dafuqs.spectrum.recipe.titration_barrel.dynamic;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.recipe.titration_barrel.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.fluid.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -69,39 +71,29 @@ public class SuspiciousBrewRecipe extends TitrationBarrelRecipe {
 			return SpectrumItems.PURE_ALCOHOL.getDefaultStack();
 		} else {
 			// add up all stew effects with their durations from the input stacks
-			Map<StatusEffect, Integer> stewEffects = new HashMap<>();
-			for (ItemStack stack : stacks) {
-				Optional<Pair<StatusEffect, Integer>> stewEffect = getStewEffectFrom(stack);
-				if (stewEffect.isPresent()) {
-					StatusEffect effect = stewEffect.get().getLeft();
-					int duration = (int) (stewEffect.get().getRight() * (Support.logBase(2, 1 + stack.getCount())));
-					if (stewEffects.containsKey(effect)) {
-						stewEffects.put(effect, stewEffects.get(effect) + duration);
-					} else {
-						stewEffects.put(effect, duration);
-					}
+			var stewEffects = new HashMap<RegistryEntry<StatusEffect>, Double>();
+			for (var stack : stacks) {
+				var stewEffectsComponent = stack.getOrDefault(DataComponentTypes.SUSPICIOUS_STEW_EFFECTS, SuspiciousStewEffectsComponent.DEFAULT);
+				for (var effect : stewEffectsComponent.effects()) {
+					var key = effect.effect();
+					var duration = effect.duration() * (Support.logBase(2, 1 + stack.getCount()));
+					stewEffects.put(key, stewEffects.getOrDefault(key, 0d) + duration);
 				}
 			}
 			
-			List<StatusEffectInstance> finalStatusEffects = new ArrayList<>();
+			var finalStatusEffects = new ArrayList<StatusEffectInstance>();
 			double clampedAlcPercent = MathHelper.clamp(alcPercent, 1D, 20D); // a too high number will cause issues with the effects length exceeding the integer limit, lol
-			for (Map.Entry<StatusEffect, Integer> entry : stewEffects.entrySet()) {
-				int finalDurationTicks = (int) (entry.getValue() * Math.pow(2, clampedAlcPercent));
-				finalStatusEffects.add(new StatusEffectInstance(entry.getKey(), finalDurationTicks, 0));
+			for (var entry : stewEffects.entrySet()) {
+				var finalDurationTicks = entry.getValue() * Math.pow(2, clampedAlcPercent);
+				finalStatusEffects.add(new StatusEffectInstance(entry.getKey(), (int) finalDurationTicks, 0));
 			}
 			
 			ItemStack outputStack = OUTPUT_STACK.copy();
 			outputStack.setCount(1);
-			return new StatusEffectBeverageProperties((long) ageIngameDays, (int) alcPercent, thickness, finalStatusEffects).getStack(outputStack);
+			outputStack.set(SpectrumDataComponentTypes.BEVERAGE, new BeverageComponent((long) ageIngameDays, (int) alcPercent, thickness));
+			outputStack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.empty(), finalStatusEffects));
+			return outputStack;
 		}
-	}
-	
-	// taken from SuspiciousStewItem
-	private Optional<Pair<StatusEffect, Integer>> getStewEffectFrom(ItemStack stack) {
-		if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof FlowerBlock flowerBlock) {
-			return Optional.of(Pair.of(flowerBlock.getStewEffects(), flowerBlock.getEffectInStewDuration()));
-		}
-		return Optional.empty();
 	}
 	
 	@Override

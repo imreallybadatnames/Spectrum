@@ -3,11 +3,13 @@ package de.dafuqs.spectrum.recipe.titration_barrel;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.titration_barrel.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.items.food.beverages.properties.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -33,9 +35,11 @@ public interface ITitrationBarrelRecipe extends GatedRecipe<TitrationBarrelBlock
 		// Dr. Who would be proud
 		if (secondsFermented < 0) {
 			float ageIngameDays = TimeHelper.minecraftDaysFromSeconds(secondsFermented);
-			;
 			List<StatusEffectInstance> statusEffects = List.of(new StatusEffectInstance(StatusEffects.INVISIBILITY, 3600, 0));
-			ItemStack stack = new StatusEffectBeverageProperties((long) ageIngameDays, 0, 0, statusEffects).getStack(SpectrumItems.SUSPICIOUS_BREW.getDefaultStack());
+			
+			var stack = SpectrumItems.SUSPICIOUS_BREW.getDefaultStack();
+			stack.set(SpectrumDataComponentTypes.BEVERAGE, new BeverageComponent((long) ageIngameDays, 0, 0));
+			stack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.empty(), statusEffects));
 			LoreHelper.setLore(stack, Text.translatable("lore.spectrum.time_travel_tap"));
 			return stack;
 		}

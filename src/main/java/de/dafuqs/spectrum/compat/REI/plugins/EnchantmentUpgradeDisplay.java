@@ -12,7 +12,8 @@ import me.shedaniel.rei.api.common.entry.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.enchantment.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.recipe.*;
+import net.minecraft.registry.entry.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -25,13 +26,13 @@ public class EnchantmentUpgradeDisplay extends EnchanterDisplay {
 	protected final int requiredExperience;
 	protected final int requiredItemCount;
 	
-	public EnchantmentUpgradeDisplay(@NotNull EnchantmentUpgradeRecipe recipe) {
-		super(recipe, buildIngredients(recipe), recipe.getResult(BasicDisplay.registryAccess()));
+	public EnchantmentUpgradeDisplay(@NotNull RecipeEntry<EnchantmentUpgradeRecipe> recipe) {
+		super(recipe, buildIngredients(recipe.value()), recipe.value().getResult(BasicDisplay.registryAccess()));
 		
-		this.enchantment = recipe.getEnchantment();
-		this.enchantmentDestinationLevel = recipe.getEnchantmentDestinationLevel();
-		this.requiredItemCount = recipe.getRequiredItemCount();
-		this.requiredExperience = recipe.getRequiredExperience();
+		this.enchantment = recipe.value().getEnchantment();
+		this.enchantmentDestinationLevel = recipe.value().getEnchantmentDestinationLevel();
+		this.requiredItemCount = recipe.value().getRequiredItemCount();
+		this.requiredExperience = recipe.value().getRequiredExperience();
 	}
 	
 	private static List<EntryIngredient> buildIngredients(EnchantmentUpgradeRecipe recipe) {

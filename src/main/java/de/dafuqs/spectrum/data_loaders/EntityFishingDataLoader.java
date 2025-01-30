@@ -1,13 +1,16 @@
 package de.dafuqs.spectrum.data_loaders;
 
 import com.google.gson.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.api.predicate.entity.*;
-import de.dafuqs.spectrum.helpers.NbtHelper;
+import de.dafuqs.spectrum.api.predicate.location.*;
+import de.dafuqs.spectrum.helpers.*;
 import net.fabricmc.fabric.api.resource.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.resource.*;
 import net.minecraft.server.world.*;
 import net.minecraft.util.*;
@@ -24,17 +27,28 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 	
 	protected static final List<EntityFishingEntry> ENTITY_FISHING_ENTRIES = new ArrayList<>();
 	
-	public record EntityFishingEntity(
-			EntityType<?> entityType,
-			Optional<NbtCompound> nbt
-	) {
+	public record EntityFishingEntity(RegistryEntry<EntityType<?>> entityType, NbtCompound nbt) {
+		
+		public static final MapCodec<EntityFishingEntity> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				Registries.ENTITY_TYPE.getEntryCodec().fieldOf("id").forGetter(EntityFishingEntity::entityType),
+				NbtCompound.CODEC.optionalFieldOf("nbt", new NbtCompound()).forGetter(EntityFishingEntity::nbt)
+		).apply(i, EntityFishingEntity::new));
+		
+		public static final Codec<Weighted.Present<EntityFishingEntity>> WEIGHTED_CODEC = RecordCodecBuilder.create(i -> i.group(
+				CODEC.forGetter(Weighted.Present::data),
+				Weight.CODEC.optionalFieldOf("id", Weight.of(1)).forGetter(Weighted.Present::weight)
+		).apply(i, Weighted.Present::new));
+		
 	}
 
-	public record EntityFishingEntry(
-			EntityFishingPredicate predicate,
-			float entityChance,
-			DataPool<EntityFishingEntity> weightedEntities
-	) {
+	public record EntityFishingEntry(List<WorldConditionsPredicate> predicates, float entityChance, Pool<Weighted.Present<EntityFishingEntity>> weightedEntities) {
+		
+		public static final Codec<EntityFishingEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
+				CodecHelper.singleOrList(WorldConditionsPredicate.CODEC).fieldOf("location").forGetter(EntityFishingEntry::predicates),
+				Codec.FLOAT.fieldOf("chance").forGetter(EntityFishingEntry::entityChance),
+				EntityFishingEntity.WEIGHTED_CODEC.listOf().xmap(Pool::of, Pool::getEntries).fieldOf("entities").forGetter(EntityFishingEntry::weightedEntities)
+		).apply(i, EntityFishingEntry::new));
+		
 	}
 	
 	private EntityFishingDataLoader() {
@@ -44,33 +58,9 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 	@Override
 	protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler) {
 		ENTITY_FISHING_ENTRIES.clear();
-		prepared.forEach((identifier, jsonElement) -> {
-			JsonObject jsonObject = jsonElement.getAsJsonObject();
-			
-			EntityFishingPredicate predicate = EntityFishingPredicate.fromJson(jsonObject.get("location").getAsJsonObject());
-			float chance = JsonHelper.getFloat(jsonObject, "chance");
-			JsonArray entityArray = JsonHelper.getArray(jsonObject, "entities");
-			
-			DataPool.Builder<EntityFishingEntity> entities = DataPool.builder();
-			entityArray.forEach(entryElement -> {
-				JsonObject entryObject = entryElement.getAsJsonObject();
-				
-				EntityType<?> entityType = Registries.ENTITY_TYPE.get(Identifier.of(JsonHelper.getString(entryObject, "id")));
-				Optional<NbtCompound> nbt = NbtHelper.getNbtCompound(entryObject.get("nbt"));
-
-				int weight = 1;
-				if (JsonHelper.hasNumber(entryObject, "weight")) {
-					weight = JsonHelper.getInt(entryObject, "weight");
-				}
-				entities.add(new EntityFishingEntity(entityType, nbt), weight);
-			});
-			
-			ENTITY_FISHING_ENTRIES.add(new EntityFishingEntry(
-					predicate,
-					chance,
-					entities.build()
-			));
-		});
+		prepared.forEach((identifier, jsonElement) ->
+			CodecHelper.fromJson(EntityFishingEntry.CODEC, jsonElement.getAsJsonObject())
+					.ifPresent(ENTITY_FISHING_ENTRIES::add));
 	}
 	
 	@Override
@@ -80,7 +70,7 @@ public class EntityFishingDataLoader extends JsonDataLoader implements Identifia
 	
 	public static Optional<EntityFishingEntity> tryCatchEntity(ServerWorld world, BlockPos pos, int bigCatchLevel) {
 		for (EntityFishingEntry entry : ENTITY_FISHING_ENTRIES) {
-			if (entry.predicate.test(world, pos)) {
+			if (entry.predicates.stream().anyMatch(p -> p.test(world, pos))) {
 				if (world.random.nextFloat() < entry.entityChance * (1 + bigCatchLevel)) {
 					var x = entry.weightedEntities.getOrEmpty(world.random);
 					if (x.isPresent()) {

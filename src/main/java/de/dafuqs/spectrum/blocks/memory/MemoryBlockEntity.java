@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
@@ -60,16 +60,17 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	}
 	
 	public void setData(LivingEntity livingEntity, @NotNull ItemStack creatureSpawnItemStack) {
-		if (livingEntity instanceof PlayerEntity playerEntity) {
+		if (livingEntity instanceof PlayerEntity playerEntity)
 			setOwner(playerEntity);
-		}
+		
 		if (creatureSpawnItemStack.getItem() instanceof MemoryItem) {
 			this.memoryItemStack = creatureSpawnItemStack.copy();
 			this.memoryItemStack.setCount(1);
 		}
-		if (!livingEntity.getWorld().isClient()) {
-			this.updateInClientWorld();
-		}
+		
+		if (livingEntity.getWorld() instanceof ServerWorld serverWorld)
+			serverWorld.getChunkManager().markForUpdate(pos);
+		
 		this.markDirty();
 	}
 	
@@ -79,7 +80,7 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 		
 		this.ownerUUID = PlayerOwned.readOwnerUUID(nbt);
 		if (nbt.contains("MemoryItem", NbtElement.COMPOUND_TYPE)) {
-			this.memoryItemStack = ItemStack.fromNbt(nbt.getCompound("MemoryItem"));
+			this.memoryItemStack = ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("MemoryItem"));
 		}
 	}
 	
@@ -87,15 +88,13 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 		super.writeNbt(nbt, registryLookup);
 		PlayerOwned.writeOwnerUUID(nbt, this.ownerUUID);
-		if (this.memoryItemStack != null) {
-			NbtCompound creatureSpawnCompound = new NbtCompound();
-			memoryItemStack.writeNbt(creatureSpawnCompound);
-			nbt.put("MemoryItem", creatureSpawnCompound);
+		if (this.memoryItemStack.isEmpty()) {
+			CodecHelper.writeNbt(nbt, "MemoryItem", ItemStack.CODEC, memoryItemStack);
 		}
 	}
 	
 	public void advanceManifesting(ServerWorld world, BlockPos blockPos) {
-		int ticksToManifest = MemoryItem.getTicksToManifest(this.memoryItemStack.getNbt());
+		int ticksToManifest = MemoryItem.getTicksToManifest(this.memoryItemStack);
 		if (ticksToManifest > 0) {
 			int additionalManifestAdvanceSteps = getManifestAdvanceSteps(world, blockPos);
 			if (additionalManifestAdvanceSteps > 0) {
@@ -103,7 +102,7 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 				if (newTicksToManifest <= 0) {
 					this.manifest(world, blockPos);
 				} else {
-					Optional<EntityType<?>> entityTypeOptional = MemoryItem.getEntityType(this.memoryItemStack.getNbt());
+					Optional<EntityType<?>> entityTypeOptional = MemoryItem.getEntityType(this.memoryItemStack);
 					if (entityTypeOptional.isPresent()) {
 						MemoryItem.setTicksToManifest(this.memoryItemStack, newTicksToManifest);
 						PlayMemoryManifestingParticlesPayload.playMemoryManifestingParticles(world, blockPos, entityTypeOptional.get(), 3);
@@ -160,8 +159,8 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 				this.tint1 = 0x222222;
 				this.tint2 = 0xDDDDDD;
 			} else {
-				this.tint1 = MemoryItem.getEggColor(this.memoryItemStack.getNbt(), 0);
-				this.tint2 = MemoryItem.getEggColor(this.memoryItemStack.getNbt(), 1);
+				this.tint1 = MemoryItem.getEggColor(this.memoryItemStack, 0);
+				this.tint2 = MemoryItem.getEggColor(this.memoryItemStack, 1);
 			}
 		}
 		
@@ -170,10 +169,6 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 		} else {
 			return tint2;
 		}
-	}
-	
-	public void updateInClientWorld() {
-		((ServerWorld) world).getChunkManager().markForUpdate(pos);
 	}
 	
 	// Called when the chunk is first loaded to initialize this be
@@ -185,28 +180,16 @@ public class MemoryBlockEntity extends BlockEntity implements PlayerOwned {
 	}
 	
 	public static Optional<Entity> hatchEntity(ServerWorld world, BlockPos blockPos, ItemStack memoryItemStack) {
-		NbtCompound nbt = memoryItemStack.getNbt();
-		if (nbt == null) {
-			return Optional.empty();
-		}
-		
-		Optional<EntityType<?>> entityType = MemoryItem.getEntityType(nbt);
-		if (entityType.isPresent()) {
-			// alignPosition: center the mob in the center of the blockPos
-			Entity entity = entityType.get().spawnFromItemStack(world, memoryItemStack, null, blockPos, SpawnReason.SPAWN_EGG, true, false);
-			if (entity != null) {
-				if (memoryItemStack.hasCustomName()) {
-					entity.setCustomName(memoryItemStack.getName());
-				}
-				if (entity instanceof MobEntity mobEntity) {
-					if (!nbt.getBoolean("SpawnAsAdult")) {
-						mobEntity.setBaby(true);
-					}
-				}
-				return Optional.of(entity);
-			}
-		}
-		return Optional.empty();
+		return Optional.ofNullable(memoryItemStack.get(SpectrumDataComponentTypes.MEMORY))
+				.flatMap(memory -> MemoryItem.getEntityType(memoryItemStack)
+						.map(entityType -> {
+							// alignPosition: center the mob in the center of the blockPos
+							Entity entity = entityType.spawnFromItemStack(world, memoryItemStack, null, blockPos, SpawnReason.SPAWN_EGG, true, false);
+							if (entity instanceof MobEntity mobEntity && !memory.spawnAsAdult())
+								mobEntity.setBaby(true);
+							return entity;
+						})
+				);
 	}
 	
 	@Override

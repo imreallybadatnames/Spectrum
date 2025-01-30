@@ -1,8 +1,10 @@
 package de.dafuqs.spectrum.recipe.spirit_instiller;
 
+import com.mojang.serialization.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.block.*;
+import de.dafuqs.spectrum.api.recipe.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.blocks.spirit_instiller.*;
 import de.dafuqs.spectrum.blocks.upgrade.*;
@@ -10,8 +12,14 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
+import io.wispforest.endec.*;
+import io.wispforest.endec.impl.*;
+import io.wispforest.owo.serialization.*;
+import io.wispforest.owo.serialization.endec.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.*;
 import net.minecraft.registry.*;
@@ -29,7 +37,6 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 	public static final int FIRST_INGREDIENT = 1;
 	public static final int SECOND_INGREDIENT = 2;
 	public static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("midgame/build_spirit_instiller_structure");
-	;
 	
 	protected final IngredientStack centerIngredient;
 	protected final IngredientStack bowlIngredient1;
@@ -96,6 +103,7 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 		if (inv instanceof SpiritInstillerBlockEntity spiritInstillerBlockEntity) {
 			Upgradeable.UpgradeHolder upgradeHolder = spiritInstillerBlockEntity.getUpgradeHolder();
 			World world = spiritInstillerBlockEntity.getWorld();
+			if (world == null) return ItemStack.EMPTY;
 			BlockPos pos = spiritInstillerBlockEntity.getPos();
 			
 			resultStack = getResult(drm).copy();
@@ -184,6 +192,33 @@ public class SpiritInstillerRecipe extends GatedStackSpectrumRecipe<RecipeInput>
 	@Override
 	public boolean fits(int width, int height) {
 		return width * height >= 3;
+	}
+	
+	public static class Serializer implements GatedRecipeSerializer<SpiritInstillerRecipe> {
+		
+		public static final StructEndec<SpiritInstillerRecipe> ENDEC = StructEndecBuilder.of(
+				Endec.STRING.optionalFieldOf("group", recipe -> recipe.group, ""),
+				Endec.BOOLEAN.optionalFieldOf("secret", recipe -> recipe.secret, false),
+				MinecraftEndecs.IDENTIFIER.fieldOf("required_advancement", recipe -> recipe.requiredAdvancementIdentifier),
+				IngredientStack.Serializer.ENDEC.fieldOf("center_ingredient", recipe -> recipe.centerIngredient),
+				IngredientStack.Serializer.ENDEC.fieldOf("ingredient1", recipe -> recipe.bowlIngredient1),
+				IngredientStack.Serializer.ENDEC.fieldOf("ingredient2", recipe -> recipe.bowlIngredient2),
+				MinecraftEndecs.ITEM_STACK.fieldOf("result", recipe -> recipe.output),
+				Endec.INT.optionalFieldOf("time", recipe -> recipe.craftingTime, 200),
+				Endec.FLOAT.optionalFieldOf("experience", recipe -> recipe.experience, 1.0f),
+				Endec.BOOLEAN.optionalFieldOf("disable_yield_and_efficiency_upgrades", recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades, false),
+				SpiritInstillerRecipe::new
+		);
+		
+		@Override
+		public MapCodec<SpiritInstillerRecipe> codec() {
+			return CodecUtils.toMapCodec(ENDEC);
+		}
+		
+		@Override
+		public PacketCodec<RegistryByteBuf, SpiritInstillerRecipe> packetCodec() {
+			return CodecUtils.toPacketCodec(ENDEC);
+		}
 	}
 	
 }

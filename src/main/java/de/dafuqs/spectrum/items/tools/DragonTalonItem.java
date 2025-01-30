@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
@@ -15,7 +15,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -29,36 +28,17 @@ import java.util.*;
 
 public class DragonTalonItem extends MalachiteBidentItem implements MergeableItem, SlotReservingItem, SlotBackgroundEffectProvider {
 	
-	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("3b9a13c8-a9a7-4545-8c32-e60baf25823e");
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers, phantomModifiers;
-	
+	private final AttributeModifiersComponent modifiers;
 	
 	public DragonTalonItem(ToolMaterial toolMaterial, double damage, double extraReach, Item.Settings settings) {
 		super(settings, 0, 0, 0, 0);
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", damage + toolMaterial.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -2.0, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Tool modifier", extraReach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		this.attributeModifiers = builder.build();
-		
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> phantom = ImmutableMultimap.builder();
-		this.phantomModifiers = phantom.build();
+		this.modifiers = AttributeModifiersComponent.builder()
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + toolMaterial.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, -2.0, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(SpectrumCommon.locate("reach_modifier"), extraReach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.build();
 	}
 	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
-	}
-	
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-		var nbt = stack.getNbt();
-		if (nbt == null || slot != EquipmentSlot.MAINHAND)
-			return super.getAttributeModifiers(slot);
-		
-		return this.isReservingSlot(stack) || nbt.getBoolean("cooldown") ? phantomModifiers : attributeModifiers;
-	}
-
 	@Override
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable("item.spectrum.dragon_talon.tooltip").formatted(Formatting.GRAY));
@@ -86,24 +66,20 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THROW.value();
 		
 		world.playSoundFromEntity(null, needleEntity, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-		markReserved(stack, true);
-		stack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT,
-				comp -> comp.apply(nbt -> nbt.putUuid("lastNeedle", needleEntity.getUuid())));
+		SlotReservingItem.reserve(stack, needleEntity.getUuid());
 	}
 	
 	@Override
 	public ItemStack getResult(ServerPlayerEntity player, ItemStack firstHalf, ItemStack secondHalf) {
 		var durability = Math.max(firstHalf.getDamage(), secondHalf.getDamage());
 		var result = new ItemStack(SpectrumItems.DRACONIC_TWINSWORD);
-		result.setNbt(firstHalf.getNbt());
+		result.applyComponentsFrom(firstHalf.getComponents());
 		
-		var nbt = result.getOrCreateNbt();
-		nbt.remove("pairSignature");
-		nbt.remove("lastNeedle");
-		nbt.remove("cooldown");
-		nbt.remove(SlotReservingItem.NBT_STRING);
+		result.remove(SpectrumDataComponentTypes.PAIRED_ITEM);
+		result.remove(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+		SlotReservingItem.free(result);
 		
-		if (isReservingSlot(firstHalf) || isReservingSlot(secondHalf)) {
+		if (SlotReservingItem.isReservingSlot(firstHalf) || SlotReservingItem.isReservingSlot(secondHalf)) {
 			durability += player.getAbilities().creativeMode ? 0 : 500;
 			player.getItemCooldownManager().set(result.getItem(), 400);
 		}
@@ -118,28 +94,22 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 		if (hand == Hand.MAIN_HAND)
 			return;
 		
-		if (!isReservingSlot(stack)) {
+		if (!SlotReservingItem.isReservingSlot(stack)) {
 			super.onStoppedUsing(user.getStackInHand(Hand.OFF_HAND), world, user, remainingUseTicks);
 			return;
 		}
 		
-		var nbt = stack.getOrCreateNbt();
-		
-		if (world.isClient() || !nbt.containsUuid("lastNeedle"))
-			return;
-		
-		ServerWorld serverWorld = (ServerWorld) world;
-		
-		var entity = serverWorld.getEntity(nbt.getUuid("lastNeedle"));
-		
-		if (entity instanceof DragonTalonEntity needle) {
-			needle.recall();
+		var reserver = SlotReservingItem.getReserver(stack);
+		if (world instanceof ServerWorld serverWorld && reserver != null) {
+			if (serverWorld.getEntity(reserver) instanceof DragonTalonEntity needle) {
+				needle.recall();
+			}
 		}
 	}
 
 	@Override
 	public boolean hasGlint(ItemStack stack) {
-		return super.hasGlint(stack) && !isReservingSlot(stack);
+		return super.hasGlint(stack) && !SlotReservingItem.isReservingSlot(stack);
 	}
 
 	@Override
@@ -158,29 +128,14 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 
 	@Override
 	public void playSound(ServerPlayerEntity player) {
-		player.playSound(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
-	}
-	
-	@Override
-	public boolean isReservingSlot(ItemStack stack) {
-		@Nullable NbtCompound nbt = stack.getNbt();
-		if (nbt == null) {
-			return false;
-		}
-		return nbt.getBoolean(SlotReservingItem.NBT_STRING);
-	}
-	
-	@Override
-	public void markReserved(ItemStack stack, boolean reserved) {
-		stack.getOrCreateNbt().putBoolean(SlotReservingItem.NBT_STRING, reserved);
+		player.playSoundToPlayer(SpectrumSoundEvents.METALLIC_UNSHEATHE, SoundCategory.PLAYERS, 0.5F, 0.8F + player.getRandom().nextFloat() * 0.4F);
 	}
 	
 	public static ItemStack findThrownStack(PlayerEntity player, UUID id) {
 		var inventory = player.getInventory();
 		for (int i = 0; i < inventory.size(); i++) {
 			var stack = inventory.getStack(i);
-			var nbt = stack.getNbt();
-			if (nbt != null && nbt.containsUuid("lastNeedle") && nbt.getUuid("lastNeedle").equals(id)) {
+			if (SlotReservingItem.isReserver(stack, id)) {
 				return stack;
 			}
 		}
@@ -190,13 +145,10 @@ public class DragonTalonItem extends MalachiteBidentItem implements MergeableIte
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 		if (entity instanceof PlayerEntity player) {
-			var nbt = stack.getOrCreateNbt();
-			if (player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
-				if (!nbt.getBoolean("cooldown")) {
-					nbt.putBoolean("cooldown", true);
-				}
-			} else if (nbt.contains("cooldown")) {
-				nbt.remove("cooldown");
+			if (player.getItemCooldownManager().isCoolingDown(stack.getItem()) || SlotReservingItem.isReservingSlot(stack)) {
+				stack.remove(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+			} else {
+				stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, modifiers);
 			}
 		}
 	}

@@ -7,6 +7,7 @@ import me.shedaniel.rei.api.common.category.*;
 import me.shedaniel.rei.api.common.display.basic.*;
 import me.shedaniel.rei.api.common.entry.*;
 import net.minecraft.client.*;
+import net.minecraft.recipe.*;
 import net.minecraft.text.*;
 import org.jetbrains.annotations.*;
 
@@ -18,11 +19,11 @@ public class FusionShrineDisplay extends GatedSpectrumDisplay {
 	protected final int craftingTime;
 	protected final Optional<Text> description;
 	
-	public FusionShrineDisplay(@NotNull FusionShrineRecipe recipe) {
-		super(recipe, buildIngredients(recipe), recipe.getResult(BasicDisplay.registryAccess()));
-		this.experience = recipe.getExperience();
-		this.craftingTime = recipe.getCraftingTime();
-		this.description = recipe.getDescription();
+	public FusionShrineDisplay(@NotNull RecipeEntry<FusionShrineRecipe> recipe) {
+		super(recipe, buildIngredients(recipe.value()), recipe.value().getResult(BasicDisplay.registryAccess()));
+		this.experience = recipe.value().getExperience();
+		this.craftingTime = recipe.value().getCraftingTime();
+		this.description = recipe.value().getDescription();
 	}
 	
 	private static List<EntryIngredient> buildIngredients(FusionShrineRecipe recipe) {

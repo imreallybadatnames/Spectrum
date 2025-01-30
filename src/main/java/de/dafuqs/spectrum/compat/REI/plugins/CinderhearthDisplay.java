@@ -7,6 +7,7 @@ import me.shedaniel.rei.api.common.category.*;
 import me.shedaniel.rei.api.common.util.*;
 import net.minecraft.client.*;
 import net.minecraft.item.*;
+import net.minecraft.recipe.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -18,11 +19,11 @@ public class CinderhearthDisplay extends GatedSpectrumDisplay {
 	protected final int craftingTime;
 	protected final List<Pair<ItemStack, Float>> outputsWithChance;
 	
-	public CinderhearthDisplay(@NotNull CinderhearthRecipe recipe) {
-		super(recipe, REIHelper.toEntryIngredients(recipe.getIngredientStacks()), List.of(EntryIngredients.ofItemStacks(recipe.getPossibleOutputs())));
-		this.outputsWithChance = recipe.getResultsWithChance();
-		this.experience = recipe.getExperience();
-		this.craftingTime = recipe.getCraftingTime();
+	public CinderhearthDisplay(@NotNull RecipeEntry<CinderhearthRecipe> recipe) {
+		super(recipe, REIHelper.toEntryIngredients(recipe.value().getIngredientStacks()), List.of(EntryIngredients.ofItemStacks(recipe.value().getPossibleOutputs())));
+		this.outputsWithChance = recipe.value().getResultsWithChance();
+		this.experience = recipe.value().getExperience();
+		this.craftingTime = recipe.value().getCraftingTime();
 	}
 	
 	@Override

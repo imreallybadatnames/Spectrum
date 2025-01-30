@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.compat.emi.recipes;
 
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.compat.emi.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.crystallarieum.*;
 import de.dafuqs.spectrum.registries.*;
 import dev.emi.emi.api.stack.*;
@@ -20,7 +19,7 @@ public class CrystallarieumEmiRecipeGated extends GatedSpectrumEmiRecipe<Crystal
 		super(SpectrumEmiRecipeCategories.CRYSTALLARIEUM, recipe, 124, 100);
 		inputs = List.of(
 				EmiIngredient.of(recipe.getIngredientStack()),
-				EmiStack.of(recipe.getGrowthStages().get(0).getBlock())
+				EmiStack.of(recipe.getGrowthStages().getFirst().getBlock())
 		);
 		outputs = Stream.concat(
 				Stream.concat(
@@ -33,9 +32,9 @@ public class CrystallarieumEmiRecipeGated extends GatedSpectrumEmiRecipe<Crystal
 	
 	@Override
 	public void addUnlockedWidgets(WidgetHolder widgets) {
-		widgets.addSlot(inputs.get(0), 0, 8);
+		widgets.addSlot(inputs.getFirst(), 0, 8);
 		
-		widgets.addSlot(EmiStack.of(SpectrumBlocks.CRYSTALLARIEUM.asStackWithColor(NullableDyeColor.get(recipe.getInkColor().getDyeColor()))), 20, 18).drawBack(false);
+		widgets.addSlot(EmiStack.of(SpectrumBlocks.CRYSTALLARIEUM.asStackWithColor(recipe.getInkColor())), 20, 18).drawBack(false);
 		
 		widgets.addFillingArrow(40, 9, recipe.getSecondsPerGrowthStage() * 1000);
 		

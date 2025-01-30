@@ -7,6 +7,7 @@ accessible class net/minecraft/client/render/BackgroundRenderer$FogData
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible class net/minecraft/loot/function/ApplyBonusLootFunction$Formula
 accessible class net/minecraft/structure/pool/StructurePoolBasedGenerator$StructurePoolGenerator
+accessible class net/minecraft/registry/RegistryOps$CachedRegistryInfoGetter
 accessible class net/minecraft/world/biome/Biome$Weather
 accessible class net/minecraft/world/SpawnDensityCapper$DensityCap
 accessible field net/minecraft/loot/LootTable pools Ljava/util/List;
@@ -18,6 +19,7 @@ accessible method net/minecraft/client/particle/BlockLeakParticle$Dripping <init
 accessible method net/minecraft/client/particle/BlockLeakParticle$ContinuousFalling  <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;Lnet/minecraft/particle/ParticleEffect;)V
 accessible method net/minecraft/client/particle/BlockLeakParticle$Landing  <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/fluid/Fluid;)V
 accessible method net/minecraft/client/particle/VibrationParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDLnet/minecraft/world/event/PositionSource;I)V
+accessible method net/minecraft/block/FluidBlock getFluidState (Lnet/minecraft/block/BlockState;)Lnet/minecraft/fluid/FluidState;
 
 accessible method net/minecraft/entity/LivingEntity applyDamage (Lnet/minecraft/entity/damage/DamageSource;F)V
 extendable method net/minecraft/screen/ForgingScreenHandler addPlayerInventorySlots (Lnet/minecraft/entity/player/PlayerInventory;)V

@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.items.magic_items;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import de.dafuqs.spectrum.api.interaction.*;
-import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.compat.claims.*;
 import de.dafuqs.spectrum.data_loaders.*;
 import de.dafuqs.spectrum.helpers.*;
@@ -18,6 +17,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -46,7 +46,7 @@ public class NaturesStaffItem extends Item implements InkPowered {
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		super.appendTooltip(stack, context, tooltip, type);
 		
-		int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
+		int efficiencyLevel = SpectrumEnchantmentHelper.getLevel(context.getRegistryLookup(), Enchantments.EFFICIENCY, stack);
 		if (efficiencyLevel == 0) {
 			if (InkPowered.canUseClient()) {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink", INK_COST.color().getColoredInkName()));
@@ -54,7 +54,7 @@ public class NaturesStaffItem extends Item implements InkPowered {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip"));
 			}
 		} else {
-			int chancePercent = (int) (getInkCostMod(stack) * 100);
+			int chancePercent = (int) (getInkCostMod(context.getRegistryLookup(), stack) * 100);
 			if (InkPowered.canUseClient()) {
 				tooltip.add(Text.translatable("item.spectrum.natures_staff.tooltip_with_ink_and_chance", INK_COST.color().getColoredInkName(), chancePercent));
 			} else {
@@ -112,7 +112,7 @@ public class NaturesStaffItem extends Item implements InkPowered {
 	}
 	
 	@Environment(EnvType.CLIENT)
-	@SuppressWarnings("resource")
+	@SuppressWarnings("DataFlowIssue")
 	public void usageTickClient(LivingEntity user) {
 		// Simple equality check to make sure this method doesn't execute on other clients.
 		// Always true if the current player is the one wielding the staff under normal circumstances.
@@ -129,8 +129,8 @@ public class NaturesStaffItem extends Item implements InkPowered {
 		}
 	}
 	
-	public float getInkCostMod(ItemStack itemStack) {
-		return 3.0F / (3.0F + EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, itemStack));
+	public float getInkCostMod(RegistryWrapper.WrapperLookup lookup, ItemStack itemStack) {
+		return 3.0F / (3.0F + SpectrumEnchantmentHelper.getLevel(lookup, Enchantments.EFFICIENCY, itemStack));
 	}
 	
 	@Override
@@ -284,10 +284,10 @@ public class NaturesStaffItem extends Item implements InkPowered {
 	private boolean payForUse(PlayerEntity player, ItemStack stack) {
 		boolean paid = player.isCreative(); // free for creative players
 		if (!paid) { // try pay with ink
-			paid = InkPowered.tryDrainEnergy(player, INK_COST, getInkCostMod(stack));
+			paid = InkPowered.tryDrainEnergy(player, INK_COST, getInkCostMod(player.getWorld().getRegistryManager(), stack));
 		}
 		if (!paid && player.getInventory().contains(ITEM_COST)) {  // try pay with item
-			int efficiencyLevel = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
+			int efficiencyLevel = SpectrumEnchantmentHelper.getLevel(player.getWorld().getRegistryManager(), Enchantments.EFFICIENCY, stack);
 			if (efficiencyLevel == 0) {
 				paid = InventoryHelper.removeFromInventoryWithRemainders(player, ITEM_COST);
 			} else {

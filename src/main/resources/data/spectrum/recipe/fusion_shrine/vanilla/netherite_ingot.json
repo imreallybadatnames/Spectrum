@@ -12,7 +12,6 @@
   ],
   "result": "minecraft:netherite_ingot",
   "required_advancement": "spectrum:unlocks/resources/netherite_ingot",
-  "world_conditions": [],
   "start_crafting_effect": "nothing",
   "during_crafting_effects": [
     "nothing",
