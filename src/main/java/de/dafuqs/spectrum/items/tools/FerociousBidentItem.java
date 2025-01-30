@@ -8,7 +8,7 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
@@ -58,7 +58,7 @@ public class FerociousBidentItem extends MalachiteBidentItem implements SlotBack
 			}
 			
 			yeetPlayer(player, getRiptideLevel(world.getRegistryManager(), stack) / 128F - 0.75F);
-			player.useRiptide(20);
+			player.useRiptide(20, 12.0F, stack);
 			
 			for (LivingEntity entityAround : world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), player.getBoundingBox().expand(2), LivingEntity::isAlive)) {
 				if (entityAround != player) {
