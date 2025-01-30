@@ -77,9 +77,13 @@ public class MiningProjectileEntity extends MagicProjectileEntity {
 		Entity entity = getOwner();
 		if (entity instanceof PlayerEntity player) {
 			Predicate<BlockState> minablePredicate = state -> {
-				int miningLevel = this.toolStack.getItem() instanceof ToolItem toolItem ? toolItem.getMaterial().getMiningLevel() : 1;
-				int efficiency = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.EFFICIENCY, this.toolStack);
-				return state.getBlock().getHardness() <= miningLevel + efficiency;
+				float hardness = state.getHardness(getWorld(), blockHitResult.getBlockPos());
+				if (hardness < 0) {
+					return false;
+				}
+				boolean suitable = this.toolStack.isSuitableFor(state);
+				int efficiencyLevel = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.EFFICIENCY, this.toolStack);
+				return hardness <= 6 + (suitable ? 4 + efficiencyLevel : 0);
 			};
 			AoEHelper.breakBlocksAround(player, this.toolStack, blockHitResult.getBlockPos(), MINING_RANGE, minablePredicate);
 		}
