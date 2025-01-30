@@ -3,6 +3,7 @@ package de.dafuqs.spectrum.particle;
 import com.mojang.serialization.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.particle.effect.*;
+import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.fabric.api.particle.v1.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;

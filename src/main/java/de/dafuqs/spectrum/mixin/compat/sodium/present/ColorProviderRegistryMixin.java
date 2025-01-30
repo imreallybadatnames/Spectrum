@@ -1,16 +1,8 @@
 package de.dafuqs.spectrum.mixin.compat.sodium.present;
 
-import de.dafuqs.spectrum.registries.*;
-import net.caffeinemc.mods.sodium.api.util.*;
 import net.caffeinemc.mods.sodium.client.model.color.*;
 import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.client.render.fluid.v1.*;
-import net.minecraft.fluid.*;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
-
-import java.util.*;
 
 // Since the color distortion bug isn't yet fixed,
 // nor is there an API for adding render overrides,
@@ -19,7 +11,7 @@ import java.util.*;
 @Environment(EnvType.CLIENT)
 @Mixin(value = ColorProviderRegistry.class, remap = false)
 public abstract class ColorProviderRegistryMixin {
-	@Shadow
+	/*@Shadow
 	protected abstract void registerFluids(ColorProvider<FluidState> resolver, Fluid... fluids);
 	
 	
@@ -35,5 +27,5 @@ public abstract class ColorProviderRegistryMixin {
 	@Unique
 	private ColorProvider<FluidState> createProvider(FluidRenderHandler handler) {
 		return (view, pos, state, quad, output) -> Arrays.fill(output, ColorARGB.toABGR(handler.getFluidColor(view, pos, state)));
-	}
+	}*/
 }

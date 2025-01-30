@@ -7,6 +7,7 @@ import de.dafuqs.spectrum.blocks.chests.*;
 import de.dafuqs.spectrum.blocks.idols.*;
 import de.dafuqs.spectrum.blocks.pastel_network.*;
 import de.dafuqs.spectrum.cca.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.entity.spawners.*;
 import de.dafuqs.spectrum.helpers.TimeHelper;
 import de.dafuqs.spectrum.helpers.*;
@@ -88,6 +89,15 @@ public class SpectrumEventListeners {
 		
 		PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
 			if (player instanceof ServerPlayerEntity serverPlayerEntity) {
+				ItemStack stack = player.getStackInHand(serverPlayerEntity.getActiveHand());
+				if (SpectrumEnchantmentHelper.hasEnchantment(player.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack)) {
+					InertiaComponent inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
+					long inertiaAmount = state.isOf(inertia.lastMined()) ? inertia.count() + 1 : 1;
+					stack.set(SpectrumDataComponentTypes.INERTIA, new InertiaComponent(state.getBlock(), inertiaAmount));
+					
+					SpectrumAdvancementCriteria.INERTIA_USED.trigger(serverPlayerEntity, state, inertiaAmount);
+				}
+				
 				SpectrumAdvancementCriteria.BLOCK_BROKEN.trigger(serverPlayerEntity, state);
 			}
 		});

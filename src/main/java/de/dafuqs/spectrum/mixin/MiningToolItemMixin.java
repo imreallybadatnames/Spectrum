@@ -3,18 +3,12 @@ package de.dafuqs.spectrum.mixin;
 import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
-import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
-import net.minecraft.server.network.*;
-import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(MiningToolItem.class)
 public abstract class MiningToolItemMixin {
@@ -22,22 +16,6 @@ public abstract class MiningToolItemMixin {
 	@Shadow
 	@Final
 	private TagKey<Block> effectiveBlocks;
-	
-	@Inject(at = @At("HEAD"), method = "postMine(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/LivingEntity;)Z")
-	public void countInertiaBlocks(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner, CallbackInfoReturnable<Boolean> cir) {
-		if (stack != null) { // thank you, gobber
-			long inertiaAmount = 0;
-			
-			if (SpectrumEnchantmentHelper.hasEnchantment(miner.getWorld().getRegistryManager(), SpectrumEnchantments.INERTIA, stack)) {
-				var inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
-				inertiaAmount = state.isOf(inertia.lastMined()) ? inertia.count() + 1 : 1;
-				stack.set(SpectrumDataComponentTypes.INERTIA, new InertiaComponent(state.getBlock(), inertiaAmount));
-			}
-			
-			if (miner instanceof ServerPlayerEntity serverPlayerEntity)
-				SpectrumAdvancementCriteria.INERTIA_USED.trigger(serverPlayerEntity, state, (int) inertiaAmount);
-		}
-	}
 	
 	@ModifyReturnValue(method = "getMiningSpeedMultiplier(Lnet/minecraft/item/ItemStack;Lnet/minecraft/block/BlockState;)F", at = @At("RETURN"))
 	public float applyMiningSpeedMultipliers(float original, ItemStack stack, BlockState state) {

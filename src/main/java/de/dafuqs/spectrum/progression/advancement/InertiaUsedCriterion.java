@@ -17,7 +17,7 @@ public class InertiaUsedCriterion extends AbstractCriterion<InertiaUsedCriterion
 	
 	public static final Identifier ID = SpectrumCommon.locate("inertia_used");
 	
-	public void trigger(ServerPlayerEntity player, BlockState state, int amount) {
+	public void trigger(ServerPlayerEntity player, BlockState state, long amount) {
 		this.trigger(player, (conditions) -> conditions.matches(state, amount));
 	}
 	
@@ -30,17 +30,17 @@ public class InertiaUsedCriterion extends AbstractCriterion<InertiaUsedCriterion
 		Optional<LootContextPredicate> player,
 		Block block,
 		StatePredicate statePredicate,
-		NumberRange.IntRange amount
+		LongRange amount
 	) implements AbstractCriterion.Conditions {
 		
 		public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
 			Registries.BLOCK.getCodec().fieldOf("block").forGetter(Conditions::block),
 			StatePredicate.CODEC.fieldOf("state").forGetter(Conditions::statePredicate),
-			NumberRange.IntRange.CODEC.fieldOf("amount").forGetter(Conditions::amount)
+				LongRange.CODEC.fieldOf("amount").forGetter(Conditions::amount)
 		).apply(instance, Conditions::new));
 		
-		public boolean matches(BlockState state, int amount) {
+		public boolean matches(BlockState state, long amount) {
 			if (this.block != null && !state.isOf(this.block)) {
 				return false;
 			} else {
