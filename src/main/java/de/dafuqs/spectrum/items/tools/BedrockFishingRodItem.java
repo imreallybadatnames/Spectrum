@@ -22,11 +22,6 @@ public class BedrockFishingRodItem extends SpectrumFishingRodItem implements Pre
 	}
 	
 	@Override
-	public boolean isDamageable() {
-		return false;
-	}
-	
-	@Override
 	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.LUCK_OF_THE_SEA, 4);
 	}

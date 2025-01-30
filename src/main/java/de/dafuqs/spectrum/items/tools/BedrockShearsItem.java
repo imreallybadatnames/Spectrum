@@ -8,15 +8,11 @@ import net.minecraft.registry.*;
 import java.util.*;
 
 // Waiting for https://github.com/FabricMC/fabric/pull/1804
+// Who's still waiting this with me in 2025??
 public class BedrockShearsItem extends ShearsItem implements Preenchanted {
 	
 	public BedrockShearsItem(Settings settings) {
 		super(settings);
-	}
-	
-	@Override
-	public boolean isDamageable() {
-		return false;
 	}
 	
 	@Override

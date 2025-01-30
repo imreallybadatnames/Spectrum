@@ -15,11 +15,6 @@ public class BedrockCrossbowItem extends CrossbowItem implements Preenchanted, A
 	}
 	
 	@Override
-	public boolean isDamageable() {
-		return false;
-	}
-	
-	@Override
 	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.QUICK_CHARGE, 4);
 	}
