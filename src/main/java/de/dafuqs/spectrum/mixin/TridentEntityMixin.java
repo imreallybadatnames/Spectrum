@@ -3,12 +3,14 @@ package de.dafuqs.spectrum.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.registries.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.damage.*;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.item.*;
+import net.minecraft.server.world.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -24,23 +26,23 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 	private boolean makeBidentDamageReasonable(Entity instance, DamageSource source, float amount, Operation<Boolean> original) {
 		if (((Object) this) instanceof BidentBaseEntity bidentEntity) {
 			var stack = bidentEntity.getTrackedStack();
-			var damage = getDamage(stack) + 1;
+			float damage = (float) getDamage(stack);
 			
-			if (instance instanceof LivingEntity livingAttacked) {
-				damage += EnchantmentHelper.getAttackDamage(stack, livingAttacked.getGroup());
+			DamageSource damageSource = SpectrumDamageTypes.impaling(getWorld(), bidentEntity, getOwner());
+			if (this.getWorld() instanceof ServerWorld serverWorld) {
+				damage += EnchantmentHelper.getDamage(serverWorld, this.getWeaponStack(), instance, damageSource, damage);
 			}
 			
-			return instance.damage(SpectrumDamageTypes.impaling(getWorld(), bidentEntity, getOwner()), damage * 2);
-		} else {
-			return original.call(instance, source, amount);
+			return instance.damage(damageSource, damage * 2);
 		}
+		return original.call(instance, source, amount);
 	}
 	
 	@Unique
-	private float getDamage(ItemStack stack) {
-		return (float) stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_DAMAGE)
-				.stream()
-				.mapToDouble(EntityAttributeModifier::getValue)
-				.sum();
+	private double getDamage(ItemStack stack) {
+		// TODO: is that correct?
+		AttributeModifiersComponent attributeModifiersComponent = stack.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT);
+		return attributeModifiersComponent.applyOperations(1.0D, EquipmentSlot.MAINHAND);
 	}
+	
 }
