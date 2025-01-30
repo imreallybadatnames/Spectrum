@@ -117,7 +117,7 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.RADIANCE_PIN);
 				entries.add(SpectrumItems.TOTEM_PENDANT);
 				entries.add(SpectrumItems.TAKE_OFF_BELT);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumItems.TAKE_OFF_BELT, Map.of(Enchantments.POWER, 5, Enchantments.FEATHER_FALLING, 4)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.TAKE_OFF_BELT, Map.of(Enchantments.POWER, 5, Enchantments.FEATHER_FALLING, 4)));
 				entries.add(SpectrumItems.AZURE_DIKE_BELT);
 				entries.add(SpectrumItems.AZURE_DIKE_RING);
 				entries.add(SpectrumItems.SHIELDGRASP_AMULET);
@@ -135,7 +135,7 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.LAURELS_OF_SERENITY);
 				entries.add(SpectrumItems.LAURELS_OF_SERENITY.getFullStack());
 				entries.add(SpectrumItems.GLEAMING_PIN);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumItems.GLEAMING_PIN, Map.of(SpectrumEnchantments.SNIPING, 2)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.GLEAMING_PIN, Map.of(SpectrumEnchantments.SNIPING, 2)));
 				entries.add(SpectrumItems.LESSER_POTION_PENDANT);
 				entries.add(SpectrumItems.GREATER_POTION_PENDANT);
 				entries.add(SpectrumItems.ASHEN_CIRCLET);
@@ -148,17 +148,17 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.NEAT_RING);
 				entries.add(SpectrumItems.CRAFTING_TABLET);
 				entries.add(SpectrumBlocks.BOTTOMLESS_BUNDLE);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), Map.of(Enchantments.POWER, 5, SpectrumEnchantments.VOIDING, 1)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), Map.of(Enchantments.POWER, 5, SpectrumEnchantments.VOIDING, 1)));
 				
 				entries.add(SpectrumItems.KNOWLEDGE_GEM);
-				ItemStack enchantedKnowledgeGemStack = SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), Map.of(Enchantments.POWER, 5, SpectrumEnchantments.VOIDING, 1));
+				ItemStack enchantedKnowledgeGemStack = SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), Map.of(Enchantments.POWER, 5, SpectrumEnchantments.VOIDING, 1));
 				entries.add(enchantedKnowledgeGemStack.copy());
 				
 				ItemStack knowledgeGemStack = SpectrumItems.KNOWLEDGE_GEM.getDefaultStack();
-				ExperienceStorageItem.addStoredExperience(lookup, knowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(lookup, knowledgeGemStack));
+				ExperienceStorageItem.addStoredExperience(displayContext.lookup(), knowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(displayContext.lookup(), knowledgeGemStack));
 				entries.add(knowledgeGemStack);
 				
-				ExperienceStorageItem.addStoredExperience(lookup, enchantedKnowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(lookup, enchantedKnowledgeGemStack));
+				ExperienceStorageItem.addStoredExperience(displayContext.lookup(), enchantedKnowledgeGemStack, SpectrumItems.KNOWLEDGE_GEM.getMaxStoredExperience(displayContext.lookup(), enchantedKnowledgeGemStack));
 				entries.add(enchantedKnowledgeGemStack);
 				
 				entries.add(SpectrumItems.CELESTIAL_POCKETWATCH);
@@ -172,18 +172,18 @@ public class SpectrumItemGroups {
 				entries.add(SpectrumItems.BAG_OF_HOLDING);
 				entries.add(SpectrumItems.RADIANCE_STAFF);
 				entries.add(SpectrumItems.NATURES_STAFF);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumItems.NATURES_STAFF, Map.of(Enchantments.EFFICIENCY, 5)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.NATURES_STAFF, Map.of(Enchantments.EFFICIENCY, 5)));
 				entries.add(SpectrumItems.STAFF_OF_REMEMBRANCE);
 				entries.add(SpectrumItems.CONSTRUCTORS_STAFF);
 				entries.add(SpectrumItems.EXCHANGING_STAFF);
-				lookup.getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(impl -> {
+				displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(impl -> {
 					impl.getOptional(Enchantments.FORTUNE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 3, false, false).getRight()));
 					impl.getOptional(Enchantments.SILK_TOUCH).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
 					impl.getOptional(SpectrumEnchantments.CLOAKED_RESONANCE).ifPresent(enchantment -> entries.add(SpectrumEnchantmentHelper.addOrUpgradeEnchantment(SpectrumItems.EXCHANGING_STAFF.getDefaultStack(), enchantment, 1, false, false).getRight()));
 				});
 				entries.add(SpectrumItems.BLOCK_FLOODER);
 				entries.add(SpectrumItems.ENDER_SPLICE);
-				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(lookup, SpectrumItems.ENDER_SPLICE, Map.of(SpectrumEnchantments.RESONANCE, 1, SpectrumEnchantments.INDESTRUCTIBLE, 1)));
+				entries.add(SpectrumEnchantmentHelper.getEnchantedStack(displayContext.lookup(), SpectrumItems.ENDER_SPLICE, Map.of(SpectrumEnchantments.RESONANCE, 1, SpectrumEnchantments.INDESTRUCTIBLE, 1)));
 				entries.add(SpectrumItems.PERTURBED_EYE);
 				entries.add(SpectrumBlocks.PARAMETRIC_MINING_DEVICE);
 				entries.add(SpectrumBlocks.THREAT_CONFLUX);
