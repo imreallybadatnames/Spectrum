@@ -11,6 +11,7 @@ accessible class net/minecraft/registry/RegistryOps$CachedRegistryInfoGetter
 accessible class net/minecraft/world/biome/Biome$Weather
 accessible class net/minecraft/world/SpawnDensityCapper$DensityCap
 accessible field net/minecraft/loot/LootTable pools Ljava/util/List;
+accessible field net/minecraft/block/FluidBlock fluid Lnet/minecraft/fluid/FlowableFluid;
 
 extendable method net/minecraft/component/type/BundleContentsComponent$Builder addInternal (Lnet/minecraft/item/ItemStack;)I
 extendable method net/minecraft/component/type/BundleContentsComponent$Builder getMaxAllowed (Lnet/minecraft/item/ItemStack;)I

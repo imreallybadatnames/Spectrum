@@ -170,7 +170,7 @@ public class SpectrumEventListeners {
 			for (Iterator<Block> it = Registries.BLOCK.stream().iterator(); it.hasNext(); ) {
 				Block block = it.next();
 				if (block instanceof FluidBlock fluidBlock) {
-					fluidLuminance.put(fluidBlock.getFluidState(fluidBlock.getDefaultState()).getFluid(), fluidBlock.getDefaultState().getLuminance());
+					fluidLuminance.put(fluidBlock.fluid, fluidBlock.getDefaultState().getLuminance());
 				}
 			}
 			
