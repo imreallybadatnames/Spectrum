@@ -12,6 +12,7 @@ import de.dafuqs.spectrum.api.status_effect.*;
 import de.dafuqs.spectrum.blocks.memory.*;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.cca.azure_dike.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
@@ -603,11 +604,11 @@ public abstract class LivingEntityMixin {
 		return sprinting;
 	}
 	
-	@Inject(at = @At("TAIL"), method = "applyFoodEffects(Lnet/minecraft/component/type/FoodComponent;)V")
-	private void spectrum$eat(FoodComponent component, CallbackInfo ci) {
-		Item item = stack.getItem();
-		if (item instanceof ApplyFoodEffectsCallback foodWithCallback) {
-			foodWithCallback.afterConsumption(world, stack, (LivingEntity) (Object) this);
+	@Inject(method = "Lnet/minecraft/entity/LivingEntity;tryEatFood(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;", at = @At(value = "HEAD"))
+	private void spectrum$conditionalFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+		ConditionalFoodComponent component = stack.get(SpectrumDataComponentTypes.CONDITIONAL_FOOD_COMPONENT);
+		if (component != null) {
+			component.tryEatFood(world, (LivingEntity) (Object) this, stack);
 		}
 	}
 	

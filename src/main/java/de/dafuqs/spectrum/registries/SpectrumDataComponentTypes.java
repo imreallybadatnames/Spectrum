@@ -51,6 +51,7 @@ public class SpectrumDataComponentTypes {
 	public static final ComponentType<Unit> UNIDENTIFIABLE = register("unidentifiable", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 	public static final ComponentType<WorkstaffComponent> WORKSTAFF = register("workstaff", builder -> builder.codec(WorkstaffComponent.CODEC).packetCodec(WorkstaffComponent.PACKET_CODEC));
 	public static final ComponentType<WrappedPresentComponent> WRAPPED_PRESENT = register("wrapped_present", builder -> builder.codec(WrappedPresentComponent.CODEC).packetCodec(WrappedPresentComponent.PACKET_CODEC).cache());
+	public static final ComponentType<ConditionalFoodComponent> CONDITIONAL_FOOD_COMPONENT = register("conditional_food_component", builder -> builder.codec(ConditionalFoodComponent.CODEC).packetCodec(ConditionalFoodComponent.PACKET_CODEC).cache());
 	
 	public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
 		return DEFERRER.defer(builderOperator.apply(ComponentType.builder()).build(),

@@ -12,9 +12,9 @@ import net.minecraft.util.*;
 
 import java.util.*;
 
-public class ConsumedTeaWithSconeCriterion extends AbstractCriterion<ConsumedTeaWithSconeCriterion.Conditions> {
+public class ConditionalFoodEatenCriterion extends AbstractCriterion<ConditionalFoodEatenCriterion.Conditions> {
 	
-	public static final Identifier ID = SpectrumCommon.locate("consumed_tea_with_scone");
+	public static final Identifier ID = SpectrumCommon.locate("consumed_conditional_food");
 	
 	public void trigger(ServerPlayerEntity player, ItemStack teaStack, ItemStack sconeStack) {
 		this.trigger(player, (conditions) -> conditions.matches(teaStack, sconeStack));
@@ -31,11 +31,11 @@ public class ConsumedTeaWithSconeCriterion extends AbstractCriterion<ConsumedTea
 		ItemPredicate sconeItem
 	) implements AbstractCriterion.Conditions {
 		
-		public static final Codec<ConsumedTeaWithSconeCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(ConsumedTeaWithSconeCriterion.Conditions::player),
-			ItemPredicate.CODEC.fieldOf("tea_items").forGetter(ConsumedTeaWithSconeCriterion.Conditions::teaItem),
-			ItemPredicate.CODEC.fieldOf("scone_items").forGetter(ConsumedTeaWithSconeCriterion.Conditions::sconeItem)
-		).apply(instance, ConsumedTeaWithSconeCriterion.Conditions::new));
+		public static final Codec<ConditionalFoodEatenCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+				LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(ConditionalFoodEatenCriterion.Conditions::player),
+				ItemPredicate.CODEC.fieldOf("eaten_item").forGetter(ConditionalFoodEatenCriterion.Conditions::teaItem),
+				ItemPredicate.CODEC.fieldOf("conditional_item").forGetter(ConditionalFoodEatenCriterion.Conditions::sconeItem)
+		).apply(instance, ConditionalFoodEatenCriterion.Conditions::new));
 		
 		public boolean matches(ItemStack teaStack, ItemStack sconeStack) {
 			return teaItem.test(teaStack) && sconeItem.test(sconeStack);

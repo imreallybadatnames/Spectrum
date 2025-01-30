@@ -1,8 +1,7 @@
 package de.dafuqs.spectrum.items.food;
 
-import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 
@@ -10,8 +9,8 @@ import java.util.*;
 
 public class RestorationTeaItem extends TeaItem {
 	
-	public RestorationTeaItem(Settings settings, FoodComponent bonusFoodComponentWithScone) {
-		super(settings, bonusFoodComponentWithScone);
+	public RestorationTeaItem(Settings settings) {
+		super(settings);
 	}
 
 	@Override

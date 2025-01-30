@@ -13,8 +13,10 @@
   "parent": "spectrum:collect_amaranth_bushel",
   "criteria": {
     "drank_any_tea_with_scone": {
-      "trigger": "spectrum:consumed_tea_with_scone",
-      "conditions": {}
+			"trigger": "spectrum:consumed_conditional_food",
+			"conditions": {
+				"conditional_item": "spectrum:scone"
+			}
     },
     "gotten_previous": {
       "trigger": "revelationary:advancement_gotten",
