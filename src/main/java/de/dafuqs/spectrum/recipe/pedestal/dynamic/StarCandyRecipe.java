@@ -22,8 +22,9 @@ public class StarCandyRecipe extends ShapedPedestalRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(CraftingRecipeInput inv, RegistryWrapper.WrapperLookup drm) {
-		if (inv.getWorld().random.nextFloat() < ENCHANTED_STAR_CANDY_CHANCE)
+	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
+		//TODO is there any way to get rand from the world?
+		if (new Random().nextFloat() < ENCHANTED_STAR_CANDY_CHANCE)
 			return SpectrumItems.ENCHANTED_STAR_CANDY.getDefaultStack();
 		return this.output.copy();
 	}

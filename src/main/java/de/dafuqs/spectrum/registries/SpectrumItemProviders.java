@@ -2,115 +2,30 @@ package de.dafuqs.spectrum.registries;
 
 import de.dafuqs.spectrum.api.interaction.*;
 import de.dafuqs.spectrum.blocks.bottomless_bundle.*;
-import net.minecraft.block.entity.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.util.collection.*;
+import org.jetbrains.annotations.*;
+
+import java.util.*;
+import java.util.function.*;
 
 public class SpectrumItemProviders {
 	
 	public static void register() {
-		ItemProviderRegistry.register(Items.SHULKER_BOX, new ItemProvider() {
-			@Override
-			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
-				NbtCompound nbt = stack.getSubNbt("BlockEntityTag");
-				if (nbt == null) {
-					return 0;
-				}
-				
-				DefaultedList<ItemStack> inventory = DefaultedList.ofSize(ShulkerBoxBlockEntity.INVENTORY_SIZE, ItemStack.EMPTY);
-				Inventories.readNbt(nbt, inventory);
-				
-				int removedCount = 0;
-				for (ItemStack s : inventory) {
-					if (s.isOf(requestedItem)) {
-						int amountToRemove = Math.min(s.getCount(), amount - removedCount);
-						s.decrement(amountToRemove);
-						removedCount += amountToRemove;
-						if (removedCount == amount) {
-							break;
-						}
-					}
-				}
-				Inventories.writeNbt(nbt, inventory);
-				
-				return removedCount;
-			}
-			
-			@Override
-			public int getItemCount(PlayerEntity player, ItemStack stack, Item requestedItem) {
-				NbtCompound nbt = stack.getSubNbt("BlockEntityTag");
-				if (nbt == null) {
-					return 0;
-				}
-				
-				DefaultedList<ItemStack> inventory = DefaultedList.ofSize(ShulkerBoxBlockEntity.INVENTORY_SIZE, ItemStack.EMPTY);
-				Inventories.readNbt(nbt, inventory);
-				
-				int count = 0;
-				for (ItemStack s : inventory) {
-					if (s.isOf(requestedItem)) {
-						count += s.getCount();
-					}
-				}
-				
-				return count;
-			}
-		});
+		ItemProviderRegistry.register(Items.SHULKER_BOX, iterableProvider((player, stack) ->
+				stack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT).iterateNonEmpty()));
+
+		ItemProviderRegistry.register(Items.BUNDLE, iterableProvider((player, stack) ->
+				stack.getOrDefault(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT).iterate()));
 		
-		ItemProviderRegistry.register(Items.BUNDLE, new ItemProvider() {
-			@Override
-			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
-				NbtCompound nbtCompound = stack.getNbt();
-				if (nbtCompound == null) {
-					return 0;
-				}
-				
-				int removedCount = 0;
-				NbtList nbtList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
-				for (NbtElement e : nbtList) {
-					ItemStack s = ItemStack.fromNbt((NbtCompound) e);
-					if (s.isOf(requestedItem)) {
-						int amountToRemove = Math.min(s.getCount(), amount - removedCount);
-						((NbtCompound) e).putByte("Count", (byte) (s.getCount() - amountToRemove));
-						removedCount += amountToRemove;
-						if (removedCount == amount) {
-							break;
-						}
-					}
-				}
-				
-				return removedCount;
-			}
-			
-			@Override
-			public int getItemCount(PlayerEntity player, ItemStack stack, Item requestedItem) {
-				NbtCompound nbtCompound = stack.getNbt();
-				if (nbtCompound == null) {
-					return 0;
-				}
-				
-				int total = 0;
-				NbtList nbtList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
-				for (NbtElement e : nbtList) {
-					ItemStack s = ItemStack.fromNbt((NbtCompound) e);
-					if (s.isOf(requestedItem)) {
-						total += s.getCount();
-					}
-				}
-				
-				return total;
-			}
-		});
-		
-		ItemProviderRegistry.register(SpectrumBlocks.BOTTOMLESS_BUNDLE, new ItemProvider() {
+		ItemProviderRegistry.register(SpectrumBlocks.BOTTOMLESS_BUNDLE.asItem(), new ItemProvider() {
 			@Override
 			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
 				var builder = BottomlessBundleItem.BottomlessStack.Builder.of(player.getWorld(), stack);
 				var removed = builder.remove(amount);
-				if (removed == null || !removed.isOf(requestedItem))
+				if (!removed.isOf(requestedItem))
 					return 0;
 				stack.set(SpectrumDataComponentTypes.BOTTOMLESS_STACK, builder.build());
 				return removed.getCount();
@@ -118,26 +33,26 @@ public class SpectrumItemProviders {
 			
 			@Override
 			public int getItemCount(PlayerEntity player, ItemStack stack, Item requestedItem) {
-				var bottomlessStack = stack.get(SpectrumDataComponentTypes.BOTTOMLESS_STACK);
-				if (bottomlessStack == null || !bottomlessStack.template().isOf(requestedItem))
+				var bottomlessStack = stack.getOrDefault(SpectrumDataComponentTypes.BOTTOMLESS_STACK, BottomlessBundleItem.BottomlessStack.DEFAULT);
+				if (!bottomlessStack.template().isOf(requestedItem))
 					return 0;
-				return bottomlessStack.count();
+				return (int) Math.min(Integer.MAX_VALUE, bottomlessStack.count());
 			}
 		});
 		
 		// BAG_OF_HOLDING only works server side
 		// the client does not know about the content of the ender chest, unless opened
-		ItemProviderRegistry.register(SpectrumItems.BAG_OF_HOLDING, new ItemProvider() {
+		ItemProviderRegistry.register(SpectrumItems.BAG_OF_HOLDING, iterableProvider((player, stack) ->
+				player == null ? List.of() : player.getEnderChestInventory().getHeldStacks()));
+		
+	}
+	
+	public static ItemProvider iterableProvider(BiFunction<@Nullable PlayerEntity, ItemStack, Iterable<ItemStack>> iterableFactory) {
+		return new ItemProvider() {
 			@Override
 			public int provideItems(PlayerEntity player, ItemStack stack, Item requestedItem, int amount) {
-				if (player == null) {
-					return 0;
-				}
-				
-				Inventory inv = player.getEnderChestInventory();
 				int removedCount = 0;
-				for (int i = 0; i < inv.size(); i++) {
-					ItemStack s = inv.getStack(i);
+				for (ItemStack s : iterableFactory.apply(player, stack)) {
 					if (s.isOf(requestedItem)) {
 						int amountToRemove = Math.min(s.getCount(), amount - removedCount);
 						s.decrement(amountToRemove);
@@ -147,18 +62,20 @@ public class SpectrumItemProviders {
 						}
 					}
 				}
-				
 				return removedCount;
 			}
 			
 			@Override
 			public int getItemCount(PlayerEntity player, ItemStack stack, Item requestedItem) {
-				if (player == null) {
-					return 0;
+				int count = 0;
+				for (ItemStack s : iterableFactory.apply(player, stack)) {
+					if (s.isOf(requestedItem)) {
+						count += s.getCount();
+					}
 				}
-				return player.getEnderChestInventory().count(requestedItem);
+				return count;
 			}
-		});
+		};
 	}
 	
 }

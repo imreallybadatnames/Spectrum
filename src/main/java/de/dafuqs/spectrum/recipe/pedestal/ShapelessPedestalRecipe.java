@@ -23,7 +23,7 @@ public class ShapelessPedestalRecipe extends PedestalRecipe {
 	}
 	
 	@Override
-	public boolean matches(CraftingRecipeInput recipeInput, World world) {
+	public boolean matches(RecipeInput recipeInput, World world) {
 		return matchIngredientStacksExclusively(recipeInput, getIngredientStacks(), CRAFTING_GRID_SLOTS) && super.matches(recipeInput, world);
 	}
 	

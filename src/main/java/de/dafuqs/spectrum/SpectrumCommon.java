@@ -48,19 +48,26 @@ public class SpectrumCommon implements ModInitializer {
 	public static SpectrumConfig CONFIG;
 
 	public static void logInfo(String message) {
-		LOGGER.info("[Spectrum] " + message);
+		LOGGER.info("[Spectrum] {}", message);
 	}
 	
 	public static void logWarning(String message) {
-		LOGGER.warn("[Spectrum] " + message);
+		LOGGER.warn("[Spectrum] {}", message);
 	}
 	
 	public static void logError(String message) {
-		LOGGER.error("[Spectrum] " + message);
+		LOGGER.error("[Spectrum] {}", message);
 	}
 	
 	public static Identifier locate(String name) {
 		return Identifier.of(MOD_ID, name);
+	}
+	
+	public static Identifier ofSpectrum(String id) {
+		int i = id.indexOf(':');
+		String path = id.substring(i + 1);
+		String namespace = i > 0 ? id.substring(0, i) : SpectrumCommon.MOD_ID;
+		return Identifier.of(namespace, path);
 	}
 	
 	// Will be null when playing on a dedicated server!

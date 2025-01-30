@@ -1,11 +1,14 @@
 package de.dafuqs.spectrum.helpers;
 
 import com.google.gson.*;
-import com.mojang.datafixers.util.*;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
+import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
+import net.minecraft.registry.entry.*;
+import net.minecraft.util.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -34,6 +37,27 @@ public class CodecHelper {
 			return recordBuilder;
 		}
 	};
+	
+	public static <T, R extends Registry<T>> Codec<T> spectrumRegistryValue(R registry) {
+		return Codec.STRING
+				.xmap(SpectrumCommon::ofSpectrum, Identifier::toString)
+				.comapFlatMap(
+						id -> registry.getEntry(id).map(DataResult::success).orElse(DataResult.error(
+								() -> "Unknown registry key in " + registry.getKey() + ": " + id
+						)),
+						entry -> entry.registryKey().getValue()
+				).flatComapMap(
+						RegistryEntry.Reference::value,
+						(value) -> {
+							var entry = registry.getEntry(value);
+							if (entry instanceof RegistryEntry.Reference<T> reference) {
+								return DataResult.success(reference);
+							} else {
+								return DataResult.error(() -> "Unregistered holder in " + registry.getKey() + ": " + entry);
+							}
+						}
+				);
+	}
 	
 	public static <T> Codec<List<T>> singleOrList(Codec<T> codec) {
 		return Codec.withAlternative(codec.listOf(), codec, List::of);

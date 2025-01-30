@@ -22,7 +22,7 @@ public class SpectrumDispenserBehaviors {
 		DispenserBlock.registerBehavior(SpectrumBlocks.PRISTINE_SHOOTING_STAR, new ShootingStarDispenserBehavior());
 		
 		// Fluid Buckets
-		DispenserBehavior fluidBucketBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.WATER_BUCKET.getDefaultStack());
+		DispenserBehavior fluidBucketBehavior = DispenserBlock.BEHAVIORS.get(Items.WATER_BUCKET);
 		DispenserBlock.registerBehavior(SpectrumItems.GOO_BUCKET, fluidBucketBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.LIQUID_CRYSTAL_BUCKET, fluidBucketBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.MIDNIGHT_SOLUTION_BUCKET, fluidBucketBehavior);
@@ -34,7 +34,7 @@ public class SpectrumDispenserBehaviors {
 		}
 		
 		// Spawn Eggs
-		DispenserBehavior spawnEggBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.SHEEP_SPAWN_EGG.getDefaultStack());
+		DispenserBehavior spawnEggBehavior = DispenserBlock.BEHAVIORS.get(Items.SHEEP_SPAWN_EGG);
 		DispenserBlock.registerBehavior(SpectrumItems.EGG_LAYING_WOOLY_PIG_SPAWN_EGG, spawnEggBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.KINDLING_SPAWN_EGG, spawnEggBehavior);
 		DispenserBlock.registerBehavior(SpectrumItems.LIZARD_SPAWN_EGG, spawnEggBehavior);
@@ -42,7 +42,7 @@ public class SpectrumDispenserBehaviors {
         DispenserBlock.registerBehavior(SpectrumItems.ERASER_SPAWN_EGG, spawnEggBehavior);
 		
 		// Equipping Mob Heads
-		DispenserBehavior armorEquipBehavior = SpectrumBlocks.ENDER_DROPPER.getDefaultBehaviorForItem(Items.PLAYER_HEAD.getDefaultStack());
+		DispenserBehavior armorEquipBehavior = DispenserBlock.BEHAVIORS.get(Items.PLAYER_HEAD);
 		for (Block skullBlock : SpectrumSkullBlock.MOB_HEADS.values()) {
 			DispenserBlock.registerBehavior(skullBlock, armorEquipBehavior);
 		}

@@ -39,7 +39,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public boolean matches(CraftingRecipeInput inventory, World world) {
+	public boolean matches(RecipeInput inventory, World world) {
 		ItemStack nonModStack = validateGridAndFindModularExplosiveStack(inventory);
 		if (!(nonModStack.getItem() instanceof ModularExplosionProvider modularExplosionProvider)) {
 			return false;
@@ -91,7 +91,7 @@ public class ExplosionModificationRecipe extends ShapelessPedestalRecipe {
 	}
 	
 	@Override
-	public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
+	public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup drm) {
 		ItemStack output = validateGridAndFindModularExplosiveStack(inventory).copy();
 		
 		Pair<List<ExplosionArchetype>, List<ExplosionModifier>> pair = findArchetypeAndModifiers(inventory);

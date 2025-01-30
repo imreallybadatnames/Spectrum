@@ -6,7 +6,7 @@
 	"overrides": [
 		{
 			"predicate": {
-				"spectrum:socketed": 1.0
+				"socketed": 1.0
 			},
 			"model": "spectrum:item/mysterious_locket_socketed"
 		}

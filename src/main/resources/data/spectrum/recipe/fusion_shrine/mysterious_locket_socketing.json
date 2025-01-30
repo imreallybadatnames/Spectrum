@@ -16,7 +16,7 @@
 	"result": {
 		"id": "spectrum:mysterious_locket",
 		"components": {
-			"spectrum:socketed": {}
+			"socketed": {}
 		}
 	},
 	"required_advancement": "spectrum:unlocks/mysterious_locket_socketing",

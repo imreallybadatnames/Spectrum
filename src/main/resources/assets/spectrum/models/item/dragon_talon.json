@@ -7,21 +7,21 @@
     {
       "predicate": {
         "oversized": 1.0,
-        "spectrum:reserved": 0.0
+        "reserved": 0.0
       },
       "model": "spectrum:item/dragon_talon_oversized"
     },
     {
       "predicate": {
         "oversized": 1.0,
-        "spectrum:reserved": 1.0
+        "reserved": 1.0
       },
       "model": "spectrum:item/dragon_blank"
     },
     {
       "predicate": {
         "oversized": 0.0,
-        "spectrum:reserved": 1.0
+        "reserved": 1.0
       },
       "model": "spectrum:item/dragon_talon_phantom"
     }

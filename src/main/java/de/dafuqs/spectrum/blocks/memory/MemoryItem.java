@@ -35,6 +35,10 @@ public class MemoryItem extends BlockItem {
 		super(block, settings);
 	}
 	
+	public static MemoryComponent getMemory(ItemStack stack) {
+		return stack.getOrDefault(SpectrumDataComponentTypes.MEMORY, MemoryComponent.DEFAULT);
+	}
+	
 	public static ItemStack getMemoryForEntity(LivingEntity entity) {
 		NbtCompound tag = new NbtCompound();
 		entity.saveSelfNbt(tag);
@@ -89,7 +93,7 @@ public class MemoryItem extends BlockItem {
 	}
 	
 	public static int getTicksToManifest(ItemStack stack) {
-		return stack.getOrDefault(SpectrumDataComponentTypes.MEMORY, MemoryComponent.DEFAULT).ticksToManifest();
+		return getMemory(stack).ticksToManifest();
 	}
 	
 	public static void setTicksToManifest(@NotNull ItemStack itemStack, int newTicksToManifest) {
@@ -105,11 +109,11 @@ public class MemoryItem extends BlockItem {
 	}
 	
 	public static boolean isBrokenPromise(ItemStack stack) {
-		return stack.getOrDefault(SpectrumDataComponentTypes.MEMORY, MemoryComponent.DEFAULT).brokenPromise();
+		return getMemory(stack).brokenPromise();
 	}
 	
 	public static boolean isUnrecognizable(ItemStack stack) {
-		return stack.getOrDefault(SpectrumDataComponentTypes.MEMORY, MemoryComponent.DEFAULT).unrecognizable();
+		return getMemory(stack).unrecognizable();
 	}
 	
 	public static void makeUnrecognizable(@NotNull ItemStack itemStack) {

@@ -41,7 +41,7 @@ public class ShapedPedestalRecipe extends PedestalRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingRecipeInput inv, World world) {
+	public boolean matches(RecipeInput inv, World world) {
 		return getRecipeOrientation(inv) != null && super.matches(inv, world);
 	}
 

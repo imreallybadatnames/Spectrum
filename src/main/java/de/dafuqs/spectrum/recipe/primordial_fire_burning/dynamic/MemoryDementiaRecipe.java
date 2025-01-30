@@ -20,14 +20,13 @@ public class MemoryDementiaRecipe extends PrimordialFireBurningRecipe {
 	
 	@Override
 	public boolean matches(RecipeInput inv, World world) {
-		// FIXME - Component
-		return MemoryItem.getEntityType(inv.getStackInSlot(0).contains());
+		return inv.getStackInSlot(0).contains(SpectrumDataComponentTypes.MEMORY);
 	}
 	
 	@Override
 	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
 		ItemStack stack = inv.getStackInSlot(0);
-		// FIXME - Set Component
+		stack.remove(SpectrumDataComponentTypes.MEMORY);
 		return stack;
 	}
 	

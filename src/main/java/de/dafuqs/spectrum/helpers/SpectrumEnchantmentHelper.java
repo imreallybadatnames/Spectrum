@@ -15,6 +15,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.stream.*;
 
 public class SpectrumEnchantmentHelper {
 	
@@ -42,6 +43,15 @@ public class SpectrumEnchantmentHelper {
 		return getEntry(registryLookup, enchantmentKey)
 				.map(entry -> addOrUpgradeEnchantment(stack, entry, level, forceEvenIfNotApplicable, allowEnchantmentConflicts))
 				.orElse(new Pair<>(false, stack));
+	}
+	
+	public static ItemStack getMaxEnchantedStack(RegistryWrapper.WrapperLookup drm, Item item) {
+		var stack = item.getDefaultStack();
+		var builder = new ItemEnchantmentsComponent.Builder(EnchantmentHelper.getEnchantments(stack));
+		drm.getOptionalWrapper(RegistryKeys.ENCHANTMENT).map(RegistryWrapper::streamEntries).orElse(Stream.empty())
+				.forEach(enchantment -> builder.set(enchantment, enchantment.value().getMaxLevel()));
+		EnchantmentHelper.set(stack, builder.build());
+		return stack;
 	}
 	
 	/**

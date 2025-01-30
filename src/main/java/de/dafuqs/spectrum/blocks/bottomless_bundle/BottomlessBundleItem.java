@@ -1,7 +1,7 @@
 package de.dafuqs.spectrum.blocks.bottomless_bundle;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.api.render.*;
@@ -9,9 +9,9 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.items.tooltip.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.api.transfer.v1.item.*;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.*;
+import net.fabricmc.fabric.api.transfer.v1.transaction.*;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.*;
 import net.minecraft.client.*;
@@ -20,17 +20,15 @@ import net.minecraft.client.render.item.*;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.math.*;
-import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
 import net.minecraft.registry.*;
 import net.minecraft.screen.slot.*;
 import net.minecraft.sound.*;
@@ -39,7 +37,7 @@ import net.minecraft.text.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -57,11 +55,8 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 
 	private static boolean dropOneBundledStack(ItemStack stack, PlayerEntity player) {
 		var builder = BottomlessStack.Builder.of(player.getWorld(), stack);
-		if (builder == null)
-			return false;
-
 		var dropped = builder.removeFirstStack();
-		if (dropped == null)
+		if (dropped.isEmpty())
 			return false;
 
 		player.dropItem(dropped, true);
@@ -181,13 +176,10 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 		if (clickType == ClickType.RIGHT) {
 			ItemStack itemStack = slot.getStack();
 			var builder = BottomlessStack.Builder.of(player.getWorld(), stack);
-			if (builder == null)
-				return false;
-
 			if (itemStack.isEmpty()) {
 				playRemoveOneSound(player);
 				var removed = builder.removeFirstStack();
-				if (removed != null) {
+				if (!removed.isEmpty()) {
 					var remainder = slot.insertStack(removed);
 					builder.add(remainder);
 				}
@@ -211,12 +203,9 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 	public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
 		if (clickType == ClickType.RIGHT && slot.canTakePartial(player)) {
 			var builder = BottomlessStack.Builder.of(player.getWorld(), stack);
-			if (builder == null)
-				return false;
-
 			if (otherStack.isEmpty()) {
 				var removed = builder.removeFirstStack();
-				if (removed != null) {
+				if (!removed.isEmpty()) {
 					this.playRemoveOneSound(player);
 					cursorStackReference.set(removed);
 				}
@@ -391,9 +380,7 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 			private ItemStack template;
 
 			public static Builder of(World world, ItemStack stack) {
-				var prev = stack.get(SpectrumDataComponentTypes.BOTTOMLESS_STACK);
-				if (prev == null)
-					return null;
+				var prev = stack.getOrDefault(SpectrumDataComponentTypes.BOTTOMLESS_STACK, BottomlessStack.DEFAULT);
 				var max = BottomlessBundleItem.getMaxStoredAmount(SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), Enchantments.POWER, stack));
 				var voiding = EnchantmentHelper.hasAnyEnchantmentsIn(stack, SpectrumEnchantmentTags.DELETES_OVERFLOW_IN_INVENTORY);
 				return new Builder(prev, max, voiding);
@@ -458,7 +445,7 @@ public class BottomlessBundleItem extends BlockItem implements InventoryInsertio
 
 			public ItemStack remove(int amount) {
 				if (isEmpty())
-					return null;
+					return ItemStack.EMPTY;
 
 				var toRemove = Math.min((int) this.count, amount);
 				var removed = this.template.copyWithCount(toRemove);
