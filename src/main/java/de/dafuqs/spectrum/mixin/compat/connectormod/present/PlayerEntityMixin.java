@@ -1,18 +1,14 @@
 package de.dafuqs.spectrum.mixin.compat.connectormod.present;
 
-import de.dafuqs.spectrum.registries.SpectrumItems;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import de.dafuqs.spectrum.helpers.*;
+import de.dafuqs.spectrum.registries.*;
+import net.minecraft.enchantment.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
@@ -21,16 +17,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
-    @Unique
-    protected int getChanneling(ItemStack stack) {
-        return EnchantmentHelper.getLevel(Enchantments.CHANNELING, stack);
-    }
-
     @ModifyVariable(method = "attack", name = "entityReachSq", at = @At(value = "STORE"))
     protected double spectrum$increaseSweepMaxDistance(double original) {
         var stack = this.getStackInHand(Hand.MAIN_HAND);
-        if (stack.getItem() == SpectrumItems.DRACONIC_TWINSWORD)
-            return original * 3 * ((getChanneling(stack) + 1) * 1.5);
+        if (stack.getItem() == SpectrumItems.DRACONIC_TWINSWORD) {
+			int channeling = SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.CHANNELING, stack);
+			return original * 3 * ((channeling + 1) * 1.5);
+		}
         return original;
     }
 }

@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
@@ -43,44 +42,21 @@ public class StructureCompassItem extends CompassItem {
 
 	public @Nullable Pair<BlockPos, RegistryEntry<Structure>> locateStructure(@NotNull ServerWorld world, @NotNull BlockPos pos) {
 		Optional<RegistryEntryList.Named<Structure>> registryEntryList = SpectrumStructureTags.entriesOf(world, locatedStructures);
-		if (registryEntryList.isPresent()) {
-			return world.getChunkManager().getChunkGenerator().locateStructure(world, registryEntryList.get(), pos, 100, false);
-		} else {
-			return null;
-		}
-	}
-	
-	public static boolean hasStructure(@NotNull ItemStack stack) {
-		NbtCompound nbtCompound = stack.getNbt();
-		return nbtCompound != null && (nbtCompound.contains("StructureDimension") && nbtCompound.contains("StructurePos"));
+		return registryEntryList.map(registryEntries ->
+				world.getChunkManager().getChunkGenerator().locateStructure(world, registryEntries, pos, 100, false))
+				.orElse(null);
 	}
 	
 	public static @Nullable GlobalPos getStructurePos(ItemStack stack) {
-		NbtCompound nbt = stack.getNbt();
-		if (nbt == null) {
-			return null;
-		}
-		boolean bl = nbt.contains("StructurePos");
-		boolean bl2 = nbt.contains("StructureDimension");
-		if (bl && bl2) {
-			Optional<RegistryKey<World>> optional = World.CODEC.parse(NbtOps.INSTANCE, nbt.get("StructureDimension")).result();
-			if (optional.isPresent()) {
-				BlockPos blockPos = NbtHelper.toBlockPos(nbt.getCompound("StructurePos"));
-				return GlobalPos.create(optional.get(), blockPos);
-			}
-		}
-		return null;
+		return stack.getOrDefault(SpectrumDataComponentTypes.TARGETED_STRUCTURE, null);
 	}
 	
 	protected void saveStructurePos(ItemStack stack, @NotNull RegistryKey<World> worldKey, @NotNull BlockPos pos) {
-		NbtCompound nbt = stack.getOrCreateNbt();
-		nbt.put("StructurePos", NbtHelper.fromBlockPos(pos));
-		nbt.putString("StructureDimension", worldKey.getValue().toString());
+		stack.set(SpectrumDataComponentTypes.TARGETED_STRUCTURE, new GlobalPos(worldKey, pos));
 	}
 	
 	protected void removeStructurePos(@NotNull ItemStack stack) {
-		stack.removeSubNbt("StructurePos");
-		stack.removeSubNbt("StructureDimension");
+		stack.remove(SpectrumDataComponentTypes.TARGETED_STRUCTURE);
 	}
 	
 }

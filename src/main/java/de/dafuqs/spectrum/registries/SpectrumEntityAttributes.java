@@ -3,9 +3,13 @@ package de.dafuqs.spectrum.registries;
 import de.dafuqs.spectrum.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.*;
+import net.minecraft.util.*;
 
 public class SpectrumEntityAttributes {
+	
+	public static final Identifier CRIT_MODIFIER_ID = SpectrumCommon.locate("crit_modifier");
+	public static final Identifier REACH_MODIFIER_ID = SpectrumCommon.locate("reach_modifier");
 	
 	/**
 	 * How vulnerable the entity is to sleep effects. The sleep effects use this value as a multiplier

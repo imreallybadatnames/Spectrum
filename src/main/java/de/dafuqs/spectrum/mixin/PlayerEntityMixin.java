@@ -25,6 +25,7 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
 import net.minecraft.server.world.*;
@@ -53,7 +54,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	@Shadow
 	public abstract boolean damage(DamageSource source, float amount);
 	
-	public SpectrumFishingBobberEntity spectrum$fishingBobber;
+	@Shadow
+	protected abstract boolean canChangeIntoPose(EntityPose pose);
+	
+	@Unique
+	public SpectrumFishingBobberEntity fishingBobber;
 	
 	@Inject(method = "updateSwimming()V", at = @At("HEAD"), cancellable = true)
 	public void spectrum$updateSwimming(CallbackInfo ci) {
@@ -82,23 +87,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		}
 	}
 	
-	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D"))
+	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D"))
 	protected void spectrum$calculateModifiers(Entity target, CallbackInfo ci) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		
-		Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
+		Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
 		
 		EntityAttributeModifier jeopardantModifier;
 		if (SpectrumTrinketItem.hasEquipped(player, SpectrumItems.JEOPARDANT)) {
-			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(player), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_ID, AttackRingItem.getAttackModifierForEntity(player), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 		} else {
-			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, AttackRingItem.ATTACK_RING_DAMAGE_NAME, 0, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+			jeopardantModifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_ID, 0, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 		}
 		map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, jeopardantModifier);
 		
 		int improvedCriticalLevel = SpectrumEnchantmentHelper.getLevel(target.getWorld().getRegistryManager(), SpectrumEnchantments.IMPROVED_CRITICAL, player.getMainHandStack());
 		if (improvedCriticalLevel > 0) {
-			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(UUID.fromString("e9bca8d4-9dcb-4e9e-8a7b-48b129c7ec5a"), "spectrum:improved_critical", ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
+			EntityAttributeModifier improvedCriticalModifier = new EntityAttributeModifier(SpectrumEntityAttributes.CRIT_MODIFIER_ID, ImprovedCriticalHelper.getAddtionalCritDamageMultiplier(improvedCriticalLevel), EntityAttributeModifier.Operation.ADD_VALUE);
 			map.put(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, improvedCriticalModifier);
 		}
 		
@@ -140,12 +145,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		return value;
 	}
 	
-	@Inject(
-			method = {"attack(Lnet/minecraft/entity/Entity;)V"},
-			at = {@At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I")}
-	)
+	@Inject(method = "attack(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I"))
 	private void spectrum$perfectCounter(Entity target, CallbackInfo ci, @Local(ordinal = 0) LocalFloatRef damage) {
 		var player = (PlayerEntity) (Object) this;
 		if (MiscPlayerDataComponent.get(player).consumePerfectCounter()) {
@@ -190,7 +190,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	
 	@Unique
 	protected int getChanneling(ItemStack stack) {
-		return EnchantmentHelper.getLevel(Enchantments.CHANNELING, stack);
+		return SpectrumEnchantmentHelper.getLevel(getWorld().getRegistryManager(), Enchantments.CHANNELING, stack);
 	}
 	
 	@Inject(at = @At("TAIL"), method = "jump()V")
@@ -213,7 +213,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	
 	@Override
 	public void setSpectrumBobber(SpectrumFishingBobberEntity bobber) {
-		this.spectrum$fishingBobber = bobber;
+		this.fishingBobber = bobber;
 	}
 	
 	@Override
@@ -223,7 +223,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	
 	@Override
 	public SpectrumFishingBobberEntity getSpectrumBobber() {
-		return this.spectrum$fishingBobber;
+		return this.fishingBobber;
 	}
 	
 	@Inject(at = @At("HEAD"), method = "canFoodHeal()Z", cancellable = true)
@@ -299,7 +299,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	@WrapOperation(method = "updatePose", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setPose(Lnet/minecraft/entity/EntityPose;)V"))
 	public void spectrum$forceSwimmingState(PlayerEntity instance, EntityPose entityPose, Operation<Void> original) {
 		var component = MiscPlayerDataComponent.get(instance);
-		if ((component.shouldLieDown() || instance.hasStatusEffect(SpectrumStatusEffects.FATAL_SLUMBER)) && wouldPoseNotCollide(EntityPose.SWIMMING)) {
+		if ((component.shouldLieDown() || instance.hasStatusEffect(SpectrumStatusEffects.FATAL_SLUMBER)) && canChangeIntoPose(EntityPose.SWIMMING)) {
 			instance.setPose(EntityPose.SWIMMING);
 			return;
 		}

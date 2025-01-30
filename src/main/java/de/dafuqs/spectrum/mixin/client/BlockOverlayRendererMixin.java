@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(InGameOverlayRenderer.class)
 public abstract class BlockOverlayRendererMixin {
 
-	@Inject(method = "renderOverlays(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
+	@Inject(method = "renderOverlays(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V", at = @At("TAIL"))
 	private static void spectrum$renderFluidOverlay(MinecraftClient minecraftClient, MatrixStack matrixStack, CallbackInfo ci) {
 		if (!minecraftClient.player.isSpectator()) {
 			if (minecraftClient.player.isSubmergedIn(SpectrumFluidTags.LIQUID_CRYSTAL)) {
@@ -37,7 +37,6 @@ public abstract class BlockOverlayRendererMixin {
 	private static void spectrum$renderOverlay(MinecraftClient client, MatrixStack matrixStack, Identifier textureIdentifier, float alpha) {
 		RenderSystem.setShader(GameRenderer::getPositionTexProgram);
 		RenderSystem.setShaderTexture(0, textureIdentifier);
-		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		BlockPos blockPos = BlockPos.ofFloored(client.player.getX(), client.player.getEyeY(), client.player.getZ());
 		float f = LightmapTextureManager.getBrightness(client.player.getWorld().getDimension(), client.player.getWorld().getLightLevel(blockPos));
 		RenderSystem.enableBlend();
@@ -46,11 +45,11 @@ public abstract class BlockOverlayRendererMixin {
 		float m = -client.player.getYaw() / 64.0F;
 		float n = client.player.getPitch() / 64.0F;
 		Matrix4f matrix4f = matrixStack.peek().getPositionMatrix();
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-		bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(4.0F + m, 4.0F + n).next();
-		bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + m, 4.0F + n).next();
-		bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(0.0F + m, 0.0F + n).next();
-		bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(4.0F + m, 0.0F + n).next();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+		bufferBuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).texture(4.0F + m, 4.0F + n);
+		bufferBuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).texture(0.0F + m, 4.0F + n);
+		bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).texture(0.0F + m, 0.0F + n);
+		bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).texture(4.0F + m, 0.0F + n);
 		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.disableBlend();

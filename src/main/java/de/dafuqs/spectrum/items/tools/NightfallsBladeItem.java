@@ -1,6 +1,5 @@
 package de.dafuqs.spectrum.items.tools;
 
-import com.google.common.collect.*;
 import de.dafuqs.revelationary.api.advancements.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.*;
@@ -27,26 +26,15 @@ import java.util.*;
 public class NightfallsBladeItem extends ToolItem implements InkPoweredPotionFillable, SlotBackgroundEffectProvider {
 	
 	private static final Identifier UNLOCK_IDENTIFIER = SpectrumCommon.locate("unlocks/equipment/nightfalls_blade");
-	protected static final UUID REACH_MODIFIER_ID = UUID.fromString("8e2e05ef-a48a-4e2d-9633-388edcb21ea3");
-
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	
 	public NightfallsBladeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
-		super(material, settings);
-
-		var damage = (float) attackDamage + material.getAttackDamage();
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", damage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		builder.put(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(REACH_MODIFIER_ID, "Weapon modifier", -1.5F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
-		this.attributeModifiers = builder.build();
+		super(material, settings.attributeModifiers(AttributeModifiersComponent.builder()
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, attackDamage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(SpectrumEntityAttributes.REACH_MODIFIER_ID, -1.5F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.build()));
 	}
 
-	@Override
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-		return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
-	}
-	
 	@Override
 	public int maxEffectCount() {
 		return 1;

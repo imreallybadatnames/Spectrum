@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.tag.*;
+import net.minecraft.server.world.*;
 import org.jetbrains.annotations.*;
 
 public class NectarLanceItem extends LightGreatswordItem implements SlotBackgroundEffectProvider {
@@ -49,26 +50,29 @@ public class NectarLanceItem extends LightGreatswordItem implements SlotBackgrou
 
 	@Override
 	protected void applyLungeHitEffects(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		var base = (float) attacker.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE) + EnchantmentHelper.getAttackDamage(stack, target.getGroup());
+		DamageSource magicDamage = attacker.getDamageSources().magic();
+		if (!(attacker.getWorld() instanceof ServerWorld serverWorld))
+			return;
+		float base = EnchantmentHelper.getDamage(serverWorld, stack, target, magicDamage, (float) attacker.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
 		if (target.hasStatusEffect(StatusEffects.POISON)) {
 			var effect = target.getStatusEffect(StatusEffects.POISON);
 			if (target.removeStatusEffect(StatusEffects.POISON)) {
 				assert effect != null;
-				applyDoTProc(attacker.getDamageSources().magic(), base + 5F,0.8F, target, effect, false, true);
+				applyDoTProc(magicDamage, base + 5F,0.8F, target, effect, false, true);
 			}
 		}
 		else if (target.hasStatusEffect(SpectrumStatusEffects.DEADLY_POISON)) {
 			var effect = target.getStatusEffect(SpectrumStatusEffects.DEADLY_POISON);
 			if (target.removeStatusEffect(SpectrumStatusEffects.DEADLY_POISON)) {
 				assert effect != null;
-				applyDoTProc(attacker.getDamageSources().magic(), base + 10F,1.0F, target, effect, true, true);
+				applyDoTProc(magicDamage, base + 10F,1.0F, target, effect, true, true);
 			}
 		}
 		else if (target.hasStatusEffect(StatusEffects.WITHER)) {
 			var effect = target.getStatusEffect(StatusEffects.WITHER);
 			if (target.removeStatusEffect(StatusEffects.WITHER)) {
 				assert effect != null;
-				applyDoTProc(attacker.getDamageSources().magic(), base + 5F,0.1F, target, effect, true, false);
+				applyDoTProc(magicDamage, base + 5F,0.1F, target, effect, true, false);
 			}
 		}
 		else if (SpectrumStatusEffectTags.hasEffectWithTag(target, SpectrumStatusEffectTags.SOPORIFIC)) {

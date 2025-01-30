@@ -1,8 +1,8 @@
 package de.dafuqs.spectrum.items.tools;
 
 import de.dafuqs.additionalentityattributes.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.render.*;
+import de.dafuqs.spectrum.registries.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -24,8 +24,8 @@ public abstract class ParryingSwordItem extends SwordItem implements ExtendedIte
 		super(material, settings.attributeModifiers(AttributeModifiersComponent.builder()
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, material.getAttackDamage() + attackDamage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
 				.add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-				.add(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, new EntityAttributeModifier(SpectrumCommon.locate("crit_modifier"), crit, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(SpectrumCommon.locate("reach_modifier"), reach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(AdditionalEntityAttributes.CRITICAL_BONUS_DAMAGE, new EntityAttributeModifier(SpectrumEntityAttributes.CRIT_MODIFIER_ID, crit, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+				.add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(SpectrumEntityAttributes.REACH_MODIFIER_ID, reach, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
 				.build()));
 	}
 	

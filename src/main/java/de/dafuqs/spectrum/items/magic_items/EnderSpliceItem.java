@@ -19,6 +19,7 @@ import net.minecraft.item.tooltip.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.network.*;
+import net.minecraft.server.world.*;
 import net.minecraft.sound.*;
 import net.minecraft.stat.*;
 import net.minecraft.text.*;
@@ -128,11 +129,11 @@ public class EnderSpliceItem extends Item {
 	private boolean teleportPlayerToPos(World world, LivingEntity user, PlayerEntity playerEntity, World targetWorld, Vec3d targetPos, boolean hasResonance) {
 		boolean isSameWorld = isSameWorld(user.getEntityWorld(), targetWorld);
 		Vec3d currentPos = playerEntity.getPos();
-		if (hasResonance || isSameWorld) {
+		if ((hasResonance || isSameWorld) && targetWorld instanceof ServerWorld targetServerWorld) {
 			world.playSound(playerEntity, currentPos.getX(), currentPos.getY(), currentPos.getZ(), SpectrumSoundEvents.PLAYER_TELEPORTS, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			
 			if (!isSameWorld) {
-				user.teleportTo(new TeleportTarget(targetWorld, targetPos.add(0, 0.25, 0), new Vec3d(0, 0, 0), user.getYaw(), user.getPitch(), TeleportTarget.NO_OP));
+				user.teleportTo(new TeleportTarget(targetServerWorld, targetPos.add(0, 0.25, 0), new Vec3d(0, 0, 0), user.getYaw(), user.getPitch(), TeleportTarget.NO_OP));
 			} else {
 				user.requestTeleport(targetPos.getX(), targetPos.y + 0.25, targetPos.z); // +0.25 makes it look way more lively
 			}

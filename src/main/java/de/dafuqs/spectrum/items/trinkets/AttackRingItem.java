@@ -8,14 +8,16 @@ import net.minecraft.client.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
+import net.minecraft.util.*;
 
 import java.util.*;
 
 public class AttackRingItem extends SpectrumTrinketItem {
 	
-	public static final UUID ATTACK_RING_DAMAGE_UUID = UUID.fromString("15d1fb68-6440-404a-aa31-7bf3310d3f52");
+	public static final Identifier ATTACK_RING_DAMAGE_ID = SpectrumCommon.locate("jeopardant");
 	public static final String ATTACK_RING_DAMAGE_NAME = "spectrum:jeopardant";
 	
 	public AttackRingItem(Settings settings) {
@@ -34,10 +36,9 @@ public class AttackRingItem extends SpectrumTrinketItem {
 	@Override
 	public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
 		super.onUnequip(stack, slot, entity);
-		if (entity.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_ATTACK_DAMAGE, AttackRingItem.ATTACK_RING_DAMAGE_UUID)) {
-			Multimap<EntityAttribute, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
-			EntityAttributeModifier modifier = new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_UUID, ATTACK_RING_DAMAGE_NAME, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-			map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, modifier);
+		if (entity.getAttributes().hasModifierForAttribute(EntityAttributes.GENERIC_ATTACK_DAMAGE, AttackRingItem.ATTACK_RING_DAMAGE_ID)) {
+			Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> map = Multimaps.newMultimap(Maps.newLinkedHashMap(), ArrayList::new);
+			map.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(AttackRingItem.ATTACK_RING_DAMAGE_ID, AttackRingItem.getAttackModifierForEntity(entity), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 			entity.getAttributes().removeModifiers(map);
 		}
 	}
