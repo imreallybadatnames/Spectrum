@@ -235,7 +235,7 @@ public abstract class LivingEntityMixin {
 				if (immunity.getDuration() >= cost) {
 					immunity.spectrum$setDuration(Math.max(5, immunity.getDuration() - cost));
 					if (!instance.getWorld().isClient()) {
-						((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity));
+						((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity, false));
 					}
 					return false;
 				} else {
