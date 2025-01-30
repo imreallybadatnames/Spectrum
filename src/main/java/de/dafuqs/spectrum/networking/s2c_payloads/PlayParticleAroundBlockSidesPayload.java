@@ -26,7 +26,7 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos, int quantity, Ve
 			PacketCodecs.INTEGER, PlayParticleAroundBlockSidesPayload::quantity,
 			SpectrumPacketCodecs.VEC_3D, PlayParticleAroundBlockSidesPayload::velocity,
 			ParticleTypes.PACKET_CODEC, PlayParticleAroundBlockSidesPayload::particle,
-			Direction.PACKET_CODEC, PlayParticleAroundBlockSidesPayload::directions,
+			SpectrumPacketCodecs.DIRECTION_LIST, PlayParticleAroundBlockSidesPayload::sides,
 			PlayParticleAroundBlockSidesPayload::new
 	);
 	
@@ -35,7 +35,7 @@ public record PlayParticleAroundBlockSidesPayload(BlockPos pos, int quantity, Ve
 			if (!sendCheck.test(player))
 				continue;
 			
-			ServerPlayNetworking.send(player, new PlayParticleAroundBlockSidesPayload(pos, quantity, velocity, particleEffect, sides));
+			ServerPlayNetworking.send(player, new PlayParticleAroundBlockSidesPayload(pos, quantity, velocity, particleEffect, List.of(sides)));
 		}
 	}
 	

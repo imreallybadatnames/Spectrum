@@ -7,6 +7,8 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.*;
 
+import java.util.*;
+
 public class ParticleHelper {
 	
 	public static void playParticleWithPatternAndVelocityClient(World world, Vec3d position, ParticleEffect particleEffect, @NotNull VectorPattern pattern, double velocity) {
@@ -53,6 +55,10 @@ public class ParticleHelper {
 	}
 	
 	public static void playParticleAroundBlockSides(World world, ParticleEffect particleEffect, BlockPos position, Direction[] sides, int quantity, Vec3d velocity) {
+		playParticleAroundBlockSides(world, particleEffect, position, List.of(sides), quantity, velocity);
+	}
+	
+	public static void playParticleAroundBlockSides(World world, ParticleEffect particleEffect, BlockPos position, List<Direction> sides, int quantity, Vec3d velocity) {
 		var random = world.getRandom();
 		
 		for (Direction direction : sides) {

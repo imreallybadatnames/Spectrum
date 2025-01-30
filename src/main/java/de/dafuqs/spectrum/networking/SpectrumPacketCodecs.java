@@ -37,6 +37,9 @@ public class SpectrumPacketCodecs {
 	
 	public static final PacketCodec<ByteBuf, List<BlockPos>> BLOCKPOS_LIST = BlockPos.PACKET_CODEC.collect(PacketCodecs.toCollection(ObjectArrayList::new));
 	
+	
+	public static final PacketCodec<ByteBuf, List<Direction>> DIRECTION_LIST = Direction.PACKET_CODEC.collect(PacketCodecs.toCollection(ObjectArrayList::new));
+	
 	// Since PacketCodec.tuple() only supports a max of 6 entries, we have some custom ones with more params here
 	
 	// 7 properties
