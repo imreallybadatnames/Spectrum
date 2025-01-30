@@ -259,7 +259,7 @@ public class FusionShrineRecipe extends GatedStackSpectrumRecipe<FusionShrineBlo
 		}
 
 		if (this.copyComponents) {
-			output = copyNbt(firstStack, output);
+			output = firstStack.copyComponentsToNewStack(output.getItem(), output.getCount());
 		}
 		
 		spawnCraftingResultAndXP(world, fusionShrineBlockEntity, output, maxAmount); // spawn results

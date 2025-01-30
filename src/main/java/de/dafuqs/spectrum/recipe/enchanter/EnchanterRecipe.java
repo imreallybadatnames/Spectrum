@@ -29,10 +29,10 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	protected final int requiredExperience;
 	protected final int craftingTime;
 	protected final boolean noBenefitsFromYieldAndEfficiencyUpgrades;
-	// copy all nbt data from the first stack in the ingredients to the output stack
-	protected final boolean copyNbt;
+	// copy all modified components from the first stack in the ingredients to the output stack
+	protected final boolean copyComponents;
 	
-	public EnchanterRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, List<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyNbt) {
+	public EnchanterRecipe(String group, boolean secret, Identifier requiredAdvancementIdentifier, List<Ingredient> inputs, ItemStack output, int craftingTime, int requiredExperience, boolean noBenefitsFromYieldAndEfficiencyUpgrades, boolean copyComponents) {
 		super(group, secret, requiredAdvancementIdentifier);
 		
 		this.inputs = inputs;
@@ -40,7 +40,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 		this.requiredExperience = requiredExperience;
 		this.craftingTime = craftingTime;
 		this.noBenefitsFromYieldAndEfficiencyUpgrades = noBenefitsFromYieldAndEfficiencyUpgrades;
-		this.copyNbt = copyNbt;
+		this.copyComponents = copyComponents;
 		
 		registerInToastManager(getType(), this);
 	}
@@ -73,8 +73,8 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 	
 	@Override
 	public ItemStack craft(RecipeInput inv, RegistryWrapper.WrapperLookup drm) {
-		if (this.copyNbt) {
-			return copyNbt(inv.getStackInSlot(0), output.copy());
+		if (this.copyComponents) {
+			return inv.getStackInSlot(0).copyComponentsToNewStack(output.getItem(), output.getCount());
 		}
 		return output.copy();
 	}
@@ -144,7 +144,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 				Codec.INT.optionalFieldOf("required_experience", 0).forGetter(recipe -> recipe.requiredExperience),
 				Codec.INT.optionalFieldOf("time", 200).forGetter(recipe -> recipe.craftingTime),
 				Codec.BOOL.optionalFieldOf("disable_yield_and_efficiency_upgrades", false).forGetter(recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades),
-				Codec.BOOL.optionalFieldOf("copy_components", false).forGetter(recipe -> recipe.copyNbt)
+				Codec.BOOL.optionalFieldOf("copy_components", false).forGetter(recipe -> recipe.copyComponents)
 		).apply(i, EnchanterRecipe::new));
 		
 		public static final PacketCodec<RegistryByteBuf, EnchanterRecipe> PACKET_CODEC = PacketCodecHelper.tuple(
@@ -156,7 +156,7 @@ public class EnchanterRecipe extends GatedSpectrumRecipe<RecipeInput> {
 				PacketCodecs.VAR_INT, recipe -> recipe.requiredExperience,
 				PacketCodecs.VAR_INT, recipe -> recipe.craftingTime,
 				PacketCodecs.BOOL, recipe -> recipe.noBenefitsFromYieldAndEfficiencyUpgrades,
-				PacketCodecs.BOOL, recipe -> recipe.copyNbt,
+				PacketCodecs.BOOL, recipe -> recipe.copyComponents,
 				EnchanterRecipe::new
 		);
 		
