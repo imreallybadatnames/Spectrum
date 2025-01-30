@@ -259,41 +259,44 @@ public class SpectrumEventListeners {
 			return ActionResult.PASS;
 		});
 		
-		CrossbowShootingCallback.register((world, shooter, hand, crossbow, projectile, projectileEntity) -> {
+		CrossbowShootingCallback.register((world, shooter, crossbow, projectile) -> {
+			int snipingLevel = SpectrumEnchantmentHelper.getLevel(world.getRegistryManager(), SpectrumEnchantments.SNIPING, crossbow);
+			if (snipingLevel > 0) {
+				projectile.setVelocity(projectile.getVelocity().multiply(1.25F * snipingLevel)); // TODO: is this a sensible value?
+			}
+			
 			if (crossbow.getItem() instanceof GlassCrestCrossbowItem && GlassCrestCrossbowItem.isOvercharged(crossbow)) {
-				if (!world.isClient) { // only fired on the client, but making sure mods aren't doing anything weird
-					Vec3d particleVelocity = projectileEntity.getVelocity().multiply(0.05);
-					
-					if (GlassCrestCrossbowItem.getOvercharge(crossbow) > 0.99F) {
-						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
-								projectileEntity.getPos(), ParticleTypes.SCRAPE, 5,
-								Vec3d.ZERO, particleVelocity);
-						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
-								projectileEntity.getPos(), ParticleTypes.WAX_OFF, 5,
-								Vec3d.ZERO, particleVelocity);
-						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
-								projectileEntity.getPos(), ParticleTypes.WAX_ON, 5,
-								Vec3d.ZERO, particleVelocity);
-						PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
-								projectileEntity.getPos(), ParticleTypes.GLOW, 5,
-								Vec3d.ZERO, particleVelocity);
-						
-						if (shooter instanceof ServerPlayerEntity serverPlayerEntity) {
-							Support.grantAdvancementCriterion(serverPlayerEntity,
-									SpectrumCommon.locate("lategame/shoot_fully_overcharged_crossbow"),
-									"shot_fully_overcharged_crossbow");
-						}
-						if (projectileEntity instanceof PersistentProjectileEntity persistentProjectileEntity) {
-							persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() * 1.5);
-						}
-					}
-					
+				Vec3d particleVelocity = projectile.getVelocity().multiply(0.05);
+				
+				if (GlassCrestCrossbowItem.getOvercharge(crossbow) > 0.99F) {
 					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
-							projectileEntity.getPos(), ParticleTypes.FIREWORK, 10,
+							projectile.getPos(), ParticleTypes.SCRAPE, 5,
+							Vec3d.ZERO, particleVelocity);
+					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+							projectile.getPos(), ParticleTypes.WAX_OFF, 5,
+							Vec3d.ZERO, particleVelocity);
+					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+							projectile.getPos(), ParticleTypes.WAX_ON, 5,
+							Vec3d.ZERO, particleVelocity);
+					PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+							projectile.getPos(), ParticleTypes.GLOW, 5,
 							Vec3d.ZERO, particleVelocity);
 					
-					GlassCrestCrossbowItem.unOvercharge(crossbow);
+					if (shooter instanceof ServerPlayerEntity serverPlayerEntity) {
+						Support.grantAdvancementCriterion(serverPlayerEntity,
+								SpectrumCommon.locate("lategame/shoot_fully_overcharged_crossbow"),
+								"shot_fully_overcharged_crossbow");
+					}
+					if (projectile instanceof PersistentProjectileEntity persistentProjectileEntity) {
+						persistentProjectileEntity.setDamage(persistentProjectileEntity.getDamage() * 1.5);
+					}
 				}
+				
+				PlayParticleWithRandomOffsetAndVelocityPayload.playParticleWithRandomOffsetAndVelocity((ServerWorld) world,
+						projectile.getPos(), ParticleTypes.FIREWORK, 10,
+						Vec3d.ZERO, particleVelocity);
+				
+				GlassCrestCrossbowItem.unOvercharge(crossbow);
 			}
 		});
 		
