@@ -2,7 +2,6 @@ package de.dafuqs.spectrum.mixin;
 
 import com.google.common.collect.*;
 import com.llamalad7.mixinextras.injector.*;
-import de.dafuqs.spectrum.api.item.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.*;
@@ -15,6 +14,7 @@ import java.util.*;
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {
 	
+	// TODO: migrate to FAPI enchant api?
 	@Inject(method = "getPossibleEntries(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;", at = @At("HEAD"), cancellable = true)
 	private static void spectrum$getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
 		if (stack.getItem() instanceof ExtendedEnchantable) {

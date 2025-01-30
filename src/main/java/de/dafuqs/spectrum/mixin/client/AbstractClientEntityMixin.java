@@ -1,19 +1,18 @@
 package de.dafuqs.spectrum.mixin.client;
 
-import de.dafuqs.spectrum.render.capes.*;
 import net.fabricmc.api.*;
 import net.minecraft.client.network.*;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
 
 
 @Environment(EnvType.CLIENT)
 @Mixin(AbstractClientPlayerEntity.class)
 public abstract class AbstractClientEntityMixin {
-    @Inject(
+	
+	// TODO: fixme - low prio
+	// cape loading is spread over lots of classes now
+	/*
+	@Inject(
             method = "getCapeTexture",
             at = @At("HEAD"),
             cancellable = true
@@ -24,5 +23,6 @@ public abstract class AbstractClientEntityMixin {
             cir.setReturnValue(cape.capePath);
             cir.cancel();
         }
-    }
+    }*/
+	
 }
