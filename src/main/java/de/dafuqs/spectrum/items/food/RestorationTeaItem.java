@@ -7,7 +7,7 @@ import net.minecraft.util.*;
 
 import java.util.*;
 
-public class RestorationTeaItem extends TeaItem {
+public class RestorationTeaItem extends DrinkItem {
 	
 	public RestorationTeaItem(Settings settings) {
 		super(settings);

@@ -83,8 +83,6 @@ public class SanityCommand {
 						&& !blockState.isIn(BlockTags.AXE_MINEABLE)
 						&& !blockState.isIn(BlockTags.SHOVEL_MINEABLE)
 						&& !blockState.isIn(BlockTags.HOE_MINEABLE)
-						&& !blockState.isIn(FabricMineableTags.SHEARS_MINEABLE)
-						&& !blockState.isIn(FabricMineableTags.SWORD_MINEABLE)
 						&& !blockState.isIn(BlockTags.SWORD_EFFICIENT)
 						&& !blockState.isIn(SpectrumBlockTags.EXEMPT_FROM_MINEABLE_DEBUG_CHECK)) {
 					SpectrumCommon.logWarning("[SANITY: Mineable Tags] Block " + registryKey.getValue() + " is not contained in a any vanilla mineable tag.");
@@ -336,19 +334,6 @@ public class SanityCommand {
 				AdvancementEntry advancementCriterionAdvancement = advancementLoader.get(advancementIdentifier);
 				if (advancementCriterionAdvancement == null) {
 					SpectrumCommon.logWarning("[SANITY: Enchantments] Enchantment '" + enchantment.getKey().getValue() + "' references advancement '" + advancementIdentifier + "' that does not exist");
-				}
-			}
-		}
-		
-		// ExtendedEnchantables with enchantability <= 0 (unable to be enchanted) or not set to be enchantable
-		for (Map.Entry<RegistryKey<Item>, Item> item : Registries.ITEM.getEntrySet()) {
-			Item i = item.getValue();
-			if (i instanceof ExtendedEnchantable) {
-				if (!new ItemStack(i).isEnchantable()) {
-					SpectrumCommon.logWarning("[SANITY: Enchantability] Item '" + item.getKey().getValue() + "' is not set to be enchantable.");
-				}
-				if (i.getEnchantability() < 1) {
-					SpectrumCommon.logWarning("[SANITY: Enchantability] Item '" + item.getKey().getValue() + "' is ExtendedEnchantable, but has enchantability of < 1");
 				}
 			}
 		}

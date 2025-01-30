@@ -24,9 +24,7 @@
             "spectrum:golden_bristle_tea"
           ],
           "components": {
-            "spectrum:tea": {
-              "milk": true
-            }
+						"spectrum:milk": []
           }
         }
       }

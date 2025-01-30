@@ -23,7 +23,7 @@ public record ConditionalFoodComponent(ItemPredicate itemPredicate, boolean cons
 	).apply(instance, ConditionalFoodComponent::new));
 	
 	public static final PacketCodec<RegistryByteBuf, ConditionalFoodComponent> PACKET_CODEC = PacketCodec.tuple(
-			ItemPredicate.PACKET_CODEC, ConditionalFoodComponent::itemPredicate,
+			ItemPredicate.PACKET_CODEC, ConditionalFoodComponent::itemPredicate, // TODO: that feels like it cannot work somehow. Hmmmmm
 			PacketCodecs.BOOL, ConditionalFoodComponent::consumeAndApplyRequiredStack,
 			FoodComponent.PACKET_CODEC, ConditionalFoodComponent::bonusFoodComponent,
 			ConditionalFoodComponent::new
