@@ -216,11 +216,11 @@ public abstract class LivingEntityMixin {
 	}
 	
 	
-	@Inject(method = "applyFoodEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getFoodComponent()Lnet/minecraft/item/FoodComponent;"))
-	private void spectrum$applyConcealedEffects(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo ci) {
+	@Inject(method = "eatFood(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/component/type/FoodComponent;)Lnet/minecraft/item/ItemStack;", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;applyFoodEffects(Lnet/minecraft/component/type/FoodComponent;)V"))
+	private void spectrum$applyConcealedEffects(World world, ItemStack stack, FoodComponent foodComponent, CallbackInfoReturnable<ItemStack> cir) {
 		var oilEffect = stack.get(SpectrumDataComponentTypes.OIL_EFFECT);
 		if (!world.isClient() && oilEffect != null)
-			targetEntity.addStatusEffect(oilEffect);
+			((LivingEntity) (Object) this).addStatusEffect(oilEffect);
 	}
 	
 	@ModifyReturnValue(method = "canHaveStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z", at = @At("RETURN"))
@@ -235,7 +235,7 @@ public abstract class LivingEntityMixin {
 				if (immunity.getDuration() >= cost) {
 					immunity.spectrum$setDuration(Math.max(5, immunity.getDuration() - cost));
 					if (!instance.getWorld().isClient()) {
-						((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity));
+						((ServerWorld) instance.getWorld()).getChunkManager().sendToNearbyPlayers(instance, new EntityStatusEffectS2CPacket(instance.getId(), immunity, false));
 					}
 					return false;
 				} else {

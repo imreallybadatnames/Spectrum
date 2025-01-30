@@ -13,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.*;
 public class StatusEffectUtilMixin {
 
     @WrapOperation(method = "getDurationText", at = @At(value = "INVOKE", target = "Lnet/minecraft/text/Text;literal(Ljava/lang/String;)Lnet/minecraft/text/MutableText;"))
-    private static MutableText spectrum$modifyDurationText(String string, Operation<MutableText> original, @Local int i, @Local(argsOnly = true) StatusEffectInstance effect) {
+	private static MutableText spectrum$modifyDurationText(String string, Operation<MutableText> original, @Local int i, @Local(argsOnly = true) StatusEffectInstance effect, @Local(argsOnly = true, ordinal = 0) float multiplier, @Local(argsOnly = true, ordinal = 1) float tickRate) {
         if (effect.getEffectType() == SpectrumStatusEffects.ETERNAL_SLUMBER) {
-            return Text.translatable("effect.spectrum.eternal_slumber.duration", StringHelper.formatTicks(i));
+			return Text.translatable("effect.spectrum.eternal_slumber.duration", StringHelper.formatTicks(i, tickRate));
         }
         return original.call(string);
     }

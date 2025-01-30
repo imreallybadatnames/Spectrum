@@ -15,11 +15,6 @@ public class BedrockBowItem extends BowItem implements Preenchanted, ArrowheadBo
 	}
 	
 	@Override
-	public boolean isDamageable() {
-		return false;
-	}
-	
-	@Override
 	public Map<RegistryKey<Enchantment>, Integer> getDefaultEnchantments() {
 		return Map.of(Enchantments.POWER, 6);
 	}

@@ -1,5 +1,6 @@
 package de.dafuqs.spectrum.mixin.client;
 
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.registries.*;
 import net.fabricmc.api.*;
 import net.minecraft.item.*;
@@ -17,7 +18,8 @@ public abstract class PotionItemClientMixin {
 	
 	@Inject(method = "appendTooltip(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/item/tooltip/TooltipType;)V", at = @At("HEAD"), cancellable = true)
 	private void spectrum$makePotionUnidentifiable(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, CallbackInfo ci) {
-		if (stack.contains(SpectrumDataComponentTypes.UNIDENTIFIABLE)) {
+		CustomPotionDataComponent component = stack.get(SpectrumDataComponentTypes.CUSTOM_POTION_DATA);
+		if (component != null && component.unidentifiable()) {
 			tooltip.add(Text.translatable("item.spectrum.potion.tooltip.unidentifiable"));
 			ci.cancel();
 		}

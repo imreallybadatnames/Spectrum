@@ -17,7 +17,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.server.world.*;
@@ -73,26 +72,12 @@ public class ExchangeStaffItem extends BuildingStaffItem {
 	public boolean canInteractWith(BlockState state, BlockView world, BlockPos pos, PlayerEntity player) {
 		return super.canInteractWith(state, world, pos, player) && state.getHardness(world, pos) < 20;
 	}
-
-	public static Optional<Block> getStoredBlock(@NotNull ItemStack exchangeStaffItemStack) {
-		NbtCompound compound = exchangeStaffItemStack.getOrCreateNbt();
-		if (compound.contains("TargetBlock")) {
-			String targetBlockString = compound.getString("TargetBlock");
-			Block targetBlock = Registries.BLOCK.get(Identifier.of(targetBlockString));
-			if (targetBlock != Blocks.AIR) {
-				return Optional.of(targetBlock);
-			}
-		}
-		return Optional.empty();
-	}
 	
-	public static boolean exchange(World world, BlockPos pos, @NotNull PlayerEntity player, @NotNull Block targetBlock,
-								   ItemStack exchangeStaffItemStack, Direction side) {
+	public static boolean exchange(World world, BlockPos pos, @NotNull PlayerEntity player, @NotNull Block targetBlock, ItemStack exchangeStaffItemStack, Direction side) {
 		return exchange(world, pos, player, targetBlock, exchangeStaffItemStack, false, side);
 	}
 	
-	public static boolean exchange(World world, BlockPos pos, @NotNull PlayerEntity player, @NotNull Block targetBlock,
-								   ItemStack exchangeStaffItemStack, boolean single, Direction side) {
+	public static boolean exchange(World world, BlockPos pos, @NotNull PlayerEntity player, @NotNull Block targetBlock, ItemStack exchangeStaffItemStack, boolean single, Direction side) {
 		Triplet<Block, Item, Integer> replaceData = countSuitableReplacementItems(player, targetBlock, single,
 				INK_COST_PER_BLOCK);
 
@@ -160,7 +145,22 @@ public class ExchangeStaffItem extends BuildingStaffItem {
 
 		return true;
 	}
-
+	
+	public void storeBlockAsTarget(@NotNull ItemStack exchangeStaffItemStack, Block block) {
+		exchangeStaffItemStack.set(SpectrumDataComponentTypes.STORED_BLOCK, Registries.BLOCK.getId(block));
+	}
+	
+	public static Optional<Block> getStoredBlock(@NotNull ItemStack exchangeStaffItemStack) {
+		Identifier blockId = exchangeStaffItemStack.get(SpectrumDataComponentTypes.STORED_BLOCK);
+		if (blockId != null) {
+			Block targetBlock = Registries.BLOCK.get(blockId);
+			if (targetBlock != Blocks.AIR) {
+				return Optional.of(targetBlock);
+			}
+		}
+		return Optional.empty();
+	}
+	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
@@ -221,13 +221,6 @@ public class ExchangeStaffItem extends BuildingStaffItem {
 		world.playSound(null, player.getBlockPos(), SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.PLAYERS, 1.0F,
 				1.0F);
 		return ActionResult.FAIL;
-	}
-	
-	public void storeBlockAsTarget(@NotNull ItemStack exchangeStaffItemStack, Block block) {
-		NbtCompound compound = exchangeStaffItemStack.getOrCreateNbt();
-		Identifier blockIdentifier = Registries.BLOCK.getId(block);
-		compound.putString("TargetBlock", blockIdentifier.toString());
-		exchangeStaffItemStack.setNbt(compound);
 	}
 	
 	@Override

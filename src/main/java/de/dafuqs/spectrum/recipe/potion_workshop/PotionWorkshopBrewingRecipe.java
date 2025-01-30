@@ -3,9 +3,9 @@ package de.dafuqs.spectrum.recipe.potion_workshop;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.item.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.recipe.*;
 import de.dafuqs.spectrum.registries.*;
@@ -55,8 +55,8 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		put(SpectrumStatusEffects.DENSITY, SpectrumStatusEffects.LIGHTWEIGHT);
 	}};
 	
-	public static @Nullable PotionWorkshopBrewingRecipe getPositiveRecipe(@NotNull StatusEffect statusEffect) {
-		if (statusEffect.getCategory() == StatusEffectCategory.HARMFUL) {
+	public static @Nullable PotionWorkshopBrewingRecipe getPositiveRecipe(@NotNull RegistryEntry<StatusEffect> statusEffect) {
+		if (statusEffect.value().getCategory() == StatusEffectCategory.HARMFUL) {
 			RegistryEntry<StatusEffect> positiveEffect = negativeToPositiveEffect.getOrDefault(statusEffect, null);
 			if (positiveEffect == null) {
 				return null;
@@ -194,17 +194,8 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 			// no effects: thick potion
 			targetStack = PotionContentsComponent.createStack(targetStack.getItem(), Potions.THICK);
 		} else {
-			// FIXME - Improve this, don't use string for ID here
-			targetStack = PotionContentsComponent.createStack(targetStack.getItem(), Registries.POTION.entryOf(RegistryKey.of(RegistryKeys.POTION, SpectrumCommon.locate("pigment_potion"))));
+			targetStack = PotionContentsComponent.createStack(targetStack.getItem(), SpectrumPotions.PIGMENT_POTION);
 			setCustomPotionEffects(targetStack, potionMod, effects);
-		}
-		
-		if (potionMod.additionalDrinkDurationTicks() != 0) {
-			// TODO - Review
-			// Noaaan - 04.01.2025
-			// I assume this could break if your input is food, and you want to keep its food component?
-			// Is that something we should respect here?
-			targetStack.set(DataComponentTypes.FOOD, new FoodComponent.Builder().setEatSeconds(1.6F + (potionMod.additionalDrinkDurationTicks() / 20f)).build());
 		}
 		
 		return targetStack;
@@ -220,8 +211,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		if (effects.isEmpty()) {
 			itemStack = PotionContentsComponent.createStack(itemStack.getItem(), Potions.THICK);
 		} else {
-			// FIXME - Improve this, don't use string for ID here
-			itemStack = PotionContentsComponent.createStack(itemStack.getItem(), Registries.POTION.entryOf(RegistryKey.of(RegistryKeys.POTION, SpectrumCommon.locate("pigment_potion"))));
+			itemStack = PotionContentsComponent.createStack(itemStack.getItem(), SpectrumPotions.PIGMENT_POTION);
 			setCustomPotionEffects(itemStack, potionMod, effects);
 		}
 		
@@ -244,7 +234,10 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 		
 		PotionContentsComponent potionComponent = new PotionContentsComponent(Optional.empty(), Optional.of(potionColor.orElse(0)), instances);
 		stack.set(DataComponentTypes.POTION_CONTENTS, potionComponent);
-		ComponentHelper.setOrRemove(stack, SpectrumDataComponentTypes.UNIDENTIFIABLE, potionMod.flags().unidentifiable());
+		
+		if (potionMod.flags().unidentifiable() || potionMod.additionalDrinkDurationTicks() != 0) {
+			stack.set(SpectrumDataComponentTypes.CUSTOM_POTION_DATA, new CustomPotionDataComponent(potionMod.flags().unidentifiable(), potionMod.additionalDrinkDurationTicks()));
+		}
 	}
 	
 	private List<InkPoweredStatusEffectInstance> generateEffects(ItemStack baseIngredient, PotionMod potionMod, PotionWorkshopBrewingRecipe lastRecipe, Random random) {
@@ -286,7 +279,7 @@ public class PotionWorkshopBrewingRecipe extends PotionWorkshopRecipe {
 	
 	private void addEffect(PotionMod potionMod, Random random, List<InkPoweredStatusEffectInstance> effects) {
 		if (potionMod.flags().makeEffectsPositive()) {
-			PotionWorkshopBrewingRecipe positiveRecipe = getPositiveRecipe(recipeData.statusEffect().value());
+			PotionWorkshopBrewingRecipe positiveRecipe = getPositiveRecipe(recipeData.statusEffect());
 			if (positiveRecipe != null) {
 				effects.add(positiveRecipe.recipeData.getStatusEffectInstance(potionMod, random));
 				return;

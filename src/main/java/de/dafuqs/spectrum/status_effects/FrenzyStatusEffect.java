@@ -18,7 +18,7 @@ public class FrenzyStatusEffect extends SpectrumStatusEffect implements Stackabl
 	
 	@Override
 	public void onApplied(LivingEntity entity, int amplifier) {
-		if (!SpectrumStatusEffects.effectsAreGettingStacked && !entity.hasStatusEffect(this)) {
+		if (!SpectrumStatusEffects.effectsAreGettingStacked && !entity.hasStatusEffect(SpectrumStatusEffects.FRENZY)) {
 			super.onApplied(entity, amplifier);
 		}
 	}

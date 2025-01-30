@@ -7,7 +7,6 @@ import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 
@@ -39,7 +38,7 @@ public class MalachiteCrossbowItem extends CrossbowItem implements Preenchanted,
 	
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-		return SpectrumToolMaterials.Material.MALACHITE.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
+		return SpectrumToolMaterial.MALACHITE.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
 	}
 	
 	@Override

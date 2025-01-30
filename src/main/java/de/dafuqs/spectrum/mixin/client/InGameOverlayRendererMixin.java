@@ -8,7 +8,7 @@ import net.minecraft.client.gui.hud.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.*;
-import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.screen.*;
 import net.minecraft.util.math.*;
 import org.joml.*;
 import org.spongepowered.asm.mixin.*;
@@ -37,13 +37,10 @@ public class InGameOverlayRendererMixin {
     // [VanillaCopy] uses different texture for fire overlay
     @Unique
     private static void renderPrimordialFireOverlay(MinecraftClient client, MatrixStack matrices) {
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-        RenderSystem.setShader(GameRenderer::getPositionColorTexProgram);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
         RenderSystem.depthFunc(519);
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        //RenderSystem.enableTexture();
         Sprite sprite = client.getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(SpectrumCommon.locate("block/primordial_fire_1"));
         RenderSystem.setShaderTexture(0, sprite.getAtlasId());
         float f = sprite.getMinU();
@@ -57,17 +54,23 @@ public class InGameOverlayRendererMixin {
         float n = MathHelper.lerp(l, g, h);
         float o = MathHelper.lerp(l, i, k);
         float p = MathHelper.lerp(l, j, k);
+        float q = 1.0F;
         
         for (int r = 0; r < 2; ++r) {
             matrices.push();
-            matrices.translate(((float) (-(r * 2 - 1)) * 0.24F), -0.3, 0.0);
+            float s = -0.5F;
+            float t = 0.5F;
+            float u = -0.5F;
+            float v = 0.5F;
+            float w = -0.5F;
+            matrices.translate((float) (-(r * 2 - 1)) * 0.24F, -0.3F, 0.0F);
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) (r * 2 - 1) * 10.0F));
             Matrix4f matrix4f = matrices.peek().getPositionMatrix();
-            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-            bufferBuilder.vertex(matrix4f, -0.5F, -0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).texture(n, p).next();
-            bufferBuilder.vertex(matrix4f, 0.5F, -0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).texture(m, p).next();
-            bufferBuilder.vertex(matrix4f, 0.5F, 0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).texture(m, o).next();
-            bufferBuilder.vertex(matrix4f, -0.5F, 0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).texture(n, o).next();
+            BufferBuilder bufferBuilder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+            bufferBuilder.vertex(matrix4f, -0.5F, -0.5F, -0.5F).texture(n, p).color(1.0F, 1.0F, 1.0F, 0.9F);
+            bufferBuilder.vertex(matrix4f, 0.5F, -0.5F, -0.5F).texture(m, p).color(1.0F, 1.0F, 1.0F, 0.9F);
+            bufferBuilder.vertex(matrix4f, 0.5F, 0.5F, -0.5F).texture(m, o).color(1.0F, 1.0F, 1.0F, 0.9F);
+            bufferBuilder.vertex(matrix4f, -0.5F, 0.5F, -0.5F).texture(n, o).color(1.0F, 1.0F, 1.0F, 0.9F);
             BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
             matrices.pop();
         }
@@ -75,6 +78,7 @@ public class InGameOverlayRendererMixin {
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.depthFunc(515);
+		
     }
     
 }
