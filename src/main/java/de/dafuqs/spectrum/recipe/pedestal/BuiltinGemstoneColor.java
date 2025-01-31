@@ -8,16 +8,16 @@ import net.minecraft.registry.*;
 import net.minecraft.util.*;
 
 public enum BuiltinGemstoneColor implements GemstoneColor, StringIdentifiable {
-	CYAN(DyeColor.CYAN),
-	MAGENTA(DyeColor.MAGENTA),
-	YELLOW(DyeColor.YELLOW),
-	BLACK(DyeColor.BLACK),
-	WHITE(DyeColor.WHITE);
+	CYAN("cyan", DyeColor.CYAN),
+	MAGENTA("magenta", DyeColor.MAGENTA),
+	YELLOW("yellow", DyeColor.YELLOW),
+	BLACK("black", DyeColor.BLACK),
+	WHITE("white", DyeColor.WHITE);
 
 	private final DyeColor dyeColor;
-
-	BuiltinGemstoneColor(DyeColor dyeColor) {
-		Registry.register(SpectrumRegistries.GEMSTONE_COLORS, SpectrumCommon.locate(dyeColor.name()), this);
+	
+	BuiltinGemstoneColor(String name, DyeColor dyeColor) {
+		Registry.register(SpectrumRegistries.GEMSTONE_COLORS, SpectrumCommon.locate(name), this);
 		this.dyeColor = dyeColor;
 	}
 
