@@ -58,16 +58,16 @@
 	"custom": {
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1293": [
-				"de/dafuqs/spectrum/mixin/injectors/StatusEffectInstanceInjector"
+				"de/dafuqs/spectrum/injectors/StatusEffectInstanceInjector"
 			],
 			"net/minecraft/class_2783": [
-				"de/dafuqs/spectrum/mixin/injectors/EntityStatusEffectS2CPacketInjector"
+				"de/dafuqs/spectrum/injectors/EntityStatusEffectS2CPacketInjector"
 			],
 			"net/minecraft/class_4174\u0024class_4175": [
-				"de/dafuqs/spectrum/mixin/injectors/FoodComponentBuilderInjector"
+				"de/dafuqs/spectrum/injectors/FoodComponentBuilderInjector"
 			],
 			"net/minecraft/class_9304": [
-				"de/dafuqs/spectrum/mixin/injectors/ItemEnchantmentsComponentInjector"
+				"de/dafuqs/spectrum/injectors/ItemEnchantmentsComponentInjector"
 			]
 		},
 		"cardinal-components": [

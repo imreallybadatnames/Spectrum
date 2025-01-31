@@ -103,9 +103,10 @@
 		"compat.connectormod.absent.PlayerEntityMixin",
 		"compat.connectormod.present.ExplosionMixin",
 		"compat.connectormod.present.PlayerEntityMixin",
-		"injectors.EntityStatusEffectS2CPacketInjector$_Mixin",
-		"injectors.FoodComponentBuilderInjector$_Accessor",
-		"injectors.StatusEffectInstanceInjector$_Mixin"
+		"injectors.EntityStatusEffectsS2CPacketMixin",
+		"injectors.FoodComponentBuilderMixin",
+		"injectors.ItemEnchantmentsComponentMixin",
+		"injectors.StatusEffectInstanceMixin"
 	],
 	"client": [
 		"accessors.DimensionEffectsAccessor",
@@ -143,8 +144,7 @@
 		"client.accessors.RenderLayerAccessor",
 		"compat.colorful_hearts.absent.InGameHudMixin",
 		"compat.colorful_hearts.present.HeartMixin",
-		"compat.sodium.present.ColorProviderRegistryMixin",
-		"injectors.ItemEnchantmentsComponentInjector$_Mixin"
+		"compat.sodium.present.ColorProviderRegistryMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

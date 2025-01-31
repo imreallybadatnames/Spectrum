@@ -28,9 +28,9 @@ public abstract class CropAndStemBlockMixin {
 	}
 	
 	@Inject(at = @At("HEAD"), method = "isFertilizable", cancellable = true)
-	public void spectrum$isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient, CallbackInfoReturnable<Boolean> cir) {
+	public void spectrum$isFertilizable(WorldView world, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
 		if (world.getBlockState(pos.down()).isOf(SpectrumBlocks.TILLED_SHALE_CLAY)) {
-			cir.cancel();
+			cir.setReturnValue(false);
 		}
 	}
 	

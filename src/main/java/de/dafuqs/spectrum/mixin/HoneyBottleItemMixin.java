@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(HoneyBottleItem.class)
 public class HoneyBottleItemMixin {
-
-	@Inject(method = "finishUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;removeStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z"))
+	
+	@Inject(method = "finishUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;removeStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"))
 	private void spectrum$cureDeadlyPoison(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
 		user.removeStatusEffect(SpectrumStatusEffects.DEADLY_POISON);
 	}

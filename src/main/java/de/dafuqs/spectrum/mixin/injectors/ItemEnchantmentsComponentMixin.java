@@ -2,7 +2,7 @@ package de.dafuqs.spectrum.mixin.injectors;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import de.dafuqs.spectrum.*;
-import de.dafuqs.spectrum.registries.*;
+import de.dafuqs.spectrum.injectors.*;
 import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.registry.entry.*;
@@ -11,45 +11,15 @@ import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 
-import java.util.*;
 import java.util.function.*;
 
-public interface ItemEnchantmentsComponentInjector {
-	
-	Set<RegistryEntry<Enchantment>> getEnchantments();
-	
-	default CloakState spectrum$cloakState(RegistryEntry<Enchantment> ench) {
-		// If this enchantment isn't in this component, what are you even doing
-		var enchantments = getEnchantments();
-		if (!enchantments.contains(ench))
-			return CloakState.HIDDEN;
-		
-		// If this enchantment is non-cloaking, it's always revealed
-		var cloaks = ench.value().getEffect(SpectrumEnchantmentEffectComponentTypes.CLOAKED);
-		if (cloaks.isEmpty()) return CloakState.REVEALED;
-		
-		// If any enchantment is not unlocked, we show that something's left by obfuscating the cloak
-		for (var cloak : cloaks)
-			if (!enchantments.contains(cloak.effect()))
-				return CloakState.OBFUSCATED;
-		
-		// All cloaked enchantments are unlocked, so we pretend this one isn't here
-		return CloakState.HIDDEN;
-	}
-	
-	enum CloakState {
-		HIDDEN,
-		OBFUSCATED,
-		REVEALED
-	}
-	
-	@Mixin(ItemEnchantmentsComponent.class)
-	class _Mixin {
+@Mixin(ItemEnchantmentsComponent.class)
+public abstract class ItemEnchantmentsComponentMixin implements ItemEnchantmentsComponentInjector {
 		
 		@ModifyVariable(method = "appendTooltip(Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", at = @At("STORE"))
 		private RegistryEntry<Enchantment> spectrum$appendTooltip$hideRevealedEnchantmentCloak(RegistryEntry<Enchantment> entry) {
 			var comp = (ItemEnchantmentsComponent) (Object) this;
-			return comp.spectrum$cloakState(entry) == CloakState.HIDDEN ? null : entry;
+			return comp.spectrum$cloakState(entry) == ItemEnchantmentsComponentInjector.CloakState.HIDDEN ? null : entry;
 		}
 		
 		@WrapOperation(method = "appendTooltip(Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getName(Lnet/minecraft/registry/entry/RegistryEntry;I)Lnet/minecraft/text/Text;"))
@@ -75,6 +45,3 @@ public interface ItemEnchantmentsComponentInjector {
 		}
 		
 	}
-	
-}
-

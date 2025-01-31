@@ -41,13 +41,13 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent NIGHTDEW_SPROUT = new FoodComponent.Builder()
-			.nutrition(1).saturationModifier(SAT_POOR).setEatSeconds(TIME_FEAST).alwaysEdible()
+			.nutrition(1).saturationModifier(SAT_POOR).spectrum$setEatSeconds(TIME_FEAST).alwaysEdible()
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.CALMING, 200, 0), 0.5F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.SOMNOLENCE, 200, 0), 0.5F)
 			.build();
 
 	public static final FoodComponent NECTARDEW_BURGEON = new FoodComponent.Builder()
-			.nutrition(1).saturationModifier(SAT_POOR).setEatSeconds(TIME_FEAST).alwaysEdible()
+			.nutrition(1).saturationModifier(SAT_POOR).spectrum$setEatSeconds(TIME_FEAST).alwaysEdible()
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.ETERNAL_SLUMBER, 6000), 0.95F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.FATAL_SLUMBER, 100), 0.05F)
 			.build();
@@ -80,7 +80,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent TRIPLE_MEAT_POT_PIE = new FoodComponent.Builder()
-			.nutrition(20).saturationModifier(SAT_NORMAL).setEatSeconds(TIME_FEAST)
+			.nutrition(20).saturationModifier(SAT_NORMAL).spectrum$setEatSeconds(TIME_FEAST)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100), 1.0F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 12000, 1), 1.0F)
 			.build();
@@ -316,7 +316,7 @@ public class SpectrumFoodComponents {
 			.build();
 	
 	public static final FoodComponent TRIPLE_MEAT_POT_STEW = new FoodComponent.Builder()
-			.nutrition(20).saturationModifier(SAT_NORMAL).setEatSeconds(TIME_FEAST)
+			.nutrition(20).saturationModifier(SAT_NORMAL).spectrum$setEatSeconds(TIME_FEAST)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100), 1.0F)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 12000, 1), 1.0F)
 			.build();
@@ -346,7 +346,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent CHAUVE_SOURIS_AU_VIN = new FoodComponent.Builder()
-			.nutrition(20).saturationModifier(SAT_GOOD).setEatSeconds(TIME_FEAST)
+			.nutrition(20).saturationModifier(SAT_GOOD).spectrum$setEatSeconds(TIME_FEAST)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.EFFECT_PROLONGING, 6000, 0), 1.0F)
 			.build();
 
@@ -395,7 +395,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent HARE_ROAST = new FoodComponent.Builder()
-			.nutrition(12).saturationModifier(SAT_GOOD).setEatSeconds(TIME_HEARTY)
+			.nutrition(12).saturationModifier(SAT_GOOD).spectrum$setEatSeconds(TIME_HEARTY)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.NOURISHING, 1200, 1), 1.0F)
 			.statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1200), 1)
 			.build();
@@ -436,7 +436,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent PEACHES_FLAMBE = new FoodComponent.Builder()
-			.nutrition(14).saturationModifier(SAT_GOOD).setEatSeconds(TIME_HEARTY)
+			.nutrition(14).saturationModifier(SAT_GOOD).spectrum$setEatSeconds(TIME_HEARTY)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.TOUGHNESS, 3000, 5), 1.0F)
 			.build();
 
@@ -463,7 +463,7 @@ public class SpectrumFoodComponents {
 			.build();
 
 	public static final FoodComponent SEDATIVES = new FoodComponent.Builder()
-			.nutrition(2).saturationModifier(SAT_POOR).setEatSeconds(TIME_HEARTY)
+			.nutrition(2).saturationModifier(SAT_POOR).spectrum$setEatSeconds(TIME_HEARTY)
 			.statusEffect(new StatusEffectInstance(SpectrumStatusEffects.STIFFNESS, 300, 4), 1.0F)
 			.build();
 

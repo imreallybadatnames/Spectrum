@@ -18,7 +18,6 @@ import de.dafuqs.spectrum.helpers.enchantments.*;
 import de.dafuqs.spectrum.items.tools.*;
 import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
-import de.dafuqs.spectrum.mixin.injectors.*;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
 import de.dafuqs.spectrum.particle.*;
 import de.dafuqs.spectrum.registries.*;
@@ -228,7 +227,7 @@ public abstract class LivingEntityMixin {
 		var instance = (LivingEntity) (Object) this;
 		
 		if (original && this.hasStatusEffect(SpectrumStatusEffects.IMMUNITY) && statusEffectInstance.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL && !SpectrumStatusEffectTags.isIncurable(statusEffectInstance.getEffectType())) {
-			if (StatusEffectInstanceInjector.isIncurable(statusEffectInstance)) {
+			if (StatusEffectHelper.isIncurable(statusEffectInstance)) {
 				var immunity = getStatusEffect(SpectrumStatusEffects.IMMUNITY);
 				var cost = 600 * (statusEffectInstance.getAmplifier() + 1);
 				
@@ -431,8 +430,6 @@ public abstract class LivingEntityMixin {
 		
 		if (!(activeItem.getItem() instanceof ParryingSwordItem))
 			return;
-		
-		
 	}
 	
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;applyDamage(Lnet/minecraft/entity/damage/DamageSource;F)V", ordinal = 0), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
@@ -498,7 +495,7 @@ public abstract class LivingEntityMixin {
 		if (AetherGracedNectarGlovesItem.testEffectFor(entity, effect.getEffectType())) {
 			var cost = (effect.getAmplifier() + 1) * AetherGracedNectarGlovesItem.HARMFUL_EFFECT_COST;
 			
-			if (StatusEffectInstanceInjector.isIncurable(effect))
+			if (StatusEffectHelper.isIncurable(effect))
 				cost *= 3;
 			
 			if (AetherGracedNectarGlovesItem.tryBlockEffect(entity, cost)) {
@@ -675,19 +672,17 @@ public abstract class LivingEntityMixin {
 	
 	
 	@com.llamalad7.mixinextras.injector.v2.WrapWithCondition(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tiltScreen(DD)V"))
-	private boolean shouldTiltScreen(LivingEntity entity, double deltaX, double deltaZ, DamageSource source,
-									 float amount) {
+	private boolean shouldTiltScreen(LivingEntity entity, double deltaX, double deltaZ, DamageSource source, float amount) {
 		return !source.isIn(SpectrumDamageTypeTags.USES_SET_HEALTH);
 	}
 	
-	@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 0))
+	/*@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 0))
 	private void spectrum$getEquipmentChanges$removeConditionalEffects(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir, @Local Map<EquipmentSlot, ItemStack> map, @Local EquipmentSlot equipmentSlot, @Local ItemStack itemStack) {
 		var livingEntity = (LivingEntity) (Object) this;
 		var builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level, context) ->
-				builder.set(enchantment, 0));
+		EnchantmentHelperAccessor.invokeForEachEnchantment(itemStack, equipmentSlot, livingEntity, (enchantment, level, context) -> builder.set(enchantment, 0));
 		itemStack.set(DataComponentTypes.ENCHANTMENTS, builder.build());
-	}
+	}*/
 	
 	@Inject(method = "getEquipmentChanges()Ljava/util/Map;", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;applyAttributeModifiers(Lnet/minecraft/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", ordinal = 1))
 	private void spectrum$getEquipmentChanges$applyConditionalEffects(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir, @Local Map<EquipmentSlot, ItemStack> map, @Local Map.Entry<EquipmentSlot, ItemStack> entry, @Local EquipmentSlot equipmentSlot, @Local ItemStack itemStack) {
