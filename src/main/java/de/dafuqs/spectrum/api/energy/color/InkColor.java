@@ -13,7 +13,8 @@ import org.joml.*;
 import java.util.*;
 
 public class InkColor {
-
+	
+	// TODO: what if other mods register new ink colors?
 	public static final Codec<InkColor> CODEC = CodecHelper.SPECTRUM_IDENTIFIER.comapFlatMap(
 			id -> ofId(id).map(DataResult::success).orElse(DataResult.error(() -> "Not a valid ink color: " + id)),
 			InkColor::getID

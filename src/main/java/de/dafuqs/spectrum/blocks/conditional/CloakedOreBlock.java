@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.blocks.conditional;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.revelationary.api.revelations.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -22,7 +21,7 @@ public class CloakedOreBlock extends ExperienceDroppingBlock implements Revelati
 			IntProvider.createValidatingCodec(0, 10).fieldOf("experience").forGetter(b -> ((ExperienceDroppingBlockAccessor) b).getExperienceDropped()),
 			createSettingsCodec(),
 			Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
-			CodecHelper.BLOCK_STATE.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+			BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
 	).apply(instance, CloakedOreBlock::new));
 
 	protected static boolean dropXP;

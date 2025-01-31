@@ -5,8 +5,6 @@ import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
-import de.dafuqs.spectrum.recipe.*;
-import net.minecraft.block.*;
 import net.minecraft.nbt.*;
 import net.minecraft.registry.*;
 import net.minecraft.util.*;
@@ -16,8 +14,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class CodecHelper {
-	
-	public static Codec<BlockState> BLOCK_STATE = Codec.STRING.flatXmap(RecipeUtils::blockStateDataFromString, state -> DataResult.success(RecipeUtils.blockStateToString(state)));
 	
 	public static Codec<Identifier> SPECTRUM_IDENTIFIER = Codec.STRING.xmap(SpectrumCommon::ofSpectrum, Identifier::toString);
 	

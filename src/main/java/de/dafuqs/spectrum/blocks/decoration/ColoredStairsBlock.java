@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.blocks.decoration;
 import com.google.common.collect.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import de.dafuqs.spectrum.helpers.*;
 import net.minecraft.block.*;
 import net.minecraft.util.*;
 
@@ -12,7 +11,7 @@ import java.util.*;
 public class ColoredStairsBlock extends StairsBlock {
 
 	public static final MapCodec<ColoredStairsBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-			CodecHelper.BLOCK_STATE.fieldOf("base_state").forGetter(b -> b.baseBlockState),
+			BlockState.CODEC.fieldOf("base_state").forGetter(b -> b.baseBlockState),
 			createSettingsCodec(),
 			DyeColor.CODEC.fieldOf("color").forGetter(ColoredStairsBlock::getColor)
 	).apply(instance, ColoredStairsBlock::new));

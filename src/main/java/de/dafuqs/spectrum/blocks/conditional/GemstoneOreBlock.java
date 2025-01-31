@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.blocks.conditional;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.api.item.*;
-import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.mixin.accessors.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
@@ -23,7 +22,7 @@ public class GemstoneOreBlock extends CloakedOreBlock {
 				createSettingsCodec(),
 				SpectrumRegistries.GEMSTONE_COLORS.getCodec().fieldOf("color").forGetter(b -> b.gemstoneColor),
 				Identifier.CODEC.fieldOf("advancement").forGetter(CloakedOreBlock::getCloakAdvancementIdentifier),
-				CodecHelper.BLOCK_STATE.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
+				BlockState.CODEC.fieldOf("cloak").forGetter(b -> b.getBlockStateCloaks().get(b.getDefaultState()))
 		).apply(instance, GemstoneOreBlock::new));
 	}
 

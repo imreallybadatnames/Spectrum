@@ -178,7 +178,7 @@ public class CrystallarieumRecipe extends GatedSpectrumRecipe<SingleStackRecipeI
 				Codec.BOOL.optionalFieldOf("secret", false).forGetter(recipe -> recipe.secret),
 				Identifier.CODEC.optionalFieldOf("required_advancement", null).forGetter(recipe -> recipe.requiredAdvancementIdentifier),
 				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-				CodecHelper.BLOCK_STATE.listOf().fieldOf("growth_stage_states").forGetter(recipe -> recipe.growthStages),
+				BlockState.CODEC.listOf().fieldOf("growth_stage_states").forGetter(recipe -> recipe.growthStages),
 				Codec.INT.fieldOf("seconds_per_growth_stage").forGetter(recipe -> recipe.secondsPerGrowthStage),
 				InkColor.CODEC.fieldOf("ink_color").forGetter(recipe -> recipe.inkColor),
 				Codec.INT.xmap(
