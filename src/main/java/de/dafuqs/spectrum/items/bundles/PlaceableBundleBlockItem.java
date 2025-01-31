@@ -1,40 +1,29 @@
 package de.dafuqs.spectrum.items.bundles;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.StackReference;
+import net.minecraft.block.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import org.apache.commons.lang3.math.Fraction;
+import net.minecraft.item.tooltip.*;
+import net.minecraft.screen.slot.*;
+import net.minecraft.text.*;
+import net.minecraft.util.*;
+import org.apache.commons.lang3.math.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class PlaceableBundleItem extends BlockItem {
+public class PlaceableBundleBlockItem extends BlockItem {
 
     private final BundleItem bundle;
-
-    public PlaceableBundleItem(BundleItem bundle, Block block, Settings settings) {
-        super(block, settings);
-        this.bundle = bundle;
-    }
-
-    public PlaceableBundleItem(int maxStacks, Block block, Settings settings) {
+	
+	public PlaceableBundleBlockItem(int maxStacks, Block block, Settings settings) {
         this(Fraction.getFraction(maxStacks, 1), maxStacks, new Item.Settings(), block, settings);
     }
-
-    public PlaceableBundleItem(Fraction maxOccupancy, Block block, Settings settings) {
-        this(maxOccupancy, Integer.MAX_VALUE, new Item.Settings(), block, settings);
-    }
-
-    public PlaceableBundleItem(Fraction maxOccupancy, int maxStacks, Settings bundleSettings, Block block, Settings settings) {
+	
+	public PlaceableBundleBlockItem(Fraction maxOccupancy, int maxStacks, Settings bundleSettings, Block block, Settings settings) {
         super(block, settings);
-        bundle = new ExtendedBundleItem(maxOccupancy, maxStacks, bundleSettings);
+		bundle = null; //  new ExtendedBundleItem(maxOccupancy, maxStacks, bundleSettings); // TODO: instanciating a new item here makes the game crash because this ExtendedBundleItem is not registered
     }
 
     @Override

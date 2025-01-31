@@ -1,6 +1,6 @@
 package de.dafuqs.spectrum.blocks.present;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.helpers.ColorHelper;
 import de.dafuqs.spectrum.networking.s2c_payloads.*;
@@ -99,7 +99,7 @@ public class PresentBlock extends BlockWithEntity {
 	@Override
 	public void onPlaced(@NotNull World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		world.setBlockState(pos, state.with(PresentBlock.VARIANT, PresentItem.getWrapData(itemStack).variant()));
+		world.setBlockState(pos, state.with(PresentBlock.VARIANT, PresentBlockItem.getWrapData(itemStack).variant()));
 		if (blockEntity instanceof PresentBlockEntity presentBlockEntity) {
 			presentBlockEntity.setPresent(itemStack);
 		}

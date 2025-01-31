@@ -5,14 +5,14 @@ import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
-import net.minecraft.component.type.ProfileComponent;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.*;
+import net.minecraft.util.collection.*;
 import net.minecraft.util.math.*;
 
 import java.util.*;
@@ -79,21 +79,21 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	
 	@Override
 	public UUID getOwnerUUID() {
-		return PresentItem.getOwner(this.presentStack).flatMap(ProfileComponent::id).orElse(null);
+		return PresentBlockItem.getOwner(this.presentStack).flatMap(ProfileComponent::id).orElse(null);
 	}
 	
 	public ProfileComponent getOwner() {
-		return PresentItem.getOwner(this.presentStack).orElse(null);
+		return PresentBlockItem.getOwner(this.presentStack).orElse(null);
 	}
 
 	@Override
 	public String getOwnerName() {
-		return PresentItem.getOwner(this.presentStack).flatMap(ProfileComponent::name).orElse("???");
+		return PresentBlockItem.getOwner(this.presentStack).flatMap(ProfileComponent::name).orElse("???");
 	}
 
 	@Override
 	public void setOwner(PlayerEntity playerEntity) {
-		PresentItem.setOwner(this.presentStack, playerEntity);
+		PresentBlockItem.setOwner(this.presentStack, playerEntity);
 		markDirty();
 	}
 	
@@ -111,16 +111,16 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	}
 
 	public Map<DyeColor, Integer> getColors() {
-		return PresentItem.getWrapData(this.presentStack).colors();
+		return PresentBlockItem.getWrapData(this.presentStack).colors();
 	}
 
 	public List<ItemStack> getStacks() {
-		return PresentItem.getBundledStacks(this.presentStack).toList();
+		return PresentBlockItem.getBundledStacks(this.presentStack).toList();
 	}
 
 	public DefaultedList<ItemStack> getDefaultedStacks() {
 		var list = DefaultedList.copyOf(ItemStack.EMPTY);
-		list.addAll(PresentItem.getBundledStacks(this.presentStack).toList());
+		list.addAll(PresentBlockItem.getBundledStacks(this.presentStack).toList());
 		return list;
 	}
 
@@ -130,7 +130,7 @@ public class PresentBlockEntity extends BlockEntity implements PlayerOwnedWithNa
 	}
 	
 	public boolean isEmpty() {
-		return PresentItem.isEmpty(this.presentStack);
+		return PresentBlockItem.isEmpty(this.presentStack);
 	}
 
 }

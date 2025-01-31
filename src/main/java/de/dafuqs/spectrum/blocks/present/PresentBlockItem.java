@@ -21,11 +21,11 @@ import net.minecraft.world.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class PresentItem extends PlaceableBundleItem {
+public class PresentBlockItem extends PlaceableBundleBlockItem {
 	
 	public static final int MAX_STORAGE_STACKS = 5;
-
-	public PresentItem(Block block, Settings settings) {
+	
+	public PresentBlockItem(Block block, Settings settings) {
 		super(MAX_STORAGE_STACKS, block, settings);
 	}
 

@@ -32,7 +32,7 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 	@Override
 	public ItemStack getResult(RegistryWrapper.WrapperLookup registryLookup) {
 		ItemStack stack = SpectrumBlocks.PRESENT.asItem().getDefaultStack();
-		PresentItem.wrap(stack, PresentBlock.WrappingPaper.RED, Map.of());
+		PresentBlockItem.wrap(stack, PresentBlock.WrappingPaper.RED, Map.of());
 		return stack;
 	}
 	
@@ -44,8 +44,8 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 		for (int j = 0; j < input.getSize(); ++j) {
 			ItemStack itemStack = input.getStackInSlot(j);
 			if (!itemStack.isEmpty()) {
-				if (itemStack.getItem() instanceof PresentItem) {
-					if (presentItemFound || PresentItem.isWrapped(itemStack)) {
+				if (itemStack.getItem() instanceof PresentBlockItem) {
+					if (presentItemFound || PresentBlockItem.isWrapped(itemStack)) {
 						return false;
 					}
 					presentItemFound = true;
@@ -68,7 +68,7 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 		
 		for (int j = 0; j < input.getSize(); ++j) {
 			ItemStack stack = input.getStackInSlot(j);
-			if (stack.getItem() instanceof PresentItem) {
+			if (stack.getItem() instanceof PresentBlockItem) {
 				presentStack = stack.copy();
 			} else if (stack.getItem() instanceof PigmentItem pigmentItem) {
 				DyeColor color = pigmentItem.getColor();
@@ -85,7 +85,7 @@ public class WrapPresentRecipe extends SpecialCraftingRecipe {
 		}
 		
 		if (!presentStack.isEmpty()) {
-			PresentItem.wrap(presentStack, wrappingPaper, colors);
+			PresentBlockItem.wrap(presentStack, wrappingPaper, colors);
 		}
 		return presentStack;
 	}
