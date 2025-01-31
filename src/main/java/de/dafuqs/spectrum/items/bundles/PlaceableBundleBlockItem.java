@@ -23,7 +23,7 @@ public class PlaceableBundleBlockItem extends BlockItem {
 	
 	public PlaceableBundleBlockItem(Fraction maxOccupancy, int maxStacks, Settings bundleSettings, Block block, Settings settings) {
         super(block, settings);
-		bundle = null; //  new ExtendedBundleItem(maxOccupancy, maxStacks, bundleSettings); // TODO: instanciating a new item here makes the game crash because this ExtendedBundleItem is not registered
+		bundle = null;   //  new ExtendedBundleItem(maxOccupancy, maxStacks, bundleSettings); // TODO: instanciating a new item here makes the game crash because this ExtendedBundleItem is not registered
     }
 
     @Override
