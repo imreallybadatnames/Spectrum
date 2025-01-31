@@ -8,35 +8,36 @@ import net.fabricmc.fabric.api.networking.v1.*;
 public class SpectrumS2CPackets {
 
 	public static void register() {
-		PayloadTypeRegistry.playC2S().register(PlayParticleWithRandomOffsetAndVelocityPayload.ID, PlayParticleWithRandomOffsetAndVelocityPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayParticleWithExactVelocityPayload.ID, PlayParticleWithExactVelocityPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayParticleWithPatternAndVelocityPayload.ID, PlayParticleWithPatternAndVelocityPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayParticleAroundBlockSidesPayload.ID, PlayParticleAroundBlockSidesPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayPedestalCraftingFinishedParticlePayload.ID, PlayPedestalCraftingFinishedParticlePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayPedestalUpgradedParticlePayload.ID, PlayPedestalUpgradedParticlePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayPedestalStartCraftingParticlePayload.ID, PlayPedestalStartCraftingParticlePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayFusionCraftingInProgressParticlePayload.ID, PlayFusionCraftingInProgressParticlePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayFusionCraftingFinishedParticlePayload.ID, PlayFusionCraftingFinishedParticlePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayShootingStarParticlesPayload.ID, PlayShootingStarParticlesPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayPresentOpeningParticlesPayload.ID, PlayPresentOpeningParticlesPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(TypedTransmissionPayload.ID, TypedTransmissionPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(ColorTransmissionPayload.ID, ColorTransmissionPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PastelTransmissionPayload.ID, PastelTransmissionPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayBlockBoundSoundInstancePayload.ID, PlayBlockBoundSoundInstancePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayTakeOffBeltSoundInstancePayload.ID, PlayTakeOffBeltSoundInstancePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(StartSkyLerpingPayload.ID, StartSkyLerpingPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayMemoryManifestingParticlesPayload.ID, PlayMemoryManifestingParticlesPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(UpdateBlockEntityInkPayload.ID, UpdateBlockEntityInkPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(InkColorSelectedS2CPayload.ID, InkColorSelectedS2CPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayAscensionAppliedEffectsPayload.ID, PlayAscensionAppliedEffectsPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PlayDivinityAppliedEffectsPayload.ID, PlayDivinityAppliedEffectsPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(MoonstoneBlastPayload.ID, MoonstoneBlastPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(SyncArtisansAtlasPayload.ID, SyncArtisansAtlasPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(SyncMentalPresencePayload.ID, SyncMentalPresencePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(CompactingChestStatusUpdatePayload.ID, CompactingChestStatusUpdatePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(BlackHoleChestStatusUpdatePayload.ID, BlackHoleChestStatusUpdatePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(FabricationChestStatusUpdatePayload.ID, FabricationChestStatusUpdatePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(PastelNodeStatusUpdatePayload.ID, PastelNodeStatusUpdatePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayParticleWithRandomOffsetAndVelocityPayload.ID, PlayParticleWithRandomOffsetAndVelocityPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayParticleWithExactVelocityPayload.ID, PlayParticleWithExactVelocityPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayParticleWithPatternAndVelocityPayload.ID, PlayParticleWithPatternAndVelocityPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayParticleAroundBlockSidesPayload.ID, PlayParticleAroundBlockSidesPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayPedestalCraftingFinishedParticlePayload.ID, PlayPedestalCraftingFinishedParticlePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayPedestalUpgradedParticlePayload.ID, PlayPedestalUpgradedParticlePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayPedestalStartCraftingParticlePayload.ID, PlayPedestalStartCraftingParticlePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(ParticleSpawnerConfigurationS2CPayload.ID, ParticleSpawnerConfigurationS2CPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayFusionCraftingInProgressParticlePayload.ID, PlayFusionCraftingInProgressParticlePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayFusionCraftingFinishedParticlePayload.ID, PlayFusionCraftingFinishedParticlePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayShootingStarParticlesPayload.ID, PlayShootingStarParticlesPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayPresentOpeningParticlesPayload.ID, PlayPresentOpeningParticlesPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(TypedTransmissionPayload.ID, TypedTransmissionPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(ColorTransmissionPayload.ID, ColorTransmissionPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PastelTransmissionPayload.ID, PastelTransmissionPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayBlockBoundSoundInstancePayload.ID, PlayBlockBoundSoundInstancePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayTakeOffBeltSoundInstancePayload.ID, PlayTakeOffBeltSoundInstancePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(StartSkyLerpingPayload.ID, StartSkyLerpingPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayMemoryManifestingParticlesPayload.ID, PlayMemoryManifestingParticlesPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(UpdateBlockEntityInkPayload.ID, UpdateBlockEntityInkPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(InkColorSelectedS2CPayload.ID, InkColorSelectedS2CPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayAscensionAppliedEffectsPayload.ID, PlayAscensionAppliedEffectsPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayDivinityAppliedEffectsPayload.ID, PlayDivinityAppliedEffectsPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(MoonstoneBlastPayload.ID, MoonstoneBlastPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(SyncArtisansAtlasPayload.ID, SyncArtisansAtlasPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(SyncMentalPresencePayload.ID, SyncMentalPresencePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(CompactingChestStatusUpdatePayload.ID, CompactingChestStatusUpdatePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(BlackHoleChestStatusUpdatePayload.ID, BlackHoleChestStatusUpdatePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(FabricationChestStatusUpdatePayload.ID, FabricationChestStatusUpdatePayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(PastelNodeStatusUpdatePayload.ID, PastelNodeStatusUpdatePayload.CODEC);
 	}
 	
 	@Environment(EnvType.CLIENT)

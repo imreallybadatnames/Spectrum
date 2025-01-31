@@ -105,11 +105,12 @@ public class SpectrumLootPoolModifiers {
 		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/dolphin")), new TreasureHunterDropDefinition(SpectrumSkullType.DOLPHIN, 0.02F));
 		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("entities/pillager")), new TreasureHunterDropDefinition(SpectrumSkullType.PILLAGER, 0.02F));
 		
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/egg_laying_wooly_pig")), new TreasureHunterDropDefinition(SpectrumSkullType.EGG_LAYING_WOOLY_PIG, 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/kindling")), new TreasureHunterDropDefinition(SpectrumSkullType.KINDLING, 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/preservation_turret")), new TreasureHunterDropDefinition(SpectrumSkullType.PRESERVATION_TURRET, 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/monstrosity")), new TreasureHunterDropDefinition(SpectrumSkullType.MONSTROSITY, 0.1F));
-		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spectrum:entities/eraser")), new TreasureHunterDropDefinition(SpectrumSkullType.ERASER, 0.1F));
+		// TODO: ...ooooor we could simply put them in the json loot table
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/egg_laying_wooly_pig")), new TreasureHunterDropDefinition(SpectrumSkullType.EGG_LAYING_WOOLY_PIG, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/kindling")), new TreasureHunterDropDefinition(SpectrumSkullType.KINDLING, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/preservation_turret")), new TreasureHunterDropDefinition(SpectrumSkullType.PRESERVATION_TURRET, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/monstrosity")), new TreasureHunterDropDefinition(SpectrumSkullType.MONSTROSITY, 0.1F));
+		put(RegistryKey.of(RegistryKeys.LOOT_TABLE, SpectrumCommon.locate("entities/eraser")), new TreasureHunterDropDefinition(SpectrumSkullType.ERASER, 0.1F));
 	}};
 	
 	public static void setup() {

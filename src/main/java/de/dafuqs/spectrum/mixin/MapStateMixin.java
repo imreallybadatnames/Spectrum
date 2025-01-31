@@ -1,19 +1,14 @@
 package de.dafuqs.spectrum.mixin;
 
-import de.dafuqs.spectrum.items.map.ArtisansAtlasState;
-import net.minecraft.item.map.MapState;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import de.dafuqs.spectrum.items.map.*;
+import net.minecraft.item.map.*;
+import net.minecraft.nbt.*;
+import net.minecraft.registry.*;
+import net.minecraft.world.*;
+import org.jetbrains.annotations.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(MapState.class)
 public class MapStateMixin {
@@ -23,9 +18,9 @@ public class MapStateMixin {
     private static ArtisansAtlasState atlasState = null;
 
     @Inject(method = "fromNbt", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/map/MapState;<init>(IIBZZZLnet/minecraft/registry/RegistryKey;)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void spectrum$fromNbt_newMapState(NbtCompound nbt, CallbackInfoReturnable<MapState> cir, RegistryKey<World> dimension, int centerX, int centerZ, byte scale, boolean showIcons, boolean unlimitedTracking, boolean locked) {
+	private static void spectrum$fromNbt_newMapState(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfoReturnable<MapState> cir, RegistryKey<World> registryKey, int centerX, int centerZ, byte scale, boolean showIcons, boolean unlimitedTracking, boolean locked) {
         if (nbt.contains("isArtisansAtlas", NbtElement.BYTE_TYPE) && nbt.getBoolean("isArtisansAtlas")) {
-            atlasState = new ArtisansAtlasState(centerX, centerZ, scale, showIcons, unlimitedTracking, locked, dimension, nbt);
+			atlasState = new ArtisansAtlasState(centerX, centerZ, scale, showIcons, unlimitedTracking, locked, registryKey, nbt);
         }
     }
 

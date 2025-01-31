@@ -1,8 +1,7 @@
 package de.dafuqs.spectrum.blocks.decoration;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
 import de.dafuqs.spectrum.*;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.*;
@@ -32,8 +31,8 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
 	public ProjectorBlock(Settings settings, String path, double width, double height, float heightOffset, float bobMultiplier, float scaling) {
 		this(settings, SpectrumCommon.locate("textures/block/" + path + ".png"), width, height, heightOffset, bobMultiplier, scaling);
 	}
-
-	public ProjectorBlock(Settings settings, Identifier path, double width, double height, float heightOffset, float bobMultiplier, float scaling) {
+	
+	public ProjectorBlock(Settings settings, Identifier texture, double width, double height, float heightOffset, float bobMultiplier, float scaling) {
 		super(settings);
 		this.heightOffset = heightOffset;
 		this.bobMultiplier = bobMultiplier;
@@ -43,7 +42,7 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
 		var min = (16 - width) / 2;
 		var max = width + min;
 		shape = Block.createCuboidShape(min, 0, min, max, height, max);
-		this.texture = SpectrumCommon.locate("textures/block/" + path + ".png");
+		this.texture = texture;
 	}
 
 	@Override
