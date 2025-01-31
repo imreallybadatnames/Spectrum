@@ -27,7 +27,7 @@ public class SpectrumDataComponentTypes {
 	public static final ComponentType<BottomlessBundleItem.BottomlessStack> BOTTOMLESS_STACK = register("bottomless_stack", builder -> builder.codec(BottomlessBundleItem.BottomlessStack.CODEC).packetCodec(BottomlessBundleItem.BottomlessStack.PACKET_CODEC));
 	public static final ComponentType<Identifier> BOUND_ITEM = register("bound_item", builder -> builder.codec(Identifier.CODEC).packetCodec(Identifier.PACKET_CODEC));
 	public static final ComponentType<ItemEnchantmentsComponent> CANVAS_ENCHANTMENTS = register("canvas_enchantments", (builder) -> builder.codec(ItemEnchantmentsComponent.CODEC).packetCodec(ItemEnchantmentsComponent.PACKET_CODEC).cache());
-	public static final ComponentType<ConditionalFoodComponent> CONDITIONAL_FOOD_COMPONENT = register("conditional_food_component", builder -> builder.codec(ConditionalFoodComponent.CODEC).packetCodec(ConditionalFoodComponent.PACKET_CODEC));
+	public static final ComponentType<PairedFoodComponent> PAIRED_FOOD_COMPONENT = register("paired_food_component", builder -> builder.codec(PairedFoodComponent.CODEC).packetCodec(PairedFoodComponent.PACKET_CODEC));
 	public static final ComponentType<CustomPotionDataComponent> CUSTOM_POTION_DATA = register("custom_potion_data", builder -> builder.codec(CustomPotionDataComponent.CODEC).packetCodec(CustomPotionDataComponent.PACKET_CODEC));
 	public static final ComponentType<EnderSpliceComponent> ENDER_SPLICE = register("ender_splice", builder -> builder.codec(EnderSpliceComponent.CODEC).packetCodec(EnderSpliceComponent.PACKET_CODEC));
 	public static final ComponentType<Unit> HIDE_USAGE_TOOLTIP = register("hide_usage_tooltip", builder -> builder.codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)));

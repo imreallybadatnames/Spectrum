@@ -10,23 +10,23 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.network.*;
 import net.minecraft.network.codec.*;
-import net.minecraft.predicate.item.*;
+import net.minecraft.registry.*;
 import net.minecraft.server.network.*;
 import net.minecraft.world.*;
 
-public record ConditionalFoodComponent(ItemPredicate itemPredicate, boolean consumeAndApplyRequiredStack, FoodComponent bonusFoodComponent) {
+public record PairedFoodComponent(Item item, boolean consumeAndApplyRequiredStack, FoodComponent bonusFoodComponent) {
 	
-	public static final Codec<ConditionalFoodComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			ItemPredicate.CODEC.fieldOf("item_predicate").forGetter(ConditionalFoodComponent::itemPredicate),
-			Codec.BOOL.fieldOf("consume_and_apply_required_stack").forGetter(ConditionalFoodComponent::consumeAndApplyRequiredStack),
-			FoodComponent.CODEC.fieldOf("bonus_food_component").forGetter(ConditionalFoodComponent::bonusFoodComponent)
-	).apply(instance, ConditionalFoodComponent::new));
+	public static final Codec<PairedFoodComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			Registries.ITEM.getCodec().fieldOf("item").forGetter(PairedFoodComponent::item),
+			Codec.BOOL.fieldOf("consume_and_apply_required_stack").forGetter(PairedFoodComponent::consumeAndApplyRequiredStack),
+			FoodComponent.CODEC.fieldOf("bonus_food_component").forGetter(PairedFoodComponent::bonusFoodComponent)
+	).apply(instance, PairedFoodComponent::new));
 	
-	public static final PacketCodec<RegistryByteBuf, ConditionalFoodComponent> PACKET_CODEC = PacketCodec.tuple(
-			ItemPredicate.PACKET_CODEC, ConditionalFoodComponent::itemPredicate, // TODO: that feels like it cannot work somehow. Hmmmmm
-			PacketCodecs.BOOL, ConditionalFoodComponent::consumeAndApplyRequiredStack,
-			FoodComponent.PACKET_CODEC, ConditionalFoodComponent::bonusFoodComponent,
-			ConditionalFoodComponent::new
+	public static final PacketCodec<RegistryByteBuf, PairedFoodComponent> PACKET_CODEC = PacketCodec.tuple(
+			PacketCodecs.registryValue(RegistryKeys.ITEM), PairedFoodComponent::item,
+			PacketCodecs.BOOL, PairedFoodComponent::consumeAndApplyRequiredStack,
+			FoodComponent.PACKET_CODEC, PairedFoodComponent::bonusFoodComponent,
+			PairedFoodComponent::new
 	);
 	
 	public void tryEatFood(World world, LivingEntity livingEntity, ItemStack eatenStack) {
@@ -37,7 +37,7 @@ public record ConditionalFoodComponent(ItemPredicate itemPredicate, boolean cons
 		// does the entity have a matching stack in their inv?
 		int requiredSlotStack = -1;
 		for (int i = 0; i < player.getInventory().size(); i++) {
-			if (this.itemPredicate.test(player.getInventory().getStack(i))) {
+			if (player.getInventory().getStack(i).isOf(this.item)) {
 				requiredSlotStack = i;
 				break;
 			}

@@ -36,7 +36,7 @@ public class SpectrumAdvancementCriteria {
 	public static ConfirmationButtonPressedCriterion CONFIRMATION_BUTTON_PRESSED;
 	public static BloodOrchidPluckingCriterion BLOOD_ORCHID_PLUCKING;
 	public static DivinityTickCriterion DIVINITY_TICK;
-	public static ConditionalFoodEatenCriterion CONDITIONAL_FOOD_EATEN;
+	public static PairedFoodEatenCriterion CONDITIONAL_FOOD_EATEN;
 	public static HummingstoneHymnCriterion CREATE_HUMMINGSTONE_HYMN;
 	public static PastelNetworkCreationCriterion PASTEL_NETWORK_CREATING;
 	public static PastelNodeUpgradeCriterion PASTEL_NODE_UPGRADING;
@@ -75,7 +75,7 @@ public class SpectrumAdvancementCriteria {
 		CONFIRMATION_BUTTON_PRESSED = Criteria.register(ConfirmationButtonPressedCriterion.ID.toString(), new ConfirmationButtonPressedCriterion());
 		BLOOD_ORCHID_PLUCKING = Criteria.register(BloodOrchidPluckingCriterion.ID.toString(), new BloodOrchidPluckingCriterion());
 		DIVINITY_TICK = Criteria.register(DivinityTickCriterion.ID.toString(), new DivinityTickCriterion());
-		CONDITIONAL_FOOD_EATEN = Criteria.register(ConditionalFoodEatenCriterion.ID.toString(), new ConditionalFoodEatenCriterion());
+		CONDITIONAL_FOOD_EATEN = Criteria.register(PairedFoodEatenCriterion.ID.toString(), new PairedFoodEatenCriterion());
 		CREATE_HUMMINGSTONE_HYMN = Criteria.register(HummingstoneHymnCriterion.ID.toString(), new HummingstoneHymnCriterion());
 		PASTEL_NETWORK_CREATING = Criteria.register(PastelNetworkCreationCriterion.ID.toString(), new PastelNetworkCreationCriterion());
 		PASTEL_NODE_UPGRADING = Criteria.register(PastelNodeUpgradeCriterion.ID.toString(), new PastelNodeUpgradeCriterion());

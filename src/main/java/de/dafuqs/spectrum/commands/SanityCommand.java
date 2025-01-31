@@ -327,15 +327,15 @@ public class SanityCommand {
 		
 		// Enchantments with nonexistent unlock enchantment
 		//TODO: Sanity between cloaked+revealed enchants and their tags
-		for (Map.Entry<RegistryKey<Enchantment>, Enchantment> enchantment : registryManager.get(RegistryKeys.ENCHANTMENT).getEntrySet()) {
-			if (enchantment.getValue() instanceof SpectrumEnchantment spectrumEnchantment) {
-				Identifier advancementIdentifier = spectrumEnchantment.getUnlockAdvancementIdentifier();
-				AdvancementEntry advancementCriterionAdvancement = advancementLoader.get(advancementIdentifier);
-				if (advancementCriterionAdvancement == null) {
-					SpectrumCommon.logWarning("[SANITY: Enchantments] Enchantment '" + enchantment.getKey().getValue() + "' references advancement '" + advancementIdentifier + "' that does not exist");
-				}
-			}
-		}
+//		for (Map.Entry<RegistryKey<Enchantment>, Enchantment> enchantment : registryManager.get(RegistryKeys.ENCHANTMENT).getEntrySet()) {
+//			if (enchantment.getValue() instanceof SpectrumEnchantment spectrumEnchantment) {
+//				Identifier advancementIdentifier = spectrumEnchantment.getUnlockAdvancementIdentifier();
+//				AdvancementEntry advancementCriterionAdvancement = advancementLoader.get(advancementIdentifier);
+//				if (advancementCriterionAdvancement == null) {
+//					SpectrumCommon.logWarning("[SANITY: Enchantments] Enchantment '" + enchantment.getKey().getValue() + "' references advancement '" + advancementIdentifier + "' that does not exist");
+//				}
+//			}
+//		}
 		
 		// Enchantments without recipe
 		Map<RegistryEntry<Enchantment>, DyeColor> craftingColors = new HashMap<>();
