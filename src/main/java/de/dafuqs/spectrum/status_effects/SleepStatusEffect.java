@@ -3,7 +3,6 @@ package de.dafuqs.spectrum.status_effects;
 import de.dafuqs.spectrum.cca.*;
 import de.dafuqs.spectrum.registries.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.registry.entry.*;
@@ -17,7 +16,7 @@ public class SleepStatusEffect extends SpectrumStatusEffect {
         super(category, color);
         this.scales = scales;
     }
-    
+	
     // oh my god
     // TODO: can the tag check be implemented into the entities base attribute modifier somehow?
     public static float getSleepResistance(@Nullable StatusEffectInstance sleepEffect, LivingEntity entity) {
@@ -97,10 +96,11 @@ public class SleepStatusEffect extends SpectrumStatusEffect {
     }
 
     // Sleep effects don't scale except for uh, calming ufck
-    @Override
-    public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
-        if (scales)
-            return super.adjustModifierAmount(amplifier, modifier);
-        return modifier.getValue();
-    }
+	//TODO verify that you can't more than one level of eternal or fatal slumber
+//    @Override
+//    public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
+//        if (scales)
+//            return super.adjustModifierAmount(amplifier, modifier);
+//        return modifier.getValue();
+//    }
 }

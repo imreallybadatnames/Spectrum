@@ -52,7 +52,6 @@
 		"MapStateMixin",
 		"MapStatePlayerUpdateTrackerMixin",
 		"MC252934Mixin",
-		"MiningToolItemMixin",
 		"MobEntityMixin",
 		"NoteBlockMixin",
 		"PiglinBrainMixin",

@@ -9,6 +9,7 @@ import de.dafuqs.additionalentityattributes.*;
 import de.dafuqs.spectrum.api.entity.*;
 import de.dafuqs.spectrum.api.item.*;
 import de.dafuqs.spectrum.cca.*;
+import de.dafuqs.spectrum.components.*;
 import de.dafuqs.spectrum.entity.entity.*;
 import de.dafuqs.spectrum.helpers.*;
 import de.dafuqs.spectrum.helpers.enchantments.*;
@@ -17,6 +18,9 @@ import de.dafuqs.spectrum.items.trinkets.*;
 import de.dafuqs.spectrum.progression.*;
 import de.dafuqs.spectrum.registries.*;
 import de.dafuqs.spectrum.status_effects.*;
+import net.minecraft.block.*;
+import net.minecraft.component.*;
+import net.minecraft.component.type.*;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.*;
@@ -25,6 +29,7 @@ import net.minecraft.entity.effect.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.particle.*;
+import net.minecraft.registry.*;
 import net.minecraft.registry.entry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.server.network.*;
@@ -57,8 +62,43 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	@Shadow
 	protected abstract boolean canChangeIntoPose(EntityPose pose);
 	
+	@Shadow
+	@Final
+	private PlayerInventory inventory;
 	@Unique
 	public SpectrumFishingBobberEntity fishingBobber;
+	
+	@WrapOperation(method = "getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;getBlockBreakingSpeed(Lnet/minecraft/block/BlockState;)F"))
+	private float yourHandlerMethod(PlayerInventory inventory, BlockState state, Operation<Float> original) {
+		ItemStack stack = inventory.main.get(inventory.selectedSlot);
+		DynamicRegistryManager drm = getRegistryManager();
+		ToolComponent tool = stack.get(DataComponentTypes.TOOL);
+		float speed = original.call(inventory, state);
+		
+		// RAZING GAMING
+		int razingLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.RAZING, stack);
+		if (razingLevel > 0 && tool != null && tool.getSpeed(state) > tool.defaultMiningSpeed()) {
+			float hardness = state.getBlock().getHardness();
+			speed = (float) Math.max(1 + hardness, Math.pow(2, 1 + razingLevel / 8F));
+		}
+		
+		// INERTIA GAMING
+		// inertia mining speed calculation logic is capped at 5 levels.
+		// Higher and the formula would do weird stuff
+		int inertiaLevel = SpectrumEnchantmentHelper.getLevel(drm, SpectrumEnchantments.INERTIA, stack);
+		inertiaLevel = Math.min(4, inertiaLevel);
+		if (inertiaLevel > 0) {
+			var inertia = stack.getOrDefault(SpectrumDataComponentTypes.INERTIA, InertiaComponent.DEFAULT);
+			if (state.isOf(inertia.lastMined())) {
+				var additionalSpeedPercent = 2.0 * Math.log(inertia.count()) / Math.log((6 - inertiaLevel) * (6 - inertiaLevel) + 1);
+				speed *= 0.5F + (float) additionalSpeedPercent;
+			} else {
+				speed /= 4;
+			}
+		}
+		
+		return speed;
+	}
 	
 	@Inject(method = "updateSwimming()V", at = @At("HEAD"), cancellable = true)
 	public void spectrum$updateSwimming(CallbackInfo ci) {
@@ -145,7 +185,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 		return value;
 	}
 	
-	@Inject(method = "attack(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I"))
+	@Inject(method = "attack(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getVelocity()Lnet/minecraft/util/math/Vec3d;"))
 	private void spectrum$perfectCounter(Entity target, CallbackInfo ci, @Local(ordinal = 0) LocalFloatRef damage) {
 		var player = (PlayerEntity) (Object) this;
 		if (MiscPlayerDataComponent.get(player).consumePerfectCounter()) {
@@ -257,7 +297,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 	}
 	
 	@ModifyVariable(method = "getBlockBreakingSpeed",
-			slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z"),
+			slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"),
 					to = @At("TAIL")
 			),
 			at = @At(value = "LOAD"),
@@ -276,7 +316,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 			var player = (PlayerEntity) (Object) this;
 			var f = original;
 			
-			if (player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player))
+			boolean hasAquaAffinity = SpectrumEnchantmentHelper.getEquipmentLevel(player.getWorld().getRegistryManager(), Enchantments.AQUA_AFFINITY, player) > 0;
+			if (player.isSubmergedIn(FluidTags.WATER) && !hasAquaAffinity)
 				f *= 5;
 			
 			if (!player.isOnGround())

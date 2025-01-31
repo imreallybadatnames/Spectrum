@@ -81,7 +81,7 @@ public class FluidIngredient {
         return Optional.ofNullable(this.fluid);
     }
     public Optional<TagKey<Fluid>> tag() {
-        return Optional.of(TagKey.of(RegistryKeys.FLUID, this.tag));
+		return Registries.FLUID.streamTags().filter(tagKey -> tagKey.id().equals(this.tag)).findFirst();
     }
     public boolean isTag() {
         return this.tag != null;
