@@ -6,17 +6,13 @@
     },
     "reach": {
       "type": "minecraft:uniform",
-      "value": {
         "min_inclusive": 1,
         "max_inclusive": 5
-      }
     },
     "height": {
       "type": "minecraft:uniform",
-      "value": {
         "min_inclusive": 2,
         "max_inclusive": 7
-      }
     }
   }
 }
