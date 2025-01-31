@@ -46,8 +46,9 @@ dependencies {
 	modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}")
 
-	// mine
-	modImplementation("maven.modrinth:exclusions-lib:${project.exclusionslib_version}")
+	// ours
+	// TODO: readd exclusions lib when ported to 1.21
+	// modImplementation("maven.modrinth:exclusions-lib:${project.exclusionslib_version}")
 	modImplementation("de.dafuqs:revelationary:${project.revelationary_version}")
 	modImplementation include("de.dafuqs:additionalentityattributes:${project.additional_entity_attributes_version}")
 	modImplementation include("de.dafuqs:arrowhead:${project.arrowhead_version}")

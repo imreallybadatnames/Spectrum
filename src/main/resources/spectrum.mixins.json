@@ -103,7 +103,6 @@
 		"compat.connectormod.absent.PlayerEntityMixin",
 		"compat.connectormod.present.ExplosionMixin",
 		"compat.connectormod.present.PlayerEntityMixin",
-		"compat.quilt_status_effect.present.SpectrumEventListenersMixin",
 		"injectors.EntityStatusEffectS2CPacketInjector$_Mixin",
 		"injectors.FoodComponentBuilderInjector$_Accessor",
 		"injectors.StatusEffectInstanceInjector$_Mixin"

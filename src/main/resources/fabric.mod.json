@@ -10,15 +10,14 @@
 		"Noaaan - Mythic Coder (Hard Carries on MC Updates)"
 	],
 	"contributors": [
-		"Electro_593 (A lot of code)",
-		"Maya (Gay)",
+		"Electro_593 (A lot of code, big porting hours)",
 		"HoneyHive (Illustrations)",
 		"800020h (Structures)",
 		"MsRandom (Gayer, Shaders)",
-		"Quarx_ (Sound design and Music)",
-		"Notawallplan (Music, Writing)",
+		"Quarx_ (Sound design)",
 		"Athebyne (Gay Dragon)",
-		"Robotgiggle (Loot, Tweaks)"
+		"Robotgiggle (Loot, Tweaks)",
+		"pizzacalz0ne (wacky but genius code)"
 	],
 	"contact": {
 		"homepage": "https://github.com/DaFuqs/",
@@ -90,8 +89,7 @@
 		"revelationary": "*",
 		"cloth-config": "*",
 		"modonomicon": "*",
-		"trinkets": "*",
-		"matchbooks": "*"
+		"trinkets": "*"
 	},
 	"suggests": {
 		"paginatedadvancements": "*"
