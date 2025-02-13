@@ -4531,7 +4531,7 @@
   "item.spectrum.glass_crest_crossbow.tooltip.how_to_overcharge": "§7Use while loaded and sneaking to §fOVERCHARGE",
   "item.spectrum.glass_crest_crossbow.tooltip.overcharged": "§7Overcharge: %d§7%%",
   "item.spectrum.glass_crest_ultra_greatsword": "Glass Crest Ultra Greatsword",
-  "item.spectrum.glass_crest_ultra_greatsword.tooltip": "§7Deals §f%d%%§7 of it's damage via Magic",
+  "item.spectrum.glass_crest_ultra_greatsword.tooltip": "§7Deals §f%d%%§7 of its damage via Magic",
   "item.spectrum.glass_crest_ultra_greatsword.tooltip2": "§7Charge to perform a ground slam",
   "item.spectrum.glass_crest_workstaff": "Glass Crest Workstaff",
   "item.spectrum.glass_peach": "Glass Peach",
