@@ -4,7 +4,6 @@ import de.dafuqs.spectrum.api.energy.*;
 import de.dafuqs.spectrum.api.energy.color.*;
 import net.fabricmc.api.*;
 import net.minecraft.nbt.*;
-import net.minecraft.registry.entry.*;
 import net.minecraft.text.*;
 import org.jetbrains.annotations.*;
 
@@ -125,8 +124,8 @@ public class TotalCappedElementalMixingInkStorage extends TotalCappedInkStorage 
 		}
 		return maxAmount;
 	}
-
-    public static TotalCappedElementalMixingInkStorage fromNbt(@NotNull NbtCompound compound) {
+	
+	public static TotalCappedElementalMixingInkStorage fromNbt(@NotNull NbtCompound compound) {
 		long maxEnergyTotal = compound.getLong("MaxEnergyTotal");
 		Map<InkColor, Long> energy = InkStorage.readEnergy(compound.contains("Energy") ? compound.getCompound("Energy") : compound);
 		return new TotalCappedElementalMixingInkStorage(maxEnergyTotal, energy);
@@ -135,14 +134,19 @@ public class TotalCappedElementalMixingInkStorage extends TotalCappedInkStorage 
 	@Override
 	public void fillCompletely() {
 		this.storedEnergy.clear();
-		//try{
 		List<InkColor> elementals = InkColors.elementals();
+		if (elementals.isEmpty()) {
+			// in case the tag is empty or something queries that method
+			// before tags are fully synced
+			// looking at you, Mouse Wheelie
+			return;
+		}
+		
 		long energyPerColor = this.maxEnergyTotal / elementals.size();
 		for (InkColor color : elementals) {
 			this.storedEnergy.put(color, energyPerColor);
 		}
 		this.currentTotal = energyPerColor * elementals.size(); // in case rounding is weird
-		//} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	@Override

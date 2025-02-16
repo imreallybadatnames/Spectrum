@@ -59,12 +59,14 @@ public class DoomBloomBlock extends FlowerBlock implements Fertilizable, Explosi
 	
 	@Override
 	public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-		return random.nextFloat() > GROW_CHANCE;
+		return true;
 	}
 	
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		grow(world, random, pos, state);
+		if (random.nextFloat() > GROW_CHANCE) {
+			grow(world, random, pos, state);
+		}
 	}
 	
 	@Override
